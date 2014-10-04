@@ -1,0 +1,20 @@
+9/29 11-2 Started on Gridia. Rendered tile map on mesh in unity.
+9/30 10-3 Rendering in batches from multiple sprite sheets.
+     7-7:50 started on rendering in layers
+     9:30-10 finished layers
+10/2 1:20-2 read Martin Fowler's article on dependency injection.
+           re-factored TileMapView
+     3:15-5
+     5:15-5:50 scale view to the screen size.
+               started on content managers / json deserializer.
+     11-11:40 fought with monodevlop. ugh. couldn't import json.NET
+10/3 5:45-7:10  smooth player movement and simple state machine
+     7:20-8 json
+     9:20-9:45 loading item data and rendering from image data
+     10:15-10:20 animations are working
+     10:25-10:55 refactored ContentManager system
+     10:55-11 added Player layer
+     11-11:30 refactored Layer rendering
+     11:50-1:45 began on lighting
+10/4 12-1 installed Visual Studios, integrated with unity
+		  fixed graphical issue with line artifacts appearing

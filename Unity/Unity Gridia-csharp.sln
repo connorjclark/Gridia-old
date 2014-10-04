@@ -1,0 +1,54 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{E767652F-E1CB-1AE9-992B-39CBB03AD748}") = "Unity Gridia", "Assembly-CSharp-vs.csproj", "{7E55EC64-71D2-B558-EA4D-C2FB5493CEF8}"
+EndProject
+Project("{E767652F-E1CB-1AE9-992B-39CBB03AD748}") = "Unity Gridia", "Assembly-CSharp-Editor-vs.csproj", "{FC1A3B56-F0F7-3501-4FF9-13B030422768}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E55EC64-71D2-B558-EA4D-C2FB5493CEF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E55EC64-71D2-B558-EA4D-C2FB5493CEF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E55EC64-71D2-B558-EA4D-C2FB5493CEF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E55EC64-71D2-B558-EA4D-C2FB5493CEF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC1A3B56-F0F7-3501-4FF9-13B030422768}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC1A3B56-F0F7-3501-4FF9-13B030422768}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC1A3B56-F0F7-3501-4FF9-13B030422768}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC1A3B56-F0F7-3501-4FF9-13B030422768}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+																																							GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.FileWidth = 120
+		$1.EolMarker = Unix
+		$1.inheritsSet = VisualStudio
+		$1.inheritsScope = text/plain
+		$1.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $2
+		$2.inheritsSet = Mono
+		$2.inheritsScope = text/x-csharp
+		$2.scope = text/x-csharp
+		$0.TextStylePolicy = $3
+		$3.FileWidth = 120
+		$3.TabWidth = 4
+		$3.EolMarker = Unix
+		$3.inheritsSet = Mono
+		$3.inheritsScope = text/plain
+		$3.scope = text/plain
+		$0.DotNetNamingPolicy = $4
+		$4.DirectoryNamespaceAssociation = None
+		$4.ResourceNamePolicy = FileFormatDefault
+		$0.StandardHeader = $5
+		$5.Text = 
+		$5.IncludeInNewFiles = True
+	EndGlobalSection
+
+EndGlobal
