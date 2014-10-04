@@ -188,8 +188,6 @@ namespace Gridia
             {
                 UpdateLighting();
             }
-
-            MonoBehaviour.print(Position);
         }
 
         private Shader FindShader() {
