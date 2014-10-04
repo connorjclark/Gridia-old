@@ -46,15 +46,14 @@
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Assets\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\JSON\JSONObject.cs" />
-    <Compile Include="Assets\JSON\JSONTemplates.cs" />
-    <Compile Include="Assets\JSON\VectorTemplates.cs" />
     <Compile Include="Assets\Scripts\Content\ContentLoader.cs" />
     <Compile Include="Assets\Scripts\Content\ContentManager.cs" />
     <Compile Include="Assets\Scripts\Content\Item.cs" />
-    <Compile Include="Assets\Scripts\Content\ItemsLoader.cs" />
     <Compile Include="Assets\Scripts\GridiaConstants.cs" />
     <Compile Include="Assets\Scripts\GridiaMain.cs" />
     <Compile Include="Assets\Scripts\ItemInstance.cs" />
@@ -65,8 +64,8 @@
     <Compile Include="Assets\Scripts\TextureManager.cs" />
     <Compile Include="Assets\Scripts\TileMap.cs" />
     <Compile Include="Assets\Scripts\TileMapView.cs" />
-    <None Include="Assets\JSON\readme.txt" />
     <None Include="Assets\Resources\content\items.txt" />
+    <None Include="Assets\Newtonsoft.Json.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
 </Project>

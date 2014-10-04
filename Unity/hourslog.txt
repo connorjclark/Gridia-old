@@ -18,3 +18,4 @@
      11:50-1:45 began on lighting
 10/4 12-1 installed Visual Studios, integrated with unity
 		  fixed graphical issue with line artifacts appearing
+	 3-4 refactored code a bit, began using git, imported Json.NET

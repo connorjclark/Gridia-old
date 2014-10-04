@@ -14,7 +14,7 @@ namespace Gridia
         
         public ContentManager ()
         {
-            items = new ItemsLoader ().Load ("content/items");
+            items = new ContentLoader<Item> ().Load ("content/items");
             Singleton = this; //smell?
         }
 
