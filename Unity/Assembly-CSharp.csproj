@@ -59,6 +59,8 @@
      <Compile Include="Assets\Scripts\TextureManager.cs" />
      <Compile Include="Assets\Scripts\TileMap.cs" />
      <Compile Include="Assets\Scripts\TileMapView.cs" />
+     <None Include="Assets\Resources\shaders\Unlit-Alpha.shader" />
+     <None Include="Assets\Resources\shaders\Sprites-Diffuse.shader" />
      <None Include="Assets\Resources\content\items.txt" />
  <Reference Include="Newtonsoft.Json">
  <HintPath>E:/Dev/Gridia-Unity/Unity/Assets/Newtonsoft.Json.dll</HintPath>

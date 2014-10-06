@@ -65,6 +65,8 @@
     <Compile Include="Assets\Scripts\TileMap.cs" />
     <Compile Include="Assets\Scripts\TileMapView.cs" />
     <None Include="Assets\Resources\content\items.txt" />
+    <None Include="Assets\Resources\shaders\Sprites-Diffuse.shader" />
+    <None Include="Assets\Resources\shaders\Unlit-Alpha.shader" />
     <None Include="Assets\Newtonsoft.Json.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
