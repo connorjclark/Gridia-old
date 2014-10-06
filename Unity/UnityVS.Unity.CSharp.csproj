@@ -54,6 +54,7 @@
     <Compile Include="Assets\Scripts\Content\ContentLoader.cs" />
     <Compile Include="Assets\Scripts\Content\ContentManager.cs" />
     <Compile Include="Assets\Scripts\Content\Item.cs" />
+    <Compile Include="Assets\Scripts\Content\Monster.cs" />
     <Compile Include="Assets\Scripts\GridiaConstants.cs" />
     <Compile Include="Assets\Scripts\GridiaMain.cs" />
     <Compile Include="Assets\Scripts\ItemInstance.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Assets\Scripts\TileMap.cs" />
     <Compile Include="Assets\Scripts\TileMapView.cs" />
     <None Include="Assets\Resources\content\items.txt" />
+    <None Include="Assets\Resources\content\monsters.txt" />
     <None Include="Assets\Resources\shaders\Sprites-Diffuse.shader" />
     <None Include="Assets\Resources\shaders\Unlit-Alpha.shader" />
     <None Include="Assets\Newtonsoft.Json.dll" />

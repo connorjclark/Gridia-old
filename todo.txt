@@ -1,5 +1,3 @@
-Content manager
-	Monsters data
 Player movement
 World loading
 Server interface and mock
