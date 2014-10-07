@@ -21,5 +21,17 @@ namespace Gridia
         {
             return new Vector2(Mathf.Floor(vector.x), Mathf.Floor(vector.y));
         }
+
+        public static bool Vector2IsAbsoluteGreaterThanOne(Vector2 vector)
+        {
+            return Mathf.Abs(vector.x) >= 1 || Mathf.Abs(vector.y) >= 1;
+        }
+
+        public static int CompareAbsoluteValues(float a, float b) 
+        {
+            if (a == b) return 0;
+            if (Mathf.Abs(a) > Mathf.Abs(b)) return 1;
+            return -1;
+        }
     }
 }

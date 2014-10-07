@@ -52,6 +52,9 @@
      <Compile Include="Assets\Scripts\Content\Monster.cs" />
      <Compile Include="Assets\Scripts\GridiaConstants.cs" />
      <Compile Include="Assets\Scripts\GridiaMain.cs" />
+     <Compile Include="Assets\Scripts\IClientConnection.cs" />
+     <Compile Include="Assets\Scripts\IServer.cs" />
+     <Compile Include="Assets\Scripts\IServerConnection.cs" />
      <Compile Include="Assets\Scripts\ItemInstance.cs" />
      <Compile Include="Assets\Scripts\Layer.cs" />
      <Compile Include="Assets\Scripts\Lighting.cs" />

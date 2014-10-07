@@ -17,7 +17,7 @@ public class GridiaMain : MonoBehaviour
         ContentManager contentManager = new ContentManager();
         TextureManager textureManager = new TextureManager();
 
-        tileMap = new TileMap(10);
+        tileMap = new TileMap(30);
         Player player = new Player();
         tileMap.AddCreature(player);
 
@@ -27,25 +27,19 @@ public class GridiaMain : MonoBehaviour
         stateMachine = new StateMachine();
         stateMachine.SetState(new PlayerMovementState(player, 4f));
 
-        Spawn(1);
+        Spawn(10);
     }
 
     void Spawn(int amount) {
         for (int i = 0; i < amount; i++)
         {
             Creature cre = new Creature();
-            int x = 1;
-            //int x = Random.Range(0, tileMap.Size);
-            //int y = Random.Range(0, tileMap.Size);
-            int y = 1;
+            int x = Random.Range(0, tileMap.Size);
+            int y = Random.Range(0, tileMap.Size);
             cre.Position = new Vector2(x, y);
             tileMap.AddCreature(cre);
             creatures.Add(cre);
         }
-    }
-
-    bool IsAbsoluteVectorGreaterThanOne(Vector2 vector) {
-        return Mathf.Abs(vector.x) >= 1 || Mathf.Abs(vector.y) >= 1; 
     }
 
     void MoveCreatures(float speed) {
@@ -58,13 +52,16 @@ public class GridiaMain : MonoBehaviour
                 {
                     Vector2 direction = Direction.RandomDirection();
                     Vector2 target = cre.Position + direction;
-                    if (tileMap.Walkable((int)target.x, (int)target.y)) cre.MovementDirection = direction;
+                    if (tileMap.Walkable((int)target.x, (int)target.y))
+                    {
+                        cre.MovementDirection = direction;
+                    }
                 }
             }
             else
             {
                 cre.Offset = cre.Offset + cre.MovementDirection * stepSpeed;
-                if (IsAbsoluteVectorGreaterThanOne(cre.Offset))
+                if (Utilities.Vector2IsAbsoluteGreaterThanOne(cre.Offset))
                 {
                     tileMap.UpdateCreature(cre, cre.Position + cre.MovementDirection);
                     cre.Offset = Vector2.zero;

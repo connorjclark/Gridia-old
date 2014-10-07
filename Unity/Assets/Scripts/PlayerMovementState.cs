@@ -23,27 +23,28 @@ namespace Gridia
         
         public void Step (StateMachine stateMachine, float dt)
         {
-            if (IsZero (_delta)) {
+            if (_delta == Vector2.zero) {
                 _delta = ProcessInput ();
                 _deltaRemaining = new Vector2 (_delta.x, _delta.y); //smell
-            } else if (!IsZero (_deltaRemaining)) {
+            }
+            else if (_deltaRemaining != Vector2.zero)
+            {
                 float stepSpeed = IsRunning () ? _speed * 2 : _speed;
                 Vector2 stepDelta = _delta * stepSpeed * dt;
-                
-                if (Mathf.Abs (_deltaRemaining.x) > Mathf.Abs (stepDelta.x))
+
+                if (Utilities.CompareAbsoluteValues(_deltaRemaining.x, stepDelta.x) == 1)
                     _deltaRemaining.x -= stepDelta.x;
                 else
                     _deltaRemaining.x = 0;
                 
-                if (Mathf.Abs (_deltaRemaining.y) > Mathf.Abs (stepDelta.y))
+                if (Utilities.CompareAbsoluteValues(_deltaRemaining.y, stepDelta.y) == 1)
                     _deltaRemaining.y -= stepDelta.y;
                 else
                     _deltaRemaining.y = 0;
 
-
                 _player.Position += stepDelta;
 
-                if (IsZero(_deltaRemaining)) {
+                if (_deltaRemaining == Vector2.zero) {
                     StartCooldown(stateMachine, dt);
                 }
             } else {
@@ -76,26 +77,20 @@ namespace Gridia
             stateMachine.Step (dt);
         }
 
-        private bool IsZero (Vector2 vector)
-        {
-            return vector.x == 0 && vector.y == 0;
-        }
-        
         private Vector2 ProcessInput ()
         {
-            int dx = 0;
-            int dy = 0;
-            
-            if (Input.GetButton ("left"))
-                dx = -1;
+            Vector2 direction = Direction.None;
+
+            if (Input.GetButton("left"))
+                direction += Direction.Left;
             if (Input.GetButton ("right"))
-                dx = 1;
+                direction += Direction.Right;
             if (Input.GetButton ("down"))
-                dy = -1;
+                direction += Direction.Down;
             if (Input.GetButton ("up"))
-                dy = 1;
+                direction += Direction.Up;
             
-            return new Vector2 (dx, dy);
+            return direction;
         }
     }
 }

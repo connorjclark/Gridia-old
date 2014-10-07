@@ -54,7 +54,8 @@ namespace Gridia
         }
 
         public bool Walkable(int x, int y) {
-            return GetTile(x, y).Creature == null;
+            Tile tile = GetTile(x, y);
+            return tile.Creature == null && !tile.Item.Item.BlockMovement;
         }
 
         private void InitializeTiles ()

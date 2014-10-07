@@ -22,4 +22,5 @@
 	 4-4:30 upgraded to Json.NET. much better.
 10/5 7:25-8:20 found monsters data, cleaned up and changed YAML->JSON. Load in content manager.
 10/6 6:15-9, 9:25-9:45 rendering smooth transition between tiles for creatures
-      9:45-10:30 refactoring today's work.
+      9:45-10:45 refactoring today's work.
+      11:50-12:25 began on mocking a server
