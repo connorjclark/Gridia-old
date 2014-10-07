@@ -60,11 +60,13 @@
     <Compile Include="Assets\Scripts\ItemInstance.cs" />
     <Compile Include="Assets\Scripts\Layer.cs" />
     <Compile Include="Assets\Scripts\Lighting.cs" />
+    <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\PlayerMovementState.cs" />
     <Compile Include="Assets\Scripts\StateMachine.cs" />
     <Compile Include="Assets\Scripts\TextureManager.cs" />
     <Compile Include="Assets\Scripts\TileMap.cs" />
     <Compile Include="Assets\Scripts\TileMapView.cs" />
+    <Compile Include="Assets\Scripts\Utilities.cs" />
     <None Include="Assets\Resources\content\items.txt" />
     <None Include="Assets\Resources\content\monsters.txt" />
     <None Include="Assets\Resources\shaders\Sprites-Diffuse.shader" />

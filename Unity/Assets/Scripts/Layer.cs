@@ -10,16 +10,30 @@ namespace Gridia
     {
         public readonly Func<Tile, int> GetTileData;
         public readonly Func<int, Texture> GetTexture;
+        public readonly Func<Tile, Vector2> GetOffset;
         public readonly GameObject renderable;
         public readonly Vector2[] uv;
         public readonly Mesh mesh;
         private readonly TileMapView _view;
 
-        public Layer(string name, TileMapView view, Func<Tile, int> getTileData, Func<int, Texture> getTexture)
+        public Layer (
+            string name,
+            TileMapView view,
+            Func<Tile, int> getTileData,
+            Func<int, Texture> getTexture,
+            Func<Tile, Vector2> getOffset = null)
         {
             _view = view;
             GetTileData = getTileData;
             GetTexture = getTexture;
+            if (getOffset == null)
+            {
+                GetOffset = tile => Vector2.zero;
+            }
+            else
+            {
+                GetOffset = getOffset;
+            }
             renderable = InitRenderable(name);
             mesh = renderable.GetComponent<MeshFilter>().mesh; //smell
             uv = InitUV();

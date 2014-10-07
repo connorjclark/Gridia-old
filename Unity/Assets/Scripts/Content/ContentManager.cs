@@ -19,7 +19,6 @@ namespace Gridia
         {
             items = new ContentLoader<Item>().Load("content/items");
             monsters = new ContentLoader<Monster>().Load("content/monsters");
-            MonoBehaviour.print(monsters[121].Name);
             Singleton = this; //smell?
         }
 

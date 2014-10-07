@@ -1,29 +1,83 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Gridia;
+using System.Collections.Generic;
 
 public class GridiaMain : MonoBehaviour
 {
+    private TileMap tileMap;
     private TileMapView view;
     private StateMachine stateMachine;
+    private List<Creature> creatures;
 
     void Start ()
     {
-        ContentManager contentManager = new ContentManager ();
+        ResizeCamera();
+        creatures = new List<Creature>();
+        ContentManager contentManager = new ContentManager();
+        TextureManager textureManager = new TextureManager();
 
-        stateMachine = new StateMachine ();
+        tileMap = new TileMap(10);
+        Player player = new Player();
+        tileMap.AddCreature(player);
 
-        ResizeCamera ();
-        TextureManager textureManager = new TextureManager ();
-        TileMap tileMap = new TileMap (100);
         view = new TileMapView (tileMap, textureManager, 2.0f);
+        view.Focus = player;
 
-        stateMachine.SetState (new PlayerMovementState (view, 4f));
+        stateMachine = new StateMachine();
+        stateMachine.SetState(new PlayerMovementState(player, 4f));
+
+        Spawn(1);
     }
-	
+
+    void Spawn(int amount) {
+        for (int i = 0; i < amount; i++)
+        {
+            Creature cre = new Creature();
+            int x = 1;
+            //int x = Random.Range(0, tileMap.Size);
+            //int y = Random.Range(0, tileMap.Size);
+            int y = 1;
+            cre.Position = new Vector2(x, y);
+            tileMap.AddCreature(cre);
+            creatures.Add(cre);
+        }
+    }
+
+    bool IsAbsoluteVectorGreaterThanOne(Vector2 vector) {
+        return Mathf.Abs(vector.x) >= 1 || Mathf.Abs(vector.y) >= 1; 
+    }
+
+    void MoveCreatures(float speed) {
+        float stepSpeed = speed * Time.deltaTime;
+        creatures.ForEach(cre =>
+        {
+            if (cre.MovementDirection == Direction.None)
+            {
+                if (Random.Range(1, 50) <= 1)
+                {
+                    Vector2 direction = Direction.RandomDirection();
+                    Vector2 target = cre.Position + direction;
+                    if (tileMap.Walkable((int)target.x, (int)target.y)) cre.MovementDirection = direction;
+                }
+            }
+            else
+            {
+                cre.Offset = cre.Offset + cre.MovementDirection * stepSpeed;
+                if (IsAbsoluteVectorGreaterThanOne(cre.Offset))
+                {
+                    tileMap.UpdateCreature(cre, cre.Position + cre.MovementDirection);
+                    cre.Offset = Vector2.zero;
+                    cre.MovementDirection = Direction.None;
+                }
+            }
+        });
+    }
+
     void Update ()
     {
         stateMachine.Step (Time.deltaTime);
+        MoveCreatures(10.0f);
         view.Render ();
     }
 

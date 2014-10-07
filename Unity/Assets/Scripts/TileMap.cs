@@ -1,4 +1,5 @@
-using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Gridia
 {
@@ -6,23 +7,25 @@ namespace Gridia
     {
         public int Floor { get; set; }
         public ItemInstance Item { get; set; }
-        public int Creature { get; set; }
+        public Creature Creature { get; set; }
     }
 
     public class TileMap
     {
         private Tile[] tiles;
-        public readonly int size;
+        private List<Creature> _creatures;
+        public int Size { get; private set; }
 
         public TileMap (int size)
         {
-            this.size = size;
+            Size = size;//smell?
+            _creatures = new List<Creature>();
             InitializeTiles ();
         }
 
         public Tile GetTile (int x, int y)
         {
-            return tiles [Wrap (y) * size + Wrap (x)];
+            return tiles [Wrap (y) * Size + Wrap (x)];
         }
 
         public void SetFloor (int floor, int x, int y)
@@ -35,29 +38,42 @@ namespace Gridia
             GetTile (x, y).Item = item;
         }
 
-        public void SetCreature (int creature, int x, int y)
-        {
-            GetTile (x, y).Creature = creature;
+        private Tile GetTileOfCreature(Creature creature) {
+            return GetTile((int)creature.Position.x, (int)creature.Position.y);
+        }
+
+        public void AddCreature(Creature creature) {
+            GetTileOfCreature(creature).Creature = creature;
+            _creatures.Add(creature);
+        }
+
+        public void UpdateCreature(Creature creature, Vector2 newPosition) {
+            GetTileOfCreature(creature).Creature = null;
+            creature.Position = newPosition;
+            GetTileOfCreature(creature).Creature = creature;
+        }
+
+        public bool Walkable(int x, int y) {
+            return GetTile(x, y).Creature == null;
         }
 
         private void InitializeTiles ()
         {
-            Random r = new Random ();
-            tiles = new Tile[size * size];
+            tiles = new Tile[Size * Size];
             for (int i = 0; i < tiles.Length; i++) {
                 Tile tile = new Tile ();
                 tile.Floor = 8;
-                tile.Creature = -1;
-                //tile.Item = ContentManager.Singleton.GetItem(10).GetInstance();
-                tile.Item = ContentManager.Singleton.GetItem(r.Next(ContentManager.Singleton.ItemCount)).GetInstance();
+                tile.Item = ContentManager.Singleton.GetItem(Random.Range(0, 10)).GetInstance();
+                if (Random.Range(0, 10) > 1) tile.Item = ContentManager.Singleton.GetItem(0).GetInstance();
+                //tile.Item = ContentManager.Singleton.GetItem(r.Next(ContentManager.Singleton.ItemCount)).GetInstance();
                 tiles [i] = tile;
             }
         }
 
         private int Wrap (int value)
         {
-            int mod = value % size;
-            return mod < 0 ? size + mod : mod;
+            int mod = value % Size;
+            return mod < 0 ? Size + mod : mod;
         }
     }
 }

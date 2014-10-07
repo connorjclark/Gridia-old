@@ -5,16 +5,16 @@ namespace Gridia
 {
     public class PlayerMovementState : State
     {
-        private TileMapView _view;
+        private Player _player;
         private Vector2 _delta;
         private Vector2 _deltaRemaining;
         private float _speed;
         private float _cooldownRemaining;
         private float _cooldown;
         
-        public PlayerMovementState (TileMapView view, float speed, float cooldown = 0f)
+        public PlayerMovementState (Player player, float speed, float cooldown = 0f)
         {
-            _view = view;
+            _player = player;
             _speed = speed;
             _cooldown = _cooldownRemaining = cooldown;
             _delta = new Vector2 ();
@@ -39,22 +39,27 @@ namespace Gridia
                     _deltaRemaining.y -= stepDelta.y;
                 else
                     _deltaRemaining.y = 0;
-                
-                _view.Position += stepDelta;
+
+
+                _player.Position += stepDelta;
 
                 if (IsZero(_deltaRemaining)) {
-                    _view.Position = new Vector2(Mathf.Round(_view.Position.x), Mathf.Round(_view.Position.y));
-                    Cooldown(stateMachine, dt);
+                    StartCooldown(stateMachine, dt);
                 }
             } else {
-                _view.Position = new Vector2(Mathf.Round(_view.Position.x), Mathf.Round(_view.Position.y));
-                Cooldown(stateMachine, dt);
+                StartCooldown(stateMachine, dt);
             }
         }
 
         private bool IsRunning ()
         {
             return Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift);
+        }
+
+        private void StartCooldown(StateMachine stateMachine, float dt)
+        {
+            _player.Position = new Vector2(Mathf.Round(_player.Position.x), Mathf.Round(_player.Position.y));
+            Cooldown(stateMachine, dt);
         }
 
         private void Cooldown (StateMachine stateMachine, float dt)
@@ -67,7 +72,7 @@ namespace Gridia
 
         private void End (StateMachine stateMachine, float dt)
         {
-            stateMachine.CurrentState = new PlayerMovementState (_view, _speed, _cooldown);
+            stateMachine.CurrentState = new PlayerMovementState (_player, _speed, _cooldown);
             stateMachine.Step (dt);
         }
 

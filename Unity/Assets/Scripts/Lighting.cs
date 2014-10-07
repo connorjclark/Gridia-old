@@ -37,7 +37,7 @@ namespace Gridia
 
         private void CreateLight(int x, int y, int intensity)
         {
-            var position = _view.Position;
+            var position = _view.Focus.Position;
             var TILE_SIZE = 32f * _view.Scale;
             var lightGameObject = new GameObject("a light");
             lightGameObject.AddComponent<Light>();

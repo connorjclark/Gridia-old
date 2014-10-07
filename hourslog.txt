@@ -20,5 +20,6 @@
 		  fixed graphical issue with line artifacts appearing
 	 3-4 refactored code a bit, began using git, imported Json.NET
 	 4-4:30 upgraded to Json.NET. much better.
-10/5 7:25-8:20 found monsters data, cleaned up and changed YAML->JSON. Load it content manager.
-		
+10/5 7:25-8:20 found monsters data, cleaned up and changed YAML->JSON. Load in content manager.
+10/6 6:15-9, 9:25-9:45 rendering smooth transition between tiles for creatures
+      9:45-10:30 refactoring today's work.

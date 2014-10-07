@@ -1,4 +1,3 @@
-Player movement
 World loading
 Server interface and mock
 Have monsters move around randomly
