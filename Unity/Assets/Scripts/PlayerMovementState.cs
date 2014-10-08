@@ -42,7 +42,7 @@ namespace Gridia
                 else
                     _deltaRemaining.y = 0;
 
-                _player.Position += stepDelta;
+                _player.Offset += stepDelta;
 
                 if (_deltaRemaining == Vector2.zero) {
                     StartCooldown(stateMachine, dt);
@@ -59,7 +59,11 @@ namespace Gridia
 
         private void StartCooldown(StateMachine stateMachine, float dt)
         {
-            _player.Position = new Vector2(Mathf.Round(_player.Position.x), Mathf.Round(_player.Position.y));
+            _player.Offset = Vector2.zero;
+            stateMachine.ServerConnection.Gridia.tileMap.UpdateCreature(_player, _player.Position + _delta);
+            int player_x = (int)Mathf.Round(_player.Position.x);
+            int player_y = (int)Mathf.Round(_player.Position.y);
+            stateMachine.ServerConnection.MovePlayer(player_x, player_y);
             Cooldown(stateMachine, dt);
         }
 

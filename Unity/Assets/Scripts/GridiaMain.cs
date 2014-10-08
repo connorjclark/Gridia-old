@@ -5,26 +5,35 @@ using System.Collections.Generic;
 
 public class GridiaMain : MonoBehaviour
 {
-    private TileMap tileMap;
-    private TileMapView view;
-    private StateMachine stateMachine;
-    private List<Creature> creatures;
+    public TileMap tileMap;
+    public TileMapView view;
+    public StateMachine stateMachine;
+    public List<Creature> creatures;
 
     void Start ()
     {
+        if (GridiaConstants.IsServer)
+        {
+            ServerConnection.CreateServer(101);
+        }
+        else 
+        {
+            ServerConnection.ConnectAsClient("127.0.0.1", 101);
+        }
+        ServerConnection.instance.Gridia = this;
+
         ResizeCamera();
         creatures = new List<Creature>();
         ContentManager contentManager = new ContentManager();
         TextureManager textureManager = new TextureManager();
 
         tileMap = new TileMap(30);
-        Player player = new Player();
-        tileMap.AddCreature(player);
+        Player player = CreatePlayer(0, 0);
 
         view = new TileMapView (tileMap, textureManager, 2.0f);
         view.Focus = player;
 
-        stateMachine = new StateMachine();
+        stateMachine = new StateMachine(ServerConnection.instance);
         stateMachine.SetState(new PlayerMovementState(player, 4f));
 
         Spawn(10);
@@ -33,13 +42,25 @@ public class GridiaMain : MonoBehaviour
     void Spawn(int amount) {
         for (int i = 0; i < amount; i++)
         {
-            Creature cre = new Creature();
             int x = Random.Range(0, tileMap.Size);
             int y = Random.Range(0, tileMap.Size);
-            cre.Position = new Vector2(x, y);
-            tileMap.AddCreature(cre);
-            creatures.Add(cre);
+            CreateCreature(x, y);
         }
+    }
+
+    Player CreatePlayer(int x, int y) {
+        Player cre = new Player();
+        cre.Position = new Vector2(x, y);
+        tileMap.AddCreature(cre);
+        creatures.Add(cre);
+        return cre;
+    }
+
+    void CreateCreature(int x, int y) {
+        Creature cre = new Creature();
+        cre.Position = new Vector2(x, y);
+        tileMap.AddCreature(cre);
+        creatures.Add(cre);
     }
 
     void MoveCreatures(float speed) {
@@ -74,7 +95,7 @@ public class GridiaMain : MonoBehaviour
     void Update ()
     {
         stateMachine.Step (Time.deltaTime);
-        MoveCreatures(10.0f);
+        //MoveCreatures(10.0f);
         view.Render ();
     }
 

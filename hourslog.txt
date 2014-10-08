@@ -24,3 +24,5 @@
 10/6 6:15-9, 9:25-9:45 rendering smooth transition between tiles for creatures
       9:45-10:45 refactoring today's work.
       11:50-12:25 began on mocking a server
+10/7 7:20-8:15
+  9:40-12:15 Finished basic server mock and player movement

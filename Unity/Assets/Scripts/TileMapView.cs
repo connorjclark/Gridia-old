@@ -9,6 +9,11 @@ namespace Gridia
         public static int OFF_GRID_TILES = 100;
 
         public Player Focus { get; set; }
+        public Vector2 FocusPosition { 
+            get { 
+                return Focus.Position + Focus.Offset - new Vector2(width / 2, height / 2); 
+            } 
+        }
         public bool IsLighting { get; set; }
         public int NumGridTiles { get { return (width + 2) * (height + 2); } }
         public int NumTiles { get { return NumGridTiles + OFF_GRID_TILES; } }
@@ -82,8 +87,8 @@ namespace Gridia
                 List<Dictionary<string, object>> elementList = new List<Dictionary<string, object>>();
 
                 int tileIndex = 0;
-                int positionX = (int)Focus.Position.x;
-                int positionY = (int)Focus.Position.y;
+                int positionX = (int)FocusPosition.x;
+                int positionY = (int)FocusPosition.y;
                 int numTilesOffGrid = 0;
 
                 ForEachInView((x, y) =>
@@ -184,7 +189,7 @@ namespace Gridia
                     layer.mesh.SetTriangles(triangleBatches[i], i);
                 }
 
-                Vector2 renderablePosition = TileSize * Utilities.Vector2Residual(-Focus.Position);
+                Vector2 renderablePosition = TileSize * Utilities.Vector2Residual(-FocusPosition);
                 layer.renderable.transform.position = Utilities.Vector2Floor(renderablePosition);
             };
 

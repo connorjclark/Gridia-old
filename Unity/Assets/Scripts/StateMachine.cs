@@ -9,6 +9,12 @@ namespace Gridia
 
     public class StateMachine
     {
+        public ServerConnection ServerConnection { get; private set; }
+
+        public StateMachine(ServerConnection serverConnection) {
+            ServerConnection = serverConnection;
+        }
+
         public State CurrentState { get; set; }
         
         public void SetState (State state)
