@@ -26,4 +26,8 @@
       11:50-12:25 began on mocking a server
 10/7 7:20-8:15
   9:40-12:15 Finished basic server mock and player movement
-10/8 
+10/21 6hr on refactoring Server
+10/22 11:45-12:30 
+      5:35-6
+      10:45-2:30 refactored server. started on c# client - finished file transfers
+10/23 12-5 finished c# client side and implemented example chat client. now, work on Gridia can continue
