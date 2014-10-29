@@ -31,3 +31,5 @@
       5:35-6
       10:45-2:30 refactored server. started on c# client - finished file transfers
 10/23 12-5 finished c# client side and implemented example chat client. now, work on Gridia can continue
+10/28 3:10-3:50
+      7-

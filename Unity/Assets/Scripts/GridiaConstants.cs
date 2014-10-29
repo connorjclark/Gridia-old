@@ -2,7 +2,6 @@ namespace Gridia
 {
     public class GridiaConstants
     {
-        public static bool IsServer;
         public const int NUM_TILES_IN_SPRITESHEET_ROW = 10;
         public const int SPRITE_SIZE = 32;
         public const int SPRITE_SHEET_SIZE = 320;

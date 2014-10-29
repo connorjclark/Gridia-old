@@ -51,19 +51,18 @@
      <Compile Include="Assets\Scripts\Content\Item.cs" />
      <Compile Include="Assets\Scripts\Content\Monster.cs" />
      <Compile Include="Assets\Scripts\GridiaConstants.cs" />
+     <Compile Include="Assets\Scripts\GridiaDriver.cs" />
      <Compile Include="Assets\Scripts\GridiaMain.cs" />
-     <Compile Include="Assets\Scripts\IClientConnection.cs" />
      <Compile Include="Assets\Scripts\ItemInstance.cs" />
      <Compile Include="Assets\Scripts\Layer.cs" />
      <Compile Include="Assets\Scripts\Lighting.cs" />
+     <Compile Include="Assets\Scripts\Locator.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\PlayerMovementState.cs" />
-     <Compile Include="Assets\Scripts\ServerConnection.cs" />
      <Compile Include="Assets\Scripts\StateMachine.cs" />
      <Compile Include="Assets\Scripts\TextureManager.cs" />
      <Compile Include="Assets\Scripts\TileMap.cs" />
      <Compile Include="Assets\Scripts\TileMapView.cs" />
-     <Compile Include="Assets\Scripts\TitleScreen.cs" />
      <Compile Include="Assets\Scripts\Utilities.cs" />
      <None Include="Assets\Resources\content\monsters.txt" />
      <None Include="Assets\Resources\shaders\Unlit-Alpha.shader" />
@@ -71,6 +70,9 @@
      <None Include="Assets\Resources\content\items.txt" />
  <Reference Include="Newtonsoft.Json">
  <HintPath>E:/Dev/Gridia-Unity/Unity/Assets/Newtonsoft.Json.dll</HintPath>
+ </Reference>
+ <Reference Include="Serving">
+ <HintPath>E:/Dev/Gridia-Unity/Unity/Assets/Serving.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

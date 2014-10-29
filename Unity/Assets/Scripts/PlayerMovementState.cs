@@ -60,10 +60,10 @@ namespace Gridia
         private void StartCooldown(StateMachine stateMachine, float dt)
         {
             _player.Offset = Vector2.zero;
-            stateMachine.ServerConnection.Gridia.tileMap.UpdateCreature(_player, _player.Position + _delta);
+            Locator.GetGame().tileMap.UpdateCreature(_player, _player.Position + _delta);
             int player_x = (int)Mathf.Round(_player.Position.x);
             int player_y = (int)Mathf.Round(_player.Position.y);
-            stateMachine.ServerConnection.MovePlayer(player_x, player_y);
+            //stateMachine.ServerConnection.MovePlayer(player_x, player_y);
             Cooldown(stateMachine, dt);
         }
 
@@ -93,6 +93,15 @@ namespace Gridia
                 direction += Direction.Down;
             if (Input.GetButton ("up"))
                 direction += Direction.Up;
+
+            if (direction != Direction.None)
+            {
+                Vector2 destination = Locator.GetGame().view.Focus.Position + direction;
+                if (!Locator.GetGame().tileMap.Walkable((int)destination.x, (int)destination.y))
+                {
+                    direction = Direction.None;
+                }
+            }
             
             return direction;
         }
