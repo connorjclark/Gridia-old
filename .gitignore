@@ -27,7 +27,8 @@ sysinfo.txt
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -61,3 +62,11 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+/Server/GridiaServer/target/
+
+# Gridia
+TestWorld/
+*.meta
+*.suo
+Client/packages
+Client/.nuget/NuGet.exe

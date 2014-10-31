@@ -32,4 +32,16 @@
       10:45-2:30 refactored server. started on c# client - finished file transfers
 10/23 12-5 finished c# client side and implemented example chat client. now, work on Gridia can continue
 10/28 3:10-3:50
-      7-
+      7-8:15
+10/29
+    2-4
+    6-8
+    11:20-3
+10/30
+    11:30-11:50
+    1:30-2:10
+    2:30-4
+    6:05-7:15 stupid bug. unity doesn't let me use File.open. client works on console but not in unity environment
+    11:30-1:30 server integration test - java to csharp binary data
+10/31
+    2:50p-
