@@ -50,15 +50,17 @@ public class TileMap {
     }
 
     public Sector getSectorOf(int x, int y, int z) {
-        Sector sector = _sectors[x][y][z];
+        int sx = x / _sectorSize;
+        int sy = y / _sectorSize;
+        Sector sector = _sectors[sx][sy][z];
         if (sector == null) {
-            _sectors[x][y][z] = sector = _sectorLoader.load(_sectorSize, x, y, z);
+            _sectors[sx][sy][z] = sector = _sectorLoader.load(_sectorSize, sx, sy, z);
         }
         return sector;
     }
 
     public Tile getTile(int x, int y, int z) {
-        return getSectorOf(x, y, z).getTile(x, y);
+        return getSectorOf(x, y, z).getTile(x % _sectorSize, y % _sectorSize);
     }
 
     public int getFloor(int x, int y, int z) {
