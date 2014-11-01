@@ -17,7 +17,8 @@ public class GridiaServerDriver {
         System.out.println("Server started.");
 
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
+            server.moveCreatures();
             server.createCreature();
-        }, 0, 5, TimeUnit.SECONDS);
+        }, 0, 1, TimeUnit.SECONDS);
     }
 }

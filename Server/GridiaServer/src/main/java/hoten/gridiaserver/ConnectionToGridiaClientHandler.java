@@ -18,7 +18,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
 
     @Override
     protected void onConnectionSettled() throws IOException {
-        System.out.println("new client");
+        //server.sendCreatures(this);
     }
 
     @Override

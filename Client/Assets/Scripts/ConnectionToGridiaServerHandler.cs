@@ -23,6 +23,18 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         GridiaDriver.connectedWaitHandle.Set();
     }
 
+    protected override void Run()
+    {
+        try
+        {
+            base.Run();
+        }
+        catch (Exception ex) 
+        {
+            Debug.LogError(ex);
+        }
+    }
+
     protected override void HandleData(int type, JObject data)
     {
         //TODO:

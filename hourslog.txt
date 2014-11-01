@@ -47,3 +47,4 @@
     2:50p-6:30
 11/1
     2:10a-2:30
+    12:10-1:45 creature spawning, movement over server

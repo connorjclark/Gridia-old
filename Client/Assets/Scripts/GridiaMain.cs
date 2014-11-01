@@ -32,7 +32,9 @@ public class GridiaGame
 
     public void MoveCreature(int id, int x, int y)
     {
-        var cre = creatures[id];
+        Creature cre;
+        creatures.TryGetValue(id, out cre);
+        if (cre == null) return;
         if (tileMap.Walkable(x, y))
         {
             cre.MovementDirection = Utilities.GetRelativeDirection(cre.Position, new Vector2(x, y));
