@@ -1,3 +1,16 @@
+Features
+
 Joining world creates a new creature and binds it to that connection
-Have monsters move around randomly
-World loading
+Item movement
+Crafting
+Inventory
+Azure
+World generation
+
+Issues
+
+GZipStream does not work in Unity
+Clean up project structure
+Gridia namespace
+Unity doesn't compile this : 
+JsonConvert issue: data["id"].Value<int>() doesn't compile in Unity. Forced to do (int)data["id"]
