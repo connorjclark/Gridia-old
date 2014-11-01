@@ -1,7 +1,6 @@
 package hoten.gridiaserver;
 
 import com.google.gson.JsonObject;
-import hoten.serving.Message;
 import hoten.serving.Protocols;
 import hoten.serving.SocketHandler;
 import java.io.DataInputStream;
@@ -42,7 +41,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         int sx = data.get("x").getAsInt();
         int sy = data.get("y").getAsInt();
         int sz = data.get("z").getAsInt();
-        
+
         Tile[][] tiles = server.tileMap.getSector(sx, sy, sz)._tiles;
         BinaryMessageBuilder builder = new BinaryMessageBuilder()
                 .protocol(outbound(SectorData))

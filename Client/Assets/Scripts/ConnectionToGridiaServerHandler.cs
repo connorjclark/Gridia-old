@@ -1,12 +1,7 @@
 ﻿using Gridia;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serving;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
