@@ -44,10 +44,10 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         switch ((GridiaProtocols.Clientbound)type)
         {
             case GridiaProtocols.Clientbound.AddCreature:
-                _game.CreateCreature((int)data["id"], (int)data["loc"]["x"], (int)data["loc"]["y"]);
+                _game.CreateCreature((int)data["id"], (int)data["loc"]["x"], (int)data["loc"]["y"], 0);
                 break;
             case GridiaProtocols.Clientbound.MoveCreature:
-                _game.MoveCreature((int)data["id"], (int)data["loc"]["x"], (int)data["loc"]["y"]);
+                _game.MoveCreature((int)data["id"], (int)data["loc"]["x"], (int)data["loc"]["y"], 0);
                 break;
         }
     }

@@ -9,9 +9,9 @@ namespace Gridia
         public static int OFF_GRID_TILES = 100;
 
         public Creature Focus { get; set; }
-        public Vector2 FocusPosition { 
+        public Vector3 FocusPosition { 
             get { 
-                return Focus.Position + Focus.Offset - new Vector2(width / 2, height / 2); 
+                return Focus.Position + Focus.Offset - new Vector3(width / 2, height / 2); 
             } 
         }
         public bool IsLighting { get; set; }
@@ -89,11 +89,12 @@ namespace Gridia
                 int tileIndex = 0;
                 int positionX = (int)FocusPosition.x;
                 int positionY = (int)FocusPosition.y;
+                int positionZ = (int)FocusPosition.z;
                 int numTilesOffGrid = 0;
 
                 ForEachInView((x, y) =>
                 {
-                    Tile tile = _tileMap.GetTile(x + positionX, y + positionY);
+                    Tile tile = _tileMap.GetTile(x + positionX, y + positionY, positionZ);
                     int dataIndex = layer.GetTileData(tile);
                     if (dataIndex != -1)
                     {
@@ -211,9 +212,10 @@ namespace Gridia
             List<Vector3> lights = new List<Vector3>();
             int posX = (int)Focus.Position.x;
             int posY = (int)Focus.Position.y;
+            int posZ = (int)Focus.Position.z;
             ForEachInView((x, y) =>
             {
-                var tile = _tileMap.GetTile(x + posX, y + posY);
+                var tile = _tileMap.GetTile(x + posX, y + posY, posZ);
                 var lightIntensity = tile.Item.Item.Light;
                 if (lightIntensity != 0)
                 {

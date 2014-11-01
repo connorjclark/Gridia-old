@@ -6,8 +6,8 @@ namespace Gridia
     public class PlayerMovementState : State
     {
         private Creature _player;
-        private Vector2 _delta;
-        private Vector2 _deltaRemaining;
+        private Vector3 _delta;
+        private Vector3 _deltaRemaining;
         private float _speed;
         private float _cooldownRemaining;
         private float _cooldown;
@@ -17,20 +17,20 @@ namespace Gridia
             _player = player;
             _speed = speed;
             _cooldown = _cooldownRemaining = cooldown;
-            _delta = new Vector2 ();
-            _deltaRemaining = new Vector2 ();
+            _delta = new Vector3 ();
+            _deltaRemaining = new Vector3 ();
         }
         
         public void Step (StateMachine stateMachine, float dt)
         {
-            if (_delta == Vector2.zero) {
+            if (_delta == Vector3.zero) {
                 _delta = ProcessInput ();
-                _deltaRemaining = new Vector2 (_delta.x, _delta.y); //smell
+                _deltaRemaining = new Vector3 (_delta.x, _delta.y); //smell
             }
-            else if (_deltaRemaining != Vector2.zero)
+            else if (_deltaRemaining != Vector3.zero)
             {
                 float stepSpeed = IsRunning () ? _speed * 2 : _speed;
-                Vector2 stepDelta = _delta * stepSpeed * dt;
+                Vector3 stepDelta = _delta * stepSpeed * dt;
 
                 if (Utilities.CompareAbsoluteValues(_deltaRemaining.x, stepDelta.x) == 1)
                     _deltaRemaining.x -= stepDelta.x;
@@ -44,7 +44,7 @@ namespace Gridia
 
                 _player.Offset += stepDelta;
 
-                if (_deltaRemaining == Vector2.zero) {
+                if (_deltaRemaining == Vector3.zero) {
                     StartCooldown(stateMachine, dt);
                 }
             } else {
@@ -83,7 +83,7 @@ namespace Gridia
 
         private Vector2 ProcessInput ()
         {
-            Vector2 direction = Direction.None;
+            Vector3 direction = Direction.None;
 
             if (Input.GetButton("left"))
                 direction += Direction.Left;
@@ -96,8 +96,8 @@ namespace Gridia
 
             if (direction != Direction.None)
             {
-                Vector2 destination = Locator.Get<GridiaGame>().view.Focus.Position + direction;
-                if (!Locator.Get<GridiaGame>().tileMap.Walkable((int)destination.x, (int)destination.y))
+                Vector3 destination = Locator.Get<GridiaGame>().view.Focus.Position + direction;
+                if (!Locator.Get<GridiaGame>().tileMap.Walkable((int)destination.x, (int)destination.y, (int)destination.z))
                 {
                     direction = Direction.None;
                 }

@@ -3,17 +3,17 @@
 namespace Gridia
 {
     public class Creature {
-        public Vector2 Position { get; set; }
-        public Vector2 Offset { get; set; }
+        public Vector3 Position { get; set; }
+        public Vector3 Offset { get; set; }
         public int Id { get; private set; }
         public int Image { get; set; }
 
-        public Vector2 MovementDirection { get; set; }
+        public Vector3 MovementDirection { get; set; }
 
-        public Creature(int id, int x, int y) {
+        public Creature(int id, int x, int y, int z) {
             MovementDirection = Direction.None;
             Id = id;
-            Position.Set(x, y);
+            Position.Set(x, y, z);
         }
 
         public void Move(float amount) {

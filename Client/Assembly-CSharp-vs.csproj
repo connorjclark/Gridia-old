@@ -61,6 +61,7 @@
      <Compile Include="Assets\Scripts\Lighting.cs" />
      <Compile Include="Assets\Scripts\Locator.cs" />
      <Compile Include="Assets\Scripts\PlayerMovementState.cs" />
+     <Compile Include="Assets\Scripts\Sector.cs" />
      <Compile Include="Assets\Scripts\StateMachine.cs" />
      <Compile Include="Assets\Scripts\TextureManager.cs" />
      <Compile Include="Assets\Scripts\TileMap.cs" />
