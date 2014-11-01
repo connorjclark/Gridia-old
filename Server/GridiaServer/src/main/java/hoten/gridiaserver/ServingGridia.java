@@ -13,11 +13,14 @@ import java.util.Random;
 
 public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler> {
 
+    private final TileMap tileMap;
     private final List<Creature> creatures = new ArrayList();
     private final Random random = new Random();
 
     public ServingGridia(int port, File clientDataFolder, String localDataFolderName) throws IOException {
         super(port, new GridiaProtocols(), clientDataFolder, localDataFolderName);
+        tileMap = new TileMap(100, 1, 20);
+        tileMap.loadAll();
     }
 
     public void moveCreatures() {

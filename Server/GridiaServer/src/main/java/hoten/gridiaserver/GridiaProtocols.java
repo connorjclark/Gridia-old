@@ -6,13 +6,13 @@ public class GridiaProtocols extends Protocols {
 
     public enum Clientbound {
 
-        AddCreature, MoveCreature, RemoveCreature
+        AddCreature, MoveCreature, RemoveCreature, LoadSector
 
     }
 
     public enum Serverbound {
 
-        PlayerMove
+        PlayerMove, SectorRequest
     }
 
     public GridiaProtocols() {
