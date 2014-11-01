@@ -5,14 +5,14 @@ namespace Gridia
 {
     public class PlayerMovementState : State
     {
-        private Player _player;
+        private Creature _player;
         private Vector2 _delta;
         private Vector2 _deltaRemaining;
         private float _speed;
         private float _cooldownRemaining;
         private float _cooldown;
         
-        public PlayerMovementState (Player player, float speed, float cooldown = 0f)
+        public PlayerMovementState (Creature player, float speed, float cooldown = 0f)
         {
             _player = player;
             _speed = speed;

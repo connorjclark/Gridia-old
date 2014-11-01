@@ -8,7 +8,7 @@ namespace Gridia
     {
         public static int OFF_GRID_TILES = 100;
 
-        public Player Focus { get; set; }
+        public Creature Focus { get; set; }
         public Vector2 FocusPosition { 
             get { 
                 return Focus.Position + Focus.Offset - new Vector2(width / 2, height / 2); 

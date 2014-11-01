@@ -25,7 +25,19 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
 
     protected override void HandleData(int type, JObject data)
     {
-        Console.WriteLine(type + " - " + data);
+        //TODO:
+        //Unity doesn't compile this : data["id"].Value<int>()
+        //So, I have to use: (int)data["id"]
+        //Why?
+        switch ((GridiaProtocols.Clientbound)type)
+        {
+            case GridiaProtocols.Clientbound.AddCreature:
+                _game.CreateCreature((int)data["id"], (int)data["loc"]["x"], (int)data["loc"]["y"]);
+                break;
+            case GridiaProtocols.Clientbound.MoveCreature:
+                _game.MoveCreature((int)data["id"], (int)data["loc"]["x"], (int)data["loc"]["y"]);
+                break;
+        }
     }
 
     protected override void HandleData(int type, JavaBinaryReader data)

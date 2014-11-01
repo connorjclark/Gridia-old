@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading;
 using UnityEngine;
+using System.Linq;
 
 public class GridiaDriver : MonoBehaviour
 {
@@ -13,7 +14,6 @@ public class GridiaDriver : MonoBehaviour
         _game = new GridiaGame();
         Locator.Provide(_game);
         ResizeCamera();
-        //Spawn(10);
 
         MonoBehaviour.print("connecting");
         ConnectionToGridiaServerHandler conn = new ConnectionToGridiaServerHandler(_game, "localhost", 1234);
@@ -33,39 +33,12 @@ public class GridiaDriver : MonoBehaviour
         MoveCreatures(10.0f * Time.deltaTime);
         _game.view.Render();
     }
-
-    void Spawn(int amount)
-    {
-        for (int i = 0; i < amount; i++)
-        {
-            int x = Random.Range(0, _game.tileMap.Size);
-            int y = Random.Range(0, _game.tileMap.Size);
-            _game.CreateCreature(x, y);
-        }
-    }
     
     void MoveCreatures(float speed)
     {
-        _game.creatures.ForEach(cre =>
-        {
-            if (cre is Player) return;
-            if (cre.MovementDirection == Direction.None)
-            {
-                if (Random.Range(1, 50) <= 1)
-                {
-                    Vector2 direction = Direction.RandomDirection();
-                    Vector2 target = cre.Position + direction;
-                    if (_game.tileMap.Walkable((int)target.x, (int)target.y))
-                    {
-                        cre.MovementDirection = direction;
-                    }
-                }
-            }
-            else
-            {
-                cre.Move(speed);
-            }
-        });
+        foreach (var cre in _game.creatures.Values) {
+            cre.Move(speed);
+        }        
     }
 
     void ResizeCamera()
