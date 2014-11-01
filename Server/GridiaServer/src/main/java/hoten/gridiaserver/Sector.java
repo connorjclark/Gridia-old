@@ -2,7 +2,7 @@ package hoten.gridiaserver;
 
 public class Sector {
     private final int _x, _y, _z;
-    private final Tile[][] _tiles;
+    public final Tile[][] _tiles;
     
     public Sector(Tile[][] tiles, int x, int y, int z) {
         _tiles = tiles;

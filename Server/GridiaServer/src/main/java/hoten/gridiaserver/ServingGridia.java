@@ -13,8 +13,8 @@ import java.util.Random;
 
 public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler> {
 
-    private final TileMap tileMap;
-    private final List<Creature> creatures = new ArrayList();
+    public final TileMap tileMap;
+    public final List<Creature> creatures = new ArrayList();
     private final Random random = new Random();
 
     public ServingGridia(int port, File clientDataFolder, String localDataFolderName) throws IOException {

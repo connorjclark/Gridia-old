@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Gridia;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Serving;
 using System;
 using System.Collections.Generic;
@@ -54,6 +56,39 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
 
     protected override void HandleData(int type, JavaBinaryReader data)
     {
-        throw new NotImplementedException();
-    }        
+        switch ((GridiaProtocols.Clientbound)type)
+        {
+            case GridiaProtocols.Clientbound.SectorData:
+                var sx = data.ReadInt32();
+                var sy = data.ReadInt32();
+                var sz = data.ReadInt32();
+                var sectorSize = _game.tileMap.SectorSize;
+                var tiles = new Tile[sectorSize, sectorSize];
+                var cm = Locator.Get<ContentManager>();
+                for (int x = 0; x < sectorSize; x++)
+                {
+                    for (int y = 0; y < sectorSize; y++)
+                    {
+                        var floor = data.ReadInt16();
+                        var itemType = data.ReadInt16();
+                        var tile = new Tile();
+                        tile.Floor = floor;
+                        tile.Item = new ItemInstance(cm.GetItem(itemType));
+                        tiles[x, y] = tile;
+                    }
+                }
+                _game.tileMap.SetSector(new Sector(tiles), sx, sy, sz);
+                break;
+        }
+    }
+
+    public void RequestSector(int x, int y, int z) {
+        Message message = new JsonMessageBuilder()
+            .Protocol(Outbound(GridiaProtocols.Serverbound.RequestSector))
+            .Set("x", x)
+            .Set("y", y)
+            .Set("z", z)
+            .Build();
+        Send(message);
+    }
 }

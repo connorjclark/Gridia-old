@@ -1,5 +1,7 @@
 package hoten.gridiaserver;
 
+import com.google.gson.Gson;
+
 public class TileMap {
 
     private final int _size, _depth, _sectorSize, _area, _volume, _sectorsAcross, _sectorsFloor, _sectorsTotal;
@@ -48,15 +50,25 @@ public class TileMap {
             }
         }
     }
+    
+    public String getSectorData(int sx, int sy, int sz) {
+        Sector sector = getSector(sx, sy, sz);
+        Gson gson = new Gson(); // :(
+        return gson.toJson(sector._tiles);
+    }
+    
+    public Sector getSector(int sx, int sy, int sz) {
+        Sector sector = _sectors[sx][sy][sz];
+        if (sector == null) {
+            _sectors[sx][sy][sz] = sector = _sectorLoader.load(_sectorSize, sx, sy, sz);
+        }
+        return sector;
+    }
 
     public Sector getSectorOf(int x, int y, int z) {
         int sx = x / _sectorSize;
         int sy = y / _sectorSize;
-        Sector sector = _sectors[sx][sy][z];
-        if (sector == null) {
-            _sectors[sx][sy][z] = sector = _sectorLoader.load(_sectorSize, sx, sy, z);
-        }
-        return sector;
+        return getSector(sx, sy, z);
     }
 
     public Tile getTile(int x, int y, int z) {
