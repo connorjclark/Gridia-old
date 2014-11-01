@@ -1,8 +1,11 @@
 ﻿using Gridia;
+using System.IO;
+using System.Threading;
 using UnityEngine;
 
 public class GridiaDriver : MonoBehaviour
 {
+    public static AutoResetEvent connectedWaitHandle = new AutoResetEvent(false);
     private GridiaGame _game;
 
     void Start()
@@ -17,17 +20,18 @@ public class GridiaDriver : MonoBehaviour
         Locator.Provide(conn);
         conn.Start();
 
-        //ContentManager contentManager = new ContentManager("TestWorld");
+        connectedWaitHandle.WaitOne();
+
+        Locator.Provide(new ContentManager("TestWorld")); // :(
+        Locator.Provide(new TextureManager("TestWorld"));
+        _game.Initialize();
     }
 
     void Update()
     {
-        /*if (_game.isConnected)
-        {
-            _game.stateMachine.Step(Time.deltaTime);
-            MoveCreatures(10.0f * Time.deltaTime);
-            _game.view.Render();
-        }*/
+        _game.stateMachine.Step(Time.deltaTime);
+        MoveCreatures(10.0f * Time.deltaTime);
+        _game.view.Render();
     }
 
     void Spawn(int amount)

@@ -1,97 +1,84 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.20506</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{12F44184-A422-5F27-22E6-507969043F15}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>
-    </RootNamespace>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <BaseDirectory>Assets</BaseDirectory>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">.\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
+	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	<ProductVersion>10.0.20506</ProductVersion>
+	<SchemaVersion>2.0</SchemaVersion>
+	<ProjectGuid>{12F44184-A422-5F27-22E6-507969043F15}</ProjectGuid>
+	<OutputType>Library</OutputType>
+	<AppDesignerFolder>Properties</AppDesignerFolder>
+	<RootNamespace></RootNamespace>
+	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+	<FileAlignment>512</FileAlignment>
+	<BaseDirectory>Assets</BaseDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_4_5_4;UNITY_4_5;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <NoWarn>0169</NoWarn>
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>Temp\bin\Debug\</OutputPath>
+	<DefineConstants>DEBUG;TRACE;UNITY_4_5_4;UNITY_4_5;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>Temp\bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <NoWarn>0169</NoWarn>
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<OutputPath>Temp\bin\Release\</OutputPath>
+	<DefineConstants>TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
+	<Reference Include="System" />
     <Reference Include="System.XML" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="UnityEngine">
-      <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor">
-      <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
-    </Reference>
+	<Reference Include="System.Core" />
+	<Reference Include="System.Xml.Linq" />
+	<Reference Include="UnityEngine">
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEditor">
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	</Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\ConnectionToGridiaServerHandler.cs" />
-    <Compile Include="Assets\Scripts\Content\ContentLoader.cs" />
-    <Compile Include="Assets\Scripts\Content\ContentManager.cs" />
-    <Compile Include="Assets\Scripts\Content\Item.cs" />
-    <Compile Include="Assets\Scripts\Content\Monster.cs" />
-    <Compile Include="Assets\Scripts\GridiaConstants.cs" />
-    <Compile Include="Assets\Scripts\GridiaDriver.cs" />
-    <Compile Include="Assets\Scripts\GridiaMain.cs" />
-    <Compile Include="Assets\Scripts\GridiaProtocols.cs" />
-    <Compile Include="Assets\Scripts\ItemInstance.cs" />
-    <Compile Include="Assets\Scripts\Layer.cs" />
-    <Compile Include="Assets\Scripts\Lighting.cs" />
-    <Compile Include="Assets\Scripts\Locator.cs" />
-    <Compile Include="Assets\Scripts\Player.cs" />
-    <Compile Include="Assets\Scripts\PlayerMovementState.cs" />
-    <Compile Include="Assets\Scripts\StateMachine.cs" />
-    <Compile Include="Assets\Scripts\TextureManager.cs" />
-    <Compile Include="Assets\Scripts\TileMap.cs" />
-    <Compile Include="Assets\Scripts\TileMapView.cs" />
-    <Compile Include="Assets\Scripts\Utilities.cs" />
-    <None Include="Assets\Resources\TestWorld\content\monsters.txt" />
-    <None Include="Assets\Resources\shaders\Unlit-Alpha.shader" />
-    <None Include="Assets\Resources\shaders\Sprites-Diffuse.shader" />
-    <None Include="Assets\Resources\TestWorld\hello world.txt" />
-    <None Include="Assets\Resources\TestWorld\content\items.txt" />
-    <Reference Include="MiscUtil">
-      <HintPath>E:/Dev/Gridia-Unity/Client/Assets/MiscUtil.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>E:/Dev/Gridia-Unity/Client/Assets/Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Serving">
-      <HintPath>E:/Dev/Gridia-Unity/Client/Assets/Serving.dll</HintPath>
-    </Reference>
+     <Compile Include="Assets\Scripts\ConnectionToGridiaServerHandler.cs" />
+     <Compile Include="Assets\Scripts\Content\ContentLoader.cs" />
+     <Compile Include="Assets\Scripts\Content\ContentManager.cs" />
+     <Compile Include="Assets\Scripts\Content\Item.cs" />
+     <Compile Include="Assets\Scripts\Content\Monster.cs" />
+     <Compile Include="Assets\Scripts\GridiaConstants.cs" />
+     <Compile Include="Assets\Scripts\GridiaDriver.cs" />
+     <Compile Include="Assets\Scripts\GridiaMain.cs" />
+     <Compile Include="Assets\Scripts\GridiaProtocols.cs" />
+     <Compile Include="Assets\Scripts\ItemInstance.cs" />
+     <Compile Include="Assets\Scripts\Layer.cs" />
+     <Compile Include="Assets\Scripts\Lighting.cs" />
+     <Compile Include="Assets\Scripts\Locator.cs" />
+     <Compile Include="Assets\Scripts\Player.cs" />
+     <Compile Include="Assets\Scripts\PlayerMovementState.cs" />
+     <Compile Include="Assets\Scripts\StateMachine.cs" />
+     <Compile Include="Assets\Scripts\TextureManager.cs" />
+     <Compile Include="Assets\Scripts\TileMap.cs" />
+     <Compile Include="Assets\Scripts\TileMapView.cs" />
+     <Compile Include="Assets\Scripts\Utilities.cs" />
+     <None Include="Assets\Resources\shaders\Unlit-Alpha.shader" />
+     <None Include="Assets\Resources\shaders\Sprites-Diffuse.shader" />
+ <Reference Include="MiscUtil">
+ <HintPath>E:/Dev/Gridia-Unity/Client/Assets/MiscUtil.dll</HintPath>
+ </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>E:/Dev/Gridia-Unity/Client/Assets/Newtonsoft.Json.dll</HintPath>
+ </Reference>
+ <Reference Include="Serving">
+ <HintPath>E:/Dev/Gridia-Unity/Client/Assets/Serving.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
 	   Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -99,4 +86,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  
 </Project>

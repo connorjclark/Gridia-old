@@ -1,7 +1,8 @@
-using System;
-using UnityEngine;
-using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using UnityEngine;
 
 namespace Gridia
 {
@@ -14,7 +15,7 @@ namespace Gridia
 
         private List<T> LoadFromJSON(string filepath)
         {
-            var data = (Resources.Load(filepath) as TextAsset).text;
+            var data = File.ReadAllText(filepath, Encoding.UTF8);
             var results = JsonConvert.DeserializeObject<List<T>>(data);
 
             for (int i = 0; i < results.Count; i++)

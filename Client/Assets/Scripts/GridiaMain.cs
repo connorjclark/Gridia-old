@@ -14,18 +14,11 @@ public class GridiaGame
     }
 
     public void Initialize() {
-        MonoBehaviour.print(1);
         creatures = new List<Creature>();
-
-        TextureManager textureManager = new TextureManager();
-        MonoBehaviour.print(5);
-
         tileMap = new TileMap(30);
         Player player = CreatePlayer(0, 0);
-
-        view = new TileMapView(tileMap, textureManager, 2.0f);
+        view = new TileMapView(tileMap, Locator.Get<TextureManager>(), 1.5f);
         view.Focus = player;
-
         stateMachine = new StateMachine();
         stateMachine.SetState(new PlayerMovementState(player, 4f));
     }

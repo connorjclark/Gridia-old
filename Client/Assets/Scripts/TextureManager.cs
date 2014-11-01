@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using System.Collections;
+using System.IO;
 
 namespace Gridia
 {
@@ -10,11 +13,11 @@ namespace Gridia
         private List<Texture> items = new List<Texture> ();
         private List<Texture> creatures = new List<Texture> ();
 
-        public TextureManager ()
+        public TextureManager (String worldName)
         {
-            floors = LoadTextures ("floors/floors", 1);
-            items = LoadTextures ("items/items", 27);
-            creatures = LoadTextures ("players/players", 8);
+            floors = LoadTextures(worldName + "/floors/floors", 1);
+            items = LoadTextures(worldName + "/items/items", 27);
+            creatures = LoadTextures(worldName + "/players/players", 8);
         }
             
         public Texture GetFloorsTexture (int index)
@@ -24,21 +27,25 @@ namespace Gridia
             
         public Texture GetItemsTexture (int index)
         {
-            return items [index];
+            return items[index];
         }
 
         public Texture GetCreaturesTexture (int index)
         {
             return creatures [index];
         }
-          
-        //load lazily?
-        private List<Texture> LoadTextures (string prefix, int numTextures)
+
+        private List<Texture> LoadTextures(String prefix, int numTextures)
         {
-            List<Texture> textures = new List<Texture> ();
-            for (int i = 0; i < numTextures; i++) {
-                Texture texture = Resources.Load (prefix + i) as Texture;
-                textures.Add (texture);
+            var textures = new List<Texture>();
+            for (var i = 0; i < numTextures; i++ )
+            {
+                byte[] data = File.ReadAllBytes(prefix + i + ".png");
+                var tex = new Texture2D(320, 320);
+                tex.filterMode = FilterMode.Point;
+                tex.wrapMode = TextureWrapMode.Clamp;
+                tex.LoadImage(data);
+                textures.Add(tex);
             }
             return textures;
         }

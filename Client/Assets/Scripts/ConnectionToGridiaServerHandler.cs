@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
 {
@@ -18,8 +19,8 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
 
     protected override void OnConnectionSettled()
     {
-        //_game.Initialize();
-        //_game.isConnected = true;
+        MonoBehaviour.print("Connection settled!");
+        GridiaDriver.connectedWaitHandle.Set();
     }
 
     protected override void HandleData(int type, JObject data)

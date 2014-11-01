@@ -40,7 +40,7 @@ namespace Gridia
             Offset = Offset + MovementDirection * amount;
             if (Utilities.Vector2IsAbsoluteGreaterThanOne(Offset))
             {
-                Locator.GetGame().tileMap.UpdateCreature(this, Position + MovementDirection);
+                Locator.Get<GridiaGame>().tileMap.UpdateCreature(this, Position + MovementDirection);
                 Offset = Vector2.zero;
                 MovementDirection = Direction.None;
             }

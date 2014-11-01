@@ -64,9 +64,7 @@ namespace Gridia
             for (int i = 0; i < tiles.Length; i++) {
                 Tile tile = new Tile ();
                 tile.Floor = 8;
-                tile.Item = ContentManager.Singleton.GetItem(Random.Range(0, 10)).GetInstance();
-                if (Random.Range(0, 10) > 1) tile.Item = ContentManager.Singleton.GetItem(0).GetInstance();
-                //tile.Item = ContentManager.Singleton.GetItem(r.Next(ContentManager.Singleton.ItemCount)).GetInstance();
+                tile.Item = Locator.Get<ContentManager>().GetItem(0).GetInstance();
                 tiles [i] = tile;
             }
         }

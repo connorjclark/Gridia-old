@@ -5,11 +5,11 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{12F44184-A422-5F27-22E6-507969043F15}</ProjectGuid>
+	<ProjectGuid>{5544F79C-5306-909F-C855-53D6959D5DFD}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
-	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<AssemblyName>Assembly-CSharp-Editor</AssemblyName>
 	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
 	<FileAlignment>512</FileAlignment>
 	<BaseDirectory>Assets</BaseDirectory>
@@ -46,26 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\ConnectionToGridiaServerHandler.cs" />
-     <Compile Include="Assets\Scripts\Content\ContentLoader.cs" />
-     <Compile Include="Assets\Scripts\Content\ContentManager.cs" />
-     <Compile Include="Assets\Scripts\Content\Item.cs" />
-     <Compile Include="Assets\Scripts\Content\Monster.cs" />
-     <Compile Include="Assets\Scripts\GridiaConstants.cs" />
-     <Compile Include="Assets\Scripts\GridiaDriver.cs" />
-     <Compile Include="Assets\Scripts\GridiaMain.cs" />
-     <Compile Include="Assets\Scripts\GridiaProtocols.cs" />
-     <Compile Include="Assets\Scripts\ItemInstance.cs" />
-     <Compile Include="Assets\Scripts\Layer.cs" />
-     <Compile Include="Assets\Scripts\Lighting.cs" />
-     <Compile Include="Assets\Scripts\Locator.cs" />
-     <Compile Include="Assets\Scripts\Player.cs" />
-     <Compile Include="Assets\Scripts\PlayerMovementState.cs" />
-     <Compile Include="Assets\Scripts\StateMachine.cs" />
-     <Compile Include="Assets\Scripts\TextureManager.cs" />
-     <Compile Include="Assets\Scripts\TileMap.cs" />
-     <Compile Include="Assets\Scripts\TileMapView.cs" />
-     <Compile Include="Assets\Scripts\Utilities.cs" />
+     <Compile Include="Assets\Editor\TexturePostProcessor.cs" />
      <None Include="Assets\Resources\shaders\Unlit-Alpha.shader" />
      <None Include="Assets\Resources\shaders\Sprites-Diffuse.shader" />
  <Reference Include="MiscUtil">
@@ -77,6 +58,13 @@
  <Reference Include="Serving">
  <HintPath>E:/Dev/Gridia-Unity/Client/Assets/Serving.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEditor.Graphs">
+ <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-vs.csproj">
+      <Project>{12F44184-A422-5F27-22E6-507969043F15}</Project>      <Name>Assembly-CSharp-vs</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

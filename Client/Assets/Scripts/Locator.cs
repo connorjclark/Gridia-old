@@ -1,30 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 public class Locator
 {
-    private static GridiaGame _game;
-    private static ConnectionToGridiaServerHandler _conn;
+    private static Dictionary<Type, Object> _services = new Dictionary<Type, Object>();
 
-    public static GridiaGame GetGame()
+    public static void Provide<T>(T service)
     {
-        return _game;
+        _services[typeof(T)] = service;
     }
 
-    public static ConnectionToGridiaServerHandler GetConn()
+    public static T Get<T>()
     {
-        return _conn;
-    }
-
-    public static void Provide(GridiaGame game) 
-    {
-        _game = game;
-    }
-
-    public static void Provide(ConnectionToGridiaServerHandler conn)
-    {
-        _conn = conn;
+        if (!_services.ContainsKey(typeof(T))) 
+        {
+            UnityEngine.Debug.LogError("Can not find service of type: " + typeof(T));
+        }
+        return (T)_services[typeof(T)];
     }
 }

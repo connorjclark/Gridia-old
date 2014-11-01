@@ -44,4 +44,6 @@
     6:05-7:15 stupid bug. unity doesn't let me use File.open. client works on console but not in unity environment
     11:30-1:30 server integration test - java to csharp binary data
 10/31
-    2:50p-
+    2:50p-6:30
+11/1
+    2:10a-2:30
