@@ -1,14 +1,14 @@
-package hoten.gridiaserver;
+package hoten.uniqueidentifiers;
 
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class UniqueIdentifiers {
 
-    private int NEXT_NEW_ID;
-    private final Queue<Integer> _available = new LinkedBlockingQueue();
-    private final int _expandAmount;
-
+    protected int _nextNewId;
+    protected int _expandAmount;
+    protected final Queue<Integer> _available = new LinkedBlockingQueue();
+    
     public UniqueIdentifiers(int expandAmount) {
         _expandAmount = expandAmount;
     }
@@ -27,10 +27,10 @@ public class UniqueIdentifiers {
     public void retire(int id) {
         _available.add(id);
     }
-
+    
     private void expand() {
         for (int i = 0; i < _expandAmount; i++) {
-            _available.add(++NEXT_NEW_ID);
+            _available.add(++_nextNewId);
         }
     }
 }

@@ -1,14 +1,14 @@
 package hoten.gridiaserver;
 
 public class Sector {
-    private final int _x, _y, _z;
+    public final int sx, sy, sz;
     public final Tile[][] _tiles;
     
-    public Sector(Tile[][] tiles, int x, int y, int z) {
+    public Sector(Tile[][] tiles, int sx, int sy, int sz) {
         _tiles = tiles;
-        _x = x;
-        _y = y;
-        _z = z;
+        this.sx = sx;
+        this.sy = sy;
+        this.sz = sz;
     }
     
     public Tile getTile(int x, int y) {

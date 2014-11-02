@@ -3,15 +3,6 @@ using UnityEngine;
 
 namespace Gridia
 {
-    public class Direction
-    {
-        public static readonly Vector3 None = new Vector3(0, 0);
-        public static readonly Vector3 Up = new Vector3(0, 1);
-        public static readonly Vector3 Left = new Vector3(-1, 0);
-        public static readonly Vector3 Right = new Vector3(1, 0);
-        public static readonly Vector3 Down = new Vector3(0, -1);
-    }
-
     public class Utilities
     {
         public static Vector2 Vector2FromAngle(double radians)
@@ -53,12 +44,12 @@ namespace Gridia
             int value = UnityEngine.Random.Range(1, 4);
             switch (value)
             {
-                case 1: return Direction.Up;
-                case 2: return Direction.Down;
-                case 3: return Direction.Left;
-                case 4: return Direction.Right;
+                case 1: return Vector3.up;
+                case 2: return Vector3.down;
+                case 3: return Vector3.left;
+                case 4: return Vector3.right;
             }
-            return Direction.None;
+            return Vector3.zero;
         }
     }
 }

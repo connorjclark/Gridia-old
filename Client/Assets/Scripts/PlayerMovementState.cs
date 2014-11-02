@@ -4,16 +4,15 @@ namespace Gridia
 {
     public class PlayerMovementState : State
     {
-        private Creature _player;
+        private Creature Player { get { return Locator.Get<TileMapView>().Focus; } }
         private Vector3 _delta;
         private Vector3 _deltaRemaining;
         private float _speed;
         private float _cooldownRemaining;
         private float _cooldown;
         
-        public PlayerMovementState (Creature player, float speed, float cooldown = 0f)
+        public PlayerMovementState (float speed, float cooldown = 0f)
         {
-            _player = player;
             _speed = speed;
             _cooldown = _cooldownRemaining = cooldown;
             _delta = new Vector3 ();
@@ -22,9 +21,10 @@ namespace Gridia
         
         public void Step (StateMachine stateMachine, float dt)
         {
+            if (Player == null) return;
             if (_delta == Vector3.zero) {
                 _delta = ProcessInput ();
-                _deltaRemaining = new Vector3 (_delta.x, _delta.y); //smell
+                _deltaRemaining = new Vector3 (_delta.x, _delta.y, 0); //smell
             }
             else if (_deltaRemaining != Vector3.zero)
             {
@@ -41,13 +41,13 @@ namespace Gridia
                 else
                     _deltaRemaining.y = 0;
 
-                _player.Offset += stepDelta;
+                Player.Offset += stepDelta;
 
                 if (_deltaRemaining == Vector3.zero) {
                     StartCooldown(stateMachine, dt);
                 }
             } else {
-                StartCooldown(stateMachine, dt);
+                Cooldown(stateMachine, dt);
             }
         }
 
@@ -58,10 +58,11 @@ namespace Gridia
 
         private void StartCooldown(StateMachine stateMachine, float dt)
         {
-            _player.Offset = Vector2.zero;
-            Locator.Get<GridiaGame>().tileMap.UpdateCreature(_player, _player.Position + _delta);
-            int player_x = (int)Mathf.Round(_player.Position.x);
-            int player_y = (int)Mathf.Round(_player.Position.y);
+            Creature player = Player;
+            player.Offset = Vector3.zero;
+            Locator.Get<GridiaGame>().tileMap.UpdateCreature(player, player.Position + _delta);
+            //int player_x = (int)Mathf.Round(_player.Position.x);
+            //int player_y = (int)Mathf.Round(_player.Position.y);
             //stateMachine.ServerConnection.MovePlayer(player_x, player_y);
             Cooldown(stateMachine, dt);
         }
@@ -76,29 +77,29 @@ namespace Gridia
 
         private void End (StateMachine stateMachine, float dt)
         {
-            stateMachine.CurrentState = new PlayerMovementState (_player, _speed, _cooldown);
+            stateMachine.CurrentState = new PlayerMovementState(_speed, _cooldown);
             stateMachine.Step (dt);
         }
 
         private Vector2 ProcessInput ()
         {
-            Vector3 direction = Direction.None;
+            Vector3 direction = Vector3.zero;
 
             if (Input.GetButton("left"))
-                direction += Direction.Left;
+                direction += Vector3.left;
             if (Input.GetButton ("right"))
-                direction += Direction.Right;
+                direction += Vector3.right;
             if (Input.GetButton ("down"))
-                direction += Direction.Down;
+                direction += Vector3.down;
             if (Input.GetButton ("up"))
-                direction += Direction.Up;
+                direction += Vector3.up;
 
-            if (direction != Direction.None)
+            if (direction != Vector3.zero)
             {
                 Vector3 destination = Locator.Get<GridiaGame>().view.Focus.Position + direction;
                 if (!Locator.Get<GridiaGame>().tileMap.Walkable((int)destination.x, (int)destination.y, (int)destination.z))
                 {
-                    direction = Direction.None;
+                    direction = Vector3.zero;
                 }
             }
             

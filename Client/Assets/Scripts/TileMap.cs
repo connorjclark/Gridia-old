@@ -16,7 +16,6 @@ namespace Gridia
         private Tile[] tiles;
         private List<Creature> _creatures = new List<Creature>();
         private Sector[, ,] _sectors;
-        private HashSet<Vector3> _sectorsRequested = new HashSet<Vector3>();
         public int Size { get; private set; }
         public int Depth { get; private set; }
         public int SectorSize { get; private set; }
@@ -32,7 +31,7 @@ namespace Gridia
             {
                 throw new ArgumentException("sectorSize must be a factor of size");
             }
-            Size = size;//smell?
+            Size = size; //smell?
             Depth = depth;
             SectorSize = sectorSize;
             Area = size * size;
@@ -49,12 +48,13 @@ namespace Gridia
         }
 
         public Sector GetSectorOf(int x, int y, int z) {
+            x = Wrap(x);
+            y = Wrap(y);
             var sx = x / SectorSize;
             var sy = y / SectorSize;
-            var sector = _sectors[sx, sy, z];
-            if (sector == null && !_sectorsRequested.Contains(new Vector3(sx, sy, z)))
+            Sector sector = _sectors[sx, sy, z];
+            if (sector == null)
             {
-                _sectorsRequested.Add(new Vector3(sx, sy, z));
                 Locator.Get<ConnectionToGridiaServerHandler>().RequestSector(sx, sy, z);
             }
             return sector;

@@ -8,10 +8,21 @@ namespace Gridia
     {
         public static int OFF_GRID_TILES = 100;
 
-        public Creature Focus { get; set; }
-        public Vector3 FocusPosition { 
-            get { 
-                return Focus.Position + Focus.Offset - new Vector3(width / 2, height / 2); 
+        public Creature Focus { 
+            get 
+            {
+                Creature cre;
+                Locator.Get<GridiaGame>().creatures.TryGetValue(FocusId, out cre);
+                return cre; 
+            } 
+        }
+        public int FocusId { get; set; }
+        public Vector3 FocusPosition
+        { 
+            get {
+                var cre = Focus;
+                var pos = cre == null ? Vector3.zero : (cre.Position + cre.Offset);
+                return pos - new Vector3(width / 2, height / 2, 0); 
             } 
         }
         public bool IsLighting { get; set; }

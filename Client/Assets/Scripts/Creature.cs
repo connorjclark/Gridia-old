@@ -11,7 +11,7 @@ namespace Gridia
         public Vector3 MovementDirection { get; set; }
 
         public Creature(int id, int x, int y, int z) {
-            MovementDirection = Direction.None;
+            MovementDirection = Vector3.zero;
             Id = id;
             Position.Set(x, y, z);
         }
@@ -22,7 +22,7 @@ namespace Gridia
             {
                 Locator.Get<GridiaGame>().tileMap.UpdateCreature(this, Position + MovementDirection);
                 Offset = Vector2.zero;
-                MovementDirection = Direction.None;
+                MovementDirection = Vector3.zero;
             }
         }
     }

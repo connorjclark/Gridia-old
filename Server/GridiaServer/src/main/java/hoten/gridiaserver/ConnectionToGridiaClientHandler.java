@@ -1,59 +1,89 @@
 package hoten.gridiaserver;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import hoten.serving.Protocols;
 import hoten.serving.SocketHandler;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
-import static hoten.gridiaserver.GridiaProtocols.Clientbound.*;
-import hoten.serving.BinaryMessageBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConnectionToGridiaClientHandler extends SocketHandler {
 
-    private final ServingGridia server;
+    private final List<Sector> _loadedSectors = new ArrayList();
+    private final GridiaMessageToClientBuilder _messageBuilder;
+    private final Gson _gson = new Gson();
+    private final ServingGridia _server;
+    private Player _player;
 
     public ConnectionToGridiaClientHandler(ServingGridia server, Socket socket) throws IOException {
         super(socket, new GridiaProtocols(), Protocols.BoundDest.CLIENT);
-        this.server = server;
+        _server = server;
+        _messageBuilder = server.messageBuilder;
+    }
+
+    public boolean hasSectorLoaded(Sector sector) {
+        return _loadedSectors.contains(sector);
     }
 
     @Override
     protected void onConnectionSettled() throws IOException {
-        //server.sendCreatures(this);
+        //_server.sendCreatures(this);
+        _player = new Player();
+        _player.username = "hoten" + System.currentTimeMillis();
+        _player.creature = _server.createCreatureForPlayer();
+        _server.announceNewPlayer(this, _player);
+        send(_messageBuilder.initialize(_server.tileMap.size, _server.tileMap.depth, _server.tileMap.sectorSize));
+        //_server.sendCreatures(this);
+        //send(_messageBuilder.createCreature(_player.creature));
+        send(_messageBuilder.setFocus(_player.creature.id));
     }
 
     @Override
     protected void handleData(int type, JsonObject data) throws IOException {
         switch (GridiaProtocols.Serverbound.values()[type]) {
+            case PlayerMove:
+                ProcessPlayerMove(data);
+                break;
             case SectorRequest:
                 ProcessSectorRequest(data);
+                break;
+            case CreatureRequest:
+                ProcessCreatureRequest(data);
                 break;
         }
     }
 
     @Override
     protected void handleData(int type, DataInputStream data) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    protected void close() {
+        super.close();
+        _server.removeCreature(_player.creature);
+    }
+
+    private void ProcessPlayerMove(JsonObject data) throws IOException {
+        Coord loc = _gson.fromJson(data, Coord.class);
+        _player.creature.location = loc;
+        _server.moveCreatureTo(_player.creature, loc);
     }
 
     private void ProcessSectorRequest(JsonObject data) throws IOException {
         int sx = data.get("x").getAsInt();
         int sy = data.get("y").getAsInt();
         int sz = data.get("z").getAsInt();
-
-        Tile[][] tiles = server.tileMap.getSector(sx, sy, sz)._tiles;
-        BinaryMessageBuilder builder = new BinaryMessageBuilder()
-                .protocol(outbound(SectorData))
-                .writeInt(sx)
-                .writeInt(sy)
-                .writeInt(sz);
-        for (int x = 0; x < tiles.length; x++) {
-            for (int y = 0; y < tiles.length; y++) {
-                builder.writeShort(tiles[x][y].floor);
-                builder.writeShort(tiles[x][y].item);
-            }
-        }
-        send(builder.build());
+        Sector sector = _server.tileMap.getSector(sx, sy, sz);
+        _loadedSectors.add(sector);
+        send(_messageBuilder.sectorRequest(sector));
+    }
+    
+    private void ProcessCreatureRequest(JsonObject data) throws IOException {
+        int id = data.get("id").getAsInt();
+        send(_messageBuilder.addCreature(_server.creatures.get(id)));
     }
 }

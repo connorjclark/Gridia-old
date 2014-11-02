@@ -7,6 +7,7 @@ using System.Linq;
 public class GridiaDriver : MonoBehaviour
 {
     public static AutoResetEvent connectedWaitHandle = new AutoResetEvent(false);
+    public static AutoResetEvent gameInitWaitHandle = new AutoResetEvent(false);
     private GridiaGame _game;
 
     void Start()
@@ -24,21 +25,23 @@ public class GridiaDriver : MonoBehaviour
 
         Locator.Provide(new ContentManager("TestWorld")); // :(
         Locator.Provide(new TextureManager("TestWorld"));
-        _game.Initialize();
+        _game.Initialize(GridiaConstants.SIZE, GridiaConstants.DEPTH, GridiaConstants.SECTOR_SIZE); // :(
+
+        gameInitWaitHandle.Set();
     }
 
     void Update()
     {
-        _game.stateMachine.Step(Time.deltaTime);
+        if (_game.stateMachine != null) {
+            _game.stateMachine.Step(Time.deltaTime);
+        }
         MoveCreatures(10.0f * Time.deltaTime);
         _game.view.Render();
     }
     
     void MoveCreatures(float speed)
     {
-        foreach (var cre in _game.creatures.Values) {
-            cre.Move(speed);
-        }        
+        _game.creatures.ValuesToList().ForEach(cre => cre.Move(speed));
     }
 
     void ResizeCamera()

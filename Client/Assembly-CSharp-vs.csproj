@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\ConcurrentDictionary.cs" />
      <Compile Include="Assets\Scripts\ConnectionToGridiaServerHandler.cs" />
      <Compile Include="Assets\Scripts\Content\ContentLoader.cs" />
      <Compile Include="Assets\Scripts\Content\ContentManager.cs" />
