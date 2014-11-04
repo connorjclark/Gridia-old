@@ -28,7 +28,8 @@ public class ContentManager {
         }
         Item item = getItem(id);
         if (item == null) {
-            System.out.println("null item: " + id);
+            System.err.println("null item: " + id);
+            return ItemInstance.NONE;
         }
         return new ItemInstance(item, quantity);
     }
@@ -72,6 +73,7 @@ public class ContentManager {
     }
 
     private List load(String json, Type type) {
-        return new Gson().fromJson(json, type);
+        Gson gson = new Gson();
+        return gson.fromJson(json, type);
     }
 }

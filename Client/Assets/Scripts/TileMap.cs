@@ -103,7 +103,7 @@ namespace Gridia
             return tile.Creature == null && !tile.Item.Item.BlockMovement;
         }
 
-        private int Wrap (int value)
+        public int Wrap (int value)
         {
             int mod = value % Size;
             return mod < 0 ? Size + mod : mod;

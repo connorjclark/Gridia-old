@@ -20,7 +20,7 @@ public class GridiaServerDriver {
         System.out.println("Server started.");
 
         for (int i = 0; i < 10; i++) {
-            server.createCreature();
+            server.createCreature(Math.random() > .5 ? 100 : 109);
         }
 
         Random r = new Random();
@@ -28,22 +28,26 @@ public class GridiaServerDriver {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 for (int k = 0; k < server.tileMap.depth; k++) {
-                    if (r.nextFloat() > 0.9) {
-                        server.tileMap.setItem(server.contentManager.createItemInstance(10), i, j, k);
+                    if (r.nextFloat() > 0.8 && server.tileMap.getFloor(i, j, k) != 1) {
+                        server.changeItem(new Coord(i, j, k), server.contentManager.createItemInstance(10));
                     }
                 }
             }
         }
 
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
-            System.out.println("tick " + System.currentTimeMillis());
             server.creatures.values().stream().filter(cre -> !cre.belongsToPlayer).forEach(cre -> {
                 server.moveCreatureRandomly(cre);
             });
-            for (int i = 0; i < 100; i++) {
-                server.changeItem(randomCoord(), server.contentManager.createItemInstance((int) (Math.random() * 10)));
+            if (server.anyPlayersOnline()) {
+                for (int i = 0; i < 20; i++) {
+                    Coord randCoord = randomCoord();
+                    if (server.tileMap.getTile(randCoord).floor != 1) {
+                        server.changeItem(randCoord, server.contentManager.createItemInstance((int) (Math.random() * 10)));
+                    }
+                }
             }
-        }, 0, 1, TimeUnit.SECONDS);
+        }, 0, 2, TimeUnit.SECONDS);
     }
 
     public static Coord randomCoord() {

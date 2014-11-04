@@ -1,4 +1,5 @@
 ﻿using Gridia;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serving;
 using System;
@@ -60,7 +61,8 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
                 _game.RemoveCreature((int)data["id"]);
                 break;
             case GridiaProtocols.Clientbound.Chat:
-                MonoBehaviour.print(data["msg"]);
+                GridiaDriver.chatArea += data["msg"] + "\n";
+                GridiaDriver.scrollPosition = new Vector2(0, int.MaxValue);
                 break;
             case GridiaProtocols.Clientbound.SetFocus:
                 var id = (int)data["id"];
@@ -76,6 +78,10 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
                 var y = (int)data["loc"]["y"];
                 var z = (int)data["loc"]["z"];
                 _game.tileMap.SetItem(Locator.Get<ContentManager>().GetItem(item).GetInstance(quantity), x, y, z);
+                break;
+            case GridiaProtocols.Clientbound.Inventory:
+                var backToJson = JsonConvert.SerializeObject(data["inv"]);
+                Locator.Get<InventoryGUI>().Inventory = JsonConvert.DeserializeObject<List<ItemInstance>>(backToJson, new ItemInstanceConverter());
                 break;
         }
     }
@@ -120,6 +126,15 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         }
     }
 
+    public void PlayerMove(Vector3 loc)
+    {
+        Message message = new JsonMessageBuilder()
+            .Protocol(Outbound(GridiaProtocols.Serverbound.PlayerMove))
+            .Set("loc", new { x = loc.x, y = loc.y, z = loc.z })
+            .Build();
+        Send(message);
+    }
+
     public void RequestSector(int x, int y, int z) {
         if (_sectorsRequested.Contains(new Vector3(x, y, z)))
         {
@@ -148,6 +163,24 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
             .Protocol(Outbound(GridiaProtocols.Serverbound.RequestCreature))
             .Set("id", id)
             .Build();
+        Send(message);
+    }
+
+    public void MoveItem(Vector3 from, Vector3 to) {
+        Message message = new JsonMessageBuilder()
+            .Protocol(Outbound(GridiaProtocols.Serverbound.MoveItem))
+                .Set("from", new { x = from.x, y = from.y, z = from.z })
+                .Set("to", new { x = to.x, y = to.y, z = to.z })
+                .Build();
+        Send(message);
+    }
+
+    public void Chat(String text)
+    {
+        Message message = new JsonMessageBuilder()
+            .Protocol(Outbound(GridiaProtocols.Serverbound.Chat))
+                .Set("msg", text)
+                .Build();
         Send(message);
     }
 }

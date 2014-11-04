@@ -51,13 +51,14 @@
      <Compile Include="Assets\Scripts\Content\ContentLoader.cs" />
      <Compile Include="Assets\Scripts\Content\ContentManager.cs" />
      <Compile Include="Assets\Scripts\Content\Item.cs" />
+     <Compile Include="Assets\Scripts\Content\ItemInstance.cs" />
      <Compile Include="Assets\Scripts\Content\Monster.cs" />
      <Compile Include="Assets\Scripts\Creature.cs" />
      <Compile Include="Assets\Scripts\GridiaConstants.cs" />
      <Compile Include="Assets\Scripts\GridiaDriver.cs" />
      <Compile Include="Assets\Scripts\GridiaMain.cs" />
      <Compile Include="Assets\Scripts\GridiaProtocols.cs" />
-     <Compile Include="Assets\Scripts\ItemInstance.cs" />
+     <Compile Include="Assets\Scripts\InventoryGUI.cs" />
      <Compile Include="Assets\Scripts\Layer.cs" />
      <Compile Include="Assets\Scripts\Lighting.cs" />
      <Compile Include="Assets\Scripts\Locator.cs" />

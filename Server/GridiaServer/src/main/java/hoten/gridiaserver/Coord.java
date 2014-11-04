@@ -18,4 +18,9 @@ public class Coord {
         y = y1;
         z = z1;
     }
+    
+    @Override
+    public String toString() {
+        return String.format("%s, %s, %s", x, y, z);
+    }
 }

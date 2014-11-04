@@ -113,4 +113,9 @@ public class TileMap {
         int mod = value % size;
         return mod < 0 ? size + mod : mod;
     }
+    
+    public void wrap(Coord loc) {
+        loc.x = wrap(loc.x);
+        loc.y = wrap(loc.y);
+    }
 }

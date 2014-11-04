@@ -19,6 +19,10 @@ namespace Gridia
 
         public Item GetItem(int id)
         {
+            var item = items[id];
+            if (item == null) {
+                return items[0];
+            }
             return items[id];
         }
 

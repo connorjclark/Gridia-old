@@ -22,6 +22,11 @@ namespace Gridia
             return new Vector3(Mathf.Floor(vector.x), Mathf.Floor(vector.y), Mathf.Floor(vector.z));
         }
 
+        public static Vector3 Vector3Absolute(Vector3 vector)
+        {
+            return new Vector3(Mathf.Abs(vector.x), Mathf.Abs(vector.y), Mathf.Abs(vector.z));
+        }
+
         public static bool Vector2IsAbsoluteGreaterThanOne(Vector2 vector)
         {
             return Mathf.Abs(vector.x) >= 1 || Mathf.Abs(vector.y) >= 1;

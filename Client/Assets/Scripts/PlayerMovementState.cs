@@ -101,6 +101,9 @@ namespace Gridia
                 {
                     direction = Vector3.zero;
                 }
+                else {
+                    Locator.Get<ConnectionToGridiaServerHandler>().PlayerMove(destination);
+                }
             }
             
             return direction;

@@ -8,55 +8,67 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import hoten.serving.fileutils.FileUtils;
 import java.io.File;
 import java.lang.reflect.Type;
 
 public class SectorLoader {
 
+    public static class ItemInstanceDeserializer implements JsonDeserializer<ItemInstance> {
+
+        private final ContentManager _contentManager;
+
+        ItemInstanceDeserializer(ContentManager contentManager) {
+            _contentManager = contentManager;
+        }
+
+        @Override
+        public ItemInstance deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException {
+            JsonObject jsonObject = json.getAsJsonObject();
+            int itemType = jsonObject.get("type").getAsInt();
+            int quantity = jsonObject.get("quantity").getAsInt();
+            return _contentManager.createItemInstance(itemType, quantity);
+        }
+    }
+
+    public static class ItemInstanceSerializer implements JsonSerializer<ItemInstance> {
+
+        @Override
+        public JsonElement serialize(ItemInstance item, Type type, JsonSerializationContext jsc) {
+            JsonObject obj = new JsonObject();
+            obj.addProperty("type", item.data.id);
+            obj.addProperty("quantity", item.quantity);
+            return obj;
+        }
+    }
+
+    public static class TileDeserializer implements JsonDeserializer<Tile> {
+
+        @Override
+        public Tile deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException {
+            JsonObject jsonObject = json.getAsJsonObject();
+            Tile tile = new Tile();
+            tile.floor = jsonObject.get("floor").getAsInt();
+            tile.item = context.deserialize(jsonObject, ItemInstance.class);
+            return tile;
+        }
+    }
+
     private final Gson _gson;
 
     public SectorLoader(ContentManager contentManager) {
-        SectorTilesDeserializer tilesDeserializer = new SectorTilesDeserializer(contentManager);
         _gson = new GsonBuilder()
-                .registerTypeAdapter(Tile[][].class, tilesDeserializer)
+                .registerTypeAdapter(ItemInstance.class, new ItemInstanceDeserializer(contentManager))
+                .registerTypeAdapter(Tile.class, new TileDeserializer())
                 .create();
     }
 
     public Sector load(int sectorSize, int x, int y, int z) {
         String path = String.format("TestWorld/json-world/%s,%s,%s.sector", x, y, z);
         String json = FileUtils.readTextFile(new File(path));
-        JsonObject jObj = _gson.fromJson("{ tiles : " + json + "}", JsonElement.class).getAsJsonObject(); // :(
-        Tile[][] tiles = _gson.fromJson(jObj, Tile[][].class);
+        Tile[][] tiles = _gson.fromJson(json, Tile[][].class);
         return new Sector(tiles, x, y, z);
-    }
-}
-
-class SectorTilesDeserializer implements JsonDeserializer<Tile[][]> {
-
-    private final ContentManager _contentManager;
-
-    SectorTilesDeserializer(ContentManager contentManager) {
-        _contentManager = contentManager;
-    }
-
-    @Override
-    public Tile[][] deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException {
-        Gson gson = new Gson();
-        JsonObject jsonObject = json.getAsJsonObject();
-        JsonArray jsonTiles = jsonObject.get("tiles").getAsJsonArray();
-        int size = jsonTiles.size();
-        Tile[][] tiles = new Tile[size][size];
-        for (int i = 0; i < size; i++) {
-            JsonArray jsonTilesInner = jsonTiles.get(0).getAsJsonArray();
-            for (int j = 0; j < size; j++) {
-                Tile tile = gson.fromJson(jsonTilesInner.get(j), Tile.class);
-                int itemType = jsonTilesInner.get(j).getAsJsonObject().get("type").getAsInt();
-                int quantity = jsonTilesInner.get(j).getAsJsonObject().get("quantity").getAsInt();
-                tile.item = _contentManager.createItemInstance(itemType, quantity);
-                tiles[i][j] = tile;
-            }
-        }
-        return tiles;
     }
 }

@@ -33,14 +33,44 @@ public class GridiaGame
             Locator.Get<ConnectionToGridiaServerHandler>().RequestCreature(id);
             return;
         }
-        if (tileMap.Walkable(x, y, z))
+
+        // :(
+
+        Vector3 curLoc = cre.Position;
+        Vector3 newLoc = new Vector3(x, y, z);
+        Vector3 diff = Utilities.Vector3Absolute(curLoc - newLoc);
+
+        if (diff.x > 1 || diff.y > 1)
+        {
+            tileMap.GetTile((int)curLoc.x, (int)curLoc.y, (int)curLoc.z).Creature = null;
+            cre.Position = newLoc;
+            tileMap.GetTile((int)newLoc.x, (int)newLoc.y, (int)newLoc.z).Creature = cre;
+        }
+        else
         {
             cre.MovementDirection = Utilities.GetRelativeDirection(cre.Position, new Vector3(x, y, z));
         }
+
+        //if (tileMap.Walkable(x, y, z))
+        //{
+        //cre.MovementDirection = Utilities.GetRelativeDirection(cre.Position, new Vector3(x, y, z));
+
+        //}
     }
 
     public void RemoveCreature(int id)
     {
+        Creature cre;
+        creatures.TryGetValue(id, out cre);
+        if (cre == null)
+        {
+            Debug.LogError("no creature of id: " + id); // :(
+            Locator.Get<ConnectionToGridiaServerHandler>().RequestCreature(id);
+            return;
+        }
+
+        Vector3 curLoc = cre.Position;
+        tileMap.GetTile((int)curLoc.x, (int)curLoc.y, (int)curLoc.z).Creature = null;
         creatures.Remove(id);
     }
 }

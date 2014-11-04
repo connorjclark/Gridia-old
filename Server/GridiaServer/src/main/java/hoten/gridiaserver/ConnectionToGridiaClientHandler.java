@@ -30,15 +30,19 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
 
     @Override
     protected void onConnectionSettled() throws IOException {
-        //_server.sendCreatures(this);
         _player = new Player();
-        _player.username = "hoten" + System.currentTimeMillis();
+        _player.username = System.currentTimeMillis() + "";
         _player.creature = _server.createCreatureForPlayer();
         _server.announceNewPlayer(this, _player);
         send(_messageBuilder.initialize(_server.tileMap.size, _server.tileMap.depth, _server.tileMap.sectorSize));
-        //_server.sendCreatures(this);
-        //send(_messageBuilder.createCreature(_player.creature));
         send(_messageBuilder.setFocus(_player.creature.id));
+
+        // fake an inventory
+        List<ItemInstance> inv = new ArrayList();
+        for (int i = 0; i < 20; i++) {
+            inv.add(_server.contentManager.createItemInstance((int) (Math.random() * 100)));
+        }
+        send(_messageBuilder.inventory(inv));
     }
 
     @Override
@@ -56,6 +60,9 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             case MoveItem:
                 ProcessMoveItem(data);
                 break;
+            case Chat:
+                ProcessChat(data);
+                break;
         }
     }
 
@@ -65,15 +72,15 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
     }
 
     @Override
-    protected void close() {
+    protected synchronized void close() {
         super.close();
         _server.removeCreature(_player.creature);
+        _server.sendToAll(_messageBuilder.chat(_player.username + " has left the building."));
     }
 
     private void ProcessPlayerMove(JsonObject data) throws IOException {
-        Coord loc = _gson.fromJson(data, Coord.class);
-        _player.creature.location = loc;
-        _server.moveCreatureTo(_player.creature, loc);
+        Coord loc = _gson.fromJson(data.get("loc"), Coord.class);
+        _server.movePlayerTo(this, _player.creature, loc);
     }
 
     private void ProcessSectorRequest(JsonObject data) throws IOException {
@@ -95,5 +102,22 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         Coord from = gson.fromJson(data.get("from"), Coord.class);
         Coord to = gson.fromJson(data.get("to"), Coord.class);
         _server.moveItem(from, to);
+    }
+
+    private void ProcessChat(JsonObject data) throws IOException {
+        String msg = data.get("msg").getAsString();
+
+        if ("!clear".equals(msg)) {
+            int size = _server.tileMap.size;
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
+                    for (int k = 0; k < _server.tileMap.depth; k++) {
+                        _server.tileMap.setItem(ItemInstance.NONE, i, j, k);
+                    }
+                }
+            }
+        }
+
+        _server.sendToAll(_messageBuilder.chat(_player.username + " says: " + msg));
     }
 }

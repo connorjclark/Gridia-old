@@ -1,5 +1,7 @@
 package hoten.gridiaserver;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import static hoten.gridiaserver.GridiaProtocols.Clientbound.*;
 import hoten.serving.message.BinaryMessageBuilder;
 import hoten.serving.message.JsonMessageBuilder;
@@ -87,6 +89,26 @@ public class GridiaMessageToClientBuilder {
                 .set("size", size)
                 .set("depth", depth)
                 .set("sectorSize", sectorSize)
+                .build();
+    }
+    
+    public Message inventory(List<ItemInstance> inventory) {
+        // :(
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(ItemInstance.class, new SectorLoader.ItemInstanceSerializer())
+                .create();
+        
+        return new JsonMessageBuilder()
+                .protocol(outbound(Inventory))
+                .set("inv", inventory)
+                .gson(gson)
+                .build();
+    }
+    
+    public Message chat(String msg) {
+        return new JsonMessageBuilder()
+                .protocol(outbound(Chat))
+                .set("msg", msg)
                 .build();
     }
 

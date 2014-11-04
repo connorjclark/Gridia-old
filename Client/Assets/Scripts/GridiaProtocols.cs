@@ -2,8 +2,8 @@
 
 public class GridiaProtocols : Protocols
 {
-    public enum Clientbound { AddCreature, MoveCreature, RemoveCreature, SectorData, Chat, SetFocus, Initialize, TileUpdate }
-    public enum Serverbound { PlayerMove, RequestSector, RequestCreature, MoveItem }
+    public enum Clientbound { AddCreature, MoveCreature, RemoveCreature, SectorData, Chat, SetFocus, Initialize, TileUpdate, Inventory }
+    public enum Serverbound { PlayerMove, RequestSector, RequestCreature, MoveItem, Chat }
 
     public GridiaProtocols()
     {
@@ -15,10 +15,12 @@ public class GridiaProtocols : Protocols
         Add(BoundDest.CLIENT, 5, DataMethod.JSON, false);
         Add(BoundDest.CLIENT, 6, DataMethod.JSON, false);
         Add(BoundDest.CLIENT, 7, DataMethod.JSON, false);
+        Add(BoundDest.CLIENT, 8, DataMethod.JSON, false);
 
         Add(BoundDest.SERVER, 0, DataMethod.JSON, false);
         Add(BoundDest.SERVER, 1, DataMethod.JSON, false);
         Add(BoundDest.SERVER, 2, DataMethod.JSON, false);
         Add(BoundDest.SERVER, 3, DataMethod.JSON, false);
+        Add(BoundDest.SERVER, 4, DataMethod.JSON, false);
     }
 }
