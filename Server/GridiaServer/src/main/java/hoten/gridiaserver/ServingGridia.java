@@ -32,7 +32,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     protected ConnectionToGridiaClientHandler makeNewConnection(Socket newConnection) throws IOException {
         return new ConnectionToGridiaClientHandler(this, newConnection);
     }
-    
+
     public boolean anyPlayersOnline() {
         return !_clients.isEmpty();
     }
@@ -40,7 +40,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     public void sendToClientsWithSectorLoadedBut(Message message, Sector sector, ConnectionToGridiaClientHandler client) {
         sendTo(message, c -> c.hasSectorLoaded(sector) && client != c);
     }
-    
+
     public void sendToClientsWithSectorLoaded(Message message, Sector sector) {
         sendTo(message, c -> c.hasSectorLoaded(sector));
     }
@@ -71,7 +71,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         cre.location = loc;
         sendToClientsWithSectorLoaded(messageBuilder.moveCreature(cre), sector);
     }
-    
+
     public void movePlayerTo(ConnectionToGridiaClientHandler client, Creature cre, Coord loc) {
         tileMap.wrap(loc);
         Sector sector = tileMap.getSectorOf(loc);
@@ -90,16 +90,22 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         } else {
             y += diff;
         }
-        if (tileMap.getTile(x, y, cre.location.z).cre != null) {
-            return;
+        if (tileMap.walkable(x, y, cre.location.z)) {
+            moveCreatureTo(cre, new Coord(x, y, cre.location.z));
         }
-        moveCreatureTo(cre, new Coord(x, y, cre.location.z));
     }
 
-    public Creature createCreature(int image) {
+    public void createCreatureRandomly(int image) {
+        Coord c = new Coord(random.nextInt(tileMap.size / 10), random.nextInt(tileMap.size / 10), 0);
+        if (tileMap.walkable(c.x, c.y, c.z)) {
+            createCreature(image, c);
+        }
+    }
+
+    public Creature createCreature(int image, Coord loc) {
         Creature cre = new Creature();
         cre.image = image;
-        cre.location.set(random.nextInt(tileMap.size / 10), random.nextInt(tileMap.size / 10), 0);
+        cre.location = loc;
         Sector sector = tileMap.getSectorOf(cre.location);
         tileMap.getTile(cre.location).cre = cre;
         sendToClientsWithSectorLoaded(messageBuilder.addCreature(cre), sector);
@@ -108,7 +114,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     }
 
     public Creature createCreatureForPlayer() {
-        Creature cre = createCreature((int) (Math.random() * 100));
+        Creature cre = createCreature((int) (Math.random() * 100), new Coord(random.nextInt(4), random.nextInt(4), 0));
         cre.belongsToPlayer = true;
         return cre;
     }

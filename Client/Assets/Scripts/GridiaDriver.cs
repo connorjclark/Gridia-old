@@ -24,8 +24,8 @@ public class GridiaDriver : MonoBehaviour
         ResizeCamera();
 
         MonoBehaviour.print("connecting");
-        ConnectionToGridiaServerHandler conn = new ConnectionToGridiaServerHandler(_game, "localhost", 1234);
-        //ConnectionToGridiaServerHandler conn = new ConnectionToGridiaServerHandler(_game, "23.102.24.247", 1234);
+        //ConnectionToGridiaServerHandler conn = new ConnectionToGridiaServerHandler(_game, "localhost", 1234);
+        ConnectionToGridiaServerHandler conn = new ConnectionToGridiaServerHandler(_game, "23.102.24.247", 1234);
         Locator.Provide(conn);
         conn.Start();
 

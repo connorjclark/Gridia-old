@@ -104,7 +104,7 @@ public class TileMap {
     public void setItem(ItemInstance item, int x, int y, int z) {
         getTile(x, y, z).item = item;
     }
-    
+
     public void setItem(ItemInstance item, Coord c) {
         getTile(c.x, c.y, c.z).item = item;
     }
@@ -113,9 +113,14 @@ public class TileMap {
         int mod = value % size;
         return mod < 0 ? size + mod : mod;
     }
-    
+
     public void wrap(Coord loc) {
         loc.x = wrap(loc.x);
         loc.y = wrap(loc.y);
+    }
+
+    public boolean walkable(int x, int y, int z) {
+        Tile tile = getTile(x, y, z);
+        return tile.cre == null && !tile.item.data.blockMovement && tile.floor != 1;
     }
 }

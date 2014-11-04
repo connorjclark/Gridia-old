@@ -20,7 +20,7 @@ public class GridiaServerDriver {
         System.out.println("Server started.");
 
         for (int i = 0; i < 10; i++) {
-            server.createCreature(Math.random() > .5 ? 100 : 109);
+            server.createCreatureRandomly(Math.random() > .5 ? 100 : 109);
         }
 
         Random r = new Random();
@@ -28,7 +28,7 @@ public class GridiaServerDriver {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 for (int k = 0; k < server.tileMap.depth; k++) {
-                    if (r.nextFloat() > 0.8 && server.tileMap.getFloor(i, j, k) != 1) {
+                    if (r.nextFloat() > 0.9 && server.tileMap.getFloor(i, j, k) != 1) {
                         server.changeItem(new Coord(i, j, k), server.contentManager.createItemInstance(10));
                     }
                 }
@@ -46,6 +46,7 @@ public class GridiaServerDriver {
                         server.changeItem(randCoord, server.contentManager.createItemInstance((int) (Math.random() * 10)));
                     }
                 }
+                server.createCreatureRandomly(Math.random() > .5 ? 100 : 109);
             }
         }, 0, 2, TimeUnit.SECONDS);
     }
