@@ -21,8 +21,16 @@ public class ContentManager {
         _itemUses = loadItemUses();
     }
 
+    // item.getInstance() instead?
     public ItemInstance createItemInstance(int id, int quantity) {
-        return new ItemInstance(getItem(id), quantity);
+        if (id == 0) {
+            return ItemInstance.NONE;
+        }
+        Item item = getItem(id);
+        if (item == null) {
+            System.out.println("null item: " + id);
+        }
+        return new ItemInstance(item, quantity);
     }
 
     public ItemInstance createItemInstance(int id) {

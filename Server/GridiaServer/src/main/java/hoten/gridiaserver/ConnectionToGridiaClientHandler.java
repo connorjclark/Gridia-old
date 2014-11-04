@@ -53,6 +53,9 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             case CreatureRequest:
                 ProcessCreatureRequest(data);
                 break;
+            case MoveItem:
+                ProcessMoveItem(data);
+                break;
         }
     }
 
@@ -81,9 +84,16 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         _loadedSectors.add(sector);
         send(_messageBuilder.sectorRequest(sector));
     }
-    
+
     private void ProcessCreatureRequest(JsonObject data) throws IOException {
         int id = data.get("id").getAsInt();
         send(_messageBuilder.addCreature(_server.creatures.get(id)));
+    }
+
+    private void ProcessMoveItem(JsonObject data) throws IOException {
+        Gson gson = new Gson();
+        Coord from = gson.fromJson(data.get("from"), Coord.class);
+        Coord to = gson.fromJson(data.get("to"), Coord.class);
+        _server.moveItem(from, to);
     }
 }

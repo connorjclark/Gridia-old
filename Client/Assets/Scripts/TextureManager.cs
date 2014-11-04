@@ -9,13 +9,15 @@ namespace Gridia
     {
         private List<Texture> floors = new List<Texture> ();
         private List<Texture> items = new List<Texture> ();
-        private List<Texture> creatures = new List<Texture> ();
+        private List<Texture> creatures = new List<Texture>();
+        private List<Texture> templates = new List<Texture>();
 
         public TextureManager (String worldName)
         {
             floors = LoadTextures(worldName + "/floors/floors", 1);
             items = LoadTextures(worldName + "/items/items", 27);
             creatures = LoadTextures(worldName + "/players/players", 8);
+            templates = LoadTextures(worldName + "/templates/template", 1);
         }
             
         public Texture GetFloorsTexture (int index)
@@ -31,6 +33,11 @@ namespace Gridia
         public Texture GetCreaturesTexture (int index)
         {
             return creatures [index];
+        }
+
+        public Texture GetTemplateTexture(int index)
+        {
+            return templates[index];
         }
 
         private List<Texture> LoadTextures(String prefix, int numTextures)

@@ -10,9 +10,10 @@ namespace Gridia
 
         public Vector3 MovementDirection { get; set; }
 
-        public Creature(int id, int x, int y, int z) {
+        public Creature(int id, int image, int x, int y, int z) {
             MovementDirection = Vector3.zero;
             Id = id;
+            Image = image;
             Position.Set(x, y, z);
         }
 

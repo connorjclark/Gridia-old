@@ -22,6 +22,7 @@ public class GridiaMessageToClientBuilder {
         return new JsonMessageBuilder()
                 .protocol(outbound(AddCreature))
                 .set("id", cre.id)
+                .set("image", cre.image)
                 .set("loc", cre.location)
                 .build();
     }
@@ -64,6 +65,7 @@ public class GridiaMessageToClientBuilder {
         builder.writeInt(creatures.size());
         creatures.stream().forEach((cre) -> {
             builder.writeShort(cre.id)
+                    .writeShort(cre.image)
                     .writeShort(cre.location.x)
                     .writeShort(cre.location.y)
                     .writeShort(cre.location.z);

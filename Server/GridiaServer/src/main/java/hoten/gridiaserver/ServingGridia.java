@@ -37,6 +37,10 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         sendTo(message, client -> client.hasSectorLoaded(sector));
     }
 
+    public void sendToClientsWithAreaLoaded(Message message, Coord loc) {
+        sendTo(message, client -> client.hasSectorLoaded(tileMap.getSectorOf(loc)));
+    }
+
     public void sendCreatures(ConnectionToGridiaClientHandler client) {
         creatures.values().forEach(cre -> {
             sendTo(messageBuilder.addCreature(cre), client);
@@ -76,7 +80,6 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
 
     public Creature createCreature() {
         Creature cre = new Creature();
-        //cre.location.set(random.nextInt(tileMap.size), random.nextInt(tileMap.size), 0);
         cre.location.set(random.nextInt(tileMap.size / 10), random.nextInt(tileMap.size / 10), 0);
         Sector sector = tileMap.getSectorOf(cre.location);
         tileMap.getTile(cre.location).cre = cre;
@@ -88,6 +91,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     public Creature createCreatureForPlayer() {
         Creature cre = createCreature();
         cre.belongsToPlayer = true;
+        cre.image = (int) (Math.random() * 100);
         return cre;
     }
 
@@ -97,5 +101,31 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
                 .set("msg", String.format("%s has joined the game!", player.username))
                 .build();
         sendToAllBut(message, client);
+    }
+
+    public void moveItem(Coord from, Coord to) {
+        ItemInstance fromItem = tileMap.getItem(from);
+        ItemInstance toItem = tileMap.getItem(to);
+        if (toItem.data.id == 0) {
+            changeItem(from, ItemInstance.NONE);
+            changeItem(to, fromItem);
+        }
+    }
+
+    public void changeItem(Coord loc, ItemInstance item) {
+        tileMap.setItem(item, loc);
+        updateTile(loc);
+    }
+
+    private void updateTile(Coord loc) {
+        Tile tile = tileMap.getTile(loc);
+        Message message = new JsonMessageBuilder()
+                .protocol(outbound(TileUpdate))
+                .set("loc", loc)
+                .set("item", tile.item.data.id)
+                .set("quantity", tile.item.quantity)
+                .set("floor", tile.floor)
+                .build();
+        sendToClientsWithAreaLoaded(message, loc);
     }
 }

@@ -48,6 +48,6 @@ public class GridiaDriver : MonoBehaviour
     {
         Camera camera = Camera.main;
         camera.orthographicSize = Screen.height / 2.0f;
-        camera.transform.position = new Vector3(Screen.width / 2, Screen.height / 2, -1);
+        camera.transform.position = new Vector3(Screen.width / 2.0f, Screen.height / 2.0f, -100);
     }
 }

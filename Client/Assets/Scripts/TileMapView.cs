@@ -109,7 +109,19 @@ namespace Gridia
                     int dataIndex = layer.GetTileData(tile);
                     if (dataIndex != -1)
                     {
-                        Texture textureForThisData = layer.GetTexture(dataIndex);
+                        Texture textureForThisData;
+
+                        //hack for water template :(
+                        if (dataIndex == -2)
+                        {
+                            textureForThisData = _textureManager.GetTemplateTexture(0);
+                            dataIndex = UseTemplate(0, 1, x + positionX, y + positionY, positionZ);
+                        }
+                        else
+                        {
+                            textureForThisData = layer.GetTexture(dataIndex);
+                        }
+
                         int tileX = (dataIndex % 100) % GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
                         int tileY = (dataIndex % 100) / GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
                         Dictionary<string, object> dic = new Dictionary<string, object>();
@@ -201,8 +213,11 @@ namespace Gridia
                     layer.mesh.SetTriangles(triangleBatches[i], i);
                 }
 
-                Vector2 renderablePosition = TileSize * Utilities.Vector2Residual(-FocusPosition);
-                layer.renderable.transform.position = Utilities.Vector2Floor(renderablePosition);
+                var layerz = layer.renderable.transform.position.z;
+                Vector3 renderablePosition = TileSize * Utilities.Vector3Residual(-FocusPosition);
+                var newLayerPos = Utilities.Vector3Floor(renderablePosition);
+                newLayerPos.z = layerz; // :(
+                layer.renderable.transform.position = newLayerPos;
             };
 
             layers.ForEach(drawLayer);
@@ -252,18 +267,10 @@ namespace Gridia
             var result = new List<Layer>();
 
             result.Add(new Layer(
-                "Creature layer",
+                "Floor layer",
                 this,
-                tile => {
-                    if (tile.Creature == null) {
-                        return -1;
-                    }
-                    return tile.Creature.Image;
-                },
-                data => _textureManager.GetCreaturesTexture(data / 100),
-                tile => {
-                    return tile.Creature.Offset;
-                }
+                tile => tile.Floor == 1 ? -2 : tile.Floor,
+                data => _textureManager.GetFloorsTexture(data / 100)
             ));
 
             result.Add(new Layer("Item layer", this, tile =>
@@ -291,12 +298,27 @@ namespace Gridia
             ));
 
             result.Add(new Layer(
-                "Floor layer",
+                "Creature layer",
                 this,
-                tile => tile.Floor,
-                data => _textureManager.GetFloorsTexture(data / 100)
+                tile =>
+                {
+                    if (tile.Creature == null)
+                    {
+                        return -1;
+                    }
+                    return tile.Creature.Image;
+                },
+                data => _textureManager.GetCreaturesTexture(data / 100),
+                tile =>
+                {
+                    return tile.Creature.Offset;
+                }
             ));
-            
+
+            for (int i = 0; i < result.Count; i++) {
+                result[i].renderable.transform.position = new Vector3(0, 0, -i);
+            }
+
             return result;
         }
 
@@ -321,5 +343,147 @@ namespace Gridia
             _gridVertices[offset + 2] = new Vector3(x2, y2, 0);
             _gridVertices[offset + 3] = new Vector3(x2, y1, 0);
         }
+
+        //generalize
+        //this is only for floors right now
+        //more uses?
+        private int UseTemplate(int templateId, int typeToMatch, int x, int y, int z) {
+            int size = _tileMap.Size;
+            int xl = x == 0 ? size - 1 : x - 1;
+            int xr = x == size - 1 ? 0 : x + 1;
+            int yu = y == 0 ? size - 1 : y + 1;
+            int yd = y == size - 1 ? 0 : y - 1;
+
+            bool above = _tileMap.GetTile(x, yu, z).Floor == typeToMatch;
+            bool below = _tileMap.GetTile(x, yd, z).Floor == typeToMatch;
+            bool left = _tileMap.GetTile(xl, y, z).Floor == typeToMatch;
+            bool right = _tileMap.GetTile(xr, y, z).Floor == typeToMatch;
+
+            int offset = templateId * 50;
+            int v = (above ? 1 : 0) + (below ? 2 : 0) + (left ? 4 : 0) + (right ? 8 : 0);
+            
+
+            // this is where the complicated crap kicks in
+            // i'd really like to replace this.
+            // :'(
+            // this is mostly guess work. I think. I wrote this code years ago. I know it works,
+            // so I just copy and pasted. Shame on me.
+
+            bool upleft = _tileMap.GetTile(xl, yu, z).Floor == typeToMatch;
+            bool upright = _tileMap.GetTile(xr, yu, z).Floor == typeToMatch;
+            bool downleft = _tileMap.GetTile(xl, yd, z).Floor == typeToMatch;
+            bool downright = _tileMap.GetTile(xr, yd, z).Floor == typeToMatch;
+
+            if (v == 15)
+            {
+                if (!upleft)
+                {
+                    v++;
+                }
+                if (!upright)
+                {
+                    v += 2;
+                }
+                if (!downleft)
+                {
+                    v += 4;
+                }
+                if (!downright)
+                {
+                    v += 8;
+                }
+            }
+            else if (v == 5)
+            {
+                if (!upleft)
+                {
+                    v = 31;
+                }
+            }
+            else if (v == 6)
+            {
+                if (!downleft)
+                {
+                    v = 32;
+                }
+            }
+            else if (v == 9)
+            {
+                if (!upright)
+                {
+                    v = 33;
+                }
+            }
+            else if (v == 10)
+            {
+                if (!downright)
+                {
+                    v = 34;
+                }
+            }
+            else if (v == 7)
+            {
+                if (!downleft || !upleft)
+                {
+                    v = 34;
+                    if (!downleft)
+                    {
+                        v++;
+                    }
+                    if (!upleft)
+                    {
+                        v += 2;
+                    }
+                }
+            }
+            else if (v == 11)
+            {
+                if (!downright || !upright)
+                {
+                    v = 37;
+                    if (!downright)
+                    {
+                        v++;
+                    }
+                    if (!upright)
+                    {
+                        v += 2;
+                    }
+                }
+            }
+            else if (v == 13)
+            {
+                if (!upright || !upleft)
+                {
+                    v = 40;
+                    if (!upright)
+                    {
+                        v++;
+                    }
+                    if (!upleft)
+                    {
+                        v += 2;
+                    }
+                }
+            }
+            else if (v == 14)
+            {
+                if (!downright || !downleft)
+                {
+                    v = 43;
+                    if (!downright)
+                    {
+                        v++;
+                    }
+                    if (!downleft)
+                    {
+                        v += 2;
+                    }
+                }
+            }
+
+            return v + offset;
+        }
     }
+
 }

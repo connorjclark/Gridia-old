@@ -93,12 +93,20 @@ public class TileMap {
         return getTile(x, y, z).floor;
     }
 
+    public ItemInstance getItem(Coord c) {
+        return getTile(c.x, c.y, c.z).item;
+    }
+
     public ItemInstance getItem(int x, int y, int z) {
         return getTile(x, y, z).item;
     }
 
     public void setItem(ItemInstance item, int x, int y, int z) {
         getTile(x, y, z).item = item;
+    }
+    
+    public void setItem(ItemInstance item, Coord c) {
+        getTile(c.x, c.y, c.z).item = item;
     }
 
     public int wrap(int value) {

@@ -12,14 +12,14 @@ namespace Gridia
             return new Vector2(x, y);
         }
 
-        public static Vector2 Vector2Residual(Vector2 vector)
+        public static Vector3 Vector3Residual(Vector3 vector)
         {
-            return new Vector2(vector.x % 1, vector.y % 1);
+            return new Vector3(vector.x % 1, vector.y % 1, vector.z % 1);
         }
 
-        public static Vector2 Vector2Floor(Vector2 vector)
+        public static Vector3 Vector3Floor(Vector3 vector)
         {
-            return new Vector2(Mathf.Floor(vector.x), Mathf.Floor(vector.y));
+            return new Vector3(Mathf.Floor(vector.x), Mathf.Floor(vector.y), Mathf.Floor(vector.z));
         }
 
         public static bool Vector2IsAbsoluteGreaterThanOne(Vector2 vector)

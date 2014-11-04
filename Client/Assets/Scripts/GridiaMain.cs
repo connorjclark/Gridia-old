@@ -16,9 +16,9 @@ public class GridiaGame
         Locator.Provide(view);
     }
 
-    public Creature CreateCreature(int id, int x, int y, int z)
+    public Creature CreateCreature(int id, int image, int x, int y, int z)
     {
-        var cre = new Creature(id, x, y, z);
+        var cre = new Creature(id, image, x, y, z);
         cre.Position = new Vector3(x, y, z);
         tileMap.AddCreature(cre);
         return creatures[id] = cre;

@@ -51,7 +51,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
                 GridiaDriver.gameInitWaitHandle.WaitOne();
                 break;
             case GridiaProtocols.Clientbound.AddCreature:
-                _game.CreateCreature((int)data["id"], (int)data["loc"]["x"], (int)data["loc"]["y"], (int)data["loc"]["z"]);
+                _game.CreateCreature((int)data["id"], (int)data["image"], (int)data["loc"]["x"], (int)data["loc"]["y"], (int)data["loc"]["z"]);
                 break;
             case GridiaProtocols.Clientbound.MoveCreature:
                 _game.MoveCreature((int)data["id"], (int)data["loc"]["x"], (int)data["loc"]["y"], (int)data["loc"]["z"]);
@@ -68,6 +68,14 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
                 _game.view.FocusId = id;
                 _game.stateMachine = new StateMachine();
                 _game.stateMachine.SetState(new PlayerMovementState(8));
+                break;
+            case GridiaProtocols.Clientbound.TileUpdate:
+                var item = (int) data["item"];
+                var quantity = (int) data["quantity"];
+                var x = (int)data["loc"]["x"];
+                var y = (int)data["loc"]["y"];
+                var z = (int)data["loc"]["z"];
+                _game.tileMap.SetItem(Locator.Get<ContentManager>().GetItem(item).GetInstance(quantity), x, y, z);
                 break;
         }
     }
@@ -102,10 +110,11 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
                 for (int i = 0; i < numCreatures; i++)
                 {
                     var id = data.ReadInt16();
+                    var image = data.ReadInt16();
                     var x = data.ReadInt16();
                     var y = data.ReadInt16();
                     var z = data.ReadInt16();
-                    _game.CreateCreature(id, x, y, z);
+                    _game.CreateCreature(id, image, x, y, z);
                 }
                 break;
         }
