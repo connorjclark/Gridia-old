@@ -2,7 +2,7 @@ package hoten.gridiaserver;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import hoten.serving.Protocols;
+import hoten.serving.message.Protocols;
 import hoten.serving.SocketHandler;
 import java.io.DataInputStream;
 import java.io.IOException;

@@ -5,8 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import static hoten.gridiaserver.GridiaProtocols.Clientbound.*;
-import hoten.serving.JsonMessageBuilder;
-import hoten.serving.Message;
+import hoten.serving.message.JsonMessageBuilder;
+import hoten.serving.message.Message;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,11 +15,13 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
 
     public final GridiaMessageToClientBuilder messageBuilder = new GridiaMessageToClientBuilder(this::outbound);
     public final TileMap tileMap;
+    public final ContentManager contentManager;
     public final Map<Integer, Creature> creatures = new ConcurrentHashMap();
     private final Random random = new Random();
 
     public ServingGridia(int port, File clientDataFolder, String localDataFolderName) throws IOException {
         super(port, new GridiaProtocols(), clientDataFolder, localDataFolderName);
+        contentManager = new ContentManager("TestWorld");
         tileMap = new TileMap(100, 1, 20);
         tileMap.loadAll();
     }

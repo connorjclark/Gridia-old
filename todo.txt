@@ -1,6 +1,5 @@
 Features
 
-Joining world creates a new creature and binds it to that connection
 Item movement
 Crafting
 Inventory

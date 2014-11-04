@@ -1,6 +1,6 @@
 package hoten.gridiaserver;
 
-import hoten.serving.Protocols;
+import hoten.serving.message.Protocols;
 
 public class GridiaProtocols extends Protocols {
 

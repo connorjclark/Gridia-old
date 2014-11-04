@@ -1,10 +1,10 @@
 package hoten.gridiaserver;
 
 import static hoten.gridiaserver.GridiaProtocols.Clientbound.*;
-import hoten.serving.BinaryMessageBuilder;
-import hoten.serving.JsonMessageBuilder;
-import hoten.serving.Message;
-import hoten.serving.Protocols.Protocol;
+import hoten.serving.message.BinaryMessageBuilder;
+import hoten.serving.message.JsonMessageBuilder;
+import hoten.serving.message.Message;
+import hoten.serving.message.Protocols.Protocol;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
