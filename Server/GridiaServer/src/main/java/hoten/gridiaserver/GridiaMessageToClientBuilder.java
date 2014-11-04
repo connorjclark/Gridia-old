@@ -54,7 +54,7 @@ public class GridiaMessageToClientBuilder {
         for (int x = 0; x < tiles.length; x++) {
             for (int y = 0; y < tiles.length; y++) {
                 builder.writeShort(tiles[x][y].floor);
-                builder.writeShort(tiles[x][y].item);
+                builder.writeShort(tiles[x][y].item.data.id);
                 if (tiles[x][y].cre != null) {
                     creatures.add(tiles[x][y].cre);
                 }

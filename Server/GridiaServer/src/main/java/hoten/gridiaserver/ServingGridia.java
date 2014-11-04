@@ -22,7 +22,9 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     public ServingGridia(int port, File clientDataFolder, String localDataFolderName) throws IOException {
         super(port, new GridiaProtocols(), clientDataFolder, localDataFolderName);
         contentManager = new ContentManager("TestWorld");
-        tileMap = new TileMap(100, 1, 20);
+        SectorLoader sectorLoader = new SectorLoader(contentManager);
+        SectorSaver sectorSaver = new SectorSaver();
+        tileMap = new TileMap(100, 1, 20, sectorLoader, sectorSaver);
         tileMap.loadAll();
     }
 

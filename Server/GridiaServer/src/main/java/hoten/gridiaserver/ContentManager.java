@@ -21,6 +21,14 @@ public class ContentManager {
         _itemUses = loadItemUses();
     }
 
+    public ItemInstance createItemInstance(int id, int quantity) {
+        return new ItemInstance(getItem(id), quantity);
+    }
+
+    public ItemInstance createItemInstance(int id) {
+        return createItemInstance(id, 1);
+    }
+
     public Item getItem(int id) {
         return _items.get(id);
     }

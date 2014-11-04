@@ -6,10 +6,10 @@ public class TileMap {
 
     public final int size, depth, sectorSize, area, volume, sectorsAcross, sectorsFloor, sectorsTotal;
     private final Sector[][][] _sectors;
-    private final SectorLoader _sectorLoader = new SectorLoader();
-    private final SectorSaver _sectorSaver = new SectorSaver();
+    private final SectorLoader _sectorLoader;
+    private final SectorSaver _sectorSaver;
 
-    public TileMap(int size, int depth, int sectorSize) {
+    public TileMap(int size, int depth, int sectorSize, SectorLoader sectorLoader, SectorSaver sectorSaver) {
         if (size % sectorSize != 0) {
             throw new IllegalArgumentException("sectorSize must be a factor of size");
         }
@@ -22,6 +22,8 @@ public class TileMap {
         sectorsFloor = sectorsAcross * sectorsAcross;
         sectorsTotal = sectorsFloor * depth;
         _sectors = new Sector[sectorsAcross][sectorsAcross][depth];
+        _sectorLoader = sectorLoader;
+        _sectorSaver = sectorSaver;
     }
 
     //temporary
@@ -91,8 +93,12 @@ public class TileMap {
         return getTile(x, y, z).floor;
     }
 
-    public int getItem(int x, int y, int z) {
+    public ItemInstance getItem(int x, int y, int z) {
         return getTile(x, y, z).item;
+    }
+
+    public void setItem(ItemInstance item, int x, int y, int z) {
+        getTile(x, y, z).item = item;
     }
 
     public int wrap(int value) {
