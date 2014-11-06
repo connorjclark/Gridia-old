@@ -10,6 +10,7 @@ import hoten.gridiaserver.map.SectorLoader;
 import hoten.gridiaserver.map.SectorSaver;
 import hoten.gridiaserver.map.Tile;
 import hoten.gridiaserver.map.TileMap;
+import hoten.gridiaserver.serializers.GridiaGson;
 import hoten.serving.ServingSocket;
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +33,8 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     public ServingGridia(int port, File clientDataFolder, String localDataFolderName) throws IOException {
         super(port, new GridiaProtocols(), clientDataFolder, localDataFolderName);
         contentManager = new ContentManager("TestWorld");
-        SectorLoader sectorLoader = new SectorLoader(contentManager);
+        GridiaGson.initialize(contentManager);
+        SectorLoader sectorLoader = new SectorLoader();
         SectorSaver sectorSaver = new SectorSaver();
         tileMap = new TileMap(100, 1, 20, sectorLoader, sectorSaver);
         tileMap.loadAll();

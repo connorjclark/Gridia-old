@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 import hoten.gridiaserver.Creature;
 import hoten.gridiaserver.content.ItemInstance;
 import hoten.gridiaserver.map.Sector;
-import hoten.gridiaserver.map.SectorLoader;
 import hoten.gridiaserver.map.Tile;
 import hoten.gridiaserver.serializers.ItemInstanceSerializer;
 import static hoten.gridiaserver.serving.GridiaProtocols.Clientbound.*;
