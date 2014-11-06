@@ -1,5 +1,7 @@
 package hoten.gridiaserver;
 
+import hoten.gridiaserver.map.Coord;
+import hoten.gridiaserver.serving.ServingGridia;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;

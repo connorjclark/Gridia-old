@@ -1,5 +1,6 @@
 package hoten.gridiaserver;
 
+import hoten.gridiaserver.map.Coord;
 import hoten.uniqueidentifiers.UniqueIdentifiers;
 
 public class Creature {
