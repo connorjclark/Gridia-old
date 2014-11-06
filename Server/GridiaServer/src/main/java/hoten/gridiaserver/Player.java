@@ -2,6 +2,6 @@ package hoten.gridiaserver;
 
 public class Player {
     public Creature creature;
-    public Object inventory;
+    public Inventory inventory;
     public String username;
 }

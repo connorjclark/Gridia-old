@@ -2,10 +2,12 @@ package hoten.gridiaserver.serving;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import hoten.gridiaserver.Inventory;
 import hoten.gridiaserver.map.Coord;
 import hoten.gridiaserver.content.ItemInstance;
 import hoten.gridiaserver.Player;
 import hoten.gridiaserver.map.Sector;
+import static hoten.gridiaserver.serving.GridiaProtocols.Clientbound.Inventory;
 import hoten.serving.message.Protocols;
 import hoten.serving.SocketHandler;
 import java.io.DataInputStream;
@@ -46,7 +48,8 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         for (int i = 0; i < 20; i++) {
             inv.add(_server.contentManager.createItemInstance((int) (Math.random() * 100)));
         }
-        send(_messageBuilder.inventory(inv));
+        _player.inventory = new Inventory(inv);
+        send(_messageBuilder.inventory(_player.inventory));
     }
 
     @Override

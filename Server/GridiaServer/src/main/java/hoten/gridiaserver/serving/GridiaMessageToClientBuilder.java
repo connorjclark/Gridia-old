@@ -3,6 +3,7 @@ package hoten.gridiaserver.serving;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import hoten.gridiaserver.Creature;
+import hoten.gridiaserver.Inventory;
 import hoten.gridiaserver.content.ItemInstance;
 import hoten.gridiaserver.map.Sector;
 import hoten.gridiaserver.map.Tile;
@@ -97,7 +98,7 @@ public class GridiaMessageToClientBuilder {
                 .build();
     }
 
-    public Message inventory(List<ItemInstance> inventory) {
+    public Message inventory(Inventory inv) {
         // :(
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(ItemInstance.class, new ItemInstanceSerializer())
@@ -105,7 +106,7 @@ public class GridiaMessageToClientBuilder {
 
         return new JsonMessageBuilder()
                 .protocol(outbound(Inventory))
-                .set("inv", inventory)
+                .set("inv", inv.items)
                 .gson(gson)
                 .build();
     }

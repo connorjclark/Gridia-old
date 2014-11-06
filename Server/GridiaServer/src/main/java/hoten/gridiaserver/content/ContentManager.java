@@ -21,7 +21,6 @@ public class ContentManager {
         _itemUses = loadItemUses();
     }
 
-    // item.getInstance() instead?
     public ItemInstance createItemInstance(int id, int quantity) {
         if (id == 0) {
             return ItemInstance.NONE;
