@@ -7,6 +7,7 @@ import hoten.gridiaserver.content.ItemInstance;
 import hoten.gridiaserver.map.Sector;
 import hoten.gridiaserver.map.SectorLoader;
 import hoten.gridiaserver.map.Tile;
+import hoten.gridiaserver.serializers.ItemInstanceSerializer;
 import static hoten.gridiaserver.serving.GridiaProtocols.Clientbound.*;
 import hoten.serving.message.BinaryMessageBuilder;
 import hoten.serving.message.JsonMessageBuilder;
@@ -96,20 +97,20 @@ public class GridiaMessageToClientBuilder {
                 .set("sectorSize", sectorSize)
                 .build();
     }
-    
+
     public Message inventory(List<ItemInstance> inventory) {
         // :(
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(ItemInstance.class, new SectorLoader.ItemInstanceSerializer())
+                .registerTypeAdapter(ItemInstance.class, new ItemInstanceSerializer())
                 .create();
-        
+
         return new JsonMessageBuilder()
                 .protocol(outbound(Inventory))
                 .set("inv", inventory)
                 .gson(gson)
                 .build();
     }
-    
+
     public Message chat(String msg) {
         return new JsonMessageBuilder()
                 .protocol(outbound(Chat))
