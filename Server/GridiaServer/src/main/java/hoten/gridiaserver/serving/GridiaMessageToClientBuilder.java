@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import hoten.gridiaserver.Creature;
 import hoten.gridiaserver.Inventory;
 import hoten.gridiaserver.content.ItemInstance;
+import hoten.gridiaserver.map.Coord;
 import hoten.gridiaserver.map.Sector;
 import hoten.gridiaserver.map.Tile;
 import hoten.gridiaserver.serializers.ItemInstanceSerializer;
@@ -106,7 +107,7 @@ public class GridiaMessageToClientBuilder {
 
         return new JsonMessageBuilder()
                 .protocol(outbound(Inventory))
-                .set("inv", inv.items)
+                .set("inv", inv.getItems())
                 .gson(gson)
                 .build();
     }
@@ -115,6 +116,26 @@ public class GridiaMessageToClientBuilder {
         return new JsonMessageBuilder()
                 .protocol(outbound(Chat))
                 .set("msg", msg)
+                .build();
+    }
+
+    public Message updateTile(Coord loc, Tile tile) {
+        return new JsonMessageBuilder()
+                .protocol(outbound(TileUpdate))
+                .set("loc", loc)
+                .set("item", tile.item.data.id)
+                .set("quantity", tile.item.quantity)
+                .set("floor", tile.floor)
+                .build();
+    }
+
+    public Message updateInventorySlot(Inventory inventory, int slotIndex) {
+        ItemInstance item = inventory.get(slotIndex);
+        return new JsonMessageBuilder()
+                .protocol(outbound(InventoryUpdate))
+                .set("index", slotIndex)
+                .set("item", item.data.id)
+                .set("quantity", item.quantity)
                 .build();
     }
 

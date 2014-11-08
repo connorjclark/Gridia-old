@@ -7,7 +7,6 @@ import hoten.gridiaserver.map.Coord;
 import hoten.gridiaserver.content.ItemInstance;
 import hoten.gridiaserver.Player;
 import hoten.gridiaserver.map.Sector;
-import static hoten.gridiaserver.serving.GridiaProtocols.Clientbound.Inventory;
 import hoten.serving.message.Protocols;
 import hoten.serving.SocketHandler;
 import java.io.DataInputStream;
@@ -22,7 +21,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
     private final GridiaMessageToClientBuilder _messageBuilder;
     private final Gson _gson = new Gson();
     private final ServingGridia _server;
-    private Player _player;
+    public Player player;
 
     public ConnectionToGridiaClientHandler(ServingGridia server, Socket socket) throws IOException {
         super(socket, new GridiaProtocols(), Protocols.BoundDest.CLIENT);
@@ -36,20 +35,20 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
 
     @Override
     protected void onConnectionSettled() throws IOException {
-        _player = new Player();
-        _player.username = System.currentTimeMillis() + "";
-        _player.creature = _server.createCreatureForPlayer();
-        _server.announceNewPlayer(this, _player);
+        player = new Player();
+        player.username = System.currentTimeMillis() + "";
+        player.creature = _server.createCreatureForPlayer();
+        _server.announceNewPlayer(this, player);
         send(_messageBuilder.initialize(_server.tileMap.size, _server.tileMap.depth, _server.tileMap.sectorSize));
-        send(_messageBuilder.setFocus(_player.creature.id));
+        send(_messageBuilder.setFocus(player.creature.id));
 
         // fake an inventory
         List<ItemInstance> inv = new ArrayList();
         for (int i = 0; i < 20; i++) {
             inv.add(_server.contentManager.createItemInstance((int) (Math.random() * 100)));
         }
-        _player.inventory = new Inventory(inv);
-        send(_messageBuilder.inventory(_player.inventory));
+        player.inventory = new Inventory(inv);
+        send(_messageBuilder.inventory(player.inventory));
     }
 
     @Override
@@ -81,13 +80,13 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
     @Override
     protected synchronized void close() {
         super.close();
-        _server.removeCreature(_player.creature);
-        _server.sendToAll(_messageBuilder.chat(_player.username + " has left the building."));
+        _server.removeCreature(player.creature);
+        _server.sendToAll(_messageBuilder.chat(player.username + " has left the building."));
     }
 
     private void ProcessPlayerMove(JsonObject data) throws IOException {
         Coord loc = _gson.fromJson(data.get("loc"), Coord.class);
-        _server.movePlayerTo(this, _player.creature, loc);
+        _server.movePlayerTo(this, player.creature, loc);
     }
 
     private void ProcessSectorRequest(JsonObject data) throws IOException {
@@ -105,10 +104,48 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
     }
 
     private void ProcessMoveItem(JsonObject data) throws IOException {
-        Gson gson = new Gson();
-        Coord from = gson.fromJson(data.get("from"), Coord.class);
-        Coord to = gson.fromJson(data.get("to"), Coord.class);
-        _server.moveItem(from, to);
+        String source = data.get("source").getAsString();
+        String dest = data.get("dest").getAsString();
+        int sourceIndex = data.get("si").getAsInt();
+        int destIndex = data.get("di").getAsInt();
+
+        ItemInstance item = null;
+
+        switch (source) {
+            case "world":
+                item = _server.tileMap.getItem(_server.tileMap.getCoordFromIndex(sourceIndex));
+                break;
+            case "inv":
+                item = player.inventory.get(sourceIndex);
+                break;
+        }
+
+        if (item == ItemInstance.NONE) {
+            return;
+        }
+
+        boolean moveSuccessful = false;
+        switch (dest) {
+            case "world":
+                moveSuccessful = _server.addItem(_server.tileMap.getCoordFromIndex(destIndex), item);
+                break;
+            case "inv":
+                moveSuccessful = player.inventory.add(item, destIndex);
+                break;
+        }
+
+        if (!moveSuccessful) {
+            return;
+        }
+
+        switch (source) {
+            case "world":
+                _server.changeItem(_server.tileMap.getCoordFromIndex(sourceIndex), ItemInstance.NONE);
+                break;
+            case "inv":
+                player.inventory.deleteSlot(sourceIndex);
+                break;
+        }
     }
 
     private void ProcessChat(JsonObject data) throws IOException {
@@ -125,6 +162,6 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             }
         }
 
-        _server.sendToAll(_messageBuilder.chat(_player.username + " says: " + msg));
+        _server.sendToAll(_messageBuilder.chat(player.username + " says: " + msg));
     }
 }

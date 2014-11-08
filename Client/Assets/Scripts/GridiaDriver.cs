@@ -16,7 +16,7 @@ public class GridiaDriver : MonoBehaviour
 
     void Start()
     {
-        invGui = new InventoryGUI(0, Screen.height - 32 * 2);
+        invGui = new InventoryGUI(new Vector2(0, Screen.height - 32 * 2));
         Locator.Provide(invGui);
 
         _game = new GridiaGame();
@@ -24,8 +24,8 @@ public class GridiaDriver : MonoBehaviour
         ResizeCamera();
 
         MonoBehaviour.print("connecting");
-        //ConnectionToGridiaServerHandler conn = new ConnectionToGridiaServerHandler(_game, "localhost", 1234);
-        ConnectionToGridiaServerHandler conn = new ConnectionToGridiaServerHandler(_game, "23.102.24.247", 1234);
+        ConnectionToGridiaServerHandler conn = new ConnectionToGridiaServerHandler(_game, "localhost", 1234);
+        //ConnectionToGridiaServerHandler conn = new ConnectionToGridiaServerHandler(_game, "23.102.24.247", 1234);
         Locator.Provide(conn);
         conn.Start();
 
@@ -48,8 +48,10 @@ public class GridiaDriver : MonoBehaviour
         invGui.Render();
         if (mouseDownItem != null)
         {
-            invGui.RenderSlot((int)Input.mousePosition.x - 16, Screen.height - (int)Input.mousePosition.y - 16, mouseDownItem);
+            var rect = new Rect((int)Input.mousePosition.x - 16, Screen.height - (int)Input.mousePosition.y - 16, 32, 32);
+            invGui.RenderSlot(rect, mouseDownItem);
         }
+
         chatInput = GUI.TextField(chatInputRect, chatInput);
 
         GUI.BeginGroup(chatAreaRect); 
@@ -57,8 +59,6 @@ public class GridiaDriver : MonoBehaviour
         GUILayout.TextArea(chatArea);
         GUILayout.EndScrollView();
         GUI.EndGroup();
-
-        if (invGui.tooltip != null) GUI.Box(invGui.toolRect, invGui.tooltip);
 
         if (chatInput != "" && Event.current.type == EventType.keyDown && Event.current.character == '\n')
         {
@@ -68,48 +68,45 @@ public class GridiaDriver : MonoBehaviour
     }
 
     ItemInstance mouseDownItem = null; // :(
-    Vector3 downCoord;
     int downSlot;
+    int sourceIndex;
     String mouseDownLocation;
-
-    Vector2 GetMouse() {
-        var mouse = Input.mousePosition;
-        mouse.y = Screen.height - mouse.y;
-        return mouse;
-    }
 
     void Update()
     {
-        Vector2 mouse = GetMouse();
-        // no no no no :(
-
-        if (Input.GetMouseButtonDown(0) && !chatInputRect.Contains(mouse) && !chatAreaRect.Contains(mouse)) 
+        if (Input.GetMouseButtonDown(0))
         {
-            downSlot = invGui.getSlotIndexUnderPoint(mouse);
-            if (downSlot != -1)
+            if (invGui.MouseDownSlot != -1)
             {
                 mouseDownLocation = "inv";
+                sourceIndex = invGui.MouseDownSlot;
+                mouseDownItem = invGui.Inventory[invGui.MouseDownSlot];
             }
-            else 
+            else
             {
                 mouseDownLocation = "world";
-                downCoord = getTileLocationOfMouse();
+                var downCoord = getTileLocationOfMouse();
                 mouseDownItem = _game.tileMap.GetTile((int)downCoord.x, (int)downCoord.y, (int)downCoord.z).Item;
+                sourceIndex = _game.tileMap.ToIndex(downCoord);
             }
         }
-        if (Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(0))
         {
-            if (mouseDownLocation == "inv")
+            String dest;
+            int destIndex;
+            if (invGui.MouseUpSlot != -1)
             {
-                Debug.Log(downSlot);
+                dest = "inv";
+                destIndex = invGui.MouseUpSlot;
             }
-            else 
+            else
             {
-                Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(downCoord, getTileLocationOfMouse());
+                dest = "world";
+                destIndex = _game.tileMap.ToIndex(getTileLocationOfMouse());
             }
+            Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(mouseDownLocation, dest, sourceIndex, destIndex);
             mouseDownItem = null;
         }
-
 
         if (_game.stateMachine != null) {
             _game.stateMachine.Step(Time.deltaTime);

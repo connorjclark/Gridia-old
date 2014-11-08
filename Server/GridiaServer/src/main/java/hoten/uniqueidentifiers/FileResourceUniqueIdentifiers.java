@@ -11,6 +11,7 @@ public class FileResourceUniqueIdentifiers extends UniqueIdentifiers {
 
     public FileResourceUniqueIdentifiers(String dir) {
         super(100);
+        new File(dir).mkdirs();
         bufferIdsThatArentClaimed(dir);
     }
 

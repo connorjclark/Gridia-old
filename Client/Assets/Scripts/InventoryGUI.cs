@@ -8,69 +8,73 @@ namespace Gridia
 {
     public class InventoryGUI
     {
-        public List<ItemInstance> Inventory { private get; set; }
+        public Vector2 Position { get; set; }
+        public List<ItemInstance> Inventory { get; set; }
         public int slotsAcross = 10;
-        public int Left { get; set; }
-        public int Top { get; set; }
+        public int MouseDownSlot { get; private set; }
+        public int MouseUpSlot { get; private set; }
 
-        public InventoryGUI(int left, int top)
+        public InventoryGUI(Vector2 position)
         {
-            Left = left;
-            Top = top;
+            Position = position;
             Inventory = new List<ItemInstance>();
         }
 
-        public int getSlotIndexUnderPoint(Vector2 point) {
-            int x = (int)(point.x / 32);
-            int y = (int)((Screen.height - point.y) / 32);
-
-            x = Math.Max(0, Math.Min(Screen.width, x));
-            y = Math.Max(0, Math.Min(Screen.height, y));
-
-            int slotsColumn = (int)Math.Ceiling(Inventory.Count / (float)slotsAcross);
-
-            int slotIndex = x + (slotsColumn-y - 1) * slotsAcross;
-
-            if (x >= slotsAcross || y >= slotsColumn || slotIndex >= Inventory.Count)
-            {
-                return -1;
-            }
-
-            return slotIndex;
-        }
-
-        public String tooltip;
-        public Rect toolRect;
-
         public void Render() {
-            tooltip = null;
+            MouseUpSlot = MouseDownSlot = -1;
+
+            int width = slotsAcross * 32;
+            int height = (int)Math.Ceiling((float)Inventory.Count / slotsAcross) * 32;
+            GUILayout.BeginArea(new Rect(Position.x, Position.y, width, height));
+
+            String tooltip = null;
+            Rect tooltipRect = new Rect(0, 0, 0, 0);
             Vector2 mouse = Event.current.mousePosition;
             for (int i = 0; i < Inventory.Count; i++)
 			{
-                int x = i % slotsAcross;
-                int y = i / slotsAcross;
+                int x = (i % slotsAcross) * 32;
+                int y = (i / slotsAcross) * 32;
                 var item = Inventory[i];
-                RenderSlot(x * 32 + Left, y * 32 + Top, item);
-                Rect loc = new Rect(x * 32 + Left, y * 32 + Top, 32, 32); // :(
-                if (loc.Contains(mouse))
+                var slotRect = new Rect(x, y, 32, 32);
+                RenderSlot(slotRect, item);
+                bool slotContainsMouse = slotRect.Contains(mouse);
+                if (slotContainsMouse)
                 {
-                    tooltip = item.Item.Name;
-                    toolRect = new Rect(mouse.x, mouse.y - 30, 150, 30);
+                    if (Event.current.type == EventType.MouseDown)
+                    {
+                        MouseDownSlot = i;
+                    }
+                    else if (Event.current.type == EventType.MouseUp)
+                    {
+                        MouseUpSlot = i;
+                    }
+                    else
+                    {
+                        tooltip = item.Item.Name;
+                        tooltipRect = new Rect(mouse.x, mouse.y - 30, 150, 30);
+                    }
                 }
 			}
+
+            GUILayout.EndArea();
+
+            if (tooltip != null) {
+                var globalRect = new Rect(Position.x + tooltipRect.x, Position.y + tooltipRect.y, tooltipRect.width, tooltipRect.height);
+                GUI.Box(globalRect, tooltip);
+            }
         }
 
-        public void RenderSlot(int x, int y, ItemInstance item) {
-            var textures = Locator.Get<TextureManager>();
-
-            Rect loc = new Rect(x, y, 32, 32);
+        public void RenderSlot(Rect loc, ItemInstance item) {
             GUI.Box(loc, "");
 
             if (item.Item.Animations == null) return; // :(
+
+            var textures = Locator.Get<TextureManager>();
+
             int spriteId = item.Item.Animations[0];
             int textureX = (spriteId % GridiaConstants.SPRITES_IN_SHEET) % GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
             int textureY = 9 - (spriteId % GridiaConstants.SPRITES_IN_SHEET) / GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
-            Rect texCoords = new Rect(textureX / 10.0f, textureY / 10.0f, 1 / 10.0f, 1 / 10.0f); // :( don't hardcode 10
+            var texCoords = new Rect(textureX / 10.0f, textureY / 10.0f, 1 / 10.0f, 1 / 10.0f); // :( don't hardcode 10
             GUI.DrawTextureWithTexCoords(loc, textures.GetItemsTexture(spriteId / GridiaConstants.SPRITES_IN_SHEET), texCoords);
         }
     }

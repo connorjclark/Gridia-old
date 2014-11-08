@@ -83,6 +83,12 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
                 var backToJson = JsonConvert.SerializeObject(data["inv"]);
                 Locator.Get<InventoryGUI>().Inventory = JsonConvert.DeserializeObject<List<ItemInstance>>(backToJson, new ItemInstanceConverter());
                 break;
+            case GridiaProtocols.Clientbound.InventoryUpdate:
+                int index = (int)data["index"];
+                item = (int)data["item"]; // :(
+                quantity = (int)data["quantity"];
+                Locator.Get<InventoryGUI>().Inventory[index] = Locator.Get<ContentManager>().GetItem(item).GetInstance(quantity);
+                break;
         }
     }
 
@@ -166,12 +172,15 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         Send(message);
     }
 
-    public void MoveItem(Vector3 from, Vector3 to) {
+    public void MoveItem(String source, String dest, int sourceIndex, int destIndex)
+    {
         Message message = new JsonMessageBuilder()
             .Protocol(Outbound(GridiaProtocols.Serverbound.MoveItem))
-                .Set("from", new { x = from.x, y = from.y, z = from.z })
-                .Set("to", new { x = to.x, y = to.y, z = to.z })
-                .Build();
+            .Set("source", source)
+            .Set("dest", dest)
+            .Set("si", sourceIndex)
+            .Set("di", destIndex)
+            .Build();
         Send(message);
     }
 

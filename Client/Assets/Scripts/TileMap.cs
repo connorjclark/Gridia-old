@@ -108,5 +108,12 @@ namespace Gridia
             int mod = value % Size;
             return mod < 0 ? Size + mod : mod;
         }
+
+        public int ToIndex(Vector3 v) {
+            int x = (int)v.x;
+            int y = (int)v.y;
+            int z = (int)v.z;
+            return x + y * Size + z * Area;
+        }
     }
 }

@@ -3,6 +3,7 @@ package hoten.gridiaserver.serving;
 import hoten.gridiaserver.content.ContentManager;
 import hoten.gridiaserver.map.Coord;
 import hoten.gridiaserver.Creature;
+import hoten.gridiaserver.Inventory;
 import hoten.gridiaserver.content.ItemInstance;
 import hoten.gridiaserver.Player;
 import hoten.gridiaserver.map.Sector;
@@ -24,6 +25,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler> {
 
+    public static ServingGridia instance; // :(
+
     public final GridiaMessageToClientBuilder messageBuilder = new GridiaMessageToClientBuilder(this::outbound);
     public final TileMap tileMap;
     public final ContentManager contentManager;
@@ -38,6 +41,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         SectorSaver sectorSaver = new SectorSaver();
         tileMap = new TileMap(100, 1, 20, sectorLoader, sectorSaver);
         tileMap.loadAll();
+        instance = this;
     }
 
     @Override
@@ -155,13 +159,26 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
 
     private void updateTile(Coord loc) {
         Tile tile = tileMap.getTile(loc);
-        Message message = new JsonMessageBuilder()
-                .protocol(outbound(TileUpdate))
-                .set("loc", loc)
-                .set("item", tile.item.data.id)
-                .set("quantity", tile.item.quantity)
-                .set("floor", tile.floor)
-                .build();
-        sendToClientsWithAreaLoaded(message, loc);
+        sendToClientsWithAreaLoaded(messageBuilder.updateTile(loc, tile), loc);
+    }
+
+    //adds item only if it is to an empty tile or if it would stack
+    public boolean addItem(Coord loc, ItemInstance itemToAdd) {
+        ItemInstance currentItem = tileMap.getTile(loc).item;
+        boolean willStack = ItemInstance.stackable(currentItem, itemToAdd);
+        if (currentItem.data.id == 0 || willStack) {
+            if (willStack) {
+                short q = (short) (currentItem.quantity + itemToAdd.quantity);
+                itemToAdd.quantity = q;
+                changeItem(loc, itemToAdd);
+            }
+        }
+        changeItem(loc, itemToAdd);
+        return true;
+    }
+
+    public void updateInventorySlot(Inventory inventory, int slotIndex) {
+        Message message = messageBuilder.updateInventorySlot(inventory, slotIndex);
+        sendTo(message, client -> client.player.inventory.id == inventory.id);
     }
 }
