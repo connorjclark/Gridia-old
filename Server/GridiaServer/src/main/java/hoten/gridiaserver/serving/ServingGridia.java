@@ -166,13 +166,11 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     public boolean addItem(Coord loc, ItemInstance itemToAdd) {
         ItemInstance currentItem = tileMap.getTile(loc).item;
         boolean willStack = ItemInstance.stackable(currentItem, itemToAdd);
-        if (currentItem.data.id == 0 || willStack) {
-            if (willStack) {
-                short q = (short) (currentItem.quantity + itemToAdd.quantity);
-                itemToAdd.quantity = q;
-                changeItem(loc, itemToAdd);
-            }
+        if (currentItem.data.id != 0 && !willStack) {
+            return false;
         }
+        int q = currentItem.quantity + itemToAdd.quantity;
+        itemToAdd.quantity = q;
         changeItem(loc, itemToAdd);
         return true;
     }

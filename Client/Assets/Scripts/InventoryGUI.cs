@@ -13,18 +13,20 @@ namespace Gridia
         public int slotsAcross = 10;
         public int MouseDownSlot { get; private set; }
         public int MouseUpSlot { get; private set; }
+        private float _slotSize;
 
-        public InventoryGUI(Vector2 position)
+        public InventoryGUI(Vector2 position, float scale)
         {
             Position = position;
             Inventory = new List<ItemInstance>();
+            _slotSize = scale * GridiaConstants.SPRITE_SIZE;
         }
 
         public void Render() {
             MouseUpSlot = MouseDownSlot = -1;
 
-            int width = slotsAcross * 32;
-            int height = (int)Math.Ceiling((float)Inventory.Count / slotsAcross) * 32;
+            float width = slotsAcross * _slotSize;
+            float height = (int)Math.Ceiling((float)Inventory.Count / slotsAcross) * _slotSize;
             GUILayout.BeginArea(new Rect(Position.x, Position.y, width, height));
 
             String tooltip = null;
@@ -32,10 +34,10 @@ namespace Gridia
             Vector2 mouse = Event.current.mousePosition;
             for (int i = 0; i < Inventory.Count; i++)
 			{
-                int x = (i % slotsAcross) * 32;
-                int y = (i / slotsAcross) * 32;
+                float x = (i % slotsAcross) * _slotSize;
+                float y = (i / slotsAcross) * _slotSize;
                 var item = Inventory[i];
-                var slotRect = new Rect(x, y, 32, 32);
+                var slotRect = new Rect(x, y, _slotSize, _slotSize);
                 RenderSlot(slotRect, item);
                 bool slotContainsMouse = slotRect.Contains(mouse);
                 if (slotContainsMouse)
@@ -51,7 +53,7 @@ namespace Gridia
                     else
                     {
                         tooltip = item.Item.Name;
-                        tooltipRect = new Rect(mouse.x, mouse.y - 30, 150, 30);
+                        tooltipRect = new Rect(mouse.x, mouse.y - 60, 150, 30);
                     }
                 }
 			}

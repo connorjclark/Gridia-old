@@ -16,7 +16,7 @@ public class GridiaDriver : MonoBehaviour
 
     void Start()
     {
-        invGui = new InventoryGUI(new Vector2(0, Screen.height - 32 * 2));
+        invGui = new InventoryGUI(new Vector2(0, Screen.height - 64 * 2), 2.0f);
         Locator.Provide(invGui);
 
         _game = new GridiaGame();
