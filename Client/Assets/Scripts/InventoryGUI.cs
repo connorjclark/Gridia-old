@@ -100,8 +100,7 @@ namespace Gridia
                 GUILayout.EndArea();
             }, "Inventory");
 
-            _windowRect.x = Mathf.Clamp(_windowRect.x, 0, Screen.width - _windowRect.width);
-            _windowRect.y = Mathf.Clamp(_windowRect.y, 0, Screen.height - _windowRect.height);
+            ClampPosition();
 
             RenderTooltip();
         }
@@ -116,16 +115,17 @@ namespace Gridia
 
         private void RenderDragAndResize()
         {
-            GUI.DragWindow(new Rect(0, 0, _windowRect.width - 20, 20));
-            var resizeRect = new Rect(_windowRect.width - 20, 0, 20, 20);
+            GUI.DragWindow(new Rect(0, 0, _windowRect.width - 40, 20));
+            var resizeRect = new Rect(_windowRect.width - 40, 0, 40, 20);
             if (Event.current.type == EventType.mouseDown && resizeRect.Contains(Event.current.mousePosition))
             {
                 ResizingWindow = true;
             }
-            GUI.Label(resizeRect, "▲");
+            GUI.Label(resizeRect, " ◄►");
         }
 
-        private void RenderTooltip() {
+        private void RenderTooltip() 
+        {
             if (_tooltip != null)
             {
                 var globalRect = new Rect(Event.current.mousePosition.x + _tooltipRect.x, Event.current.mousePosition.y + _tooltipRect.y, _tooltipRect.width, _tooltipRect.height);
@@ -133,7 +133,16 @@ namespace Gridia
             }
         }
 
-        public void RenderSlot(Rect loc, ItemInstance item) {
+        private void ClampPosition() 
+        {
+            var maxWidth = Math.Max(0, Screen.width - _windowRect.width);
+            var maxHeight = Math.Max(0, Screen.height - _windowRect.height);
+            _windowRect.x = Mathf.Clamp(_windowRect.x, 0, maxWidth);
+            _windowRect.y = Mathf.Clamp(_windowRect.y, 0, maxHeight);
+        }
+
+        public void RenderSlot(Rect loc, ItemInstance item) 
+        {
             GUI.Box(loc, "");
 
             if (item.Item.Animations == null) return; // :(
