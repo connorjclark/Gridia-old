@@ -1,10 +1,20 @@
 Features
 
-Item movement
-Crafting
-Inventory
-Azure
-World generation
+By 11/11/14:
+  Tabbed UI
+  Refactor
+
+By 11/18/14:
+  Crafting
+  Smooth movement
+
+By 11/25/14:
+  Combat
+
+By 12/2/14:
+  World generation
+  Zoom in/out
+  Build a test dungeon
 
 Issues
 
@@ -12,4 +22,4 @@ GZipStream does not work in Unity
 Clean up project structure
 Gridia namespace
 Unity doesn't compile this : 
-JsonConvert issue: data["id"].Value<int>() doesn't compile in Unity. Forced to do (int)data["id"]
+  JsonConvert issue: data["id"].Value<int>() doesn't compile in Unity. Forced to do (int)data["id"]
