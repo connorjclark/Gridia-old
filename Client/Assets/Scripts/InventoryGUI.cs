@@ -8,7 +8,6 @@ namespace Gridia
 {
     public class InventoryGUI
     {
-        public Vector2 Position { get; set; }
         private List<ItemInstance> _inventory;
         public List<ItemInstance> Inventory
         {
@@ -21,7 +20,7 @@ namespace Gridia
                 _inventory = value;
                 float width = slotsAcross * _slotSize;
                 float height = (int)Math.Ceiling((float)Inventory.Count / slotsAcross) * _slotSize;
-                _windowRect = new Rect(Position.x, Position.y, width, height + _borderHeight * 2);
+                _windowRect = new Rect(_windowRect.x, _windowRect.y, width + _borderSize * 2, height + _borderSize * 2);
             }
         }
         public int slotsAcross = 10;
@@ -31,14 +30,14 @@ namespace Gridia
         public bool ResizingWindow { get; private set; }
         private float _slotSize;
         private float _scale;
-        private Rect _windowRect;
+        private Rect _windowRect = new Rect(0, 0, 0, 0);
         private String _tooltip = null;
         private Rect _tooltipRect = new Rect(0, 0, 0, 0);
-        private int _borderHeight = 20;
+        private int _borderSize = 20;
 
         public InventoryGUI(Vector2 position, float scale)
         {
-            Position = position;
+            _windowRect = new Rect(position.x, position.y, 0, 0);
             Inventory = new List<ItemInstance>();
             _slotSize = scale * GridiaConstants.SPRITE_SIZE;
             _scale = scale;
@@ -69,7 +68,7 @@ namespace Gridia
             {
                 RenderDragAndResize();
 
-                GUILayout.BeginArea(new Rect(5, _borderHeight, 1000, 1000));
+                GUILayout.BeginArea(new Rect(_borderSize, _borderSize, 1000, 1000));
 
                 for (int i = 0; i < Inventory.Count; i++)
                 {
@@ -106,10 +105,10 @@ namespace Gridia
         }
 
         private void Resize() {
-            _windowRect.width = Event.current.mousePosition.x - _windowRect.x + 10;
-            _windowRect.width = Mathf.Clamp(_windowRect.width, _slotSize, Screen.width);
+            _windowRect.width = Event.current.mousePosition.x - _windowRect.x + _borderSize * 2;
+            _windowRect.width = Mathf.Clamp(_windowRect.width, _slotSize + _borderSize * 2, Screen.width);
             slotsAcross = (int)(_windowRect.width / _slotSize);
-            int height = (int)(Math.Ceiling((float)Inventory.Count / slotsAcross) * _slotSize) + _borderHeight * 2;
+            int height = (int)(Math.Ceiling((float)Inventory.Count / slotsAcross) * _slotSize) + _borderSize * 2;
             _windowRect.height = height;
         }
 
