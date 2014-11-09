@@ -27,7 +27,6 @@ namespace Gridia
         public int MouseDownSlot { get; private set; }
         public int MouseUpSlot { get; private set; }
         private float _slotSize;
-        private float _scale;
         private String _tooltip = null;
         private Rect _tooltipRect = new Rect(0, 0, 0, 0);
 
@@ -36,7 +35,6 @@ namespace Gridia
             ResizeOnVertical = false;
             Inventory = new List<ItemInstance>();
             _slotSize = scale * GridiaConstants.SPRITE_SIZE;
-            _scale = scale;
         }
 
         protected override void RenderContents()
@@ -68,7 +66,7 @@ namespace Gridia
             }
         }
 
-        public void Render() {
+        public override void Render() {
             if (Event.current.type == EventType.Layout)
             {
                 MouseUpSlot = MouseDownSlot = -1;
