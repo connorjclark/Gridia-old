@@ -20,7 +20,7 @@ namespace Gridia
                 _inventory = value;
                 float width = slotsAcross * _slotSize;
                 float height = (int)Math.Ceiling((float)Inventory.Count / slotsAcross) * _slotSize;
-                _windowRect = new Rect(_windowRect.x, _windowRect.y, width + BorderSize * 2, height + BorderSize * 2);
+                WindowRect = new Rect(WindowRect.x, WindowRect.y, width + BorderSize * 2, height + BorderSize * 2);
             }
         }
         public int slotsAcross = 10;
@@ -82,10 +82,12 @@ namespace Gridia
         protected override void Resize()
         {
             base.Resize();
-            _windowRect.width = Math.Max(_windowRect.width, BorderSize * 2 + _slotSize);
-            slotsAcross = (int)(_windowRect.width / _slotSize);
+            var resized = WindowRect;
+            resized.width = Math.Max(resized.width, BorderSize * 2 + _slotSize);
+            slotsAcross = (int)(resized.width / _slotSize);
             int height = (int)(Math.Ceiling((float)Inventory.Count / slotsAcross) * _slotSize + BorderSize * 2);
-            _windowRect.height = height;
+            resized.height = height;
+            WindowRect = resized;
         }
 
         private void RenderTooltip() 
