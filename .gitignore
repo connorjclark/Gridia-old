@@ -74,3 +74,5 @@ Client/.nuget/NuGet.exe
 
 # Unity
 client_Data/
+*.csproj
+*.sln
