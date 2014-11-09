@@ -54,11 +54,13 @@
      <Compile Include="Assets\Scripts\Content\ItemInstance.cs" />
      <Compile Include="Assets\Scripts\Content\Monster.cs" />
      <Compile Include="Assets\Scripts\Creature.cs" />
+     <Compile Include="Assets\Scripts\GUI\ChatGUI.cs" />
+     <Compile Include="Assets\Scripts\GUI\GridiaWindow.cs" />
+     <Compile Include="Assets\Scripts\GUI\InventoryGUI.cs" />
      <Compile Include="Assets\Scripts\GridiaConstants.cs" />
      <Compile Include="Assets\Scripts\GridiaDriver.cs" />
      <Compile Include="Assets\Scripts\GridiaMain.cs" />
      <Compile Include="Assets\Scripts\GridiaProtocols.cs" />
-     <Compile Include="Assets\Scripts\InventoryGUI.cs" />
      <Compile Include="Assets\Scripts\Layer.cs" />
      <Compile Include="Assets\Scripts\Lighting.cs" />
      <Compile Include="Assets\Scripts\Locator.cs" />
@@ -72,13 +74,13 @@
      <None Include="Assets\Resources\shaders\Unlit-Alpha.shader" />
      <None Include="Assets\Resources\shaders\Sprites-Diffuse.shader" />
  <Reference Include="MiscUtil">
- <HintPath>E:/Dev/Gridia-Unity/Client/Assets/MiscUtil.dll</HintPath>
+ <HintPath>E:/Dev/Gridia/Client/Assets/MiscUtil.dll</HintPath>
  </Reference>
  <Reference Include="Newtonsoft.Json">
- <HintPath>E:/Dev/Gridia-Unity/Client/Assets/Newtonsoft.Json.dll</HintPath>
+ <HintPath>E:/Dev/Gridia/Client/Assets/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="Serving">
- <HintPath>E:/Dev/Gridia-Unity/Client/Assets/Serving.dll</HintPath>
+ <HintPath>E:/Dev/Gridia/Client/Assets/Serving.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
