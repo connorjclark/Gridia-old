@@ -115,9 +115,8 @@ public class TileMap {
         return mod < 0 ? size + mod : mod;
     }
 
-    public void wrap(Coord loc) {
-        loc.x = wrap(loc.x);
-        loc.y = wrap(loc.y);
+    public Coord wrap(Coord loc) {
+        return new Coord(wrap(loc.x), wrap(loc.y), loc.z);
     }
 
     public boolean walkable(int x, int y, int z) {
