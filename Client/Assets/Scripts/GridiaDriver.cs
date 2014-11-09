@@ -73,6 +73,18 @@ public class GridiaDriver : MonoBehaviour
     int sourceIndex;
     String mouseDownLocation;
 
+    Vector2 getMouse() {
+        var pos = Input.mousePosition;
+        pos.y = Screen.height - pos.y;
+        return pos;
+    }
+
+    bool isMouseOverGUI() 
+    {
+        var mouse = getMouse();
+        return invGui.ResizingWindow || invGui.MouseOver || chatAreaRect.Contains(mouse) || chatInputRect.Contains(mouse);
+    }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -83,7 +95,7 @@ public class GridiaDriver : MonoBehaviour
                 sourceIndex = invGui.MouseDownSlot;
                 mouseDownItem = invGui.Inventory[invGui.MouseDownSlot];
             }
-            else
+            else if (!isMouseOverGUI())
             {
                 mouseDownLocation = "world";
                 var downCoord = getTileLocationOfMouse();
@@ -91,7 +103,7 @@ public class GridiaDriver : MonoBehaviour
                 sourceIndex = _game.tileMap.ToIndex(downCoord);
             }
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(0) && mouseDownItem != null)
         {
             String dest;
             int destIndex;

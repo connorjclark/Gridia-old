@@ -21,7 +21,7 @@ namespace Gridia
                 _inventory = value;
                 float width = slotsAcross * _slotSize;
                 float height = (int)Math.Ceiling((float)Inventory.Count / slotsAcross) * _slotSize;
-                _windowRect = new Rect(Position.x, Position.y, width, height + 40);
+                _windowRect = new Rect(Position.x, Position.y, width, height + _borderHeight * 2);
             }
         }
         public int slotsAcross = 10;
@@ -34,7 +34,7 @@ namespace Gridia
         private Rect _windowRect;
         private String _tooltip = null;
         private Rect _tooltipRect = new Rect(0, 0, 0, 0);
-
+        private int _borderHeight = 20;
 
         public InventoryGUI(Vector2 position, float scale)
         {
@@ -63,11 +63,13 @@ namespace Gridia
                 Resize();
             }
 
+            MouseOver = _windowRect.Contains(Event.current.mousePosition);
+
             _windowRect = GUI.Window(0, _windowRect, windowId =>
             {
                 RenderDragAndResize();
 
-                GUILayout.BeginArea(new Rect(5, 20, 1000, 1000));
+                GUILayout.BeginArea(new Rect(5, _borderHeight, 1000, 1000));
 
                 for (int i = 0; i < Inventory.Count; i++)
                 {
@@ -108,7 +110,7 @@ namespace Gridia
             _windowRect.width = Event.current.mousePosition.x - _windowRect.x + 10;
             _windowRect.width = Mathf.Clamp(_windowRect.width, _slotSize, Screen.width);
             slotsAcross = (int)(_windowRect.width / _slotSize);
-            int height = (int)(Math.Ceiling((float)Inventory.Count / slotsAcross) * _slotSize) + 40;
+            int height = (int)(Math.Ceiling((float)Inventory.Count / slotsAcross) * _slotSize) + _borderHeight * 2;
             _windowRect.height = height;
         }
 
