@@ -52,43 +52,28 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
                 GridiaDriver.gameInitWaitHandle.WaitOne();
                 break;
             case GridiaProtocols.Clientbound.AddCreature:
-                _game.CreateCreature((int)data["id"], (int)data["image"], (int)data["loc"]["x"], (int)data["loc"]["y"], (int)data["loc"]["z"]);
+                AddCreature(data);
                 break;
             case GridiaProtocols.Clientbound.MoveCreature:
-                _game.MoveCreature((int)data["id"], (int)data["loc"]["x"], (int)data["loc"]["y"], (int)data["loc"]["z"]);
+                MoveCreature(data);
                 break;
             case GridiaProtocols.Clientbound.RemoveCreature:
-                _game.RemoveCreature((int)data["id"]);
+                RemoveCreature(data);
                 break;
             case GridiaProtocols.Clientbound.Chat:
-                var chat = Locator.Get<ChatGUI>();
-                chat.ChatArea += data["msg"] + "\n";
-                chat.SetScrollToMax();
+                Chat(data);
                 break;
             case GridiaProtocols.Clientbound.SetFocus:
-                var id = (int)data["id"];
-                MonoBehaviour.print("focus id: " + id);
-                _game.view.FocusId = id;
-                _game.stateMachine = new StateMachine();
-                _game.stateMachine.SetState(new PlayerMovementState(8));
+                SetFocus(data);
                 break;
             case GridiaProtocols.Clientbound.TileUpdate:
-                var item = (int) data["item"];
-                var quantity = (int) data["quantity"];
-                var x = (int)data["loc"]["x"];
-                var y = (int)data["loc"]["y"];
-                var z = (int)data["loc"]["z"];
-                _game.tileMap.SetItem(Locator.Get<ContentManager>().GetItem(item).GetInstance(quantity), x, y, z);
+                TileUpdate(data);
                 break;
             case GridiaProtocols.Clientbound.Inventory:
-                var backToJson = JsonConvert.SerializeObject(data["inv"]);
-                Locator.Get<InventoryGUI>().Inventory = JsonConvert.DeserializeObject<List<ItemInstance>>(backToJson, new ItemInstanceConverter());
+                Inventory(data);
                 break;
             case GridiaProtocols.Clientbound.InventoryUpdate:
-                int index = (int)data["index"];
-                item = (int)data["item"]; // :(
-                quantity = (int)data["quantity"];
-                Locator.Get<InventoryGUI>().Inventory[index] = Locator.Get<ContentManager>().GetItem(item).GetInstance(quantity);
+                InventoryUpdate(data);
                 break;
         }
     }
@@ -98,40 +83,113 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         switch ((GridiaProtocols.Clientbound)type)
         {
             case GridiaProtocols.Clientbound.SectorData:
-                var sx = data.ReadInt32();
-                var sy = data.ReadInt32();
-                var sz = data.ReadInt32();
-                var sectorSize = _game.tileMap.SectorSize;
-                var tiles = new Tile[sectorSize, sectorSize];
-                var cm = Locator.Get<ContentManager>();
-
-                for (int x = 0; x < sectorSize; x++)
-                {
-                    for (int y = 0; y < sectorSize; y++)
-                    {
-                        var floor = data.ReadInt16();
-                        var itemType = data.ReadInt16();
-                        var tile = new Tile();
-                        tile.Floor = floor;
-                        tile.Item = new ItemInstance(cm.GetItem(itemType));
-                        tiles[x, y] = tile;
-                    }
-                }
-                _game.tileMap.SetSector(new Sector(tiles), sx, sy, sz);
-
-                var numCreatures = data.ReadInt32();
-                for (int i = 0; i < numCreatures; i++)
-                {
-                    var id = data.ReadInt16();
-                    var image = data.ReadInt16();
-                    var x = data.ReadInt16();
-                    var y = data.ReadInt16();
-                    var z = data.ReadInt16();
-                    _game.CreateCreature(id, image, x, y, z);
-                }
+                SectorData(data);
                 break;
         }
     }
+
+    //inbound
+
+    private void AddCreature(JObject data) 
+    {
+        int id = (int)data["id"];
+        int image = (int)data["image"];
+        int x = (int)data["loc"]["x"];
+        int y = (int)data["loc"]["y"];
+        int z = (int)data["loc"]["z"];
+        _game.CreateCreature(id, image, x, y, z);
+    }
+
+    private void MoveCreature(JObject data) 
+    {
+        int id = (int)data["id"];
+        int x = (int)data["loc"]["x"];
+        int y = (int)data["loc"]["y"];
+        int z = (int)data["loc"]["z"];
+        _game.MoveCreature(id, x, y, z);
+    }
+
+    private void RemoveCreature(JObject data)
+    {
+        int id = (int)data["id"];
+        _game.RemoveCreature(id);
+    }
+
+    private void Chat(JObject data) 
+    {
+        var chat = Locator.Get<ChatGUI>();
+        chat.ChatArea += data["msg"] + "\n";
+        chat.SetScrollToMax();
+    }
+
+    private void SetFocus(JObject data)
+    {
+        var id = (int)data["id"];
+        _game.view.FocusId = id;
+        _game.stateMachine = new StateMachine();
+        _game.stateMachine.SetState(new PlayerMovementState(8));
+    }
+
+    private void TileUpdate(JObject data)
+    {
+        var item = (int)data["item"];
+        var quantity = (int)data["quantity"];
+        var x = (int)data["loc"]["x"];
+        var y = (int)data["loc"]["y"];
+        var z = (int)data["loc"]["z"];
+        _game.tileMap.SetItem(Locator.Get<ContentManager>().GetItem(item).GetInstance(quantity), x, y, z);
+    }
+
+    private void Inventory(JObject data)
+    {
+        var backToJson = JsonConvert.SerializeObject(data["inv"]); // :(
+        Locator.Get<InventoryGUI>().Inventory = JsonConvert.DeserializeObject<List<ItemInstance>>(backToJson, new ItemInstanceConverter());
+    }
+
+    private void InventoryUpdate(JObject data)
+    {
+        int index = (int)data["index"];
+        int item = (int)data["item"];
+        int quantity = (int)data["quantity"];
+        Locator.Get<InventoryGUI>().Inventory[index] = Locator.Get<ContentManager>().GetItem(item).GetInstance(quantity);
+    }
+
+    private void SectorData(JavaBinaryReader data) 
+    {
+        var sx = data.ReadInt32();
+        var sy = data.ReadInt32();
+        var sz = data.ReadInt32();
+        var sectorSize = _game.tileMap.SectorSize;
+        var tiles = new Tile[sectorSize, sectorSize];
+        var cm = Locator.Get<ContentManager>();
+
+        for (int x = 0; x < sectorSize; x++)
+        {
+            for (int y = 0; y < sectorSize; y++)
+            {
+                var floor = data.ReadInt16();
+                var itemType = data.ReadInt16();
+                var tile = new Tile();
+                tile.Floor = floor;
+                tile.Item = new ItemInstance(cm.GetItem(itemType));
+                tiles[x, y] = tile;
+            }
+        }
+        _game.tileMap.SetSector(new Sector(tiles), sx, sy, sz);
+
+        var numCreatures = data.ReadInt32();
+        for (int i = 0; i < numCreatures; i++)
+        {
+            var id = data.ReadInt16();
+            var image = data.ReadInt16();
+            var x = data.ReadInt16();
+            var y = data.ReadInt16();
+            var z = data.ReadInt16();
+            _game.CreateCreature(id, image, x, y, z);
+        }
+    }
+
+    //outbound
 
     public void PlayerMove(Vector3 loc)
     {
