@@ -30,7 +30,8 @@ namespace Gridia
         private String _tooltip = null;
         private Rect _tooltipRect = new Rect(0, 0, 0, 0);
 
-        public InventoryGUI(Vector2 position, float scale) : base(position, "Inventory")
+        public InventoryGUI(Vector2 position, float scale) 
+            : base(position, "Inventory")
         {
             ResizeOnVertical = false;
             Inventory = new List<ItemInstance>();
@@ -103,7 +104,7 @@ namespace Gridia
 
             if (item.Item.Animations == null) return; // :(
 
-            var textures = Locator.Get<TextureManager>();
+            var textures = Locator.Get<TextureManager>(); // :(
 
             int spriteId = item.Item.Animations[0];
             int textureX = (spriteId % GridiaConstants.SPRITES_IN_SHEET) % GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;

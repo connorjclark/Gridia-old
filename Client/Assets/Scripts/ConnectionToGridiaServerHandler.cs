@@ -61,8 +61,9 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
                 _game.RemoveCreature((int)data["id"]);
                 break;
             case GridiaProtocols.Clientbound.Chat:
-                GridiaDriver.chatArea += data["msg"] + "\n";
-                GridiaDriver.scrollPosition = new Vector2(0, int.MaxValue);
+                var chat = Locator.Get<ChatGUI>();
+                chat.ChatArea += data["msg"] + "\n";
+                chat.SetScrollToMax();
                 break;
             case GridiaProtocols.Clientbound.SetFocus:
                 var id = (int)data["id"];

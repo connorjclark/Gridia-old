@@ -23,7 +23,7 @@ namespace Gridia
         {
             WindowId = _NEXT_WINDOW_ID++;
             WindowName = windowName;
-            WindowRect = new Rect(position.x, position.y, 0, 0);
+            WindowRect = new Rect(position.x, position.y, 300, 300);
             ResizeOnHorizontal = ResizeOnVertical = true;
             BorderSize = 20;
         }

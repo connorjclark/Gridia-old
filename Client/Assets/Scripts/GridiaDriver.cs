@@ -13,12 +13,15 @@ public class GridiaDriver : MonoBehaviour
     public static AutoResetEvent gameInitWaitHandle = new AutoResetEvent(false);
     private GridiaGame _game;
     public InventoryGUI invGui;
+    public ChatGUI chatGui;
 
     void Start()
     {
-        float scale = 1.5f;
-        invGui = new InventoryGUI(new Vector2(0, Screen.height - 64 * scale - 20), scale);
+        invGui = new InventoryGUI(new Vector2(0, Int32.MaxValue), 1.5f);
         Locator.Provide(invGui);
+
+        chatGui = new ChatGUI(new Vector2(Int32.MaxValue, Int32.MaxValue));
+        Locator.Provide(chatGui);
 
         _game = new GridiaGame();
         Locator.Provide(_game);
@@ -39,12 +42,6 @@ public class GridiaDriver : MonoBehaviour
         gameInitWaitHandle.Set();
     }
 
-    string chatInput = "";
-    public static string chatArea = "\n\n\n\n";
-    Rect chatInputRect = new Rect(Screen.width / 2, Screen.height - 20, Screen.width / 2, 20);
-    Rect chatAreaRect = new Rect(Screen.width / 2, Screen.height - 120, Screen.width / 2, 100);
-    public static Vector2 scrollPosition = Vector2.zero;
-
     void OnGUI() {
         invGui.Render();
         if (mouseDownItem != null)
@@ -53,19 +50,7 @@ public class GridiaDriver : MonoBehaviour
             invGui.RenderSlot(rect, mouseDownItem);
         }
 
-        chatInput = GUI.TextField(chatInputRect, chatInput);
-
-        GUI.BeginGroup(chatAreaRect); 
-        scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(chatAreaRect.width), GUILayout.Height(chatAreaRect.height));
-        GUILayout.TextArea(chatArea);
-        GUILayout.EndScrollView();
-        GUI.EndGroup();
-
-        if (chatInput != "" && Event.current.type == EventType.keyDown && Event.current.character == '\n')
-        {
-            Locator.Get<ConnectionToGridiaServerHandler>().Chat(chatInput);
-            chatInput = "";
-        }
+        chatGui.Render();
     }
 
     ItemInstance mouseDownItem = null; // :(
@@ -82,7 +67,7 @@ public class GridiaDriver : MonoBehaviour
     bool isMouseOverGUI() 
     {
         var mouse = getMouse();
-        return invGui.ResizingWindow || invGui.MouseOver || chatAreaRect.Contains(mouse) || chatInputRect.Contains(mouse);
+        return invGui.ResizingWindow || invGui.MouseOver || chatGui.MouseOver || chatGui.ResizingWindow;
     }
 
     void Update()
