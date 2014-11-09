@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Gridia
 {
-    public class InventoryGUI
+    public class InventoryGUI : GridiaWindow
     {
         private List<ItemInstance> _inventory;
         public List<ItemInstance> Inventory
@@ -20,107 +20,72 @@ namespace Gridia
                 _inventory = value;
                 float width = slotsAcross * _slotSize;
                 float height = (int)Math.Ceiling((float)Inventory.Count / slotsAcross) * _slotSize;
-                _windowRect = new Rect(_windowRect.x, _windowRect.y, width + _borderSize * 2, height + _borderSize * 2);
+                _windowRect = new Rect(_windowRect.x, _windowRect.y, width + BorderSize * 2, height + BorderSize * 2);
             }
         }
         public int slotsAcross = 10;
         public int MouseDownSlot { get; private set; }
         public int MouseUpSlot { get; private set; }
-        public bool MouseOver { get; private set; }
-        public bool ResizingWindow { get; private set; }
         private float _slotSize;
         private float _scale;
-        private Rect _windowRect = new Rect(0, 0, 0, 0);
         private String _tooltip = null;
         private Rect _tooltipRect = new Rect(0, 0, 0, 0);
-        private int _borderSize = 20;
 
-        public InventoryGUI(Vector2 position, float scale)
+        public InventoryGUI(Vector2 position, float scale) : base(position, "Inventory")
         {
-            _windowRect = new Rect(position.x, position.y, 0, 0);
+            ResizeOnVertical = false;
             Inventory = new List<ItemInstance>();
             _slotSize = scale * GridiaConstants.SPRITE_SIZE;
             _scale = scale;
+        }
+
+        protected override void RenderContents()
+        {
+            for (int i = 0; i < Inventory.Count; i++)
+            {
+                float x = (i % slotsAcross) * _slotSize;
+                float y = (i / slotsAcross) * _slotSize;
+                var item = Inventory[i];
+                var slotRect = new Rect(x, y, _slotSize, _slotSize);
+                RenderSlot(slotRect, item);
+                bool slotContainsMouse = slotRect.Contains(Event.current.mousePosition);
+                if (slotContainsMouse)
+                {
+                    if (Event.current.type == EventType.MouseDown)
+                    {
+                        MouseDownSlot = i;
+                    }
+                    else if (Event.current.type == EventType.MouseUp)
+                    {
+                        MouseUpSlot = i;
+                    }
+                    else
+                    {
+                        _tooltip = item.Item.Name;
+                        _tooltipRect = new Rect(0, 0 - 60, 150, 30);
+                    }
+                }
+            }
         }
 
         public void Render() {
             if (Event.current.type == EventType.Layout)
             {
                 MouseUpSlot = MouseDownSlot = -1;
-                MouseOver = false;
                 _tooltip = null;
                 _tooltipRect = new Rect(0, 0, 0, 0);
             }
-
-            if (Event.current.type == EventType.MouseUp)
-            {
-                ResizingWindow = false;
-            }
-
-            if (ResizingWindow) 
-            {
-                Resize();
-            }
-
-            MouseOver = _windowRect.Contains(Event.current.mousePosition);
-
-            _windowRect = GUI.Window(0, _windowRect, windowId =>
-            {
-                RenderDragAndResize();
-
-                GUILayout.BeginArea(new Rect(_borderSize, _borderSize, 1000, 1000));
-
-                for (int i = 0; i < Inventory.Count; i++)
-                {
-                    float x = (i % slotsAcross) * _slotSize;
-                    float y = (i / slotsAcross) * _slotSize;
-                    var item = Inventory[i];
-                    var slotRect = new Rect(x, y, _slotSize, _slotSize);
-                    RenderSlot(slotRect, item);
-                    bool slotContainsMouse = slotRect.Contains(Event.current.mousePosition);
-                    if (slotContainsMouse)
-                    {
-                        if (Event.current.type == EventType.MouseDown)
-                        {
-                            MouseDownSlot = i;
-                        }
-                        else if (Event.current.type == EventType.MouseUp)
-                        {
-                            MouseUpSlot = i;
-                        }
-                        else
-                        {
-                            _tooltip = item.Item.Name;
-                            _tooltipRect = new Rect(0, 0 - 60, 150, 30);
-                        }
-                    }
-                }
-
-                GUILayout.EndArea();
-            }, "Inventory");
-
-            ClampPosition();
-
+            base.Render();
             RenderTooltip();
         }
 
-        private void Resize() {
-            _windowRect.width = Event.current.mousePosition.x - _windowRect.x + _borderSize * 2;
-            _windowRect.width = Mathf.Clamp(_windowRect.width, _slotSize + _borderSize * 2, Screen.width);
-            slotsAcross = (int)(_windowRect.width / _slotSize);
-            int height = (int)(Math.Ceiling((float)Inventory.Count / slotsAcross) * _slotSize) + _borderSize * 2;
-            _windowRect.height = height;
-        }
-
-        private void RenderDragAndResize()
+        protected override void Resize()
         {
-            GUI.DragWindow(new Rect(0, 0, _windowRect.width - 40, 20));
-            var resizeRect = new Rect(_windowRect.width - 40, 0, 40, 20);
-            if (Event.current.type == EventType.mouseDown && resizeRect.Contains(Event.current.mousePosition))
-            {
-                ResizingWindow = true;
-            }
-            GUI.Label(resizeRect, " ◄►");
+            base.Resize();
+            _windowRect.width = Math.Max(_windowRect.width, BorderSize * 2 + _slotSize);
+            slotsAcross = (int)(_windowRect.width / _slotSize);
+            int height = (int)(Math.Ceiling((float)Inventory.Count / slotsAcross) * _slotSize + BorderSize * 2);
+            _windowRect.height = height;
         }
 
         private void RenderTooltip() 
@@ -130,14 +95,6 @@ namespace Gridia
                 var globalRect = new Rect(Event.current.mousePosition.x + _tooltipRect.x, Event.current.mousePosition.y + _tooltipRect.y, _tooltipRect.width, _tooltipRect.height);
                 GUI.Box(globalRect, _tooltip);
             }
-        }
-
-        private void ClampPosition() 
-        {
-            var maxWidth = Math.Max(0, Screen.width - _windowRect.width);
-            var maxHeight = Math.Max(0, Screen.height - _windowRect.height);
-            _windowRect.x = Mathf.Clamp(_windowRect.x, 0, maxWidth);
-            _windowRect.y = Mathf.Clamp(_windowRect.y, 0, maxHeight);
         }
 
         public void RenderSlot(Rect loc, ItemInstance item) 
