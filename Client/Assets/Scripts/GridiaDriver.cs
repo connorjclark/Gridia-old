@@ -109,7 +109,7 @@ public class GridiaDriver : MonoBehaviour
         if (_game.stateMachine != null) {
             _game.stateMachine.Step(Time.deltaTime);
         }
-        MoveCreatures(10.0f * Time.deltaTime);
+        MoveCreatures();
         _game.view.Render();
         ResizeCamera(); // :( only on resize
     }
@@ -124,9 +124,10 @@ public class GridiaDriver : MonoBehaviour
         return new Vector3(x, y);
     }
     
-    void MoveCreatures(float speed)
+    // : (
+    void MoveCreatures()
     {
-        _game.creatures.ValuesToList().ForEach(cre => cre.Move(speed));
+        _game.creatures.ValuesToList().ForEach(cre => cre.LoadPositionAtCurrentTime());
     }
 
     void ResizeCamera()

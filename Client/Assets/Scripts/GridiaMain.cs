@@ -24,7 +24,7 @@ public class GridiaGame
         return creatures[id] = cre;
     }
 
-    public void MoveCreature(int id, int x, int y, int z)
+    public void MoveCreature(int id, int x, int y, int z, long time)
     {
         Creature cre;
         creatures.TryGetValue(id, out cre);
@@ -34,28 +34,7 @@ public class GridiaGame
             return;
         }
 
-        // :(
-
-        Vector3 curLoc = cre.Position;
-        Vector3 newLoc = new Vector3(x, y, z);
-        Vector3 diff = Utilities.Vector3Absolute(curLoc - newLoc);
-
-        if (diff.x > 1 || diff.y > 1)
-        {
-            tileMap.GetTile((int)curLoc.x, (int)curLoc.y, (int)curLoc.z).Creature = null;
-            cre.Position = newLoc;
-            tileMap.GetTile((int)newLoc.x, (int)newLoc.y, (int)newLoc.z).Creature = cre;
-        }
-        else
-        {
-            cre.MovementDirection = Utilities.GetRelativeDirection(cre.Position, new Vector3(x, y, z));
-        }
-
-        //if (tileMap.Walkable(x, y, z))
-        //{
-        //cre.MovementDirection = Utilities.GetRelativeDirection(cre.Position, new Vector3(x, y, z));
-
-        //}
+        cre.AddPositionSnapshot(new Vector3(x, y, z), time);
     }
 
     public void RemoveCreature(int id)

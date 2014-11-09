@@ -60,6 +60,11 @@ namespace Gridia
             return sector;
         }
 
+        public Tile GetTile(Vector3 loc) 
+        {
+            return GetTile((int)loc.x, (int)loc.y, (int)loc.z);
+        }
+
         public Tile GetTile (int x, int y, int z)
         {
             x = Wrap(x);
@@ -84,18 +89,13 @@ namespace Gridia
         }
 
         private Tile GetTileOfCreature(Creature creature) {
-            return GetTile((int)creature.Position.x, (int)creature.Position.y, (int)creature.Position.z);
+            var pos = creature.Position;
+            return GetTile((int)pos.x, (int)pos.y, (int)pos.z);
         }
 
         public void AddCreature(Creature creature) {
             GetTileOfCreature(creature).Creature = creature;
             _creatures.Add(creature);
-        }
-
-        public void UpdateCreature(Creature creature, Vector2 newPosition) {
-            GetTileOfCreature(creature).Creature = null;
-            creature.Position = newPosition;
-            GetTileOfCreature(creature).Creature = creature;
         }
 
         public bool Walkable(int x, int y, int z) {

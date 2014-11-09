@@ -35,6 +35,10 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         }
     }
 
+    private long getSystemTime() {
+        return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+    }
+
     protected override void HandleData(int type, JObject data)
     {
         //TODO:
@@ -48,6 +52,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
                 GridiaConstants.SIZE = (int)data["size"];
                 GridiaConstants.DEPTH = (int)data["depth"];
                 GridiaConstants.SECTOR_SIZE = (int)data["sectorSize"];
+                GridiaConstants.SERVER_TIME_OFFSET = getSystemTime() - (long)data["time"];
                 GridiaDriver.connectedWaitHandle.Set(); // :(
                 GridiaDriver.gameInitWaitHandle.WaitOne();
                 break;
@@ -106,7 +111,8 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         int x = (int)data["loc"]["x"];
         int y = (int)data["loc"]["y"];
         int z = (int)data["loc"]["z"];
-        _game.MoveCreature(id, x, y, z);
+        long time = GridiaConstants.SERVER_TIME_OFFSET + (long)data["time"];
+        _game.MoveCreature(id, x, y, z, time);
     }
 
     private void RemoveCreature(JObject data)

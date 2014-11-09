@@ -39,6 +39,7 @@ public class GridiaMessageToClientBuilder {
     public Message moveCreature(Creature cre) {
         return new JsonMessageBuilder()
                 .protocol(outbound(MoveCreature))
+                .set("time", System.currentTimeMillis())
                 .set("id", cre.id)
                 .set("loc", cre.location)
                 .build();
@@ -93,6 +94,7 @@ public class GridiaMessageToClientBuilder {
     public Message initialize(int size, int depth, int sectorSize) {
         return new JsonMessageBuilder()
                 .protocol(outbound(Initialize))
+                .set("time", System.currentTimeMillis())
                 .set("size", size)
                 .set("depth", depth)
                 .set("sectorSize", sectorSize)

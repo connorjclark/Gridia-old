@@ -6,7 +6,7 @@ namespace Gridia
 {
     public class TileMapView
     {
-        public static int OFF_GRID_TILES = 100;
+        public static int OFF_GRID_TILES = 400; // stress test this limit
 
         public Creature Focus { 
             get 
@@ -273,16 +273,19 @@ namespace Gridia
                 data => _textureManager.GetFloorsTexture(data / 100)
             ));
 
-            result.Add(new Layer("Item layer", this, tile =>
-            {
-                int[] animations = tile.Item.Item.Animations;
-                if (animations == null || animations.Length == 0)
+            result.Add(new Layer(
+                "Item layer", 
+                this, 
+                tile =>
                 {
-                    return -1;
-                }
-                int frame = (int)((Time.time * 6) % animations.Length);//smell
-                return animations[frame];
-            },
+                    int[] animations = tile.Item.Item.Animations;
+                    if (animations == null || animations.Length == 0)
+                    {
+                        return -1;
+                    }
+                    int frame = (int)((Time.time * 6) % animations.Length);//smell
+                    return animations[frame];
+                },
                 data => _textureManager.GetItemsTexture(data / 100),
                 tile =>
                 {
