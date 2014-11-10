@@ -11,9 +11,7 @@ namespace Gridia
         public Creature Focus { 
             get 
             {
-                Creature cre;
-                Locator.Get<GridiaGame>().creatures.TryGetValue(FocusId, out cre);
-                return cre; 
+                return _tileMap.GetCreature(FocusId);
             } 
         }
         public int FocusId { get; set; }
@@ -21,9 +19,9 @@ namespace Gridia
         { 
             get {
                 var cre = Focus;
-                var pos = cre == null ? Vector3.zero : (cre.Position + cre.Offset);
+                var pos = cre == null ? Vector3.zero : cre.Position;
                 return pos - new Vector3(width / 2, height / 2, 0); 
-            } 
+            }
         }
         public bool IsLighting { get; set; }
         public int NumGridTiles { get { return (width + 2) * (height + 2); } }
@@ -98,9 +96,10 @@ namespace Gridia
                 List<Dictionary<string, object>> elementList = new List<Dictionary<string, object>>();
 
                 int tileIndex = 0;
-                int positionX = (int)FocusPosition.x;
-                int positionY = (int)FocusPosition.y;
-                int positionZ = (int)FocusPosition.z;
+                var pos = FocusPosition;
+                int positionX = (int)pos.x;
+                int positionY = (int)pos.y;
+                int positionZ = (int)pos.z;
                 int numTilesOffGrid = 0;
 
                 ForEachInView((x, y) =>
@@ -214,7 +213,7 @@ namespace Gridia
                 }
 
                 var layerz = layer.renderable.transform.position.z;
-                Vector3 renderablePosition = TileSize * Utilities.Vector3Residual(-FocusPosition);
+                Vector3 renderablePosition = TileSize * Utilities.Vector3Residual(-pos);
                 var newLayerPos = Utilities.Vector3Floor(renderablePosition);
                 newLayerPos.z = layerz; // :(
                 layer.renderable.transform.position = newLayerPos;
@@ -300,7 +299,7 @@ namespace Gridia
                 }
             ));
 
-            result.Add(new Layer(
+            /*result.Add(new Layer(
                 "Creature layer",
                 this,
                 tile =>
@@ -316,7 +315,7 @@ namespace Gridia
                 {
                     return tile.Creature.Offset;
                 }
-            ));
+            ));*/
 
             for (int i = 0; i < result.Count; i++) {
                 result[i].renderable.transform.position = new Vector3(0, 0, -i);

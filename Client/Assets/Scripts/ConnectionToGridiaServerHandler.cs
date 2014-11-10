@@ -102,23 +102,26 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         int x = (int)data["loc"]["x"];
         int y = (int)data["loc"]["y"];
         int z = (int)data["loc"]["z"];
-        _game.CreateCreature(id, image, x, y, z);
+        _game.tileMap.CreateCreature(id, image, x, y, z);
     }
 
     private void MoveCreature(JObject data) 
     {
         int id = (int)data["id"];
-        int x = (int)data["loc"]["x"];
-        int y = (int)data["loc"]["y"];
-        int z = (int)data["loc"]["z"];
-        long time = GridiaConstants.SERVER_TIME_OFFSET + (long)data["time"];
-        _game.MoveCreature(id, x, y, z, time);
+        if (id != _game.view.FocusId) 
+        {
+            int x = (int)data["loc"]["x"];
+            int y = (int)data["loc"]["y"];
+            int z = (int)data["loc"]["z"];
+            long time = (long)data["time"];
+            _game.tileMap.MoveCreature(id, x, y, z, time);
+        }
     }
 
     private void RemoveCreature(JObject data)
     {
         int id = (int)data["id"];
-        _game.RemoveCreature(id);
+        _game.tileMap.RemoveCreature(id);
     }
 
     private void Chat(JObject data) 
@@ -191,7 +194,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
             var x = data.ReadInt16();
             var y = data.ReadInt16();
             var z = data.ReadInt16();
-            _game.CreateCreature(id, image, x, y, z);
+            _game.tileMap.CreateCreature(id, image, x, y, z);
         }
     }
 
@@ -228,6 +231,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         {
             return;
         }
+        Debug.LogError("no creature of id: " + id); // :(
         _creaturesRequested.Add(id);
 
         Message message = new JsonMessageBuilder()

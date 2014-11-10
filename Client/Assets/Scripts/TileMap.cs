@@ -8,13 +8,12 @@ namespace Gridia
     {
         public int Floor { get; set; }
         public ItemInstance Item { get; set; }
-        public Creature Creature { get; set; }
     }
 
     public class TileMap
     {
         private Tile[] tiles;
-        private List<Creature> _creatures = new List<Creature>();
+        public ConcurrentDictionary<int, Creature> creatures = new ConcurrentDictionary<int, Creature>();
         private Sector[, ,] _sectors;
         public int Size { get; private set; }
         public int Depth { get; private set; }
@@ -60,6 +59,46 @@ namespace Gridia
             return sector;
         }
 
+        public Creature CreateCreature(int id, int image, int x, int y, int z)
+        {
+            var cre = new Creature(id, image, x, y, z);
+            return creatures[id] = cre;
+        }
+
+        public void RemoveCreature(int id)
+        {
+            creatures.Remove(id);
+        }
+
+        public void MoveCreature(int id, int x, int y, int z, long time)
+        {
+            var cre = GetCreature(id);
+            if (cre != null)
+            {
+                cre.AddPositionSnapshot(new Vector3(x, y, z), time);
+            }
+        }
+
+        public Creature GetCreature(int id) 
+        {
+            Creature cre;
+            creatures.TryGetValue(id, out cre);
+            if (cre == null)
+            {
+                Locator.Get<ConnectionToGridiaServerHandler>().RequestCreature(id);
+            }
+            return cre;
+        }
+
+        public Creature GetCreatureAt(Vector3 loc) 
+        {
+            return creatures.ValuesToList().Find(cre => 
+            {
+                var pos = cre.Position;
+                return (int)pos.x == loc.x && (int)pos.y == loc.y && pos.z == loc.z;
+            });
+        }
+
         public Tile GetTile(Vector3 loc) 
         {
             return GetTile((int)loc.x, (int)loc.y, (int)loc.z);
@@ -88,19 +127,15 @@ namespace Gridia
             GetTile (x, y, z).Item = item;
         }
 
-        private Tile GetTileOfCreature(Creature creature) {
+        /*private Tile GetTileOfCreature(Creature creature) {
             var pos = creature.Position;
             return GetTile((int)pos.x, (int)pos.y, (int)pos.z);
-        }
-
-        public void AddCreature(Creature creature) {
-            GetTileOfCreature(creature).Creature = creature;
-            _creatures.Add(creature);
-        }
+        }*/
 
         public bool Walkable(int x, int y, int z) {
-            Tile tile = GetTile(x, y, z);
-            return tile.Creature == null && !tile.Item.Item.BlockMovement;
+            var tile = GetTile(x, y, z);
+            var loc = new Vector3(x, y, z);
+            return GetCreatureAt(loc) == null && !tile.Item.Item.BlockMovement;
         }
 
         public int Wrap (int value)

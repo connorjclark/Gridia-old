@@ -51,6 +51,24 @@ public class GridiaDriver : MonoBehaviour
         }
 
         chatGui.Render();
+
+        //temp :(
+        var cm = Locator.Get<ContentManager>();
+        foreach (var cre in _game.tileMap.creatures.ValuesToList()) 
+        {
+            var pos = cre.Position;
+            var focusPos = _game.view.FocusPosition;
+            var relative = pos - focusPos;
+            var rect = new Rect(relative.x * 32, Screen.height - relative.y * 32 - 32, 32, 32);
+
+            var textures = Locator.Get<TextureManager>();
+
+            int spriteId = cre.Image;
+            int textureX = (spriteId % GridiaConstants.SPRITES_IN_SHEET) % GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
+            int textureY = 9 - (spriteId % GridiaConstants.SPRITES_IN_SHEET) / GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
+            var texCoords = new Rect(textureX / 10.0f, textureY / 10.0f, 1 / 10.0f, 1 / 10.0f); // :( don't hardcode 10
+            GUI.DrawTextureWithTexCoords(rect, textures.GetCreaturesTexture(spriteId / GridiaConstants.SPRITES_IN_SHEET), texCoords);
+        }
     }
 
     ItemInstance mouseDownItem = null; // :(
@@ -72,6 +90,7 @@ public class GridiaDriver : MonoBehaviour
 
     void Update()
     {
+
         if (Input.GetMouseButtonDown(0))
         {
             if (invGui.MouseDownSlot != -1)
@@ -109,7 +128,6 @@ public class GridiaDriver : MonoBehaviour
         if (_game.stateMachine != null) {
             _game.stateMachine.Step(Time.deltaTime);
         }
-        MoveCreatures();
         _game.view.Render();
         ResizeCamera(); // :( only on resize
     }
@@ -122,12 +140,6 @@ public class GridiaDriver : MonoBehaviour
         y = _game.tileMap.Wrap(y + (int)_game.view.FocusPosition.y);
 
         return new Vector3(x, y);
-    }
-    
-    // : (
-    void MoveCreatures()
-    {
-        _game.creatures.ValuesToList().ForEach(cre => cre.LoadPositionAtCurrentTime());
     }
 
     void ResizeCamera()

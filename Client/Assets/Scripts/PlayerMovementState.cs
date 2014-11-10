@@ -17,7 +17,7 @@ namespace Gridia
         // : (
         private long getSystemTime()
         {
-            return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+            return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - GridiaConstants.SERVER_TIME_OFFSET;
         }
         
         public void Step (StateMachine stateMachine, float dt)
@@ -28,9 +28,12 @@ namespace Gridia
                 var delta = ProcessInput ();
                 if (delta != Vector3.zero) 
                 {
-                    var newPosition = Player.Position + delta;
-                    _cooldownUntil = getSystemTime() - 100;
-                    Player.AddPositionSnapshot(newPosition, _cooldownUntil);
+                    var pos = Player.Position;
+                    var newPosition = pos + delta;
+                    var now = getSystemTime();
+                    _cooldownUntil = now + 100;
+                    Player.AddPositionSnapshot(pos, now - Creature.RENDER_DELAY);
+                    Player.AddPositionSnapshot(newPosition, _cooldownUntil - Creature.RENDER_DELAY);
                 }
             }
             else if (getSystemTime() > _cooldownUntil)

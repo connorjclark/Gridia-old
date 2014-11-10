@@ -14,20 +14,20 @@ namespace Gridia
             }
             public Vector3 Position { get; set; }
             public long Timestamp { get; set; }
+
+            public override string ToString() {
+                return Timestamp + " " + Position;
+            }
         }
 
         public Vector3 Position {
             set 
             {
-                AddPositionSnapshot(value, getSystemTime());
+                AddPositionSnapshot(value, getSystemTime() - RENDER_DELAY); // needed?
             }
             get 
             {
-                PositionSnapshot before = null;
-                PositionSnapshot after = null;
-                GetSnapshotBeforeAndAfter(getSystemTime() - RENDER_DELAY, out before, out after);
-                if (before == null) return Vector3.zero;
-                return before.Position;
+                return GetPosition();
             } 
         }
         public int Id { get; private set; }
@@ -37,10 +37,8 @@ namespace Gridia
         public Creature(int id, int image, int x, int y, int z) {
             Id = id;
             Image = image;
-            Position.Set(x, y, z);
+            Position = new Vector3(x, y, z);
         }
-
-        public Vector3 Offset { get { return GetOffset(); } }
 
         public void AddPositionSnapshot(Vector3 position) 
         {
@@ -51,15 +49,19 @@ namespace Gridia
         {
             var snapshot = new PositionSnapshot(position, time);
             _positions.Add(snapshot);
+            if (_positions.Count > 6) 
+            {
+                _positions.RemoveRange(0, 3);
+            }
         }
 
-        // : (
+        // :(
         private long getSystemTime()
         {
-            return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+            return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - GridiaConstants.SERVER_TIME_OFFSET;
         }
 
-        private static int RENDER_DELAY = 300; // in ms
+        public static int RENDER_DELAY = 100; // in ms
 
         // see https://developer.valvesoftware.com/wiki/Source_Multiplayer_Networking
 
@@ -69,7 +71,7 @@ namespace Gridia
             for (int i = _positions.Count - 1; i >= 0; i--) 
             {
                 var snapshot = _positions[i];
-                if (time > snapshot.Timestamp) 
+                if (time >= snapshot.Timestamp) 
                 {
                     before = snapshot;
                     after = i  != _positions.Count - 1 ? _positions[i + 1] : before;
@@ -77,8 +79,8 @@ namespace Gridia
                 }
             }
         }
-        
-        public Vector3 GetOffset() 
+
+        public Vector3 GetPosition() 
         {
             long timeToRender = getSystemTime() - RENDER_DELAY;
             PositionSnapshot snapshotBefore = null;
@@ -86,25 +88,12 @@ namespace Gridia
 
             GetSnapshotBeforeAndAfter(timeToRender, out snapshotBefore, out snapshotAfter);
 
-            if (snapshotAfter == snapshotBefore) return Vector3.zero;
+            if (snapshotBefore == null) return Vector3.zero;
+            if (snapshotAfter == snapshotBefore) return snapshotBefore.Position;
 
             float interp = (float)(timeToRender - snapshotBefore.Timestamp) / (snapshotAfter.Timestamp - snapshotBefore.Timestamp);
             var snapshotPositionDelta = snapshotAfter.Position - snapshotBefore.Position;
-            return snapshotPositionDelta * interp;
-        }
-
-        private Vector3 _currentPositionInTileMap;
-        public void LoadPositionAtCurrentTime() {
-            var currentPosition = Position;
-            if (currentPosition != _currentPositionInTileMap) 
-            {
-                var tilemap = Locator.Get<GridiaGame>().tileMap;
-
-                tilemap.GetTile(_currentPositionInTileMap).Creature = null;
-                tilemap.GetTile(currentPosition).Creature = this;
-
-                _currentPositionInTileMap = currentPosition;
-            }
+            return snapshotBefore.Position + snapshotPositionDelta * interp;
         }
     }
 }

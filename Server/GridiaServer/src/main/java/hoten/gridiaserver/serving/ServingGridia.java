@@ -79,27 +79,21 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         sendToClientsWithSectorLoaded(messageBuilder.removeCreature(cre), sector);
     }
 
+    // :( todo: speed
     public void moveCreatureTo(Creature cre, Coord loc) {
+        int timeInMillisecondsToMove = 200;
+        sendToClientsWithSectorLoaded(messageBuilder.moveCreature(cre, 0), tileMap.getSectorOf(cre.location));
         tileMap.wrap(loc);
         Sector sector = tileMap.getSectorOf(loc);
         tileMap.getTile(cre.location).cre = null;
         tileMap.getTile(loc).cre = cre;
         cre.location = loc;
-        sendToClientsWithSectorLoaded(messageBuilder.moveCreature(cre), sector);
-    }
-
-    public void movePlayerTo(ConnectionToGridiaClientHandler client, Creature cre, Coord loc) {
-        tileMap.wrap(loc);
-        Sector sector = tileMap.getSectorOf(loc);
-        tileMap.getTile(cre.location).cre = null;
-        tileMap.getTile(loc).cre = cre;
-        cre.location = loc;
-        sendToClientsWithSectorLoadedBut(messageBuilder.moveCreature(cre), sector, client);
+        sendToClientsWithSectorLoaded(messageBuilder.moveCreature(cre, timeInMillisecondsToMove), sector);
     }
 
     public void moveCreatureRandomly(Creature cre) {
-        int x = tileMap.wrap(cre.location.x);
-        int y = tileMap.wrap(cre.location.y);
+        int x = cre.location.x;
+        int y = cre.location.y;
         int diff = random.nextBoolean() ? 1 : -1;
         if (random.nextBoolean()) {
             x += diff;

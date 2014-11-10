@@ -123,7 +123,7 @@ public class TileMap {
         Tile tile = getTile(x, y, z);
         return tile.cre == null && !tile.item.data.blockMovement && tile.floor != 1;
     }
-    
+
     public Coord getCoordFromIndex(int index) {
         int z = index / area;
         int y = (index / size) % size;

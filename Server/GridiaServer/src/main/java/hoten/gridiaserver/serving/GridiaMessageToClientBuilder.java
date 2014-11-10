@@ -36,10 +36,10 @@ public class GridiaMessageToClientBuilder {
                 .build();
     }
 
-    public Message moveCreature(Creature cre) {
+    public Message moveCreature(Creature cre, int timeoffset) {
         return new JsonMessageBuilder()
                 .protocol(outbound(MoveCreature))
-                .set("time", System.currentTimeMillis())
+                .set("time", System.currentTimeMillis() + timeoffset)
                 .set("id", cre.id)
                 .set("loc", cre.location)
                 .build();
