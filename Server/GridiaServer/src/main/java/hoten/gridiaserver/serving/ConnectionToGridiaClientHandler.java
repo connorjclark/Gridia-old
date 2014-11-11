@@ -109,6 +109,10 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         int sourceIndex = data.get("si").getAsInt();
         int destIndex = data.get("di").getAsInt();
 
+        if (source.equals(dest) && sourceIndex == destIndex) {
+            return;
+        }
+
         ItemInstance item = null;
 
         switch (source) {
