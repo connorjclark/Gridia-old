@@ -5,10 +5,7 @@ import hoten.gridiaserver.serving.ServingGridia;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.Random;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class GridiaServerDriver {

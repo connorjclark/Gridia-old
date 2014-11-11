@@ -55,7 +55,10 @@ namespace Gridia
                 GUILayout.EndArea();
             }, WindowName);
 
-            ClampPosition();
+            if (!ResizingWindow) 
+            {
+                ClampPosition();
+            }
         }
 
         protected virtual void Resize()
@@ -64,12 +67,12 @@ namespace Gridia
             if (ResizeOnHorizontal)
             {
                 resized.width = Event.current.mousePosition.x - resized.x + BorderSize * 2;
-                resized.width = Mathf.Clamp(resized.width, BorderSize * 2, Screen.width);
+                resized.width = Mathf.Clamp(resized.width, BorderSize * 2, Screen.width - WindowRect.x);
             }
             if (ResizeOnVertical)
             {
                 resized.height = Event.current.mousePosition.y - resized.y + BorderSize * 2;
-                resized.height = Mathf.Clamp(resized.height, BorderSize * 2, Screen.height);
+                resized.height = Mathf.Clamp(resized.height, BorderSize * 2, Screen.height - WindowRect.y);
             }
             WindowRect = resized;
         }
@@ -77,7 +80,7 @@ namespace Gridia
         protected void RenderDragAndResize()
         {
             GUI.DragWindow(new Rect(0, 0, WindowRect.width - 40, 20));
-            var resizeRect = new Rect(WindowRect.width - 40, 0, 40, 20);
+            var resizeRect = new Rect(WindowRect.width - 40, WindowRect.height - 20, 40, 20);
             if (Event.current.type == EventType.mouseDown && resizeRect.Contains(Event.current.mousePosition))
             {
                 ResizingWindow = true;
