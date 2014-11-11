@@ -10,6 +10,22 @@ namespace Gridia
     {
         private static int _NEXT_WINDOW_ID;
 
+        // :(
+        public static void RenderSlot(Rect loc, ItemInstance item)
+        {
+            GUI.Box(loc, "");
+
+            if (item.Item.Animations == null) return; // :(
+
+            var textures = Locator.Get<TextureManager>(); // :(
+
+            int spriteId = item.Item.Animations[0];
+            int textureX = (spriteId % GridiaConstants.SPRITES_IN_SHEET) % GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
+            int textureY = 9 - (spriteId % GridiaConstants.SPRITES_IN_SHEET) / GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
+            var texCoords = new Rect(textureX / 10.0f, textureY / 10.0f, 1 / 10.0f, 1 / 10.0f); // :( don't hardcode 10
+            GUI.DrawTextureWithTexCoords(loc, textures.GetItemsTexture(spriteId / GridiaConstants.SPRITES_IN_SHEET), texCoords);
+        }
+
         public int WindowId { get; private set; }
         public bool Visible { get; set; }
         public bool MouseOver { get; private set; }

@@ -12,20 +12,28 @@ public class GridiaDriver : MonoBehaviour
     public static AutoResetEvent connectedWaitHandle = new AutoResetEvent(false);
     public static AutoResetEvent gameInitWaitHandle = new AutoResetEvent(false);
     private GridiaGame _game;
+    public TabbedUI tabbedGui;
     public InventoryGUI invGui;
     public ChatGUI chatGui;
 
     void Start()
     {
-        invGui = new InventoryGUI(new Vector2(0, Int32.MaxValue), 1.5f);
+        ResizeCamera();
+
+        float guiScale = 1.75f;
+
+        tabbedGui = new TabbedUI(new Vector2(Int32.MaxValue, 0), guiScale);
+
+        invGui = new InventoryGUI(new Vector2(0, Int32.MaxValue), guiScale);
         Locator.Provide(invGui);
+        tabbedGui.Add(1397, invGui); // :(
 
         chatGui = new ChatGUI(new Vector2(Int32.MaxValue, Int32.MaxValue));
         Locator.Provide(chatGui);
+        tabbedGui.Add(351, chatGui); // :(
 
         _game = new GridiaGame();
         Locator.Provide(_game);
-        ResizeCamera();
 
         MonoBehaviour.print("connecting");
         ConnectionToGridiaServerHandler conn = new ConnectionToGridiaServerHandler(_game, "localhost", 1234);
@@ -43,14 +51,12 @@ public class GridiaDriver : MonoBehaviour
     }
 
     void OnGUI() {
-        invGui.Render();
+        tabbedGui.Render();
         if (mouseDownItem != null)
         {
             var rect = new Rect((int)Input.mousePosition.x - 16, Screen.height - (int)Input.mousePosition.y - 16, 32, 32);
-            invGui.RenderSlot(rect, mouseDownItem);
+            GridiaWindow.RenderSlot(rect, mouseDownItem);
         }
-
-        chatGui.Render();
 
         //temp :(
         var cm = Locator.Get<ContentManager>();
@@ -85,12 +91,11 @@ public class GridiaDriver : MonoBehaviour
     bool isMouseOverGUI() 
     {
         var mouse = getMouse();
-        return invGui.ResizingWindow || invGui.MouseOver || chatGui.MouseOver || chatGui.ResizingWindow;
+        return tabbedGui.MouseOverAny() || tabbedGui.ResizingAny();
     }
 
     void Update()
     {
-
         if (Input.GetMouseButtonDown(0))
         {
             if (invGui.MouseDownSlot != -1)
