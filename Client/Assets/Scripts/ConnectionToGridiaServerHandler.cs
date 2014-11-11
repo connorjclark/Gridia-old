@@ -127,8 +127,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
     private void Chat(JObject data) 
     {
         var chat = Locator.Get<ChatGUI>();
-        chat.ChatArea += data["msg"] + "\n";
-        chat.SetScrollToMax();
+        chat.append((String)data["msg"]);
     }
 
     private void SetFocus(JObject data)

@@ -8,8 +8,8 @@ namespace Gridia
 {
     public class ChatGUI : GridiaWindow
     {
-        public String ChatInput { get; set; }
-        public String ChatArea { get; set; }
+        private String ChatInput { get; set; }
+        private String ChatArea { get; set; }
         private Vector2 ScrollPosition { get; set; }
 
         private int ChatInputHeight { get; set; }
@@ -40,7 +40,13 @@ namespace Gridia
             }
         }
 
-        public void SetScrollToMax() 
+        public void append(String line) 
+        {
+            ChatArea += line + '\n';
+            SetScrollToMax();
+        }
+
+        private void SetScrollToMax() 
         {
             ScrollPosition = new Vector2(0, int.MaxValue);
         }
