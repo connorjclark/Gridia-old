@@ -42,7 +42,7 @@ namespace Gridia
             }
             if (ResizingWindow)
             {
-                Resize();
+                WindowRect = Resize();
             }
 
             MouseOver = WindowRect.Contains(Event.current.mousePosition);
@@ -61,7 +61,7 @@ namespace Gridia
             }
         }
 
-        protected virtual void Resize()
+        protected virtual Rect Resize()
         {
             var resized = WindowRect;
             if (ResizeOnHorizontal)
@@ -74,7 +74,7 @@ namespace Gridia
                 resized.height = Event.current.mousePosition.y - resized.y + BorderSize * 2;
                 resized.height = Mathf.Clamp(resized.height, BorderSize * 2, Screen.height - WindowRect.y);
             }
-            WindowRect = resized;
+            return resized;
         }
 
         protected void RenderDragAndResize()

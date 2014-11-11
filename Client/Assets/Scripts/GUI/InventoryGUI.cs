@@ -78,15 +78,14 @@ namespace Gridia
             RenderTooltip();
         }
 
-        protected override void Resize()
+        protected override Rect Resize()
         {
-            base.Resize();
-            var resized = WindowRect;
+            var resized = base.Resize();
             resized.width = Math.Max(resized.width, BorderSize * 2 + _slotSize);
             slotsAcross = (int)(resized.width / _slotSize);
             int height = (int)(Math.Ceiling((float)Inventory.Count / slotsAcross) * _slotSize + BorderSize * 2);
             resized.height = height;
-            WindowRect = resized;
+            return resized;
         }
 
         private void RenderTooltip() 
