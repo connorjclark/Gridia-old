@@ -10,8 +10,6 @@ namespace Gridia
     {
         public String ChatInput { get; set; }
         public String ChatArea { get; set; }
-        private Rect ChatInputRect { get; set; }
-        private Rect ChatAreaRect { get; set; }
         private Vector2 ScrollPosition { get; set; }
 
         private int ChatInputHeight { get; set; }
@@ -22,8 +20,6 @@ namespace Gridia
             ChatInputHeight = 20;
             ChatInput = "Hello!";
             ChatArea = "\n\n\n\n\n\n\n\n";
-            //ChatInputRect = new Rect(Screen.width / 2, Screen.height - 20, Screen.width / 2, 20);
-            //ChatAreaRect = new Rect(Screen.width / 2, Screen.height - 120, Screen.width / 2, 100);
         }
 
         protected override void RenderContents()
