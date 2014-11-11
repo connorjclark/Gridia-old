@@ -27,6 +27,8 @@ namespace Gridia
         }
 
         public int WindowId { get; private set; }
+        public bool Resizeable { get; set; }
+        public bool Moveable { get; set; }
         public bool Visible { get; set; }
         public bool MouseOver { get; private set; }
         public bool ResizingWindow { get; private set; }
@@ -38,11 +40,11 @@ namespace Gridia
 
         public GridiaWindow(Vector2 position, String windowName)
         {
-            Visible = true;
+            Resizeable = Moveable = Visible = true;
+            ResizeOnHorizontal = ResizeOnVertical = true;
             WindowId = _NEXT_WINDOW_ID++;
             WindowName = windowName;
             WindowRect = new Rect(position.x, position.y, 300, 300);
-            ResizeOnHorizontal = ResizeOnVertical = true;
             BorderSize = 20;
         }
 
@@ -68,7 +70,14 @@ namespace Gridia
 
                 WindowRect = GUI.Window(WindowId, WindowRect, windowId =>
                 {
-                    RenderDragAndResize();
+                    if (Moveable) 
+                    {
+                        RenderDrag();
+                    }
+                    if (Resizeable)
+                    {
+                        RenderResize();
+                    }
                     GUILayout.BeginArea(new Rect(BorderSize, BorderSize, Int32.MaxValue, Int32.MaxValue));
                     RenderContents();
                     GUILayout.EndArea();
@@ -97,9 +106,13 @@ namespace Gridia
             return resized;
         }
 
-        protected void RenderDragAndResize()
+        protected void RenderDrag()
         {
             GUI.DragWindow(new Rect(0, 0, WindowRect.width - 40, 20));
+        }
+
+        protected void RenderResize() 
+        {
             var resizeRect = new Rect(WindowRect.width - 40, WindowRect.height - 20, 40, 20);
             if (Event.current.type == EventType.mouseDown && resizeRect.Contains(Event.current.mousePosition))
             {
