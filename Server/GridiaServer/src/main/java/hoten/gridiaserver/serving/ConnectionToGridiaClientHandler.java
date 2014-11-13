@@ -6,6 +6,8 @@ import hoten.gridiaserver.Inventory;
 import hoten.gridiaserver.map.Coord;
 import hoten.gridiaserver.content.ItemInstance;
 import hoten.gridiaserver.Player;
+import hoten.gridiaserver.content.Item;
+import hoten.gridiaserver.content.ItemUse;
 import hoten.gridiaserver.map.Sector;
 import hoten.serving.message.Protocols;
 import hoten.serving.SocketHandler;
@@ -181,7 +183,36 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         String dest = data.get("dest").getAsString();
         int sourceIndex = data.get("si").getAsInt();
         int destIndex = data.get("di").getAsInt();
-        
-        
+        System.out.println(source + " " + dest);
+
+        Item tool = ItemInstance.NONE.data, focus = ItemInstance.NONE.data;
+
+        switch (source) {
+            case "world":
+                tool = _server.tileMap.getItem(_server.tileMap.getCoordFromIndex(sourceIndex)).data;
+                break;
+            case "inv":
+                tool = player.inventory.get(sourceIndex).data;
+                break;
+        }
+        switch (dest) {
+            case "world":
+                focus = _server.tileMap.getItem(_server.tileMap.getCoordFromIndex(destIndex)).data;
+                break;
+            case "inv":
+                focus = player.inventory.get(destIndex).data;
+                break;
+        }
+
+        System.out.println(tool.name + " " + focus.name);
+        List<ItemUse> uses = _server.contentManager.getItemUses(tool, focus);
+        System.out.println(uses.size());
+        if (uses.isEmpty()) return;
+        ItemUse use = uses.get(0);
+
+        if ("world".equals(dest)) {
+            ItemInstance item = _server.contentManager.createItemInstance(use.products.get(0));
+            _server.changeItem(_server.tileMap.getCoordFromIndex(destIndex), item);
+        }
     }
 }
