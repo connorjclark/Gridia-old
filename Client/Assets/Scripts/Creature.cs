@@ -68,6 +68,7 @@ namespace Gridia
         private void GetSnapshotBeforeAndAfter(long time, out PositionSnapshot before, out PositionSnapshot after) 
         {
             before = after = null;
+			// :( think about synchornizing access to _positions
             for (int i = _positions.Count - 1; i >= 0; i--) 
             {
                 var snapshot = _positions[i];

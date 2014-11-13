@@ -44,9 +44,13 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
 
         // fake an inventory
         List<ItemInstance> inv = new ArrayList();
+        inv.add(_server.contentManager.createItemInstance(57));
+        inv.add(_server.contentManager.createItemInstance(280));
+        inv.add(_server.contentManager.createItemInstance(1067));
         for (int i = 0; i < 20; i++) {
-            inv.add(_server.contentManager.createItemInstance((int) (Math.random() * 100)));
+            inv.add(_server.contentManager.createItemInstance(0));
         }
+
         player.inventory = new Inventory(inv);
         send(_messageBuilder.inventory(player.inventory));
     }
@@ -68,6 +72,9 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
                 break;
             case Chat:
                 ProcessChat(data);
+                break;
+            case UseItem:
+                ProcessUseItem(data);
                 break;
         }
     }
@@ -167,5 +174,14 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         }
 
         _server.sendToAll(_messageBuilder.chat(player.username + " says: " + msg));
+    }
+
+    private void ProcessUseItem(JsonObject data) {
+        String source = data.get("source").getAsString();
+        String dest = data.get("dest").getAsString();
+        int sourceIndex = data.get("si").getAsInt();
+        int destIndex = data.get("di").getAsInt();
+        
+        
     }
 }

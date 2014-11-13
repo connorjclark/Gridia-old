@@ -13,6 +13,5 @@ public class GridiaGame
         tileMap = new TileMap(size, depth, sectorSize);
         view = new TileMapView(tileMap, Locator.Get<TextureManager>(), 1.0f);
         Locator.Provide(view);
-        //Locator.Provide(tileMap);
     }
 }
