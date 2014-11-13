@@ -30,12 +30,13 @@ namespace Gridia
         public bool Resizeable { get; set; }
         public bool Moveable { get; set; }
         public bool Visible { get; set; }
-        public bool MouseOver { get; private set; }
-        public bool ResizingWindow { get; private set; }
+		public bool MouseOver { get; private set; }
+		public bool DoubleClick { get; private set; }
+		public bool ResizingWindow { get; private set; }
         public bool ResizeOnHorizontal { get; set; }
         public bool ResizeOnVertical { get; set; }
-        public float BorderSize { get; set; }
-        public String WindowName { get; set; }
+		public float BorderSize { get; set; }
+		public String WindowName { get; set; }
         protected Rect WindowRect { get; set; }
 
         public GridiaWindow(Vector2 position, String windowName)
@@ -54,12 +55,15 @@ namespace Gridia
         {
             if (Event.current.type == EventType.Layout)
             {
-                MouseOver = false;
+                MouseOver = DoubleClick = false;
             }
             if (Event.current.type == EventType.MouseUp)
             {
                 ResizingWindow = false;
             }
+			if (Event.current.type == EventType.MouseDown) {
+				DoubleClick = Event.current.clickCount == 2;
+			}
             if (ResizingWindow)
             {
                 WindowRect = Resize();

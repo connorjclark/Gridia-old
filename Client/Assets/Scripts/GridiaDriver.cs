@@ -77,6 +77,7 @@ public class GridiaDriver : MonoBehaviour
         }
     }
 
+	bool usingItem;
     ItemInstance mouseDownItem = null; // :(
     int downSlot;
     int sourceIndex;
@@ -98,7 +99,7 @@ public class GridiaDriver : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (invGui.MouseDownSlot != -1)
+			if (invGui.MouseDownSlot != -1)
             {
                 mouseDownLocation = "inv";
                 sourceIndex = invGui.MouseDownSlot;
@@ -126,9 +127,10 @@ public class GridiaDriver : MonoBehaviour
                 dest = "world";
                 destIndex = _game.tileMap.ToIndex(getTileLocationOfMouse());
             }
-            Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(mouseDownLocation, dest, sourceIndex, destIndex);
-            mouseDownItem = null;
-        }
+
+			Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(mouseDownLocation, dest, sourceIndex, destIndex);
+			mouseDownItem = null;
+		}
 
         if (_game.stateMachine != null) {
             _game.stateMachine.Step(Time.deltaTime);
