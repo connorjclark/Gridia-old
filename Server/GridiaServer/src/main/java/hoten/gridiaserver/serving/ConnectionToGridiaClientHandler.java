@@ -49,6 +49,9 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         inv.add(_server.contentManager.createItemInstance(57));
         inv.add(_server.contentManager.createItemInstance(280));
         inv.add(_server.contentManager.createItemInstance(1067));
+        inv.add(_server.contentManager.createItemInstance(1068));
+        inv.add(_server.contentManager.createItemInstance(826));
+        inv.add(_server.contentManager.createItemInstance(1039));
         for (int i = 0; i < 20; i++) {
             inv.add(_server.contentManager.createItemInstance(0));
         }
@@ -197,7 +200,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         ItemInstance tool = getItemFrom(source, sourceIndex);
         ItemInstance focus = getItemFrom(dest, destIndex);
 
-        System.out.println(tool.data.name + " " + focus.data.name);
+        System.out.println(tool + " " + focus);
         List<ItemUse> uses = _server.contentManager.getItemUses(tool.data, focus.data);
         System.out.println(uses.size());
         if (uses.isEmpty()) {
@@ -206,7 +209,9 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         ItemUse use = uses.get(0);
 
         if (use.focusQuantityConsumed > 0) {
-            focus.quantity -= use.focusQuantityConsumed;
+            if (focus != ItemInstance.NONE) {
+                focus.quantity -= use.focusQuantityConsumed;
+            }
             switch (dest) {
                 case "world":
                     _server.updateTile(destIndex);
@@ -214,13 +219,14 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             }
         }
 
+        System.out.println("focus after use: " + focus);
+
         if ("world".equals(dest)) {
-            ItemInstance item = _server.contentManager.createItemInstance(use.products.get(0));
-            _server.addItemNear(_server.tileMap.getCoordFromIndex(destIndex), item, 3);
             use.products.stream()
-                    .skip(1)
                     .forEach(product -> {
                         ItemInstance productInstance = _server.contentManager.createItemInstance(product);
+
+                        System.out.println("product: " + productInstance);
                         _server.addItemNear(destIndex, productInstance, 3);
                     });
         }
