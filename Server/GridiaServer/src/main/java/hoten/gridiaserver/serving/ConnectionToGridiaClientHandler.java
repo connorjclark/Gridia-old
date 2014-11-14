@@ -206,7 +206,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         if (uses.isEmpty()) {
             return;
         }
-        ItemUse use = uses.get(0);
+        ItemUse use = uses.get(0); // temp
 
         if (use.focusQuantityConsumed > 0) {
             if (focus != ItemInstance.NONE) {
