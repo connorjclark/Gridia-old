@@ -145,8 +145,8 @@ namespace Gridia
         }
 
         public int ToIndex(Vector3 v) {
-            int x = (int)v.x;
-            int y = (int)v.y;
+            int x = Wrap((int)v.x);
+            int y = Wrap((int)v.y);
             int z = (int)v.z;
             return x + y * Size + z * Area;
         }

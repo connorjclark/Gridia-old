@@ -2,7 +2,7 @@ package hoten.gridiaserver.content;
 
 public class ItemInstance {
 
-    public static final ItemInstance NONE = new ItemInstance(new Item(), 0);
+    public static final ItemInstance NONE = new ItemInstance(new Item(), 1);
     
     public static boolean stackable(ItemInstance item1, ItemInstance item2) {
         if (item1.data.id != item2.data.id || !item1.data.stackable) {
@@ -17,5 +17,6 @@ public class ItemInstance {
 
     public ItemInstance(Item data, int quantity) {
         this.data = data;
+        this.quantity = quantity;
     }
 }

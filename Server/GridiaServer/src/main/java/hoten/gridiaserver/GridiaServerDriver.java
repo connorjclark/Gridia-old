@@ -5,6 +5,8 @@ import hoten.gridiaserver.serving.ServingGridia;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
@@ -20,23 +22,17 @@ public class GridiaServerDriver {
         server.startServer();
         System.out.println("Server started.");
 
-        for (int i = 0; i < 10; i++) {
-            server.createCreatureRandomly(Math.random() > .5 ? 100 : 109);
-        }
-        
-        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
-            server.creatures.values().stream().filter(cre -> !cre.belongsToPlayer).forEach(cre -> {
-                server.moveCreatureRandomly(cre);
-            });
-            if (server.anyPlayersOnline()) {
-                for (int i = 0; i < 20; i++) {
-                    Coord randCoord = randomCoord();
-                    if (server.tileMap.getTile(randCoord).floor != 1) {
-                        server.changeItem(randCoord, server.contentManager.createItemInstance((int) (Math.random() * 10)));
-                    }
-                }
-                server.createCreatureRandomly(Math.random() > .5 ? 100 : 109);
+        for (int i = 0; i < 2000; i++) {
+            Coord randCoord = randomCoord();
+            if (server.tileMap.getTile(randCoord).floor != 1) {
+                List<Integer> possibleItems = Arrays.asList(263, 260, 188, 264, 575);
+                int randomItemId = possibleItems.get((int) (possibleItems.size() * Math.random()));
+                server.changeItem(randCoord, server.contentManager.createItemInstance(randomItemId));
             }
+        }
+
+        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
+            // nothing right now
         }, 0, 200, TimeUnit.MILLISECONDS);
     }
 

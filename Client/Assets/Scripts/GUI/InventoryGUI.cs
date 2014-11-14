@@ -24,6 +24,7 @@ namespace Gridia
             }
         }
         public int slotsAcross = 10;
+        public int SlotSelected { get; set; }
         public int MouseDownSlot { get; private set; }
         public int MouseUpSlot { get; private set; }
         private float _slotSize;
@@ -46,6 +47,12 @@ namespace Gridia
                 float y = (i / slotsAcross) * _slotSize;
                 var item = Inventory[i];
                 var slotRect = new Rect(x, y, _slotSize, _slotSize);
+                if (SlotSelected == i) 
+                {
+                    // :(
+                    GUI.Box(slotRect, "");
+                    GUI.Box(slotRect, "");
+                }
                 RenderSlot(slotRect, item);
                 bool slotContainsMouse = slotRect.Contains(Event.current.mousePosition);
                 if (slotContainsMouse)

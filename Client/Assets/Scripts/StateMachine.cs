@@ -1,8 +1,25 @@
+using UnityEngine;
 namespace Gridia
 {
-    public interface State
+    public abstract class State
     {
-        void Step (StateMachine stateMachine, float dt);
+        public abstract void Step (StateMachine stateMachine, float dt);
+
+        protected Vector3 ProcessDirectionalInput() 
+        {
+            Vector3 direction = Vector3.zero;
+
+            if (Input.GetButton("left"))
+                direction += Vector3.left;
+            if (Input.GetButton("right"))
+                direction += Vector3.right;
+            if (Input.GetButton("down"))
+                direction += Vector3.down;
+            if (Input.GetButton("up"))
+                direction += Vector3.up;
+
+            return direction;
+        }
     }
 
     public class StateMachine
@@ -12,7 +29,8 @@ namespace Gridia
         
         public void SetState (State state)
         {
-            CurrentState = state;
+             Debug.Log(state);
+             CurrentState = state;
         }
         
         public void Step (float dt)

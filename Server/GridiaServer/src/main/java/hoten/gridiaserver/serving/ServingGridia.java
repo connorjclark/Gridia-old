@@ -151,9 +151,17 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         updateTile(loc);
     }
 
-    private void updateTile(Coord loc) {
+    public void changeItem(int index, ItemInstance item) {
+        changeItem(tileMap.getCoordFromIndex(index), item);
+    }
+
+    public void updateTile(Coord loc) {
         Tile tile = tileMap.getTile(loc);
         sendToClientsWithAreaLoaded(messageBuilder.updateTile(loc, tile), loc);
+    }
+
+    public void updateTile(int index) {
+        updateTile(tileMap.getCoordFromIndex(index));
     }
 
     //adds item only if it is to an empty tile or if it would stack
@@ -167,6 +175,39 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         itemToAdd.quantity = q;
         changeItem(loc, itemToAdd);
         return true;
+    }
+
+    //attempts to add an item at location, but if it is occupied, finds a nearby location
+    //goes target, leftabove target, above target, rightabove target, left target, right target, leftbelow target...
+    public boolean addItemNear(Coord loc, ItemInstance item, int bufferzone) {
+        int x0 = loc.x;
+        int y0 = loc.y;
+        for (int offset = 0; offset <= bufferzone; offset++) {
+            for (int y1 = y0 - offset; y1 <= offset + y0; y1++) {
+                if (y1 == y0 - offset || y1 == y0 + offset) {
+                    for (int x1 = x0 - offset; x1 <= offset + x0; x1++) {
+                        Coord newLoc = tileMap.wrap(new Coord(x1, y1, loc.z));
+                        if (addItem(newLoc, item)) {
+                            return true;
+                        }
+                    }
+                } else {
+                    Coord newLoc = tileMap.wrap(new Coord(x0 - offset, y1, loc.z));
+                    if (addItem(newLoc, item)) {
+                        return true;
+                    }
+                    newLoc = tileMap.wrap(new Coord(x0 + offset, y1, loc.z));
+                    if (addItem(newLoc, item)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean addItemNear(int index, ItemInstance item, int bufferzone) {
+        return addItemNear(tileMap.getCoordFromIndex(index), item, bufferzone);
     }
 
     public void updateInventorySlot(Inventory inventory, int slotIndex) {

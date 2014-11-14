@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import hoten.serving.fileutils.FileUtils;
 import java.io.File;
 import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -42,7 +43,11 @@ public class ContentManager {
     }
 
     public List<ItemUse> getItemUses(Item tool, Item focus) {
-        return _itemUses.get(tool).stream()
+        List<ItemUse> uses = _itemUses.get(tool);
+        if (uses == null) {
+            return Arrays.asList();
+        }
+        return uses.stream()
                 .filter(u -> u.focus == focus.id)
                 .collect(Collectors.toList());
     }

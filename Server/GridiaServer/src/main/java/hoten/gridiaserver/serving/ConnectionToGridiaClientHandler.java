@@ -112,6 +112,31 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         send(_messageBuilder.addCreature(_server.creatures.get(id)));
     }
 
+    private ItemInstance getItemFrom(String from, int index) {
+        switch (from) {
+            case "world":
+                return _server.tileMap.getItem(_server.tileMap.getCoordFromIndex(index));
+            case "inv":
+                if (index == -1) {
+                    return ItemInstance.NONE;
+                }
+                return player.inventory.get(index);
+            default:
+                return ItemInstance.NONE;
+        }
+    }
+
+    private void removeItemAt(String from, int index) {
+        switch (from) {
+            case "world":
+                _server.changeItem(_server.tileMap.getCoordFromIndex(index), ItemInstance.NONE);
+                break;
+            case "inv":
+                player.inventory.deleteSlot(index);
+                break;
+        }
+    }
+
     private void ProcessMoveItem(JsonObject data) throws IOException {
         String source = data.get("source").getAsString();
         String dest = data.get("dest").getAsString();
@@ -122,16 +147,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             return;
         }
 
-        ItemInstance item = null;
-
-        switch (source) {
-            case "world":
-                item = _server.tileMap.getItem(_server.tileMap.getCoordFromIndex(sourceIndex));
-                break;
-            case "inv":
-                item = player.inventory.get(sourceIndex);
-                break;
-        }
+        ItemInstance item = getItemFrom(source, sourceIndex);
 
         if (item == ItemInstance.NONE) {
             return;
@@ -151,14 +167,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             return;
         }
 
-        switch (source) {
-            case "world":
-                _server.changeItem(_server.tileMap.getCoordFromIndex(sourceIndex), ItemInstance.NONE);
-                break;
-            case "inv":
-                player.inventory.deleteSlot(sourceIndex);
-                break;
-        }
+        removeItemAt(source, sourceIndex);
     }
 
     private void ProcessChat(JsonObject data) throws IOException {
@@ -185,34 +194,35 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         int destIndex = data.get("di").getAsInt();
         System.out.println(source + " " + dest);
 
-        Item tool = ItemInstance.NONE.data, focus = ItemInstance.NONE.data;
+        ItemInstance tool = getItemFrom(source, sourceIndex);
+        ItemInstance focus = getItemFrom(dest, destIndex);
 
-        switch (source) {
-            case "world":
-                tool = _server.tileMap.getItem(_server.tileMap.getCoordFromIndex(sourceIndex)).data;
-                break;
-            case "inv":
-                tool = player.inventory.get(sourceIndex).data;
-                break;
-        }
-        switch (dest) {
-            case "world":
-                focus = _server.tileMap.getItem(_server.tileMap.getCoordFromIndex(destIndex)).data;
-                break;
-            case "inv":
-                focus = player.inventory.get(destIndex).data;
-                break;
-        }
-
-        System.out.println(tool.name + " " + focus.name);
-        List<ItemUse> uses = _server.contentManager.getItemUses(tool, focus);
+        System.out.println(tool.data.name + " " + focus.data.name);
+        List<ItemUse> uses = _server.contentManager.getItemUses(tool.data, focus.data);
         System.out.println(uses.size());
-        if (uses.isEmpty()) return;
+        if (uses.isEmpty()) {
+            return;
+        }
         ItemUse use = uses.get(0);
+
+        if (use.focusQuantityConsumed > 0) {
+            focus.quantity -= use.focusQuantityConsumed;
+            switch (dest) {
+                case "world":
+                    _server.updateTile(destIndex);
+                    break;
+            }
+        }
 
         if ("world".equals(dest)) {
             ItemInstance item = _server.contentManager.createItemInstance(use.products.get(0));
-            _server.changeItem(_server.tileMap.getCoordFromIndex(destIndex), item);
+            _server.addItemNear(_server.tileMap.getCoordFromIndex(destIndex), item, 3);
+            use.products.stream()
+                    .skip(1)
+                    .forEach(product -> {
+                        ItemInstance productInstance = _server.contentManager.createItemInstance(product);
+                        _server.addItemNear(destIndex, productInstance, 3);
+                    });
         }
     }
 }

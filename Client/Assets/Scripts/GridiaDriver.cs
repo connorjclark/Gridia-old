@@ -11,13 +11,15 @@ public class GridiaDriver : MonoBehaviour
 {
     public static AutoResetEvent connectedWaitHandle = new AutoResetEvent(false);
     public static AutoResetEvent gameInitWaitHandle = new AutoResetEvent(false);
-    private GridiaGame _game;
+    public GridiaGame _game; // :(
     public TabbedUI tabbedGui;
     public InventoryGUI invGui;
     public ChatGUI chatGui;
+    public ItemInstance mouseDownItem = null; // :(
 
     void Start()
     {
+        Locator.Provide(this);
         ResizeCamera();
 
         float guiScale = 1.75f;
@@ -77,18 +79,14 @@ public class GridiaDriver : MonoBehaviour
         }
     }
 
-    ItemInstance mouseDownItem = null; // :(
-    int downSlot;
-    int sourceIndex;
-    String mouseDownLocation;
-
-    Vector2 getMouse() {
+    public Vector2 getMouse()
+    {
         var pos = Input.mousePosition;
         pos.y = Screen.height - pos.y;
         return pos;
     }
 
-    bool isMouseOverGUI() 
+    public bool isMouseOverGUI() 
     {
         var mouse = getMouse();
         return tabbedGui.MouseOverAny() || tabbedGui.ResizingAny();
@@ -96,48 +94,6 @@ public class GridiaDriver : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-			if (invGui.MouseDownSlot != -1)
-            {
-                mouseDownLocation = "inv";
-                sourceIndex = invGui.MouseDownSlot;
-                mouseDownItem = invGui.Inventory[invGui.MouseDownSlot];
-            }
-            else if (!isMouseOverGUI())
-            {
-                mouseDownLocation = "world";
-                var downCoord = getTileLocationOfMouse();
-                mouseDownItem = _game.tileMap.GetTile((int)downCoord.x, (int)downCoord.y, (int)downCoord.z).Item;
-                sourceIndex = _game.tileMap.ToIndex(downCoord);
-            }
-        }
-		else if (Input.GetMouseButtonUp(0) && (mouseDownItem != null || Input.GetKey(KeyCode.LeftControl)))
-		{
-            String dest;
-            int destIndex;
-            if (invGui.MouseUpSlot != -1)
-            {
-                dest = "inv";
-                destIndex = invGui.MouseUpSlot;
-            }
-            else
-            {
-                dest = "world";
-                destIndex = _game.tileMap.ToIndex(getTileLocationOfMouse());
-            }
-			if (Input.GetKey(KeyCode.LeftControl))
-			{
-				Locator.Get<ConnectionToGridiaServerHandler>().UseItem(mouseDownLocation, dest, sourceIndex, destIndex);
-			}
-			else 
-			{
-				Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(mouseDownLocation, dest, sourceIndex, destIndex);
-			}
-
-			mouseDownItem = null;
-		}
-
         if (_game.stateMachine != null) {
             _game.stateMachine.Step(Time.deltaTime);
         }
@@ -145,7 +101,7 @@ public class GridiaDriver : MonoBehaviour
         ResizeCamera(); // :( only on resize
     }
 
-    Vector3 getTileLocationOfMouse() {
+    public Vector3 getTileLocationOfMouse() {
         int x = (int)(Input.mousePosition.x / (GridiaConstants.SPRITE_SIZE * _game.view.Scale));
         int y = (int)(Input.mousePosition.y / (GridiaConstants.SPRITE_SIZE * _game.view.Scale));
 

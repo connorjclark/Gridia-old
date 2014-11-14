@@ -6,21 +6,15 @@ namespace Gridia
     public class PlayerMovementState : State
     {
         private Creature Player { get { return Locator.Get<TileMapView>().Focus; } }
-        private float _speed;
         private long _cooldownUntil;
-        
-        public PlayerMovementState (float speed)
-        {
-            _speed = speed;
-        }
 
         // : (
         private long getSystemTime()
         {
             return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - GridiaConstants.SERVER_TIME_OFFSET;
         }
-        
-        public void Step (StateMachine stateMachine, float dt)
+
+        public override void Step(StateMachine stateMachine, float dt)
         {
             if (Player == null) return;
             if (_cooldownUntil == 0)
@@ -35,10 +29,14 @@ namespace Gridia
                     Player.AddPositionSnapshot(pos, now - Creature.RENDER_DELAY);
                     Player.AddPositionSnapshot(newPosition, _cooldownUntil - Creature.RENDER_DELAY);
                 }
+                else
+                {
+                    End(stateMachine);
+                }
             }
             else if (getSystemTime() > _cooldownUntil)
             {
-                End(stateMachine, dt);
+                End(stateMachine);
             }
         }
 
@@ -47,24 +45,14 @@ namespace Gridia
             return Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift);
         }
 
-        private void End (StateMachine stateMachine, float dt)
+        private void End (StateMachine stateMachine)
         {
-            stateMachine.CurrentState = new PlayerMovementState(_speed);
-            stateMachine.Step (dt);
+            stateMachine.CurrentState = new IdleState();
         }
 
         private Vector3 ProcessInput ()
         {
-            Vector3 direction = Vector3.zero;
-
-            if (Input.GetButton("left"))
-                direction += Vector3.left;
-            if (Input.GetButton ("right"))
-                direction += Vector3.right;
-            if (Input.GetButton ("down"))
-                direction += Vector3.down;
-            if (Input.GetButton ("up"))
-                direction += Vector3.up;
+            Vector3 direction = ProcessDirectionalInput();
 
             if (direction != Vector3.zero)
             {

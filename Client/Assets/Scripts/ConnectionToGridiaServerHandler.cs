@@ -134,8 +134,6 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
     {
         var id = (int)data["id"];
         _game.view.FocusId = id;
-        _game.stateMachine = new StateMachine();
-        _game.stateMachine.SetState(new PlayerMovementState(8));
     }
 
     private void TileUpdate(JObject data)

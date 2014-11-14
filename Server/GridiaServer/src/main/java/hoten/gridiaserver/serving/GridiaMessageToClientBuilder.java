@@ -122,6 +122,10 @@ public class GridiaMessageToClientBuilder {
     }
 
     public Message updateTile(Coord loc, Tile tile) {
+        // :(
+        if (tile.item.quantity <= 0) {
+            tile.item = ItemInstance.NONE;
+        }
         return new JsonMessageBuilder()
                 .protocol(outbound(TileUpdate))
                 .set("loc", loc)
