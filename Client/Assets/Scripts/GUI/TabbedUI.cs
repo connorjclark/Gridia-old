@@ -13,14 +13,12 @@ namespace Gridia
         private float _spacing = 5;
         private float _tabSize;
 
-        public TabbedUI(Vector2 position, float scale)
-            : base(position, "Tabs")
+        public TabbedUI(Rect rect, float scale)
+            : base(rect, "Tabs")
         {
             Moveable = Resizeable = false;
             _tabSize = scale * GridiaConstants.SPRITE_SIZE;
-            var resized = WindowRect;
-            resized.height = BorderSize * 2 + _tabSize; // :(
-            WindowRect = resized;
+            Height = BorderSize * 2 + _tabSize;
         }
 
         protected override void RenderContents() 

@@ -24,14 +24,14 @@ public class GridiaDriver : MonoBehaviour
 
         float guiScale = 1.75f;
 
-        tabbedGui = new TabbedUI(new Vector2(Int32.MaxValue, 0), guiScale);
+        tabbedGui = new TabbedUI(new Rect(Int32.MaxValue, 0, 300, 300), guiScale);
         Locator.Provide(tabbedGui);
 
-        invGui = new InventoryGUI(new Vector2(0, Int32.MaxValue), guiScale);
+        invGui = new InventoryGUI(new Rect(0, Int32.MaxValue, 300, 300), guiScale);
         Locator.Provide(invGui);
         tabbedGui.Add(1397, invGui); // :(
 
-        chatGui = new ChatGUI(new Vector2(Int32.MaxValue, Int32.MaxValue));
+        chatGui = new ChatGUI(new Rect(Int32.MaxValue, Int32.MaxValue, 300, 300));
         Locator.Provide(chatGui);
         tabbedGui.Add(351, chatGui); // :(
 

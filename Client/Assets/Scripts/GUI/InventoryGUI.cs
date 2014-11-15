@@ -8,99 +8,77 @@ namespace Gridia
 {
     public class InventoryGUI : GridiaWindow
     {
-        private List<ItemInstance> _inventory;
         public List<ItemInstance> Inventory
         {
-            get
-            {
-                return _inventory;
-            }
             set
             {
-                _inventory = value;
-                float width = slotsAcross * _slotSize;
-                float height = (int)Math.Ceiling((float)Inventory.Count / slotsAcross) * _slotSize;
-                WindowRect = new Rect(WindowRect.x, WindowRect.y, width + BorderSize * 2, height + BorderSize * 2);
+                _itemRenderables = new List<ItemRenderable>();
+                _slots.RemoveChildren();
+                for (int i = 0; i < value.Count; i++)
+                {
+                    var itemRend = new ItemRenderable(new Rect(0, 0, 32 * _scale, 32 * _scale), value[i]);
+                    _itemRenderables.Add(itemRend);
+                    _slots.AddChild(itemRend);
+                }
+
+                Width = _slots.Width + BorderSize * 2;
+                Height = _slots.Height + BorderSize * 2;
             }
         }
-        public int slotsAcross = 10;
-        public int SlotSelected { get; set; }
-        public int MouseDownSlot { get; private set; }
-        public int MouseUpSlot { get; private set; }
-        private float _slotSize;
-        private String _tooltip = null;
-        private Rect _tooltipRect = new Rect(0, 0, 0, 0);
 
-        public InventoryGUI(Vector2 position, float scale) 
-            : base(position, "Inventory")
+        public int SlotSelected { get { return _slots.TileSelected; } set { _slots.TileSelected = value; } }
+        public int MouseDownSlot { get { return _slots.MouseDownTile; } }
+        public int MouseUpSlot { get { return _slots.MouseUpTile; } }
+        public int MouseOverSlot { get { return _slots.MouseOverTile; } }
+
+        private List<ItemRenderable> _itemRenderables;
+        private ExtendibleGridGUI _slots = new ExtendibleGridGUI(new Rect(0, 0, 0, 0));
+        private float _scale; // :(
+
+        public InventoryGUI(Rect rect, float scale)
+            : base(rect, "Inventory")
         {
             ResizeOnVertical = false;
             Inventory = new List<ItemInstance>();
-            _slotSize = scale * GridiaConstants.SPRITE_SIZE;
+            _scale = scale;
         }
 
         protected override void RenderContents()
         {
-            for (int i = 0; i < Inventory.Count; i++)
-            {
-                float x = (i % slotsAcross) * _slotSize;
-                float y = (i / slotsAcross) * _slotSize;
-                var item = Inventory[i];
-                var slotRect = new Rect(x, y, _slotSize, _slotSize);
-                if (SlotSelected == i) 
-                {
-                    // :(
-                    GUI.Box(slotRect, "");
-                    GUI.Box(slotRect, "");
-                }
-                RenderSlot(slotRect, item);
-                bool slotContainsMouse = slotRect.Contains(Event.current.mousePosition);
-                if (slotContainsMouse)
-                {
-                    if (Event.current.type == EventType.MouseDown)
-                    {
-                        MouseDownSlot = i;
-                    }
-                    else if (Event.current.type == EventType.MouseUp)
-                    {
-                        MouseUpSlot = i;
-                    }
-                    else
-                    {
-                        _tooltip = item.Item.Name;
-                        _tooltipRect = new Rect(0, 0 - 60, 150, 30);
-                    }
-                }
-            }
+            _slots.Render();
         }
 
         public override void Render() {
-            if (Event.current.type == EventType.Layout)
-            {
-                MouseUpSlot = MouseDownSlot = -1;
-                _tooltip = null;
-                _tooltipRect = new Rect(0, 0, 0, 0);
-            }
             base.Render();
-            RenderTooltip();
+            RenderTooltip(); // :(
         }
 
-        protected override Rect Resize()
+        public void SetItemAt(int index, ItemInstance item)
         {
-            var resized = base.Resize();
-            resized.width = Math.Max(resized.width, BorderSize * 2 + _slotSize);
-            slotsAcross = (int)(resized.width / _slotSize);
-            int height = (int)(Math.Ceiling((float)Inventory.Count / slotsAcross) * _slotSize + BorderSize * 2);
-            resized.height = height;
-            return resized;
+            _itemRenderables[index].Item = item;
+        }
+
+        public ItemInstance GetItemAt(int index)
+        {
+            return _itemRenderables[index].Item;
+        }
+
+        protected override void Resize()
+        {
+            base.Resize();
+            _slots.FitToWidth(Width - BorderSize * 2);
+            Width = Math.Max(Width, BorderSize * 2 + _slots.Width);
+            Height = BorderSize * 2 + _slots.Height;
         }
 
         private void RenderTooltip() 
         {
-            if (_tooltip != null)
+            if (_slots.MouseOverTile != -1)
             {
-                var globalRect = new Rect(Event.current.mousePosition.x + _tooltipRect.x, Event.current.mousePosition.y + _tooltipRect.y, _tooltipRect.width, _tooltipRect.height);
-                GUI.Box(globalRect, _tooltip);
+                var itemOver = _itemRenderables[_slots.MouseOverTile].Item.Item.Name;
+                var rect = _slots.MouseOverRect;
+                var globalRect = new Rect(Event.current.mousePosition.x + rect.x, Event.current.mousePosition.y + rect.y, rect.width, rect.height);
+                GUI.Box(globalRect, itemOver);
             }
         }
     }

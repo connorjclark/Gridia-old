@@ -14,8 +14,8 @@ namespace Gridia
 
         private int ChatInputHeight { get; set; }
 
-        public ChatGUI(Vector2 position)
-            : base(position, "Chat")
+        public ChatGUI(Rect rect)
+            : base(rect, "Chat")
         {
             ChatInputHeight = 20;
             ChatInput = "Hello!";
@@ -24,8 +24,8 @@ namespace Gridia
 
         protected override void RenderContents()
         {
-            var chatInputRect = new Rect(0, WindowRect.height - BorderSize * 2 - ChatInputHeight, WindowRect.width - BorderSize * 2, ChatInputHeight);
-            var chatAreaRect = new Rect(0, 0, WindowRect.width - BorderSize * 2, WindowRect.height - ChatInputHeight - BorderSize * 2);
+            var chatInputRect = new Rect(0, Height - BorderSize * 2 - ChatInputHeight, Width - BorderSize * 2, ChatInputHeight);
+            var chatAreaRect = new Rect(0, 0, Width - BorderSize * 2, Height - ChatInputHeight - BorderSize * 2);
             
             ChatInput = GUI.TextField(chatInputRect, ChatInput);
 

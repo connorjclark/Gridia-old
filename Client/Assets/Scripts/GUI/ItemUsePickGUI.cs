@@ -13,8 +13,8 @@ namespace Gridia
         private bool _listShow;
         private GUIStyle _listStyle;
 
-        public ItemUsePickGUI(Vector2 position, List<ItemUse> uses)
-            : base(position, "Chat")
+        public ItemUsePickGUI(Rect rect, List<ItemUse> uses)
+            : base(rect, "Chat")
         {
             _uses = uses.ToArray();
             // Make a GUIStyle that has a solid white hover/onHover background to indicate highlighted items

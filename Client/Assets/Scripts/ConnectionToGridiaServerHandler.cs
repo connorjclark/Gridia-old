@@ -160,7 +160,8 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         int index = (int)data["index"];
         int item = (int)data["item"];
         int quantity = (int)data["quantity"];
-        Locator.Get<InventoryGUI>().Inventory[index] = Locator.Get<ContentManager>().GetItem(item).GetInstance(quantity);
+        var itemInstance = Locator.Get<ContentManager>().GetItem(item).GetInstance(quantity);
+        Locator.Get<InventoryGUI>().SetItemAt(index, itemInstance);
     }
 
     private void SectorData(JavaBinaryReader data) 
@@ -200,9 +201,9 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
 
     private void ItemUsePick(JObject data)
     {
-        var uses = data["uses"].ToObject<List<ItemUse>>();
-        var pickGui = new ItemUsePickGUI(Vector3.zero, uses);
-        Locator.Get<TabbedUI>().Add(10, pickGui); // :(
+        //var uses = data["uses"].ToObject<List<ItemUse>>();
+        //var pickGui = new ItemUsePickGUI(uses);
+        //Locator.Get<TabbedUI>().Add(10, pickGui); // :(
     }
 
     //outbound

@@ -45,7 +45,7 @@ namespace Gridia
                 {
                     mouseDownLocation = "inv";
                     sourceIndex = _driver.invGui.MouseDownSlot;
-                    _driver.mouseDownItem = _driver.invGui.Inventory[_driver.invGui.MouseDownSlot];
+                    _driver.mouseDownItem = _driver.invGui.GetItemAt(_driver.invGui.MouseDownSlot);
                 }
                 else if (!_driver.isMouseOverGUI())
                 {
