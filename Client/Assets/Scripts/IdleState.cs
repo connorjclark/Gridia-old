@@ -24,7 +24,14 @@ namespace Gridia
             var numKeyPressed = GetNumberKeyPressed();
             if (numKeyPressed != -1)
             {
-                _driver.invGui.SlotSelected = numKeyPressed - 1;
+                if (Input.GetKey(KeyCode.LeftShift)) 
+                {
+                    _driver.tabbedGui.ToggleVisiblity(numKeyPressed - 1);
+                }
+                else 
+                {
+                    _driver.invGui.SlotSelected = numKeyPressed - 1;
+                }
             }
 
             if (Input.GetKey(KeyCode.Space)) 
@@ -89,7 +96,7 @@ namespace Gridia
         {
             for (int i = 0; i < 10; i++)
             {
-                if (Input.GetKey("" + i) || Input.GetKey("[" + i + "]"))
+                if (Input.GetKeyDown("" + i) || Input.GetKeyDown("[" + i + "]"))
                 {
                     return i;
                 }

@@ -29,7 +29,7 @@ namespace Gridia
                 var itemId = _tabItemSprites[i];
                 bool tabOpen = _windows[i].Visible;
                 if (GUI.Button(rect, "")) {
-                    _windows[i].Visible = !tabOpen;
+                    ToggleVisiblity(i);
                 }
                 var alpha = (byte)(tabOpen ? 255 : 50);
                 GUI.color = new Color32(255, 255, 255, alpha);
@@ -47,6 +47,14 @@ namespace Gridia
         {
             _tabItemSprites.Add(tabItemSprite);
             _windows.Add(window);
+        }
+
+        public void ToggleVisiblity(int index)
+        {
+            if (index < _windows.Count) 
+            {
+                _windows[index].Visible = !_windows[index].Visible;
+            }
         }
 
         public bool MouseOverAny() 
