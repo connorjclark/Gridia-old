@@ -162,7 +162,11 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
                 moveSuccessful = _server.addItem(_server.tileMap.getCoordFromIndex(destIndex), item);
                 break;
             case "inv":
-                moveSuccessful = player.inventory.add(item, destIndex);
+                if (destIndex == -1) {
+                    moveSuccessful = player.inventory.add(item);
+                } else {
+                    moveSuccessful = player.inventory.add(item, destIndex);
+                }
                 break;
         }
 

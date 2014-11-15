@@ -73,8 +73,17 @@ namespace Gridia
                 }
                 else
                 {
-                    dest = "world";
-                    destIndex = _driver._game.tileMap.ToIndex(_driver.getTileLocationOfMouse());
+                    var tileLocUp = _driver.getTileLocationOfMouse();
+                    if (tileLocUp == _driver._game.view.Focus.Position)
+                    {
+                        dest = "inv";
+                        destIndex = -1;
+                    }
+                    else 
+                    {
+                        dest = "world";
+                        destIndex = _driver._game.tileMap.ToIndex(tileLocUp);
+                    }
                 }
 
                 Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(mouseDownLocation, dest, sourceIndex, destIndex);
