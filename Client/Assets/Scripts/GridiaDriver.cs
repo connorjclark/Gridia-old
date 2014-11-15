@@ -12,9 +12,10 @@ public class GridiaDriver : MonoBehaviour
     public static AutoResetEvent connectedWaitHandle = new AutoResetEvent(false);
     public static AutoResetEvent gameInitWaitHandle = new AutoResetEvent(false);
     public GridiaGame _game; // :(
-    public TabbedUI tabbedGui;
+    public TabbedUI tabbedGui; // :(
     public InventoryWindow invGui;
     public ChatWindow chatGui;
+    public ItemUsePickWindow itemUsePickWindow;
     public ItemInstance mouseDownItem = null; // :(
 
     void Start()
@@ -34,6 +35,10 @@ public class GridiaDriver : MonoBehaviour
         chatGui = new ChatWindow(new Rect(Int32.MaxValue, Int32.MaxValue, 300, 300));
         Locator.Provide(chatGui);
         tabbedGui.Add(351, chatGui); // :(
+
+        itemUsePickWindow = new ItemUsePickWindow(new Rect(0, 0, 300, 300), guiScale);
+        Locator.Provide(itemUsePickWindow);
+        tabbedGui.Add(10, itemUsePickWindow, false); // :(
 
         _game = new GridiaGame();
         Locator.Provide(_game);

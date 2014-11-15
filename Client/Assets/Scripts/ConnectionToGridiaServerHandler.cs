@@ -81,7 +81,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
                 InventoryUpdate(data);
                 break;
             case GridiaProtocols.Clientbound.ItemUsePick:
-                //ItemUsePick(data);
+                ItemUsePick(data);
                 break;
         }
     }
@@ -201,9 +201,12 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
 
     private void ItemUsePick(JObject data)
     {
-        //var uses = data["uses"].ToObject<List<ItemUse>>();
-        //var pickGui = new ItemUsePickGUI(uses);
-        //Locator.Get<TabbedUI>().Add(10, pickGui); // :(
+        var uses = data["uses"].ToObject<List<ItemUse>>();
+        var usePickWindow = Locator.Get<ItemUsePickWindow>();
+        usePickWindow.Uses = uses;
+        var tabbedUI = Locator.Get<TabbedUI>();
+        tabbedUI.DisableAll();
+        tabbedUI.Enable(usePickWindow, true);
     }
 
     //outbound

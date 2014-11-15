@@ -61,8 +61,11 @@ namespace Gridia
                 {
                     direction = Vector3.zero;
                 }
-                else {
+                else 
+                {
                     Locator.Get<ConnectionToGridiaServerHandler>().PlayerMove(destination);
+                    Locator.Get<TabbedUI>().EnableAll();
+                    Locator.Get<TabbedUI>().Enable(Locator.Get<ItemUsePickWindow>(), false);
                 }
             }
             

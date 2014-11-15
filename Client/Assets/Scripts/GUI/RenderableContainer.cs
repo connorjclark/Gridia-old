@@ -35,7 +35,15 @@ namespace Gridia
 
         public void AddChild(Renderable child) 
         {
-            _children.Add(child);
+            if (child.Parent == null)
+            {
+                child.Parent = this;
+                _children.Add(child);
+            }
+            else 
+            {
+                throw new Exception("Child already belongs to a container: " + child);
+            }
         }
 
         public void RemoveChild(Renderable child) 

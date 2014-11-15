@@ -21,6 +21,7 @@ namespace Gridia
             : base(rect)
         {
             TilesAcross = 10;
+            TileSelected = -1;
         }
 
         public override void Render() 

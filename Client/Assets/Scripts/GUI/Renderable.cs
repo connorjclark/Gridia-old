@@ -8,6 +8,7 @@ namespace Gridia
 {
     public abstract class Renderable
     {
+        public RenderableContainer Parent { get; set; }
         private Rect _rect;
         public Rect Rect
         {

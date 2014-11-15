@@ -41,6 +41,7 @@ namespace Gridia
             ResizeOnVertical = false;
             Inventory = new List<ItemInstance>();
             _scale = scale;
+            _slots.TileSelected = 0;
         }
 
         protected override void RenderContents()

@@ -9,7 +9,8 @@ namespace Gridia
     public class TabbedUI : GridiaWindow
     {
         private List<int> _tabItemSprites = new List<int>();
-        private List<GridiaWindow> _windows = new List<GridiaWindow>();
+        private List<bool> _tabEnabled = new List<bool>();
+        private List<GridiaWindow> _windows = new List<GridiaWindow>(); // :(
         private float _spacing = 5;
         private float _tabSize;
 
@@ -25,6 +26,10 @@ namespace Gridia
         {
             for (int i = 0; i < _windows.Count; i++)
             {
+                if (!_tabEnabled[i])
+                {
+                    continue;
+                }
                 var rect = new Rect(i * (_tabSize + _spacing), 0, _tabSize, _tabSize);
                 var itemId = _tabItemSprites[i];
                 bool tabOpen = _windows[i].Visible;
@@ -40,13 +45,20 @@ namespace Gridia
         public override void Render()
         {
             base.Render();
-            _windows.ForEach(w => w.Render());
+            for (int i = 0; i < _windows.Count; i++)
+            {
+                if (_tabEnabled[i])
+                {
+                    _windows[i].Render();
+                }
+            }
         }
 
-        public void Add(int tabItemSprite, GridiaWindow window) 
+        public void Add(int tabItemSprite, GridiaWindow window, bool enabled = true) 
         {
             _tabItemSprites.Add(tabItemSprite);
             _windows.Add(window);
+            _tabEnabled.Add(enabled);
         }
 
         public void ToggleVisiblity(int index)
@@ -55,6 +67,21 @@ namespace Gridia
             {
                 _windows[index].Visible = !_windows[index].Visible;
             }
+        }
+
+        public void Enable(GridiaWindow window, bool enabled) 
+        {
+            _tabEnabled[_windows.IndexOf(window)] = enabled;
+        }
+
+        public void DisableAll() 
+        {
+            _windows.ForEach(w => Enable(w, false));
+        }
+
+        public void EnableAll()
+        {
+            _windows.ForEach(w => Enable(w, true));
         }
 
         public bool MouseOverAny() 
