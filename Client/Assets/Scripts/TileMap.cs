@@ -144,6 +144,11 @@ namespace Gridia
             return mod < 0 ? Size + mod : mod;
         }
 
+        public Vector3 Wrap(Vector3 coord) 
+        {
+            return new Vector3(Wrap((int)coord.x), Wrap((int)coord.y), coord.z);
+        }
+
         public int ToIndex(Vector3 v) {
             int x = Wrap((int)v.x);
             int y = Wrap((int)v.y);

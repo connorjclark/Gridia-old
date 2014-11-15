@@ -48,6 +48,7 @@ namespace Gridia
 
             if (Input.GetMouseButtonDown(0))
             {
+                // :(
                 if (_driver.invGui.MouseDownSlot != -1)
                 {
                     mouseDownLocation = "inv";
@@ -74,7 +75,7 @@ namespace Gridia
                 else
                 {
                     var tileLocUp = _driver.getTileLocationOfMouse();
-                    if (tileLocUp == _driver._game.view.Focus.Position)
+                    if (tileLocUp == _driver._game.tileMap.Wrap(_driver._game.view.Focus.Position))
                     {
                         dest = "inv";
                         destIndex = -1;

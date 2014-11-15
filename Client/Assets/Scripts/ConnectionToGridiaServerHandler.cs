@@ -276,6 +276,15 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
 		Send(message);
 	}
 
+    public void PickItemUse(int useIndex) 
+    {
+        Message message = new JsonMessageBuilder()
+            .Protocol(Outbound(GridiaProtocols.Serverbound.PickItemUse))
+                .Set("useIndex", useIndex)
+                .Build();
+        Send(message);
+    }
+
     public void Chat(String text)
     {
         Message message = new JsonMessageBuilder()

@@ -81,6 +81,9 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             case UseItem:
                 ProcessUseItem(data);
                 break;
+            case PickItemUse:
+                ProcessPickItemUse(data);
+                break;
         }
     }
 
@@ -222,6 +225,9 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         }
     }
 
+    private int useSourceIndex, useDestIndex;
+    private String useSource, useDest;
+
     private void ProcessUseItem(JsonObject data) throws IOException {
         String source = data.get("source").getAsString();
         String dest = data.get("dest").getAsString();
@@ -241,6 +247,19 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             ExecuteItemUse(uses.get(0), tool, focus, dest, sourceIndex, destIndex);
         } else {
             send(_messageBuilder.itemUsePick(uses));
+            useSource = source;
+            useDest = dest;
+            useSourceIndex = sourceIndex;
+            useDestIndex = destIndex;
         }
+    }
+
+    private void ProcessPickItemUse(JsonObject data) throws IOException {
+        int useIndex = data.get("useIndex").getAsInt();
+        ItemInstance tool = getItemFrom(useSource, useSourceIndex);
+        ItemInstance focus = getItemFrom(useDest, useDestIndex);
+        List<ItemUse> uses = _server.contentManager.getItemUses(tool.data, focus.data);
+        ItemUse use = uses.get(useIndex);
+        ExecuteItemUse(use, tool, focus, useDest, useSourceIndex, useDestIndex);
     }
 }

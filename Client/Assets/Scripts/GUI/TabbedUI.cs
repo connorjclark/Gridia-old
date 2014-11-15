@@ -9,7 +9,7 @@ namespace Gridia
     public class TabbedUI : GridiaWindow
     {
         private List<int> _tabItemSprites = new List<int>();
-        private List<bool> _tabEnabled = new List<bool>();
+        private List<bool> _tabEnabled = new List<bool>(); // :(
         private List<GridiaWindow> _windows = new List<GridiaWindow>(); // :(
         private float _spacing = 5;
         private float _tabSize;
@@ -24,13 +24,14 @@ namespace Gridia
 
         protected override void RenderContents() 
         {
+            int tabsRendered = 0;
             for (int i = 0; i < _windows.Count; i++)
             {
                 if (!_tabEnabled[i])
                 {
                     continue;
                 }
-                var rect = new Rect(i * (_tabSize + _spacing), 0, _tabSize, _tabSize);
+                var rect = new Rect(tabsRendered++ * (_tabSize + _spacing), 0, _tabSize, _tabSize);
                 var itemId = _tabItemSprites[i];
                 bool tabOpen = _windows[i].Visible;
                 if (GUI.Button(rect, "")) {
@@ -84,14 +85,19 @@ namespace Gridia
             _windows.ForEach(w => Enable(w, true));
         }
 
+        public bool IsEnabled(GridiaWindow window) 
+        {
+            return _tabEnabled[_windows.IndexOf(window)];
+        }
+
         public bool MouseOverAny() 
         {
-            return MouseOver || _windows.Exists(w => w.MouseOver);
+            return MouseOver || _windows.Exists(w => IsEnabled(w) && w.MouseOver);
         }
 
         public bool ResizingAny()
         {
-            return ResizingWindow || _windows.Exists(w => w.ResizingWindow);
+            return ResizingWindow || _windows.Exists(w => IsEnabled(w) && w.ResizingWindow);
         }
     }
 }
