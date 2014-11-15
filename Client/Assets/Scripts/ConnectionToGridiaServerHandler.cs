@@ -129,7 +129,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
 
     private void Chat(JObject data) 
     {
-        var chat = Locator.Get<ChatGUI>();
+        var chat = Locator.Get<ChatWindow>();
         chat.append((String)data["msg"]);
     }
 
@@ -152,7 +152,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
     private void Inventory(JObject data)
     {
         var backToJson = JsonConvert.SerializeObject(data["inv"]); // :(
-        Locator.Get<InventoryGUI>().Inventory = JsonConvert.DeserializeObject<List<ItemInstance>>(backToJson, new ItemInstanceConverter());
+        Locator.Get<InventoryWindow>().Inventory = JsonConvert.DeserializeObject<List<ItemInstance>>(backToJson, new ItemInstanceConverter());
     }
 
     private void InventoryUpdate(JObject data)
@@ -161,7 +161,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         int item = (int)data["item"];
         int quantity = (int)data["quantity"];
         var itemInstance = Locator.Get<ContentManager>().GetItem(item).GetInstance(quantity);
-        Locator.Get<InventoryGUI>().SetItemAt(index, itemInstance);
+        Locator.Get<InventoryWindow>().SetItemAt(index, itemInstance);
     }
 
     private void SectorData(JavaBinaryReader data) 

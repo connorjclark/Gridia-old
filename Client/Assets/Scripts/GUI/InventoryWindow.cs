@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Gridia
 {
-    public class InventoryGUI : GridiaWindow
+    public class InventoryWindow : GridiaWindow
     {
         public List<ItemInstance> Inventory
         {
@@ -32,10 +32,10 @@ namespace Gridia
         public int MouseOverSlot { get { return _slots.MouseOverTile; } }
 
         private List<ItemRenderable> _itemRenderables;
-        private ExtendibleGridGUI _slots = new ExtendibleGridGUI(new Rect(0, 0, 0, 0));
+        private ExtendibleGrid _slots = new ExtendibleGrid(new Rect(0, 0, 0, 0));
         private float _scale; // :(
 
-        public InventoryGUI(Rect rect, float scale)
+        public InventoryWindow(Rect rect, float scale)
             : base(rect, "Inventory")
         {
             ResizeOnVertical = false;

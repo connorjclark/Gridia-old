@@ -13,8 +13,8 @@ public class GridiaDriver : MonoBehaviour
     public static AutoResetEvent gameInitWaitHandle = new AutoResetEvent(false);
     public GridiaGame _game; // :(
     public TabbedUI tabbedGui;
-    public InventoryGUI invGui;
-    public ChatGUI chatGui;
+    public InventoryWindow invGui;
+    public ChatWindow chatGui;
     public ItemInstance mouseDownItem = null; // :(
 
     void Start()
@@ -27,11 +27,11 @@ public class GridiaDriver : MonoBehaviour
         tabbedGui = new TabbedUI(new Rect(Int32.MaxValue, 0, 300, 300), guiScale);
         Locator.Provide(tabbedGui);
 
-        invGui = new InventoryGUI(new Rect(0, Int32.MaxValue, 300, 300), guiScale);
+        invGui = new InventoryWindow(new Rect(0, Int32.MaxValue, 300, 300), guiScale);
         Locator.Provide(invGui);
         tabbedGui.Add(1397, invGui); // :(
 
-        chatGui = new ChatGUI(new Rect(Int32.MaxValue, Int32.MaxValue, 300, 300));
+        chatGui = new ChatWindow(new Rect(Int32.MaxValue, Int32.MaxValue, 300, 300));
         Locator.Provide(chatGui);
         tabbedGui.Add(351, chatGui); // :(
 

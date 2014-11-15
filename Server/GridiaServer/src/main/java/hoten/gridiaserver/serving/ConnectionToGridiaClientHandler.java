@@ -213,8 +213,6 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             use.products.stream()
                     .forEach(product -> {
                         ItemInstance productInstance = _server.contentManager.createItemInstance(product);
-
-                        System.out.println("product: " + productInstance);
                         _server.addItemNear(destIndex, productInstance, 3);
                     });
         }

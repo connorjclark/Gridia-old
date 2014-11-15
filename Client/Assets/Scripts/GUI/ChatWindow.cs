@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Gridia
 {
-    public class ChatGUI : GridiaWindow
+    public class ChatWindow : GridiaWindow
     {
         private String ChatInput { get; set; }
         private String ChatArea { get; set; }
@@ -14,7 +14,7 @@ namespace Gridia
 
         private int ChatInputHeight { get; set; }
 
-        public ChatGUI(Rect rect)
+        public ChatWindow(Rect rect)
             : base(rect, "Chat")
         {
             ChatInputHeight = 20;

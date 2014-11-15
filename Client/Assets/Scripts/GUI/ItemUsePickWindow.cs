@@ -6,14 +6,14 @@ using UnityEngine;
 
 namespace Gridia
 {
-    public class ItemUsePickGUI : GridiaWindow
+    public class ItemUsePickWindow : GridiaWindow
     {
         private ItemUse[] _uses;
         private int _listEntry;
         private bool _listShow;
         private GUIStyle _listStyle;
 
-        public ItemUsePickGUI(Rect rect, List<ItemUse> uses)
+        public ItemUsePickWindow(Rect rect, List<ItemUse> uses)
             : base(rect, "Chat")
         {
             _uses = uses.ToArray();

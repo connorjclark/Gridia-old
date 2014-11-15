@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Gridia
 {
-    public class ExtendibleGridGUI : RenderableContainer
+    public class ExtendibleGrid : RenderableContainer
     {
         public int TilesAcross { get; private set; }
         public int TileSelected { get; set; }
@@ -17,7 +17,7 @@ namespace Gridia
         public float Width { get { return TilesAcross * GetTileWidth(); } }
         public float Height { get { return (int)Math.Ceiling((float)NumChildren / TilesAcross) * GetTileHeight(); } }
 
-        public ExtendibleGridGUI(Rect rect)
+        public ExtendibleGrid(Rect rect)
             : base(rect)
         {
             TilesAcross = 10;
