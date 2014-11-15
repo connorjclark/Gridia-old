@@ -25,6 +25,7 @@ public class GridiaDriver : MonoBehaviour
         float guiScale = 1.75f;
 
         tabbedGui = new TabbedUI(new Vector2(Int32.MaxValue, 0), guiScale);
+        Locator.Provide(tabbedGui);
 
         invGui = new InventoryGUI(new Vector2(0, Int32.MaxValue), guiScale);
         Locator.Provide(invGui);

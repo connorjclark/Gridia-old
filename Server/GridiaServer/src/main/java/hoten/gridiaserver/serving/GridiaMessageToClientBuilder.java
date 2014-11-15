@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import hoten.gridiaserver.Creature;
 import hoten.gridiaserver.Inventory;
 import hoten.gridiaserver.content.ItemInstance;
+import hoten.gridiaserver.content.ItemUse;
 import hoten.gridiaserver.map.Coord;
 import hoten.gridiaserver.map.Sector;
 import hoten.gridiaserver.map.Tile;
@@ -142,6 +143,13 @@ public class GridiaMessageToClientBuilder {
                 .set("index", slotIndex)
                 .set("item", item.data.id)
                 .set("quantity", item.quantity)
+                .build();
+    }
+
+    public Message itemUsePick(List<ItemUse> uses) {
+        return new JsonMessageBuilder()
+                .protocol(outbound(ItemUsePick))
+                .set("uses", uses)
                 .build();
     }
 

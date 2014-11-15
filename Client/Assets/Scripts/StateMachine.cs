@@ -29,7 +29,6 @@ namespace Gridia
         
         public void SetState (State state)
         {
-             Debug.Log(state);
              CurrentState = state;
         }
         

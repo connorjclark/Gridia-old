@@ -190,24 +190,14 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         _server.sendToAll(_messageBuilder.chat(player.username + " says: " + msg));
     }
 
-    private void ProcessUseItem(JsonObject data) {
-        String source = data.get("source").getAsString();
-        String dest = data.get("dest").getAsString();
-        int sourceIndex = data.get("si").getAsInt();
-        int destIndex = data.get("di").getAsInt();
-        System.out.println(source + " " + dest);
-
-        ItemInstance tool = getItemFrom(source, sourceIndex);
-        ItemInstance focus = getItemFrom(dest, destIndex);
-
-        System.out.println(tool + " " + focus);
-        List<ItemUse> uses = _server.contentManager.getItemUses(tool.data, focus.data);
-        System.out.println(uses.size());
-        if (uses.isEmpty()) {
-            return;
-        }
-        ItemUse use = uses.get(0); // temp
-
+    private void ExecuteItemUse(
+            ItemUse use,
+            ItemInstance tool,
+            ItemInstance focus,
+            String dest,
+            int sourceIndex,
+            int destIndex
+    ) {
         if (use.focusQuantityConsumed > 0) {
             if (focus != ItemInstance.NONE) {
                 focus.quantity -= use.focusQuantityConsumed;
@@ -219,8 +209,6 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             }
         }
 
-        System.out.println("focus after use: " + focus);
-
         if ("world".equals(dest)) {
             use.products.stream()
                     .forEach(product -> {
@@ -229,6 +217,28 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
                         System.out.println("product: " + productInstance);
                         _server.addItemNear(destIndex, productInstance, 3);
                     });
+        }
+    }
+
+    private void ProcessUseItem(JsonObject data) throws IOException {
+        String source = data.get("source").getAsString();
+        String dest = data.get("dest").getAsString();
+        int sourceIndex = data.get("si").getAsInt();
+        int destIndex = data.get("di").getAsInt();
+
+        ItemInstance tool = getItemFrom(source, sourceIndex);
+        ItemInstance focus = getItemFrom(dest, destIndex);
+
+        List<ItemUse> uses = _server.contentManager.getItemUses(tool.data, focus.data);
+
+        if (uses.isEmpty()) {
+            return;
+        }
+
+        if (uses.size() == 1) {
+            ExecuteItemUse(uses.get(0), tool, focus, dest, sourceIndex, destIndex);
+        } else {
+            send(_messageBuilder.itemUsePick(uses));
         }
     }
 }

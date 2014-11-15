@@ -21,7 +21,6 @@ public class ContentManager {
         _items = loadItems();
         _items.set(0, ItemInstance.NONE.data);
         _itemUses = loadItemUses();
-        System.out.println("hand uses = " + _itemUses.get(ItemInstance.NONE.data));
     }
 
     public ItemInstance createItemInstance(int id, int quantity) {

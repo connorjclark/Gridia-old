@@ -80,6 +80,9 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
             case GridiaProtocols.Clientbound.InventoryUpdate:
                 InventoryUpdate(data);
                 break;
+            case GridiaProtocols.Clientbound.ItemUsePick:
+                //ItemUsePick(data);
+                break;
         }
     }
 
@@ -193,6 +196,13 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
             var z = data.ReadInt16();
             _game.tileMap.CreateCreature(id, image, x, y, z);
         }
+    }
+
+    private void ItemUsePick(JObject data)
+    {
+        var uses = data["uses"].ToObject<List<ItemUse>>();
+        var pickGui = new ItemUsePickGUI(Vector3.zero, uses);
+        Locator.Get<TabbedUI>().Add(10, pickGui); // :(
     }
 
     //outbound
