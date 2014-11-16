@@ -40,6 +40,9 @@ public class ContentManager {
     }
 
     public Item getItem(int id) {
+        if (id == -1) {
+            return _items.get(0);
+        }
         return _items.get(id);
     }
 
