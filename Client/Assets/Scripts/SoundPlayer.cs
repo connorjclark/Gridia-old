@@ -50,7 +50,6 @@ namespace Gridia
 
         public void PlayMusic(String name)
         {
-            Debug.Log(name);
             var clip = GetAudioClip(name);
             _audio.clip = clip;
             _audio.loop = false;
