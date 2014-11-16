@@ -40,10 +40,20 @@ namespace Gridia
                 return;
             }
 
-            if (ProcessDirectionalInput() != Vector3.zero)
+            var direction = ProcessDirectionalInput();
+            if (direction != Vector3.zero)
             {
-                End(stateMachine, dt, new PlayerMovementState());
-                return;
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    var pickupItemLoc = _driver._game.tileMap.Wrap(_driver._game.view.Focus.Position + direction);
+                    var pickupItemIndex = _driver._game.tileMap.ToIndex(pickupItemLoc);
+                    Locator.Get<ConnectionToGridiaServerHandler>().MoveItem("world", "inv", pickupItemIndex, -1);
+                }
+                else
+                {
+                    End(stateMachine, dt, new PlayerMovementState());
+                    return;
+                }
             }
 
             if (Input.GetMouseButtonDown(0))
