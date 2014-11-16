@@ -51,7 +51,10 @@ namespace Gridia
 
         public override void Render() {
             base.Render();
-            RenderTooltip(); // :(
+            _slots.RenderTooltip((ItemRenderable itemR) => 
+            {
+                return itemR.Item.Item.Name;
+            }); // :(
         }
 
         public void SetItemAt(int index, ItemInstance item)
@@ -70,17 +73,6 @@ namespace Gridia
             _slots.FitToWidth(Width - BorderSize * 2);
             Width = Math.Max(Width, BorderSize * 2 + _slots.Width);
             Height = BorderSize * 2 + _slots.Height;
-        }
-
-        private void RenderTooltip() 
-        {
-            if (_slots.MouseOverTile != -1)
-            {
-                var itemOver = _itemRenderables[_slots.MouseOverTile].Item.Item.Name;
-                var rect = _slots.MouseOverRect;
-                var globalRect = new Rect(Event.current.mousePosition.x + rect.x, Event.current.mousePosition.y + rect.y, rect.width, rect.height);
-                GUI.Box(globalRect, itemOver);
-            }
         }
     }
 }

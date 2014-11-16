@@ -63,6 +63,17 @@ namespace Gridia
             }
         }
 
+        public void RenderTooltip<T>(Func<T, String> tooltipFunc)
+            where T : Renderable
+        {
+            if (MouseOverTile != -1)
+            {
+                var rect = MouseOverRect;
+                var globalRect = new Rect(Event.current.mousePosition.x + rect.x, Event.current.mousePosition.y + rect.y, rect.width, rect.height);
+                GUI.Box(globalRect, tooltipFunc((T)GetChildAt(MouseOverTile)));
+            }
+        }
+
         public void AddChild(Renderable child) 
         {
             base.AddChild(child);
