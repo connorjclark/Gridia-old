@@ -20,8 +20,6 @@ namespace Gridia
         // temp
         // this only plays the sound
         public void Play() {
-            UnityEngine.Debug.Log(Name);
-            UnityEngine.Debug.Log(Frames.Count);
             Frames.ForEach(f =>
             {
                 if (f.Sound != null) Locator.Get<SoundPlayer>().SfxQueue.Enqueue(f.Sound);
