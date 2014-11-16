@@ -1001,9 +1001,13 @@
     ]
   },
   {
-    "id":0,
+    "id":44,
+    "name":"Woodcutting",
     "frames":[
-
+      {
+        "sound":"Woodcutting",
+        "sprite":0
+      }
     ]
   }
 ]
