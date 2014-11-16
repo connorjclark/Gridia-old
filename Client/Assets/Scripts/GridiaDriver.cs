@@ -21,6 +21,7 @@ public class GridiaDriver : MonoBehaviour
     void Start()
     {
         Locator.Provide(this);
+        Locator.Provide<SoundPlayer>(GetComponent<SoundPlayer>());
         ResizeCamera();
 
         float guiScale = 1.75f;
