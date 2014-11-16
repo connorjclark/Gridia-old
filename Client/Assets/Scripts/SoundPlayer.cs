@@ -19,7 +19,7 @@ namespace Gridia
 
         public void Update() 
         {
-            if (MusicQueue.Count != 0) 
+            if (MusicQueue.Count != 0 && !_audio.isPlaying) 
             {
                 PlayMusic(MusicQueue.Dequeue());
             }
@@ -29,12 +29,22 @@ namespace Gridia
             }
         }
 
+        public void QueueRandomSong() 
+        {
+            var songs = Directory.GetFiles(@"TestWorld\sound\music", "*.ogg", SearchOption.AllDirectories);
+            var index = new System.Random().Next(songs.Length);
+            var song = Path.GetFileNameWithoutExtension(songs[index]);
+            MusicQueue.Enqueue(song);
+        }
+
         public void PlayMusic(String name)
         {
+            Debug.Log("Play " + name);
             var clip = GetAudioClip(name);
             _audio.clip = clip;
+            _audio.loop = false;
             _audio.Play();
-            _audio.loop = true;
+            Locator.Get<SoundPlayer>().QueueRandomSong();
         }
 
         public void PlaySfx(String name) 
