@@ -69,8 +69,16 @@ namespace Gridia
             if (MouseOverTile != -1)
             {
                 var rect = MouseOverRect;
-                var globalRect = new Rect(Event.current.mousePosition.x + rect.x, Event.current.mousePosition.y + rect.y, rect.width, rect.height);
-                GUI.Box(globalRect, tooltipFunc((T)GetChildAt(MouseOverTile)));
+
+                var deltaY = (Event.current.mousePosition.y > Screen.height / 2 ? 1 : -1) * rect.y;
+
+                var globalRect = new Rect(Event.current.mousePosition.x + rect.x, Event.current.mousePosition.y + deltaY, rect.width, rect.height);
+
+                var tooltip = tooltipFunc((T)GetChildAt(MouseOverTile));
+
+                GUI.Window(100, globalRect, windowId => {
+                    GUI.Box(new Rect(0, 0, rect.width, rect.height), tooltipFunc((T)GetChildAt(MouseOverTile)));
+                }, tooltip);
             }
         }
 
