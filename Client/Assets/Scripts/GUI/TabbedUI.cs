@@ -38,6 +38,11 @@ namespace Gridia
         {
             base.Render();
             _windows.ForEach(w => w.Render());
+            _tabs.RenderTooltip((ItemRenderable itemR) =>
+            {
+                var index = _tabs.GetIndexOfChild(itemR);
+                return _windows[index].WindowName;
+            }); // :(
         }
 
         public void Add(int tabItemSprite, GridiaWindow window) 

@@ -52,6 +52,11 @@ namespace Gridia
             return _children[index];
         }
 
+        public int GetIndexOfChild(Renderable child) 
+        {
+            return _children.IndexOf(child);
+        }
+
         public void RemoveChild(Renderable child) 
         {
             if (!_children.Remove(child)) 
