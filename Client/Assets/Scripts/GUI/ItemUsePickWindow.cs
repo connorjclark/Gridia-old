@@ -24,7 +24,7 @@ namespace Gridia
 
                 Width = _picks.Width + BorderSize * 2;
                 Height = _picks.Height + BorderSize * 2;
-                X = (Screen.width - Width) / 2;
+                X = (Screen.width / 2 - Width) / 2;
                 Y = (Screen.height - Height) / 2;
             }
         }
