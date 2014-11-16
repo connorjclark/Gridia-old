@@ -10,6 +10,7 @@ namespace Gridia
     {
         private String _source;
         private int _sourceIndex;
+        private Vector3 _previousDirection = new Vector3(123, 123);
 
         public ItemUseState(String source, int sourceIndex) 
         {
@@ -22,12 +23,14 @@ namespace Gridia
             var endTheState = Input.GetKeyUp(KeyCode.Space);
 
             var direction = ProcessDirectionalInput();
-            if (direction != Vector3.zero || endTheState) 
+
+            if (direction != _previousDirection && (direction != Vector3.zero || endTheState)) 
             {
+                _previousDirection = direction;
                 var destLocation = Locator.Get<TileMapView>().Focus.Position + direction;
                 var destIndex = Locator.Get<TileMap>().ToIndex(destLocation);
                 Locator.Get<ConnectionToGridiaServerHandler>().UseItem(_source, "world", _sourceIndex, destIndex);
-                endTheState = true;
+                //endTheState = true;
             }
 
             if (endTheState)
