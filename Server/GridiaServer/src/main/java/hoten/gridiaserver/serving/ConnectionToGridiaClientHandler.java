@@ -206,7 +206,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             String dest,
             int sourceIndex,
             int destIndex
-    ) {
+    ) throws IOException {
         if (use.successTool != -1) {
             if (use.successTool == 0) {
                 tool.quantity -= 1;
@@ -244,6 +244,10 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             if (use.animation != 0) {
                 _server.sendToClientsWithAreaLoaded(_messageBuilder.animation(use.animation), destIndex);
             }
+        }
+
+        if (use.successMessage != null) {
+            send(_messageBuilder.chat(use.successMessage));
         }
     }
 
