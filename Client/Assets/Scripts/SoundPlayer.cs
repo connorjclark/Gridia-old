@@ -63,7 +63,10 @@ namespace Gridia
         {
             foreach (string d in Directory.GetFiles(@"TestWorld\sound", "*.*", SearchOption.AllDirectories))
             {
-                if (Path.GetFileNameWithoutExtension(d) == name) return d;
+                if (String.Equals(Path.GetFileNameWithoutExtension(d), name, StringComparison.OrdinalIgnoreCase))
+                {
+                    return d;
+                }
             }
             throw new Exception("No file found: " + name);
         }

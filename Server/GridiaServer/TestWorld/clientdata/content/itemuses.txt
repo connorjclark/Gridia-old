@@ -32334,6 +32334,7 @@
     "tool":280,
     "focus":1906,
     "focusQuantityConsumed":1,
+    "animation":23,
     "products":[
       360
     ],
@@ -33026,6 +33027,7 @@
     "tool":280,
     "focus":0,
     "focusQuantityConsumed":1,
+    "animation":23,
     "products":[
       1085
     ],
