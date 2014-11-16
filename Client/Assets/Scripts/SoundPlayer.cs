@@ -46,6 +46,11 @@ namespace Gridia
             Locator.Get<SoundPlayer>().QueueRandomSong();
         }
 
+        public void EndCurrentSong() 
+        {
+            _audio.Stop();
+        }
+
         public void PlaySfx(String name) 
         {
             var clip = GetAudioClip(name);
