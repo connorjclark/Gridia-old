@@ -6,7 +6,6 @@ import hoten.gridiaserver.Inventory;
 import hoten.gridiaserver.map.Coord;
 import hoten.gridiaserver.content.ItemInstance;
 import hoten.gridiaserver.Player;
-import hoten.gridiaserver.content.Item;
 import hoten.gridiaserver.content.ItemUse;
 import hoten.gridiaserver.map.Sector;
 import hoten.serving.message.Protocols;
@@ -222,6 +221,9 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
                         ItemInstance productInstance = _server.contentManager.createItemInstance(product);
                         _server.addItemNear(destIndex, productInstance, 3);
                     });
+            if (use.animation != 0) {
+                _server.sendToClientsWithAreaLoaded(_messageBuilder.animation(use.animation), destIndex);
+            }
         }
     }
 

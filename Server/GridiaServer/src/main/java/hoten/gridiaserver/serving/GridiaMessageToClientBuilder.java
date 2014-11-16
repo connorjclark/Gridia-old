@@ -152,6 +152,13 @@ public class GridiaMessageToClientBuilder {
                 .set("uses", uses)
                 .build();
     }
+    
+    public Message animation(int animation) {
+        return new JsonMessageBuilder()
+                .protocol(outbound(Animation))
+                .set("anim", animation)
+                .build();
+    }
 
     private Protocol outbound(Enum en) {
         return _outbound.apply(en);

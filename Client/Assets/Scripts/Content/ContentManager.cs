@@ -10,11 +10,13 @@ namespace Gridia
         
         private readonly List<Item> items;
         private readonly List<Monster> monsters;
+        private readonly List<Animation> animations;
         
         public ContentManager (String worldName)
         {
             items = new ContentLoader<Item>().Load(worldName + "/content/items.txt");
             monsters = new ContentLoader<Monster>().Load(worldName + "/content/monsters.txt");
+            animations = new ContentLoader<Animation>().Load(worldName + "/content/animations.txt");
         }
 
         public Item GetItem(int id)
@@ -29,6 +31,11 @@ namespace Gridia
         public Monster GetMonster(int id)
         {
             return monsters[id];
+        }
+
+        public Animation GetAnimation(int id)
+        {
+            return animations[id - 1]; // :(
         }
     }
 }

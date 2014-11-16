@@ -1,9 +1,10 @@
+using System;
 namespace Gridia
 {
     public class Item
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public String Name { get; set; }
         public bool BlockMovement { get; set; }
         public int Light { get; set; }
         public int[] Animations { get; set; }

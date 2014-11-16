@@ -1044,6 +1044,7 @@
     "tool":280,
     "focus":325,
     "focusQuantityConsumed":1,
+    "animation":23,
     "products":[
       323
     ],
@@ -1057,6 +1058,7 @@
     "tool":280,
     "focus":282,
     "focusQuantityConsumed":1,
+    "animation":23,
     "products":[
       321
     ],
@@ -1070,6 +1072,7 @@
     "tool":280,
     "focus":327,
     "focusQuantityConsumed":1,
+    "animation":23,
     "products":[
       324
     ],
@@ -1083,6 +1086,7 @@
     "tool":280,
     "focus":126,
     "focusQuantityConsumed":1,
+    "animation":23,
     "products":[
       124
     ],
@@ -1096,6 +1100,7 @@
     "tool":280,
     "focus":328,
     "focusQuantityConsumed":1,
+    "animation":23,
     "products":[
       330
     ],
@@ -1109,6 +1114,7 @@
     "tool":280,
     "focus":333,
     "focusQuantityConsumed":1,
+    "animation":23,
     "products":[
       335
     ],
@@ -1122,6 +1128,7 @@
     "tool":280,
     "focus":357,
     "focusQuantityConsumed":1,
+    "animation":23,
     "products":[
       356
     ],
@@ -1135,6 +1142,7 @@
     "tool":280,
     "focus":363,
     "focusQuantityConsumed":1,
+    "animation":23,
     "products":[
       365
     ],
@@ -1148,6 +1156,7 @@
     "tool":280,
     "focus":340,
     "focusQuantityConsumed":1,
+    "animation":23,
     "products":[
       342
     ],
@@ -1161,6 +1170,7 @@
     "tool":280,
     "focus":193,
     "focusQuantityConsumed":1,
+    "animation":23,
     "products":[
       194
     ],
@@ -1174,6 +1184,7 @@
     "tool":281,
     "focus":323,
     "focusQuantityConsumed":1,
+    "animation":23,
     "products":[
       325
     ],
@@ -2007,6 +2018,7 @@
     "tool":901,
     "focus":0,
     "focusQuantityConsumed":0,
+    "animation":25,
     "products":[
       0
     ],
@@ -2020,6 +2032,7 @@
     "tool":901,
     "focus":4,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       5,
       5,
@@ -2037,6 +2050,7 @@
     "tool":901,
     "focus":5,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       271
     ],
@@ -2050,6 +2064,7 @@
     "tool":901,
     "focus":987,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       981,
       271
@@ -2065,6 +2080,7 @@
     "tool":901,
     "focus":986,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       980,
       271
@@ -2080,6 +2096,7 @@
     "tool":901,
     "focus":339,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       271
     ],
@@ -2093,6 +2110,7 @@
     "tool":901,
     "focus":10,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       271
     ],
@@ -2106,6 +2124,7 @@
     "tool":901,
     "focus":211,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       271
     ],
@@ -2119,6 +2138,7 @@
     "tool":901,
     "focus":213,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       271
     ],
@@ -2145,6 +2165,7 @@
     "tool":901,
     "focus":212,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       271
     ],
@@ -2158,6 +2179,7 @@
     "tool":901,
     "focus":214,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       271
     ],
@@ -2171,6 +2193,7 @@
     "tool":901,
     "focus":215,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       271
     ],
@@ -2184,6 +2207,7 @@
     "tool":901,
     "focus":216,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       271
     ],
@@ -2197,6 +2221,7 @@
     "tool":901,
     "focus":217,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       271
     ],
@@ -2210,6 +2235,7 @@
     "tool":901,
     "focus":218,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       271
     ],
@@ -2223,6 +2249,7 @@
     "tool":901,
     "focus":219,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       271
     ],
@@ -2236,6 +2263,7 @@
     "tool":901,
     "focus":220,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       271
     ],
@@ -2249,6 +2277,7 @@
     "tool":901,
     "focus":221,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       271
     ],
@@ -2262,6 +2291,7 @@
     "tool":901,
     "focus":222,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       271
     ],
@@ -2275,6 +2305,7 @@
     "tool":901,
     "focus":223,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       271
     ],
@@ -2288,6 +2319,7 @@
     "tool":901,
     "focus":224,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       271
     ],
@@ -2301,6 +2333,7 @@
     "tool":901,
     "focus":248,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       271,
       406
@@ -2316,6 +2349,7 @@
     "tool":901,
     "focus":249,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       271,
       406
@@ -2331,6 +2365,7 @@
     "tool":901,
     "focus":257,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       271,
       406
@@ -2346,6 +2381,7 @@
     "tool":901,
     "focus":258,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       271,
       406
@@ -2361,6 +2397,7 @@
     "tool":901,
     "focus":241,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       271
     ],
@@ -2374,6 +2411,7 @@
     "tool":901,
     "focus":242,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       271
     ],
@@ -3366,6 +3404,7 @@
     "tool":902,
     "focus":0,
     "focusQuantityConsumed":0,
+    "animation":39,
     "products":[
       1210
     ],
@@ -3379,6 +3418,7 @@
     "tool":902,
     "focus":0,
     "focusQuantityConsumed":0,
+    "animation":39,
     "products":[
       1002
     ],
@@ -3417,6 +3457,7 @@
     "tool":2034,
     "focus":0,
     "focusQuantityConsumed":0,
+    "animation":29,
     "products":[
       0
     ],
@@ -3429,6 +3470,7 @@
     "tool":2035,
     "focus":0,
     "focusQuantityConsumed":0,
+    "animation":29,
     "products":[
       0
     ],
@@ -3441,6 +3483,7 @@
     "tool":2026,
     "focus":0,
     "focusQuantityConsumed":0,
+    "animation":29,
     "products":[
       0
     ],
@@ -3453,6 +3496,7 @@
     "tool":2027,
     "focus":0,
     "focusQuantityConsumed":0,
+    "animation":29,
     "products":[
       0
     ],
@@ -3465,6 +3509,7 @@
     "tool":1099,
     "focus":0,
     "focusQuantityConsumed":0,
+    "animation":29,
     "products":[
       1001
     ],
@@ -4598,6 +4643,7 @@
     "tool":902,
     "focus":981,
     "focusQuantityConsumed":1,
+    "animation":39,
     "products":[
       0
     ],
@@ -4611,6 +4657,7 @@
     "tool":902,
     "focus":980,
     "focusQuantityConsumed":1,
+    "animation":39,
     "products":[
       0
     ],
@@ -4624,6 +4671,7 @@
     "tool":902,
     "focus":0,
     "focusQuantityConsumed":0,
+    "animation":39,
     "products":[
       980
     ],
@@ -4637,6 +4685,7 @@
     "tool":902,
     "focus":0,
     "focusQuantityConsumed":0,
+    "animation":39,
     "products":[
       981
     ],
@@ -4650,6 +4699,7 @@
     "tool":902,
     "focus":0,
     "focusQuantityConsumed":0,
+    "animation":39,
     "products":[
       1116
     ],
@@ -4663,6 +4713,7 @@
     "tool":902,
     "focus":1116,
     "focusQuantityConsumed":1,
+    "animation":39,
     "products":[
       0
     ],
@@ -10590,6 +10641,7 @@
     "tool":0,
     "focus":2198,
     "focusQuantityConsumed":1,
+    "animation":31,
     "products":[
       2199
     ],
@@ -10603,6 +10655,7 @@
     "tool":0,
     "focus":2199,
     "focusQuantityConsumed":1,
+    "animation":31,
     "products":[
       2198
     ],
@@ -15878,6 +15931,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1258
     ],
@@ -15890,6 +15944,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1442
     ],
@@ -15902,6 +15957,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1443
     ],
@@ -15914,6 +15970,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1444
     ],
@@ -15926,6 +15983,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1445
     ],
@@ -15938,6 +15996,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1446
     ],
@@ -15950,6 +16009,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1447
     ],
@@ -15962,6 +16022,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1448
     ],
@@ -15974,6 +16035,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1449
     ],
@@ -15986,6 +16048,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1451
     ],
@@ -15998,6 +16061,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1452
     ],
@@ -16010,6 +16074,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1453
     ],
@@ -16022,6 +16087,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1454
     ],
@@ -16034,6 +16100,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1455
     ],
@@ -16046,6 +16113,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1456
     ],
@@ -16058,6 +16126,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1457
     ],
@@ -16070,6 +16139,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1458
     ],
@@ -16082,6 +16152,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1459
     ],
@@ -16094,6 +16165,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       486
     ],
@@ -16106,6 +16178,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       497
     ],
@@ -16118,6 +16191,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       498
     ],
@@ -16130,6 +16204,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       499
     ],
@@ -16142,6 +16217,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       538
     ],
@@ -16154,6 +16230,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       273
     ],
@@ -16166,6 +16243,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1120
     ],
@@ -16178,6 +16256,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       558
     ],
@@ -16190,6 +16269,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       0,
       560
@@ -16204,6 +16284,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       0,
       350
@@ -16218,6 +16299,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       351
     ],
@@ -16230,6 +16312,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1256
     ],
@@ -16242,6 +16325,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       819
     ],
@@ -16254,6 +16338,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       822
     ],
@@ -16266,6 +16351,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       821
     ],
@@ -16278,6 +16364,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       385
     ],
@@ -16290,6 +16377,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       387
     ],
@@ -16302,6 +16390,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       388
     ],
@@ -16314,6 +16403,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       389
     ],
@@ -16326,6 +16416,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       390
     ],
@@ -16338,6 +16429,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1711
     ],
@@ -16350,6 +16442,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1713
     ],
@@ -16362,6 +16455,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       196
     ],
@@ -16374,6 +16468,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       197
     ],
@@ -16386,6 +16481,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       198
     ],
@@ -16398,6 +16494,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1694
     ],
@@ -16410,6 +16507,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1695
     ],
@@ -16422,6 +16520,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1696
     ],
@@ -16434,6 +16533,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1697
     ],
@@ -16446,6 +16546,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       836
     ],
@@ -16458,6 +16559,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       843
     ],
@@ -16470,6 +16572,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1658
     ],
@@ -16482,6 +16585,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1659
     ],
@@ -16494,6 +16598,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       3142
     ],
@@ -16506,6 +16611,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       3144
     ],
@@ -16518,6 +16624,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       114
     ],
@@ -16530,6 +16637,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       440
     ],
@@ -16542,6 +16650,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1211
     ],
@@ -16554,6 +16663,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1467
     ],
@@ -16566,6 +16676,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1468
     ],
@@ -16578,6 +16689,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1469
     ],
@@ -16590,6 +16702,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1470
     ],
@@ -16602,6 +16715,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1471
     ],
@@ -16614,6 +16728,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1472
     ],
@@ -16626,6 +16741,7 @@
     "tool":1068,
     "focus":256,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       406
     ],
@@ -16638,6 +16754,7 @@
     "tool":1068,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       0,
       71
@@ -16652,6 +16769,7 @@
     "tool":1068,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       1707
     ],
@@ -16664,6 +16782,7 @@
     "tool":1068,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       0,
       88
@@ -16678,6 +16797,7 @@
     "tool":1068,
     "focus":71,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       0,
       407
@@ -16692,6 +16812,7 @@
     "tool":1068,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       812
     ],
@@ -16704,6 +16825,7 @@
     "tool":1068,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       813
     ],
@@ -16716,6 +16838,7 @@
     "tool":1068,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       815
     ],
@@ -16728,6 +16851,7 @@
     "tool":1068,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       816
     ],
@@ -16740,6 +16864,7 @@
     "tool":1068,
     "focus":437,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       1105
     ],
@@ -16752,6 +16877,7 @@
     "tool":1068,
     "focus":437,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       1154
     ],
@@ -16764,6 +16890,7 @@
     "tool":1068,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       0,
       65
@@ -16778,6 +16905,7 @@
     "tool":1068,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       0,
       58
@@ -16792,6 +16920,7 @@
     "tool":1068,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       0,
       96
@@ -16806,6 +16935,7 @@
     "tool":1068,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       274
     ],
@@ -16843,6 +16973,7 @@
     "tool":917,
     "focus":342,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -16856,6 +16987,7 @@
     "tool":917,
     "focus":194,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -16869,6 +17001,7 @@
     "tool":920,
     "focus":342,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -16882,6 +17015,7 @@
     "tool":920,
     "focus":194,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -16895,6 +17029,7 @@
     "tool":923,
     "focus":342,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -16908,6 +17043,7 @@
     "tool":923,
     "focus":194,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -16921,6 +17057,7 @@
     "tool":926,
     "focus":342,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -16934,6 +17071,7 @@
     "tool":926,
     "focus":194,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -16947,6 +17085,7 @@
     "tool":929,
     "focus":342,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -16960,6 +17099,7 @@
     "tool":929,
     "focus":194,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -16973,6 +17113,7 @@
     "tool":932,
     "focus":342,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -16986,6 +17127,7 @@
     "tool":932,
     "focus":194,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -16999,6 +17141,7 @@
     "tool":935,
     "focus":342,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -17012,6 +17155,7 @@
     "tool":935,
     "focus":194,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -17025,6 +17169,7 @@
     "tool":938,
     "focus":2237,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -17038,6 +17183,7 @@
     "tool":2222,
     "focus":2237,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -17051,6 +17197,7 @@
     "tool":2223,
     "focus":2237,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -17205,6 +17352,7 @@
     "tool":1464,
     "focus":2237,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -17218,6 +17366,7 @@
     "tool":918,
     "focus":342,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -17231,6 +17380,7 @@
     "tool":918,
     "focus":194,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -17244,6 +17394,7 @@
     "tool":921,
     "focus":342,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -17257,6 +17408,7 @@
     "tool":921,
     "focus":194,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -17270,6 +17422,7 @@
     "tool":924,
     "focus":342,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -17283,6 +17436,7 @@
     "tool":924,
     "focus":194,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -17296,6 +17450,7 @@
     "tool":927,
     "focus":342,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -17309,6 +17464,7 @@
     "tool":927,
     "focus":194,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -17322,6 +17478,7 @@
     "tool":930,
     "focus":342,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -17335,6 +17492,7 @@
     "tool":930,
     "focus":194,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -17348,6 +17506,7 @@
     "tool":933,
     "focus":342,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -17361,6 +17520,7 @@
     "tool":933,
     "focus":194,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -17374,6 +17534,7 @@
     "tool":936,
     "focus":342,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -17387,6 +17548,7 @@
     "tool":936,
     "focus":194,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -17400,6 +17562,7 @@
     "tool":939,
     "focus":2237,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -17413,6 +17576,7 @@
     "tool":1465,
     "focus":2237,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -20726,6 +20890,7 @@
     "tool":672,
     "focus":659,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       0
     ],
@@ -20791,6 +20956,7 @@
     "tool":666,
     "focus":665,
     "focusQuantityConsumed":0,
+    "animation":25,
     "products":[
 
     ],
@@ -20804,6 +20970,7 @@
     "tool":667,
     "focus":0,
     "focusQuantityConsumed":0,
+    "animation":29,
     "products":[
 
     ],
@@ -29993,6 +30160,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1678
     ],
@@ -30199,6 +30367,7 @@
     "tool":1068,
     "focus":1668,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       1698
     ],
@@ -30211,6 +30380,7 @@
     "tool":1068,
     "focus":1669,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       1698
     ],
@@ -30223,6 +30393,7 @@
     "tool":1068,
     "focus":1670,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       1698
     ],
@@ -30235,6 +30406,7 @@
     "tool":1068,
     "focus":1671,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       1698
     ],
@@ -30247,6 +30419,7 @@
     "tool":1068,
     "focus":1672,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       1698
     ],
@@ -30259,6 +30432,7 @@
     "tool":1068,
     "focus":1673,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       1698
     ],
@@ -30271,6 +30445,7 @@
     "tool":1068,
     "focus":1674,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       1698
     ],
@@ -30283,6 +30458,7 @@
     "tool":1068,
     "focus":1675,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       1698
     ],
@@ -30295,6 +30471,7 @@
     "tool":1068,
     "focus":1676,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       1698
     ],
@@ -30307,6 +30484,7 @@
     "tool":1068,
     "focus":1677,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       1698
     ],
@@ -30319,6 +30497,7 @@
     "tool":1068,
     "focus":1679,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       1698
     ],
@@ -30331,6 +30510,7 @@
     "tool":1068,
     "focus":1680,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       1698
     ],
@@ -30343,6 +30523,7 @@
     "tool":1068,
     "focus":1681,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       1698
     ],
@@ -30355,6 +30536,7 @@
     "tool":1068,
     "focus":1682,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       1698
     ],
@@ -30367,6 +30549,7 @@
     "tool":1068,
     "focus":1683,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       1698
     ],
@@ -30379,6 +30562,7 @@
     "tool":1068,
     "focus":1684,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       1698
     ],
@@ -30391,6 +30575,7 @@
     "tool":1068,
     "focus":1685,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       1698
     ],
@@ -30403,6 +30588,7 @@
     "tool":1068,
     "focus":1686,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       1698
     ],
@@ -30415,6 +30601,7 @@
     "tool":1068,
     "focus":1687,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       1698
     ],
@@ -30427,6 +30614,7 @@
     "tool":1068,
     "focus":1724,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       1698
     ],
@@ -30440,6 +30628,7 @@
     "tool":1704,
     "focus":1740,
     "focusQuantityConsumed":1,
+    "animation":22,
     "products":[
       1747,
       1698
@@ -30709,6 +30898,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       480
     ],
@@ -30721,6 +30911,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       488
     ],
@@ -30733,6 +30924,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1661
     ],
@@ -30745,6 +30937,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1662
     ],
@@ -30757,6 +30950,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1766
     ],
@@ -30769,6 +30963,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1768
     ],
@@ -30781,6 +30976,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1770
     ],
@@ -30793,6 +30989,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1772
     ],
@@ -30805,6 +31002,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1774
     ],
@@ -30817,6 +31015,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1776
     ],
@@ -30829,6 +31028,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1778
     ],
@@ -30841,6 +31041,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1780
     ],
@@ -30853,6 +31054,7 @@
     "tool":345,
     "focus":1661,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       484
     ],
@@ -30865,6 +31067,7 @@
     "tool":345,
     "focus":1662,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       485
     ],
@@ -30877,6 +31080,7 @@
     "tool":345,
     "focus":1766,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1765
     ],
@@ -30889,6 +31093,7 @@
     "tool":345,
     "focus":1768,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1767
     ],
@@ -30901,6 +31106,7 @@
     "tool":345,
     "focus":1770,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1769
     ],
@@ -30913,6 +31119,7 @@
     "tool":345,
     "focus":1772,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1771
     ],
@@ -30925,6 +31132,7 @@
     "tool":345,
     "focus":1774,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1773
     ],
@@ -30937,6 +31145,7 @@
     "tool":345,
     "focus":1776,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1775
     ],
@@ -30949,6 +31158,7 @@
     "tool":345,
     "focus":1778,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1777
     ],
@@ -30961,6 +31171,7 @@
     "tool":345,
     "focus":1780,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1779
     ],
@@ -31138,6 +31349,7 @@
     "tool":280,
     "focus":1798,
     "focusQuantityConsumed":1,
+    "animation":23,
     "products":[
       1077
     ],
@@ -31151,6 +31363,7 @@
     "tool":280,
     "focus":1799,
     "focusQuantityConsumed":1,
+    "animation":23,
     "products":[
       1077
     ],
@@ -31164,6 +31377,7 @@
     "tool":280,
     "focus":1800,
     "focusQuantityConsumed":1,
+    "animation":23,
     "products":[
       1077
     ],
@@ -31177,6 +31391,7 @@
     "tool":280,
     "focus":1801,
     "focusQuantityConsumed":1,
+    "animation":23,
     "products":[
       1077
     ],
@@ -32040,6 +32255,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1903
     ],
@@ -32065,6 +32281,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1904
     ],
@@ -32090,6 +32307,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       1905
     ],
@@ -32714,6 +32932,7 @@
     "tool":901,
     "focus":1939,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       271,
       406
@@ -32820,6 +33039,7 @@
     "tool":1806,
     "focus":342,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -32833,6 +33053,7 @@
     "tool":1806,
     "focus":194,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -32845,6 +33066,7 @@
     "tool":1807,
     "focus":342,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -32857,6 +33079,7 @@
     "tool":1807,
     "focus":194,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -32905,6 +33128,7 @@
     "tool":1809,
     "focus":140,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -32917,6 +33141,7 @@
     "tool":1809,
     "focus":140,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -32929,6 +33154,7 @@
     "tool":1809,
     "focus":140,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -32980,6 +33206,7 @@
     "tool":1810,
     "focus":342,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -32992,6 +33219,7 @@
     "tool":1810,
     "focus":194,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -33004,6 +33232,7 @@
     "tool":1811,
     "focus":342,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -33016,6 +33245,7 @@
     "tool":1811,
     "focus":194,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -33028,6 +33258,7 @@
     "tool":1812,
     "focus":342,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -33040,6 +33271,7 @@
     "tool":1812,
     "focus":194,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -34317,6 +34549,7 @@
     "tool":3066,
     "focus":1468,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       3069
     ],
@@ -34329,6 +34562,7 @@
     "tool":3066,
     "focus":1470,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       3070
     ],
@@ -34538,6 +34772,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       3086
     ],
@@ -34550,6 +34785,7 @@
     "tool":3087,
     "focus":1117,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       3088
     ],
@@ -34562,6 +34798,7 @@
     "tool":3087,
     "focus":986,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       3089
     ],
@@ -34575,6 +34812,7 @@
     "tool":900,
     "focus":3088,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       1117,
       3087
@@ -34590,6 +34828,7 @@
     "tool":900,
     "focus":3089,
     "focusQuantityConsumed":1,
+    "animation":25,
     "products":[
       986,
       3087
@@ -34604,6 +34843,7 @@
     "tool":3066,
     "focus":3086,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       3087
     ],
@@ -34859,6 +35099,7 @@
     "tool":3100,
     "focus":2237,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -34872,6 +35113,7 @@
     "tool":3101,
     "focus":2237,
     "focusQuantityConsumed":0,
+    "animation":26,
     "products":[
 
     ],
@@ -36287,6 +36529,7 @@
     "tool":280,
     "focus":3128,
     "focusQuantityConsumed":1,
+    "animation":23,
     "products":[
       3126
     ],
@@ -36472,6 +36715,7 @@
     "tool":280,
     "focus":3133,
     "focusQuantityConsumed":1,
+    "animation":23,
     "products":[
       3130
     ],
@@ -37047,6 +37291,7 @@
     "tool":826,
     "focus":406,
     "focusQuantityConsumed":1,
+    "animation":24,
     "products":[
       2387
     ],

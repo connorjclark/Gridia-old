@@ -14,6 +14,20 @@ namespace Gridia
         private AudioClip _currentMusic;
         [SerializeField]
         private AudioSource _audio;
+        public Queue<String> MusicQueue = new Queue<String>();
+        public Queue<String> SfxQueue = new Queue<String>();
+
+        public void Update() 
+        {
+            if (MusicQueue.Count != 0) 
+            {
+                PlayMusic(MusicQueue.Dequeue());
+            }
+            if (SfxQueue.Count != 0)
+            {
+                PlaySfx(SfxQueue.Dequeue());
+            }
+        }
 
         public void PlayMusic(String name)
         {

@@ -83,6 +83,9 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
             case GridiaProtocols.Clientbound.ItemUsePick:
                 ItemUsePick(data);
                 break;
+            case GridiaProtocols.Clientbound.Animation:
+                Animation(data);
+                break;
         }
     }
 
@@ -207,6 +210,13 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         var tabbedUI = Locator.Get<TabbedUI>();
         tabbedUI.DisableAll();
         tabbedUI.Enable(usePickWindow, true);
+    }
+
+    private void Animation(JObject data)
+    {
+        var animId = (int)data["anim"];
+        var anim = Locator.Get<ContentManager>().GetAnimation(animId);
+        anim.Play(); // temp
     }
 
     //outbound

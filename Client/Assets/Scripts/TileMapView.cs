@@ -299,24 +299,6 @@ namespace Gridia
                 }
             ));
 
-            /*result.Add(new Layer(
-                "Creature layer",
-                this,
-                tile =>
-                {
-                    if (tile.Creature == null)
-                    {
-                        return -1;
-                    }
-                    return tile.Creature.Image;
-                },
-                data => _textureManager.GetCreaturesTexture(data / 100),
-                tile =>
-                {
-                    return tile.Creature.Offset;
-                }
-            ));*/
-
             for (int i = 0; i < result.Count; i++) {
                 result[i].renderable.transform.position = new Vector3(0, 0, -i);
             }

@@ -61,6 +61,10 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         sendTo(message, c -> c.hasSectorLoaded(sector));
     }
 
+    public void sendToClientsWithAreaLoaded(Message message, int destIndex) {
+        sendToClientsWithAreaLoaded(message, tileMap.getCoordFromIndex(destIndex));
+    }
+
     public void sendToClientsWithAreaLoaded(Message message, Coord loc) {
         sendTo(message, c -> c.hasSectorLoaded(tileMap.getSectorOf(loc)));
     }
