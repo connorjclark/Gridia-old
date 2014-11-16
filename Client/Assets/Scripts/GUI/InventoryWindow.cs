@@ -53,7 +53,7 @@ namespace Gridia
             base.Render();
             _slots.RenderTooltip((ItemRenderable itemR) => 
             {
-                return itemR.Item.Item.Name;
+                return itemR.Item.ToString();
             }); // :(
         }
 

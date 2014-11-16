@@ -13,6 +13,11 @@ namespace Gridia
             Item = item;
             Quantity = quantity;
         }
+
+        public override string ToString()
+        {
+            return Item.Name + ((Quantity != 1) ? String.Format(" ({0})", Quantity) : "");
+        }
     }
 
     public class ItemInstanceConverter : JsonCreationConverter<ItemInstance>
