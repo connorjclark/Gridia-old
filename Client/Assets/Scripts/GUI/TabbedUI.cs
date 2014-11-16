@@ -28,9 +28,6 @@ namespace Gridia
             if (_tabs.MouseUpTile != -1) 
             {
                 ToggleVisiblity(_tabs.MouseUpTile);
-                var tab = _tabs.GetChildAt(_tabs.MouseUpTile);
-                var alpha = (byte)(_windows[_tabs.MouseUpTile].Visible ? 255 : 50);
-                tab.Color = new Color32(255, 255, 255, alpha);
             }
         }
 
@@ -54,6 +51,7 @@ namespace Gridia
                 var item = Locator.Get<ContentManager>().GetItem(tabItemSprite).GetInstance();
                 var tab = new ItemRenderable(new Rect(0, 0, _tabSize, _tabSize), item);
                 _tabs.AddChild(tab);
+                SetTabTransparency(_tabs.NumChildren - 1);
             }
         }
 
@@ -72,6 +70,7 @@ namespace Gridia
             if (index < _windows.Count) 
             {
                 _windows[index].Visible = !_windows[index].Visible;
+                SetTabTransparency(index);
             }
         }
 
@@ -83,6 +82,13 @@ namespace Gridia
         public bool ResizingAny()
         {
             return ResizingWindow || _windows.Exists(w => w.ResizingWindow);
+        }
+
+        private void SetTabTransparency(int index) 
+        {
+            var tab = _tabs.GetChildAt(index);
+            var alpha = (byte)(_windows[index].Visible ? 255 : 100);
+            tab.Color = new Color32(255, 255, 255, alpha);
         }
     }
 }

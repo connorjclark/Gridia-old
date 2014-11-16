@@ -62,6 +62,9 @@ public class GridiaDriver : MonoBehaviour
     {
         tabbedGui.Add(1397, invGui); // :(
         tabbedGui.Add(351, chatGui); // :(
+        var options = new OptionsWindow(new Rect(0, 0, 300, 100));
+        options.Visible = false;
+        tabbedGui.Add(1, options);
     }
 
     void OnGUI() {
@@ -128,5 +131,15 @@ public class GridiaDriver : MonoBehaviour
         Camera camera = Camera.main;
         camera.orthographicSize = Screen.height / 2.0f;
         camera.transform.position = new Vector3(Screen.width / 2.0f, Screen.height / 2.0f, -100);
+    }
+
+    public void OnApplicationQuit() 
+    {
+        Application.CancelQuit();
+        //Locator.Get<ConnectionToServerHandler>().End();
+        if (!Application.isEditor)
+        {
+            System.Diagnostics.Process.GetCurrentProcess().Kill();
+        }
     }
 }
