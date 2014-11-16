@@ -75,6 +75,7 @@ namespace Gridia
                 var mouseOverIndex = MouseOverTile;
                 GUI.Window(100, globalRect, windowId => {
                     GUI.Box(new Rect(0, 0, rect.width, rect.height), tooltipFunc((T)GetChildAt(mouseOverIndex)));
+                    GUI.BringWindowToFront(windowId);
                 }, tooltip);
             }
         }
