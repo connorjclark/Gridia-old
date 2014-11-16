@@ -14,7 +14,9 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ConnectionToGridiaClientHandler extends SocketHandler {
 
@@ -45,12 +47,12 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
 
         // fake an inventory
         List<ItemInstance> inv = new ArrayList();
-        inv.add(_server.contentManager.createItemInstance(57));
-        inv.add(_server.contentManager.createItemInstance(280));
-        inv.add(_server.contentManager.createItemInstance(1067));
-        inv.add(_server.contentManager.createItemInstance(1068));
-        inv.add(_server.contentManager.createItemInstance(826));
-        inv.add(_server.contentManager.createItemInstance(1039));
+        inv.addAll(Arrays.asList(57, 140, 280, 1067, 1068, 826, 1974, 1974, 1039, 171, 902, 901, 339, 341).stream()
+                .map(i -> {
+                    int quantity = _server.contentManager.getItem(i).stackable ? 1000 : 1;
+                    return _server.contentManager.createItemInstance(i, quantity);
+                })
+                .collect(Collectors.toList()));
         for (int i = 0; i < 20; i++) {
             inv.add(_server.contentManager.createItemInstance(0));
         }
@@ -200,10 +202,28 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             ItemUse use,
             ItemInstance tool,
             ItemInstance focus,
+            String source,
             String dest,
             int sourceIndex,
             int destIndex
     ) {
+        if (use.successTool != -1) {
+            if (use.successTool == 0) {
+                tool.quantity -= 1;
+            } else {
+                tool = _server.contentManager.createItemInstance(use.successTool);
+            }
+
+            switch (source) {
+                case "world":
+                    _server.changeItem(sourceIndex, tool);
+                    break;
+                case "inv":
+                    player.inventory.set(sourceIndex, tool);
+                    break;
+            }
+        }
+
         if (use.focusQuantityConsumed > 0) {
             if (focus != ItemInstance.NONE) {
                 focus.quantity -= use.focusQuantityConsumed;
@@ -246,7 +266,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         }
 
         if (uses.size() == 1) {
-            ExecuteItemUse(uses.get(0), tool, focus, dest, sourceIndex, destIndex);
+            ExecuteItemUse(uses.get(0), tool, focus, source, dest, sourceIndex, destIndex);
         } else {
             send(_messageBuilder.itemUsePick(uses));
             useSource = source;
@@ -262,6 +282,6 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         ItemInstance focus = getItemFrom(useDest, useDestIndex);
         List<ItemUse> uses = _server.contentManager.getItemUses(tool.data, focus.data);
         ItemUse use = uses.get(useIndex);
-        ExecuteItemUse(use, tool, focus, useDest, useSourceIndex, useDestIndex);
+        ExecuteItemUse(use, tool, focus, useSource, useDest, useSourceIndex, useDestIndex);
     }
 }
