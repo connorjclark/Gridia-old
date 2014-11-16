@@ -41,7 +41,6 @@ namespace Gridia
                 {
                     // :(
                     GUI.Box(rect, "");
-                    GUI.Box(rect, "");
                 }
                 bool slotContainsMouse = rect.Contains(Event.current.mousePosition);
                 if (slotContainsMouse)
