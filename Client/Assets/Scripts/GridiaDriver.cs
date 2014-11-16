@@ -31,15 +31,12 @@ public class GridiaDriver : MonoBehaviour
 
         invGui = new InventoryWindow(new Rect(0, Int32.MaxValue, 300, 300), guiScale);
         Locator.Provide(invGui);
-        tabbedGui.Add(1397, invGui); // :(
 
         chatGui = new ChatWindow(new Rect(Int32.MaxValue, Int32.MaxValue, 300, 300));
         Locator.Provide(chatGui);
-        tabbedGui.Add(351, chatGui); // :(
 
         itemUsePickWindow = new ItemUsePickWindow(new Rect(0, 0, 300, 300), guiScale);
         Locator.Provide(itemUsePickWindow);
-        tabbedGui.Add(10, itemUsePickWindow, false); // :(
 
         _game = new GridiaGame();
         Locator.Provide(_game);
@@ -57,6 +54,14 @@ public class GridiaDriver : MonoBehaviour
         _game.Initialize(GridiaConstants.SIZE, GridiaConstants.DEPTH, GridiaConstants.SECTOR_SIZE); // :(
 
         gameInitWaitHandle.Set();
+
+        InitTabbedGui();
+    }
+
+    void InitTabbedGui() 
+    {
+        tabbedGui.Add(1397, invGui); // :(
+        tabbedGui.Add(351, chatGui); // :(
     }
 
     void OnGUI() {

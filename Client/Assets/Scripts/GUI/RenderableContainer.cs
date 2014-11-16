@@ -26,6 +26,7 @@ namespace Gridia
             GUI.BeginGroup(Rect);
             foreach (var child in _children)
             {
+                GUI.color = child.Color;
                 child.Render();
             }
             GUI.EndGroup();
@@ -57,6 +58,11 @@ namespace Gridia
             {
                 throw new Exception("Child not found: " + child);
             }
+        }
+
+        public void RemoveChildAt(int index) 
+        {
+            _children.RemoveAt(index);
         }
 
         public void RemoveChildren() 

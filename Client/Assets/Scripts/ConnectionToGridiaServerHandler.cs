@@ -208,8 +208,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         var usePickWindow = Locator.Get<ItemUsePickWindow>();
         usePickWindow.Uses = uses;
         var tabbedUI = Locator.Get<TabbedUI>();
-        tabbedUI.DisableAll();
-        tabbedUI.Enable(usePickWindow, true);
+        tabbedUI.Add(10, usePickWindow);
     }
 
     private void Animation(JObject data)

@@ -64,8 +64,7 @@ namespace Gridia
                 else 
                 {
                     Locator.Get<ConnectionToGridiaServerHandler>().PlayerMove(destination);
-                    Locator.Get<TabbedUI>().EnableAll();
-                    Locator.Get<TabbedUI>().Enable(Locator.Get<ItemUsePickWindow>(), false);
+                    Locator.Get<TabbedUI>().Remove(Locator.Get<ItemUsePickWindow>());
                 }
             }
             

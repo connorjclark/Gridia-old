@@ -47,12 +47,15 @@ namespace Gridia
             set { if (value != _rect.y) { _rect.y = value; Dirty = true; } }
         }
 
+        public bool Dirty { get; set; }
+
+        public Color32 Color { get; set; }
+
         public Renderable(Rect rect)
         {
             Rect = rect;
+            Color = new Color32(255, 255, 255, 255);
         }
-
-        public bool Dirty { get; set; }
 
         public abstract void Render();
     }

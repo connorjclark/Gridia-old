@@ -45,8 +45,7 @@ namespace Gridia
             // :(
             if (_picks.MouseUpTile != -1)
             {
-                Locator.Get<TabbedUI>().EnableAll();
-                Locator.Get<TabbedUI>().Enable(this, false);
+                Locator.Get<TabbedUI>().Remove(this);
                 Locator.Get<ConnectionToGridiaServerHandler>().PickItemUse(_picks.MouseUpTile);
             }
         }

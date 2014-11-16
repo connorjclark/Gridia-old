@@ -8,11 +8,10 @@ namespace Gridia
 {
     public class TabbedUI : GridiaWindow
     {
-        private List<int> _tabItemSprites = new List<int>();
-        private List<bool> _tabEnabled = new List<bool>(); // :(
         private List<GridiaWindow> _windows = new List<GridiaWindow>(); // :(
         private float _spacing = 5;
         private float _tabSize;
+        private ExtendibleGrid _tabs = new ExtendibleGrid(new Rect(0, 0, 0, 0));
 
         public TabbedUI(Rect rect, float scale)
             : base(rect, "Tabs")
@@ -24,42 +23,43 @@ namespace Gridia
 
         protected override void RenderContents() 
         {
-            int tabsRendered = 0;
-            for (int i = 0; i < _windows.Count; i++)
+            _tabs.Render();
+
+            if (_tabs.MouseUpTile != -1) 
             {
-                if (!_tabEnabled[i])
-                {
-                    continue;
-                }
-                var rect = new Rect(tabsRendered++ * (_tabSize + _spacing), 0, _tabSize, _tabSize);
-                var itemId = _tabItemSprites[i];
-                bool tabOpen = _windows[i].Visible;
-                if (GUI.Button(rect, "")) {
-                    ToggleVisiblity(i);
-                }
-                var alpha = (byte)(tabOpen ? 255 : 50);
-                GUI.color = new Color32(255, 255, 255, alpha);
-                RenderSlot(rect, Locator.Get<ContentManager>().GetItem(itemId).GetInstance());
+                ToggleVisiblity(_tabs.MouseUpTile);
+                var tab = _tabs.GetChildAt(_tabs.MouseUpTile);
+                var alpha = (byte)(_windows[_tabs.MouseUpTile].Visible ? 255 : 50);
+                tab.Color = new Color32(255, 255, 255, alpha);
             }
         }
 
         public override void Render()
         {
             base.Render();
-            for (int i = 0; i < _windows.Count; i++)
+            _windows.ForEach(w => w.Render());
+        }
+
+        public void Add(int tabItemSprite, GridiaWindow window) 
+        {
+            if (!_windows.Contains(window)) 
             {
-                if (_tabEnabled[i])
-                {
-                    _windows[i].Render();
-                }
+                _windows.Add(window);
+
+                var item = Locator.Get<ContentManager>().GetItem(tabItemSprite).GetInstance();
+                var tab = new ItemRenderable(new Rect(0, 0, _tabSize, _tabSize), item);
+                _tabs.AddChild(tab);
             }
         }
 
-        public void Add(int tabItemSprite, GridiaWindow window, bool enabled = true) 
+        public void Remove(GridiaWindow window) 
         {
-            _tabItemSprites.Add(tabItemSprite);
-            _windows.Add(window);
-            _tabEnabled.Add(enabled);
+            var index = _windows.IndexOf(window);
+            if (index != -1)
+            {
+                _windows.RemoveAt(index);
+                _tabs.RemoveChildAt(index);
+            }
         }
 
         public void ToggleVisiblity(int index)
@@ -70,34 +70,14 @@ namespace Gridia
             }
         }
 
-        public void Enable(GridiaWindow window, bool enabled) 
-        {
-            _tabEnabled[_windows.IndexOf(window)] = enabled;
-        }
-
-        public void DisableAll() 
-        {
-            _windows.ForEach(w => Enable(w, false));
-        }
-
-        public void EnableAll()
-        {
-            _windows.ForEach(w => Enable(w, true));
-        }
-
-        public bool IsEnabled(GridiaWindow window) 
-        {
-            return _tabEnabled[_windows.IndexOf(window)];
-        }
-
         public bool MouseOverAny() 
         {
-            return MouseOver || _windows.Exists(w => IsEnabled(w) && w.MouseOver);
+            return MouseOver || _windows.Exists(w => w.MouseOver);
         }
 
         public bool ResizingAny()
         {
-            return ResizingWindow || _windows.Exists(w => IsEnabled(w) && w.ResizingWindow);
+            return ResizingWindow || _windows.Exists(w => w.ResizingWindow);
         }
     }
 }
