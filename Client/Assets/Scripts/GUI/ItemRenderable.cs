@@ -14,7 +14,6 @@ namespace Gridia
             : base(rect)
         {
             Item = item;
-            ShowToolTip = true;
             ToolTip = item.ToString;
         }
 

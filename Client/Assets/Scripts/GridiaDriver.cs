@@ -119,7 +119,7 @@ public class GridiaDriver : MonoBehaviour
                 var height = 30;
                 GUI.Box(new Rect((toolTipRect.width - width) / 2, (toolTipRect.height - height) / 2, width, height), toolTip);
                 GUI.BringWindowToFront(windowId);
-            }, "Tool tip");
+            }, "");
         }
         toolTip = null;
     }

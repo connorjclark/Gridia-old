@@ -46,7 +46,6 @@ namespace Gridia
                 {
                     if (Event.current.type == EventType.MouseDown)
                     {
-                        Debug.Log("Mouse DOwn " + i);
                         MouseDownTile = i;
                     }
                     else if (Event.current.type == EventType.MouseUp)

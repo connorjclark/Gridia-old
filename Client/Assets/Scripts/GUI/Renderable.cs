@@ -53,7 +53,6 @@ namespace Gridia
 
         public Action OnClick { private get; set; }
         public Action OnRightClick { private get; set; }
-        public bool ShowToolTip { private get; set; } // :(
         public Func<String> ToolTip { private get; set; }
 
         public Renderable(Rect rect)
@@ -68,14 +67,14 @@ namespace Gridia
             {
                 if (Event.current.button == 0)
                 {
-                    OnClick();
+                    if (OnClick != null) OnClick();
                 }
                 else if (Event.current.button == 1)
                 {
-                    OnRightClick();
+                    if (OnRightClick != null) OnRightClick();
                 }
             }
-            else if (ShowToolTip && Rect.Contains(Event.current.mousePosition))
+            else if (ToolTip != null && Rect.Contains(Event.current.mousePosition))
             {
                 RenderTooltip();
             }
@@ -94,7 +93,11 @@ namespace Gridia
                 deltaY = Mathf.Lerp(0, 100, ratio);
             }
 
-            var globalRect = new Rect(Input.mousePosition.x + 10, Screen.height - Input.mousePosition.y - deltaY + 10, 300, 100);
+            var globalRect = new Rect(Input.mousePosition.x + 10, Screen.height - Input.mousePosition.y - deltaY + 10, 250, 50);
+
+            globalRect.x = Math.Min(globalRect.x, Screen.width - globalRect.width);
+            globalRect.y = Math.Min(globalRect.y, Screen.height - globalRect.height);
+
             var tooltip = ToolTip();
             var driver = Locator.Get<GridiaDriver>();
             driver.toolTip = tooltip;
