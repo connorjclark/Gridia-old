@@ -14,7 +14,7 @@ namespace Gridia
             : base(rect)
         {
             Item = item;
-            ToolTip = item.ToString;
+            ToolTip = () => Item.ToString();
         }
 
         public override void Render()

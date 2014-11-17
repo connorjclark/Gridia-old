@@ -98,9 +98,8 @@ namespace Gridia
             globalRect.x = Math.Min(globalRect.x, Screen.width - globalRect.width);
             globalRect.y = Math.Min(globalRect.y, Screen.height - globalRect.height);
 
-            var tooltip = ToolTip();
             var driver = Locator.Get<GridiaDriver>();
-            driver.toolTip = tooltip;
+            driver.toolTip = ToolTip();
             driver.toolTipRect = globalRect;
         }
     }

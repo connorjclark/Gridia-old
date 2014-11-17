@@ -121,7 +121,11 @@ public class GridiaDriver : MonoBehaviour
                 GUI.BringWindowToFront(windowId);
             }, "");
         }
-        toolTip = null;
+        // :(
+        if (!(_game.stateMachine.CurrentState is PlayerMovementState)) 
+        {
+            toolTip = null;
+        }
     }
 
     public Vector2 getMouse()
