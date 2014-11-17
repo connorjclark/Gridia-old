@@ -19,6 +19,10 @@ namespace Gridia
 
         public void Update() 
         {
+            if (Application.isEditor) // :(
+            {
+                return;
+            }
             if (MusicQueue.Count == 0)
             {
                 QueueRandomSongs();

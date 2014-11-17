@@ -51,12 +51,28 @@ namespace Gridia
 
         public Color32 Color { get; set; }
 
+        public Action OnClick { private get; set; }
+        public Action OnRightClick { private get; set; }
+
         public Renderable(Rect rect)
         {
             Rect = rect;
             Color = new Color32(255, 255, 255, 255);
         }
 
-        public abstract void Render();
+        public virtual void Render()
+        {
+            if (Event.current.type == EventType.MouseUp && Rect.Contains(Event.current.mousePosition)) 
+            {
+                if (Event.current.button == 0)
+                {
+                    OnClick();
+                }
+                else if (Event.current.button == 1)
+                {
+                    OnRightClick();
+                }
+            }
+        }
     }
 }

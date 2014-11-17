@@ -7,6 +7,8 @@ namespace Gridia
 {
     public class ItemUse
     {
+        public int tool;
+        public int focus;
         public List<int> products;
     }
 }

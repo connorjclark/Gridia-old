@@ -14,8 +14,8 @@ namespace Gridia
         public int MouseUpTile { get; private set; }
         public int MouseOverTile { get; private set; }
         public Rect MouseOverRect { get; private set; }
-        public float Width { get { return TilesAcross * GetTileWidth(); } }
-        public float Height { get { return (int)Math.Ceiling((float)NumChildren / TilesAcross) * GetTileHeight(); } }
+        public float Width { get { if (Dirty) { CalculateRect(); } return base.Width; } }
+        public float Height { get { if (Dirty) { CalculateRect(); } return base.Height; } }
 
         public ExtendibleGrid(Rect rect)
             : base(rect)
@@ -79,7 +79,7 @@ namespace Gridia
             }
         }
 
-        public void AddChild(Renderable child) 
+        public override void AddChild(Renderable child) 
         {
             base.AddChild(child);
             var i = NumChildren - 1;
@@ -91,6 +91,12 @@ namespace Gridia
         {
             width = Math.Max(width, GetTileWidth());
             TilesAcross = (int)(width / GetTileWidth());
+            PositionTiles();
+        }
+
+        public void SetTilesAcross(int tilesAcross) 
+        {
+            TilesAcross = tilesAcross;
             PositionTiles();
         }
 
@@ -113,6 +119,7 @@ namespace Gridia
 
         private void PositionTiles() 
         {
+            Dirty = true;
             for (int i = 0; i < NumChildren; i++)
             {
                 PositionTile(_children[i], i);

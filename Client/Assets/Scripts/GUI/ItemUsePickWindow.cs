@@ -13,7 +13,7 @@ namespace Gridia
             set
             {
                 _useRenderables = new List<ItemRenderable>();
-                _picks.RemoveChildren();
+                _picks.RemoveAllChildren();
                 for (int i = 0; i < value.Count; i++)
                 {
                     var item = Locator.Get<ContentManager>().GetItem(value[i].products[0]).GetInstance(1);

@@ -58,6 +58,22 @@ public class GridiaDriver : MonoBehaviour
         InitTabbedGui();
     }
 
+    private RecipeBookWindow _recipeBook;
+    public void OpenRecipeBook(ItemInstance item) 
+    {
+        if (item.Item.Id != 0) 
+        {
+            var rect = new Rect(0, 0, 300, 300);
+            if (_recipeBook != null) 
+            {
+                rect = _recipeBook.Rect;
+                tabbedGui.Remove(_recipeBook);
+            }
+            _recipeBook = new RecipeBookWindow(rect, item);
+            tabbedGui.Add(351, _recipeBook);
+        }
+    }
+
     void InitTabbedGui() 
     {
         tabbedGui.Add(1397, invGui); // :(

@@ -13,10 +13,15 @@ namespace Gridia
             set
             {
                 _itemRenderables = new List<ItemRenderable>();
-                _slots.RemoveChildren();
+                _slots.RemoveAllChildren();
                 for (int i = 0; i < value.Count; i++)
                 {
                     var itemRend = new ItemRenderable(new Rect(0, 0, 32 * _scale, 32 * _scale), value[i]);
+                    var slotIndex = i;
+                    itemRend.OnRightClick = () => 
+                    {
+                        Locator.Get<GridiaDriver>().OpenRecipeBook(itemRend.Item);
+                    };
                     _itemRenderables.Add(itemRend);
                     _slots.AddChild(itemRend);
                 }

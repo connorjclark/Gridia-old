@@ -18,28 +18,33 @@ namespace Gridia
 
         public override void Render()
         {
-            if (_children.Any(c => c.Dirty)) 
+            if (Dirty || _children.Any(c => c.Dirty)) 
             {
+                Dirty = false;
                 _children.ForEach(c => c.Dirty = false);
                 CalculateRect();
             }
             GUI.BeginGroup(Rect);
-            foreach (var child in _children)
+            lock (_children)
             {
-                GUI.color = child.Color;
-                child.Render();
+                foreach (var child in _children)
+                {
+                    GUI.color = child.Color;
+                    child.Render();
+                }
             }
             GUI.EndGroup();
         }
 
         public int NumChildren { get { return _children.Count; } }
 
-        public void AddChild(Renderable child) 
+        public virtual void AddChild(Renderable child) 
         {
             if (child.Parent == null)
             {
                 child.Parent = this;
-                _children.Add(child);
+                lock (_children) _children.Add(child);
+                Dirty = true;
             }
             else 
             {
@@ -59,23 +64,30 @@ namespace Gridia
 
         public void RemoveChild(Renderable child) 
         {
-            if (!_children.Remove(child)) 
+            lock (_children)
             {
-                throw new Exception("Child not found: " + child);
+                if (!_children.Remove(child))
+                {
+                    throw new Exception("Child not found: " + child);
+                }
+                Dirty = true;
             }
+            child.Parent = null;
         }
 
         public void RemoveChildAt(int index) 
         {
-            _children.RemoveAt(index);
+            lock (_children) _children.RemoveAt(index);
+            Dirty = true;
         }
 
-        public void RemoveChildren() 
+        public void RemoveAllChildren() 
         {
-            _children.Clear();
+            lock (_children) _children.Clear();
+            Dirty = true;
         }
 
-        private void CalculateRect() 
+        protected void CalculateRect() 
         {
             var width = 0f;
             var height = 0f;
