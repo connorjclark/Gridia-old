@@ -80,7 +80,7 @@ public class GridiaDriver : MonoBehaviour
     {
         tabbedGui.Add(1397, invGui); // :(
         tabbedGui.Add(351, chatGui); // :(
-        var options = new OptionsWindow(new Rect(0, 0, 300, 100));
+        var options = new OptionsWindow(new Rect(0, 0, 300, 200));
         options.Visible = false;
         tabbedGui.Add(1, options);
     }
