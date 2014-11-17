@@ -35,11 +35,6 @@ namespace Gridia
         {
             base.Render();
             _windows.ForEach(w => w.Render());
-            _tabs.RenderTooltip((ItemRenderable itemR) =>
-            {
-                var index = _tabs.GetIndexOfChild(itemR);
-                return _windows[index].WindowName;
-            }); // :(
         }
 
         public void Add(int tabItemSprite, GridiaWindow window) 
@@ -50,6 +45,7 @@ namespace Gridia
 
                 var item = Locator.Get<ContentManager>().GetItem(tabItemSprite).GetInstance();
                 var tab = new ItemRenderable(new Rect(0, 0, _tabSize, _tabSize), item);
+                tab.ToolTip = () => window.WindowName;
                 _tabs.AddChild(tab);
                 SetTabTransparency(_tabs.NumChildren - 1);
             }

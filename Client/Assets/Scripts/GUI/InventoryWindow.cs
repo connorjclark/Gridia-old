@@ -54,14 +54,6 @@ namespace Gridia
             _slots.Render();
         }
 
-        public override void Render() {
-            base.Render();
-            _slots.RenderTooltip((ItemRenderable itemR) => 
-            {
-                return itemR.Item.ToString();
-            }); // :(
-        }
-
         public void SetItemAt(int index, ItemInstance item)
         {
             _itemRenderables[index].Item = item;

@@ -49,14 +49,5 @@ namespace Gridia
                 Locator.Get<ConnectionToGridiaServerHandler>().PickItemUse(_picks.MouseUpTile);
             }
         }
-
-        public override void Render()
-        {
-            base.Render();
-            _picks.RenderTooltip((ItemRenderable itemR) =>
-            {
-                return itemR.Item.ToString();
-            }); // :(
-        }
     }
 }

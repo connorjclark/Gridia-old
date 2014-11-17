@@ -17,6 +17,8 @@ public class GridiaDriver : MonoBehaviour
     public ChatWindow chatGui;
     public ItemUsePickWindow itemUsePickWindow;
     public ItemInstance mouseDownItem = null; // :(
+    public String toolTip; // :(
+    public Rect toolTipRect; // :(
 
     void Start()
     {
@@ -108,6 +110,18 @@ public class GridiaDriver : MonoBehaviour
             var texCoords = new Rect(textureX / 10.0f, textureY / 10.0f, 1 / 10.0f, 1 / 10.0f); // :( don't hardcode 10
             GUI.DrawTextureWithTexCoords(rect, textures.GetCreaturesTexture(spriteId / GridiaConstants.SPRITES_IN_SHEET), texCoords);
         }
+
+        if (toolTip != null) 
+        {
+            GUI.Window(100, toolTipRect, windowId =>
+            {
+                var width = 200;
+                var height = 30;
+                GUI.Box(new Rect((toolTipRect.width - width) / 2, (toolTipRect.height - height) / 2, width, height), toolTip);
+                GUI.BringWindowToFront(windowId);
+            }, "Tool tip");
+        }
+        toolTip = null;
     }
 
     public Vector2 getMouse()

@@ -14,10 +14,14 @@ namespace Gridia
             : base(rect)
         {
             Item = item;
+            ShowToolTip = true;
+            ToolTip = item.ToString;
         }
 
         public override void Render()
         {
+            base.Render();
+
             GUI.Box(Rect, "");
 
             if (Item.Item.Animations == null) return; // :(

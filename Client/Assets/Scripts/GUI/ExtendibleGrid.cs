@@ -13,7 +13,6 @@ namespace Gridia
         public int MouseDownTile { get; private set; }
         public int MouseUpTile { get; private set; }
         public int MouseOverTile { get; private set; }
-        public Rect MouseOverRect { get; private set; }
         public float Width { get { if (Dirty) { CalculateRect(); } return base.Width; } }
         public float Height { get { if (Dirty) { CalculateRect(); } return base.Height; } }
 
@@ -47,6 +46,7 @@ namespace Gridia
                 {
                     if (Event.current.type == EventType.MouseDown)
                     {
+                        Debug.Log("Mouse DOwn " + i);
                         MouseDownTile = i;
                     }
                     else if (Event.current.type == EventType.MouseUp)
@@ -56,26 +56,8 @@ namespace Gridia
                     else
                     {
                         MouseOverTile = i;
-                        MouseOverRect = new Rect(0, 0 - 60, 150, 30); // :(
                     }
                 }
-            }
-        }
-
-        public void RenderTooltip<T>(Func<T, String> tooltipFunc)
-            where T : Renderable
-        {
-            if (MouseOverTile != -1)
-            {
-                var rect = MouseOverRect;
-                var deltaY = (Event.current.mousePosition.y > Screen.height / 2 ? 1 : -1) * rect.y;
-                var globalRect = new Rect(Event.current.mousePosition.x + rect.x, Event.current.mousePosition.y + deltaY, rect.width, rect.height);
-                var tooltip = tooltipFunc((T)GetChildAt(MouseOverTile));
-                var mouseOverIndex = MouseOverTile;
-                GUI.Window(100, globalRect, windowId => {
-                    GUI.Box(new Rect(0, 0, rect.width, rect.height), tooltipFunc((T)GetChildAt(mouseOverIndex)));
-                    GUI.BringWindowToFront(windowId);
-                }, tooltip);
             }
         }
 
