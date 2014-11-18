@@ -10,24 +10,21 @@ namespace Gridia
     {
         protected List<Renderable> _children = new List<Renderable>();
 
-        public RenderableContainer(Rect rect)
-            : base(rect) 
-        {
-            
-        }
+        public RenderableContainer(Vector2 pos)
+            : base(pos) { }
 
         public override void Render()
         {
-            if (Dirty || _children.Any(c => c.Dirty)) 
+            if (_children.Any(c => c.Dirty)) 
             {
-                Dirty = false;
-                _children.ForEach(c => c.Dirty = false);
                 CalculateRect();
+                Dirty = true;
+                _children.ForEach(c => c.Dirty = false);
             }
-            GUI.BeginGroup(Rect);
+            GUI.BeginGroup(new Rect(X, Y, Int32.MaxValue, Int32.MaxValue));
             lock (_children)
             {
-                foreach (var child in _children)
+                foreach (var child in _children.ToList())
                 {
                     GUI.color = child.Color;
                     child.Render();
@@ -45,6 +42,7 @@ namespace Gridia
                 child.Parent = this;
                 lock (_children) _children.Add(child);
                 Dirty = true;
+                child.Dirty = true;
             }
             else 
             {
@@ -93,17 +91,11 @@ namespace Gridia
             var height = 0f;
             foreach (var child in _children)
             {
-                width = Math.Max(width, child.Width + child.X);
-                height = Math.Max(height, child.Height + child.Y);
+                width = Math.Max(width, (child.Width + child.X) );
+                height = Math.Max(height, (child.Height + child.Y) );
             }
-            Width = width;
-            Height = height;
-        }
-
-        private void EnsureContainsRect(Renderable child) 
-        {
-            Width = Math.Max(Rect.width, child.Width + child.X);
-            Height = Math.Max(Rect.height, child.Height + child.Y);
+            _rect.width = width / TrueScale.x;
+            _rect.height = height / TrueScale.y;
         }
     }
 }

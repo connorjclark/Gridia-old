@@ -17,8 +17,6 @@ public class GridiaDriver : MonoBehaviour
     public ChatWindow chatGui;
     public ItemUsePickWindow itemUsePickWindow;
     public ItemInstance mouseDownItem = null; // :(
-    public String toolTip; // :(
-    public Rect toolTipRect; // :(
 
     void Start()
     {
@@ -28,17 +26,21 @@ public class GridiaDriver : MonoBehaviour
 
         float guiScale = 1.75f;
 
-        tabbedGui = new TabbedUI(new Rect(Int32.MaxValue, 0, 300, 300), guiScale);
+        tabbedGui = new TabbedUI(new Vector2(Int32.MaxValue, 0));
         Locator.Provide(tabbedGui);
+        tabbedGui.ScaleXY = guiScale;
 
-        invGui = new InventoryWindow(new Rect(0, Int32.MaxValue, 300, 300), guiScale);
+        invGui = new InventoryWindow(new Vector2(0, Int32.MaxValue));
         Locator.Provide(invGui);
+        invGui.ScaleXY = guiScale;
 
-        chatGui = new ChatWindow(new Rect(Int32.MaxValue, Int32.MaxValue, 300, 300));
+        chatGui = new ChatWindow(new Vector2(Int32.MaxValue, Int32.MaxValue));
         Locator.Provide(chatGui);
+        chatGui.ScaleXY = guiScale;
 
-        itemUsePickWindow = new ItemUsePickWindow(new Rect(0, 0, 300, 300), guiScale);
+        itemUsePickWindow = new ItemUsePickWindow(new Vector2(0, 0));
         Locator.Provide(itemUsePickWindow);
+        itemUsePickWindow.ScaleXY = guiScale;
 
         _game = new GridiaGame();
         Locator.Provide(_game);
@@ -71,8 +73,9 @@ public class GridiaDriver : MonoBehaviour
                 rect = _recipeBook.Rect;
                 tabbedGui.Remove(_recipeBook);
             }
-            _recipeBook = new RecipeBookWindow(rect, item);
-            tabbedGui.Add(351, _recipeBook);
+            _recipeBook = new RecipeBookWindow(Vector2.zero, item);
+            _recipeBook.ScaleXY = 1.75f;
+            tabbedGui.Add(3126, _recipeBook);
         }
     }
 
@@ -80,7 +83,7 @@ public class GridiaDriver : MonoBehaviour
     {
         tabbedGui.Add(1397, invGui); // :(
         tabbedGui.Add(351, chatGui); // :(
-        var options = new OptionsWindow(new Rect(0, 0, 300, 200));
+        var options = new OptionsWindow(Vector2.zero);
         options.Visible = false;
         tabbedGui.Add(1, options);
     }
@@ -90,7 +93,9 @@ public class GridiaDriver : MonoBehaviour
         if (mouseDownItem != null)
         {
             var rect = new Rect((int)Input.mousePosition.x - 16, Screen.height - (int)Input.mousePosition.y - 16, 32, 32);
-            GridiaWindow.RenderSlot(rect, mouseDownItem);
+            var draggedItem = new ItemRenderable(new Vector2(rect.x, rect.y), mouseDownItem);
+            draggedItem.ToolTip = null;
+            draggedItem.Render();
         }
 
         //temp :(
@@ -111,21 +116,7 @@ public class GridiaDriver : MonoBehaviour
             GUI.DrawTextureWithTexCoords(rect, textures.GetCreaturesTexture(spriteId / GridiaConstants.SPRITES_IN_SHEET), texCoords);
         }
 
-        if (toolTip != null) 
-        {
-            GUI.Window(100, toolTipRect, windowId =>
-            {
-                var width = 200;
-                var height = 30;
-                GUI.Box(new Rect((toolTipRect.width - width) / 2, (toolTipRect.height - height) / 2, width, height), toolTip);
-                GUI.BringWindowToFront(windowId);
-            }, "");
-        }
-        // :(
-        if (!(_game.stateMachine.CurrentState is PlayerMovementState)) 
-        {
-            toolTip = null;
-        }
+        ToolTipRenderable.instance.Render();
     }
 
     public Vector2 getMouse()

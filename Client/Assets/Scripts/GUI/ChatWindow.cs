@@ -6,49 +6,39 @@ using UnityEngine;
 
 namespace Gridia
 {
+    // :( Todo: able to resize chat window
     public class ChatWindow : GridiaWindow
     {
-        private String ChatInput { get; set; }
-        private String ChatArea { get; set; }
-        private Vector2 ScrollPosition { get; set; }
+        private TextField ChatInput { get; set; }
+        private TextArea ChatArea { get; set; }
 
-        private int ChatInputHeight { get; set; }
-
-        public ChatWindow(Rect rect)
-            : base(rect, "Chat")
+        public ChatWindow(Vector2 pos)
+            : base(pos, "Chat")
         {
-            ChatInputHeight = 20;
-            ChatInput = "Hello!";
-            ChatArea = "\n\n\n\n\n\n\n\n";
-        }
+            ChatArea = new TextArea(Vector2.zero, 150, 125);
+            AddChild(ChatArea);
 
-        protected override void RenderContents()
-        {
-            var chatInputRect = new Rect(0, Height - BorderSize * 2 - ChatInputHeight, Width - BorderSize * 2, ChatInputHeight);
-            var chatAreaRect = new Rect(0, 0, Width - BorderSize * 2, Height - ChatInputHeight - BorderSize * 2);
-            
-            ChatInput = GUI.TextField(chatInputRect, ChatInput);
+            ChatInput = new TextField(new Vector2(0, ChatArea.Height + 10), 150, 30);
+            ChatInput.OnEnter = SendChatMessage;
+            AddChild(ChatInput);
 
-            ScrollPosition = GUILayout.BeginScrollView(ScrollPosition, GUILayout.Width(chatInputRect.width), GUILayout.Height(chatAreaRect.height));
-            GUILayout.TextArea(ChatArea);
-            GUILayout.EndScrollView();
-
-            if (ChatInput != "" && Event.current.type == EventType.keyDown && Event.current.character == '\n')
-            {
-                Locator.Get<ConnectionToGridiaServerHandler>().Chat(ChatInput);
-                ChatInput = "";
-            }
+            ChatInput.Text = "Hello!";
         }
 
         public void append(String line) 
         {
-            ChatArea += line + '\n';
+            ChatArea.Text += line + '\n';
             SetScrollToMax();
+        }
+
+        private void SendChatMessage(String message) 
+        {
+            Locator.Get<ConnectionToGridiaServerHandler>().Chat(message);
         }
 
         private void SetScrollToMax() 
         {
-            ScrollPosition = new Vector2(0, int.MaxValue);
+            ChatArea.ScrollPosition = new Vector2(0, int.MaxValue);
         }
     }
 }

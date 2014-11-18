@@ -282,7 +282,7 @@ namespace Gridia
                     {
                         return -1;
                     }
-                    int frame = (int)((Time.time * 6) % animations.Length);//smell
+                    int frame = (int)((Time.time * 6) % animations.Length);//smell :(
                     return animations[frame];
                 },
                 data => _textureManager.GetItemsTexture(data / 100),

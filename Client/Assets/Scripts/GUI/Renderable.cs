@@ -9,74 +9,121 @@ namespace Gridia
     public abstract class Renderable
     {
         public RenderableContainer Parent { get; set; }
-        private Rect _rect;
+        protected Rect _rect;
         public Rect Rect
         {
-            get { return _rect; }
-            protected set
+            get 
             {
-                if (!value.Equals(_rect)) 
+                var scale = TrueScale;
+                var scaled = new Rect(_rect.x * scale.x, _rect.y * scale.y, _rect.width * scale.x, _rect.height * scale.y);
+                return scaled; 
+            }
+            set
+            {
+                var scale = TrueScale;
+                var normalized = new Rect(value.x / scale.x, value.y / scale.y, value.width / scale.x, value.height / scale.y);
+                if (!normalized.Equals(_rect)) 
                 {
-                    _rect = value;
+                    _rect = normalized;
                     Dirty = true;
                 }
             }
         }
 
-        public float Width
+        private Vector2 _scale = Vector2.one;
+        public Vector2 Scale
         {
-            get { return _rect.width; }
-            set { if (value != _rect.width) { _rect.width = value; Dirty = true; } }
+            get 
+            {
+                return _scale;
+            } 
+            set
+            {
+                _scale = value;
+                Dirty = true;
+            }
         }
 
-        public float Height
+        public float ScaleXY { set { Dirty = true; _scale = new Vector2(value, value); } }
+        public float ScaleX { get { return _scale.x; } set { Dirty = true; _scale.x = value; } }
+        public float ScaleY { get { return _scale.y; } set { Dirty = true; _scale.y = value; } }
+
+        public Vector2 TrueScale 
         {
-            get { return _rect.height; }
-            set { if (value != _rect.height) { _rect.height = value; Dirty = true; } }
+            get 
+            {
+                var parentScale = Parent != null ? Parent.TrueScale : Vector2.one;
+                return new Vector2(parentScale.x * _scale.x, parentScale.y * _scale.y);
+            }
+        }
+
+        public virtual float Width
+        {
+            get { return Rect.width; }
+            set { if (value != _rect.width) { ScaleX = value / _rect.width; Dirty = true; } }
+        }
+
+        public virtual float Height
+        {
+            get { return Rect.height; }
+            set { if (value != _rect.height) { ScaleY = value / _rect.height; Dirty = true; } }
         }
 
         public float X
         {
-            get { return _rect.x; }
-            set { if (value != _rect.x) { _rect.x = value; Dirty = true; } }
+            get { return Rect.x; }
+            set { if (value != _rect.x) { _rect.x = value / TrueScale.x; Dirty = true; } }
         }
 
         public float Y
         {
-            get { return _rect.y; }
-            set { if (value != _rect.y) { _rect.y = value; Dirty = true; } }
+            get { return Rect.y; }
+            set { if (value != _rect.y) { _rect.y = value / TrueScale.y; Dirty = true; } }
         }
 
         public bool Dirty { get; set; }
 
         public Color32 Color { get; set; }
 
-        public Action OnClick { private get; set; }
+        public Action OnClick { private get; set; } // really just mouse up... :(
+        public Action OnMouseDown { private get; set; }
         public Action OnRightClick { private get; set; }
+        public Action OnMouseOver { private get; set; }
         public Func<String> ToolTip { private get; set; }
 
-        public Renderable(Rect rect)
+        public Renderable(Vector2 pos)
         {
-            Rect = rect;
+            Rect = new Rect(pos.x, pos.y, 0, 0);
             Color = new Color32(255, 255, 255, 255);
         }
 
+        // :(
         public virtual void Render()
         {
-            if (Event.current.type == EventType.MouseUp && Rect.Contains(Event.current.mousePosition)) 
+            var mouseOver = Rect.Contains(Event.current.mousePosition);
+
+            if (mouseOver)
             {
-                if (Event.current.button == 0)
+                if (Event.current.type == EventType.MouseUp)
                 {
-                    if (OnClick != null) OnClick();
+                    if (Event.current.button == 0)
+                    {
+                        if (OnClick != null) OnClick();
+                    }
+                    else if (Event.current.button == 1)
+                    {
+                        if (OnRightClick != null) OnRightClick();
+                    }
                 }
-                else if (Event.current.button == 1)
+                else if (Event.current.type == EventType.MouseDown)
                 {
-                    if (OnRightClick != null) OnRightClick();
+                    if (OnMouseDown != null) OnMouseDown();
                 }
-            }
-            else if (ToolTip != null && Rect.Contains(Event.current.mousePosition))
-            {
-                RenderTooltip();
+                else if (ToolTip != null && ToolTip() != "")
+                {
+                    RenderTooltip();
+                }
+                if (OnMouseOver != null) OnMouseOver();
             }
         }
 
@@ -98,9 +145,8 @@ namespace Gridia
             globalRect.x = Math.Min(globalRect.x, Screen.width - globalRect.width);
             globalRect.y = Math.Min(globalRect.y, Screen.height - globalRect.height);
 
-            var driver = Locator.Get<GridiaDriver>();
-            driver.toolTip = ToolTip();
-            driver.toolTipRect = globalRect;
+            ToolTipRenderable.instance.ToolTip = ToolTip();
+            ToolTipRenderable.instance.Rect = globalRect;
         }
     }
 }

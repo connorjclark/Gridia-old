@@ -6,25 +6,9 @@ using UnityEngine;
 
 namespace Gridia 
 {
-    public abstract class GridiaWindow : Renderable
+    public class GridiaWindow : RenderableContainer
     {
         private static int _NEXT_WINDOW_ID;
-
-        // :(
-        public static void RenderSlot(Rect loc, ItemInstance item)
-        {
-            GUI.Box(loc, "");
-
-            if (item.Item.Animations == null) return; // :(
-
-            var textures = Locator.Get<TextureManager>(); // :(
-
-            int spriteId = item.Item.Animations[0];
-            int textureX = (spriteId % GridiaConstants.SPRITES_IN_SHEET) % GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
-            int textureY = 9 - (spriteId % GridiaConstants.SPRITES_IN_SHEET) / GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
-            var texCoords = new Rect(textureX / 10.0f, textureY / 10.0f, 1 / 10.0f, 1 / 10.0f); // :( don't hardcode 10
-            GUI.DrawTextureWithTexCoords(loc, textures.GetItemsTexture(spriteId / GridiaConstants.SPRITES_IN_SHEET), texCoords);
-        }
 
         public int WindowId { get; private set; }
         public bool Resizeable { get; set; }
@@ -38,17 +22,16 @@ namespace Gridia
 		public float BorderSize { get; set; }
 		public String WindowName { get; set; }
 
-        public GridiaWindow(Rect rect, String windowName)
-            : base(rect)
+        public GridiaWindow(Vector2 pos, String windowName)
+            : base(pos)
         {
+            _rect.width = _rect.height = 300;
             Resizeable = Moveable = Visible = true;
             ResizeOnHorizontal = ResizeOnVertical = true;
             WindowId = _NEXT_WINDOW_ID++;
             WindowName = windowName;
             BorderSize = 20;
         }
-
-        protected abstract void RenderContents();
 
         public override void Render() 
         {
@@ -71,7 +54,8 @@ namespace Gridia
             {
                 MouseOver = Rect.Contains(Event.current.mousePosition);
 
-                Rect = GUI.Window(WindowId, Rect, windowId =>
+                // what a hack...
+                var modifiedRect = GUI.Window(WindowId, new Rect(X, Y, Width + BorderSize * 2, Height + BorderSize * 2), windowId =>
                 {
                     if (Moveable) 
                     {
@@ -81,10 +65,12 @@ namespace Gridia
                     {
                         RenderResize();
                     }
-                    GUILayout.BeginArea(new Rect(BorderSize, BorderSize, Int32.MaxValue, Int32.MaxValue));
-                    RenderContents();
+                    GUILayout.BeginArea(new Rect(BorderSize - X, BorderSize - Y, Int32.MaxValue, Int32.MaxValue));
+                    base.Render();
                     GUILayout.EndArea();
                 }, WindowName);
+
+                Rect = new Rect(modifiedRect.x, modifiedRect.y, modifiedRect.width - BorderSize * 2, modifiedRect.height - BorderSize * 2);
 
                 if (!ResizingWindow)
                 {
@@ -97,24 +83,24 @@ namespace Gridia
         {
             if (ResizeOnHorizontal)
             {
-                var newWidth = Event.current.mousePosition.x - X + BorderSize * 2;
-                Width = Mathf.Clamp(newWidth, BorderSize * 2, Screen.width - X);
+                var newWidth = Event.current.mousePosition.x / TrueScale.x - _rect.x - BorderSize;
+                _rect.width = Mathf.Clamp(newWidth, BorderSize * 2, Screen.width - _rect.x);
             }
             if (ResizeOnVertical)
             {
-                var newHeight = Event.current.mousePosition.y - Y + BorderSize * 2;
-                Height = Mathf.Clamp(newHeight, BorderSize * 2, Screen.height - Y);
+                var newHeight = Event.current.mousePosition.y / TrueScale.y - _rect.y - BorderSize;
+                _rect.height = Mathf.Clamp(newHeight, BorderSize * 2, Screen.height - _rect.y);
             }
         }
 
         protected void RenderDrag()
         {
-            GUI.DragWindow(new Rect(0, 0, Width - 40, 20));
+            GUI.DragWindow(new Rect(0, 0, Width + BorderSize * 2, BorderSize));
         }
 
         protected void RenderResize() 
         {
-            var resizeRect = new Rect(Width - 40, Height - 20, 40, 20);
+            var resizeRect = new Rect(Width, Height + BorderSize, BorderSize * 2, BorderSize);
             if (Event.current.type == EventType.mouseDown && resizeRect.Contains(Event.current.mousePosition))
             {
                 ResizingWindow = true;
@@ -124,8 +110,13 @@ namespace Gridia
 
         private void ClampPosition()
         {
-            var maxX = Math.Max(0, Screen.width - Width);
-            var maxY = Math.Max(0, Screen.height - Height);
+            if (Dirty)
+            {
+                CalculateRect();
+                Dirty = false;
+            }
+            var maxX = Math.Max(0, Screen.width - Width - BorderSize * 2);
+            var maxY = Math.Max(0, Screen.height - Height - BorderSize * 2);
             X = Mathf.Clamp(X, 0, maxX);
             Y = Mathf.Clamp(Y, 0, maxY);
         }

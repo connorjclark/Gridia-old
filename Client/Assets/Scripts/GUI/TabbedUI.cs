@@ -9,26 +9,13 @@ namespace Gridia
     public class TabbedUI : GridiaWindow
     {
         private List<GridiaWindow> _windows = new List<GridiaWindow>(); // :(
-        private float _spacing = 5;
-        private float _tabSize;
-        private ExtendibleGrid _tabs = new ExtendibleGrid(new Rect(0, 0, 0, 0));
+        private ExtendibleGrid _tabs = new ExtendibleGrid(Vector2.zero);
 
-        public TabbedUI(Rect rect, float scale)
-            : base(rect, "Tabs")
+        public TabbedUI(Vector2 pos)
+            : base(pos, "Tabs")
         {
             Moveable = Resizeable = false;
-            _tabSize = scale * GridiaConstants.SPRITE_SIZE;
-            Height = BorderSize * 2 + _tabSize;
-        }
-
-        protected override void RenderContents() 
-        {
-            _tabs.Render();
-
-            if (_tabs.MouseUpTile != -1) 
-            {
-                ToggleVisiblity(_tabs.MouseUpTile);
-            }
+            AddChild(_tabs);
         }
 
         public override void Render()
@@ -44,10 +31,13 @@ namespace Gridia
                 _windows.Add(window);
 
                 var item = Locator.Get<ContentManager>().GetItem(tabItemSprite).GetInstance();
-                var tab = new ItemRenderable(new Rect(0, 0, _tabSize, _tabSize), item);
+                var tab = new ItemRenderable(Vector2.zero, item);
                 tab.ToolTip = () => window.WindowName;
+                tab.OnClick = () => ToggleVisiblity(window);
                 _tabs.AddChild(tab);
                 SetTabTransparency(_tabs.NumChildren - 1);
+
+                Dirty = true;
             }
         }
 
@@ -59,6 +49,11 @@ namespace Gridia
                 _windows.RemoveAt(index);
                 _tabs.RemoveChildAt(index);
             }
+        }
+
+        public void ToggleVisiblity(GridiaWindow window)
+        {
+            ToggleVisiblity(_windows.IndexOf(window));
         }
 
         public void ToggleVisiblity(int index)

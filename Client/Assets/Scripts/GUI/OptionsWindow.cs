@@ -8,36 +8,30 @@ namespace Gridia
 {
     public class OptionsWindow : GridiaWindow
     {
-        private Rect _logout;
-        private Rect _nextSong;
-        private Rect _muteMusic;
-        private Rect _muteSfx;
-        private SoundPlayer _soundPlayer;
-
-        public OptionsWindow(Rect rect)
-            : base(rect, "Options") 
+        public OptionsWindow(Vector2 pos)
+            : base(pos, "Options") 
         {
             Resizeable = false;
-            _logout = new Rect(0, 0, 80, 30);
-            _nextSong = new Rect(0, 35, 80, 30);
-            _muteMusic = new Rect(0, 70, 100, 30);
-            _muteSfx = new Rect(0, 105, 100, 30);
-            _soundPlayer = Locator.Get<SoundPlayer>();
+            var soundPlayer = Locator.Get<SoundPlayer>();
+            MakeButton("Log out", new Rect(0, 0, 80, 30), Application.Quit);
+            MakeButton("Next song", new Rect(0, 35, 80, 30), soundPlayer.EndCurrentSong);
+            MakeToggle(" Mute music", soundPlayer.MuteMusic, new Rect(0, 70, 100, 30), (value) => soundPlayer.MuteMusic = value);
+            MakeToggle(" Mute sfx", soundPlayer.MuteSfx, new Rect(0, 105, 100, 30), (value) => soundPlayer.MuteSfx = value);
         }
 
-        protected override void RenderContents()
+        private void MakeButton(String label, Rect rect, Action onClick) 
         {
+            var button = new Button(new Vector2(rect.x, rect.y), rect.width, rect.height, label);
+            button.OnClick = onClick;
+            AddChild(button);
+        }
 
-            if (GUI.Button(_logout, "Log out")) 
-            {
-                Application.Quit();
-            }
-            if (GUI.Button(_nextSong, "Next song"))
-            {
-                _soundPlayer.EndCurrentSong();
-            }
-            _soundPlayer.MuteMusic = GUI.Toggle(_muteMusic, _soundPlayer.MuteMusic, " Mute music");
-            _soundPlayer.MuteSfx = GUI.Toggle(_muteSfx, _soundPlayer.MuteSfx, " Mute sfx");
+        private void MakeToggle(String label, bool initialState, Rect rect, Action<bool> onToggle) 
+        {
+            var toggle = new Toggle(new Vector2(rect.x, rect.y), rect.width, rect.height, label, initialState);
+            toggle.Rect = rect;
+            toggle.OnToggle = onToggle;
+            AddChild(toggle);
         }
     }
 }

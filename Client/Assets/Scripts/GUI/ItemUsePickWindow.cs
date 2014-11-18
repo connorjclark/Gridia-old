@@ -17,37 +17,33 @@ namespace Gridia
                 for (int i = 0; i < value.Count; i++)
                 {
                     var item = Locator.Get<ContentManager>().GetItem(value[i].products[0]).GetInstance(1);
-                    var itemRend = new ItemRenderable(new Rect(0, 0, 32 * _scale, 32 * _scale), item);
+                    var itemRend = new ItemRenderable(new Vector2(0, 0), item);
+                    var index = i;
+                    itemRend.OnClick = () => SelectUse(index);
                     _useRenderables.Add(itemRend);
                     _picks.AddChild(itemRend);
                 }
 
-                Width = _picks.Width + BorderSize * 2;
-                Height = _picks.Height + BorderSize * 2;
+                CalculateRect();
                 X = (Screen.width / 2 - Width) / 2;
                 Y = (Screen.height - Height) / 2;
             }
         }
-        private ExtendibleGrid _picks = new ExtendibleGrid(new Rect(0, 0, 0, 0));
+        private ExtendibleGrid _picks = new ExtendibleGrid(Vector2.zero);
         private List<ItemRenderable> _useRenderables;
         private float _scale;
 
-        public ItemUsePickWindow(Rect rect, float scale)
-            : base(rect, "Item use pick")
+        public ItemUsePickWindow(Vector2 pos)
+            : base(pos, "Item use pick")
         {
-            _scale = scale;
             Resizeable = false;
+            AddChild(_picks);
         }
 
-        protected override void RenderContents()
+        private void SelectUse(int index) 
         {
-            _picks.Render();
-            // :(
-            if (_picks.MouseUpTile != -1)
-            {
-                Locator.Get<TabbedUI>().Remove(this);
-                Locator.Get<ConnectionToGridiaServerHandler>().PickItemUse(_picks.MouseUpTile);
-            }
+            Locator.Get<TabbedUI>().Remove(this);
+            Locator.Get<ConnectionToGridiaServerHandler>().PickItemUse(index);
         }
     }
 }

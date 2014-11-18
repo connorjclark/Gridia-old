@@ -9,15 +9,13 @@ namespace Gridia
     public class RecipeBookWindow : GridiaWindow
     {
         private ExtendibleGrid _toolFocusGrid;
-        private ItemRenderable _tool;
-        private Vector2 _scrollPosition;
+        private ScrollView _scrollView;
 
-        public RecipeBookWindow(Rect rect, ItemInstance tool) 
-            : base(rect, "Recipe Book")
+        public RecipeBookWindow(Vector2 pos, ItemInstance tool) 
+            : base(pos, "Recipe Book")
         {
-            var scale = 1.5f;
-
-            _toolFocusGrid = new ExtendibleGrid(new Rect(0, scale * 32, 0, 0));
+            _rect.width = 150;
+            _toolFocusGrid = new ExtendibleGrid(new Vector2(0, 32));
 
             var usesWithTool = Locator.Get<ContentManager>().GetUses(tool);
             usesWithTool
@@ -25,31 +23,25 @@ namespace Gridia
                 .ToList()
                 .ForEach(usesWithFocus => {
                     var uses = usesWithFocus.ToList();
-                    _toolFocusGrid.AddChild(new ToolFocusRecipes(new Rect(0, 0, 1000, 32 * scale), uses, scale));
+                    _toolFocusGrid.AddChild(new ToolFocusRecipes(Vector2.zero, uses));
                 });
             _toolFocusGrid.SetTilesAcross(1);
-            _tool = new ItemRenderable(new Rect(0, 0, 32 * scale, 32 * scale), tool);
+
+            AddChild(new ItemRenderable(new Vector2(0, 0), tool));
+            _toolFocusGrid.Parent = this; // hack to get the scale... :(
+            AddChild(_scrollView = new ScrollView(new Vector2(0, 32), Width, Height - 32, _toolFocusGrid));
         }
 
-        protected override void RenderContents()
+        public override void Render()
         {
-            _tool.Render();
-
-            var middleX = (Width - BorderSize * 2 - _toolFocusGrid.Width) / 2;
-
-            var pos = new Rect(middleX, _toolFocusGrid.Y, _toolFocusGrid.Width + 25, Height - BorderSize * 2 - _tool.Height);
-            var view = new Rect(0, 0, _toolFocusGrid.Width, _toolFocusGrid.Height);
-
-            _scrollPosition = GUI.BeginScrollView(pos, _scrollPosition, view);
-            _toolFocusGrid.Render();
-            GUI.EndScrollView();
+            base.Render();
+            _toolFocusGrid.SetTilesAcross(1); // :(
+            _scrollView.Width = _toolFocusGrid.Width / _toolFocusGrid.TrueScale.x + BorderSize * 2;
         }
 
         protected override void Resize()
         {
             base.Resize();
-            Width = Math.Max(Width, _toolFocusGrid.Width + 50);
-            _tool.X = (Width - _tool.Width) / 2;
         }
     }
 }

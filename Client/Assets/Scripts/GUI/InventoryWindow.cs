@@ -12,46 +12,56 @@ namespace Gridia
         {
             set
             {
-                _itemRenderables = new List<ItemRenderable>();
-                _slots.RemoveAllChildren();
-                for (int i = 0; i < value.Count; i++)
-                {
-                    var itemRend = new ItemRenderable(new Rect(0, 0, 32 * _scale, 32 * _scale), value[i]);
-                    var slotIndex = i;
-                    itemRend.OnRightClick = () => 
-                    {
-                        Locator.Get<GridiaDriver>().OpenRecipeBook(itemRend.Item);
-                    };
-                    _itemRenderables.Add(itemRend);
-                    _slots.AddChild(itemRend);
-                }
-
-                Width = _slots.Width + BorderSize * 2;
-                Height = _slots.Height + BorderSize * 2;
+                ViewItems(value);
             }
         }
 
         public int SlotSelected { get { return _slots.TileSelected; } set { _slots.TileSelected = value; } }
-        public int MouseDownSlot { get { return _slots.MouseDownTile; } }
-        public int MouseUpSlot { get { return _slots.MouseUpTile; } }
-        public int MouseOverSlot { get { return _slots.MouseOverTile; } }
+        // :(
+        public int MouseDownSlot { get; private set; }
+        public int MouseUpSlot { get; private set; }
+        public int MouseOverSlot { get; private set; }
 
         private List<ItemRenderable> _itemRenderables;
-        private ExtendibleGrid _slots = new ExtendibleGrid(new Rect(0, 0, 0, 0));
-        private float _scale; // :(
+        private ExtendibleGrid _slots = new ExtendibleGrid(Vector2.zero); // :(
 
-        public InventoryWindow(Rect rect, float scale)
-            : base(rect, "Inventory")
+        public InventoryWindow(Vector2 pos)
+            : base(pos, "Inventory")
         {
             ResizeOnVertical = false;
             Inventory = new List<ItemInstance>();
-            _scale = scale;
             _slots.TileSelected = 0;
+            AddChild(_slots);
         }
 
-        protected override void RenderContents()
+        public override void Render()
         {
-            _slots.Render();
+            if (Event.current.type == EventType.Layout) 
+            {
+                MouseDownSlot = MouseUpSlot = MouseOverSlot = -1;
+            }
+            base.Render();
+        }
+
+        public void ViewItems(List<ItemInstance> items) 
+        {
+            _itemRenderables = new List<ItemRenderable>();
+
+            _slots.RemoveAllChildren();
+            for (int i = 0; i < items.Count; i++)
+            {
+                var itemRend = new ItemRenderable(Vector2.zero, items[i]);
+                var slotIndex = i;
+                itemRend.OnRightClick = () =>
+                {
+                    Locator.Get<GridiaDriver>().OpenRecipeBook(itemRend.Item);
+                };
+                itemRend.OnMouseDown = () => MouseDownSlot = slotIndex;
+                itemRend.OnClick = () => MouseUpSlot = slotIndex;
+                itemRend.OnMouseOver = () => MouseOverSlot = slotIndex;
+                _itemRenderables.Add(itemRend);
+                _slots.AddChild(itemRend);
+            }
         }
 
         public void SetItemAt(int index, ItemInstance item)
@@ -68,8 +78,13 @@ namespace Gridia
         {
             base.Resize();
             _slots.FitToWidth(Width - BorderSize * 2);
-            Width = Math.Max(Width, BorderSize * 2 + _slots.Width);
-            Height = BorderSize * 2 + _slots.Height;
+
+            var availableHeight = Screen.height - BorderSize * 2;
+            int maxTilesColumn = Mathf.FloorToInt(availableHeight / _slots.GetTileHeight());
+            while (_slots.TilesColumn > maxTilesColumn)
+            {
+                _slots.SetTilesAcross(_slots.TilesAcross + 1);
+            }
         }
     }
 }

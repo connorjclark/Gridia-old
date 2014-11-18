@@ -10,9 +10,11 @@ namespace Gridia
     {
         public String Text { get; set; }
 
-        public Button(Rect rect, String text)
-            : base(rect)
+        public Button(Vector2 pos, float width, float height, String text)
+            : base(pos)
         {
+            _rect.width = width;
+            _rect.height = height;
             Text = text;
         }
 

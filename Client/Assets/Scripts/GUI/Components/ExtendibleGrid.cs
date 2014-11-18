@@ -9,15 +9,11 @@ namespace Gridia
     public class ExtendibleGrid : RenderableContainer
     {
         public int TilesAcross { get; private set; }
+        public int TilesColumn { get { return Mathf.CeilToInt((float)NumChildren / TilesAcross); } }
         public int TileSelected { get; set; }
-        public int MouseDownTile { get; private set; }
-        public int MouseUpTile { get; private set; }
-        public int MouseOverTile { get; private set; }
-        public float Width { get { if (Dirty) { CalculateRect(); } return base.Width; } }
-        public float Height { get { if (Dirty) { CalculateRect(); } return base.Height; } }
 
-        public ExtendibleGrid(Rect rect)
-            : base(rect)
+        public ExtendibleGrid(Vector2 pos)
+            : base(pos)
         {
             TilesAcross = 10;
             TileSelected = -1;
@@ -25,11 +21,6 @@ namespace Gridia
 
         public override void Render() 
         {
-            if (Event.current.type == EventType.Layout)
-            {
-                MouseOverTile = MouseDownTile = MouseUpTile = -1;
-            }
-
             base.Render();
 
             for (int i = 0; i < NumChildren; i++)
@@ -40,22 +31,6 @@ namespace Gridia
                 {
                     // :(
                     GUI.Box(rect, "");
-                }
-                bool slotContainsMouse = rect.Contains(Event.current.mousePosition);
-                if (slotContainsMouse)
-                {
-                    if (Event.current.type == EventType.MouseDown)
-                    {
-                        MouseDownTile = i;
-                    }
-                    else if (Event.current.type == EventType.MouseUp)
-                    {
-                        MouseUpTile = i;
-                    }
-                    else
-                    {
-                        MouseOverTile = i;
-                    }
                 }
             }
         }
@@ -77,7 +52,7 @@ namespace Gridia
 
         public void SetTilesAcross(int tilesAcross) 
         {
-            TilesAcross = tilesAcross;
+            TilesAcross = Math.Max(1, tilesAcross);
             PositionTiles();
         }
 
@@ -94,8 +69,9 @@ namespace Gridia
 
         private void PositionTile(Renderable tile, int index) 
         {
-            tile.X = (index % TilesAcross) * GetTileWidth();
-            tile.Y = (index / TilesAcross) * GetTileHeight();
+            var x = (index % TilesAcross) * GetTileWidth();
+            var y = (index / TilesAcross) * GetTileHeight();
+            tile.Rect = new Rect(x, y, tile.Width, tile.Height);
         }
 
         private void PositionTiles() 
