@@ -23,3 +23,7 @@ Clean up project structure
 Gridia namespace
 Unity doesn't compile this : 
   JsonConvert issue: data["id"].Value<int>() doesn't compile in Unity. Forced to do (int)data["id"]
+  
+Wishlist
+
+sfxr
