@@ -14,7 +14,29 @@ By 11/25/14:
 By 12/2/14:
   World generation
   Zoom in/out
-  Build a test dungeon
+  Build a test dungeon  
+
+Spring semester:
+
+Spell discovery:
+  Runes placed in minecraft-esque fashion
+  Discovering a certain attribute: shape and specific runes
+  Town gives a spell for free. Example: healing. Show player that a plus and a certain rune is for healing
+  Quests will then give players tips on the shape for a spell, or the rune for a spell
+  Discovery != usage
+  Specific runes needed is random for each player, to prevent easily 'cheating'  
+
+Land ownership:
+  Server owned, Player owned, and unclaimed
+  change sector size to 49x49
+  Partition sectors to 4 plots
+  Non-contiguous land has a one-tile border of undevelopable land, to prevent blocking parts of the world
+  Plots in PVP zones can have chests/doors be pick locked
+  Players can't build/destroy on land owned by other players or the server
+  Server owned floors can only be improved. Grass -> dirt -> stone. Floors decay over use.
+  Magic spell to see ownership
+  After x amount of time, if player does not log in, their land is put up for auction by the town
+  Taxes?
 
 Issues
 
@@ -27,3 +49,4 @@ Unity doesn't compile this :
 Wishlist
 
 sfxr
+Water ripple effect
