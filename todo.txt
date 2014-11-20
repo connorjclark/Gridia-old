@@ -1,3 +1,31 @@
+Immediate todo:
+
+Controls
+
+  Shift to pick up item below
+  Ctrl + WASD to change item selection
+  QEZC for diagonal item usage
+  Q to drop a single item of currently selected tool
+  Shift + q to drop entire stack
+  WASD to selected certain item usage, Enter to confirm
+  Alt + WASD for hand usage
+
+UI
+
+  Map
+  hand uses don't show in recipe book?
+  Show slot number for items 1-10 in inventory
+  Move 'next' button in recipe book to far right
+
+Features
+
+  Movement speeds
+  Big monsters
+
+Refactoring
+  
+  xxxGui -> xxxWindow
+
 Features
 
 By 11/11/14:
