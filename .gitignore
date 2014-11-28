@@ -74,8 +74,12 @@ Client/.nuget/NuGet.exe
 
 # Unity
 client_Data/
-Client/Assembly-CSharp-vs.csproj
-Client/Assembly-CSharp.csproj
-Client/Client-csharp.sln
-Client/Client.sln
+/*.csproj
+/*.unityproj
+/*.sln
+/*.suo
+/*.user
+/*.userprefs
+/*.pidb
+/*.booproj
 Client/build

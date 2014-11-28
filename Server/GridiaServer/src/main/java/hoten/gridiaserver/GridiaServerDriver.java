@@ -22,10 +22,10 @@ public class GridiaServerDriver {
         server.startServer();
         System.out.println("Server started.");
 
+        List<Integer> possibleItems = Arrays.asList(263, 260, 188, 264, 575);
         for (int i = 0; i < 2000; i++) {
             Coord randCoord = randomCoord();
             if (server.tileMap.getTile(randCoord).floor != 1) {
-                List<Integer> possibleItems = Arrays.asList(263, 260, 188, 264, 575);
                 int randomItemId = possibleItems.get((int) (possibleItems.size() * Math.random()));
                 server.changeItem(randCoord, server.contentManager.createItemInstance(randomItemId));
             }

@@ -1,5 +1,31 @@
 Immediate todo:
 
+Sat
+
+Fix controls
+Movement speeds
+Equipment
+Melee
+
+Sun
+
+Magic
+World building
+
+Mon
+
+Map
+World gen
+Zooming
+
+Tues
+
+Make dungeon
+Teach Eric
+
+Wed & Thur
+Touch ups
+
 Controls
 
   Shift to pick up item below
