@@ -12,7 +12,6 @@ namespace Gridia
         private int sourceIndex;
         private String mouseDownLocation;
         private GridiaDriver _driver;
-
         // :(
         public IdleState() 
         {
@@ -40,16 +39,18 @@ namespace Gridia
                 return;
             }
 
-            var direction = ProcessDirectionalInput();
-            if (direction != Vector3.zero)
+            
+            if (Input.GetKey(KeyCode.LeftShift))
             {
-                if (Input.GetKey(KeyCode.LeftShift))
+                if (_inputManager.Valid9DirectionalInput()) 
                 {
-                    var pickupItemLoc = _driver._game.tileMap.Wrap(_driver._game.view.Focus.Position + direction);
-                    var pickupItemIndex = _driver._game.tileMap.ToIndex(pickupItemLoc);
-                    Locator.Get<ConnectionToGridiaServerHandler>().MoveItem("world", "inv", pickupItemIndex, -1);
+                    PickUpItemAt(_driver._game.view.Focus.Position + _inputManager.Get9DirectionalInput());
                 }
-                else
+            }
+            else
+            {
+                var direction = _inputManager.Get4DirectionalInput();
+                if (direction != Vector3.zero)
                 {
                     End(stateMachine, dt, new PlayerMovementState());
                     return;
@@ -102,6 +103,13 @@ namespace Gridia
                 _driver.mouseDownItem =  null;
                 mouseDownLocation = null;
             }
+        }
+
+        private void PickUpItemAt(Vector3 loc) 
+        {
+            var pickupItemLoc = _driver._game.tileMap.Wrap(loc);
+            var pickupItemIndex = _driver._game.tileMap.ToIndex(pickupItemLoc);
+            Locator.Get<ConnectionToGridiaServerHandler>().MoveItem("world", "inv", pickupItemIndex, -1);
         }
 
         private void End(StateMachine stateMachine, float dt, State newState) 

@@ -40,19 +40,19 @@ namespace Gridia
             }
         }
 
-        private bool IsRunning ()
+        private bool IsRunning()
         {
             return Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift);
         }
 
-        private void End (StateMachine stateMachine)
+        private void End(StateMachine stateMachine)
         {
             stateMachine.CurrentState = new IdleState();
         }
 
-        private Vector3 ProcessInput ()
+        private Vector3 ProcessInput()
         {
-            Vector3 direction = ProcessDirectionalInput();
+            var direction = _inputManager.Get4DirectionalInput();
 
             if (direction != Vector3.zero)
             {

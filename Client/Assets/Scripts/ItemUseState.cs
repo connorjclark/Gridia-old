@@ -20,21 +20,13 @@ namespace Gridia
 
         public override void Step(StateMachine stateMachine, float dt)
         {
-            var endTheState = Input.GetKeyUp(KeyCode.Space);
-
-            var direction = ProcessDirectionalInput();
-
-            if (direction != _previousDirection && (direction != Vector3.zero || endTheState)) 
+            var direction = _inputManager.Get9DirectionalInput();
+            if (_inputManager.Valid9DirectionalInput() && direction != _previousDirection) 
             {
                 _previousDirection = direction;
                 var destLocation = Locator.Get<TileMapView>().Focus.Position + direction;
                 var destIndex = Locator.Get<TileMap>().ToIndex(destLocation);
                 Locator.Get<ConnectionToGridiaServerHandler>().UseItem(_source, "world", _sourceIndex, destIndex);
-                //endTheState = true;
-            }
-
-            if (endTheState)
-            {
                 End(stateMachine);
             }
         }

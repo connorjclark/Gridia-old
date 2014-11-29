@@ -17,9 +17,12 @@ public class GridiaDriver : MonoBehaviour
     public ChatWindow chatGui;
     public ItemUsePickWindow itemUsePickWindow;
     public ItemInstance mouseDownItem = null; // :(
+    public InputManager inputManager = new InputManager();
 
     void Start()
     {
+        Locator.Provide(inputManager);
+
         Locator.Provide(this);
         Locator.Provide<SoundPlayer>(GetComponent<SoundPlayer>());
         ResizeCamera();
@@ -89,6 +92,7 @@ public class GridiaDriver : MonoBehaviour
     }
 
     void OnGUI() {
+        inputManager.Step();
         tabbedGui.Render();
         if (mouseDownItem != null)
         {
