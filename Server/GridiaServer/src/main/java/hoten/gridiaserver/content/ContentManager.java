@@ -65,14 +65,14 @@ public class ContentManager {
     }
 
     private List<Item> loadItems() {
-        String json = FileUtils.readTextFile(new File(_path + "items.txt"));
+        String json = FileUtils.readTextFile(new File(_path + "items.json"));
         Type type = new TypeToken<List<Item>>() {
         }.getType();
         return load(json, type);
     }
 
     private Map<Item, List<ItemUse>> loadItemUses() {
-        String json = FileUtils.readTextFile(new File(_path + "itemuses.txt"));
+        String json = FileUtils.readTextFile(new File(_path + "itemuses.json"));
         Type type = new TypeToken<List<ItemUse>>() {
         }.getType();
         List<ItemUse> usesList = load(json, type);

@@ -25,7 +25,7 @@ namespace Gridia
                     var pos = Player.Position;
                     var newPosition = pos + delta;
                     var now = getSystemTime();
-                    var baseTime = 200;
+                    var baseTime = 150; // :(
                     
                     // :(
                     float movementModifier;

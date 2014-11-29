@@ -15,10 +15,10 @@ namespace Gridia
         
         public ContentManager (String worldName)
         {
-            items = new ContentLoader<Item>().Load(worldName + "/content/items.txt");
-            monsters = new ContentLoader<Monster>().Load(worldName + "/content/monsters.txt");
-            animations = new ContentLoader<Animation>().Load(worldName + "/content/animations.txt");
-            uses = new ContentLoader<ItemUse>().Load(worldName + "/content/itemuses.txt");
+            items = new ContentLoader<Item>().Load(worldName + "/content/items.json");
+            monsters = new ContentLoader<Monster>().Load(worldName + "/content/monsters.json");
+            animations = new ContentLoader<Animation>().Load(worldName + "/content/animations.json");
+            uses = new ContentLoader<ItemUse>().Load(worldName + "/content/itemuses.json");
         }
 
         public Item GetItem(int id)
