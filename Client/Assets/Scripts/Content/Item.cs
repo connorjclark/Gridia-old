@@ -5,7 +5,7 @@ namespace Gridia
     {
         public int Id { get; set; }
         public String Name { get; set; }
-        public bool BlockMovement { get; set; }
+        public bool Walkable { get; set; }
         public int Light { get; set; }
         public int[] Animations { get; set; }
 
