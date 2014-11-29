@@ -38,6 +38,23 @@ namespace Gridia
             return direction;
         }
 
+        // :(
+        public Vector3 Get4DirectionalInputUp()
+        {
+            var direction = Vector3.zero;
+
+            if (Input.GetButtonUp("left"))
+                direction += Vector3.left;
+            if (Input.GetButtonUp("right"))
+                direction += Vector3.right;
+            if (Input.GetButtonUp("down"))
+                direction += Vector3.down;
+            if (Input.GetButtonUp("up"))
+                direction += Vector3.up;
+
+            return direction;
+        }
+
         public bool Valid9DirectionalInput() 
         {
             return Get9DirectionalInput() != Vector3.zero || Input.GetKeyDown(KeyCode.S);

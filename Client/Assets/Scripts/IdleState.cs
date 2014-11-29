@@ -8,7 +8,7 @@ namespace Gridia
 {
     public class IdleState : State
     {
-        private int downSlot;
+        //private int downSlot;
         private int sourceIndex;
         private String mouseDownLocation;
         private GridiaDriver _driver;
@@ -49,6 +49,15 @@ namespace Gridia
                 if (_inputManager.Valid9DirectionalInput()) 
                 {
                     PickUpItemAt(_driver._game.view.Focus.Position + _inputManager.Get9DirectionalInput());
+                }
+            }
+            else if (Input.GetKey(KeyCode.LeftControl))
+            {
+                var dir = _inputManager.Get4DirectionalInputUp();
+                if (dir != Vector3.zero)
+                {
+                    _driver.invGui.SlotSelectedX += (int)dir.x;
+                    _driver.invGui.SlotSelectedY += (int)-dir.y;
                 }
             }
             else

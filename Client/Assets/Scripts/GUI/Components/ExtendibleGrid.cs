@@ -11,6 +11,24 @@ namespace Gridia
         public int TilesAcross { get; private set; }
         public int TilesColumn { get { return Mathf.CeilToInt((float)NumChildren / TilesAcross); } }
         public int TileSelected { get; set; }
+        public int TileSelectedX
+        {
+            get { return TileSelected % TilesAcross; }
+            set
+            {
+                var newX = Mathf.Clamp(value, 0, TilesAcross - 1);
+                TileSelected = Mathf.Clamp(newX + TileSelectedY * TilesAcross, 0, NumChildren - 1);
+            }
+        }
+        public int TileSelectedY
+        {
+            get { return TileSelected / TilesAcross; }
+            set
+            {
+                var newY = Mathf.Clamp(value, 0, TilesColumn - 1);
+                TileSelected = Mathf.Clamp(TileSelectedX + newY * TilesAcross, 0, NumChildren - 1);
+            }
+        }
 
         public ExtendibleGrid(Vector2 pos)
             : base(pos)

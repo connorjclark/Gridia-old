@@ -17,6 +17,8 @@ namespace Gridia
         }
 
         public int SlotSelected { get { return _slots.TileSelected; } set { _slots.TileSelected = value; } }
+        public int SlotSelectedX { get { return _slots.TileSelectedX; } set { _slots.TileSelectedX = value; } }
+        public int SlotSelectedY { get { return _slots.TileSelectedY; } set { _slots.TileSelectedY = value; } }
         // :(
         public int MouseDownSlot { get; private set; }
         public int MouseUpSlot { get; private set; }
