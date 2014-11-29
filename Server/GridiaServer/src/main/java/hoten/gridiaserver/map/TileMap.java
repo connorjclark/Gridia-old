@@ -121,7 +121,7 @@ public class TileMap {
 
     public boolean walkable(int x, int y, int z) {
         Tile tile = getTile(x, y, z);
-        return tile.cre == null && !tile.item.data.blockMovement && tile.floor != 1;
+        return tile.cre == null && tile.item.data.walkable && tile.floor != 1;
     }
 
     public Coord getCoordFromIndex(int index) {

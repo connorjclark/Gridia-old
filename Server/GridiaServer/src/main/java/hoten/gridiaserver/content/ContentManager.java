@@ -1,7 +1,9 @@
 package hoten.gridiaserver.content;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import hoten.gridiaserver.serializers.ItemDeserializer;
 import hoten.serving.fileutils.FileUtils;
 import java.io.File;
 import java.lang.reflect.Type;
@@ -81,7 +83,9 @@ public class ContentManager {
     }
 
     private List load(String json, Type type) {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Item.class, new ItemDeserializer())
+                .create();
         return gson.fromJson(json, type);
     }
 }
