@@ -16,23 +16,39 @@ namespace Gridia
         private AudioSource _audio;
         public Queue<String> MusicQueue = new Queue<String>();
         public Queue<String> SfxQueue = new Queue<String>();
-        public bool MuteMusic { get; set; }
+        private bool _muteMusic;
+        public bool MuteMusic
+        {
+            get { return _muteMusic; }
+            set
+            {
+                _muteMusic = value;
+                if (_muteMusic) 
+                {
+                    _audio.Pause();
+                }
+                else
+                {
+                    _audio.Play();
+                }
+            }
+        }
         public bool MuteSfx { get; set; }
         public String CurrentSongName { get; private set; }
 
         public void Start() 
         {
+            _audio.loop = false;
             MuteMusic = Application.isEditor;
         }
 
         public void Update() 
         {
-            _audio.mute = MuteMusic;
             if (MusicQueue.Count == 0)
             {
                 QueueRandomSongs();
             }
-            if (!_audio.isPlaying) 
+            if (!_audio.isPlaying && !_muteMusic) 
             {
                 PlayMusic(MusicQueue.Dequeue());
             }
@@ -62,8 +78,11 @@ namespace Gridia
             CurrentSongName = name;
             var clip = GetAudioClip(name);
             _audio.clip = clip;
-            _audio.loop = false;
-            _audio.Play();
+            
+            if (!_muteMusic) 
+            {
+                _audio.Play();
+            }
         }
 
         public void EndCurrentSong() 
