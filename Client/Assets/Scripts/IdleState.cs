@@ -37,8 +37,12 @@ namespace Gridia
             {
                 End(stateMachine, dt, new ItemUseState("inv", _driver.invGui.SlotSelected));
                 return;
+            } 
+            else if (Input.GetKey(KeyCode.LeftAlt)) 
+            {
+                End(stateMachine, dt, new ItemUseState("inv", -1));
+                return;
             }
-
             
             if (Input.GetKey(KeyCode.LeftShift))
             {
