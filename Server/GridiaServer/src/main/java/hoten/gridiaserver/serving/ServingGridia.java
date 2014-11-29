@@ -154,6 +154,16 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         tileMap.setItem(item, loc);
         updateTile(loc);
     }
+    
+    public void reduceItemQuantity(Coord loc, int amount) {
+        ItemInstance item = tileMap.getItem(loc);
+        item.quantity -= amount;
+        if (item.quantity == 0) {
+            changeItem(loc, ItemInstance.NONE);
+        } else {
+            updateTile(loc);
+        }
+    }
 
     public void changeItem(int index, ItemInstance item) {
         changeItem(tileMap.getCoordFromIndex(index), item);

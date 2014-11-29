@@ -20,11 +20,12 @@ namespace Gridia
             base.Render();
             if (ToolTip != null)
             {
+                var toolTip = ToolTip;
                 GUI.Window(100, Rect, windowId =>
                 {
                     var width = 200;
                     var height = 30;
-                    GUI.Box(new Rect((Rect.width - width) / 2, (Rect.height - height) / 2, width, height), ToolTip);
+                    GUI.Box(new Rect((Rect.width - width) / 2, (Rect.height - height) / 2, width, height), toolTip);
                     GUI.BringWindowToFront(windowId);
                 }, "");
                 ToolTip = null;

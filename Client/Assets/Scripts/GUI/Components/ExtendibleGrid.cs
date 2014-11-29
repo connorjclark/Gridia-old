@@ -34,22 +34,16 @@ namespace Gridia
             : base(pos)
         {
             TilesAcross = 10;
-            TileSelected = -1;
         }
 
         public override void Render() 
         {
             base.Render();
-
-            for (int i = 0; i < NumChildren; i++)
+            // :(
+            if (TileSelected != -1)
             {
-                var rect = _children[i].Rect;
-
-                if (TileSelected == i)
-                {
-                    // :(
-                    GUI.Box(rect, "");
-                }
+                var rect = _children[TileSelected].Rect;
+                GUI.Box(rect, "");
             }
         }
 

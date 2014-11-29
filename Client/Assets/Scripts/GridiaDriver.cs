@@ -94,6 +94,7 @@ public class GridiaDriver : MonoBehaviour
     void OnGUI() {
         inputManager.Step();
         tabbedGui.Render();
+        tabbedGui.HandleEvents();
         if (mouseDownItem != null)
         {
             var rect = new Rect((int)Input.mousePosition.x - 16, Screen.height - (int)Input.mousePosition.y - 16, 32, 32);

@@ -133,13 +133,13 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         }
     }
 
-    private void removeItemAt(String from, int index) {
+    private void removeItemAt(String from, int index, int quantity) {
         switch (from) {
             case "world":
-                _server.changeItem(_server.tileMap.getCoordFromIndex(index), ItemInstance.NONE);
+                _server.reduceItemQuantity(_server.tileMap.getCoordFromIndex(index), quantity);
                 break;
             case "inv":
-                player.inventory.deleteSlot(index);
+                player.inventory.reduceQuantityAt(index, quantity);
                 break;
         }
     }
@@ -148,6 +148,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         String source = data.get("source").getAsString();
         String dest = data.get("dest").getAsString();
         int sourceIndex = data.get("si").getAsInt();
+        int quantityToMove = data.get("quantity").getAsInt();
         int destIndex = data.get("di").getAsInt();
 
         if (source.equals(dest) && sourceIndex == destIndex) {
@@ -155,10 +156,14 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         }
 
         ItemInstance item = getItemFrom(source, sourceIndex);
-
         if (item == ItemInstance.NONE) {
             return;
         }
+        if (quantityToMove == -1) {
+            quantityToMove = item.quantity;
+        }
+        item = new ItemInstance(item);
+        item.quantity = quantityToMove;
 
         boolean moveSuccessful = false;
         switch (dest) {
@@ -178,7 +183,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             return;
         }
 
-        removeItemAt(source, sourceIndex);
+        removeItemAt(source, sourceIndex, quantityToMove);
     }
 
     private void ProcessChat(JsonObject data) throws IOException {

@@ -20,8 +20,11 @@ namespace Gridia
 
         public override void Render()
         {
-            base.Render();
-            GUI.Button(Rect, Text);
+            // :(
+            if (GUI.Button(Rect, Text) && OnClick != null) 
+            {
+                OnClick();
+            }
         }
     }
 }

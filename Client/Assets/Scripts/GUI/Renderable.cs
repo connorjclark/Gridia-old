@@ -85,10 +85,12 @@ namespace Gridia
 
         public Color32 Color { get; set; }
 
-        public Action OnClick { private get; set; } // really just mouse up... :(
+        // :(
+        public Action OnClick { protected get; set; } // really just mouse up... :(
         public Action OnMouseDown { private get; set; }
         public Action OnRightClick { private get; set; }
         public Action OnMouseOver { private get; set; }
+        public Action OnKeyUp { private get; set; }
         public Func<String> ToolTip { private get; set; }
 
         public Renderable(Vector2 pos)
@@ -99,6 +101,10 @@ namespace Gridia
 
         // :(
         public virtual void Render()
+        {
+        }
+
+        public virtual void HandleEvents() 
         {
             var mouseOver = Rect.Contains(Event.current.mousePosition);
 
@@ -124,6 +130,11 @@ namespace Gridia
                     RenderTooltip();
                 }
                 if (OnMouseOver != null) OnMouseOver();
+            }
+
+            if (Event.current.type == EventType.KeyUp)
+            {
+                if (OnKeyUp != null) OnKeyUp();
             }
         }
 

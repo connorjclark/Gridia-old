@@ -28,13 +28,7 @@ Touch ups
 
 Controls
 
-  Shift to pick up item below
-  Ctrl + WASD to change item selection
-  QEZC for diagonal item usage
-  Q to drop a single item of currently selected tool
   Shift + q to drop entire stack
-  WASD to selected certain item usage, Enter to confirm
-  Alt + WASD for hand usage
 
 UI
 

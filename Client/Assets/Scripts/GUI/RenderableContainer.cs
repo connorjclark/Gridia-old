@@ -8,6 +8,7 @@ namespace Gridia
 {
     public class RenderableContainer : Renderable
     {
+        public int NumChildren { get { return _children.Count; } }
         protected List<Renderable> _children = new List<Renderable>();
 
         public RenderableContainer(Vector2 pos)
@@ -21,6 +22,7 @@ namespace Gridia
                 Dirty = true;
                 _children.ForEach(c => c.Dirty = false);
             }
+
             GUI.BeginGroup(new Rect(X, Y, Int32.MaxValue, Int32.MaxValue));
             lock (_children)
             {
@@ -33,7 +35,19 @@ namespace Gridia
             GUI.EndGroup();
         }
 
-        public int NumChildren { get { return _children.Count; } }
+        public override void HandleEvents() 
+        {
+            GUI.BeginGroup(new Rect(X, Y, Int32.MaxValue, Int32.MaxValue));
+            base.HandleEvents();
+            lock (_children)
+            {
+                foreach (var child in _children.ToList())
+                {
+                    child.HandleEvents();
+                }
+            }
+            GUI.EndGroup();
+        }
 
         public virtual void AddChild(Renderable child) 
         {

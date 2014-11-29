@@ -8,10 +8,10 @@ namespace Gridia
 {
     public class IdleState : State
     {
-        //private int downSlot;
         private int sourceIndex;
         private String mouseDownLocation;
         private GridiaDriver _driver;
+
         // :(
         public IdleState() 
         {
@@ -29,7 +29,7 @@ namespace Gridia
                 }
                 else 
                 {
-                    _driver.invGui.SlotSelected = numKeyPressed - 1;
+                    _driver.invGui.SlotSelected = numKeyPressed == 0 ? 9 : numKeyPressed - 1;
                 }
             }
 

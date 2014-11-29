@@ -43,6 +43,7 @@ namespace Gridia
             {
                 ResizingWindow = false;
             }
+            // :(
 			if (Event.current.type == EventType.MouseDown) {
 				DoubleClick = Event.current.clickCount == 2;
 			}
@@ -76,6 +77,16 @@ namespace Gridia
                 {
                     ClampPosition();
                 }
+            }
+        }
+
+        public override void HandleEvents()
+        {
+            if (Visible)
+            {
+                GUI.BeginGroup(new Rect(BorderSize, BorderSize, Int32.MaxValue, Int32.MaxValue));
+                base.HandleEvents();
+                GUI.EndGroup();
             }
         }
 

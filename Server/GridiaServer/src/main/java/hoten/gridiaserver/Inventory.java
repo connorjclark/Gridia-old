@@ -68,6 +68,16 @@ public class Inventory {
         set(slotIndex, ItemInstance.NONE);
         updateSlot(slotIndex);
     }
+
+    public void reduceQuantityAt(int slotIndex, int amount) {
+        ItemInstance item = get(slotIndex);
+        item.quantity -= amount;
+        if (item.quantity == 0) {
+            set(slotIndex, ItemInstance.NONE);
+        } else {
+            updateSlot(slotIndex);
+        }
+    }
 }
 
 class InventoryLoader {

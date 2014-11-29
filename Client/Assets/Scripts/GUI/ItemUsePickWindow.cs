@@ -24,8 +24,6 @@ namespace Gridia
                     Picks.AddChild(itemRend);
                 }
 
-                Picks.TileSelected = 0;
-
                 CalculateRect();
                 X = (Screen.width / 2 - Width) / 2;
                 Y = (Screen.height - Height) / 2;

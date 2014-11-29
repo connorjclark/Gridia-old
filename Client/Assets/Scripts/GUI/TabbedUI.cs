@@ -14,6 +14,7 @@ namespace Gridia
         public TabbedUI(Vector2 pos)
             : base(pos, "Tabs")
         {
+            _tabs.TileSelected = -1;
             Moveable = Resizeable = false;
             AddChild(_tabs);
         }
@@ -22,6 +23,12 @@ namespace Gridia
         {
             base.Render();
             _windows.ForEach(w => w.Render());
+        }
+
+        public override void HandleEvents()
+        {
+            base.HandleEvents();
+            _windows.ForEach(w => w.HandleEvents());
         }
 
         public void Add(int tabItemSprite, GridiaWindow window) 

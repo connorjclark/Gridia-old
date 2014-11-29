@@ -19,6 +19,11 @@ public class ItemInstance {
         this.data = data;
         this.quantity = quantity;
     }
+    
+    public ItemInstance(ItemInstance item) {
+        data = item.data;
+        quantity = item.quantity;
+    }
 
     @Override
     public String toString() {

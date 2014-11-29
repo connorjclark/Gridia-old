@@ -263,7 +263,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         Send(message);
     }
 
-    public void MoveItem(String source, String dest, int sourceIndex, int destIndex)
+    public void MoveItem(String source, String dest, int sourceIndex, int destIndex, int quantity = -1)
     {
         Message message = new JsonMessageBuilder()
             .Protocol(Outbound(GridiaProtocols.Serverbound.MoveItem))
@@ -271,6 +271,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
             .Set("dest", dest)
             .Set("si", sourceIndex)
             .Set("di", destIndex)
+            .Set("quantity", quantity)
             .Build();
         Send(message);
     }
