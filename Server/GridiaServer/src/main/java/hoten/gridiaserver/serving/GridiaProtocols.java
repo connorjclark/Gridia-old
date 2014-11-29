@@ -6,7 +6,7 @@ public class GridiaProtocols extends Protocols {
 
     public enum Clientbound {
 
-        AddCreature, MoveCreature, RemoveCreature, SectorData, Chat, SetFocus, Initialize, TileUpdate, Inventory, InventoryUpdate, ItemUsePick, Animation
+        AddCreature, MoveCreature, RemoveCreature, SectorData, Chat, SetFocus, Initialize, TileUpdate, Container, ContainerUpdate, ItemUsePick, Animation
 
     }
 

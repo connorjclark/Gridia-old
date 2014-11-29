@@ -2,7 +2,7 @@ package hoten.gridiaserver.serving;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import hoten.gridiaserver.Inventory;
+import hoten.gridiaserver.Container;
 import hoten.gridiaserver.map.Coord;
 import hoten.gridiaserver.content.ItemInstance;
 import hoten.gridiaserver.Player;
@@ -57,8 +57,8 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             inv.add(_server.contentManager.createItemInstance(0));
         }
 
-        player.inventory = new Inventory(inv);
-        send(_messageBuilder.inventory(player.inventory));
+        player.inventory = new Container(inv);
+        send(_messageBuilder.container(player.inventory));
     }
 
     @Override

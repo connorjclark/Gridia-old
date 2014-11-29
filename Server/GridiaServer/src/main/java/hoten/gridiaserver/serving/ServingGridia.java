@@ -3,7 +3,7 @@ package hoten.gridiaserver.serving;
 import hoten.gridiaserver.content.ContentManager;
 import hoten.gridiaserver.map.Coord;
 import hoten.gridiaserver.Creature;
-import hoten.gridiaserver.Inventory;
+import hoten.gridiaserver.Container;
 import hoten.gridiaserver.content.ItemInstance;
 import hoten.gridiaserver.Player;
 import hoten.gridiaserver.map.Sector;
@@ -224,8 +224,8 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         return addItemNear(tileMap.getCoordFromIndex(index), item, bufferzone);
     }
 
-    public void updateInventorySlot(Inventory inventory, int slotIndex) {
-        Message message = messageBuilder.updateInventorySlot(inventory, slotIndex);
+    public void updateInventorySlot(Container inventory, int slotIndex) {
+        Message message = messageBuilder.updateContainerSlot(inventory, slotIndex);
         sendTo(message, client -> client.player.inventory.id == inventory.id);
     }
 }

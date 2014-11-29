@@ -3,7 +3,7 @@ package hoten.gridiaserver.serving;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import hoten.gridiaserver.Creature;
-import hoten.gridiaserver.Inventory;
+import hoten.gridiaserver.Container;
 import hoten.gridiaserver.content.ItemInstance;
 import hoten.gridiaserver.content.ItemUse;
 import hoten.gridiaserver.map.Coord;
@@ -102,15 +102,15 @@ public class GridiaMessageToClientBuilder {
                 .build();
     }
 
-    public Message inventory(Inventory inv) {
+    public Message container(Container container) {
         // :(
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(ItemInstance.class, new ItemInstanceSerializer())
                 .create();
 
         return new JsonMessageBuilder()
-                .protocol(outbound(Inventory))
-                .set("inv", inv.getItems())
+                .protocol(outbound(Container))
+                .set("items", container.getItems())
                 .gson(gson)
                 .build();
     }
@@ -136,10 +136,10 @@ public class GridiaMessageToClientBuilder {
                 .build();
     }
 
-    public Message updateInventorySlot(Inventory inventory, int slotIndex) {
-        ItemInstance item = inventory.get(slotIndex);
+    public Message updateContainerSlot(Container container, int slotIndex) {
+        ItemInstance item = container.get(slotIndex);
         return new JsonMessageBuilder()
-                .protocol(outbound(InventoryUpdate))
+                .protocol(outbound(ContainerUpdate))
                 .set("index", slotIndex)
                 .set("item", item.data.id)
                 .set("quantity", item.quantity)

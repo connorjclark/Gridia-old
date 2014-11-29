@@ -74,11 +74,11 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
             case GridiaProtocols.Clientbound.TileUpdate:
                 TileUpdate(data);
                 break;
-            case GridiaProtocols.Clientbound.Inventory:
-                Inventory(data);
+            case GridiaProtocols.Clientbound.Container:
+                Container(data);
                 break;
-            case GridiaProtocols.Clientbound.InventoryUpdate:
-                InventoryUpdate(data);
+            case GridiaProtocols.Clientbound.ContainerUpdate:
+                ContainerUpdate(data);
                 break;
             case GridiaProtocols.Clientbound.ItemUsePick:
                 ItemUsePick(data);
@@ -152,13 +152,13 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         _game.tileMap.SetItem(Locator.Get<ContentManager>().GetItem(item).GetInstance(quantity), x, y, z);
     }
 
-    private void Inventory(JObject data)
+    private void Container(JObject data)
     {
-        var backToJson = JsonConvert.SerializeObject(data["inv"]); // :(
+        var backToJson = JsonConvert.SerializeObject(data["items"]); // :(
         Locator.Get<InventoryWindow>().Inventory = JsonConvert.DeserializeObject<List<ItemInstance>>(backToJson, new ItemInstanceConverter());
     }
 
-    private void InventoryUpdate(JObject data)
+    private void ContainerUpdate(JObject data)
     {
         int index = (int)data["index"];
         int item = (int)data["item"];
