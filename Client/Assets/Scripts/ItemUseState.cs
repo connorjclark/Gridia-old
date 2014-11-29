@@ -20,14 +20,20 @@ namespace Gridia
 
         public override void Step(StateMachine stateMachine, float dt)
         {
-            var direction = _inputManager.Get9DirectionalInput();
-            if (_inputManager.Valid9DirectionalInput() && direction != _previousDirection) 
+            if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.LeftAlt)) 
             {
-                _previousDirection = direction;
-                var destLocation = Locator.Get<TileMapView>().Focus.Position + direction;
-                var destIndex = Locator.Get<TileMap>().ToIndex(destLocation);
-                Locator.Get<ConnectionToGridiaServerHandler>().UseItem(_source, "world", _sourceIndex, destIndex);
                 End(stateMachine);
+            }
+            if (_inputManager.Valid9DirectionalInputUp())
+            {
+                var direction = _inputManager.Get9DirectionalInputUp();
+                if (direction != _previousDirection)
+                {
+                    _previousDirection = direction;
+                    var destLocation = Locator.Get<TileMapView>().Focus.Position + direction;
+                    var destIndex = Locator.Get<TileMap>().ToIndex(destLocation);
+                    Locator.Get<ConnectionToGridiaServerHandler>().UseItem(_source, "world", _sourceIndex, destIndex);
+                }
             }
         }
 

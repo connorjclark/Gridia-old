@@ -10,6 +10,7 @@ public class GridiaGame
     public bool isConnected = false;
 
     public void Initialize(int size, int depth, int sectorSize) {
+        Locator.Provide(stateMachine);
         tileMap = new TileMap(size, depth, sectorSize);
         Locator.Provide(tileMap);
         view = new TileMapView(tileMap, Locator.Get<TextureManager>(), 1.0f);

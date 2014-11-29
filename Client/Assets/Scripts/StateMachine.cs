@@ -9,9 +9,9 @@ namespace Gridia
 
     public class StateMachine
     {
-        public State CurrentState { get; set; }
+        public State CurrentState { get; private set; }
         
-        public void SetState (State state)
+        public void SetState(State state)
         {
              CurrentState = state;
         }

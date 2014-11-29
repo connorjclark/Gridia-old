@@ -19,7 +19,7 @@ namespace Gridia
             if (Player == null) return;
             if (_cooldownUntil == 0)
             {
-                var delta = ProcessInput ();
+                var delta = ProcessInput();
                 if (delta != Vector3.zero) 
                 {
                     var pos = Player.Position;
@@ -47,7 +47,7 @@ namespace Gridia
 
         private void End(StateMachine stateMachine)
         {
-            stateMachine.CurrentState = new IdleState();
+            stateMachine.SetState(new IdleState());
         }
 
         private Vector3 ProcessInput()
@@ -64,7 +64,6 @@ namespace Gridia
                 else 
                 {
                     Locator.Get<ConnectionToGridiaServerHandler>().PlayerMove(destination);
-                    Locator.Get<TabbedUI>().Remove(Locator.Get<ItemUsePickWindow>());
                 }
             }
             

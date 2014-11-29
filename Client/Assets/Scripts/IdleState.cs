@@ -33,11 +33,12 @@ namespace Gridia
                 }
             }
 
-            if (Input.GetKey(KeyCode.Space)) 
+            // :(
+            if (Input.GetKey(KeyCode.Space) && _inputManager.Valid9DirectionalInput()) 
             {
                 End(stateMachine, dt, new ItemUseState("inv", _driver.invGui.SlotSelected));
                 return;
-            } 
+            }
             else if (Input.GetKey(KeyCode.LeftAlt)) 
             {
                 End(stateMachine, dt, new ItemUseState("inv", -1));

@@ -13,7 +13,7 @@ namespace Gridia
             set
             {
                 _useRenderables = new List<ItemRenderable>();
-                _picks.RemoveAllChildren();
+                Picks.RemoveAllChildren();
                 for (int i = 0; i < value.Count; i++)
                 {
                     var item = Locator.Get<ContentManager>().GetItem(value[i].products[0]).GetInstance(1);
@@ -21,15 +21,18 @@ namespace Gridia
                     var index = i;
                     itemRend.OnClick = () => SelectUse(index);
                     _useRenderables.Add(itemRend);
-                    _picks.AddChild(itemRend);
+                    Picks.AddChild(itemRend);
                 }
+
+                Picks.TileSelected = 0;
 
                 CalculateRect();
                 X = (Screen.width / 2 - Width) / 2;
                 Y = (Screen.height - Height) / 2;
             }
         }
-        private ExtendibleGrid _picks = new ExtendibleGrid(Vector2.zero);
+        public ExtendibleGrid Picks = new ExtendibleGrid(Vector2.zero); // :(
+        public ItemUsePickState ItemUsePickState { get; set; }
         private List<ItemRenderable> _useRenderables;
         private float _scale;
 
@@ -37,13 +40,32 @@ namespace Gridia
             : base(pos, "Item use pick")
         {
             Resizeable = false;
-            AddChild(_picks);
+            AddChild(Picks);
+        }
+
+        public void SelectUse()
+        {
+            SelectUse(Picks.TileSelected);
         }
 
         private void SelectUse(int index) 
         {
             Locator.Get<TabbedUI>().Remove(this);
             Locator.Get<ConnectionToGridiaServerHandler>().PickItemUse(index);
+            ItemUsePickState.End();
+        }
+
+        public override void Render()
+        {
+            base.Render();
+            if (Event.current.type == EventType.KeyDown) 
+            {
+                if (Input.GetKey(KeyCode.Space))
+                {
+                    Locator.Get<ItemUsePickWindow>().SelectUse();
+                    ItemUsePickState.End();
+                }
+            }
         }
     }
 }

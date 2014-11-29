@@ -60,6 +60,11 @@ namespace Gridia
             return Get9DirectionalInput() != Vector3.zero || Input.GetKeyDown(KeyCode.S);
         }
 
+        public bool Valid9DirectionalInputUp()
+        {
+            return Get9DirectionalInputUp() != Vector3.zero || Input.GetKeyUp(KeyCode.S);
+        }
+
         public Vector3 Get9DirectionalInput() 
         {
             if (Input.GetKeyDown(KeyCode.Q))
@@ -95,6 +100,47 @@ namespace Gridia
                 return Vector3.down;
             }
             else if (Input.GetKeyDown(KeyCode.C))
+            {
+                return Vector3.right + Vector3.down;
+            }
+            return Vector3.zero;
+        }
+
+        public Vector3 Get9DirectionalInputUp()
+        {
+            if (Input.GetKeyUp(KeyCode.Q))
+            {
+                return Vector3.left + Vector3.up;
+            }
+            else if (Input.GetKeyUp(KeyCode.W))
+            {
+                return Vector3.up;
+            }
+            else if (Input.GetKeyUp(KeyCode.E))
+            {
+                return Vector3.right + Vector3.up;
+            }
+            else if (Input.GetKeyUp(KeyCode.A))
+            {
+                return Vector3.left;
+            }
+            else if (Input.GetKeyUp(KeyCode.S))
+            {
+                return Vector3.zero;
+            }
+            else if (Input.GetKeyUp(KeyCode.D))
+            {
+                return Vector3.right;
+            }
+            else if (Input.GetKeyUp(KeyCode.Z))
+            {
+                return Vector3.left + Vector3.down;
+            }
+            else if (Input.GetKeyUp(KeyCode.X))
+            {
+                return Vector3.down;
+            }
+            else if (Input.GetKeyUp(KeyCode.C))
             {
                 return Vector3.right + Vector3.down;
             }
