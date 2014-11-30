@@ -16,13 +16,14 @@ public class MonsterDeserializer implements JsonDeserializer<Monster> {
     public Monster deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
         Monster monster = new Monster();
-        int spriteIndex = jsonObject.has("image") ? jsonObject.get("image").getAsInt() : 0;
+        monster.id = jsonObject.get("id").getAsInt();
+        int spriteIndex = jsonObject.has("image") ? jsonObject.get("image").getAsInt() - 1 : 0; // :(
         if (jsonObject.has("image_type")) {
             int imageType = jsonObject.get("image_type").getAsInt();
             if (imageType == 1) {
                 monster.image = new DefaultCreatureImage(spriteIndex, 1, 2);
             } else if (imageType == 2) {
-                monster.image = new DefaultCreatureImage(spriteIndex - 1, 2, 2);
+                monster.image = new DefaultCreatureImage(spriteIndex, 2, 2);
             }
         } else {
             monster.image = new DefaultCreatureImage(spriteIndex);

@@ -3,6 +3,7 @@ package hoten.gridiaserver.content;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import hoten.gridiaserver.DefaultCreatureImage;
 import hoten.gridiaserver.serializers.ItemDeserializer;
 import hoten.gridiaserver.serializers.MonsterDeserializer;
 import hoten.serving.fileutils.FileUtils;

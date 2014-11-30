@@ -286,7 +286,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         {
             return;
         }
-        Debug.LogError("no creature of id: " + id); // :(
+        //Debug.LogError("no creature of id: " + id); // :(
         _creaturesRequested.Add(id);
 
         Message message = new JsonMessageBuilder()

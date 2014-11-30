@@ -33,7 +33,7 @@ public class GridiaServerDriver {
         }
 
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
-            if (server.anyPlayersOnline()) {
+            if (server.anyPlayersOnline() && server.creatures.size() < 100) {
                 spawnMonster();
             }
         }, 0, 500, TimeUnit.MILLISECONDS);
@@ -54,7 +54,7 @@ public class GridiaServerDriver {
     }
 
     private static void spawnMonster() {
-        List<Integer> possibleMonsters = Arrays.asList(120, 5);
+        List<Integer> possibleMonsters = Arrays.asList(120, 5, 63, 1);
         int randomMonsterId = possibleMonsters.get((int) (possibleMonsters.size() * Math.random()));
         Monster mold = server.contentManager.getMonster(randomMonsterId);
         server.createCreature(mold, randomCoord());

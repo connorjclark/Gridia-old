@@ -69,7 +69,6 @@ namespace Gridia
                     var destination = Locator.Get<GridiaGame>().view.Focus.Position + direction;
                     if (Locator.Get<TileMap>().GetCreatureAt(destination) != null)
                     {
-                        Debug.Log("hit!");
                         Locator.Get<ConnectionToGridiaServerHandler>().Hit(destination);
                     }
                     else if(Locator.Get<TileMap>().Walkable(destination))
