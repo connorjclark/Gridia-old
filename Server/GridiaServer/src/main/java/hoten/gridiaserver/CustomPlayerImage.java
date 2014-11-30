@@ -13,6 +13,9 @@ public class CustomPlayerImage implements CreatureImage {
         ItemInstance headEquipment = equipment.get(Item.ArmorSpot.Head.ordinal());
         ItemInstance chestEquipment = equipment.get(Item.ArmorSpot.Chest.ordinal());
         ItemInstance legsEquipment = equipment.get(Item.ArmorSpot.Legs.ordinal());
+        ItemInstance shieldEquipment = equipment.get(Item.ArmorSpot.Shield.ordinal());
+        ItemInstance weaponEquipment = equipment.get(Item.ArmorSpot.Weapon.ordinal());
+
         if (headEquipment != ItemInstance.NONE) {
             head = headEquipment.data.wearImage;
         } else {
@@ -28,5 +31,16 @@ public class CustomPlayerImage implements CreatureImage {
         } else {
             legs = bareLegs;
         }
+        if (shieldEquipment != ItemInstance.NONE) {
+            shield = shieldEquipment.data.wearImage;
+        } else {
+            shield = 0;
+        }
+        if (weaponEquipment != ItemInstance.NONE) {
+            weapon = weaponEquipment.data.wearImage;
+        } else {
+            weapon = 0;
+        }
     }
+
 }

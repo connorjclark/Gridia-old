@@ -52,7 +52,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         inv.addAll(Arrays.asList(
                 57, 140, 280, 1067, 1068, 826, 1974,
                 1974, 1039, 171, 902, 901, 339, 341,
-                29, 19, 18, 12, 913
+                29, 19, 18, 12, 913, 34
         ).stream()
                 .map(i -> {
                     int quantity = _server.contentManager.getItem(i).stackable ? 1000 : 1;
@@ -69,9 +69,11 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         equipment.add(_server.contentManager.createItemInstance(0));
         equipment.add(_server.contentManager.createItemInstance(0));
         equipment.add(_server.contentManager.createItemInstance(0));
+        equipment.add(_server.contentManager.createItemInstance(0));
+        equipment.add(_server.contentManager.createItemInstance(0));
         player.equipment = new Container(equipment, Container.ContainerType.Equipment);
-        ((CustomPlayerImage)(player.creature.image)).moldToEquipment(player.equipment);
-        
+        ((CustomPlayerImage) (player.creature.image)).moldToEquipment(player.equipment);
+
         send(_messageBuilder.container(player.inventory));
         send(_messageBuilder.container(player.equipment));
     }
@@ -318,7 +320,8 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
     private void ProcessEquipItem(JsonObject data) throws IOException {
         int slotIndex = data.get("slotIndex").getAsInt();
         ItemInstance item = player.inventory.get(slotIndex);
-        if (item.data.itemClass == Item.ItemClass.Armor) {
+        // :(
+        if (item.data.isEquipable()) {
             int armorSlotIndex = item.data.armorSpot.ordinal();
             if (player.equipment.isEmpty(armorSlotIndex)) {
                 player.inventory.deleteSlot(slotIndex);
@@ -343,7 +346,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             send(_messageBuilder.chat("Your inventory is full."));
         }
     }
-    
+
     private void updatePlayerImage() {
         if (player.creature.image instanceof CustomPlayerImage) {
             CustomPlayerImage image = (CustomPlayerImage) player.creature.image;

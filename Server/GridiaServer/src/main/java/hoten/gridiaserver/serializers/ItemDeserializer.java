@@ -21,7 +21,7 @@ public class ItemDeserializer implements JsonDeserializer<Item> {
             item.itemClass = Item.ItemClass.valueOf(itemClass);
         }
 
-        if (item.itemClass == Item.ItemClass.Armor) {
+        if (item.isEquipable()) {
             String armorSpot = jsonObject.get("armorSpot").getAsString();
             item.armorSpot = Item.ArmorSpot.valueOf(armorSpot);
         }

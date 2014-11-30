@@ -24,8 +24,8 @@ Make dungeon
 Teach Eric
 
 Wed & Thur
+
 Touch ups
-Chat message shows above player
 
 Controls
 
@@ -37,6 +37,7 @@ UI
   hand uses don't show in recipe book?
   Show slot number for items 1-10 in inventory
   Move 'next' button in recipe book to far right
+  Chat message shows above player
 
 Features
 

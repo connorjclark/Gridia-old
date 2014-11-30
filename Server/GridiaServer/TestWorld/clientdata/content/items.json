@@ -276,7 +276,9 @@
     "id":20,
     "burden":50,
     "value":0,
+    "wearImage":1,
     "name":"Practice Dagger",
+    "armorSpot":"Weapon",
     "animations":[
       20
     ],
@@ -289,7 +291,9 @@
     "id":21,
     "burden":50,
     "value":0,
+    "wearImage":1,
     "name":"Dagger",
+    "armorSpot":"Weapon",
     "animations":[
       20
     ],
@@ -302,7 +306,9 @@
     "id":22,
     "burden":60,
     "value":0,
+    "wearImage":1,
     "name":"Long Knife",
+    "armorSpot":"Weapon",
     "animations":[
       21
     ],
@@ -315,7 +321,9 @@
     "id":23,
     "burden":70,
     "value":0,
+    "wearImage":20,
     "name":"Phantom Dagger",
+    "armorSpot":"Weapon",
     "animations":[
       22
     ],
@@ -328,7 +336,9 @@
     "id":24,
     "burden":50,
     "value":0,
+    "wearImage":21,
     "name":"Zircon Dagger",
+    "armorSpot":"Weapon",
     "animations":[
       23
     ],
@@ -341,7 +351,9 @@
     "id":25,
     "burden":1000,
     "value":0,
+    "wearImage":3,
     "name":"Rommel\u0027s Claymore",
+    "armorSpot":"Weapon",
     "animations":[
       39
     ],
@@ -354,7 +366,9 @@
     "id":26,
     "burden":30,
     "value":500,
+    "wearImage":144,
     "name":"Gold Wand",
+    "armorSpot":"Weapon",
     "animations":[
       29
     ],
@@ -367,7 +381,9 @@
     "id":27,
     "burden":30,
     "value":500,
+    "wearImage":144,
     "name":"Worn Gold Wand",
+    "armorSpot":"Weapon",
     "animations":[
       29
     ],
@@ -380,7 +396,9 @@
     "id":28,
     "burden":40,
     "value":500,
+    "wearImage":145,
     "name":"Zircon Orb",
+    "armorSpot":"Weapon",
     "animations":[
       27
     ],
@@ -408,7 +426,9 @@
     "id":30,
     "burden":150,
     "value":0,
+    "wearImage":2,
     "name":"Practice Short Sword",
+    "armorSpot":"Weapon",
     "animations":[
       30
     ],
@@ -421,7 +441,9 @@
     "id":31,
     "burden":150,
     "value":0,
+    "wearImage":2,
     "name":"Short Sword",
+    "armorSpot":"Weapon",
     "animations":[
       30
     ],
@@ -434,7 +456,9 @@
     "id":32,
     "burden":250,
     "value":0,
+    "wearImage":75,
     "name":"Long Sword",
+    "armorSpot":"Weapon",
     "animations":[
       31
     ],
@@ -447,7 +471,9 @@
     "id":33,
     "burden":350,
     "value":0,
+    "wearImage":76,
     "name":"Broad Sword",
+    "armorSpot":"Weapon",
     "animations":[
       32
     ],
@@ -460,7 +486,9 @@
     "id":34,
     "burden":500,
     "value":0,
+    "wearImage":30,
     "name":"Damon Sword",
+    "armorSpot":"Weapon",
     "animations":[
       33
     ],
@@ -486,7 +514,9 @@
     "id":36,
     "burden":600,
     "value":0,
+    "wearImage":3,
     "name":"Great Sword",
+    "armorSpot":"Weapon",
     "animations":[
       36
     ],
@@ -499,7 +529,9 @@
     "id":37,
     "burden":30,
     "value":100,
+    "wearImage":143,
     "name":"Copper Wand",
+    "armorSpot":"Weapon",
     "animations":[
       35
     ],
@@ -512,7 +544,9 @@
     "id":38,
     "burden":30,
     "value":100,
+    "wearImage":143,
     "name":"Worn Copper Wand",
+    "armorSpot":"Weapon",
     "animations":[
       35
     ],
@@ -526,7 +560,9 @@
     "id":40,
     "burden":200,
     "value":0,
+    "wearImage":5,
     "name":"Practice Hand Axe",
+    "armorSpot":"Weapon",
     "animations":[
       40
     ],
@@ -539,7 +575,9 @@
     "id":41,
     "burden":200,
     "value":0,
+    "wearImage":5,
     "name":"Hand Axe",
+    "armorSpot":"Weapon",
     "animations":[
       40
     ],
@@ -552,7 +590,9 @@
     "id":42,
     "burden":500,
     "value":0,
+    "wearImage":45,
     "name":"Battle Axe",
+    "armorSpot":"Weapon",
     "animations":[
       41
     ],
@@ -565,7 +605,9 @@
     "id":43,
     "burden":700,
     "value":0,
+    "wearImage":6,
     "name":"Great Axe",
+    "armorSpot":"Weapon",
     "animations":[
       42
     ],
@@ -578,7 +620,9 @@
     "id":44,
     "burden":1500,
     "value":0,
+    "wearImage":32,
     "name":"Molten Blade",
+    "armorSpot":"Weapon",
     "animations":[
       25
     ],
@@ -591,7 +635,9 @@
     "id":45,
     "burden":400,
     "value":0,
+    "wearImage":16,
     "name":"Oak Scythe",
+    "armorSpot":"Weapon",
     "animations":[
       44
     ],
@@ -604,7 +650,9 @@
     "id":46,
     "burden":600,
     "value":0,
+    "wearImage":102,
     "name":"Iron Scythe",
+    "armorSpot":"Weapon",
     "animations":[
       45
     ],
@@ -617,7 +665,9 @@
     "id":47,
     "burden":800,
     "value":0,
+    "wearImage":103,
     "name":"Onyx Scythe",
+    "armorSpot":"Weapon",
     "animations":[
       46
     ],
@@ -646,7 +696,9 @@
     "id":50,
     "burden":200,
     "value":0,
+    "wearImage":56,
     "name":"Practice Club",
+    "armorSpot":"Weapon",
     "animations":[
       50
     ],
@@ -659,7 +711,9 @@
     "id":51,
     "burden":200,
     "value":0,
+    "wearImage":56,
     "name":"Club",
+    "armorSpot":"Weapon",
     "animations":[
       50
     ],
@@ -672,7 +726,9 @@
     "id":52,
     "burden":400,
     "value":0,
+    "wearImage":7,
     "name":"Light Mace",
+    "armorSpot":"Weapon",
     "animations":[
       51
     ],
@@ -685,7 +741,9 @@
     "id":53,
     "burden":600,
     "value":0,
+    "wearImage":57,
     "name":"Mace",
+    "armorSpot":"Weapon",
     "animations":[
       52
     ],
@@ -699,7 +757,9 @@
     "id":55,
     "burden":800,
     "value":0,
+    "wearImage":8,
     "name":"Great Mace",
+    "armorSpot":"Weapon",
     "animations":[
       37
     ],
@@ -712,7 +772,9 @@
     "id":56,
     "burden":700,
     "value":0,
+    "wearImage":58,
     "name":"Spiked Mace",
+    "armorSpot":"Weapon",
     "animations":[
       38
     ],
@@ -725,7 +787,9 @@
     "id":57,
     "burden":200,
     "value":0,
+    "wearImage":5,
     "name":"Wood Axe",
+    "armorSpot":"Weapon",
     "animations":[
       448
     ],
@@ -738,7 +802,9 @@
     "id":58,
     "burden":30,
     "value":100,
+    "wearImage":19,
     "name":"Wood Wand",
+    "armorSpot":"Weapon",
     "animations":[
       34
     ],
@@ -751,7 +817,9 @@
     "id":59,
     "burden":30,
     "value":50,
+    "wearImage":19,
     "name":"Worn Wood Wand",
+    "armorSpot":"Weapon",
     "animations":[
       34
     ],
@@ -764,7 +832,9 @@
     "id":60,
     "burden":200,
     "value":0,
+    "wearImage":9,
     "name":"Practice Spear",
+    "armorSpot":"Weapon",
     "animations":[
       60
     ],
@@ -777,7 +847,9 @@
     "id":61,
     "burden":300,
     "value":0,
+    "wearImage":9,
     "name":"Spear",
+    "armorSpot":"Weapon",
     "animations":[
       60
     ],
@@ -790,7 +862,9 @@
     "id":62,
     "burden":300,
     "value":0,
+    "wearImage":10,
     "name":"Double Spear",
+    "armorSpot":"Weapon",
     "animations":[
       61
     ],
@@ -803,7 +877,9 @@
     "id":63,
     "burden":1000,
     "value":0,
+    "wearImage":9,
     "name":"Falcon Spear",
+    "armorSpot":"Weapon",
     "animations":[
       62
     ],
@@ -816,7 +892,9 @@
     "id":64,
     "burden":600,
     "value":0,
+    "wearImage":11,
     "name":"Trident",
+    "armorSpot":"Weapon",
     "animations":[
       63
     ],
@@ -829,7 +907,9 @@
     "id":65,
     "burden":30,
     "value":10,
+    "wearImage":19,
     "name":"Practice Wood Wand",
+    "armorSpot":"Weapon",
     "animations":[
       34
     ],
@@ -842,7 +922,9 @@
     "id":66,
     "burden":700,
     "value":0,
+    "wearImage":73,
     "name":"Grayvyn Trident",
+    "armorSpot":"Weapon",
     "animations":[
       68
     ],
@@ -855,7 +937,9 @@
     "id":67,
     "burden":30,
     "value":200,
+    "wearImage":142,
     "name":"Iron Wand",
+    "armorSpot":"Weapon",
     "animations":[
       26
     ],
@@ -868,7 +952,9 @@
     "id":68,
     "burden":30,
     "value":200,
+    "wearImage":142,
     "name":"Worn Iron Wand",
+    "armorSpot":"Weapon",
     "animations":[
       26
     ],
@@ -881,7 +967,9 @@
     "id":69,
     "burden":900,
     "value":0,
+    "wearImage":74,
     "name":"Battle Trident",
+    "armorSpot":"Weapon",
     "animations":[
       64
     ],
@@ -894,7 +982,9 @@
     "id":70,
     "burden":200,
     "value":0,
+    "wearImage":13,
     "name":"Practice Staff",
+    "armorSpot":"Weapon",
     "animations":[
       70
     ],
@@ -907,7 +997,9 @@
     "id":71,
     "burden":200,
     "value":0,
+    "wearImage":13,
     "name":"Staff",
+    "armorSpot":"Weapon",
     "animations":[
       70
     ],
@@ -920,7 +1012,9 @@
     "id":72,
     "burden":250,
     "value":0,
+    "wearImage":82,
     "name":"Iron-Tip Staff",
+    "armorSpot":"Weapon",
     "animations":[
       71
     ],
@@ -934,7 +1028,9 @@
     "id":74,
     "burden":600,
     "value":0,
+    "wearImage":13,
     "name":"Staff of Feanor",
+    "armorSpot":"Weapon",
     "animations":[
       73
     ],
@@ -947,7 +1043,9 @@
     "id":75,
     "burden":700,
     "value":0,
+    "wearImage":58,
     "name":"Grayvyn Spiked Mace",
+    "armorSpot":"Weapon",
     "animations":[
       38
     ],
@@ -960,7 +1058,9 @@
     "id":76,
     "burden":900,
     "value":0,
+    "wearImage":12,
     "name":"Double Trident",
+    "armorSpot":"Weapon",
     "animations":[
       69
     ],
@@ -973,7 +1073,9 @@
     "id":77,
     "burden":30,
     "value":1000,
+    "wearImage":141,
     "name":"Damon Wand",
+    "armorSpot":"Weapon",
     "animations":[
       864
     ],
@@ -1012,7 +1114,9 @@
     "id":80,
     "burden":200,
     "value":0,
+    "wearImage":14,
     "name":"Practice Flail",
+    "armorSpot":"Weapon",
     "animations":[
       80
     ],
@@ -1025,7 +1129,9 @@
     "id":81,
     "burden":350,
     "value":0,
+    "wearImage":14,
     "name":"Flail",
+    "armorSpot":"Weapon",
     "animations":[
       80
     ],
@@ -1038,7 +1144,9 @@
     "id":82,
     "burden":500,
     "value":0,
+    "wearImage":89,
     "name":"Battle Flail",
+    "armorSpot":"Weapon",
     "animations":[
       81
     ],
@@ -1051,7 +1159,9 @@
     "id":83,
     "burden":700,
     "value":0,
+    "wearImage":90,
     "name":"Heavy Battle Flail",
+    "armorSpot":"Weapon",
     "animations":[
       82
     ],
@@ -1065,7 +1175,9 @@
     "id":85,
     "burden":900,
     "value":0,
+    "wearImage":15,
     "name":"Great Flail",
+    "armorSpot":"Weapon",
     "animations":[
       66
     ],
@@ -1078,7 +1190,9 @@
     "id":86,
     "burden":500,
     "value":0,
+    "wearImage":5,
     "name":"Damon Shield",
+    "armorSpot":"Shield",
     "animations":[
       863
     ],
@@ -1130,7 +1244,9 @@
     "id":90,
     "burden":30,
     "value":0,
+    "wearImage":35,
     "name":"Brass Knuckles",
+    "armorSpot":"Weapon",
     "animations":[
       90
     ],
@@ -1143,7 +1259,9 @@
     "id":91,
     "burden":100,
     "value":0,
+    "wearImage":4,
     "name":"Claw",
+    "armorSpot":"Weapon",
     "animations":[
       91
     ],
@@ -1156,7 +1274,9 @@
     "id":92,
     "burden":200,
     "value":0,
+    "wearImage":36,
     "name":"Zircon Claw",
+    "armorSpot":"Weapon",
     "animations":[
       92
     ],
@@ -1169,7 +1289,9 @@
     "id":93,
     "burden":500,
     "value":0,
+    "wearImage":37,
     "name":"Molten Katar",
+    "armorSpot":"Weapon",
     "animations":[
       93
     ],
@@ -1182,7 +1304,9 @@
     "id":94,
     "burden":500,
     "value":0,
+    "wearImage":38,
     "name":"Mailed Fist",
+    "armorSpot":"Weapon",
     "animations":[
       83
     ],
@@ -1390,7 +1514,9 @@
     "id":110,
     "burden":350,
     "value":0,
+    "wearImage":105,
     "name":"Bone Scythe",
+    "armorSpot":"Weapon",
     "animations":[
       74
     ],
@@ -1417,7 +1543,6 @@
     "id":113,
     "burden":600,
     "value":300,
-    "wearImage":0,
     "name":"Bone Armor",
     "armorSpot":"Chest",
     "animations":[
@@ -1432,7 +1557,9 @@
     "id":114,
     "burden":250,
     "value":0,
+    "wearImage":1,
     "name":"Small Round Shield",
+    "armorSpot":"Shield",
     "animations":[
       593
     ],
@@ -1445,7 +1572,9 @@
     "id":115,
     "burden":500,
     "value":0,
+    "wearImage":3,
     "name":"Large Round Shield",
+    "armorSpot":"Shield",
     "animations":[
       590
     ],
@@ -1458,7 +1587,9 @@
     "id":116,
     "burden":375,
     "value":0,
+    "wearImage":2,
     "name":"Kite Shield",
+    "armorSpot":"Shield",
     "animations":[
       591
     ],
@@ -1471,7 +1602,9 @@
     "id":117,
     "burden":750,
     "value":0,
+    "wearImage":4,
     "name":"Tower Shield",
+    "armorSpot":"Shield",
     "animations":[
       592
     ],
@@ -1484,7 +1617,9 @@
     "id":118,
     "burden":500,
     "value":500,
+    "wearImage":7,
     "name":"Bandit Shield",
+    "armorSpot":"Shield",
     "animations":[
       67
     ],
@@ -1497,7 +1632,9 @@
     "id":119,
     "burden":200,
     "value":500,
+    "wearImage":140,
     "name":"Zodiac Casting Staff",
+    "armorSpot":"Weapon",
     "animations":[
       72
     ],
@@ -1510,7 +1647,9 @@
     "id":120,
     "burden":100,
     "value":0,
+    "wearImage":16,
     "name":"Farmer\u0027s Scythe",
+    "armorSpot":"Weapon",
     "animations":[
       346
     ],
@@ -1762,7 +1901,9 @@
     "id":139,
     "burden":100,
     "value":0,
+    "wearImage":22,
     "name":"Drake Dagger",
+    "armorSpot":"Weapon",
     "animations":[
       688
     ],
@@ -1866,7 +2007,9 @@
     "id":147,
     "burden":300,
     "value":400,
+    "wearImage":139,
     "name":"Phobos Staff",
+    "armorSpot":"Weapon",
     "animations":[
       73
     ],
@@ -1970,7 +2113,9 @@
     "id":155,
     "burden":50,
     "value":0,
+    "wearImage":23,
     "name":"Damon Dagger",
+    "armorSpot":"Weapon",
     "animations":[
       920
     ],
@@ -3325,7 +3470,9 @@
     "id":259,
     "burden":500,
     "value":0,
+    "wearImage":59,
     "name":"Damon Mace",
+    "armorSpot":"Weapon",
     "animations":[
       921
     ],
@@ -3443,6 +3590,7 @@
     "burden":300,
     "value":500,
     "name":"Shrokrim",
+    "armorSpot":"Weapon",
     "animations":[
       893
     ],
@@ -3455,7 +3603,9 @@
     "id":269,
     "burden":500,
     "value":0,
+    "wearImage":70,
     "name":"Damon Spear",
+    "armorSpot":"Weapon",
     "animations":[
       922
     ],
@@ -3495,6 +3645,7 @@
     "burden":10,
     "value":5,
     "name":"Sling",
+    "armorSpot":"Weapon",
     "animations":[
       890
     ],
@@ -3508,6 +3659,7 @@
     "burden":4000,
     "value":0,
     "name":"Catapult",
+    "armorSpot":"Weapon",
     "animations":[
       892
     ],
@@ -3521,6 +3673,7 @@
     "burden":100,
     "value":200,
     "name":"Boomerang",
+    "armorSpot":"Weapon",
     "animations":[
       891
     ],
@@ -4665,7 +4818,9 @@
     "id":358,
     "burden":500,
     "value":0,
+    "wearImage":91,
     "name":"Damon Flail",
+    "armorSpot":"Weapon",
     "animations":[
       923
     ],
@@ -4678,7 +4833,9 @@
     "id":359,
     "burden":500,
     "value":0,
+    "wearImage":83,
     "name":"Damon Staff",
+    "armorSpot":"Weapon",
     "animations":[
       924
     ],
@@ -4717,7 +4874,9 @@
     "id":362,
     "burden":200,
     "value":300,
+    "wearImage":138,
     "name":"Magic Book",
+    "armorSpot":"Weapon",
     "animations":[
       132
     ],
@@ -4797,7 +4956,9 @@
     "id":368,
     "burden":900,
     "value":0,
+    "wearImage":46,
     "name":"Damon Axe",
+    "armorSpot":"Weapon",
     "animations":[
       925
     ],
@@ -4810,7 +4971,9 @@
     "id":369,
     "burden":300,
     "value":0,
+    "wearImage":39,
     "name":"Damon Claw",
+    "armorSpot":"Weapon",
     "animations":[
       926
     ],
@@ -5776,7 +5939,9 @@
     "id":442,
     "burden":30,
     "value":100,
+    "wearImage":137,
     "name":"Imp Wand",
+    "armorSpot":"Weapon",
     "animations":[
       34
     ],
@@ -5815,7 +5980,9 @@
     "id":445,
     "burden":30,
     "value":500,
+    "wearImage":137,
     "name":"Drake Wand",
+    "armorSpot":"Weapon",
     "animations":[
       629
     ],
@@ -5828,7 +5995,9 @@
     "id":446,
     "burden":100,
     "value":80,
+    "wearImage":136,
     "name":"Bone Wand",
+    "armorSpot":"Weapon",
     "animations":[
       618
     ],
@@ -6153,7 +6322,9 @@
     "id":471,
     "burden":30,
     "value":300,
+    "wearImage":137,
     "name":"Golem Wand",
+    "armorSpot":"Weapon",
     "animations":[
       629
     ],
@@ -6400,7 +6571,9 @@
     "id":489,
     "burden":700,
     "value":400,
+    "wearImage":6,
     "name":"Moo Shield",
+    "armorSpot":"Shield",
     "animations":[
       779
     ],
@@ -11066,7 +11239,9 @@
     "id":837,
     "burden":2000,
     "value":0,
+    "wearImage":8,
     "name":"Battering Ram",
+    "armorSpot":"Weapon",
     "animations":[
       955
     ],
@@ -11118,7 +11293,9 @@
     "id":841,
     "burden":600,
     "value":0,
+    "wearImage":84,
     "name":"Battle Staff",
+    "armorSpot":"Weapon",
     "animations":[
       960
     ],
@@ -11131,7 +11308,9 @@
     "id":842,
     "burden":400,
     "value":0,
+    "wearImage":77,
     "name":"Battle Spear",
+    "armorSpot":"Weapon",
     "animations":[
       961
     ],
@@ -11456,7 +11635,9 @@
     "id":867,
     "burden":30,
     "value":350,
+    "wearImage":146,
     "name":"Titanium Wand",
+    "armorSpot":"Weapon",
     "animations":[
       973
     ],
@@ -11469,7 +11650,9 @@
     "id":868,
     "burden":30,
     "value":350,
+    "wearImage":146,
     "name":"Worn Titanium Wand",
+    "armorSpot":"Weapon",
     "animations":[
       973
     ],
@@ -11482,7 +11665,9 @@
     "id":869,
     "burden":30,
     "value":500,
+    "wearImage":147,
     "name":"Hessite Wand",
+    "armorSpot":"Weapon",
     "animations":[
       974
     ],
@@ -11495,7 +11680,9 @@
     "id":870,
     "burden":30,
     "value":500,
+    "wearImage":147,
     "name":"Worn Hessite Wand",
+    "armorSpot":"Weapon",
     "animations":[
       974
     ],
@@ -11508,7 +11695,9 @@
     "id":871,
     "burden":30,
     "value":750,
+    "wearImage":148,
     "name":"Magnetite Wand",
+    "armorSpot":"Weapon",
     "animations":[
       975
     ],
@@ -11521,7 +11710,9 @@
     "id":872,
     "burden":30,
     "value":750,
+    "wearImage":148,
     "name":"Worn Magnetite Wand",
+    "armorSpot":"Weapon",
     "animations":[
       975
     ],
@@ -13223,7 +13414,6 @@
     "id":1005,
     "burden":100,
     "value":200,
-    "wearImage":0,
     "name":"Miners Hat",
     "armorSpot":"Head",
     "animations":[
@@ -13332,7 +13522,9 @@
     "id":1014,
     "burden":200,
     "value":0,
+    "wearImage":31,
     "name":"Drej Sword",
+    "armorSpot":"Weapon",
     "animations":[
       316,
       317,
@@ -13504,7 +13696,9 @@
     "id":1027,
     "burden":100,
     "value":0,
+    "wearImage":13,
     "name":"Rake",
+    "armorSpot":"Weapon",
     "animations":[
       334
     ],
@@ -14003,6 +14197,7 @@
     "burden":100,
     "value":100,
     "name":"Saw",
+    "armorSpot":"Weapon",
     "animations":[
       380
     ],
@@ -14139,7 +14334,9 @@
     "id":1079,
     "burden":500,
     "value":0,
+    "wearImage":104,
     "name":"Long Scythe",
+    "armorSpot":"Weapon",
     "animations":[
       1270
     ],
@@ -14716,7 +14913,9 @@
     "id":1122,
     "burden":200,
     "value":0,
+    "wearImage":17,
     "name":"Bow",
+    "armorSpot":"Weapon",
     "animations":[
       460
     ],
@@ -14729,7 +14928,9 @@
     "id":1123,
     "burden":300,
     "value":0,
+    "wearImage":110,
     "name":"Fine Bow",
+    "armorSpot":"Weapon",
     "animations":[
       461
     ],
@@ -14742,7 +14943,9 @@
     "id":1124,
     "burden":500,
     "value":0,
+    "wearImage":111,
     "name":"Elven Bow",
+    "armorSpot":"Weapon",
     "animations":[
       462
     ],
@@ -14859,7 +15062,9 @@
     "id":1133,
     "burden":200,
     "value":0,
+    "wearImage":17,
     "name":"Practice Bow",
+    "armorSpot":"Weapon",
     "animations":[
       460
     ],
@@ -14885,7 +15090,9 @@
     "id":1135,
     "burden":600,
     "value":0,
+    "wearImage":18,
     "name":"Practice CrossBow",
+    "armorSpot":"Weapon",
     "animations":[
       481
     ],
@@ -14898,7 +15105,9 @@
     "id":1136,
     "burden":600,
     "value":0,
+    "wearImage":18,
     "name":"Light CrossBow",
+    "armorSpot":"Weapon",
     "animations":[
       481
     ],
@@ -14911,7 +15120,9 @@
     "id":1137,
     "burden":900,
     "value":0,
+    "wearImage":123,
     "name":"Heavy CrossBow",
+    "armorSpot":"Weapon",
     "animations":[
       480
     ],
@@ -14924,7 +15135,9 @@
     "id":1138,
     "burden":200,
     "value":0,
+    "wearImage":13,
     "name":"Blow Gun",
+    "armorSpot":"Weapon",
     "animations":[
       482
     ],
@@ -14937,7 +15150,9 @@
     "id":1139,
     "burden":200,
     "value":0,
+    "wearImage":13,
     "name":"Poison Blow Gun",
+    "armorSpot":"Weapon",
     "animations":[
       483
     ],
@@ -14976,7 +15191,9 @@
     "id":1142,
     "burden":200,
     "value":0,
+    "wearImage":130,
     "name":"Hand CrossBow",
+    "armorSpot":"Weapon",
     "animations":[
       638
     ],
@@ -14989,7 +15206,9 @@
     "id":1143,
     "burden":400,
     "value":0,
+    "wearImage":112,
     "name":"Antler Bow",
+    "armorSpot":"Weapon",
     "animations":[
       461
     ],
@@ -15002,7 +15221,9 @@
     "id":1144,
     "burden":500,
     "value":0,
+    "wearImage":113,
     "name":"Bovine Bow",
+    "armorSpot":"Weapon",
     "animations":[
       777
     ],
@@ -15093,7 +15314,9 @@
     "id":1151,
     "burden":900,
     "value":0,
+    "wearImage":124,
     "name":"Elven CrossBow",
+    "armorSpot":"Weapon",
     "animations":[
       894
     ],
@@ -15106,7 +15329,9 @@
     "id":1152,
     "burden":400,
     "value":0,
+    "wearImage":114,
     "name":"Damon Bow",
+    "armorSpot":"Weapon",
     "animations":[
       927
     ],
@@ -15119,7 +15344,9 @@
     "id":1153,
     "burden":750,
     "value":0,
+    "wearImage":125,
     "name":"Damon CrossBow",
+    "armorSpot":"Weapon",
     "animations":[
       928
     ],
@@ -15145,7 +15372,9 @@
     "id":1155,
     "burden":800,
     "value":0,
+    "wearImage":126,
     "name":"Antler CrossBow",
+    "armorSpot":"Weapon",
     "animations":[
       480
     ],
@@ -15769,7 +15998,9 @@
     "id":1202,
     "burden":50,
     "value":0,
+    "wearImage":24,
     "name":"Ice Dagger",
+    "armorSpot":"Weapon",
     "animations":[
       1083
     ],
@@ -15782,7 +16013,9 @@
     "id":1203,
     "burden":50,
     "value":0,
+    "wearImage":25,
     "name":"Fire Dagger",
+    "armorSpot":"Weapon",
     "animations":[
       1084
     ],
@@ -15795,7 +16028,9 @@
     "id":1204,
     "burden":50,
     "value":0,
+    "wearImage":26,
     "name":"Bone Dagger",
+    "armorSpot":"Weapon",
     "animations":[
       1085
     ],
@@ -15808,7 +16043,9 @@
     "id":1205,
     "burden":500,
     "value":0,
+    "wearImage":14,
     "name":"Shinobou",
+    "armorSpot":"Weapon",
     "animations":[
       1086
     ],
@@ -15821,7 +16058,6 @@
     "id":1206,
     "burden":100,
     "value":1000,
-    "wearImage":0,
     "name":"Viking Helmet",
     "armorSpot":"Head",
     "animations":[
@@ -15836,7 +16072,6 @@
     "id":1207,
     "burden":100,
     "value":1300,
-    "wearImage":0,
     "name":"Elite Viking Helmet",
     "armorSpot":"Head",
     "animations":[
@@ -15864,7 +16099,9 @@
     "id":1209,
     "burden":30,
     "value":1500,
+    "wearImage":149,
     "name":"Viking Wand",
+    "armorSpot":"Weapon",
     "animations":[
       1089
     ],
@@ -15916,7 +16153,9 @@
     "id":1213,
     "burden":3000,
     "value":0,
+    "wearImage":60,
     "name":"Giant Club",
+    "armorSpot":"Weapon",
     "animations":[
       1091
     ],
@@ -15929,7 +16168,9 @@
     "id":1214,
     "burden":3000,
     "value":0,
+    "wearImage":92,
     "name":"Giant Flail",
+    "armorSpot":"Weapon",
     "animations":[
       1092
     ],
@@ -16359,7 +16600,9 @@
     "id":1248,
     "burden":400,
     "value":0,
+    "wearImage":16,
     "name":"Practice Scythe",
+    "armorSpot":"Weapon",
     "animations":[
       44
     ],
@@ -16692,7 +16935,9 @@
     "id":1273,
     "burden":350,
     "value":0,
+    "wearImage":151,
     "name":"Fire Broad Sword",
+    "armorSpot":"Weapon",
     "animations":[
       1172
     ],
@@ -16705,7 +16950,9 @@
     "id":1274,
     "burden":600,
     "value":0,
+    "wearImage":32,
     "name":"Fire Great Sword",
+    "armorSpot":"Weapon",
     "animations":[
       1173
     ],
@@ -16718,7 +16965,9 @@
     "id":1275,
     "burden":350,
     "value":0,
+    "wearImage":153,
     "name":"Frost Broad Sword",
+    "armorSpot":"Weapon",
     "animations":[
       1176
     ],
@@ -16731,7 +16980,9 @@
     "id":1276,
     "burden":600,
     "value":0,
+    "wearImage":33,
     "name":"Frost Great Sword",
+    "armorSpot":"Weapon",
     "animations":[
       1177
     ],
@@ -16744,7 +16995,9 @@
     "id":1277,
     "burden":350,
     "value":0,
+    "wearImage":155,
     "name":"Lightning Broad Sword",
+    "armorSpot":"Weapon",
     "animations":[
       1174
     ],
@@ -16757,7 +17010,9 @@
     "id":1278,
     "burden":600,
     "value":0,
+    "wearImage":34,
     "name":"Lightning Great Sword",
+    "armorSpot":"Weapon",
     "animations":[
       1175
     ],
@@ -16770,7 +17025,9 @@
     "id":1279,
     "burden":400,
     "value":0,
+    "wearImage":44,
     "name":"Heavy Axe",
+    "armorSpot":"Weapon",
     "animations":[
       1184
     ],
@@ -16783,7 +17040,9 @@
     "id":1280,
     "burden":400,
     "value":0,
+    "wearImage":85,
     "name":"Iron Staff",
+    "armorSpot":"Weapon",
     "animations":[
       1185
     ],
@@ -16796,7 +17055,9 @@
     "id":1281,
     "burden":500,
     "value":0,
+    "wearImage":47,
     "name":"Fire Battle Axe",
+    "armorSpot":"Weapon",
     "animations":[
       1150
     ],
@@ -16809,7 +17070,9 @@
     "id":1282,
     "burden":700,
     "value":0,
+    "wearImage":53,
     "name":"Fire Great Axe",
+    "armorSpot":"Weapon",
     "animations":[
       1151
     ],
@@ -16822,7 +17085,9 @@
     "id":1283,
     "burden":500,
     "value":0,
+    "wearImage":48,
     "name":"Frost Battle Axe",
+    "armorSpot":"Weapon",
     "animations":[
       1154
     ],
@@ -16835,7 +17100,9 @@
     "id":1284,
     "burden":700,
     "value":0,
+    "wearImage":54,
     "name":"Frost Great Axe",
+    "armorSpot":"Weapon",
     "animations":[
       1155
     ],
@@ -16848,7 +17115,9 @@
     "id":1285,
     "burden":500,
     "value":0,
+    "wearImage":49,
     "name":"Lightning Battle Axe",
+    "armorSpot":"Weapon",
     "animations":[
       1152
     ],
@@ -16861,7 +17130,9 @@
     "id":1286,
     "burden":700,
     "value":0,
+    "wearImage":55,
     "name":"Lightning Great Axe",
+    "armorSpot":"Weapon",
     "animations":[
       1153
     ],
@@ -16874,7 +17145,9 @@
     "id":1287,
     "burden":800,
     "value":0,
+    "wearImage":61,
     "name":"Fire Great Mace",
+    "armorSpot":"Weapon",
     "animations":[
       1161
     ],
@@ -16887,7 +17160,9 @@
     "id":1288,
     "burden":700,
     "value":0,
+    "wearImage":64,
     "name":"Fire Spiked Mace",
+    "armorSpot":"Weapon",
     "animations":[
       1160
     ],
@@ -16900,7 +17175,9 @@
     "id":1289,
     "burden":800,
     "value":0,
+    "wearImage":62,
     "name":"Frost Great Mace",
+    "armorSpot":"Weapon",
     "animations":[
       1165
     ],
@@ -16913,7 +17190,9 @@
     "id":1290,
     "burden":700,
     "value":0,
+    "wearImage":65,
     "name":"Frost Spiked Mace",
+    "armorSpot":"Weapon",
     "animations":[
       1164
     ],
@@ -16926,7 +17205,9 @@
     "id":1291,
     "burden":800,
     "value":0,
+    "wearImage":63,
     "name":"Lightning Great Mace",
+    "armorSpot":"Weapon",
     "animations":[
       1163
     ],
@@ -16939,7 +17220,9 @@
     "id":1292,
     "burden":700,
     "value":0,
+    "wearImage":66,
     "name":"Lightning Spiked Mace",
+    "armorSpot":"Weapon",
     "animations":[
       1162
     ],
@@ -16952,7 +17235,9 @@
     "id":1293,
     "burden":300,
     "value":0,
+    "wearImage":71,
     "name":"Fire Spear",
+    "armorSpot":"Weapon",
     "animations":[
       1166
     ],
@@ -16965,7 +17250,9 @@
     "id":1294,
     "burden":300,
     "value":0,
+    "wearImage":79,
     "name":"Fire Double Spear",
+    "armorSpot":"Weapon",
     "animations":[
       1180
     ],
@@ -16978,7 +17265,9 @@
     "id":1295,
     "burden":300,
     "value":0,
+    "wearImage":72,
     "name":"Frost Spear",
+    "armorSpot":"Weapon",
     "animations":[
       1167
     ],
@@ -16991,7 +17280,9 @@
     "id":1296,
     "burden":300,
     "value":0,
+    "wearImage":80,
     "name":"Frost Double Spear",
+    "armorSpot":"Weapon",
     "animations":[
       1181
     ],
@@ -17004,7 +17295,9 @@
     "id":1297,
     "burden":300,
     "value":0,
+    "wearImage":78,
     "name":"Lightning Spear",
+    "armorSpot":"Weapon",
     "animations":[
       1168
     ],
@@ -17017,7 +17310,9 @@
     "id":1298,
     "burden":300,
     "value":0,
+    "wearImage":81,
     "name":"Lightning Double Spear",
+    "armorSpot":"Weapon",
     "animations":[
       1182
     ],
@@ -17030,7 +17325,9 @@
     "id":1299,
     "burden":600,
     "value":0,
+    "wearImage":79,
     "name":"Fire Staff",
+    "armorSpot":"Weapon",
     "animations":[
       1169
     ],
@@ -17043,7 +17340,9 @@
     "id":1300,
     "burden":600,
     "value":0,
+    "wearImage":80,
     "name":"Frost Staff",
+    "armorSpot":"Weapon",
     "animations":[
       1170
     ],
@@ -17056,7 +17355,9 @@
     "id":1301,
     "burden":600,
     "value":0,
+    "wearImage":81,
     "name":"Lightning Staff",
+    "armorSpot":"Weapon",
     "animations":[
       1171
     ],
@@ -17069,7 +17370,9 @@
     "id":1302,
     "burden":700,
     "value":0,
+    "wearImage":93,
     "name":"Fire Battle Flail",
+    "armorSpot":"Weapon",
     "animations":[
       1146
     ],
@@ -17082,7 +17385,9 @@
     "id":1303,
     "burden":900,
     "value":0,
+    "wearImage":96,
     "name":"Fire Great Flail",
+    "armorSpot":"Weapon",
     "animations":[
       1147
     ],
@@ -17095,7 +17400,9 @@
     "id":1304,
     "burden":700,
     "value":0,
+    "wearImage":94,
     "name":"Frost Battle Flail",
+    "armorSpot":"Weapon",
     "animations":[
       1158
     ],
@@ -17108,7 +17415,9 @@
     "id":1305,
     "burden":900,
     "value":0,
+    "wearImage":97,
     "name":"Frost Great Flail",
+    "armorSpot":"Weapon",
     "animations":[
       1159
     ],
@@ -17121,7 +17430,9 @@
     "id":1306,
     "burden":700,
     "value":0,
+    "wearImage":95,
     "name":"Lightning Battle Flail",
+    "armorSpot":"Weapon",
     "animations":[
       1156
     ],
@@ -17134,7 +17445,9 @@
     "id":1307,
     "burden":900,
     "value":0,
+    "wearImage":98,
     "name":"Lightning Great Flail",
+    "armorSpot":"Weapon",
     "animations":[
       1157
     ],
@@ -17446,7 +17759,9 @@
     "id":1331,
     "burden":350,
     "value":0,
+    "wearImage":150,
     "name":"Fire Long Sword",
+    "armorSpot":"Weapon",
     "animations":[
       1172
     ],
@@ -17459,7 +17774,9 @@
     "id":1332,
     "burden":350,
     "value":0,
+    "wearImage":152,
     "name":"Frost Long Sword",
+    "armorSpot":"Weapon",
     "animations":[
       1176
     ],
@@ -17472,7 +17789,9 @@
     "id":1333,
     "burden":350,
     "value":0,
+    "wearImage":154,
     "name":"Lightning Long Sword",
+    "armorSpot":"Weapon",
     "animations":[
       1174
     ],
@@ -17485,7 +17804,9 @@
     "id":1334,
     "burden":500,
     "value":0,
+    "wearImage":50,
     "name":"Fire Axe",
+    "armorSpot":"Weapon",
     "animations":[
       1150
     ],
@@ -17498,7 +17819,9 @@
     "id":1335,
     "burden":500,
     "value":0,
+    "wearImage":51,
     "name":"Frost Axe",
+    "armorSpot":"Weapon",
     "animations":[
       1154
     ],
@@ -17511,7 +17834,9 @@
     "id":1336,
     "burden":500,
     "value":0,
+    "wearImage":52,
     "name":"Lightning Axe",
+    "armorSpot":"Weapon",
     "animations":[
       1152
     ],
@@ -17524,7 +17849,9 @@
     "id":1337,
     "burden":700,
     "value":0,
+    "wearImage":67,
     "name":"Fire Mace",
+    "armorSpot":"Weapon",
     "animations":[
       1160
     ],
@@ -17537,7 +17864,9 @@
     "id":1338,
     "burden":700,
     "value":0,
+    "wearImage":68,
     "name":"Frost Mace",
+    "armorSpot":"Weapon",
     "animations":[
       1164
     ],
@@ -17550,7 +17879,9 @@
     "id":1339,
     "burden":700,
     "value":0,
+    "wearImage":69,
     "name":"Lightning Mace",
+    "armorSpot":"Weapon",
     "animations":[
       1162
     ],
@@ -17563,7 +17894,9 @@
     "id":1340,
     "burden":600,
     "value":0,
+    "wearImage":79,
     "name":"Fire Short Staff",
+    "armorSpot":"Weapon",
     "animations":[
       1169
     ],
@@ -17576,7 +17909,9 @@
     "id":1341,
     "burden":600,
     "value":0,
+    "wearImage":80,
     "name":"Frost Short Staff",
+    "armorSpot":"Weapon",
     "animations":[
       1170
     ],
@@ -17589,7 +17924,9 @@
     "id":1342,
     "burden":600,
     "value":0,
+    "wearImage":81,
     "name":"Lightning Short Staff",
+    "armorSpot":"Weapon",
     "animations":[
       1171
     ],
@@ -17602,7 +17939,9 @@
     "id":1343,
     "burden":700,
     "value":0,
+    "wearImage":99,
     "name":"Fire Flail",
+    "armorSpot":"Weapon",
     "animations":[
       1146
     ],
@@ -17615,7 +17954,9 @@
     "id":1344,
     "burden":700,
     "value":0,
+    "wearImage":100,
     "name":"Frost Flail",
+    "armorSpot":"Weapon",
     "animations":[
       1158
     ],
@@ -17628,7 +17969,9 @@
     "id":1345,
     "burden":700,
     "value":0,
+    "wearImage":101,
     "name":"Lightning Flail",
+    "armorSpot":"Weapon",
     "animations":[
       1156
     ],
@@ -17641,7 +17984,9 @@
     "id":1346,
     "burden":600,
     "value":0,
+    "wearImage":106,
     "name":"Fire Scythe",
+    "armorSpot":"Weapon",
     "animations":[
       1203
     ],
@@ -17654,7 +17999,9 @@
     "id":1347,
     "burden":600,
     "value":0,
+    "wearImage":107,
     "name":"Frost Scythe",
+    "armorSpot":"Weapon",
     "animations":[
       1204
     ],
@@ -17667,7 +18014,9 @@
     "id":1348,
     "burden":600,
     "value":0,
+    "wearImage":108,
     "name":"Lightning Scythe",
+    "armorSpot":"Weapon",
     "animations":[
       1205
     ],
@@ -19305,7 +19654,9 @@
     "id":1474,
     "burden":800,
     "value":0,
+    "wearImage":109,
     "name":"Damon Scythe",
+    "armorSpot":"Weapon",
     "animations":[
       1298
     ],
@@ -19318,7 +19669,9 @@
     "id":1475,
     "burden":300,
     "value":8000,
+    "wearImage":163,
     "name":"Damon Shrokrim",
+    "armorSpot":"Weapon",
     "animations":[
       809
     ],
@@ -19358,6 +19711,7 @@
     "burden":10000,
     "value":0,
     "name":"Mongrim Boulder",
+    "armorSpot":"Weapon",
     "animations":[
       0
     ],
@@ -19474,7 +19828,6 @@
     "id":1487,
     "burden":450,
     "value":200,
-    "wearImage":0,
     "name":"Copper Studded Chest",
     "armorSpot":"Chest",
     "animations":[
@@ -19489,7 +19842,6 @@
     "id":1488,
     "burden":75,
     "value":75,
-    "wearImage":0,
     "name":"Copper Studded Cap",
     "armorSpot":"Head",
     "animations":[
@@ -19504,7 +19856,6 @@
     "id":1489,
     "burden":250,
     "value":200,
-    "wearImage":0,
     "name":"Copper Studded Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -19519,7 +19870,6 @@
     "id":1490,
     "burden":550,
     "value":400,
-    "wearImage":0,
     "name":"Silver Studded Chest",
     "armorSpot":"Chest",
     "animations":[
@@ -19534,7 +19884,6 @@
     "id":1491,
     "burden":100,
     "value":100,
-    "wearImage":0,
     "name":"Silver Studded Cap",
     "armorSpot":"Head",
     "animations":[
@@ -19549,7 +19898,6 @@
     "id":1492,
     "burden":350,
     "value":400,
-    "wearImage":0,
     "name":"Silver Studded Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -19564,7 +19912,6 @@
     "id":1493,
     "burden":650,
     "value":600,
-    "wearImage":0,
     "name":"Iron Studded Chest",
     "armorSpot":"Chest",
     "animations":[
@@ -19579,7 +19926,6 @@
     "id":1494,
     "burden":125,
     "value":150,
-    "wearImage":0,
     "name":"Iron Studded Cap",
     "armorSpot":"Head",
     "animations":[
@@ -19594,7 +19940,6 @@
     "id":1495,
     "burden":450,
     "value":600,
-    "wearImage":0,
     "name":"Iron Studded Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -19609,7 +19954,6 @@
     "id":1496,
     "burden":750,
     "value":1000,
-    "wearImage":0,
     "name":"Gold Studded Chest",
     "armorSpot":"Chest",
     "animations":[
@@ -19624,7 +19968,6 @@
     "id":1497,
     "burden":150,
     "value":250,
-    "wearImage":0,
     "name":"Gold Studded Cap",
     "armorSpot":"Head",
     "animations":[
@@ -19639,7 +19982,6 @@
     "id":1498,
     "burden":550,
     "value":1000,
-    "wearImage":0,
     "name":"Gold Studded Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -19654,7 +19996,6 @@
     "id":1499,
     "burden":850,
     "value":2000,
-    "wearImage":0,
     "name":"Zircon Studded Chest",
     "armorSpot":"Chest",
     "animations":[
@@ -19669,7 +20010,6 @@
     "id":1500,
     "burden":175,
     "value":500,
-    "wearImage":0,
     "name":"Zircon Studded Cap",
     "armorSpot":"Head",
     "animations":[
@@ -19684,7 +20024,6 @@
     "id":1501,
     "burden":650,
     "value":2000,
-    "wearImage":0,
     "name":"Zircon Studded Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -19699,7 +20038,6 @@
     "id":1502,
     "burden":950,
     "value":3500,
-    "wearImage":0,
     "name":"Titanium Studded Chest",
     "armorSpot":"Chest",
     "animations":[
@@ -19714,7 +20052,6 @@
     "id":1503,
     "burden":200,
     "value":750,
-    "wearImage":0,
     "name":"Titanium Studded Cap",
     "armorSpot":"Head",
     "animations":[
@@ -19729,7 +20066,6 @@
     "id":1504,
     "burden":750,
     "value":3500,
-    "wearImage":0,
     "name":"Titanium Studded Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -19744,7 +20080,6 @@
     "id":1505,
     "burden":1050,
     "value":5000,
-    "wearImage":0,
     "name":"Hessite Studded Chest",
     "armorSpot":"Chest",
     "animations":[
@@ -19759,7 +20094,6 @@
     "id":1506,
     "burden":225,
     "value":1250,
-    "wearImage":0,
     "name":"Hessite Studded Cap",
     "armorSpot":"Head",
     "animations":[
@@ -19774,7 +20108,6 @@
     "id":1507,
     "burden":750,
     "value":5000,
-    "wearImage":0,
     "name":"Hessite Studded Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -19789,7 +20122,6 @@
     "id":1508,
     "burden":1150,
     "value":7000,
-    "wearImage":0,
     "name":"Damon Studded Chest",
     "armorSpot":"Chest",
     "animations":[
@@ -19804,7 +20136,6 @@
     "id":1509,
     "burden":250,
     "value":1500,
-    "wearImage":0,
     "name":"Damon Studded Cap",
     "armorSpot":"Head",
     "animations":[
@@ -19819,7 +20150,6 @@
     "id":1510,
     "burden":850,
     "value":7000,
-    "wearImage":0,
     "name":"Damon Studded Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -19977,7 +20307,9 @@
     "id":1522,
     "burden":200,
     "value":0,
+    "wearImage":41,
     "name":"Fire Gauntlet",
+    "armorSpot":"Weapon",
     "animations":[
       1316
     ],
@@ -19990,7 +20322,9 @@
     "id":1523,
     "burden":200,
     "value":0,
+    "wearImage":42,
     "name":"Frost Gauntlet",
+    "armorSpot":"Weapon",
     "animations":[
       1317
     ],
@@ -20003,7 +20337,9 @@
     "id":1524,
     "burden":200,
     "value":0,
+    "wearImage":43,
     "name":"Lightning Gauntlet",
+    "armorSpot":"Weapon",
     "animations":[
       1318
     ],
@@ -20016,7 +20352,9 @@
     "id":1525,
     "burden":200,
     "value":0,
+    "wearImage":40,
     "name":"Gauntlet",
+    "armorSpot":"Weapon",
     "animations":[
       1335
     ],
@@ -20203,7 +20541,9 @@
     "id":1538,
     "burden":350,
     "value":0,
+    "wearImage":2,
     "name":"Steel Broad Sword",
+    "armorSpot":"Weapon",
     "animations":[
       1319
     ],
@@ -20216,7 +20556,9 @@
     "id":1539,
     "burden":600,
     "value":0,
+    "wearImage":3,
     "name":"Steel Great Sword",
+    "armorSpot":"Weapon",
     "animations":[
       1320
     ],
@@ -20229,7 +20571,9 @@
     "id":1540,
     "burden":800,
     "value":0,
+    "wearImage":8,
     "name":"Steel Great Mace",
+    "armorSpot":"Weapon",
     "animations":[
       1322
     ],
@@ -20242,7 +20586,9 @@
     "id":1541,
     "burden":700,
     "value":0,
+    "wearImage":7,
     "name":"Steel Spiked Mace",
+    "armorSpot":"Weapon",
     "animations":[
       1321
     ],
@@ -20255,7 +20601,9 @@
     "id":1542,
     "burden":500,
     "value":0,
+    "wearImage":5,
     "name":"Steel Battle Axe",
+    "armorSpot":"Weapon",
     "animations":[
       1323
     ],
@@ -20268,7 +20616,9 @@
     "id":1543,
     "burden":700,
     "value":0,
+    "wearImage":6,
     "name":"Steel Great Axe",
+    "armorSpot":"Weapon",
     "animations":[
       1324
     ],
@@ -20281,7 +20631,9 @@
     "id":1544,
     "burden":600,
     "value":0,
+    "wearImage":16,
     "name":"Steel Scythe",
+    "armorSpot":"Weapon",
     "animations":[
       1325
     ],
@@ -20294,7 +20646,9 @@
     "id":1545,
     "burden":700,
     "value":0,
+    "wearImage":14,
     "name":"Steel Heavy Battle Flail",
+    "armorSpot":"Weapon",
     "animations":[
       1326
     ],
@@ -20307,7 +20661,9 @@
     "id":1546,
     "burden":900,
     "value":0,
+    "wearImage":15,
     "name":"Steel Great Flail",
+    "armorSpot":"Weapon",
     "animations":[
       1327
     ],
@@ -20320,7 +20676,9 @@
     "id":1547,
     "burden":100,
     "value":0,
+    "wearImage":4,
     "name":"Steel Claw",
+    "armorSpot":"Weapon",
     "animations":[
       1328
     ],
@@ -20333,7 +20691,9 @@
     "id":1548,
     "burden":600,
     "value":0,
+    "wearImage":84,
     "name":"Steel Battle Staff",
+    "armorSpot":"Weapon",
     "animations":[
       1330
     ],
@@ -20346,7 +20706,9 @@
     "id":1549,
     "burden":400,
     "value":0,
+    "wearImage":77,
     "name":"Steel Battle Spear",
+    "armorSpot":"Weapon",
     "animations":[
       1329
     ],
@@ -20359,7 +20721,9 @@
     "id":1550,
     "burden":300,
     "value":5000,
+    "wearImage":164,
     "name":"Steel Shrokrim",
+    "armorSpot":"Weapon",
     "animations":[
       1332
     ],
@@ -20385,7 +20749,9 @@
     "id":1552,
     "burden":60,
     "value":0,
+    "wearImage":1,
     "name":"Steel Knife",
+    "armorSpot":"Weapon",
     "animations":[
       1336
     ],
@@ -20398,7 +20764,9 @@
     "id":1553,
     "burden":250,
     "value":0,
+    "wearImage":115,
     "name":"Copper Bow",
+    "armorSpot":"Weapon",
     "animations":[
       1340
     ],
@@ -20411,7 +20779,9 @@
     "id":1554,
     "burden":300,
     "value":0,
+    "wearImage":116,
     "name":"Silver Bow",
+    "armorSpot":"Weapon",
     "animations":[
       1341
     ],
@@ -20424,7 +20794,9 @@
     "id":1555,
     "burden":350,
     "value":0,
+    "wearImage":117,
     "name":"Iron Bow",
+    "armorSpot":"Weapon",
     "animations":[
       1342
     ],
@@ -20437,7 +20809,9 @@
     "id":1556,
     "burden":400,
     "value":0,
+    "wearImage":119,
     "name":"Gold Bow",
+    "armorSpot":"Weapon",
     "animations":[
       1344
     ],
@@ -20450,7 +20824,9 @@
     "id":1557,
     "burden":450,
     "value":0,
+    "wearImage":120,
     "name":"Zircon Bow",
+    "armorSpot":"Weapon",
     "animations":[
       1345
     ],
@@ -20463,7 +20839,9 @@
     "id":1558,
     "burden":500,
     "value":0,
+    "wearImage":121,
     "name":"Titanium Bow",
+    "armorSpot":"Weapon",
     "animations":[
       1346
     ],
@@ -20476,7 +20854,9 @@
     "id":1559,
     "burden":550,
     "value":0,
+    "wearImage":122,
     "name":"Hessite Bow",
+    "armorSpot":"Weapon",
     "animations":[
       1347
     ],
@@ -20580,7 +20960,9 @@
     "id":1567,
     "burden":350,
     "value":0,
+    "wearImage":118,
     "name":"Steel Bow",
+    "armorSpot":"Weapon",
     "animations":[
       1343
     ],
@@ -20710,7 +21092,9 @@
     "id":1577,
     "burden":600,
     "value":0,
+    "wearImage":127,
     "name":"Copper CrossBow",
+    "armorSpot":"Weapon",
     "animations":[
       1360
     ],
@@ -20723,7 +21107,9 @@
     "id":1578,
     "burden":700,
     "value":0,
+    "wearImage":128,
     "name":"Silver CrossBow",
+    "armorSpot":"Weapon",
     "animations":[
       1361
     ],
@@ -20736,7 +21122,9 @@
     "id":1579,
     "burden":800,
     "value":0,
+    "wearImage":129,
     "name":"Iron CrossBow",
+    "armorSpot":"Weapon",
     "animations":[
       1362
     ],
@@ -20749,7 +21137,9 @@
     "id":1580,
     "burden":900,
     "value":0,
+    "wearImage":131,
     "name":"Steel CrossBow",
+    "armorSpot":"Weapon",
     "animations":[
       1363
     ],
@@ -20762,7 +21152,9 @@
     "id":1581,
     "burden":1000,
     "value":0,
+    "wearImage":132,
     "name":"Gold CrossBow",
+    "armorSpot":"Weapon",
     "animations":[
       1364
     ],
@@ -20775,7 +21167,9 @@
     "id":1582,
     "burden":1100,
     "value":0,
+    "wearImage":133,
     "name":"Zircon CrossBow",
+    "armorSpot":"Weapon",
     "animations":[
       1365
     ],
@@ -20788,7 +21182,9 @@
     "id":1583,
     "burden":1200,
     "value":0,
+    "wearImage":134,
     "name":"Titanium CrossBow",
+    "armorSpot":"Weapon",
     "animations":[
       1366
     ],
@@ -20801,7 +21197,9 @@
     "id":1584,
     "burden":1300,
     "value":0,
+    "wearImage":135,
     "name":"Hessite CrossBow",
+    "armorSpot":"Weapon",
     "animations":[
       1367
     ],
@@ -22923,6 +23321,7 @@
     "burden":30,
     "value":1000,
     "name":"Wand of the Dead",
+    "armorSpot":"Weapon",
     "animations":[
       864
     ],
@@ -23790,6 +24189,7 @@
     "burden":100,
     "value":0,
     "name":"Magma Bow",
+    "armorSpot":"Weapon",
     "animations":[
       1499
     ],
@@ -24230,7 +24630,9 @@
     "id":1846,
     "burden":40,
     "value":25000,
+    "wearImage":145,
     "name":"Gorvor Orb",
+    "armorSpot":"Weapon",
     "animations":[
       1631
     ],
@@ -24762,7 +25164,9 @@
     "id":1895,
     "burden":1000,
     "value":0,
+    "wearImage":159,
     "name":"Hessite Sword",
+    "armorSpot":"Weapon",
     "animations":[
       1649
     ],
@@ -24775,7 +25179,9 @@
     "id":1896,
     "burden":500,
     "value":0,
+    "wearImage":156,
     "name":"Zircon Mace",
+    "armorSpot":"Weapon",
     "animations":[
       1654
     ],
@@ -24788,7 +25194,9 @@
     "id":1897,
     "burden":200,
     "value":0,
+    "wearImage":158,
     "name":"Zircon Sword",
+    "armorSpot":"Weapon",
     "animations":[
       1656
     ],
@@ -24801,7 +25209,9 @@
     "id":1898,
     "burden":150,
     "value":0,
+    "wearImage":160,
     "name":"Titanium Dagger",
+    "armorSpot":"Weapon",
     "animations":[
       1657
     ],
@@ -24814,7 +25224,9 @@
     "id":1899,
     "burden":1000,
     "value":0,
+    "wearImage":157,
     "name":"Hessite Mace",
+    "armorSpot":"Weapon",
     "animations":[
       1655
     ],
@@ -24996,7 +25408,9 @@
     "id":1913,
     "burden":500,
     "value":500,
+    "wearImage":8,
     "name":"Large Red Kite Shield",
+    "armorSpot":"Shield",
     "animations":[
       1683
     ],
@@ -25009,7 +25423,9 @@
     "id":1914,
     "burden":700,
     "value":500,
+    "wearImage":9,
     "name":"Large Blue Kite Shield",
+    "armorSpot":"Shield",
     "animations":[
       1684
     ],
@@ -25022,7 +25438,9 @@
     "id":1915,
     "burden":800,
     "value":50,
+    "wearImage":11,
     "name":"Large Rivited Shield",
+    "armorSpot":"Shield",
     "animations":[
       1682
     ],
@@ -25035,7 +25453,9 @@
     "id":1916,
     "burden":700,
     "value":2000,
+    "wearImage":10,
     "name":"Large U Shield",
+    "armorSpot":"Shield",
     "animations":[
       1681
     ],
@@ -27486,6 +27906,7 @@
     "burden":10000,
     "value":0,
     "name":"Dragon Breath",
+    "armorSpot":"Weapon",
     "animations":[
       0
     ],
@@ -27569,7 +27990,9 @@
     "id":2111,
     "burden":250,
     "value":0,
+    "wearImage":178,
     "name":"Dragon Short Sword",
+    "armorSpot":"Weapon",
     "animations":[
       1895
     ],
@@ -27582,7 +28005,9 @@
     "id":2112,
     "burden":100,
     "value":0,
+    "wearImage":179,
     "name":"Gremlin Claw",
+    "armorSpot":"Weapon",
     "animations":[
       1896
     ],
@@ -27595,7 +28020,9 @@
     "id":2113,
     "burden":150,
     "value":0,
+    "wearImage":180,
     "name":"Gremlin Sword",
+    "armorSpot":"Weapon",
     "animations":[
       1897
     ],
@@ -27608,7 +28035,9 @@
     "id":2114,
     "burden":500,
     "value":0,
+    "wearImage":181,
     "name":"Gremlin Maul",
+    "armorSpot":"Weapon",
     "animations":[
       1898
     ],
@@ -28089,7 +28518,9 @@
     "id":2169,
     "burden":100,
     "value":0,
+    "wearImage":20,
     "name":"Copper Buckler",
+    "armorSpot":"Shield",
     "animations":[
       1950
     ],
@@ -28102,7 +28533,9 @@
     "id":2170,
     "burden":150,
     "value":0,
+    "wearImage":30,
     "name":"Copper Kite Shield",
+    "armorSpot":"Shield",
     "animations":[
       1960
     ],
@@ -28115,7 +28548,9 @@
     "id":2171,
     "burden":200,
     "value":0,
+    "wearImage":40,
     "name":"Copper Tower Shield",
+    "armorSpot":"Shield",
     "animations":[
       1970
     ],
@@ -28128,7 +28563,9 @@
     "id":2172,
     "burden":250,
     "value":0,
+    "wearImage":21,
     "name":"Silver Buckler",
+    "armorSpot":"Shield",
     "animations":[
       1951
     ],
@@ -28141,7 +28578,9 @@
     "id":2173,
     "burden":300,
     "value":0,
+    "wearImage":31,
     "name":"Silver Kite Shield",
+    "armorSpot":"Shield",
     "animations":[
       1961
     ],
@@ -28154,7 +28593,9 @@
     "id":2174,
     "burden":350,
     "value":0,
+    "wearImage":41,
     "name":"Silver Tower Shield",
+    "armorSpot":"Shield",
     "animations":[
       1971
     ],
@@ -28167,7 +28608,9 @@
     "id":2175,
     "burden":400,
     "value":0,
+    "wearImage":22,
     "name":"Iron Buckler",
+    "armorSpot":"Shield",
     "animations":[
       1952
     ],
@@ -28180,7 +28623,9 @@
     "id":2176,
     "burden":450,
     "value":0,
+    "wearImage":32,
     "name":"Iron Kite Shield",
+    "armorSpot":"Shield",
     "animations":[
       1962
     ],
@@ -28193,7 +28638,9 @@
     "id":2177,
     "burden":500,
     "value":0,
+    "wearImage":42,
     "name":"Iron Tower Shield",
+    "armorSpot":"Shield",
     "animations":[
       1972
     ],
@@ -28206,7 +28653,9 @@
     "id":2178,
     "burden":550,
     "value":0,
+    "wearImage":23,
     "name":"Gold Buckler",
+    "armorSpot":"Shield",
     "animations":[
       1953
     ],
@@ -28219,7 +28668,9 @@
     "id":2179,
     "burden":600,
     "value":0,
+    "wearImage":33,
     "name":"Gold Kite Shield",
+    "armorSpot":"Shield",
     "animations":[
       1963
     ],
@@ -28232,7 +28683,9 @@
     "id":2180,
     "burden":650,
     "value":0,
+    "wearImage":43,
     "name":"Gold Tower Shield",
+    "armorSpot":"Shield",
     "animations":[
       1973
     ],
@@ -28245,7 +28698,9 @@
     "id":2181,
     "burden":700,
     "value":0,
+    "wearImage":24,
     "name":"Zircon Buckler",
+    "armorSpot":"Shield",
     "animations":[
       1954
     ],
@@ -28258,7 +28713,9 @@
     "id":2182,
     "burden":750,
     "value":0,
+    "wearImage":34,
     "name":"Zircon Kite Shield",
+    "armorSpot":"Shield",
     "animations":[
       1964
     ],
@@ -28271,7 +28728,9 @@
     "id":2183,
     "burden":800,
     "value":0,
+    "wearImage":44,
     "name":"Zircon Tower Shield",
+    "armorSpot":"Shield",
     "animations":[
       1974
     ],
@@ -28284,7 +28743,9 @@
     "id":2184,
     "burden":850,
     "value":0,
+    "wearImage":25,
     "name":"Titanium Buckler",
+    "armorSpot":"Shield",
     "animations":[
       1955
     ],
@@ -28297,7 +28758,9 @@
     "id":2185,
     "burden":900,
     "value":0,
+    "wearImage":35,
     "name":"Titanium Kite Shield",
+    "armorSpot":"Shield",
     "animations":[
       1965
     ],
@@ -28310,7 +28773,9 @@
     "id":2186,
     "burden":950,
     "value":0,
+    "wearImage":45,
     "name":"Titanium Tower Shield",
+    "armorSpot":"Shield",
     "animations":[
       1975
     ],
@@ -28323,7 +28788,9 @@
     "id":2187,
     "burden":1000,
     "value":0,
+    "wearImage":26,
     "name":"Hessite Buckler",
+    "armorSpot":"Shield",
     "animations":[
       1956
     ],
@@ -28336,7 +28803,9 @@
     "id":2188,
     "burden":1050,
     "value":0,
+    "wearImage":36,
     "name":"Hessite Kite Shield",
+    "armorSpot":"Shield",
     "animations":[
       1966
     ],
@@ -28349,7 +28818,9 @@
     "id":2189,
     "burden":1100,
     "value":0,
+    "wearImage":46,
     "name":"Hessite Tower Shield",
+    "armorSpot":"Shield",
     "animations":[
       1976
     ],
@@ -28362,7 +28833,9 @@
     "id":2190,
     "burden":10,
     "value":0,
+    "wearImage":75,
     "name":"Equalizer Sword",
+    "armorSpot":"Weapon",
     "animations":[
       1957,
       1957,
@@ -28381,6 +28854,7 @@
     "burden":10,
     "value":0,
     "name":"Equalizer Shrokrim",
+    "armorSpot":"Weapon",
     "animations":[
       1946,
       1946,
@@ -28490,7 +28964,9 @@
     "id":2200,
     "burden":100,
     "value":0,
+    "wearImage":182,
     "name":"Artifact Dagger",
+    "armorSpot":"Weapon",
     "animations":[
       1980
     ],
@@ -28503,7 +28979,9 @@
     "id":2201,
     "burden":400,
     "value":0,
+    "wearImage":183,
     "name":"Artifact Sword",
+    "armorSpot":"Weapon",
     "animations":[
       1981
     ],
@@ -28516,7 +28994,9 @@
     "id":2202,
     "burden":500,
     "value":0,
+    "wearImage":185,
     "name":"Artifact Axe",
+    "armorSpot":"Weapon",
     "animations":[
       1982
     ],
@@ -28529,7 +29009,9 @@
     "id":2203,
     "burden":700,
     "value":0,
+    "wearImage":190,
     "name":"Artifact Scythe",
+    "armorSpot":"Weapon",
     "animations":[
       1983
     ],
@@ -28542,7 +29024,9 @@
     "id":2204,
     "burden":500,
     "value":0,
+    "wearImage":186,
     "name":"Artifact Mace",
+    "armorSpot":"Weapon",
     "animations":[
       1984
     ],
@@ -28555,7 +29039,9 @@
     "id":2205,
     "burden":500,
     "value":0,
+    "wearImage":187,
     "name":"Artifact Trident",
+    "armorSpot":"Weapon",
     "animations":[
       1985
     ],
@@ -28568,7 +29054,9 @@
     "id":2206,
     "burden":500,
     "value":0,
+    "wearImage":188,
     "name":"Artifact Staff",
+    "armorSpot":"Weapon",
     "animations":[
       1986
     ],
@@ -28581,7 +29069,9 @@
     "id":2207,
     "burden":500,
     "value":0,
+    "wearImage":189,
     "name":"Artifact Flail",
+    "armorSpot":"Weapon",
     "animations":[
       1977
     ],
@@ -28594,7 +29084,9 @@
     "id":2208,
     "burden":300,
     "value":0,
+    "wearImage":184,
     "name":"Artifact Claw",
+    "armorSpot":"Weapon",
     "animations":[
       1978
     ],
@@ -28607,7 +29099,9 @@
     "id":2209,
     "burden":400,
     "value":0,
+    "wearImage":191,
     "name":"Artifact Bow",
+    "armorSpot":"Weapon",
     "animations":[
       1987
     ],
@@ -28620,7 +29114,9 @@
     "id":2210,
     "burden":750,
     "value":0,
+    "wearImage":192,
     "name":"Artifact CrossBow",
+    "armorSpot":"Weapon",
     "animations":[
       1988
     ],
@@ -28633,7 +29129,9 @@
     "id":2211,
     "burden":300,
     "value":0,
+    "wearImage":193,
     "name":"Artifact Shrokrim",
+    "armorSpot":"Weapon",
     "animations":[
       1979
     ],
@@ -28646,7 +29144,9 @@
     "id":2212,
     "burden":40,
     "value":5000,
+    "wearImage":194,
     "name":"Artifact Orb",
+    "armorSpot":"Weapon",
     "animations":[
       1989
     ],
@@ -31484,6 +31984,7 @@
     "burden":50,
     "value":2000,
     "name":"Magic Scroll",
+    "armorSpot":"Weapon",
     "animations":[
       1748
     ],
@@ -31574,7 +32075,9 @@
     "id":3010,
     "burden":1000,
     "value":0,
+    "wearImage":161,
     "name":"Ghoul Blade",
+    "armorSpot":"Weapon",
     "animations":[
       1754
     ],
@@ -31639,7 +32142,9 @@
     "id":3015,
     "burden":1000,
     "value":0,
+    "wearImage":162,
     "name":"Storm Mace",
+    "armorSpot":"Weapon",
     "animations":[
       1756
     ],
@@ -31692,6 +32197,7 @@
     "burden":300,
     "value":0,
     "name":"Fire Shrokrim",
+    "armorSpot":"Weapon",
     "animations":[
       1730
     ],
@@ -31705,6 +32211,7 @@
     "burden":300,
     "value":0,
     "name":"Frost Shrokrim",
+    "armorSpot":"Weapon",
     "animations":[
       1732
     ],
@@ -31718,6 +32225,7 @@
     "burden":300,
     "value":0,
     "name":"Lightning Shrokrim",
+    "armorSpot":"Weapon",
     "animations":[
       1733
     ],
@@ -31730,7 +32238,9 @@
     "id":3022,
     "burden":500,
     "value":0,
+    "wearImage":38,
     "name":"Flaming Mailed Fist",
+    "armorSpot":"Weapon",
     "animations":[
       83
     ],
@@ -31743,7 +32253,9 @@
     "id":3023,
     "burden":500,
     "value":0,
+    "wearImage":38,
     "name":"Frost Mailed Fist",
+    "armorSpot":"Weapon",
     "animations":[
       83
     ],
@@ -31756,7 +32268,9 @@
     "id":3024,
     "burden":500,
     "value":0,
+    "wearImage":38,
     "name":"Lightning Mailed Fist",
+    "armorSpot":"Weapon",
     "animations":[
       83
     ],
@@ -32398,7 +32912,9 @@
     "id":3073,
     "burden":150,
     "value":0,
+    "wearImage":165,
     "name":"UT\u0027s Fly Swatter",
+    "armorSpot":"Weapon",
     "animations":[
       1790
     ],
@@ -32801,7 +33317,9 @@
     "id":3104,
     "burden":50,
     "value":0,
+    "wearImage":166,
     "name":"Zephyrium Dagger",
+    "armorSpot":"Weapon",
     "animations":[
       1873
     ],
@@ -32814,7 +33332,9 @@
     "id":3105,
     "burden":500,
     "value":0,
+    "wearImage":167,
     "name":"Zephyrium Sword",
+    "armorSpot":"Weapon",
     "animations":[
       1874
     ],
@@ -32827,7 +33347,9 @@
     "id":3106,
     "burden":900,
     "value":0,
+    "wearImage":169,
     "name":"Zephyrium Axe",
+    "armorSpot":"Weapon",
     "animations":[
       1875
     ],
@@ -32840,7 +33362,9 @@
     "id":3107,
     "burden":800,
     "value":0,
+    "wearImage":174,
     "name":"Zephyrium Scythe",
+    "armorSpot":"Weapon",
     "animations":[
       1876
     ],
@@ -32853,7 +33377,9 @@
     "id":3108,
     "burden":500,
     "value":0,
+    "wearImage":170,
     "name":"Zephyrium Mace",
+    "armorSpot":"Weapon",
     "animations":[
       1877
     ],
@@ -32866,7 +33392,9 @@
     "id":3109,
     "burden":500,
     "value":0,
+    "wearImage":171,
     "name":"Zephyrium Trident",
+    "armorSpot":"Weapon",
     "animations":[
       1878
     ],
@@ -32879,7 +33407,9 @@
     "id":3110,
     "burden":500,
     "value":0,
+    "wearImage":172,
     "name":"Zephyrium Staff",
+    "armorSpot":"Weapon",
     "animations":[
       1879
     ],
@@ -32892,7 +33422,9 @@
     "id":3111,
     "burden":500,
     "value":0,
+    "wearImage":173,
     "name":"Zephyrium Flail",
+    "armorSpot":"Weapon",
     "animations":[
       1868
     ],
@@ -32905,7 +33437,9 @@
     "id":3112,
     "burden":300,
     "value":0,
+    "wearImage":168,
     "name":"Zephyrium Claw",
+    "armorSpot":"Weapon",
     "animations":[
       1869
     ],
@@ -32918,7 +33452,9 @@
     "id":3113,
     "burden":400,
     "value":0,
+    "wearImage":175,
     "name":"Zephyrium Bow",
+    "armorSpot":"Weapon",
     "animations":[
       1880
     ],
@@ -32931,7 +33467,9 @@
     "id":3114,
     "burden":750,
     "value":0,
+    "wearImage":176,
     "name":"Zephyrium CrossBow",
+    "armorSpot":"Weapon",
     "animations":[
       1881
     ],
@@ -32944,7 +33482,9 @@
     "id":3115,
     "burden":300,
     "value":0,
+    "wearImage":177,
     "name":"Zephyrium Shrokrim",
+    "armorSpot":"Weapon",
     "animations":[
       1883
     ],
@@ -33377,7 +33917,9 @@
     "id":3147,
     "burden":600,
     "value":0,
+    "wearImage":5,
     "name":"Poison Battle Axe",
+    "armorSpot":"Weapon",
     "animations":[
       412
     ],
@@ -33390,7 +33932,9 @@
     "id":3148,
     "burden":450,
     "value":0,
+    "wearImage":2,
     "name":"Poison Broad Sword",
+    "armorSpot":"Weapon",
     "animations":[
       410
     ],
@@ -33403,7 +33947,9 @@
     "id":3149,
     "burden":700,
     "value":0,
+    "wearImage":7,
     "name":"Poison Spiked Mace",
+    "armorSpot":"Weapon",
     "animations":[
       2177
     ],
@@ -33416,7 +33962,9 @@
     "id":3150,
     "burden":600,
     "value":0,
+    "wearImage":16,
     "name":"Poison Scythe",
+    "armorSpot":"Weapon",
     "animations":[
       2179
     ],
@@ -33429,7 +33977,9 @@
     "id":3151,
     "burden":100,
     "value":0,
+    "wearImage":4,
     "name":"Poison Claw",
+    "armorSpot":"Weapon",
     "animations":[
       2174
     ],
@@ -33442,7 +33992,9 @@
     "id":3152,
     "burden":600,
     "value":0,
+    "wearImage":84,
     "name":"Poison Battle Staff",
+    "armorSpot":"Weapon",
     "animations":[
       2173
     ],
@@ -33455,7 +34007,9 @@
     "id":3153,
     "burden":400,
     "value":0,
+    "wearImage":77,
     "name":"Poison Battle Spear",
+    "armorSpot":"Weapon",
     "animations":[
       2169
     ],
@@ -33468,7 +34022,9 @@
     "id":3154,
     "burden":300,
     "value":5000,
+    "wearImage":164,
     "name":"Poison Shrokrim",
+    "armorSpot":"Weapon",
     "animations":[
       2178
     ],
@@ -33494,7 +34050,9 @@
     "id":3156,
     "burden":60,
     "value":0,
+    "wearImage":1,
     "name":"Steel Dagger",
+    "armorSpot":"Weapon",
     "animations":[
       2180
     ],
@@ -33507,7 +34065,9 @@
     "id":3157,
     "burden":60,
     "value":0,
+    "wearImage":1,
     "name":"Poison Dagger",
+    "armorSpot":"Weapon",
     "animations":[
       2175
     ],
@@ -33520,7 +34080,9 @@
     "id":3158,
     "burden":900,
     "value":0,
+    "wearImage":15,
     "name":"Poison Great Flail",
+    "armorSpot":"Weapon",
     "animations":[
       2176
     ],

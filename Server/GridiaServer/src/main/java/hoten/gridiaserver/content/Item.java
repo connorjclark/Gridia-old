@@ -11,7 +11,7 @@ public class Item {
 
     public enum ArmorSpot {
 
-        Head, Chest, Legs
+        Head, Chest, Legs, Weapon, Shield
     }
 
     // :( make final?
@@ -20,4 +20,8 @@ public class Item {
     public ArmorSpot armorSpot;
     public String name;
     public boolean walkable, moveable, stackable;
+    
+    public boolean isEquipable() {
+        return itemClass == ItemClass.Armor || itemClass == ItemClass.Weapon || itemClass == ItemClass.Shield;
+    }
 }
