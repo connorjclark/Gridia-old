@@ -7,37 +7,29 @@ namespace Gridia
 {
     public class TextureManager
     {
-        private List<Texture> floors = new List<Texture> ();
-        private List<Texture> items = new List<Texture> ();
-        private List<Texture> creatures = new List<Texture>();
-        private List<Texture> templates = new List<Texture>();
+        public List<Texture> Floors { get; private set; }
+        public List<Texture> Items { get; private set; }
+        public List<Texture> Creatures { get; private set; }
+        public List<Texture> Templates { get; private set; }
+        public List<Texture> Heads { get; private set; }
+        public List<Texture> Chests { get; private set; }
+        public List<Texture> Legs { get; private set; }
+        public List<Texture> Arms { get; private set; }
+        public List<Texture> Weapons { get; private set; }
+        public List<Texture> Shields { get; private set; }
 
         public TextureManager (String worldName)
         {
-            floors = LoadTextures(worldName + "/floors/floors", 1);
-            items = LoadTextures(worldName + "/items/items", 27);
-            creatures = LoadTextures(worldName + "/players/players", 8);
-            templates = LoadTextures(worldName + "/templates/template", 1);
-        }
-            
-        public Texture GetFloorsTexture (int index)
-        {
-            return floors [index];
-        }
-            
-        public Texture GetItemsTexture (int index)
-        {
-            return items[index];
-        }
-
-        public Texture GetCreaturesTexture (int index)
-        {
-            return creatures [index];
-        }
-
-        public Texture GetTemplateTexture(int index)
-        {
-            return templates[index];
+            Floors = LoadTextures(worldName + "/floors/floors", 1); // :(
+            Items = LoadTextures(worldName + "/items/items", 27);
+            Creatures = LoadTextures(worldName + "/players/players", 8);
+            Templates = LoadTextures(worldName + "/templates/template", 1);
+            Heads = LoadTextures(worldName + "/players/head", 2);
+            Chests = LoadTextures(worldName + "/players/chest", 1);
+            Legs = LoadTextures(worldName + "/players/legs", 1);
+            Arms = LoadTextures(worldName + "/players/arms", 1);
+            Weapons = LoadTextures(worldName + "/players/weapon", 1);
+            Shields = LoadTextures(worldName + "/players/shield", 1);
         }
 
         private List<Texture> LoadTextures(String prefix, int numTextures)

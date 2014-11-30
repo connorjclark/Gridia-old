@@ -106,7 +106,7 @@ namespace Gridia
             public override Texture GetTexture(int spriteIndex)
             {
                 var textures = Locator.Get<TextureManager>(); // :(
-                return textures.GetItemsTexture(spriteIndex / GridiaConstants.SPRITES_IN_SHEET);
+                return textures.Items[spriteIndex / GridiaConstants.SPRITES_IN_SHEET];
             }
         }
     }

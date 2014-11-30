@@ -3,6 +3,7 @@ package hoten.gridiaserver.serving;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import hoten.gridiaserver.Container;
+import hoten.gridiaserver.CustomPlayerImage;
 import hoten.gridiaserver.map.Coord;
 import hoten.gridiaserver.content.ItemInstance;
 import hoten.gridiaserver.Player;
@@ -40,7 +41,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
     @Override
     protected void onConnectionSettled() throws IOException {
         player = new Player();
-        player.username = System.currentTimeMillis() + "";
+        player.username = "Bill_" + hashCode();
         player.creature = _server.createCreatureForPlayer();
         _server.announceNewPlayer(this, player);
         send(_messageBuilder.initialize(_server.tileMap.size, _server.tileMap.depth, _server.tileMap.sectorSize));
@@ -69,7 +70,8 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         equipment.add(_server.contentManager.createItemInstance(0));
         equipment.add(_server.contentManager.createItemInstance(0));
         player.equipment = new Container(equipment, Container.ContainerType.Equipment);
-
+        ((CustomPlayerImage)(player.creature.image)).moldToEquipment(player.equipment);
+        
         send(_messageBuilder.container(player.inventory));
         send(_messageBuilder.container(player.equipment));
     }
@@ -325,6 +327,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
                 player.inventory.set(slotIndex, player.equipment.get(armorSlotIndex));
                 player.equipment.set(armorSlotIndex, item);
             }
+            updatePlayerImage();
         } else {
             send(_messageBuilder.chat("You cannot equip a " + item.data.name));
         }
@@ -335,8 +338,17 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         ItemInstance itemToUnequip = player.equipment.get(slotIndex);
         if (player.inventory.add(itemToUnequip)) {
             player.equipment.deleteSlot(slotIndex);
+            updatePlayerImage();
         } else {
             send(_messageBuilder.chat("Your inventory is full."));
+        }
+    }
+    
+    private void updatePlayerImage() {
+        if (player.creature.image instanceof CustomPlayerImage) {
+            CustomPlayerImage image = (CustomPlayerImage) player.creature.image;
+            image.moldToEquipment(player.equipment);
+            _server.updateCreaureImage(player.creature);
         }
     }
 }

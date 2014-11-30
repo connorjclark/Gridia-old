@@ -31,10 +31,10 @@ namespace Gridia
             } 
         }
         public int Id { get; private set; }
-        public int Image { get; set; }
+        public CreatureImage Image { get; set; }
         private List<PositionSnapshot> _positions = new List<PositionSnapshot>();
 
-        public Creature(int id, int image, int x, int y, int z) {
+        public Creature(int id, CreatureImage image, int x, int y, int z) {
             Id = id;
             Image = image;
             Position = new Vector3(x, y, z);

@@ -9,6 +9,6 @@ public class Creature {
 
     public final int id = uniqueIds.next();
     public Coord location = new Coord(0, 0, 0);
-    public int image;
+    public CreatureImage image;
     public boolean belongsToPlayer;
 }

@@ -4,6 +4,9 @@ import hoten.gridiaserver.content.ContentManager;
 import hoten.gridiaserver.map.Coord;
 import hoten.gridiaserver.Creature;
 import hoten.gridiaserver.Container;
+import hoten.gridiaserver.CreatureImage;
+import hoten.gridiaserver.CustomPlayerImage;
+import hoten.gridiaserver.DefaultCreatureImage;
 import hoten.gridiaserver.content.ItemInstance;
 import hoten.gridiaserver.Player;
 import hoten.gridiaserver.map.Sector;
@@ -94,6 +97,11 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         cre.location = loc;
         sendToClientsWithSectorLoaded(messageBuilder.moveCreature(cre, timeInMillisecondsToMove), sector);
     }
+    
+    public void updateCreaureImage(Creature cre) {
+        Sector sector = tileMap.getSectorOf(cre.location);
+        sendToClientsWithSectorLoaded(messageBuilder.updateCreatureImage(cre), sector);
+    }
 
     public void moveCreatureRandomly(Creature cre) {
         int x = cre.location.x;
@@ -115,8 +123,13 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
             createCreature(image, c);
         }
     }
-
+    
     public Creature createCreature(int image, Coord loc) {
+        return createCreature(new DefaultCreatureImage(image), loc);
+    }
+
+
+    public Creature createCreature(CreatureImage image, Coord loc) {
         Creature cre = new Creature();
         cre.image = image;
         cre.location = loc;
@@ -128,7 +141,12 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     }
 
     public Creature createCreatureForPlayer() {
-        Creature cre = createCreature((int) (Math.random() * 100), new Coord(random.nextInt(4), random.nextInt(4), 0));
+        CustomPlayerImage image = new CustomPlayerImage();
+        image.bareArms = (int) (Math.random() * 10);
+        image.bareHead = (int) (Math.random() * 100);
+        image.bareChest = (int) (Math.random() * 10);
+        image.bareLegs = (int) (Math.random() * 10);
+        Creature cre = createCreature(image, new Coord(random.nextInt(4), random.nextInt(4), 0));
         cre.belongsToPlayer = true;
         return cre;
     }
@@ -154,7 +172,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         tileMap.setItem(item, loc);
         updateTile(loc);
     }
-    
+
     public void reduceItemQuantity(Coord loc, int amount) {
         ItemInstance item = tileMap.getItem(loc);
         item.quantity -= amount;

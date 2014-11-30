@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import hoten.gridiaserver.Creature;
 import hoten.gridiaserver.Container;
+import hoten.gridiaserver.Player;
 import hoten.gridiaserver.content.ItemInstance;
 import hoten.gridiaserver.content.ItemUse;
 import hoten.gridiaserver.map.Coord;
@@ -73,14 +74,16 @@ public class GridiaMessageToClientBuilder {
             }
         }
 
-        builder.writeInt(creatures.size());
-        creatures.stream().forEach((cre) -> {
-            builder.writeShort(cre.id)
-                    .writeShort(cre.image)
-                    .writeShort(cre.location.x)
-                    .writeShort(cre.location.y)
-                    .writeShort(cre.location.z);
-        });
+        //builder.writeInt(creatures.size());
+        builder.writeInt(0);
+        // .remove?
+        /*creatures.stream().forEach((cre) -> {
+         builder.writeShort(cre.id)
+         .writeShort(cre.image)
+         .writeShort(cre.location.x)
+         .writeShort(cre.location.y)
+         .writeShort(cre.location.z);
+         });*/
 
         return builder.build();
     }
@@ -155,11 +158,19 @@ public class GridiaMessageToClientBuilder {
                 .set("uses", uses)
                 .build();
     }
-    
+
     public Message animation(int animation) {
         return new JsonMessageBuilder()
                 .protocol(outbound(Animation))
                 .set("anim", animation)
+                .build();
+    }
+
+    public Message updateCreatureImage(Creature creature) {
+        return new JsonMessageBuilder()
+                .protocol(outbound(UpdateCreatureImage))
+                .set("id", creature.id)
+                .set("image", creature.image)
                 .build();
     }
 

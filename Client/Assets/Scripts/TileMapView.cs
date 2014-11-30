@@ -113,7 +113,7 @@ namespace Gridia
                         //hack for water template :(
                         if (dataIndex == -2)
                         {
-                            textureForThisData = _textureManager.GetTemplateTexture(0);
+                            textureForThisData = _textureManager.Templates[0];
                             dataIndex = UseTemplate(0, 1, x + positionX, y + positionY, positionZ);
                         }
                         else
@@ -269,7 +269,7 @@ namespace Gridia
                 "Floor layer",
                 this,
                 tile => tile.Floor == 1 ? -2 : tile.Floor,
-                data => _textureManager.GetFloorsTexture(data / 100)
+                data => _textureManager.Floors[data / 100]
             ));
 
             result.Add(new Layer(
@@ -285,7 +285,7 @@ namespace Gridia
                     int frame = (int)((Time.time * 6) % animations.Length);//smell :(
                     return animations[frame];
                 },
-                data => _textureManager.GetItemsTexture(data / 100),
+                data => _textureManager.Items[data / 100],
                 tile =>
                 {
                     if (tile.Item.Item.Name.Contains("Rose"))

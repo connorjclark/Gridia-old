@@ -86,6 +86,9 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
             case GridiaProtocols.Clientbound.Animation:
                 Animation(data);
                 break;
+            case GridiaProtocols.Clientbound.UpdateCreatureImage:
+                UpdateCreatureImage(data);
+                break;
         }
     }
 
@@ -104,7 +107,10 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
     private void AddCreature(JObject data) 
     {
         int id = (int)data["id"];
-        int image = (int)data["image"];
+
+        var backToJson = JsonConvert.SerializeObject(data["image"]); // :(
+        var image = JsonConvert.DeserializeObject<CreatureImage>(backToJson, new CreatureImageConverter());
+
         int x = (int)data["loc"]["x"];
         int y = (int)data["loc"]["y"];
         int z = (int)data["loc"]["z"];
@@ -210,7 +216,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         _game.tileMap.SetSector(new Sector(tiles), sx, sy, sz);
 
         var numCreatures = data.ReadInt32();
-        for (int i = 0; i < numCreatures; i++)
+        /*for (int i = 0; i < numCreatures; i++)
         {
             var id = data.ReadInt16();
             var image = data.ReadInt16();
@@ -218,7 +224,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
             var y = data.ReadInt16();
             var z = data.ReadInt16();
             _game.tileMap.CreateCreature(id, image, x, y, z);
-        }
+        }*/
     }
 
     private void ItemUsePick(JObject data)
@@ -237,6 +243,14 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         var animId = (int)data["anim"];
         var anim = Locator.Get<ContentManager>().GetAnimation(animId);
         anim.Play(); // temp
+    }
+
+    private void UpdateCreatureImage(JObject data)
+    {
+        int id = (int)data["id"];
+        var backToJson = JsonConvert.SerializeObject(data["image"]); // :(
+        var image = JsonConvert.DeserializeObject<CreatureImage>(backToJson, new CreatureImageConverter());
+        _game.tileMap.GetCreature(id).Image = image;
     }
 
     //outbound

@@ -15,7 +15,7 @@ public class Item {
     }
 
     // :( make final?
-    public int id;
+    public int id, wearImage;
     public ItemClass itemClass;
     public ArmorSpot armorSpot;
     public String name;

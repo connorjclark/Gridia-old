@@ -12,6 +12,7 @@ public class GridiaDriver : MonoBehaviour
     public static AutoResetEvent connectedWaitHandle = new AutoResetEvent(false);
     public static AutoResetEvent gameInitWaitHandle = new AutoResetEvent(false);
     public GridiaGame _game; // :(
+    public TextureManager _textureManager; // :(
     public TabbedUI tabbedGui; // :(
     public InventoryWindow invGui;
     public EquipmentWindow equipmentGui;
@@ -62,7 +63,7 @@ public class GridiaDriver : MonoBehaviour
         connectedWaitHandle.WaitOne();
 
         Locator.Provide(new ContentManager("TestWorld")); // :(
-        Locator.Provide(new TextureManager("TestWorld"));
+        Locator.Provide(_textureManager = new TextureManager("TestWorld"));
         _game.Initialize(GridiaConstants.SIZE, GridiaConstants.DEPTH, GridiaConstants.SECTOR_SIZE); // :(
 
         gameInitWaitHandle.Set();
@@ -118,16 +119,44 @@ public class GridiaDriver : MonoBehaviour
             var relative = pos - focusPos;
             var rect = new Rect(relative.x * 32, Screen.height - relative.y * 32 - 32, 32, 32);
 
-            var textures = Locator.Get<TextureManager>();
-
-            int spriteId = cre.Image;
-            int textureX = (spriteId % GridiaConstants.SPRITES_IN_SHEET) % GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
-            int textureY = 9 - (spriteId % GridiaConstants.SPRITES_IN_SHEET) / GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
-            var texCoords = new Rect(textureX / 10.0f, textureY / 10.0f, 1 / 10.0f, 1 / 10.0f); // :( don't hardcode 10
-            GUI.DrawTextureWithTexCoords(rect, textures.GetCreaturesTexture(spriteId / GridiaConstants.SPRITES_IN_SHEET), texCoords);
+            DrawCreature(rect, cre.Image);
         }
 
         ToolTipRenderable.instance.Render();
+    }
+
+    private void DrawCreature(Rect rect, CreatureImage image)
+    {
+        if (image is DefaultCreatureImage)
+        {
+            var defaultImage = image as DefaultCreatureImage;
+            int spriteId = defaultImage.SpriteIndex;
+            int textureX = (spriteId % GridiaConstants.SPRITES_IN_SHEET) % GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
+            int textureY = 9 - (spriteId % GridiaConstants.SPRITES_IN_SHEET) / GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
+            var texCoords = new Rect(textureX / 10.0f, textureY / 10.0f, defaultImage.Width / 10.0f, defaultImage.Height / 10.0f); // :( don't hardcode 10
+            rect.width *= defaultImage.Width;
+            rect.height *= defaultImage.Height;
+            GUI.DrawTextureWithTexCoords(rect, _textureManager.Creatures[spriteId / GridiaConstants.SPRITES_IN_SHEET], texCoords);
+        }
+        else if (image is CustomPlayerImage)
+        {
+            var customImage = image as CustomPlayerImage;
+            DrawCreaturePart(rect, _textureManager.Heads, customImage.Head);
+            DrawCreaturePart(rect, _textureManager.Chests, customImage.Chest);
+            DrawCreaturePart(rect, _textureManager.Legs, customImage.Legs);
+            DrawCreaturePart(rect, _textureManager.Arms, customImage.Arms);
+            DrawCreaturePart(rect, _textureManager.Weapons, customImage.Weapon);
+            DrawCreaturePart(rect, _textureManager.Shields, customImage.Shield);
+        }
+    }
+
+    private void DrawCreaturePart(Rect rect, List<Texture> textures, int spriteIndex)
+    {
+        var texture = textures[spriteIndex / GridiaConstants.SPRITES_IN_SHEET];
+        int textureX = (spriteIndex % GridiaConstants.SPRITES_IN_SHEET) % GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
+        int textureY = 9 - (spriteIndex % GridiaConstants.SPRITES_IN_SHEET) / GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
+        var texCoords = new Rect(textureX / 10.0f, textureY / 10.0f, 1 / 10.0f, 1 / 10.0f); // :( don't hardcode 10
+        GUI.DrawTextureWithTexCoords(rect, texture, texCoords);
     }
 
     public Vector2 getMouse()

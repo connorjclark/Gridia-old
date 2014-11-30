@@ -156,6 +156,7 @@
     "id":12,
     "burden":1500,
     "value":500,
+    "wearImage":12,
     "name":"Iron Chest Plate",
     "armorSpot":"Chest",
     "animations":[
@@ -170,6 +171,7 @@
     "id":13,
     "burden":1350,
     "value":500,
+    "wearImage":12,
     "name":"Iron Chest Scale",
     "armorSpot":"Chest",
     "animations":[
@@ -184,6 +186,7 @@
     "id":14,
     "burden":1200,
     "value":500,
+    "wearImage":12,
     "name":"Iron Chest Chain",
     "armorSpot":"Chest",
     "animations":[
@@ -198,6 +201,7 @@
     "id":15,
     "burden":400,
     "value":100,
+    "wearImage":20,
     "name":"Chest Leather Armor",
     "armorSpot":"Chest",
     "animations":[
@@ -212,6 +216,7 @@
     "id":16,
     "burden":600,
     "value":1000,
+    "wearImage":21,
     "name":"Elk Leather Armor",
     "armorSpot":"Chest",
     "animations":[
@@ -226,6 +231,7 @@
     "id":17,
     "burden":900,
     "value":1500,
+    "wearImage":23,
     "name":"Drake Chest Scale",
     "armorSpot":"Chest",
     "animations":[
@@ -240,6 +246,7 @@
     "id":18,
     "burden":1000,
     "value":0,
+    "wearImage":18,
     "name":"Damon Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -254,6 +261,7 @@
     "id":19,
     "burden":1000,
     "value":0,
+    "wearImage":18,
     "name":"Damon Chest Armor",
     "armorSpot":"Chest",
     "animations":[
@@ -385,6 +393,7 @@
     "id":29,
     "burden":250,
     "value":0,
+    "wearImage":100,
     "name":"Damon Helmet",
     "armorSpot":"Head",
     "animations":[
@@ -621,6 +630,7 @@
     "id":48,
     "burden":400,
     "value":500,
+    "wearImage":22,
     "name":"Mutant Leather Armor",
     "armorSpot":"Chest",
     "animations":[
@@ -1407,6 +1417,7 @@
     "id":113,
     "burden":600,
     "value":300,
+    "wearImage":0,
     "name":"Bone Armor",
     "armorSpot":"Chest",
     "animations":[
@@ -6753,6 +6764,7 @@
     "id":517,
     "burden":300,
     "value":60,
+    "wearImage":10,
     "name":"Copper Chest Chain",
     "armorSpot":"Chest",
     "animations":[
@@ -6767,6 +6779,7 @@
     "id":518,
     "burden":450,
     "value":80,
+    "wearImage":10,
     "name":"Copper Chest Scale",
     "armorSpot":"Chest",
     "animations":[
@@ -6781,6 +6794,7 @@
     "id":519,
     "burden":600,
     "value":100,
+    "wearImage":10,
     "name":"Copper Chest Plate",
     "armorSpot":"Chest",
     "animations":[
@@ -6795,6 +6809,7 @@
     "id":520,
     "burden":400,
     "value":60,
+    "wearImage":17,
     "name":"Magnetite Chest Chain",
     "armorSpot":"Chest",
     "animations":[
@@ -6809,6 +6824,7 @@
     "id":521,
     "burden":800,
     "value":100,
+    "wearImage":17,
     "name":"Magnetite Chest Scale",
     "armorSpot":"Chest",
     "animations":[
@@ -6823,6 +6839,7 @@
     "id":522,
     "burden":1200,
     "value":140,
+    "wearImage":17,
     "name":"Magnetite Chest Plate",
     "armorSpot":"Chest",
     "animations":[
@@ -6837,6 +6854,7 @@
     "id":523,
     "burden":2100,
     "value":300,
+    "wearImage":14,
     "name":"Zircon Chest Chain",
     "armorSpot":"Chest",
     "animations":[
@@ -6851,6 +6869,7 @@
     "id":524,
     "burden":2250,
     "value":320,
+    "wearImage":14,
     "name":"Zircon Chest Scale",
     "armorSpot":"Chest",
     "animations":[
@@ -6865,6 +6884,7 @@
     "id":525,
     "burden":2400,
     "value":340,
+    "wearImage":14,
     "name":"Zircon Chest Plate",
     "armorSpot":"Chest",
     "animations":[
@@ -6879,6 +6899,7 @@
     "id":526,
     "burden":2550,
     "value":320,
+    "wearImage":15,
     "name":"Titanium Chest Chain",
     "armorSpot":"Chest",
     "animations":[
@@ -6893,6 +6914,7 @@
     "id":527,
     "burden":2700,
     "value":380,
+    "wearImage":15,
     "name":"Titanium Chest Scale",
     "armorSpot":"Chest",
     "animations":[
@@ -6907,6 +6929,7 @@
     "id":528,
     "burden":2850,
     "value":400,
+    "wearImage":15,
     "name":"Titanium Chest Plate",
     "armorSpot":"Chest",
     "animations":[
@@ -6921,6 +6944,7 @@
     "id":529,
     "burden":750,
     "value":120,
+    "wearImage":11,
     "name":"Silver Chest Chain",
     "armorSpot":"Chest",
     "animations":[
@@ -6935,6 +6959,7 @@
     "id":530,
     "burden":900,
     "value":140,
+    "wearImage":11,
     "name":"Silver Chest Scale",
     "armorSpot":"Chest",
     "animations":[
@@ -6949,6 +6974,7 @@
     "id":531,
     "burden":1050,
     "value":160,
+    "wearImage":11,
     "name":"Silver Chest Plate",
     "armorSpot":"Chest",
     "animations":[
@@ -6963,6 +6989,7 @@
     "id":532,
     "burden":1650,
     "value":240,
+    "wearImage":13,
     "name":"Gold Chest Chain",
     "armorSpot":"Chest",
     "animations":[
@@ -6977,6 +7004,7 @@
     "id":533,
     "burden":1800,
     "value":260,
+    "wearImage":13,
     "name":"Gold Chest Scale",
     "armorSpot":"Chest",
     "animations":[
@@ -6991,6 +7019,7 @@
     "id":534,
     "burden":1950,
     "value":280,
+    "wearImage":13,
     "name":"Gold Chest Plate",
     "armorSpot":"Chest",
     "animations":[
@@ -7005,6 +7034,7 @@
     "id":535,
     "burden":3000,
     "value":420,
+    "wearImage":16,
     "name":"Hessite Chest Chain",
     "armorSpot":"Chest",
     "animations":[
@@ -7019,6 +7049,7 @@
     "id":536,
     "burden":3150,
     "value":440,
+    "wearImage":16,
     "name":"Hessite Chest Scale",
     "armorSpot":"Chest",
     "animations":[
@@ -7033,6 +7064,7 @@
     "id":537,
     "burden":3300,
     "value":460,
+    "wearImage":16,
     "name":"Hessite Chest Plate",
     "armorSpot":"Chest",
     "animations":[
@@ -9530,6 +9562,7 @@
     "id":729,
     "burden":1500,
     "value":220,
+    "wearImage":12,
     "name":"Iron Leggings Plate",
     "armorSpot":"Legs",
     "animations":[
@@ -9544,6 +9577,7 @@
     "id":730,
     "burden":1350,
     "value":200,
+    "wearImage":12,
     "name":"Iron Leggings Scale",
     "armorSpot":"Legs",
     "animations":[
@@ -9558,6 +9592,7 @@
     "id":731,
     "burden":1200,
     "value":180,
+    "wearImage":12,
     "name":"Iron Leggings Chain",
     "armorSpot":"Legs",
     "animations":[
@@ -9572,6 +9607,7 @@
     "id":732,
     "burden":300,
     "value":60,
+    "wearImage":10,
     "name":"Copper Leggings Chain",
     "armorSpot":"Legs",
     "animations":[
@@ -9586,6 +9622,7 @@
     "id":733,
     "burden":450,
     "value":80,
+    "wearImage":10,
     "name":"Copper Leggings Scale",
     "armorSpot":"Legs",
     "animations":[
@@ -9600,6 +9637,7 @@
     "id":734,
     "burden":600,
     "value":100,
+    "wearImage":10,
     "name":"Copper Leggings Plate",
     "armorSpot":"Legs",
     "animations":[
@@ -9614,6 +9652,7 @@
     "id":735,
     "burden":400,
     "value":60,
+    "wearImage":17,
     "name":"Magnetite Leggings Chain",
     "armorSpot":"Legs",
     "animations":[
@@ -9628,6 +9667,7 @@
     "id":736,
     "burden":800,
     "value":100,
+    "wearImage":17,
     "name":"Magnetite Leggings Scale",
     "armorSpot":"Legs",
     "animations":[
@@ -9642,6 +9682,7 @@
     "id":737,
     "burden":1200,
     "value":140,
+    "wearImage":17,
     "name":"Magnetite Leggings Plate",
     "armorSpot":"Legs",
     "animations":[
@@ -9656,6 +9697,7 @@
     "id":738,
     "burden":2100,
     "value":300,
+    "wearImage":14,
     "name":"Zircon Leggings Chain",
     "armorSpot":"Legs",
     "animations":[
@@ -9670,6 +9712,7 @@
     "id":739,
     "burden":2250,
     "value":320,
+    "wearImage":14,
     "name":"Zircon Leggings Scale",
     "armorSpot":"Legs",
     "animations":[
@@ -9684,6 +9727,7 @@
     "id":740,
     "burden":2400,
     "value":340,
+    "wearImage":14,
     "name":"Zircon Leggings Plate",
     "armorSpot":"Legs",
     "animations":[
@@ -9698,6 +9742,7 @@
     "id":741,
     "burden":2550,
     "value":360,
+    "wearImage":15,
     "name":"Titanium Leggings Chain",
     "armorSpot":"Legs",
     "animations":[
@@ -9712,6 +9757,7 @@
     "id":742,
     "burden":2700,
     "value":380,
+    "wearImage":15,
     "name":"Titanium Leggings Scale",
     "armorSpot":"Legs",
     "animations":[
@@ -9726,6 +9772,7 @@
     "id":743,
     "burden":2850,
     "value":400,
+    "wearImage":15,
     "name":"Titanium Leggings Plate",
     "armorSpot":"Legs",
     "animations":[
@@ -9740,6 +9787,7 @@
     "id":744,
     "burden":750,
     "value":120,
+    "wearImage":11,
     "name":"Silver Leggings Chain",
     "armorSpot":"Legs",
     "animations":[
@@ -9754,6 +9802,7 @@
     "id":745,
     "burden":900,
     "value":140,
+    "wearImage":11,
     "name":"Silver Leggings Scale",
     "armorSpot":"Legs",
     "animations":[
@@ -9768,6 +9817,7 @@
     "id":746,
     "burden":1050,
     "value":160,
+    "wearImage":11,
     "name":"Silver Leggings Plate",
     "armorSpot":"Legs",
     "animations":[
@@ -9782,6 +9832,7 @@
     "id":747,
     "burden":1650,
     "value":240,
+    "wearImage":13,
     "name":"Gold Leggings Chain",
     "armorSpot":"Legs",
     "animations":[
@@ -9796,6 +9847,7 @@
     "id":748,
     "burden":1800,
     "value":260,
+    "wearImage":13,
     "name":"Gold Leggings Scale",
     "armorSpot":"Legs",
     "animations":[
@@ -9810,6 +9862,7 @@
     "id":749,
     "burden":1950,
     "value":280,
+    "wearImage":13,
     "name":"Gold Leggings Plate",
     "armorSpot":"Legs",
     "animations":[
@@ -9824,6 +9877,7 @@
     "id":750,
     "burden":3000,
     "value":420,
+    "wearImage":16,
     "name":"Hessite Leggings Chain",
     "armorSpot":"Legs",
     "animations":[
@@ -9838,6 +9892,7 @@
     "id":751,
     "burden":3150,
     "value":440,
+    "wearImage":16,
     "name":"Hessite Leggings Scale",
     "armorSpot":"Legs",
     "animations":[
@@ -9852,6 +9907,7 @@
     "id":752,
     "burden":3300,
     "value":460,
+    "wearImage":16,
     "name":"Hessite Leggings Plate",
     "armorSpot":"Legs",
     "animations":[
@@ -9866,6 +9922,7 @@
     "id":753,
     "burden":375,
     "value":55,
+    "wearImage":101,
     "name":"Iron Helmet Plate",
     "armorSpot":"Head",
     "animations":[
@@ -9880,6 +9937,7 @@
     "id":754,
     "burden":337,
     "value":50,
+    "wearImage":101,
     "name":"Iron Helmet Scale",
     "armorSpot":"Head",
     "animations":[
@@ -9894,6 +9952,7 @@
     "id":755,
     "burden":300,
     "value":45,
+    "wearImage":101,
     "name":"Iron Helmet Chain",
     "armorSpot":"Head",
     "animations":[
@@ -9908,6 +9967,7 @@
     "id":756,
     "burden":75,
     "value":15,
+    "wearImage":102,
     "name":"Copper Helmet Chain",
     "armorSpot":"Head",
     "animations":[
@@ -9922,6 +9982,7 @@
     "id":757,
     "burden":112,
     "value":20,
+    "wearImage":102,
     "name":"Copper Helmet Scale",
     "armorSpot":"Head",
     "animations":[
@@ -9936,6 +9997,7 @@
     "id":758,
     "burden":150,
     "value":25,
+    "wearImage":102,
     "name":"Copper Helmet Plate",
     "armorSpot":"Head",
     "animations":[
@@ -9950,6 +10012,7 @@
     "id":759,
     "burden":100,
     "value":15,
+    "wearImage":103,
     "name":"Magnetite Helmet Chain",
     "armorSpot":"Head",
     "animations":[
@@ -9964,6 +10027,7 @@
     "id":760,
     "burden":200,
     "value":25,
+    "wearImage":103,
     "name":"Magnetite Helmet Scale",
     "armorSpot":"Head",
     "animations":[
@@ -9978,6 +10042,7 @@
     "id":761,
     "burden":300,
     "value":35,
+    "wearImage":103,
     "name":"Magnetite Helmet Plate",
     "armorSpot":"Head",
     "animations":[
@@ -9992,6 +10057,7 @@
     "id":762,
     "burden":525,
     "value":75,
+    "wearImage":104,
     "name":"Zircon Helmet Chain",
     "armorSpot":"Head",
     "animations":[
@@ -10006,6 +10072,7 @@
     "id":763,
     "burden":562,
     "value":80,
+    "wearImage":104,
     "name":"Zircon Helmet Scale",
     "armorSpot":"Head",
     "animations":[
@@ -10020,6 +10087,7 @@
     "id":764,
     "burden":600,
     "value":85,
+    "wearImage":104,
     "name":"Zircon Helmet Plate",
     "armorSpot":"Head",
     "animations":[
@@ -10034,6 +10102,7 @@
     "id":765,
     "burden":637,
     "value":90,
+    "wearImage":105,
     "name":"Titanium Helmet Chain",
     "armorSpot":"Head",
     "animations":[
@@ -10048,6 +10117,7 @@
     "id":766,
     "burden":675,
     "value":95,
+    "wearImage":105,
     "name":"Titanium Helmet Scale",
     "armorSpot":"Head",
     "animations":[
@@ -10062,6 +10132,7 @@
     "id":767,
     "burden":712,
     "value":100,
+    "wearImage":105,
     "name":"Titanium Helmet Plate",
     "armorSpot":"Head",
     "animations":[
@@ -10076,6 +10147,7 @@
     "id":768,
     "burden":187,
     "value":30,
+    "wearImage":106,
     "name":"Silver Helmet Chain",
     "armorSpot":"Head",
     "animations":[
@@ -10090,6 +10162,7 @@
     "id":769,
     "burden":225,
     "value":35,
+    "wearImage":106,
     "name":"Silver Helmet Scale",
     "armorSpot":"Head",
     "animations":[
@@ -10104,6 +10177,7 @@
     "id":770,
     "burden":262,
     "value":40,
+    "wearImage":106,
     "name":"Silver Helmet Plate",
     "armorSpot":"Head",
     "animations":[
@@ -10118,6 +10192,7 @@
     "id":771,
     "burden":412,
     "value":60,
+    "wearImage":107,
     "name":"Gold Helmet Chain",
     "armorSpot":"Head",
     "animations":[
@@ -10132,6 +10207,7 @@
     "id":772,
     "burden":450,
     "value":65,
+    "wearImage":107,
     "name":"Gold Helmet Scale",
     "armorSpot":"Head",
     "animations":[
@@ -10146,6 +10222,7 @@
     "id":773,
     "burden":487,
     "value":70,
+    "wearImage":107,
     "name":"Gold Helmet Plate",
     "armorSpot":"Head",
     "animations":[
@@ -10160,6 +10237,7 @@
     "id":774,
     "burden":750,
     "value":105,
+    "wearImage":108,
     "name":"Hessite Helmet Chain",
     "armorSpot":"Head",
     "animations":[
@@ -10174,6 +10252,7 @@
     "id":775,
     "burden":787,
     "value":110,
+    "wearImage":108,
     "name":"Hessite Helmet Scale",
     "armorSpot":"Head",
     "animations":[
@@ -10188,6 +10267,7 @@
     "id":776,
     "burden":825,
     "value":115,
+    "wearImage":108,
     "name":"Hessite Helmet Plate",
     "armorSpot":"Head",
     "animations":[
@@ -10332,6 +10412,7 @@
     "id":787,
     "burden":50,
     "value":15,
+    "wearImage":109,
     "name":"Leather Cap",
     "armorSpot":"Head",
     "animations":[
@@ -10346,6 +10427,7 @@
     "id":788,
     "burden":200,
     "value":20,
+    "wearImage":20,
     "name":"Leather Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -11972,6 +12054,7 @@
     "id":913,
     "burden":10,
     "value":0,
+    "wearImage":115,
     "name":"Santa\u0027s Cap",
     "armorSpot":"Head",
     "animations":[
@@ -13140,6 +13223,7 @@
     "id":1005,
     "burden":100,
     "value":200,
+    "wearImage":0,
     "name":"Miners Hat",
     "armorSpot":"Head",
     "animations":[
@@ -15737,6 +15821,7 @@
     "id":1206,
     "burden":100,
     "value":1000,
+    "wearImage":0,
     "name":"Viking Helmet",
     "armorSpot":"Head",
     "animations":[
@@ -15751,6 +15836,7 @@
     "id":1207,
     "burden":100,
     "value":1300,
+    "wearImage":0,
     "name":"Elite Viking Helmet",
     "armorSpot":"Head",
     "animations":[
@@ -16433,6 +16519,7 @@
     "id":1261,
     "burden":50,
     "value":1000,
+    "wearImage":110,
     "name":"Mutant Leather Cap",
     "armorSpot":"Head",
     "animations":[
@@ -16447,6 +16534,7 @@
     "id":1262,
     "burden":400,
     "value":2500,
+    "wearImage":22,
     "name":"Mutant Leather Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -16461,6 +16549,7 @@
     "id":1263,
     "burden":100,
     "value":2500,
+    "wearImage":111,
     "name":"Elk Leather Cap",
     "armorSpot":"Head",
     "animations":[
@@ -16475,6 +16564,7 @@
     "id":1264,
     "burden":600,
     "value":5000,
+    "wearImage":21,
     "name":"Elk Leather Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -16489,6 +16579,7 @@
     "id":1265,
     "burden":225,
     "value":3500,
+    "wearImage":112,
     "name":"Drake Scale Helmet",
     "armorSpot":"Head",
     "animations":[
@@ -16503,6 +16594,7 @@
     "id":1266,
     "burden":900,
     "value":7000,
+    "wearImage":23,
     "name":"Drake Scale Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -16517,6 +16609,7 @@
     "id":1267,
     "burden":150,
     "value":1000,
+    "wearImage":113,
     "name":"Skunk Helmet",
     "armorSpot":"Head",
     "animations":[
@@ -19381,6 +19474,7 @@
     "id":1487,
     "burden":450,
     "value":200,
+    "wearImage":0,
     "name":"Copper Studded Chest",
     "armorSpot":"Chest",
     "animations":[
@@ -19395,6 +19489,7 @@
     "id":1488,
     "burden":75,
     "value":75,
+    "wearImage":0,
     "name":"Copper Studded Cap",
     "armorSpot":"Head",
     "animations":[
@@ -19409,6 +19504,7 @@
     "id":1489,
     "burden":250,
     "value":200,
+    "wearImage":0,
     "name":"Copper Studded Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -19423,6 +19519,7 @@
     "id":1490,
     "burden":550,
     "value":400,
+    "wearImage":0,
     "name":"Silver Studded Chest",
     "armorSpot":"Chest",
     "animations":[
@@ -19437,6 +19534,7 @@
     "id":1491,
     "burden":100,
     "value":100,
+    "wearImage":0,
     "name":"Silver Studded Cap",
     "armorSpot":"Head",
     "animations":[
@@ -19451,6 +19549,7 @@
     "id":1492,
     "burden":350,
     "value":400,
+    "wearImage":0,
     "name":"Silver Studded Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -19465,6 +19564,7 @@
     "id":1493,
     "burden":650,
     "value":600,
+    "wearImage":0,
     "name":"Iron Studded Chest",
     "armorSpot":"Chest",
     "animations":[
@@ -19479,6 +19579,7 @@
     "id":1494,
     "burden":125,
     "value":150,
+    "wearImage":0,
     "name":"Iron Studded Cap",
     "armorSpot":"Head",
     "animations":[
@@ -19493,6 +19594,7 @@
     "id":1495,
     "burden":450,
     "value":600,
+    "wearImage":0,
     "name":"Iron Studded Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -19507,6 +19609,7 @@
     "id":1496,
     "burden":750,
     "value":1000,
+    "wearImage":0,
     "name":"Gold Studded Chest",
     "armorSpot":"Chest",
     "animations":[
@@ -19521,6 +19624,7 @@
     "id":1497,
     "burden":150,
     "value":250,
+    "wearImage":0,
     "name":"Gold Studded Cap",
     "armorSpot":"Head",
     "animations":[
@@ -19535,6 +19639,7 @@
     "id":1498,
     "burden":550,
     "value":1000,
+    "wearImage":0,
     "name":"Gold Studded Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -19549,6 +19654,7 @@
     "id":1499,
     "burden":850,
     "value":2000,
+    "wearImage":0,
     "name":"Zircon Studded Chest",
     "armorSpot":"Chest",
     "animations":[
@@ -19563,6 +19669,7 @@
     "id":1500,
     "burden":175,
     "value":500,
+    "wearImage":0,
     "name":"Zircon Studded Cap",
     "armorSpot":"Head",
     "animations":[
@@ -19577,6 +19684,7 @@
     "id":1501,
     "burden":650,
     "value":2000,
+    "wearImage":0,
     "name":"Zircon Studded Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -19591,6 +19699,7 @@
     "id":1502,
     "burden":950,
     "value":3500,
+    "wearImage":0,
     "name":"Titanium Studded Chest",
     "armorSpot":"Chest",
     "animations":[
@@ -19605,6 +19714,7 @@
     "id":1503,
     "burden":200,
     "value":750,
+    "wearImage":0,
     "name":"Titanium Studded Cap",
     "armorSpot":"Head",
     "animations":[
@@ -19619,6 +19729,7 @@
     "id":1504,
     "burden":750,
     "value":3500,
+    "wearImage":0,
     "name":"Titanium Studded Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -19633,6 +19744,7 @@
     "id":1505,
     "burden":1050,
     "value":5000,
+    "wearImage":0,
     "name":"Hessite Studded Chest",
     "armorSpot":"Chest",
     "animations":[
@@ -19647,6 +19759,7 @@
     "id":1506,
     "burden":225,
     "value":1250,
+    "wearImage":0,
     "name":"Hessite Studded Cap",
     "armorSpot":"Head",
     "animations":[
@@ -19661,6 +19774,7 @@
     "id":1507,
     "burden":750,
     "value":5000,
+    "wearImage":0,
     "name":"Hessite Studded Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -19675,6 +19789,7 @@
     "id":1508,
     "burden":1150,
     "value":7000,
+    "wearImage":0,
     "name":"Damon Studded Chest",
     "armorSpot":"Chest",
     "animations":[
@@ -19689,6 +19804,7 @@
     "id":1509,
     "burden":250,
     "value":1500,
+    "wearImage":0,
     "name":"Damon Studded Cap",
     "armorSpot":"Head",
     "animations":[
@@ -19703,6 +19819,7 @@
     "id":1510,
     "burden":850,
     "value":7000,
+    "wearImage":0,
     "name":"Damon Studded Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -19912,6 +20029,7 @@
     "id":1526,
     "burden":1500,
     "value":2200,
+    "wearImage":19,
     "name":"Steel Chest Plate",
     "armorSpot":"Chest",
     "animations":[
@@ -19926,6 +20044,7 @@
     "id":1527,
     "burden":1350,
     "value":2000,
+    "wearImage":19,
     "name":"Steel Chest Scale",
     "armorSpot":"Chest",
     "animations":[
@@ -19940,6 +20059,7 @@
     "id":1528,
     "burden":1200,
     "value":1800,
+    "wearImage":19,
     "name":"Steel Chest Chain",
     "armorSpot":"Chest",
     "animations":[
@@ -19980,6 +20100,7 @@
     "id":1531,
     "burden":375,
     "value":550,
+    "wearImage":105,
     "name":"Steel Helmet Plate",
     "armorSpot":"Head",
     "animations":[
@@ -19994,6 +20115,7 @@
     "id":1532,
     "burden":337,
     "value":500,
+    "wearImage":105,
     "name":"Steel Helmet Scale",
     "armorSpot":"Head",
     "animations":[
@@ -20008,6 +20130,7 @@
     "id":1533,
     "burden":300,
     "value":450,
+    "wearImage":105,
     "name":"Steel Helmet Chain",
     "armorSpot":"Head",
     "animations":[
@@ -20022,6 +20145,7 @@
     "id":1534,
     "burden":1500,
     "value":2200,
+    "wearImage":19,
     "name":"Steel Leggings Plate",
     "armorSpot":"Legs",
     "animations":[
@@ -20036,6 +20160,7 @@
     "id":1535,
     "burden":1350,
     "value":2000,
+    "wearImage":19,
     "name":"Steel Leggings Scale",
     "armorSpot":"Legs",
     "animations":[
@@ -20050,6 +20175,7 @@
     "id":1536,
     "burden":1200,
     "value":1800,
+    "wearImage":19,
     "name":"Steel Leggings Chain",
     "armorSpot":"Legs",
     "animations":[
@@ -23319,6 +23445,7 @@
     "id":1788,
     "burden":10,
     "value":10,
+    "wearImage":2,
     "name":"Blue Jersey",
     "armorSpot":"Chest",
     "animations":[
@@ -23333,6 +23460,7 @@
     "id":1789,
     "burden":10,
     "value":10,
+    "wearImage":4,
     "name":"Red Jersey",
     "armorSpot":"Chest",
     "animations":[
@@ -23367,6 +23495,7 @@
     "id":1791,
     "burden":10,
     "value":10,
+    "wearImage":24,
     "name":"Referee Jersey",
     "armorSpot":"Chest",
     "animations":[
@@ -23615,6 +23744,7 @@
     "id":1810,
     "burden":1000,
     "value":0,
+    "wearImage":25,
     "name":"Magma Chest Armor",
     "armorSpot":"Chest",
     "animations":[
@@ -23629,6 +23759,7 @@
     "id":1811,
     "burden":1000,
     "value":0,
+    "wearImage":24,
     "name":"Magma Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -23643,6 +23774,7 @@
     "id":1812,
     "burden":350,
     "value":0,
+    "wearImage":114,
     "name":"Magma Helmet",
     "armorSpot":"Head",
     "animations":[
@@ -25247,6 +25379,7 @@
     "id":1943,
     "burden":300,
     "value":3500,
+    "wearImage":110,
     "name":"Sewer Helmet",
     "armorSpot":"Head",
     "animations":[
@@ -27307,6 +27440,7 @@
     "id":2102,
     "burden":225,
     "value":3500,
+    "wearImage":116,
     "name":"Mongrim Leather Helmet",
     "armorSpot":"Head",
     "animations":[
@@ -27321,6 +27455,7 @@
     "id":2103,
     "burden":900,
     "value":1500,
+    "wearImage":30,
     "name":"Mongrim Leather Armor",
     "armorSpot":"Chest",
     "animations":[
@@ -27335,6 +27470,7 @@
     "id":2104,
     "burden":900,
     "value":7000,
+    "wearImage":26,
     "name":"Mongrim Leather Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -27388,6 +27524,7 @@
     "id":2108,
     "burden":250,
     "value":4000,
+    "wearImage":117,
     "name":"Dragon Scale Helmet",
     "armorSpot":"Head",
     "animations":[
@@ -27402,6 +27539,7 @@
     "id":2109,
     "burden":1000,
     "value":4000,
+    "wearImage":31,
     "name":"Dragon Scale Armor",
     "armorSpot":"Chest",
     "animations":[
@@ -27416,6 +27554,7 @@
     "id":2110,
     "burden":1000,
     "value":7000,
+    "wearImage":27,
     "name":"Dragon Scale Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -28676,6 +28815,7 @@
     "id":2225,
     "burden":500,
     "value":10000,
+    "wearImage":118,
     "name":"Tungsten Helmet",
     "armorSpot":"Head",
     "animations":[
@@ -28690,6 +28830,7 @@
     "id":2226,
     "burden":1500,
     "value":10000,
+    "wearImage":32,
     "name":"Tungsten Armor",
     "armorSpot":"Chest",
     "animations":[
@@ -28704,6 +28845,7 @@
     "id":2227,
     "burden":1500,
     "value":10000,
+    "wearImage":28,
     "name":"Tungsten Leggings",
     "armorSpot":"Legs",
     "animations":[
@@ -31861,6 +32003,7 @@
     "id":3043,
     "burden":1600,
     "value":2300,
+    "wearImage":26,
     "name":"Blank Chest Armor",
     "armorSpot":"Chest",
     "animations":[
@@ -31875,6 +32018,7 @@
     "id":3044,
     "burden":1600,
     "value":2300,
+    "wearImage":27,
     "name":"Typhoon Frost Chest Armor",
     "armorSpot":"Chest",
     "animations":[
@@ -31889,6 +32033,7 @@
     "id":3045,
     "burden":1600,
     "value":2300,
+    "wearImage":28,
     "name":"Typhoon Flare Chest Armor",
     "armorSpot":"Chest",
     "animations":[
@@ -31903,6 +32048,7 @@
     "id":3046,
     "burden":1600,
     "value":2300,
+    "wearImage":29,
     "name":"Typhoon Shock Chest Armor",
     "armorSpot":"Chest",
     "animations":[
@@ -32222,6 +32368,7 @@
     "id":3071,
     "burden":10,
     "value":0,
+    "wearImage":35,
     "name":"Santa\u0027s Jacket",
     "armorSpot":"Chest",
     "animations":[
@@ -32236,6 +32383,7 @@
     "id":3072,
     "burden":10,
     "value":0,
+    "wearImage":25,
     "name":"Santa\u0027s Pants",
     "armorSpot":"Legs",
     "animations":[
@@ -33554,6 +33702,7 @@
     "id":3172,
     "burden":500,
     "value":7500,
+    "wearImage":119,
     "name":"Skull Helmet",
     "armorSpot":"Head",
     "animations":[
@@ -33581,6 +33730,7 @@
     "id":3174,
     "burden":600,
     "value":4000,
+    "wearImage":117,
     "name":"Reinforced Dragon Helm",
     "armorSpot":"Head",
     "animations":[
