@@ -6,6 +6,7 @@ import hoten.gridiaserver.Container;
 import hoten.gridiaserver.map.Coord;
 import hoten.gridiaserver.content.ItemInstance;
 import hoten.gridiaserver.Player;
+import hoten.gridiaserver.content.Item;
 import hoten.gridiaserver.content.ItemUse;
 import hoten.gridiaserver.map.Sector;
 import hoten.serving.message.Protocols;
@@ -47,7 +48,11 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
 
         // fake an inventory
         List<ItemInstance> inv = new ArrayList();
-        inv.addAll(Arrays.asList(57, 140, 280, 1067, 1068, 826, 1974, 1974, 1039, 171, 902, 901, 339, 341).stream()
+        inv.addAll(Arrays.asList(
+                57, 140, 280, 1067, 1068, 826, 1974,
+                1974, 1039, 171, 902, 901, 339, 341,
+                29, 19, 18, 12, 913
+        ).stream()
                 .map(i -> {
                     int quantity = _server.contentManager.getItem(i).stackable ? 1000 : 1;
                     return _server.contentManager.createItemInstance(i, quantity);
@@ -60,9 +65,9 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
 
         // fake equipment
         List<ItemInstance> equipment = new ArrayList();
-        equipment.add(_server.contentManager.createItemInstance(29));
-        equipment.add(_server.contentManager.createItemInstance(19));
-        equipment.add(_server.contentManager.createItemInstance(18));
+        equipment.add(_server.contentManager.createItemInstance(0));
+        equipment.add(_server.contentManager.createItemInstance(0));
+        equipment.add(_server.contentManager.createItemInstance(0));
         player.equipment = new Container(equipment, Container.ContainerType.Equipment);
 
         send(_messageBuilder.container(player.inventory));
@@ -92,6 +97,12 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
                 break;
             case PickItemUse:
                 ProcessPickItemUse(data);
+                break;
+            case EquipItem:
+                ProcessEquipItem(data);
+                break;
+            case UnequipItem:
+                ProcessUnequipItem(data);
                 break;
         }
     }
@@ -300,5 +311,32 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         List<ItemUse> uses = _server.contentManager.getItemUses(tool.data, focus.data);
         ItemUse use = uses.get(useIndex);
         ExecuteItemUse(use, tool, focus, useSource, useDest, useSourceIndex, useDestIndex);
+    }
+
+    private void ProcessEquipItem(JsonObject data) throws IOException {
+        int slotIndex = data.get("slotIndex").getAsInt();
+        ItemInstance item = player.inventory.get(slotIndex);
+        if (item.data.itemClass == Item.ItemClass.Armor) {
+            int armorSlotIndex = item.data.armorSpot.ordinal();
+            if (player.equipment.isEmpty(armorSlotIndex)) {
+                player.inventory.deleteSlot(slotIndex);
+                player.equipment.set(armorSlotIndex, item);
+            } else {
+                player.inventory.set(slotIndex, player.equipment.get(armorSlotIndex));
+                player.equipment.set(armorSlotIndex, item);
+            }
+        } else {
+            send(_messageBuilder.chat("You cannot equip a " + item.data.name));
+        }
+    }
+
+    private void ProcessUnequipItem(JsonObject data) throws IOException {
+        int slotIndex = data.get("slotIndex").getAsInt();
+        ItemInstance itemToUnequip = player.equipment.get(slotIndex);
+        if (player.inventory.add(itemToUnequip)) {
+            player.equipment.deleteSlot(slotIndex);
+        } else {
+            send(_messageBuilder.chat("Your inventory is full."));
+        }
     }
 }

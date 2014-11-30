@@ -11,6 +11,8 @@ import java.util.List;
 
 public class Container {
 
+    
+
     public enum ContainerType {
 
         Inventory, Equipment, Other
@@ -34,6 +36,10 @@ public class Container {
 
     public ItemInstance get(int index) {
         return _items.get(index);
+    }
+    
+    public boolean isEmpty(int index) {
+        return _items.get(index) == ItemInstance.NONE;
     }
 
     public void set(int index, ItemInstance item) {
@@ -68,7 +74,7 @@ public class Container {
     }
 
     public void updateSlot(int slotIndex) {
-        ServingGridia.instance.updateInventorySlot(this, slotIndex); // :(
+        ServingGridia.instance.updateContainerSlot(this, slotIndex); // :(
     }
 
     public void deleteSlot(int slotIndex) {

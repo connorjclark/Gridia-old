@@ -36,9 +36,10 @@ namespace Gridia
             {
                 var pos = new Vector2(0, i * 32);
                 var itemRend = new ItemRenderable(pos, items[i]);
-                itemRend.OnRightClick = () =>
+                var slotIndex = i;
+                itemRend.OnDoubleClick = () =>
                 {
-                    Locator.Get<GridiaDriver>().OpenRecipeBook(itemRend.Item);
+                    Locator.Get<ConnectionToGridiaServerHandler>().UnequipItem(slotIndex);
                 };
                 _itemRenderables.Add(itemRend);
                 _slots.AddChild(itemRend);

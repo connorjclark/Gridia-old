@@ -170,11 +170,20 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
 
     private void ContainerUpdate(JObject data)
     {
+        var type = (String)data["type"];
         int index = (int)data["index"];
         int item = (int)data["item"];
         int quantity = (int)data["quantity"];
         var itemInstance = Locator.Get<ContentManager>().GetItem(item).GetInstance(quantity);
-        Locator.Get<InventoryWindow>().SetItemAt(index, itemInstance);
+        // :(
+        if (type == "Inventory")
+        {
+            Locator.Get<InventoryWindow>().SetItemAt(index, itemInstance);
+        }
+        else if (type == "Equipment")
+        {
+            Locator.Get<EquipmentWindow>().SetItemAt(index, itemInstance);
+        }
     }
 
     private void SectorData(JavaBinaryReader data) 
@@ -312,6 +321,24 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         Message message = new JsonMessageBuilder()
             .Protocol(Outbound(GridiaProtocols.Serverbound.Chat))
                 .Set("msg", text)
+                .Build();
+        Send(message);
+    }
+
+    public void EquipItem(int slotIndex)
+    {
+        Message message = new JsonMessageBuilder()
+            .Protocol(Outbound(GridiaProtocols.Serverbound.EquipItem))
+                .Set("slotIndex", slotIndex)
+                .Build();
+        Send(message);
+    }
+
+    public void UnequipItem(int slotIndex)
+    {
+        Message message = new JsonMessageBuilder()
+            .Protocol(Outbound(GridiaProtocols.Serverbound.UnequipItem))
+                .Set("slotIndex", slotIndex)
                 .Build();
         Send(message);
     }

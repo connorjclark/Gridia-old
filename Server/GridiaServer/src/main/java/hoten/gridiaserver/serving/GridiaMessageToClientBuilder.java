@@ -142,6 +142,7 @@ public class GridiaMessageToClientBuilder {
         ItemInstance item = container.get(slotIndex);
         return new JsonMessageBuilder()
                 .protocol(outbound(ContainerUpdate))
+                .set("type", container.type)
                 .set("index", slotIndex)
                 .set("item", item.data.id)
                 .set("quantity", item.quantity)

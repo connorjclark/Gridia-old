@@ -224,8 +224,8 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         return addItemNear(tileMap.getCoordFromIndex(index), item, bufferzone);
     }
 
-    public void updateInventorySlot(Container inventory, int slotIndex) {
-        Message message = messageBuilder.updateContainerSlot(inventory, slotIndex);
-        sendTo(message, client -> client.player.inventory.id == inventory.id);
+    public void updateContainerSlot(Container container, int slotIndex) {
+        Message message = messageBuilder.updateContainerSlot(container, slotIndex);
+        sendTo(message, client -> client.player.inventory.id == container.id || client.player.equipment.id == container.id);
     }
 }
