@@ -3,7 +3,6 @@ package hoten.gridiaserver.content;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import hoten.gridiaserver.DefaultCreatureImage;
 import hoten.gridiaserver.serializers.ItemDeserializer;
 import hoten.gridiaserver.serializers.MonsterDeserializer;
 import hoten.serving.fileutils.FileUtils;
@@ -50,6 +49,12 @@ public class ContentManager {
             return _items.get(0);
         }
         return _items.get(id);
+    }
+
+    public Item getItemByName(String name) {
+        return _items.stream()
+                .filter(item -> item != null && item.name.equalsIgnoreCase(name))
+                .findFirst().get();
     }
 
     public Monster getMonster(int id) {
@@ -103,7 +108,7 @@ public class ContentManager {
     private List load(String json, Type type) {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Item.class, new ItemDeserializer()) // :(
-                .registerTypeAdapter(Monster.class, new MonsterDeserializer())
+                .registerTypeAdapter(Monster.class, new MonsterDeserializer(this))
                 .create();
         return gson.fromJson(json, type);
     }

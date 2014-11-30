@@ -23,6 +23,8 @@ import java.net.Socket;
 import static hoten.gridiaserver.serving.GridiaProtocols.Clientbound.*;
 import hoten.serving.message.JsonMessageBuilder;
 import hoten.serving.message.Message;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
@@ -79,6 +81,15 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         });
     }
 
+    public void killCreature(Creature cre) {
+        if (cre.inventory != null) {
+            cre.inventory.getItems().stream().forEach((item) -> {
+                addItemNear(cre.location, item, 10);
+            });
+        }
+        removeCreature(cre);
+    }
+
     public void removeCreature(Creature cre) {
         Sector sector = tileMap.getSectorOf(cre.location);
         creatures.remove(cre.id);
@@ -126,7 +137,10 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     }
 
     public Creature createCreature(Monster mold, Coord loc) {
-        return createCreature(mold.image, loc);
+        Creature cre = createCreature(mold.image, loc);
+        List<ItemInstance> items = mold.drops;
+        cre.inventory = new Container(items);
+        return cre;
     }
 
     public Creature createCreature(int image, Coord loc) {
@@ -248,6 +262,6 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
 
     public void updateContainerSlot(Container container, int slotIndex) {
         Message message = messageBuilder.updateContainerSlot(container, slotIndex);
-        sendTo(message, client -> client.player.inventory.id == container.id || client.player.equipment.id == container.id);
+        sendTo(message, client -> client.player.creature.inventory.id == container.id || client.player.equipment.id == container.id);
     }
 }

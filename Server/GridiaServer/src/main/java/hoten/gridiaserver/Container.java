@@ -11,8 +11,6 @@ import java.util.List;
 
 public class Container {
 
-    
-
     public enum ContainerType {
 
         Inventory, Equipment, Other
@@ -30,6 +28,10 @@ public class Container {
         this.type = type;
     }
 
+    public Container(List<ItemInstance> items) {
+        this(items, ContainerType.Inventory);
+    }
+
     public List<ItemInstance> getItems() {
         return _items;
     }
@@ -37,7 +39,7 @@ public class Container {
     public ItemInstance get(int index) {
         return _items.get(index);
     }
-    
+
     public boolean isEmpty(int index) {
         return _items.get(index) == ItemInstance.NONE;
     }

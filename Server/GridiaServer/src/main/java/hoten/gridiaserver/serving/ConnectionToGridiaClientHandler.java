@@ -63,8 +63,8 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         for (int i = 0; i < 20; i++) {
             inv.add(_server.contentManager.createItemInstance(0));
         }
-        player.inventory = new Container(inv, Container.ContainerType.Inventory);
-
+        player.creature.inventory = new Container(inv, Container.ContainerType.Inventory);
+        
         // fake equipment
         List<ItemInstance> equipment = new ArrayList();
         equipment.add(_server.contentManager.createItemInstance(0));
@@ -78,7 +78,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         }
         _server.updateCreatureImage(player.creature);
 
-        send(_messageBuilder.container(player.inventory));
+        send(_messageBuilder.container(player.creature.inventory));
         send(_messageBuilder.container(player.equipment));
     }
 
@@ -157,7 +157,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
                 if (index == -1) {
                     return ItemInstance.NONE;
                 }
-                return player.inventory.get(index);
+                return player.creature.inventory.get(index);
             default:
                 return ItemInstance.NONE;
         }
@@ -169,7 +169,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
                 _server.reduceItemQuantity(_server.tileMap.getCoordFromIndex(index), quantity);
                 break;
             case "inv":
-                player.inventory.reduceQuantityAt(index, quantity);
+                player.creature.inventory.reduceQuantityAt(index, quantity);
                 break;
         }
     }
@@ -202,9 +202,9 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
                 break;
             case "inv":
                 if (destIndex == -1) {
-                    moveSuccessful = player.inventory.add(item);
+                    moveSuccessful = player.creature.inventory.add(item);
                 } else {
-                    moveSuccessful = player.inventory.add(item, destIndex);
+                    moveSuccessful = player.creature.inventory.add(item, destIndex);
                 }
                 break;
         }
@@ -270,7 +270,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
                     _server.changeItem(sourceIndex, tool);
                     break;
                 case "inv":
-                    player.inventory.set(sourceIndex, tool);
+                    player.creature.inventory.set(sourceIndex, tool);
                     break;
             }
         }
@@ -342,15 +342,15 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
 
     private void ProcessEquipItem(JsonObject data) throws IOException {
         int slotIndex = data.get("slotIndex").getAsInt();
-        ItemInstance item = player.inventory.get(slotIndex);
+        ItemInstance item = player.creature.inventory.get(slotIndex);
         // :(
         if (item.data.isEquipable()) {
             int armorSlotIndex = item.data.armorSpot.ordinal();
             if (player.equipment.isEmpty(armorSlotIndex)) {
-                player.inventory.deleteSlot(slotIndex);
+                player.creature.inventory.deleteSlot(slotIndex);
                 player.equipment.set(armorSlotIndex, item);
             } else {
-                player.inventory.set(slotIndex, player.equipment.get(armorSlotIndex));
+                player.creature.inventory.set(slotIndex, player.equipment.get(armorSlotIndex));
                 player.equipment.set(armorSlotIndex, item);
             }
             updatePlayerImage();
@@ -362,7 +362,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
     private void ProcessUnequipItem(JsonObject data) throws IOException {
         int slotIndex = data.get("slotIndex").getAsInt();
         ItemInstance itemToUnequip = player.equipment.get(slotIndex);
-        if (player.inventory.add(itemToUnequip)) {
+        if (player.creature.inventory.add(itemToUnequip)) {
             player.equipment.deleteSlot(slotIndex);
             updatePlayerImage();
         } else {
@@ -382,7 +382,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         Coord loc = _gson.fromJson(data.get("loc"), Coord.class);
         Creature creature = _server.tileMap.getCreature(loc);
         if (creature != null && !creature.belongsToPlayer) {
-            _server.removeCreature(creature);
+            _server.killCreature(creature);
             _server.sendToClientsWithAreaLoaded(_messageBuilder.animation(1), loc);
         }
     }
