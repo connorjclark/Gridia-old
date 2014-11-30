@@ -69,6 +69,10 @@ namespace Gridia
                 itemRend.OnMouseDown = () => MouseDownSlot = slotIndex;
                 itemRend.OnClick = () => MouseUpSlot = slotIndex;
                 itemRend.OnMouseOver = () => MouseOverSlot = slotIndex;
+                itemRend.OnDoubleClick = () =>
+                {
+                    Locator.Get<ConnectionToGridiaServerHandler>().EquipItem(slotIndex);
+                };
                 _itemRenderables.Add(itemRend);
                 _slots.AddChild(itemRend);
             }
