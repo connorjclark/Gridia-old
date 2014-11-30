@@ -1,0 +1,32 @@
+Movement:
+
+WASD keys
+
+Picking up an item:
+
+Shift + QWEASDZXC (directional)
+  or
+Drag from world to an inventory slot
+  or
+Drag from world to your player
+
+Crafting:
+
+1234567890 to select slot in inventory
+  or
+Ctrl + WASD to change selected slot
+Space + QWEASDZXC to use selected slot
+Alt + QWEASDZXC to use hand
+
+Item Craft Selection:
+
+Click
+  or
+WASD to change selection, space to confirm
+
+Other:
+
+Double click item in inventory to equip
+Double click equipped item to unequip
+Right click item in inventory to view recipe book
+Q to drop a single item of currently selected slot
