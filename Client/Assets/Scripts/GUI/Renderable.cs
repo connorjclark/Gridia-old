@@ -87,6 +87,7 @@ namespace Gridia
 
         // :(
         public Action OnClick { protected get; set; } // really just mouse up... :(
+        public Action OnDoubleClick { private get; set; }
         public Action OnMouseDown { private get; set; }
         public Action OnRightClick { private get; set; }
         public Action OnMouseOver { private get; set; }
@@ -106,9 +107,7 @@ namespace Gridia
 
         public virtual void HandleEvents() 
         {
-            var mouseOver = Rect.Contains(Event.current.mousePosition);
-
-            if (mouseOver)
+            if (Rect.Contains(Event.current.mousePosition))
             {
                 if (Event.current.type == EventType.MouseUp)
                 {
@@ -123,7 +122,14 @@ namespace Gridia
                 }
                 else if (Event.current.type == EventType.MouseDown)
                 {
-                    if (OnMouseDown != null) OnMouseDown();
+                    if (Event.current.clickCount == 2)
+                    {
+                        if (OnDoubleClick != null) OnDoubleClick();
+                    }
+                    else
+                    {
+                        if (OnMouseDown != null) OnMouseDown();
+                    }
                 }
                 else if (ToolTip != null && ToolTip() != "")
                 {
