@@ -117,7 +117,9 @@ public class GridiaDriver : MonoBehaviour
             var pos = cre.Position;
             var focusPos = _game.view.FocusPosition;
             var relative = pos - focusPos;
-            var rect = new Rect(relative.x * 32, Screen.height - relative.y * 32 - 32, 32, 32);
+
+            var tileSize = 32 * _game.view.Scale;
+            var rect = new Rect(relative.x * tileSize, Screen.height - relative.y * tileSize - tileSize, tileSize, tileSize);
 
             DrawCreature(rect, cre.Image);
         }
