@@ -233,7 +233,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         var usePickWindow = Locator.Get<ItemUsePickWindow>();
         usePickWindow.Uses = uses;
         var tabbedUI = Locator.Get<TabbedUI>();
-        tabbedUI.Add(10, usePickWindow);
+        tabbedUI.Add(10, usePickWindow, true);
         usePickWindow.ItemUsePickState = new ItemUsePickState(usePickWindow);
         Locator.Get<StateMachine>().SetState(usePickWindow.ItemUsePickState);
     }

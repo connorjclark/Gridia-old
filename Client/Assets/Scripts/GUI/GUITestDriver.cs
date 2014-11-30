@@ -23,7 +23,7 @@ namespace Gridia
             // inv window
 
             var invWindow = new InventoryWindow(Vector2.zero);
-            tabWindow.Add(123, invWindow);
+            tabWindow.Add(123, invWindow, true);
 
             var inv = new List<ItemInstance>();
             for (int i = 0; i < 25; i++)
@@ -62,7 +62,7 @@ namespace Gridia
 
             var testWindow = new GridiaWindow(Vector2.zero, "test");
             testWindow.AddChild(displayList);
-            tabWindow.Add(11, testWindow);
+            tabWindow.Add(11, testWindow, true);
         }
 
         public void OnGUI() 

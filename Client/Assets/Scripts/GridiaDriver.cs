@@ -84,18 +84,20 @@ public class GridiaDriver : MonoBehaviour
             }
             _recipeBook = new RecipeBookWindow(Vector2.zero, item);
             _recipeBook.ScaleXY = 1.75f;
-            tabbedGui.Add(2008, _recipeBook);
+            tabbedGui.Add(2008, _recipeBook, true);
         }
     }
 
     void InitTabbedGui() 
     {
-        tabbedGui.Add(1221, invGui); // :(
-        tabbedGui.Add(15, equipmentGui); // :(
-        tabbedGui.Add(147, chatGui); // :(
+        tabbedGui.Add(1221, invGui, false); // :(
+        tabbedGui.Add(15, equipmentGui, false); // :(
+        tabbedGui.Add(147, chatGui, false); // :(
+
         var options = new OptionsWindow(Vector2.zero);
-        options.Visible = false;
-        tabbedGui.Add(0, options);
+        options.X = (Screen.width - options.Width) / 2;
+        options.Y = (Screen.height - options.Height) / 2;
+        tabbedGui.Add(0, options, false);
     }
 
     void OnGUI() {

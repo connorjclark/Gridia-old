@@ -31,18 +31,17 @@ namespace Gridia
             _windows.ForEach(w => w.HandleEvents());
         }
 
-        public void Add(int tabItemSpriteIndex, GridiaWindow window) 
+        public void Add(int tabItemSpriteIndex, GridiaWindow window, bool visible) 
         {
             if (!_windows.Contains(window)) 
             {
+                window.Visible = visible;
                 _windows.Add(window);
-
                 var tab = new ItemImageRenderable(Vector2.zero, tabItemSpriteIndex);
                 tab.ToolTip = () => window.WindowName;
                 tab.OnClick = () => ToggleVisiblity(window);
                 _tabs.AddChild(tab);
                 SetTabTransparency(_tabs.NumChildren - 1);
-
                 Dirty = true;
             }
         }
@@ -54,6 +53,7 @@ namespace Gridia
             {
                 _windows.RemoveAt(index);
                 _tabs.RemoveChildAt(index);
+                Dirty = true;
             }
         }
 

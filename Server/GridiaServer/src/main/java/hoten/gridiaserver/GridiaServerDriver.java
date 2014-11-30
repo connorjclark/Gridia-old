@@ -49,7 +49,9 @@ public class GridiaServerDriver {
         server.creatures.values().stream()
                 .filter(cre -> !cre.belongsToPlayer)
                 .forEach(cre -> {
-                    server.moveCreatureRandomly(cre);
+                    if (Math.random() > 0.5) {
+                        server.moveCreatureRandomly(cre);
+                    }
                 });
     }
 
