@@ -12,7 +12,7 @@ public class ItemInstance {
         return q < 1000;
     }
 
-    public final Item data;
+    public Item data;
     public int quantity;
 
     public ItemInstance(Item data, int quantity) {

@@ -1,5 +1,6 @@
 package hoten.gridiaserver;
 
+import hoten.gridiaserver.content.Monster;
 import hoten.gridiaserver.map.Coord;
 import hoten.gridiaserver.serving.ServingGridia;
 import java.io.File;
@@ -30,10 +31,18 @@ public class GridiaServerDriver {
                 server.changeItem(randCoord, server.contentManager.createItemInstance(randomItemId));
             }
         }
-
+        
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
-            // nothing right now
-        }, 0, 200, TimeUnit.MILLISECONDS);
+            if (server.anyPlayersOnline()) {
+                Monster mold = server.contentManager.getMonster(120);
+                server.createCreature(mold, randomCoord());
+                server.creatures.values().stream()
+                        .filter(cre -> !cre.belongsToPlayer)
+                        .forEach(cre -> {
+                            server.moveCreatureRandomly(cre);
+                        });
+            }
+        }, 0, 500, TimeUnit.MILLISECONDS);
     }
 
     public static Coord randomCoord() {

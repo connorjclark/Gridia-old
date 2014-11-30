@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import hoten.gridiaserver.serializers.ItemDeserializer;
+import hoten.gridiaserver.serializers.MonsterDeserializer;
 import hoten.serving.fileutils.FileUtils;
 import java.io.File;
 import java.lang.reflect.Type;
@@ -16,12 +17,14 @@ public class ContentManager {
 
     private final List<Item> _items;
     private final Map<Item, List<ItemUse>> _itemUses;
+    private final List<Monster> _monsters;
     private final String _path;
 
     public ContentManager(String worldName) {
         _path = String.format("%s/clientdata/content/", worldName);
         _items = loadItems();
-        _items.set(0, ItemInstance.NONE.data);
+        _monsters = loadMonsters();
+        ItemInstance.NONE.data = _items.get(0);
         _itemUses = loadItemUses();
     }
 
@@ -46,6 +49,13 @@ public class ContentManager {
             return _items.get(0);
         }
         return _items.get(id);
+    }
+
+    public Monster getMonster(int id) {
+        if (id == -1) {
+            return _monsters.get(0);
+        }
+        return _monsters.get(id);
     }
 
     public List<ItemUse> getItemUses(Item tool, Item focus) {
@@ -73,6 +83,13 @@ public class ContentManager {
         return load(json, type);
     }
 
+    private List<Monster> loadMonsters() {
+        String json = FileUtils.readTextFile(new File(_path + "monsters.json"));
+        Type type = new TypeToken<List<Monster>>() {
+        }.getType();
+        return load(json, type);
+    }
+
     private Map<Item, List<ItemUse>> loadItemUses() {
         String json = FileUtils.readTextFile(new File(_path + "itemuses.json"));
         Type type = new TypeToken<List<ItemUse>>() {
@@ -84,7 +101,8 @@ public class ContentManager {
 
     private List load(String json, Type type) {
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Item.class, new ItemDeserializer())
+                .registerTypeAdapter(Item.class, new ItemDeserializer()) // :(
+                .registerTypeAdapter(Monster.class, new MonsterDeserializer())
                 .create();
         return gson.fromJson(json, type);
     }

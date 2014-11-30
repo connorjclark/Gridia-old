@@ -9,6 +9,7 @@ import hoten.gridiaserver.CustomPlayerImage;
 import hoten.gridiaserver.DefaultCreatureImage;
 import hoten.gridiaserver.content.ItemInstance;
 import hoten.gridiaserver.Player;
+import hoten.gridiaserver.content.Monster;
 import hoten.gridiaserver.map.Sector;
 import hoten.gridiaserver.map.SectorLoader;
 import hoten.gridiaserver.map.SectorSaver;
@@ -97,7 +98,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         cre.location = loc;
         sendToClientsWithSectorLoaded(messageBuilder.moveCreature(cre, timeInMillisecondsToMove), sector);
     }
-    
+
     public void updateCreaureImage(Creature cre) {
         Sector sector = tileMap.getSectorOf(cre.location);
         sendToClientsWithSectorLoaded(messageBuilder.updateCreatureImage(cre), sector);
@@ -123,11 +124,14 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
             createCreature(image, c);
         }
     }
-    
+
+    public Creature createCreature(Monster mold, Coord loc) {
+        return createCreature(mold.image, loc);
+    }
+
     public Creature createCreature(int image, Coord loc) {
         return createCreature(new DefaultCreatureImage(image), loc);
     }
-
 
     public Creature createCreature(CreatureImage image, Coord loc) {
         Creature cre = new Creature();

@@ -134,10 +134,11 @@ public class GridiaDriver : MonoBehaviour
             var defaultImage = image as DefaultCreatureImage;
             int spriteId = defaultImage.SpriteIndex;
             int textureX = (spriteId % GridiaConstants.SPRITES_IN_SHEET) % GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
-            int textureY = 9 - (spriteId % GridiaConstants.SPRITES_IN_SHEET) / GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
+            int textureY = 10 - (spriteId % GridiaConstants.SPRITES_IN_SHEET) / GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW - defaultImage.Height; // ?
             var texCoords = new Rect(textureX / 10.0f, textureY / 10.0f, defaultImage.Width / 10.0f, defaultImage.Height / 10.0f); // :( don't hardcode 10
             rect.width *= defaultImage.Width;
             rect.height *= defaultImage.Height;
+            rect.y -= (defaultImage.Height - 1) * GridiaConstants.SPRITE_SIZE * _game.view.Scale;
             GUI.DrawTextureWithTexCoords(rect, _textureManager.Creatures[spriteId / GridiaConstants.SPRITES_IN_SHEET], texCoords);
         }
         else if (image is CustomPlayerImage)

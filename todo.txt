@@ -25,6 +25,7 @@ Teach Eric
 
 Wed & Thur
 Touch ups
+Chat message shows above player
 
 Controls
 
