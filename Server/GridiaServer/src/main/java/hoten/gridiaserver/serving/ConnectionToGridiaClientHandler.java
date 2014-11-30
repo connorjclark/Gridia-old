@@ -384,6 +384,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         if (creature != null && !creature.belongsToPlayer) {
             _server.killCreature(creature);
             _server.sendToClientsWithAreaLoaded(_messageBuilder.animation(1), loc);
+            _server.addItemNear(loc, _server.contentManager.createItemInstance(1022), 10);
         }
     }
 }
