@@ -66,8 +66,17 @@ namespace Gridia
                 var direction = _inputManager.Get4DirectionalInput();
                 if (direction != Vector3.zero)
                 {
-                    End(stateMachine, dt, new PlayerMovementState());
-                    return;
+                    var destination = Locator.Get<GridiaGame>().view.Focus.Position + direction;
+                    if (Locator.Get<TileMap>().GetCreatureAt(destination) != null)
+                    {
+                        Debug.Log("hit!");
+                        Locator.Get<ConnectionToGridiaServerHandler>().Hit(destination);
+                    }
+                    else if(Locator.Get<TileMap>().Walkable(destination))
+                    {
+                        End(stateMachine, dt, new PlayerMovementState(destination));
+                        return;
+                    }
                 }
             }
 

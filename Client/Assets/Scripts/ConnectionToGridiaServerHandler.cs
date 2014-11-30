@@ -356,4 +356,13 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
                 .Build();
         Send(message);
     }
+
+    public void Hit(Vector3 loc)
+    {
+        Message message = new JsonMessageBuilder()
+            .Protocol(Outbound(GridiaProtocols.Serverbound.Hit))
+                .Set("loc", new { x = loc.x, y = loc.y, z = loc.z })
+                .Build();
+        Send(message);
+    }
 }

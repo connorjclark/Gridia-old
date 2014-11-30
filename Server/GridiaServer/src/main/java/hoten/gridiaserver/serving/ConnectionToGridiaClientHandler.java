@@ -3,11 +3,11 @@ package hoten.gridiaserver.serving;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import hoten.gridiaserver.Container;
+import hoten.gridiaserver.Creature;
 import hoten.gridiaserver.CustomPlayerImage;
 import hoten.gridiaserver.map.Coord;
 import hoten.gridiaserver.content.ItemInstance;
 import hoten.gridiaserver.Player;
-import hoten.gridiaserver.content.Item;
 import hoten.gridiaserver.content.ItemUse;
 import hoten.gridiaserver.map.Sector;
 import hoten.serving.message.Protocols;
@@ -72,7 +72,10 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         equipment.add(_server.contentManager.createItemInstance(0));
         equipment.add(_server.contentManager.createItemInstance(0));
         player.equipment = new Container(equipment, Container.ContainerType.Equipment);
-        ((CustomPlayerImage) (player.creature.image)).moldToEquipment(player.equipment);
+        if (player.creature.image instanceof CustomPlayerImage) {
+            ((CustomPlayerImage) (player.creature.image)).moldToEquipment(player.equipment);
+        }
+        _server.updateCreaureImage(player.creature);
 
         send(_messageBuilder.container(player.inventory));
         send(_messageBuilder.container(player.equipment));
@@ -107,6 +110,9 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
                 break;
             case UnequipItem:
                 ProcessUnequipItem(data);
+                break;
+            case Hit:
+                ProcessHit(data);
                 break;
         }
     }
@@ -352,6 +358,15 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             CustomPlayerImage image = (CustomPlayerImage) player.creature.image;
             image.moldToEquipment(player.equipment);
             _server.updateCreaureImage(player.creature);
+        }
+    }
+
+    private void ProcessHit(JsonObject data) throws IOException {
+        Coord loc = _gson.fromJson(data.get("loc"), Coord.class);
+        Creature creature = _server.tileMap.getCreature(loc);
+        if (creature != null && !creature.belongsToPlayer) {
+            _server.removeCreature(creature);
+            _server.sendToClientsWithAreaLoaded(_messageBuilder.animation(1), loc);
         }
     }
 }

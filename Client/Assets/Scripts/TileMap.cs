@@ -132,6 +132,11 @@ namespace Gridia
             return GetTile((int)pos.x, (int)pos.y, (int)pos.z);
         }*/
 
+        public bool Walkable(Vector3 destination)
+        {
+            return Walkable((int)destination.x, (int)destination.y, (int)destination.z);
+        }
+
         public bool Walkable(int x, int y, int z) {
             var tile = GetTile(x, y, z);
             var loc = new Vector3(x, y, z);

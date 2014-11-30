@@ -24,32 +24,50 @@ public class GridiaServerDriver {
         System.out.println("Server started.");
 
         List<Integer> possibleItems = Arrays.asList(263, 260, 188, 264, 575);
-        for (int i = 0; i < 2000; i++) {
+        for (int i = 0; i < 1000; i++) {
             Coord randCoord = randomCoord();
             if (server.tileMap.getTile(randCoord).floor != 1) {
                 int randomItemId = possibleItems.get((int) (possibleItems.size() * Math.random()));
                 server.changeItem(randCoord, server.contentManager.createItemInstance(randomItemId));
             }
         }
-        
+
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
             if (server.anyPlayersOnline()) {
-                Monster mold = server.contentManager.getMonster(120);
-                server.createCreature(mold, randomCoord());
-                server.creatures.values().stream()
-                        .filter(cre -> !cre.belongsToPlayer)
-                        .forEach(cre -> {
-                            server.moveCreatureRandomly(cre);
-                        });
+                spawnMonster();
             }
         }, 0, 500, TimeUnit.MILLISECONDS);
+
+        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
+            if (server.anyPlayersOnline()) {
+                moveMonstersRandomly();
+            }
+        }, 0, 1500, TimeUnit.MILLISECONDS);
     }
 
-    public static Coord randomCoord() {
+    private static void moveMonstersRandomly() {
+        server.creatures.values().stream()
+                .filter(cre -> !cre.belongsToPlayer)
+                .forEach(cre -> {
+                    server.moveCreatureRandomly(cre);
+                });
+    }
+
+    private static void spawnMonster() {
+        List<Integer> possibleMonsters = Arrays.asList(120, 5);
+        int randomMonsterId = possibleMonsters.get((int) (possibleMonsters.size() * Math.random()));
+        Monster mold = server.contentManager.getMonster(randomMonsterId);
+        server.createCreature(mold, randomCoord());
+    }
+
+    private static Coord randomCoord() {
         int size = server.tileMap.size;
         int x = (int) (Math.random() * size);
         int y = (int) (Math.random() * size);
         int z = (int) (Math.random() * server.tileMap.depth);
+        if (!server.tileMap.walkable(x, y, z)) {
+            return randomCoord();
+        }
         return new Coord(x, y, z);
     }
 }

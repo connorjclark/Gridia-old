@@ -127,6 +127,7 @@ public class GridiaDriver : MonoBehaviour
         ToolTipRenderable.instance.Render();
     }
 
+    // :(
     private void DrawCreature(Rect rect, CreatureImage image)
     {
         if (image is DefaultCreatureImage)

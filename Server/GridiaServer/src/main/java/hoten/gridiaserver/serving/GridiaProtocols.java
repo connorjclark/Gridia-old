@@ -12,7 +12,7 @@ public class GridiaProtocols extends Protocols {
 
     public enum Serverbound {
 
-        PlayerMove, SectorRequest, CreatureRequest, MoveItem, Chat, UseItem, PickItemUse, EquipItem, UnequipItem
+        PlayerMove, SectorRequest, CreatureRequest, MoveItem, Chat, UseItem, PickItemUse, EquipItem, UnequipItem, Hit
     }
 
     public GridiaProtocols() {

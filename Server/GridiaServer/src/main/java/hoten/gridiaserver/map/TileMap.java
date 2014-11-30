@@ -1,6 +1,7 @@
 package hoten.gridiaserver.map;
 
 import com.google.gson.Gson;
+import hoten.gridiaserver.Creature;
 import hoten.gridiaserver.content.ItemInstance;
 
 public class TileMap {
@@ -108,6 +109,10 @@ public class TileMap {
 
     public void setItem(ItemInstance item, Coord c) {
         getTile(c.x, c.y, c.z).item = item;
+    }
+
+    public Creature getCreature(Coord loc) {
+        return getTile(loc).cre;
     }
 
     public int wrap(int value) {
