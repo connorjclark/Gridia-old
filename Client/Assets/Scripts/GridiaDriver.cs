@@ -14,6 +14,7 @@ public class GridiaDriver : MonoBehaviour
     public GridiaGame _game; // :(
     public TabbedUI tabbedGui; // :(
     public InventoryWindow invGui;
+    public EquipmentWindow equipmentGui;
     public ChatWindow chatGui;
     public ItemUsePickWindow itemUsePickWindow;
     public ItemInstance mouseDownItem = null; // :(
@@ -36,6 +37,10 @@ public class GridiaDriver : MonoBehaviour
         invGui = new InventoryWindow(new Vector2(0, Int32.MaxValue));
         Locator.Provide(invGui);
         invGui.ScaleXY = guiScale;
+
+        equipmentGui = new EquipmentWindow(new Vector2(0, 0));
+        Locator.Provide(equipmentGui);
+        equipmentGui.ScaleXY = guiScale;
 
         chatGui = new ChatWindow(new Vector2(Int32.MaxValue, Int32.MaxValue));
         Locator.Provide(chatGui);
@@ -78,17 +83,18 @@ public class GridiaDriver : MonoBehaviour
             }
             _recipeBook = new RecipeBookWindow(Vector2.zero, item);
             _recipeBook.ScaleXY = 1.75f;
-            tabbedGui.Add(3126, _recipeBook);
+            tabbedGui.Add(2008, _recipeBook);
         }
     }
 
     void InitTabbedGui() 
     {
-        tabbedGui.Add(1397, invGui); // :(
-        tabbedGui.Add(351, chatGui); // :(
+        tabbedGui.Add(1221, invGui); // :(
+        tabbedGui.Add(15, equipmentGui); // :(
+        tabbedGui.Add(147, chatGui); // :(
         var options = new OptionsWindow(Vector2.zero);
         options.Visible = false;
-        tabbedGui.Add(1, options);
+        tabbedGui.Add(0, options);
     }
 
     void OnGUI() {

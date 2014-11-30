@@ -155,7 +155,17 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
     private void Container(JObject data)
     {
         var backToJson = JsonConvert.SerializeObject(data["items"]); // :(
-        Locator.Get<InventoryWindow>().Inventory = JsonConvert.DeserializeObject<List<ItemInstance>>(backToJson, new ItemInstanceConverter());
+        var items = JsonConvert.DeserializeObject<List<ItemInstance>>(backToJson, new ItemInstanceConverter());
+        var id = (int)data["id"];
+        var type = (String)data["type"];
+        if (type == "Inventory") 
+        {
+            Locator.Get<InventoryWindow>().Items = items;
+        }
+        else
+        {
+            Locator.Get<EquipmentWindow>().Items = items;
+        }
     }
 
     private void ContainerUpdate(JObject data)

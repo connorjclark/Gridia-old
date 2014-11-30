@@ -31,14 +31,13 @@ namespace Gridia
             _windows.ForEach(w => w.HandleEvents());
         }
 
-        public void Add(int tabItemSprite, GridiaWindow window) 
+        public void Add(int tabItemSpriteIndex, GridiaWindow window) 
         {
             if (!_windows.Contains(window)) 
             {
                 _windows.Add(window);
 
-                var item = Locator.Get<ContentManager>().GetItem(tabItemSprite).GetInstance();
-                var tab = new ItemRenderable(Vector2.zero, item);
+                var tab = new ItemImageRenderable(Vector2.zero, tabItemSpriteIndex);
                 tab.ToolTip = () => window.WindowName;
                 tab.OnClick = () => ToggleVisiblity(window);
                 _tabs.AddChild(tab);
@@ -87,6 +86,28 @@ namespace Gridia
             var tab = _tabs.GetChildAt(index);
             var alpha = (byte)(_windows[index].Visible ? 255 : 100);
             tab.Color = new Color32(255, 255, 255, alpha);
+        }
+
+        class ItemImageRenderable : SpriteRenderable
+        {
+            public int SpriteIndex { get; set; }
+
+            public ItemImageRenderable(Vector2 pos, int spriteIndex)
+                : base(pos)
+            {
+                SpriteIndex = spriteIndex;
+            }
+
+            public override int GetSpriteIndex()
+            {
+                return SpriteIndex;
+            }
+
+            public override Texture GetTexture(int spriteIndex)
+            {
+                var textures = Locator.Get<TextureManager>(); // :(
+                return textures.GetItemsTexture(spriteIndex / GridiaConstants.SPRITES_IN_SHEET);
+            }
         }
     }
 }

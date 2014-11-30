@@ -40,7 +40,7 @@ namespace Gridia
         {
             base.Render();
             // :(
-            if (TileSelected != -1)
+            if (TileSelected != -1 && TileSelected < NumChildren)
             {
                 var rect = _children[TileSelected].Rect;
                 GUI.Box(rect, "");

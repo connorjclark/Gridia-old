@@ -11,14 +11,21 @@ import java.util.List;
 
 public class Container {
 
+    public enum ContainerType {
+
+        Inventory, Equipment, Other
+    }
+
     public static final UniqueIdentifiers uniqueIds = new FileResourceUniqueIdentifiers("TestWorld/containers/");
 
     private final List<ItemInstance> _items;
     public final int id;
+    public final ContainerType type;
 
-    public Container(List<ItemInstance> items) {
+    public Container(List<ItemInstance> items, ContainerType type) {
         _items = items;
         id = uniqueIds.next();
+        this.type = type;
     }
 
     public List<ItemInstance> getItems() {

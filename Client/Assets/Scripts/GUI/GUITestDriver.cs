@@ -31,7 +31,7 @@ namespace Gridia
                 inv.Add(cm.GetItem(i).GetInstance(i));
             }
 
-            invWindow.Inventory = inv;
+            invWindow.Items = inv;
 
             invWindow.ScaleXY = 2f;
 

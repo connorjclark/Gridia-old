@@ -111,6 +111,8 @@ public class GridiaMessageToClientBuilder {
         return new JsonMessageBuilder()
                 .protocol(outbound(Container))
                 .set("items", container.getItems())
+                .set("type", container.type)
+                .set("id", container.id)
                 .gson(gson)
                 .build();
     }

@@ -56,9 +56,17 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         for (int i = 0; i < 20; i++) {
             inv.add(_server.contentManager.createItemInstance(0));
         }
+        player.inventory = new Container(inv, Container.ContainerType.Inventory);
 
-        player.inventory = new Container(inv);
+        // fake equipment
+        List<ItemInstance> equipment = new ArrayList();
+        equipment.add(_server.contentManager.createItemInstance(29));
+        equipment.add(_server.contentManager.createItemInstance(19));
+        equipment.add(_server.contentManager.createItemInstance(18));
+        player.equipment = new Container(equipment, Container.ContainerType.Equipment);
+
         send(_messageBuilder.container(player.inventory));
+        send(_messageBuilder.container(player.equipment));
     }
 
     @Override

@@ -8,7 +8,7 @@ namespace Gridia
 {
     public class InventoryWindow : GridiaWindow
     {
-        public List<ItemInstance> Inventory
+        public List<ItemInstance> Items
         {
             set
             {
@@ -31,7 +31,7 @@ namespace Gridia
             : base(pos, "Inventory")
         {
             ResizeOnVertical = false;
-            Inventory = new List<ItemInstance>();
+            Items = new List<ItemInstance>();
             AddChild(_slots);
             _slots.OnKeyUp = () =>
             {
