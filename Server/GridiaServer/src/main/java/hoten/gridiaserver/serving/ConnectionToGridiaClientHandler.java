@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import hoten.gridiaserver.Container;
 import hoten.gridiaserver.Creature;
 import hoten.gridiaserver.CustomPlayerImage;
+import hoten.gridiaserver.DefaultCreatureImage;
 import hoten.gridiaserver.map.Coord;
 import hoten.gridiaserver.content.ItemInstance;
 import hoten.gridiaserver.Player;
@@ -75,7 +76,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         if (player.creature.image instanceof CustomPlayerImage) {
             ((CustomPlayerImage) (player.creature.image)).moldToEquipment(player.equipment);
         }
-        _server.updateCreaureImage(player.creature);
+        _server.updateCreatureImage(player.creature);
 
         send(_messageBuilder.container(player.inventory));
         send(_messageBuilder.container(player.equipment));
@@ -229,6 +230,22 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             }
         }
 
+        if (msg.startsWith("!image ")) {
+            try {
+                String[] split = msg.split(" ");
+                int image = Integer.parseInt(split[1]);
+                int width = split.length == 4 && split[2].matches("\\d+") ? Integer.parseInt(split[2]) : 1;
+                int height = split.length == 4 && split[3].matches("\\d+") ? Integer.parseInt(split[3]) : 1;
+                if (image == 0) {
+                    player.creature.image = new CustomPlayerImage();
+                } else if (image > 0 && image <= 700 && width > 0 && width <= 3 && height > 0 && height <= 3) {
+                    player.creature.image = new DefaultCreatureImage(image, width, height);
+                }
+                updatePlayerImage();
+            } catch (NumberFormatException e) {
+            }
+        }
+
         _server.sendToAll(_messageBuilder.chat(player.username + " says: " + msg));
     }
 
@@ -357,8 +374,8 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         if (player.creature.image instanceof CustomPlayerImage) {
             CustomPlayerImage image = (CustomPlayerImage) player.creature.image;
             image.moldToEquipment(player.equipment);
-            _server.updateCreaureImage(player.creature);
         }
+        _server.updateCreatureImage(player.creature);
     }
 
     private void ProcessHit(JsonObject data) throws IOException {

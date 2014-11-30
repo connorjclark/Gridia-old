@@ -99,7 +99,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         sendToClientsWithSectorLoaded(messageBuilder.moveCreature(cre, timeInMillisecondsToMove), sector);
     }
 
-    public void updateCreaureImage(Creature cre) {
+    public void updateCreatureImage(Creature cre) {
         Sector sector = tileMap.getSectorOf(cre.location);
         sendToClientsWithSectorLoaded(messageBuilder.updateCreatureImage(cre), sector);
     }
