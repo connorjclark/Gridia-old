@@ -1,5 +1,6 @@
 package hoten.uniqueidentifiers;
 
+import hoten.gridia.uniqueidentifiers.UniqueIdentifiers;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.Before;
