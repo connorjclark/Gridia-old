@@ -22,19 +22,21 @@ public class GraphBuildIT {
     public static void main(String[] args) {
         DelaunayGraphFactory delaunayFactory = new DelaunayGraphFactory();
         VoronoiGraphFactory voronoiFactory = new VoronoiGraphFactory();
+        
+        VoronoiGraph voronoiGraph = voronoiFactory.create(1000, 1800);
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         final List<Vector2> randomPoints = randomPoints(300, 400);
         final DelaunayGraph delaunayGraph = delaunayFactory.create(randomPoints);
-        final VoronoiGraph voronoiGraph = voronoiFactory.create(delaunayGraph);
+        //final VoronoiGraph voronoiGraph = voronoiFactory.create(delaunayGraph);
         JFrame frame = new JFrame();
         JPanel panel = new JPanel() {
             @Override
             public void paint(Graphics g) {
-                drawPoints(g, randomPoints);
-                drawEdges(g, delaunayGraph.getEdges());
+                //drawPoints(g, randomPoints);
+                //drawEdges(g, delaunayGraph.getEdges());
                 //drawTriangles(g, delaunayGraph.getTriangles());
-                //drawEdges(g, voronoiGraph.getEdges());
+                drawEdges(g, voronoiGraph.getEdges());
             }
         };
         panel.setPreferredSize(screenSize);
