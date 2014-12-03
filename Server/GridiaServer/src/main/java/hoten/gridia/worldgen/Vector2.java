@@ -9,6 +9,14 @@ public class Vector2 {
         this.y = y;
     }
 
+    public Vector2 add(Vector2 other) {
+        return new Vector2(x + other.x, y + other.y);
+    }
+
+    public Vector2 div(int divisor) {
+        return new Vector2(x / divisor, y / divisor);
+    }
+
     public Vector3 vec3() {
         return new Vector3(x, y, 0);
     }

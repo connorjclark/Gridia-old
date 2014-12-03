@@ -83,3 +83,4 @@ client_Data/
 /*.pidb
 /*.booproj
 Client/build
+tmp_voronoi_data

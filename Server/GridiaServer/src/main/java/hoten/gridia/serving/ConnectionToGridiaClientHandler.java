@@ -64,7 +64,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             inv.add(_server.contentManager.createItemInstance(0));
         }
         player.creature.inventory = new Container(inv, Container.ContainerType.Inventory);
-        
+
         // fake equipment
         List<ItemInstance> equipment = new ArrayList();
         equipment.add(_server.contentManager.createItemInstance(0));
@@ -382,8 +382,8 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         Coord loc = _gson.fromJson(data.get("loc"), Coord.class);
         Creature creature = _server.tileMap.getCreature(loc);
         if (creature != null && !creature.belongsToPlayer) {
-            _server.killCreature(creature);
             _server.sendToClientsWithAreaLoaded(_messageBuilder.animation(1), loc);
+            _server.killCreature(creature);
             _server.addItemNear(loc, _server.contentManager.createItemInstance(1022), 10);
         }
     }

@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,11 +20,11 @@ import org.junit.Test;
 
 public class GraphBuildIT {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         DelaunayGraphFactory delaunayFactory = new DelaunayGraphFactory();
         VoronoiGraphFactory voronoiFactory = new VoronoiGraphFactory();
         
-        VoronoiGraph voronoiGraph = voronoiFactory.create(1000, 1800);
+        VoronoiGraph voronoiGraph = voronoiFactory.create(3000, 2000, 2);
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         final List<Vector2> randomPoints = randomPoints(300, 400);
