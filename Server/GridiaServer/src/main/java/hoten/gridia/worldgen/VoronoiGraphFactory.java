@@ -1,92 +1,64 @@
 package hoten.gridia.worldgen;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
-import java.util.Random;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 public class VoronoiGraphFactory {
 
-    public VoronoiGraph create(int numPoints, int bounds, int numLloydRelaxations) throws IOException {
-        VoronoiGraph graph = create(randomPoints(numPoints, bounds));
+    public VoronoiGraph create(List<Vector2> points, int numLloydRelaxations) throws IOException {
+        VoronoiGraph graph = create(points);
 
         for (int i = 0; i < numLloydRelaxations; i++) {
-            List<Vector2> points = lloydRelaxation(graph);
+            points = lloydRelaxation(graph);
             graph = create(points);
         }
 
         return graph;
     }
 
-    private List<Vector2> randomPoints(int numPoints, int bound) {
-        List<Vector2> result = new ArrayList<>();
-        Random random = new Random();
-        for (int i = 0; i < numPoints; i++) {
-            result.add(new Vector2(random.nextInt(bound), random.nextInt(bound)));
-        }
-        return result;
-    }
+    public VoronoiGraph create(List<Vector2> points) throws IOException {
+        QhullBridge qhull = new QhullBridge();
+        File pointsFile = qhull.saveAsQhullPoints(points, "../../tmp_voronoi_data");
 
-    // http://www.qhull.org/html/qvoronoi.htm
-    private VoronoiGraph create(List<Vector2> points) throws IOException {
-        File pointsFile = saveAsQhullPoints(points, "../../tmp_voronoi_data");
-
-        List<Vector2> voronoiPoints = new ArrayList<>();
+        List<Vector2> voronoiCenters = new ArrayList<>();
         Set<Edge> edges = new HashSet<>();
         List<List<Vector2>> regions = new ArrayList<>();
+        Map<Edge, Edge> ridges = new HashMap<>(); // delaunay edge -> voronoi edge
 
-        String cmd = String.format("cd bin/qhull && qvoronoi p Fn FN < %s && exit", pointsFile.getAbsolutePath());
-        ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", cmd)
-                .redirectErrorStream(true);
-
-        Queue<String> output = new LinkedList();
-        try {
-            Process qhull = builder.start();
-            BufferedReader in = new BufferedReader(new InputStreamReader(qhull.getInputStream()));
-            while (true) {
-                String line = in.readLine();
-                if (line == null) {
-                    break;
-                }
-                output.add(line);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(VoronoiGraphFactory.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        String cmd = String.format("qvoronoi p Fn FN Fv < %s", pointsFile.getAbsolutePath());
+        //String cmd = String.format("qvoronoi Fv < %s", pointsFile.getAbsolutePath());
+        Queue<String> output = qhull.runQhull(cmd);
 
         output.remove();
 
         int numVoronoiPointsLeft = Integer.parseInt(output.remove());
+        System.out.println("numVoronoiPointsLeft = " + numVoronoiPointsLeft);
 
         while (numVoronoiPointsLeft-- > 0) {
             String line = output.remove();
             String[] split = line.trim().split("\\s+");
             int x = (int) (Double.parseDouble(split[0]));
             int y = (int) (Double.parseDouble(split[1]));
-            voronoiPoints.add(new Vector2(x, y));
+            voronoiCenters.add(new Vector2(x, y));
         }
 
         output.remove();
 
-        voronoiPoints.forEach(a -> {
+        voronoiCenters.forEach(a -> {
             String line = output.remove();
             String[] split = line.split(" ");
             Arrays.asList(split).stream().skip(1).forEach(strIndex -> {
                 int index = Integer.parseInt(strIndex);
                 if (index >= 0) {
-                    Vector2 b = voronoiPoints.get(index);
+                    Vector2 b = voronoiCenters.get(index);
                     edges.add(new Edge(a, b));
                 }
             });
@@ -102,25 +74,33 @@ public class VoronoiGraphFactory {
             Arrays.asList(split).stream().skip(1).forEach(strIndex -> {
                 int index = Integer.parseInt(strIndex);
                 if (index >= 0) {
-                    region.add(voronoiPoints.get(index));
+                    region.add(voronoiCenters.get(index));
                 }
             });
 
             regions.add(region);
         }
 
-        return new VoronoiGraph(voronoiPoints, edges, regions);
-    }
+        int numRidges = Integer.parseInt(output.remove());
+        for (int i = 0; i < numRidges; i++) {
+            String line = output.remove();
+            String[] split = line.split("\\s+");
 
-    private File saveAsQhullPoints(List<Vector2> points, String filePath) throws IOException {
-        String result = "2\n" + points.size() + "\n" + points.stream().
-                map(point -> String.format("%d %d", point.x, point.y))
-                .collect(Collectors.joining("\n"));
+            Vector2 pointA = points.get(Integer.parseInt(split[1]));
+            Vector2 pointB = points.get(Integer.parseInt(split[2]));
 
-        File file = new File(filePath);
-        Files.write(file.toPath(), result.getBytes());
+            int indexA = Integer.parseInt(split[3]);
+            int indexB = Integer.parseInt(split[4]);
 
-        return file;
+            if (indexA != 0 && indexB != 0) {
+                Vector2 voronoiCenterA = voronoiCenters.get(Integer.parseInt(split[3]) - 1);
+                Vector2 voronoiCenterB = voronoiCenters.get(Integer.parseInt(split[4]) - 1);
+                ridges.put(new Edge(pointA, pointB), new Edge(voronoiCenterA, voronoiCenterB));
+            }
+        }
+        System.out.println("numRidgesLeft = " + numRidges);
+
+        return new VoronoiGraph(points, voronoiCenters, edges, regions, ridges);
     }
 
     private List<Vector2> lloydRelaxation(VoronoiGraph graph) throws IOException {
@@ -142,18 +122,26 @@ public class VoronoiGraphFactory {
 
     public static class VoronoiGraph {
 
-        private final List<Vector2> _voronoiPoints;
+        private final List<Vector2> _points;
+        private final List<Vector2> _voronoiCenters;
         private final Set<Edge> _edges;
         private final List<List<Vector2>> _regions;
+        private final Map<Edge, Edge> _ridges;
 
-        public VoronoiGraph(List<Vector2> points, Set<Edge> edges, List<List<Vector2>> regions) {
-            _voronoiPoints = points;
+        public VoronoiGraph(List<Vector2> points, List<Vector2> voronoiCenters, Set<Edge> edges, List<List<Vector2>> regions, Map<Edge, Edge> ridges) {
+            _points = points;
+            _voronoiCenters = voronoiCenters;
             _edges = edges;
             _regions = regions;
+            _ridges = ridges;
         }
 
-        public List<Vector2> getVoronoiPoints() {
-            return _voronoiPoints;
+        public List<Vector2> getPoints() {
+            return _points;
+        }
+
+        public List<Vector2> getVoronoiCenters() {
+            return _voronoiCenters;
         }
 
         public Set<Edge> getEdges() {
@@ -162,6 +150,10 @@ public class VoronoiGraphFactory {
 
         public List<List<Vector2>> getRegions() {
             return _regions;
+        }
+
+        public Map<Edge, Edge> getRidges() {
+            return _ridges;
         }
     }
 }
