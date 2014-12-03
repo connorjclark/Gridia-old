@@ -20,7 +20,7 @@
               <configuration>
                 <archive>
                   <manifest>
-                    <mainClass>hoten.gridiaserver.GridiaServerDriver</mainClass>
+                    <mainClass>hoten.gridia.GridiaServerDriver</mainClass>
                   </manifest>
                 </archive>
                 <descriptorRefs>
