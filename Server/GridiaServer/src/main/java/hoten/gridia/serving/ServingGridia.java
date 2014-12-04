@@ -22,6 +22,7 @@ import java.net.Socket;
 import static hoten.gridia.serving.GridiaProtocols.Clientbound.*;
 import hoten.serving.message.JsonMessageBuilder;
 import hoten.serving.message.Message;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -36,6 +37,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     public final ContentManager contentManager;
     public final Map<Integer, Creature> creatures = new ConcurrentHashMap();
     private final Random random = new Random();
+    public boolean devMode = false; // :(
 
     public ServingGridia(String worldName, String mapName, int port, File clientDataFolder, String localDataFolderName) throws IOException {
         super(port, new GridiaProtocols(), clientDataFolder, localDataFolderName);
@@ -91,9 +93,13 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
 
     public void dropCreatureInventory(Creature cre) {
         if (cre.inventory != null) {
-            cre.inventory.getItems().stream().forEach((item) -> {
+            List<ItemInstance> items = cre.inventory.getItems();
+            items.stream().forEach((item) -> {
                 addItemNear(cre.location, item, 10);
             });
+            for (int i = 0; i < items.size(); i++) {
+                cre.inventory.deleteSlot(i);
+            }
             sendToClientsWithAreaLoaded(messageBuilder.animation(45), cre.location);
             addItemNear(cre.location, contentManager.createItemInstance(1022), 10);
         }
@@ -152,7 +158,10 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
 
     public Creature createCreature(Monster mold, Coord loc) {
         Creature cre = createCreature(mold.image, loc);
-        List<ItemInstance> items = mold.drops;
+        List<ItemInstance> items = new ArrayList<>();
+        mold.drops.forEach(itemDrop -> {
+            items.add(new ItemInstance(itemDrop));
+        });
         cre.inventory = new Container(items);
         return cre;
     }

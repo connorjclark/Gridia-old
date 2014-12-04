@@ -197,7 +197,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         }
 
         ItemInstance item = getItemFrom(source, sourceIndex);
-        if (item == ItemInstance.NONE) {
+        if (item == ItemInstance.NONE || (!_server.devMode && !item.data.moveable)) {
             return;
         }
         if (quantityToMove == -1) {
@@ -328,6 +328,10 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
                 } catch (NumberFormatException e) {
                 }
             }
+        }
+        
+        if (msg.equals("!dev")) {
+            _server.devMode = !_server.devMode;
         }
 
         _server.sendToAll(_messageBuilder.chat(player.username + " says: " + msg));

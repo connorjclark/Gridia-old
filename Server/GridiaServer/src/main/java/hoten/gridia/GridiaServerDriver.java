@@ -26,8 +26,8 @@ public class GridiaServerDriver {
 
     public static void main(String[] args) throws IOException {
         if (args.length == 0) {
-            args = "TestWorld RoachCity 30000 20 51235053089343 1000 2 20".split("\\s+");
-            //args = "TestWorld RoachCity".split("\\s+");
+            //args = "TestWorld RoachCity 30000 20 51235053089343 1000 2 20".split("\\s+");
+            args = "TestWorld RoachCity".split("\\s+");
         }
 
         String worldName = args[0];
@@ -82,10 +82,9 @@ public class GridiaServerDriver {
             if (server.anyPlayersOnline()) {
                 server.tileMap.save();
             }
-        }, 0, 1500, TimeUnit.MILLISECONDS);
+        }, 0, 1, TimeUnit.MINUTES);
 
         // hard code the roach quest for the presentation
-        arenaLocation = new Coord(server.tileMap.size / 2, server.tileMap.size / 2, 0);
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
             if (server.anyPlayersOnline()) {
                 List<Creature> playersInArena = getPlayersInArena();
@@ -108,20 +107,20 @@ public class GridiaServerDriver {
     }
 
     // hard code spawn location
-    private static Coord playerSpawn = new Coord(500, 500, 0);
+    private static Coord playerSpawn = new Coord(498, 543, 0);
 
     public static Coord getPlayerSpawn() {
         Random random = new Random();
-        return playerSpawn.add(random.nextInt(5), random.nextInt(5), 0);
+        return playerSpawn.add(random.nextInt(3), random.nextInt(3), 0);
     }
 
     // hard code the roach quest for the presentation
-    private static int arenaTickRate = 1000;
-    private static int arenaDuration = 15 * 1000;
-    private static Coord arenaLocation;
-    private static Coord winnerTeleportLocation = new Coord(0, 0, 0);
-    private static Coord loserTeleportLocation = new Coord(0, 0, 1);
-    private static int arenaSize = 0;
+    private static int arenaTickRate = 5000;
+    private static int arenaDuration = 30 * 1000;
+    private static Coord arenaLocation = new Coord(495, 481, 1);
+    private static Coord winnerTeleportLocation = new Coord(550, 485, 1);
+    private static Coord loserTeleportLocation = new Coord(550, 490, 1);
+    private static int arenaSize = 23;
     private static int numRoaches = 50;
     private static boolean arenaIsGoing;
     private static int timeLeft;

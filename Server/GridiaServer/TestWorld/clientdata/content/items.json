@@ -31,7 +31,7 @@
       2
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -44,7 +44,7 @@
       3
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -83,7 +83,7 @@
       6
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -135,7 +135,7 @@
       10
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -148,7 +148,7 @@
       11
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -1693,7 +1693,7 @@
       349
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -1810,7 +1810,7 @@
       6
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -2211,7 +2211,7 @@
       87
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -2224,7 +2224,7 @@
       88
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -2237,7 +2237,7 @@
       89
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -2341,7 +2341,7 @@
       303
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -2354,7 +2354,7 @@
       129
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -2367,7 +2367,7 @@
       692
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -2380,7 +2380,7 @@
       694
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -2393,7 +2393,7 @@
       695
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -2406,7 +2406,7 @@
       693
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -2484,7 +2484,7 @@
       129
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -2510,7 +2510,7 @@
       428
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -2536,7 +2536,7 @@
       129
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -2549,7 +2549,7 @@
       532
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -2708,7 +2708,7 @@
       1928
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -2721,7 +2721,7 @@
       1936
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -2734,7 +2734,7 @@
       1926
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -2747,7 +2747,7 @@
       425
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -2760,7 +2760,7 @@
       1927
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -2773,7 +2773,7 @@
       1425
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -2786,7 +2786,7 @@
       1937
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -2799,7 +2799,7 @@
       1455
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -2812,7 +2812,7 @@
       1938
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -2825,7 +2825,7 @@
       1485
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -2838,7 +2838,7 @@
       110
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -2851,7 +2851,7 @@
       111
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -2864,7 +2864,7 @@
       112
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -2877,7 +2877,7 @@
       113
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -2890,7 +2890,7 @@
       114
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -2903,7 +2903,7 @@
       115
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -2916,7 +2916,7 @@
       116
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -2929,7 +2929,7 @@
       117
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -2942,7 +2942,7 @@
       118
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -2955,7 +2955,7 @@
       119
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -2968,7 +2968,7 @@
       120
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -2981,7 +2981,7 @@
       121
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -2994,7 +2994,7 @@
       122
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3007,7 +3007,7 @@
       123
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3020,7 +3020,7 @@
       124
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3033,7 +3033,7 @@
       207
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3046,7 +3046,7 @@
       208
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3059,7 +3059,7 @@
       209
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3072,7 +3072,7 @@
       217
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3085,7 +3085,7 @@
       218
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3098,7 +3098,7 @@
       219
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3111,7 +3111,7 @@
       227
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3124,7 +3124,7 @@
       228
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3137,7 +3137,7 @@
       229
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3150,7 +3150,7 @@
       229
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3163,7 +3163,7 @@
       229
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3176,7 +3176,7 @@
       229
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3189,7 +3189,7 @@
       442
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3202,7 +3202,7 @@
       442
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3215,7 +3215,7 @@
       442
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3228,7 +3228,7 @@
       442
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3241,7 +3241,7 @@
       100
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3254,7 +3254,7 @@
       101
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3267,7 +3267,7 @@
       535
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3280,7 +3280,7 @@
       534
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3293,7 +3293,7 @@
       229
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3306,7 +3306,7 @@
       442
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3332,7 +3332,7 @@
       102
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3345,7 +3345,7 @@
       103
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3358,7 +3358,7 @@
       125
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -3371,7 +3371,7 @@
       126
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -3384,7 +3384,7 @@
       127
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -3397,7 +3397,7 @@
       129
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -3410,7 +3410,7 @@
       129
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -3449,7 +3449,7 @@
       105
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3462,7 +3462,7 @@
       106
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -3490,7 +3490,7 @@
       237
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -3503,7 +3503,7 @@
       257
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -3516,7 +3516,7 @@
       257
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -3529,7 +3529,7 @@
       258
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -3542,7 +3542,7 @@
       256
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -3555,7 +3555,7 @@
       255
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -3581,7 +3581,7 @@
       129
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -3691,7 +3691,7 @@
       153
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -3730,7 +3730,7 @@
       156
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -3743,7 +3743,7 @@
       157
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -4094,7 +4094,7 @@
       107
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -4107,7 +4107,7 @@
       108
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -4120,7 +4120,7 @@
       109
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -4133,7 +4133,7 @@
       148
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -4146,7 +4146,7 @@
       128
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -4159,7 +4159,7 @@
       149
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -4172,7 +4172,7 @@
       226
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -4185,7 +4185,7 @@
       246
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -4266,7 +4266,7 @@
       223
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -4338,7 +4338,7 @@
       182
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -4382,7 +4382,7 @@
       185
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -4768,7 +4768,7 @@
       186
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -5398,7 +5398,7 @@
       240
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -5411,7 +5411,7 @@
       241
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -5424,7 +5424,7 @@
       242
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -5645,7 +5645,7 @@
       613
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -5658,7 +5658,7 @@
       614
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -5684,7 +5684,7 @@
       613
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -5697,7 +5697,7 @@
       615
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -5723,7 +5723,7 @@
       613
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -5736,7 +5736,7 @@
       616
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -5762,7 +5762,7 @@
       613
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -5775,7 +5775,7 @@
       617
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -5918,7 +5918,7 @@
       500
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Bridge"
   },
@@ -6054,7 +6054,7 @@
       403
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -6067,7 +6067,7 @@
       404
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -6080,7 +6080,7 @@
       405
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -6093,7 +6093,7 @@
       406
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -6106,7 +6106,7 @@
       407
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -6119,7 +6119,7 @@
       408
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -6132,7 +6132,7 @@
       409
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -6145,7 +6145,7 @@
       413
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -6158,7 +6158,7 @@
       414
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -6171,7 +6171,7 @@
       415
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -6184,7 +6184,7 @@
       416
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -6197,7 +6197,7 @@
       417
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -6210,7 +6210,7 @@
       418
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -6223,7 +6223,7 @@
       419
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -6236,7 +6236,7 @@
       423
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -6249,7 +6249,7 @@
       424
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -6262,7 +6262,7 @@
       426
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -6342,7 +6342,7 @@
       774
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -6355,7 +6355,7 @@
       775
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -6410,7 +6410,7 @@
       391
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -6428,7 +6428,7 @@
       392
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -6591,7 +6591,7 @@
       525
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -6604,7 +6604,7 @@
       526
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -6617,7 +6617,7 @@
       527
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -6643,7 +6643,7 @@
       525
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -7686,7 +7686,7 @@
       802
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -7699,7 +7699,7 @@
       802
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -7712,7 +7712,7 @@
       802
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -7725,7 +7725,7 @@
       803
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -7738,7 +7738,7 @@
       804
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -7777,7 +7777,7 @@
       267
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -7790,7 +7790,7 @@
       267
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -7803,7 +7803,7 @@
       267
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -7816,7 +7816,7 @@
       267
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -7829,7 +7829,7 @@
       267
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -7842,7 +7842,7 @@
       267
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -7855,7 +7855,7 @@
       267
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -7868,7 +7868,7 @@
       267
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -7881,7 +7881,7 @@
       267
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -7894,7 +7894,7 @@
       267
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -7907,7 +7907,7 @@
       267
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -8089,7 +8089,7 @@
       303
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -8128,7 +8128,7 @@
       257
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -8141,7 +8141,7 @@
       129
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -8388,7 +8388,7 @@
       303
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -8401,7 +8401,7 @@
       524
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -8414,7 +8414,7 @@
       513
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -8427,7 +8427,7 @@
       512
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -8440,7 +8440,7 @@
       523
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -8453,7 +8453,7 @@
       129
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -8726,7 +8726,7 @@
       442
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -8739,7 +8739,7 @@
       229
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -8791,7 +8791,7 @@
       11
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -8817,7 +8817,7 @@
       266
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -8869,7 +8869,7 @@
       237
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -8908,7 +8908,7 @@
       699
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -9012,7 +9012,7 @@
       102
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -9194,7 +9194,7 @@
       842
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -9207,7 +9207,7 @@
       844
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -9220,7 +9220,7 @@
       837
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -9233,7 +9233,7 @@
       838
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -9246,7 +9246,7 @@
       839
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -9259,7 +9259,7 @@
       849
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -9272,7 +9272,7 @@
       840
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -9285,7 +9285,7 @@
       841
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -9298,7 +9298,7 @@
       843
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -9311,7 +9311,7 @@
       845
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -9324,7 +9324,7 @@
       846
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -9337,7 +9337,7 @@
       847
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -9350,7 +9350,7 @@
       848
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -11088,7 +11088,7 @@
       129
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -11114,7 +11114,7 @@
       129
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -11127,7 +11127,7 @@
       303
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -11140,7 +11140,7 @@
       834
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -11153,7 +11153,7 @@
       835
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -11166,7 +11166,7 @@
       833
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -11259,7 +11259,7 @@
       267
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -11497,7 +11497,7 @@
       908
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -11562,7 +11562,7 @@
       970
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -11756,7 +11756,7 @@
       977
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -11782,7 +11782,7 @@
       978
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -11808,7 +11808,7 @@
       979
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -11834,7 +11834,7 @@
       980
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -11860,7 +11860,7 @@
       981
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -11886,7 +11886,7 @@
       982
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -11912,7 +11912,7 @@
       983
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -11938,7 +11938,7 @@
       984
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -11964,7 +11964,7 @@
       985
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -11990,7 +11990,7 @@
       986
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -12068,7 +12068,7 @@
       988
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -12733,7 +12733,7 @@
       989
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -12759,7 +12759,7 @@
       990
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -12785,7 +12785,7 @@
       991
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -12811,7 +12811,7 @@
       992
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -12837,7 +12837,7 @@
       993
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -12876,7 +12876,7 @@
       994
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -12915,7 +12915,7 @@
       995
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -12975,7 +12975,7 @@
       999
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -13079,7 +13079,7 @@
       687
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -13092,7 +13092,7 @@
       598
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Cave_down"
   },
@@ -13105,7 +13105,7 @@
       641
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Cave_up"
   },
@@ -13118,7 +13118,7 @@
       2190
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Cave_down"
   },
@@ -13131,7 +13131,7 @@
       599
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Cave_up"
   },
@@ -13144,7 +13144,7 @@
       634
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Cave_down"
   },
@@ -13157,7 +13157,7 @@
       635
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Cave_up"
   },
@@ -13170,7 +13170,7 @@
       636
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Cave_down"
   },
@@ -13183,7 +13183,7 @@
       637
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Cave_up"
   },
@@ -13196,7 +13196,7 @@
       594
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Cave_down"
   },
@@ -13209,7 +13209,7 @@
       595
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Cave_up"
   },
@@ -13222,7 +13222,7 @@
       596
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Cave_down"
   },
@@ -13235,7 +13235,7 @@
       597
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Cave_up"
   },
@@ -13435,7 +13435,7 @@
       1100
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -13448,7 +13448,7 @@
       1101
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -13461,7 +13461,7 @@
       1102
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -13474,7 +13474,7 @@
       1103
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -13610,7 +13610,7 @@
       327
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -13623,7 +13623,7 @@
       328
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -13636,7 +13636,7 @@
       329
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -13716,7 +13716,7 @@
       1016
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -13729,7 +13729,7 @@
       1017
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -13990,7 +13990,7 @@
       359
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":true,
     "class":"Normal"
   },
@@ -14325,7 +14325,7 @@
       392
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Fire"
   },
@@ -14459,7 +14459,7 @@
       392
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -14477,7 +14477,7 @@
       392
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -14493,7 +14493,7 @@
       340
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -14506,7 +14506,7 @@
       341
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -14584,7 +14584,7 @@
       1004
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -14833,7 +14833,7 @@
       1232
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -14846,7 +14846,7 @@
       1000
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Cave_down"
   },
@@ -14859,7 +14859,7 @@
       1001
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Cave_up"
   },
@@ -15170,7 +15170,7 @@
       474
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -15183,7 +15183,7 @@
       475
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -15475,7 +15475,7 @@
       1013
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -15493,7 +15493,7 @@
       1021
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -16145,7 +16145,7 @@
       1104
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -16188,7 +16188,7 @@
       1094
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Trap"
   },
@@ -16201,7 +16201,7 @@
       1094
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Trap"
   },
@@ -16214,7 +16214,7 @@
       1093
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -16227,7 +16227,7 @@
       1094
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Trap"
   },
@@ -16240,7 +16240,7 @@
       1094
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Trap"
   },
@@ -16253,7 +16253,7 @@
       1094
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Trap"
   },
@@ -16266,7 +16266,7 @@
       1094
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Trap"
   },
@@ -16279,7 +16279,7 @@
       1094
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Trap"
   },
@@ -16292,7 +16292,7 @@
       1094
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Trap"
   },
@@ -16305,7 +16305,7 @@
       1094
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Trap"
   },
@@ -16318,7 +16318,7 @@
       1094
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Trap"
   },
@@ -16332,7 +16332,7 @@
       1094
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Trap"
   },
@@ -16345,7 +16345,7 @@
       1094
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Trap"
   },
@@ -16358,7 +16358,7 @@
       1094
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Trap"
   },
@@ -16371,7 +16371,7 @@
       1095
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Trap"
   },
@@ -16384,7 +16384,7 @@
       1096
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Trap"
   },
@@ -16623,7 +16623,7 @@
       1109
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Trap"
   },
@@ -16636,7 +16636,7 @@
       409
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -16649,7 +16649,7 @@
       774
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -16662,7 +16662,7 @@
       414
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -16675,7 +16675,7 @@
       775
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -17504,7 +17504,7 @@
       1183
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18099,7 +18099,7 @@
       1210
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -18112,7 +18112,7 @@
       1211
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -18125,7 +18125,7 @@
       1212
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -18138,7 +18138,7 @@
       1213
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -18151,7 +18151,7 @@
       1214
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -18164,7 +18164,7 @@
       1215
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -18177,7 +18177,7 @@
       1216
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -18190,7 +18190,7 @@
       1217
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -18203,7 +18203,7 @@
       748
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -18216,7 +18216,7 @@
       749
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -18255,7 +18255,7 @@
       1230
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18268,7 +18268,7 @@
       1231
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18320,7 +18320,7 @@
       895
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18333,7 +18333,7 @@
       896
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18346,7 +18346,7 @@
       895
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18359,7 +18359,7 @@
       896
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18372,7 +18372,7 @@
       1227
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18385,7 +18385,7 @@
       1226
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18398,7 +18398,7 @@
       813
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18411,7 +18411,7 @@
       814
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18424,7 +18424,7 @@
       812
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18463,7 +18463,7 @@
       1228
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18476,7 +18476,7 @@
       1229
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18489,7 +18489,7 @@
       823
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18502,7 +18502,7 @@
       1250
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18515,7 +18515,7 @@
       824
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18528,7 +18528,7 @@
       822
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18671,7 +18671,7 @@
       1222
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18684,7 +18684,7 @@
       1255
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18697,7 +18697,7 @@
       807
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18710,7 +18710,7 @@
       1259
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18723,7 +18723,7 @@
       808
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18736,7 +18736,7 @@
       806
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18749,7 +18749,7 @@
       129
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -18762,7 +18762,7 @@
       1251
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18775,7 +18775,7 @@
       1252
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18788,7 +18788,7 @@
       827
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18801,7 +18801,7 @@
       1260
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18814,7 +18814,7 @@
       829
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18827,7 +18827,7 @@
       826
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18866,7 +18866,7 @@
       1251
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18879,7 +18879,7 @@
       1252
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18892,7 +18892,7 @@
       827
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18905,7 +18905,7 @@
       1261
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18918,7 +18918,7 @@
       828
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -18931,7 +18931,7 @@
       826
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -19048,7 +19048,7 @@
       1262
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -19061,7 +19061,7 @@
       1263
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -19074,7 +19074,7 @@
       1264
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -19087,7 +19087,7 @@
       1265
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -19100,7 +19100,7 @@
       1271
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -19113,7 +19113,7 @@
       1266
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -19126,7 +19126,7 @@
       1276
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -19139,7 +19139,7 @@
       1267
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -19152,7 +19152,7 @@
       1268
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -19165,7 +19165,7 @@
       1269
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -19178,7 +19178,7 @@
       1289
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -19191,7 +19191,7 @@
       129
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -19204,7 +19204,7 @@
       1094
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Trap"
   },
@@ -19243,7 +19243,7 @@
       1233
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -19256,7 +19256,7 @@
       1234
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -19269,7 +19269,7 @@
       1235
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -19282,7 +19282,7 @@
       1236
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -19295,7 +19295,7 @@
       1237
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -19308,7 +19308,7 @@
       1238
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -19321,7 +19321,7 @@
       1239
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -19334,7 +19334,7 @@
       1243
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -19347,7 +19347,7 @@
       1244
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -19360,7 +19360,7 @@
       1245
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -19373,7 +19373,7 @@
       1246
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -19386,7 +19386,7 @@
       1247
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -19399,7 +19399,7 @@
       1248
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -19412,7 +19412,7 @@
       1249
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -19425,7 +19425,7 @@
       1253
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -19438,7 +19438,7 @@
       1254
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -19451,7 +19451,7 @@
       1256
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -19464,7 +19464,7 @@
       1257
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -19477,7 +19477,7 @@
       1258
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -19503,7 +19503,7 @@
       1220
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -19516,7 +19516,7 @@
       1280
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -21425,7 +21425,7 @@
       1403
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21438,7 +21438,7 @@
       1404
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21451,7 +21451,7 @@
       1405
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21464,7 +21464,7 @@
       1406
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21477,7 +21477,7 @@
       1407
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21490,7 +21490,7 @@
       1408
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21503,7 +21503,7 @@
       1409
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21516,7 +21516,7 @@
       1413
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21529,7 +21529,7 @@
       1414
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21542,7 +21542,7 @@
       1415
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21555,7 +21555,7 @@
       1416
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21568,7 +21568,7 @@
       1417
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21581,7 +21581,7 @@
       1418
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21594,7 +21594,7 @@
       1419
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21607,7 +21607,7 @@
       1423
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21620,7 +21620,7 @@
       1424
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21633,7 +21633,7 @@
       1426
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21646,7 +21646,7 @@
       1427
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21659,7 +21659,7 @@
       1428
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21672,7 +21672,7 @@
       1433
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21685,7 +21685,7 @@
       1434
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21698,7 +21698,7 @@
       1435
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21711,7 +21711,7 @@
       1436
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21724,7 +21724,7 @@
       1437
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21737,7 +21737,7 @@
       1438
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21750,7 +21750,7 @@
       1439
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21763,7 +21763,7 @@
       1443
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21776,7 +21776,7 @@
       1444
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21789,7 +21789,7 @@
       1445
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21802,7 +21802,7 @@
       1446
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21815,7 +21815,7 @@
       1447
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21828,7 +21828,7 @@
       1448
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21841,7 +21841,7 @@
       1449
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21854,7 +21854,7 @@
       1453
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21867,7 +21867,7 @@
       1454
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21880,7 +21880,7 @@
       1456
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21893,7 +21893,7 @@
       1457
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21906,7 +21906,7 @@
       1458
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21919,7 +21919,7 @@
       1463
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21932,7 +21932,7 @@
       1464
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21945,7 +21945,7 @@
       1465
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21958,7 +21958,7 @@
       1466
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21971,7 +21971,7 @@
       1467
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21984,7 +21984,7 @@
       1468
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -21997,7 +21997,7 @@
       1469
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22010,7 +22010,7 @@
       1473
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22023,7 +22023,7 @@
       1474
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22036,7 +22036,7 @@
       1475
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22049,7 +22049,7 @@
       1476
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22062,7 +22062,7 @@
       1477
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22075,7 +22075,7 @@
       1478
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22088,7 +22088,7 @@
       1479
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22101,7 +22101,7 @@
       1483
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22114,7 +22114,7 @@
       1484
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22127,7 +22127,7 @@
       1486
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22140,7 +22140,7 @@
       1487
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22153,7 +22153,7 @@
       1488
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22296,7 +22296,7 @@
       1500
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22309,7 +22309,7 @@
       1501
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22322,7 +22322,7 @@
       1502
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22335,7 +22335,7 @@
       1510
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22348,7 +22348,7 @@
       1520
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22361,7 +22361,7 @@
       1521
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22374,7 +22374,7 @@
       1522
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22387,7 +22387,7 @@
       1523
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22400,7 +22400,7 @@
       1513
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22413,7 +22413,7 @@
       1512
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22439,7 +22439,7 @@
       1514
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22452,7 +22452,7 @@
       1524
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22465,7 +22465,7 @@
       1503
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22478,7 +22478,7 @@
       1504
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22491,7 +22491,7 @@
       1533
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22504,7 +22504,7 @@
       1543
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22517,7 +22517,7 @@
       1534
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22530,7 +22530,7 @@
       1553
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22543,7 +22543,7 @@
       1544
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -22725,7 +22725,7 @@
       1094
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Trap"
   },
@@ -23011,7 +23011,7 @@
       1540
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -23024,7 +23024,7 @@
       1527
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -23756,7 +23756,7 @@
       1600
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -23979,7 +23979,7 @@
       1094
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Trap"
   },
@@ -23992,7 +23992,7 @@
       359
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -24005,7 +24005,7 @@
       359
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -24018,7 +24018,7 @@
       89
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -24031,7 +24031,7 @@
       89
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -24044,7 +24044,7 @@
       0
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -24057,7 +24057,7 @@
       0
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -24070,7 +24070,7 @@
       0
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -24083,7 +24083,7 @@
       0
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -24207,7 +24207,7 @@
       303
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -24246,7 +24246,7 @@
       257
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -24259,7 +24259,7 @@
       129
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -24363,7 +24363,7 @@
       0
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -24376,7 +24376,7 @@
       65
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -24415,7 +24415,7 @@
       258
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -24441,7 +24441,7 @@
       1622
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -24457,7 +24457,7 @@
       1633
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Bridge"
   },
@@ -24473,7 +24473,7 @@
       1634
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Bridge"
   },
@@ -24489,7 +24489,7 @@
       1635
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Bridge"
   },
@@ -24505,7 +24505,7 @@
       1636
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Bridge"
   },
@@ -24518,7 +24518,7 @@
       1627
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -24650,7 +24650,7 @@
       1637
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Bridge"
   },
@@ -24663,7 +24663,7 @@
       1638
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Bridge"
   },
@@ -24676,7 +24676,7 @@
       1409
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -24689,7 +24689,7 @@
       1414
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -24702,7 +24702,7 @@
       1427
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -24715,7 +24715,7 @@
       1428
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -24754,7 +24754,7 @@
       1433
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -24767,7 +24767,7 @@
       1434
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -24780,7 +24780,7 @@
       1435
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -24793,7 +24793,7 @@
       1436
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -24806,7 +24806,7 @@
       1437
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -24819,7 +24819,7 @@
       1438
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -24832,7 +24832,7 @@
       1439
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -24845,7 +24845,7 @@
       1443
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -24858,7 +24858,7 @@
       1444
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -24871,7 +24871,7 @@
       1445
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -24884,7 +24884,7 @@
       1446
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -24897,7 +24897,7 @@
       1447
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -24910,7 +24910,7 @@
       1448
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -24923,7 +24923,7 @@
       1449
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -24936,7 +24936,7 @@
       1453
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -24949,7 +24949,7 @@
       1454
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -24962,7 +24962,7 @@
       1456
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -24975,7 +24975,7 @@
       1457
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -24988,7 +24988,7 @@
       1458
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -25016,7 +25016,7 @@
       102
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -25029,7 +25029,7 @@
       105
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -25042,7 +25042,7 @@
       103
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -25055,7 +25055,7 @@
       106
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -25130,7 +25130,7 @@
       1094
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Trap"
   },
@@ -25486,7 +25486,7 @@
       129
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -25764,7 +25764,7 @@
       1714
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -25822,7 +25822,7 @@
       1696
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Trap"
   },
@@ -26329,7 +26329,7 @@
       1800
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26342,7 +26342,7 @@
       1801
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26355,7 +26355,7 @@
       1839
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26368,7 +26368,7 @@
       1804
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26381,7 +26381,7 @@
       1805
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26394,7 +26394,7 @@
       1806
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26407,7 +26407,7 @@
       1807
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26420,7 +26420,7 @@
       1808
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26433,7 +26433,7 @@
       1809
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26446,7 +26446,7 @@
       1810
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26459,7 +26459,7 @@
       1811
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26472,7 +26472,7 @@
       1812
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26485,7 +26485,7 @@
       1813
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26498,7 +26498,7 @@
       1814
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26511,7 +26511,7 @@
       1815
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26524,7 +26524,7 @@
       1816
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26537,7 +26537,7 @@
       1817
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26550,7 +26550,7 @@
       1818
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26563,7 +26563,7 @@
       1819
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26576,7 +26576,7 @@
       1820
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26589,7 +26589,7 @@
       1821
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26602,7 +26602,7 @@
       1822
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26615,7 +26615,7 @@
       1823
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26628,7 +26628,7 @@
       1824
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26641,7 +26641,7 @@
       1825
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26654,7 +26654,7 @@
       1826
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26667,7 +26667,7 @@
       1827
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26680,7 +26680,7 @@
       1828
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26700,7 +26700,7 @@
       1831
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26713,7 +26713,7 @@
       1829
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26726,7 +26726,7 @@
       1837
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26739,7 +26739,7 @@
       1836
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26752,7 +26752,7 @@
       1833
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26765,7 +26765,7 @@
       1834
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26778,7 +26778,7 @@
       1835
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26791,7 +26791,7 @@
       1802
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -26804,7 +26804,7 @@
       1803
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -27078,7 +27078,7 @@
       1740
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -27091,7 +27091,7 @@
       1741
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -27104,7 +27104,7 @@
       1742
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -27117,7 +27117,7 @@
       1743
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -27130,7 +27130,7 @@
       1750
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -27143,7 +27143,7 @@
       1751
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -27156,7 +27156,7 @@
       1752
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -27169,7 +27169,7 @@
       1753
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -27234,7 +27234,7 @@
       379
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -27247,7 +27247,7 @@
       379
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -27260,7 +27260,7 @@
       379
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -27273,7 +27273,7 @@
       379
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -27286,7 +27286,7 @@
       379
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -27299,7 +27299,7 @@
       379
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -27312,7 +27312,7 @@
       379
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -27325,7 +27325,7 @@
       379
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -27338,7 +27338,7 @@
       379
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -27351,7 +27351,7 @@
       379
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28068,7 +28068,7 @@
       1451
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28081,7 +28081,7 @@
       1653
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28094,7 +28094,7 @@
       1905
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28107,7 +28107,7 @@
       1940
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28123,7 +28123,7 @@
       1942
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28139,7 +28139,7 @@
       1944
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28152,7 +28152,7 @@
       633
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28165,7 +28165,7 @@
       525
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28178,7 +28178,7 @@
       525
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28191,7 +28191,7 @@
       633
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28204,7 +28204,7 @@
       633
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28217,7 +28217,7 @@
       633
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28276,7 +28276,7 @@
       1906
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28289,7 +28289,7 @@
       1907
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28302,7 +28302,7 @@
       1908
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28315,7 +28315,7 @@
       1920
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28328,7 +28328,7 @@
       1921
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28341,7 +28341,7 @@
       1922
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28367,7 +28367,7 @@
       1916
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28380,7 +28380,7 @@
       1917
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28393,7 +28393,7 @@
       1918
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28406,7 +28406,7 @@
       1923
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28419,7 +28419,7 @@
       1924
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28432,7 +28432,7 @@
       1925
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28943,7 +28943,7 @@
       2030
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -28956,7 +28956,7 @@
       2031
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -29164,7 +29164,7 @@
       1999
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -29177,7 +29177,7 @@
       1990
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -29190,7 +29190,7 @@
       1991
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -29961,7 +29961,7 @@
       2004
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Bridge"
   },
@@ -29974,7 +29974,7 @@
       2005
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Bridge"
   },
@@ -29987,7 +29987,7 @@
       2014
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Bridge"
   },
@@ -30000,7 +30000,7 @@
       2015
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Bridge"
   },
@@ -30013,7 +30013,7 @@
       2024
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Bridge"
   },
@@ -30026,7 +30026,7 @@
       2025
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Bridge"
   },
@@ -30039,7 +30039,7 @@
       2034
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Bridge"
   },
@@ -30052,7 +30052,7 @@
       2035
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Bridge"
   },
@@ -30065,7 +30065,7 @@
       2080
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Bridge"
   },
@@ -30078,7 +30078,7 @@
       2081
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Bridge"
   },
@@ -30091,7 +30091,7 @@
       2090
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Bridge"
   },
@@ -30104,7 +30104,7 @@
       2091
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Bridge"
   },
@@ -30122,7 +30122,7 @@
       2045
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -32582,7 +32582,7 @@
       1784
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -32595,7 +32595,7 @@
       1785
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -32608,7 +32608,7 @@
       1786
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -32634,7 +32634,7 @@
       1
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -32932,7 +32932,7 @@
       1848
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Food"
   },
@@ -32945,7 +32945,7 @@
       1847
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Food"
   },
@@ -32958,7 +32958,7 @@
       1846
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Food"
   },
@@ -33114,7 +33114,7 @@
       1856
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Cave_down"
   },
@@ -33127,7 +33127,7 @@
       1857
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Cave_down"
   },
@@ -33140,7 +33140,7 @@
       1859
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -33153,7 +33153,7 @@
       1859
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Wall"
   },
@@ -33192,7 +33192,7 @@
       1861
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -33633,7 +33633,7 @@
       1998
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -33766,7 +33766,7 @@
       1838
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -33779,7 +33779,7 @@
       1838
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
@@ -33792,7 +33792,7 @@
       1968
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -34113,7 +34113,7 @@
       613
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -34126,7 +34126,7 @@
       2191
     ],
     "walkable":true,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Plant"
   },
@@ -34243,7 +34243,7 @@
       2302
     ],
     "walkable":false,
-    "moveable":true,
+    "moveable":false,
     "stackable":false,
     "class":"Normal"
   },
