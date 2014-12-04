@@ -58,8 +58,8 @@ public class ContentManager {
     }
 
     public Monster getMonster(int id) {
-        if (id == -1) {
-            return _monsters.get(0);
+        if (_monsters.size() <= id || 0 > id) {
+            return null;
         }
         return _monsters.get(id);
     }

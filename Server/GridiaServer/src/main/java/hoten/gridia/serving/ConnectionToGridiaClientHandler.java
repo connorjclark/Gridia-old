@@ -258,11 +258,14 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             try {
                 String[] split = msg.split(" ", 3);
                 if (split.length == 3) {
-                    int img = Integer.parseInt(split[1]);
-                    String friendlyMessage = split[2];
-                    Creature creature = _server.createCreature(img, player.creature.location.add(0, 1, 0));
-                    creature.isFriendly = true;
-                    creature.friendlyMessage = friendlyMessage;
+                    int id = Integer.parseInt(split[1]);
+                    Monster monster = _server.contentManager.getMonster(id);
+                    if (monster != null) {
+                        String friendlyMessage = split[2];
+                        Creature creature = _server.createCreature(monster, player.creature.location.add(0, 1, 0));
+                        creature.isFriendly = true;
+                        creature.friendlyMessage = friendlyMessage;
+                    }
                 }
             } catch (NumberFormatException e) {
             }
@@ -274,9 +277,18 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
                 if (split.length == 2) {
                     int id = Integer.parseInt(split[1]);
                     Monster monster = _server.contentManager.getMonster(id);
-                    _server.createCreature(monster, player.creature.location.add(0, 1, 0));
+                    if (monster != null) {
+                        _server.createCreature(monster, player.creature.location.add(0, 1, 0));
+                    }
                 }
             } catch (NumberFormatException e) {
+            }
+        }
+
+        if (msg.equals("!kill")) {
+            Creature cre = _server.tileMap.getCreature(player.creature.location.add(0, 1, 0));
+            if (cre != null) {
+                _server.removeCreature(cre);
             }
         }
 
