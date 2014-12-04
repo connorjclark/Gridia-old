@@ -24,8 +24,8 @@ public class GridiaServerDriver {
 
     public static void main(String[] args) throws IOException {
         if (args.length == 0) {
-            args = "TestWorld RoachCity 300 0 51235053089343 100 2 20".split("\\s+");
-            //args = "TestWorld RoachCity".split("\\s+");
+            //args = "TestWorld RoachCity 30000 20 51235053089343 1000 2 20".split("\\s+");
+            args = "TestWorld RoachCity".split("\\s+");
         }
 
         String worldName = args[0];
@@ -53,14 +53,8 @@ public class GridiaServerDriver {
         server.startServer();
 
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
-            if (server.anyPlayersOnline() && server.creatures.size() < 100) {
-                //spawnMonster();
-            }
-        }, 0, 500, TimeUnit.MILLISECONDS);
-
-        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
             if (server.anyPlayersOnline()) {
-                //moveMonstersRandomly();
+                moveMonstersRandomly();
             }
         }, 0, 1500, TimeUnit.MILLISECONDS);
 
@@ -81,6 +75,13 @@ public class GridiaServerDriver {
             });
         }, 0, 1000, TimeUnit.MILLISECONDS);
 
+        // save every minute
+        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
+            if (server.anyPlayersOnline()) {
+                server.tileMap.save();
+            }
+        }, 0, 1500, TimeUnit.MILLISECONDS);
+
         System.out.println("Server started.");
     }
 
@@ -92,23 +93,5 @@ public class GridiaServerDriver {
                         server.moveCreatureRandomly(cre);
                     }
                 });
-    }
-
-    private static void spawnMonster() {
-        List<Integer> possibleMonsters = Arrays.asList(120, 5, 63, 1);
-        int randomMonsterId = possibleMonsters.get((int) (possibleMonsters.size() * Math.random()));
-        Monster mold = server.contentManager.getMonster(randomMonsterId);
-        server.createCreature(mold, randomCoord());
-    }
-
-    private static Coord randomCoord() {
-        int size = server.tileMap.size;
-        int x = (int) (Math.random() * size);
-        int y = (int) (Math.random() * size);
-        int z = (int) (Math.random() * server.tileMap.depth);
-        if (!server.tileMap.walkable(x, y, z)) {
-            return randomCoord();
-        }
-        return new Coord(x, y, z);
     }
 }

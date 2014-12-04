@@ -164,7 +164,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         image.bareHead = (int) (Math.random() * 100);
         image.bareChest = (int) (Math.random() * 10);
         image.bareLegs = (int) (Math.random() * 10);
-        Creature cre = createCreature(image, new Coord(tileMap.size / 2 + random.nextInt(4), tileMap.size / 2 + random.nextInt(4), 1));
+        Creature cre = createCreature(image, new Coord(tileMap.size / 2 + random.nextInt(4), tileMap.size / 2 + random.nextInt(4), 0));
         cre.belongsToPlayer = true;
         return cre;
     }
