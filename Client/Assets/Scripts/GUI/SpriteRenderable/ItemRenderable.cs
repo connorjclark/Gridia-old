@@ -13,6 +13,15 @@ namespace Gridia
             ToolTip = () => Item.Item.Id != 0 ? Item.ToString() : null;
         }
 
+        public override void Render()
+        {
+            base.Render();
+            if (Item.Quantity > 1)
+            {
+                GUI.Label(Rect, Item.Quantity.ToString());
+            }
+        }
+
         public override int GetSpriteIndex()
         {
             var animations = Item.Item.Animations;
