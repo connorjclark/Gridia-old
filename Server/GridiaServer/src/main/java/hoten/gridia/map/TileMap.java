@@ -1,10 +1,24 @@
 package hoten.gridia.map;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import hoten.gridia.Creature;
 import hoten.gridia.content.ItemInstance;
+import hoten.serving.fileutils.FileUtils;
+import java.io.File;
 
 public class TileMap {
+
+    public static TileMap loadMap(String mapName) {
+        String json = FileUtils.readTextFile(new File(mapName + "/meta.json"));
+        JsonObject metaData = new Gson().fromJson(json, JsonObject.class);
+
+        int size = metaData.get("size").getAsInt();
+        int depth = metaData.get("depth").getAsInt();
+        int sectorSize = metaData.get("sectorSize").getAsInt();
+
+        return new TileMap(mapName, size, depth, sectorSize, new JsonSectorLoader(), new SectorSaver());
+    }
 
     public final int size, depth, sectorSize, area, volume, sectorsAcross, sectorsFloor, sectorsTotal;
     public final String mapName;
@@ -100,7 +114,7 @@ public class TileMap {
     public void setFloor(int x, int y, int z, int floor) {
         getTile(x, y, z).floor = floor;
     }
-    
+
     public void setFloor(Coord loc, int floor) {
         getTile(loc).floor = floor;
     }

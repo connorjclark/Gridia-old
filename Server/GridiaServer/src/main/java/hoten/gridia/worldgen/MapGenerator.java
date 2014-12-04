@@ -72,6 +72,12 @@ public class MapGenerator {
 
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
+                for (int z = 1; z < depth; z++) {
+                    Tile undergroundTile = world.getTile(x, y, z);
+                    undergroundTile.item = ItemInstance.NONE;
+                    undergroundTile.floor = 19;
+                }
+
                 int pixel = mapImage.getRGB(x, y);
                 Tile tile = world.getTile(x, y, 0);
 

@@ -42,7 +42,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         super(port, new GridiaProtocols(), clientDataFolder, localDataFolderName);
         contentManager = new ContentManager(worldName);
         GridiaGson.initialize(contentManager);
-        tileMap = new TileMap("TestWorld/RoachCity", 1000, 1, 20, new JsonSectorLoader(), new SectorSaver());
+        tileMap = TileMap.loadMap(worldName + "/" + mapName);
         instance = this;
     }
 
@@ -162,7 +162,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         image.bareHead = (int) (Math.random() * 100);
         image.bareChest = (int) (Math.random() * 10);
         image.bareLegs = (int) (Math.random() * 10);
-        Creature cre = createCreature(image, new Coord(tileMap.size / 2 + random.nextInt(4), tileMap.size / 2 + random.nextInt(4), 0));
+        Creature cre = createCreature(image, new Coord(tileMap.size / 2 + random.nextInt(4), tileMap.size / 2 + random.nextInt(4), 1));
         cre.belongsToPlayer = true;
         return cre;
     }

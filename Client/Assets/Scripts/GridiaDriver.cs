@@ -120,16 +120,20 @@ public class GridiaDriver : MonoBehaviour
 
         //temp :(
         var cm = Locator.Get<ContentManager>();
+        var playerZ = (int) _game.view.Focus.Position.z;
         foreach (var cre in _game.tileMap.creatures.ValuesToList()) 
         {
             var pos = cre.Position;
-            var focusPos = _game.view.FocusPosition;
-            var relative = pos - focusPos;
+            if (playerZ == pos.z)
+            {
+                var focusPos = _game.view.FocusPosition;
+                var relative = pos - focusPos;
 
-            var tileSize = 32 * _game.view.Scale;
-            var rect = new Rect(relative.x * tileSize, Screen.height - relative.y * tileSize - tileSize, tileSize, tileSize);
+                var tileSize = 32 * _game.view.Scale;
+                var rect = new Rect(relative.x * tileSize, Screen.height - relative.y * tileSize - tileSize, tileSize, tileSize);
 
-            DrawCreature(rect, cre.Image);
+                DrawCreature(rect, cre.Image);
+            }
         }
 
         ToolTipRenderable.instance.Render();
@@ -208,11 +212,12 @@ public class GridiaDriver : MonoBehaviour
     public Vector3 getTileLocationOfMouse() {
         int x = (int)(Input.mousePosition.x / (GridiaConstants.SPRITE_SIZE * _game.view.Scale));
         int y = (int)(Input.mousePosition.y / (GridiaConstants.SPRITE_SIZE * _game.view.Scale));
+        int z = (int)_game.view.Focus.Position.z;
 
         x = _game.tileMap.Wrap(x + (int)_game.view.FocusPosition.x);
         y = _game.tileMap.Wrap(y + (int)_game.view.FocusPosition.y);
 
-        return new Vector3(x, y);
+        return new Vector3(x, y, z);
     }
 
     void ResizeCamera()
