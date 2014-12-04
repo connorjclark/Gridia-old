@@ -20,7 +20,7 @@ namespace Gridia
 
         public TextureManager (String worldName)
         {
-            Floors = LoadTextures(worldName + "/floors/floors", 1); // :(
+            Floors = LoadTextures(worldName + "/floors/floors", 3); // :(
             Items = LoadTextures(worldName + "/items/items", 27);
             Creatures = LoadTextures(worldName + "/players/players", 8);
             Templates = LoadTextures(worldName + "/templates/template", 1);

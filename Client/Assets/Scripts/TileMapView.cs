@@ -288,7 +288,7 @@ namespace Gridia
                 data => _textureManager.Items[data / 100],
                 tile =>
                 {
-                    if (tile.Item.Item.Name.Contains("Rose"))
+                    if (tile.Item.Item.Name.Contains("Cut"))
                     {
                         return 0.1f * Utilities.Vector2FromAngle(Time.time + tile.GetHashCode());
                     }

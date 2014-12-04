@@ -28,6 +28,10 @@ public class TileMap {
         _sectorSaver = sectorSaver;
     }
 
+    public TileMap(int size, int depth, int sectorSize) {
+        this(size, depth, sectorSize, new JsonSectorLoader(), new SectorSaver());
+    }
+
     //temporary
     public void loadAll() {
         for (int x = 0; x < sectorsAcross; x++) {
@@ -95,6 +99,10 @@ public class TileMap {
         return getTile(x, y, z).floor;
     }
 
+    public void setFloor(int x, int y, int z, int floor) {
+        getTile(x, y, z).floor = floor;
+    }
+
     public ItemInstance getItem(Coord c) {
         return getTile(c.x, c.y, c.z).item;
     }
@@ -135,4 +143,5 @@ public class TileMap {
         int x = index % size;
         return new Coord(x, y, z);
     }
+
 }

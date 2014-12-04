@@ -51,7 +51,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         // fake an inventory
         List<ItemInstance> inv = new ArrayList();
         inv.addAll(Arrays.asList(
-                57, 140, 280, 1067, 1068, 826, 1974,
+                57, 277, 140, 280, 1067, 1068, 826, 1974,
                 1974, 1039, 171, 902, 901, 339, 341,
                 29, 19, 18, 12, 913, 34
         ).stream()
@@ -60,7 +60,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
                     return _server.contentManager.createItemInstance(i, quantity);
                 })
                 .collect(Collectors.toList()));
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 19; i++) {
             inv.add(_server.contentManager.createItemInstance(0));
         }
         player.creature.inventory = new Container(inv, Container.ContainerType.Inventory);

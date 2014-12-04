@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import static hoten.gridia.serving.GridiaProtocols.Clientbound.*;
+import hoten.gridia.worldgen.MapGenerator;
 import hoten.serving.message.JsonMessageBuilder;
 import hoten.serving.message.Message;
 import java.util.ArrayList;
@@ -43,10 +44,12 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         super(port, new GridiaProtocols(), clientDataFolder, localDataFolderName);
         contentManager = new ContentManager("TestWorld");
         GridiaGson.initialize(contentManager);
-        SectorLoader sectorLoader = new SectorLoader();
-        SectorSaver sectorSaver = new SectorSaver();
-        tileMap = new TileMap(100, 1, 20, sectorLoader, sectorSaver);
-        tileMap.loadAll();
+
+        //tileMap = new TileMap(100, 1, 20);
+        //tileMap.loadAll();
+        MapGenerator mapGenerator = new MapGenerator(contentManager, 1000, 2, 51235053089343L);
+        tileMap = mapGenerator.generate(1000, 1, 20);
+
         instance = this;
     }
 
@@ -164,7 +167,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         image.bareHead = (int) (Math.random() * 100);
         image.bareChest = (int) (Math.random() * 10);
         image.bareLegs = (int) (Math.random() * 10);
-        Creature cre = createCreature(image, new Coord(50 + random.nextInt(4), 50 + random.nextInt(4), 0));
+        Creature cre = createCreature(image, new Coord(tileMap.size / 2 + random.nextInt(4), tileMap.size / 2 + random.nextInt(4), 0));
         cre.belongsToPlayer = true;
         return cre;
     }
