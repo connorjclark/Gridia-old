@@ -10,6 +10,7 @@ namespace Gridia
         public int MonsterCount { get { return monsters.Count; } }
         
         private readonly List<Item> items;
+        private readonly List<Floor> floors;
         private readonly List<Monster> monsters;
         private readonly List<Animation> animations;
         private readonly List<ItemUse> uses;
@@ -17,6 +18,7 @@ namespace Gridia
         public ContentManager (String worldName)
         {
             items = new ContentLoader<Item>().Load(worldName + "/content/items.json");
+            floors = new ContentLoader<Floor>().Load(worldName + "/content/floors.json");
             monsters = new ContentLoader<Monster>().Load(worldName + "/content/monsters.json");
             animations = new ContentLoader<Animation>().Load(worldName + "/content/animations.json");
             uses = new ContentLoader<ItemUse>().Load(worldName + "/content/itemuses.json");
@@ -29,6 +31,11 @@ namespace Gridia
                 return items[0];
             }
             return items[id];
+        }
+
+        public Floor GetFloor(int id)
+        {
+            return floors[id];
         }
 
         public Monster GetMonster(int id)

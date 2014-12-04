@@ -28,29 +28,9 @@ namespace Gridia
                 Locator.Get<ConnectionToGridiaServerHandler>().PlayerMove(_destination);
                 var now = getSystemTime();
 
-                // :(
-                var baseTime = 150;
-                float movementModifier;
+                var baseTime = 250; // :(
                 var floor = Locator.Get<GridiaGame>().tileMap.GetTile((int)_destination.x, (int)_destination.y, (int)_destination.z).Floor;
-                switch (floor)
-                {
-                    case 1:
-                        movementModifier = 0.3f;
-                        break;
-                    case 21:
-                    case 47:
-                        movementModifier = 0.8f;
-                        break;
-                    case 2:
-                    case 11:
-                    case 18:
-                    case 46:
-                        movementModifier = 1.5f;
-                        break;
-                    default:
-                        movementModifier = 1f;
-                        break;
-                }
+                float movementModifier = Locator.Get<ContentManager>().GetFloor(floor).MovementModifier;
 
                 var timeForMovement = baseTime / movementModifier;
                 _cooldownUntil = now + (int)timeForMovement;
