@@ -9,6 +9,7 @@ import hoten.gridia.content.ItemUse;
 import hoten.gridia.map.Coord;
 import hoten.gridia.map.Sector;
 import hoten.gridia.map.Tile;
+import hoten.gridia.serializers.GridiaGson;
 import hoten.gridia.serializers.ItemInstanceSerializer;
 import static hoten.gridia.serving.GridiaProtocols.Clientbound.*;
 import hoten.serving.message.BinaryMessageBuilder;
@@ -106,17 +107,12 @@ public class GridiaMessageToClientBuilder {
     }
 
     public Message container(Container container) {
-        // :(
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(ItemInstance.class, new ItemInstanceSerializer())
-                .create();
-
         return new JsonMessageBuilder()
                 .protocol(outbound(Container))
                 .set("items", container.getItems())
                 .set("type", container.type)
                 .set("id", container.id)
-                .gson(gson)
+                .gson(GridiaGson.get()) // :(
                 .build();
     }
 

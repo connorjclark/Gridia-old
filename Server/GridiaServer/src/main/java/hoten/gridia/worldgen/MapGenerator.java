@@ -1,5 +1,6 @@
 package hoten.gridia.worldgen;
 
+import com.google.gson.Gson;
 import hoten.delaunay.examples.TestDriver;
 import hoten.delaunay.examples.TestGraphImpl;
 import hoten.delaunay.examples.TestGraphImpl.ColorData;
@@ -11,7 +12,9 @@ import hoten.gridia.map.SectorLoader;
 import hoten.gridia.map.SectorSaver;
 import hoten.gridia.map.Tile;
 import hoten.gridia.map.TileMap;
+import hoten.serving.fileutils.FileUtils;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -31,11 +34,21 @@ public class MapGenerator {
         _seed = seed;
     }
 
-    public TileMap generate(int size, int depth, int sectorSize) {
+    public TileMap generate(String mapName, int size, int depth, int sectorSize) {
+        HashMap<String, Object> mapMetaData = new HashMap<>();
+
+        mapMetaData.put("name", mapName);
+        mapMetaData.put("size", size);
+        mapMetaData.put("depth", depth);
+        mapMetaData.put("sectorSize", sectorSize);
+
+        String metaDataJson = new Gson().toJson(mapMetaData);
+        FileUtils.saveAs(new File(mapName + "/meta.json"), metaDataJson.getBytes());
+
         VoronoiGraph graph = TestDriver.createVoronoiGraph(size, _numPoints, _numLloydRelaxations, _seed);
         BufferedImage mapImage = graph.createMap();
 
-        TileMap world = new TileMap(size, depth, sectorSize, createFakeLoader(), new SectorSaver());
+        TileMap world = new TileMap(mapName, size, depth, sectorSize, createFakeLoader(), new SectorSaver());
 
         HashMap<Integer, ColorData> colorBiomeMap = new HashMap<>();
 
@@ -124,7 +137,7 @@ public class MapGenerator {
     }
 
     private SectorLoader createFakeLoader() {
-        return (int sectorSize, int sx, int sy, int sz) -> {
+        return (String mapName, int sectorSize, int sx, int sy, int sz) -> {
             Tile[][] tiles = new Tile[sectorSize][sectorSize];
             for (int x = 0; x < sectorSize; x++) {
                 tiles[x] = new Tile[sectorSize];

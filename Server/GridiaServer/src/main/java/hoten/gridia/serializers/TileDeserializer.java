@@ -16,7 +16,7 @@ public class TileDeserializer implements JsonDeserializer<Tile> {
         JsonObject jsonObject = json.getAsJsonObject();
         Tile tile = new Tile();
         tile.floor = jsonObject.get("floor").getAsInt();
-        tile.item = context.deserialize(jsonObject, ItemInstance.class);
+        tile.item = context.deserialize(jsonObject.get("item"), ItemInstance.class);
         return tile;
     }
 }

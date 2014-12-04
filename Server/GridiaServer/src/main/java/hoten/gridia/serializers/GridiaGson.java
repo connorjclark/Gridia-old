@@ -15,12 +15,10 @@ public class GridiaGson {
     }
 
     public static void initialize(ContentManager contentManager) {
-        if (_gson != null) {
-            throw new RuntimeException("GridiaGson already initialized.");
-        }
         _gson = new GsonBuilder()
                 .registerTypeAdapter(ItemInstance.class, new ItemInstanceDeserializer(contentManager))
                 .registerTypeAdapter(Tile.class, new TileDeserializer())
+                .registerTypeAdapter(ItemInstance.class, new ItemInstanceSerializer())
                 .create();
     }
 }

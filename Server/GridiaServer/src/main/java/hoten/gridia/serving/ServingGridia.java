@@ -10,8 +10,8 @@ import hoten.gridia.DefaultCreatureImage;
 import hoten.gridia.content.ItemInstance;
 import hoten.gridia.Player;
 import hoten.gridia.content.Monster;
+import hoten.gridia.map.JsonSectorLoader;
 import hoten.gridia.map.Sector;
-import hoten.gridia.map.SectorLoader;
 import hoten.gridia.map.SectorSaver;
 import hoten.gridia.map.Tile;
 import hoten.gridia.map.TileMap;
@@ -21,10 +21,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import static hoten.gridia.serving.GridiaProtocols.Clientbound.*;
-import hoten.gridia.worldgen.MapGenerator;
 import hoten.serving.message.JsonMessageBuilder;
 import hoten.serving.message.Message;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -40,16 +38,11 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     public final Map<Integer, Creature> creatures = new ConcurrentHashMap();
     private final Random random = new Random();
 
-    public ServingGridia(int port, File clientDataFolder, String localDataFolderName) throws IOException {
+    public ServingGridia(String worldName, String mapName, int port, File clientDataFolder, String localDataFolderName) throws IOException {
         super(port, new GridiaProtocols(), clientDataFolder, localDataFolderName);
-        contentManager = new ContentManager("TestWorld");
+        contentManager = new ContentManager(worldName);
         GridiaGson.initialize(contentManager);
-
-        //tileMap = new TileMap(100, 1, 20);
-        //tileMap.loadAll();
-        MapGenerator mapGenerator = new MapGenerator(contentManager, 1000, 2, 51235053089343L);
-        tileMap = mapGenerator.generate(1000, 1, 20);
-
+        tileMap = new TileMap("TestWorld/RoachCity", 1000, 1, 20, new JsonSectorLoader(), new SectorSaver());
         instance = this;
     }
 
@@ -110,7 +103,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         cre.location = loc;
         sendToClientsWithSectorLoaded(messageBuilder.moveCreature(cre, timeInMillisecondsToMove), sector);
     }
-    
+
     public void moveCreatureTo(Creature cre, Coord loc) {
         moveCreatureTo(cre, loc, 200);
     }
@@ -195,7 +188,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         tileMap.setItem(item, loc);
         updateTile(loc);
     }
-    
+
     public void changeFloor(Coord loc, int floor) {
         tileMap.setFloor(loc, floor);
         updateTile(loc);
