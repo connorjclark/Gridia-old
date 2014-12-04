@@ -259,11 +259,12 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
 
     //outbound
 
-    public void PlayerMove(Vector3 loc)
+    public void PlayerMove(Vector3 loc, int timeForMovement)
     {
         Message message = new JsonMessageBuilder()
             .Protocol(Outbound(GridiaProtocols.Serverbound.PlayerMove))
             .Set("loc", new { x = loc.x, y = loc.y, z = loc.z })
+            .Set("timeForMovement", timeForMovement)
             .Build();
         Send(message);
     }

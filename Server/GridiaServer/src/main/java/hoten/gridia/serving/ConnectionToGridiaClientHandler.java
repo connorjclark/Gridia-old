@@ -138,7 +138,8 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
 
     private void ProcessPlayerMove(JsonObject data) throws IOException {
         Coord loc = _gson.fromJson(data.get("loc"), Coord.class);
-        _server.moveCreatureTo(player.creature, loc);
+        int timeForMovement = data.get("timeForMovement").getAsInt();
+        _server.moveCreatureTo(player.creature, loc, timeForMovement);
     }
 
     private void ProcessSectorRequest(JsonObject data) throws IOException {

@@ -101,9 +101,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         sendToClientsWithSectorLoaded(messageBuilder.removeCreature(cre), sector);
     }
 
-    // :( todo: speed
-    public void moveCreatureTo(Creature cre, Coord loc) {
-        int timeInMillisecondsToMove = 200;
+    public void moveCreatureTo(Creature cre, Coord loc, int timeInMillisecondsToMove) {
         sendToClientsWithSectorLoaded(messageBuilder.moveCreature(cre, 0), tileMap.getSectorOf(cre.location));
         tileMap.wrap(loc);
         Sector sector = tileMap.getSectorOf(loc);
@@ -111,6 +109,10 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         tileMap.getTile(loc).cre = cre;
         cre.location = loc;
         sendToClientsWithSectorLoaded(messageBuilder.moveCreature(cre, timeInMillisecondsToMove), sector);
+    }
+    
+    public void moveCreatureTo(Creature cre, Coord loc) {
+        moveCreatureTo(cre, loc, 200);
     }
 
     public void updateCreatureImage(Creature cre) {

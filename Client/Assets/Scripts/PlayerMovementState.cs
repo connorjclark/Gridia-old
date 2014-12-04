@@ -25,14 +25,15 @@ namespace Gridia
             if (Player == null) return;
             if (_cooldownUntil == 0)
             {
-                Locator.Get<ConnectionToGridiaServerHandler>().PlayerMove(_destination);
                 var now = getSystemTime();
 
                 var baseTime = 250; // :(
                 var floor = Locator.Get<GridiaGame>().tileMap.GetTile((int)_destination.x, (int)_destination.y, (int)_destination.z).Floor;
                 float movementModifier = Locator.Get<ContentManager>().GetFloor(floor).MovementModifier;
-
                 var timeForMovement = baseTime / movementModifier;
+
+                Locator.Get<ConnectionToGridiaServerHandler>().PlayerMove(_destination, (int) timeForMovement);
+
                 _cooldownUntil = now + (int)timeForMovement;
                 Player.AddPositionSnapshot(Player.Position, now - Creature.RENDER_DELAY);
                 Player.AddPositionSnapshot(_destination, _cooldownUntil - Creature.RENDER_DELAY);
