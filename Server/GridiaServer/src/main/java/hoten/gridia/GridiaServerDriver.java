@@ -22,7 +22,7 @@ public class GridiaServerDriver {
 
     public static void main(String[] args) throws IOException {
         if (args.length == 0) {
-            args = "TestWorld RoachCity 1000 2 51235053089343 1000 1 20".split("\\s+");
+            args = "TestWorld RoachCity".split("\\s+");
         }
 
         String worldName = args[0];
