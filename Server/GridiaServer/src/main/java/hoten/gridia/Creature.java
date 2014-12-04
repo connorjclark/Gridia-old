@@ -12,4 +12,5 @@ public class Creature {
     public CreatureImage image;
     public boolean belongsToPlayer;
     public Container inventory;
+    public boolean justTeleported; // :(
 }

@@ -122,12 +122,13 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
     private void MoveCreature(JObject data)
     {
         int id = (int)data["id"];
-        if (id != _game.view.FocusId)
+        int x = (int)data["loc"]["x"];
+        int y = (int)data["loc"]["y"];
+        int z = (int)data["loc"]["z"];
+        long time = (long)data["time"];
+
+        if (id != _game.view.FocusId || z != _game.view.Focus.Position.z)
         {
-            int x = (int)data["loc"]["x"];
-            int y = (int)data["loc"]["y"];
-            int z = (int)data["loc"]["z"];
-            long time = (long)data["time"];
             _game.tileMap.MoveCreature(id, x, y, z, time);
         }
     }

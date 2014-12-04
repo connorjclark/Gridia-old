@@ -1,6 +1,8 @@
 package hoten.gridia;
 
 import hoten.gridia.content.ContentManager;
+import hoten.gridia.content.Item;
+import hoten.gridia.content.ItemInstance;
 import hoten.gridia.content.Monster;
 import hoten.gridia.map.Coord;
 import hoten.gridia.map.TileMap;
@@ -22,7 +24,8 @@ public class GridiaServerDriver {
 
     public static void main(String[] args) throws IOException {
         if (args.length == 0) {
-            args = "TestWorld RoachCity".split("\\s+");
+            args = "TestWorld RoachCity 300 0 51235053089343 100 2 20".split("\\s+");
+            //args = "TestWorld RoachCity".split("\\s+");
         }
 
         String worldName = args[0];
@@ -48,19 +51,37 @@ public class GridiaServerDriver {
         String localDataDirName = worldName;
         server = new ServingGridia(worldName, mapName, port, clientDataDir, localDataDirName);
         server.startServer();
-        System.out.println("Server started.");
 
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
             if (server.anyPlayersOnline() && server.creatures.size() < 100) {
-                spawnMonster();
+                //spawnMonster();
             }
         }, 0, 500, TimeUnit.MILLISECONDS);
 
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
             if (server.anyPlayersOnline()) {
-                moveMonstersRandomly();
+                //moveMonstersRandomly();
             }
         }, 0, 1500, TimeUnit.MILLISECONDS);
+
+        // temp code to handle cave up/down
+        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
+            server.creatures.values().forEach(creature -> {
+                if (!creature.justTeleported) {
+                    ItemInstance itemUnder = server.tileMap.getItem(creature.location);
+                    Coord loc = creature.location;
+                    if (loc.z != server.tileMap.depth && itemUnder.data.itemClass == Item.ItemClass.Cave_down) {
+                        server.moveCreatureTo(creature, loc.add(0, 0, 1));
+                        creature.justTeleported = true;
+                    } else if (loc.z != 0 && itemUnder.data.itemClass == Item.ItemClass.Cave_up) {
+                        server.moveCreatureTo(creature, loc.add(0, 0, -1));
+                        creature.justTeleported = true;
+                    }
+                }
+            });
+        }, 0, 1000, TimeUnit.MILLISECONDS);
+
+        System.out.println("Server started.");
     }
 
     private static void moveMonstersRandomly() {

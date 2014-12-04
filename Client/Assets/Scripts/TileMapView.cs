@@ -20,7 +20,7 @@ namespace Gridia
             get {
                 var cre = Focus;
                 var pos = cre == null ? Vector3.zero : cre.Position;
-                return pos - new Vector3(width / 2, height / 2, 0); 
+                return pos - new Vector3(width / 2, height / 2, 0);
             }
         }
         public bool IsLighting { get; set; }

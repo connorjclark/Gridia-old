@@ -10,9 +10,7 @@ import hoten.gridia.DefaultCreatureImage;
 import hoten.gridia.content.ItemInstance;
 import hoten.gridia.Player;
 import hoten.gridia.content.Monster;
-import hoten.gridia.map.JsonSectorLoader;
 import hoten.gridia.map.Sector;
-import hoten.gridia.map.SectorSaver;
 import hoten.gridia.map.Tile;
 import hoten.gridia.map.TileMap;
 import hoten.gridia.serializers.GridiaGson;
@@ -95,6 +93,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     }
 
     public void moveCreatureTo(Creature cre, Coord loc, int timeInMillisecondsToMove) {
+        cre.justTeleported = false;
         sendToClientsWithSectorLoaded(messageBuilder.moveCreature(cre, 0), tileMap.getSectorOf(cre.location));
         tileMap.wrap(loc);
         Sector sector = tileMap.getSectorOf(loc);
@@ -102,6 +101,9 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         tileMap.getTile(loc).cre = cre;
         cre.location = loc;
         sendToClientsWithSectorLoaded(messageBuilder.moveCreature(cre, timeInMillisecondsToMove), sector);
+        sendTo(messageBuilder.moveCreature(cre, timeInMillisecondsToMove), client -> {
+            return client.hasSectorLoaded(sector) || client.player.creature == cre;
+        });
     }
 
     public void moveCreatureTo(Creature cre, Coord loc) {
