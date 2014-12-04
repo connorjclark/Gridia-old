@@ -303,6 +303,21 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             _server.hurtCreature(player.creature, 100000);
         }
 
+        if (msg.startsWith("!warp ")) {
+            String[] split = msg.split("\\s+");
+            if (split.length == 3) {
+                try {
+                    int x = Integer.parseInt(split[1]);
+                    int y = Integer.parseInt(split[2]);
+                    int z = player.creature.location.z;
+                    if (_server.tileMap.inBounds(x, y, z)) {
+                        _server.moveCreatureTo(player.creature, new Coord(x, y, z), true);
+                    }
+                } catch (NumberFormatException e) {
+                }
+            }
+        }
+
         _server.sendToAll(_messageBuilder.chat(player.username + " says: " + msg));
     }
 

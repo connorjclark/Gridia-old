@@ -160,4 +160,7 @@ public class TileMap {
         return new Coord(x, y, z);
     }
 
+    public boolean inBounds(int x, int y, int z) {
+        return x >= 0 && x < size && y >= 0 && y < size && z >= 0 && z < depth;
+    }
 }
