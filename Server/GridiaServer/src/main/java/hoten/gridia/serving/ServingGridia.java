@@ -193,6 +193,11 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         tileMap.setItem(item, loc);
         updateTile(loc);
     }
+    
+    public void changeFloor(Coord loc, int floor) {
+        tileMap.setFloor(loc, floor);
+        updateTile(loc);
+    }
 
     public void reduceItemQuantity(Coord loc, int amount) {
         ItemInstance item = tileMap.getItem(loc);

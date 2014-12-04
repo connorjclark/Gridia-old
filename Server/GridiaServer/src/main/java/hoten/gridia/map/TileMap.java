@@ -102,6 +102,10 @@ public class TileMap {
     public void setFloor(int x, int y, int z, int floor) {
         getTile(x, y, z).floor = floor;
     }
+    
+    public void setFloor(Coord loc, int floor) {
+        getTile(loc).floor = floor;
+    }
 
     public ItemInstance getItem(Coord c) {
         return getTile(c.x, c.y, c.z).item;

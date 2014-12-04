@@ -9,6 +9,7 @@ namespace Gridia
     public class AdminWindow : GridiaWindow
     {
         private BulkViewer _bulkItems;
+        private BulkViewer _bulkFloors;
         private ContentManager _contentManager;
 
         public AdminWindow(Vector2 pos)
@@ -33,14 +34,32 @@ namespace Gridia
                 }
             );
 
+            _bulkFloors = new BulkViewer(
+                new Vector2(10 * GridiaConstants.SPRITE_SIZE, 0),
+                () =>
+                {
+                    return _contentManager.FloorCount;
+                },
+                (int index) =>
+                {
+                    return new FloorRenderable(Vector2.zero, index);
+                },
+                (int index) =>
+                {
+                    var location = Locator.Get<TileMapView>().Focus.Position;
+                    Locator.Get<ConnectionToGridiaServerHandler>().AdminMakeFloor(location, index);
+                }
+            );
+
             AddChild(_bulkItems);
+            AddChild(_bulkFloors);
         }
 
         private class BulkViewer : RenderableContainer
         {
             private ExtendibleGrid _bulk = new ExtendibleGrid(new Vector2(0, 30));
             private int _currentPage;
-            private int _perPage = 100;
+            private int _perPage = 50;
             private Vector2 vector2;
 
             public BulkViewer(
@@ -78,7 +97,15 @@ namespace Gridia
 
             private void ShowPage(int page)
             {
-                page = Mathf.Clamp(page, 0, GetNumElements() / _perPage);
+                var maxPage = GetNumElements() / _perPage - 1;
+                if (page == -1)
+                {
+                    page = maxPage;
+                }
+                else if (page == maxPage + 1)
+                {
+                    page = 0;
+                }
                 _currentPage = page;
 
                 _bulk.RemoveAllChildren();
@@ -88,7 +115,6 @@ namespace Gridia
                 for (int i = firstItemToShow; i < lastItemToShow; i++)
                 {
                     int elementIndex = i;
-                    //var item = new ItemRenderable(Vector2.zero, _contentManager.GetItem(itemIndex).GetInstance());
                     var element = GetElement(i);
                     element.OnClick = () =>
                     {

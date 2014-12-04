@@ -154,10 +154,12 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
     {
         var item = (int)data["item"];
         var quantity = (int)data["quantity"];
+        var floor = (int)data["floor"];
         var x = (int)data["loc"]["x"];
         var y = (int)data["loc"]["y"];
         var z = (int)data["loc"]["z"];
         _game.tileMap.SetItem(Locator.Get<ContentManager>().GetItem(item).GetInstance(quantity), x, y, z);
+        _game.tileMap.SetFloor(floor, x, y, z);
     }
 
     private void Container(JObject data)
@@ -375,6 +377,16 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
             .Protocol(Outbound(GridiaProtocols.Serverbound.AdminMakeItem))
                 .Set("loc", new { x = loc.x, y = loc.y, z = loc.z })
                 .Set("item", itemIndex)
+                .Build();
+        Send(message);
+    }
+
+    public void AdminMakeFloor(Vector3 loc, int floorIndex)
+    {
+        Message message = new JsonMessageBuilder()
+            .Protocol(Outbound(GridiaProtocols.Serverbound.AdminMakeFloor))
+                .Set("loc", new { x = loc.x, y = loc.y, z = loc.z })
+                .Set("floor", floorIndex)
                 .Build();
         Send(message);
     }

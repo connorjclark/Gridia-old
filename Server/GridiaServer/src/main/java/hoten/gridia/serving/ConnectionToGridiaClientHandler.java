@@ -118,6 +118,9 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             case AdminMakeItem:
                 ProcessAdminMakeItem(data);
                 break;
+            case AdminMakeFloor:
+                ProcessAdminMakeFloor(data);
+                break;
         }
     }
 
@@ -395,5 +398,11 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         Coord loc = _gson.fromJson(data.get("loc"), Coord.class);
         int itemId = data.get("item").getAsInt();
         _server.changeItem(loc, _server.contentManager.createItemInstance(itemId));
+    }
+
+    private void ProcessAdminMakeFloor(JsonObject data) throws IOException {
+        Coord loc = _gson.fromJson(data.get("loc"), Coord.class);
+        int floor = data.get("floor").getAsInt();
+        _server.changeFloor(loc, floor);
     }
 }
