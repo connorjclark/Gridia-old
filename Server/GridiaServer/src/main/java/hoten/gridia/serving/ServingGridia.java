@@ -7,6 +7,7 @@ import hoten.gridia.Container;
 import hoten.gridia.CreatureImage;
 import hoten.gridia.CustomPlayerImage;
 import hoten.gridia.DefaultCreatureImage;
+import hoten.gridia.GridiaServerDriver;
 import hoten.gridia.content.ItemInstance;
 import hoten.gridia.Player;
 import hoten.gridia.content.Monster;
@@ -75,13 +76,27 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         });
     }
 
-    public void killCreature(Creature cre) {
+    public void hurtCreature(Creature cre, int lifePoints) {
+        sendToClientsWithAreaLoaded(messageBuilder.animation(1), cre.location);
+        cre.life -= lifePoints;
+        if (cre.life <= 0) {
+            dropCreatureInventory(cre);
+            if (cre.belongsToPlayer) {
+                moveCreatureTo(cre, GridiaServerDriver.getPlayerSpawn(), true);
+            } else {
+                removeCreature(cre);
+            }
+        }
+    }
+
+    public void dropCreatureInventory(Creature cre) {
         if (cre.inventory != null) {
             cre.inventory.getItems().stream().forEach((item) -> {
                 addItemNear(cre.location, item, 10);
             });
+            sendToClientsWithAreaLoaded(messageBuilder.animation(45), cre.location);
+            addItemNear(cre.location, contentManager.createItemInstance(1022), 10);
         }
-        removeCreature(cre);
     }
 
     public void removeCreature(Creature cre) {
@@ -163,7 +178,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         image.bareHead = (int) (Math.random() * 100);
         image.bareChest = (int) (Math.random() * 10);
         image.bareLegs = (int) (Math.random() * 10);
-        Creature cre = createCreature(image, new Coord(tileMap.size / 2 + random.nextInt(4), tileMap.size / 2 + random.nextInt(4), 0));
+        Creature cre = createCreature(image, GridiaServerDriver.getPlayerSpawn());
         cre.belongsToPlayer = true;
         return cre;
     }

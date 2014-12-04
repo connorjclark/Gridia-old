@@ -106,6 +106,14 @@ public class GridiaServerDriver {
 
         System.out.println("Server started.");
     }
+    
+    // hard code spawn location
+    private static Coord playerSpawn = new Coord(500, 500, 0);
+    
+    public static Coord getPlayerSpawn() {
+        Random random = new Random();
+        return playerSpawn.add(random.nextInt(5), random.nextInt(5), 0);
+    }
 
     // hard code the roach quest for the presentation
     private static int arenaTickRate = 1000;

@@ -299,6 +299,10 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             send(_messageBuilder.chat(player.creature.location.toString()));
         }
 
+        if (msg.equals("!die")) {
+            _server.hurtCreature(player.creature, 100000);
+        }
+
         _server.sendToAll(_messageBuilder.chat(player.username + " says: " + msg));
     }
 
@@ -438,12 +442,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             if (creature.isFriendly) {
                 send(_messageBuilder.chat(creature.friendlyMessage));
             } else {
-                _server.sendToClientsWithAreaLoaded(_messageBuilder.animation(1), loc);
-                if (--creature.life <= 0) {
-                    _server.sendToClientsWithAreaLoaded(_messageBuilder.animation(45), loc);
-                    _server.killCreature(creature);
-                    _server.addItemNear(loc, _server.contentManager.createItemInstance(1022), 10);
-                }
+                _server.hurtCreature(creature, 1);
             }
         }
     }
