@@ -6016,7 +6016,7 @@
     ],
     "walkable":true,
     "moveable":true,
-    "stackable":false,
+    "stackable":true,
     "class":"Normal"
   },
   {

@@ -1776,11 +1776,6 @@
         "item": "Roach Antenae",
         "quantity": 1,
         "chance": 10
-      },
-      {
-        "item": "Gold",
-        "quantity": 5,
-        "chance": 30
       }
     ]
   },

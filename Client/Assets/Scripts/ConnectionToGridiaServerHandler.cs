@@ -126,8 +126,9 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         int y = (int)data["loc"]["y"];
         int z = (int)data["loc"]["z"];
         long time = (long)data["time"];
+        bool isTeleport = (bool)data["isTeleport"];
 
-        if (id != _game.view.FocusId || z != _game.view.Focus.Position.z)
+        if (id != _game.view.FocusId || isTeleport)
         {
             _game.tileMap.MoveCreature(id, x, y, z, time);
         }

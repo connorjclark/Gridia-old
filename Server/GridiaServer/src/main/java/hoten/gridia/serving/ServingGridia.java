@@ -92,22 +92,21 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         sendToClientsWithSectorLoaded(messageBuilder.removeCreature(cre), sector);
     }
 
-    public void moveCreatureTo(Creature cre, Coord loc, int timeInMillisecondsToMove) {
+    public void moveCreatureTo(Creature cre, Coord loc, int timeInMillisecondsToMove, boolean isTeleport) {
         cre.justTeleported = false;
-        sendToClientsWithSectorLoaded(messageBuilder.moveCreature(cre, 0), tileMap.getSectorOf(cre.location));
+        sendToClientsWithSectorLoaded(messageBuilder.moveCreature(cre, 0, isTeleport), tileMap.getSectorOf(cre.location));
         tileMap.wrap(loc);
         Sector sector = tileMap.getSectorOf(loc);
         tileMap.getTile(cre.location).cre = null;
         tileMap.getTile(loc).cre = cre;
         cre.location = loc;
-        sendToClientsWithSectorLoaded(messageBuilder.moveCreature(cre, timeInMillisecondsToMove), sector);
-        sendTo(messageBuilder.moveCreature(cre, timeInMillisecondsToMove), client -> {
+        sendTo(messageBuilder.moveCreature(cre, timeInMillisecondsToMove, isTeleport), client -> {
             return client.hasSectorLoaded(sector) || client.player.creature == cre;
         });
     }
 
-    public void moveCreatureTo(Creature cre, Coord loc) {
-        moveCreatureTo(cre, loc, 200);
+    public void moveCreatureTo(Creature cre, Coord loc, boolean isTeleport) {
+        moveCreatureTo(cre, loc, 200, isTeleport);
     }
 
     public void updateCreatureImage(Creature cre) {
@@ -125,7 +124,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
             y += diff;
         }
         if (tileMap.walkable(x, y, cre.location.z)) {
-            moveCreatureTo(cre, new Coord(x, y, cre.location.z));
+            moveCreatureTo(cre, new Coord(x, y, cre.location.z), false);
         }
     }
 
