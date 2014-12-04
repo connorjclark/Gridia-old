@@ -73,7 +73,7 @@ namespace Gridia
                 {
                     var directionDown = _inputManager.Get4DirectionalInput();
                     var destinationDown = Locator.Get<GridiaGame>().view.Focus.Position + directionDown;
-                    if (Locator.Get<TileMap>().Walkable(destinationDown))
+                    if (directionDown != Vector3.zero && Locator.Get<TileMap>().Walkable(destinationDown))
                     {
                         End(stateMachine, dt, new PlayerMovementState(destinationDown));
                         return;

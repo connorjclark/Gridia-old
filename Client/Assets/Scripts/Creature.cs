@@ -40,6 +40,11 @@ namespace Gridia
             Position = new Vector3(x, y, z);
         }
 
+        public void ClearSnapshots() 
+        {
+            _positions.Clear();
+        }
+
         public void AddPositionSnapshot(Vector3 position) 
         {
             AddPositionSnapshot(position, getSystemTime());

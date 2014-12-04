@@ -295,6 +295,18 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             }
         }
 
+        if (msg.equals("!del")) {
+            _server.changeItem(player.creature.location.add(0, 1, 0), ItemInstance.NONE);
+        }
+
+        if (msg.equals("!clr")) {
+            for (int i = 0; i < 20; i++) {
+                for (int j = 0; j < 20; j++) {
+                    _server.changeItem(player.creature.location.add(i, j, 0), ItemInstance.NONE);
+                }
+            }
+        }
+
         if (msg.equals("!loc")) {
             send(_messageBuilder.chat(player.creature.location.toString()));
         }
@@ -305,11 +317,11 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
 
         if (msg.startsWith("!warp ")) {
             String[] split = msg.split("\\s+");
-            if (split.length == 3) {
+            if (split.length == 4) {
                 try {
                     int x = Integer.parseInt(split[1]);
                     int y = Integer.parseInt(split[2]);
-                    int z = player.creature.location.z;
+                    int z = Integer.parseInt(split[3]);
                     if (_server.tileMap.inBounds(x, y, z)) {
                         _server.moveCreatureTo(player.creature, new Coord(x, y, z), true);
                     }

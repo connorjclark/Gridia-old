@@ -130,6 +130,10 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
 
         if (id != _game.view.FocusId || isTeleport)
         {
+            if (isTeleport)
+            {
+                //_game.tileMap.GetCreature(id).ClearSnapshots();
+            }
             _game.tileMap.MoveCreature(id, x, y, z, time);
         }
     }
@@ -265,7 +269,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
     {
         Message message = new JsonMessageBuilder()
             .Protocol(Outbound(GridiaProtocols.Serverbound.PlayerMove))
-            .Set("loc", new { x = loc.x, y = loc.y, z = loc.z })
+            .Set("loc", new { x = (int)loc.x, y = (int)loc.y, z = (int)loc.z })
             .Set("timeForMovement", timeForMovement)
             .Build();
         Send(message);

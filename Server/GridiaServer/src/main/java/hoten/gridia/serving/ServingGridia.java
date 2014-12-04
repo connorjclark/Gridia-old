@@ -109,7 +109,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
 
     public void moveCreatureTo(Creature cre, Coord loc, int timeInMillisecondsToMove, boolean isTeleport) {
         cre.justTeleported = false;
-        sendToClientsWithSectorLoaded(messageBuilder.moveCreature(cre, 0, isTeleport), tileMap.getSectorOf(cre.location));
+        sendToClientsWithSectorLoaded(messageBuilder.moveCreature(cre, 0, false), tileMap.getSectorOf(cre.location));
         tileMap.wrap(loc);
         Sector sector = tileMap.getSectorOf(loc);
         tileMap.getTile(cre.location).cre = null;
