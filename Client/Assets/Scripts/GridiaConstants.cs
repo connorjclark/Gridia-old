@@ -10,6 +10,7 @@ namespace Gridia
         public const float SPRITE_UV = 1.0f * SPRITE_SIZE / SPRITE_SHEET_SIZE;
         public static int SIZE, DEPTH, SECTOR_SIZE; // :(
         public static long SERVER_TIME_OFFSET;
+        public static bool IS_ADMIN;
     }
 }
 

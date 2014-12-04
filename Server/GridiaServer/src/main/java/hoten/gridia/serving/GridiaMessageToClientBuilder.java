@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import hoten.gridia.Creature;
 import hoten.gridia.Container;
-import hoten.gridia.Player;
 import hoten.gridia.content.ItemInstance;
 import hoten.gridia.content.ItemUse;
 import hoten.gridia.map.Coord;
@@ -102,6 +101,7 @@ public class GridiaMessageToClientBuilder {
                 .set("size", size)
                 .set("depth", depth)
                 .set("sectorSize", sectorSize)
+                .set("isAdmin", true)
                 .build();
     }
 

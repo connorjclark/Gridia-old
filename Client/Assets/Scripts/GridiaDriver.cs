@@ -68,6 +68,12 @@ public class GridiaDriver : MonoBehaviour
 
         gameInitWaitHandle.Set();
 
+        if (GridiaConstants.IS_ADMIN)
+        {
+            var adminWindow = new AdminWindow(Vector2.zero);
+            tabbedGui.Add(10, adminWindow, false);
+        }
+
         InitTabbedGui();
     }
 

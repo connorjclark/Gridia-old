@@ -29,13 +29,14 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         {
             base.Run();
         }
-        catch (Exception ex) 
+        catch (Exception ex)
         {
             Debug.LogError(ex);
         }
     }
 
-    private long getSystemTime() {
+    private long getSystemTime()
+    {
         return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
     }
 
@@ -53,6 +54,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
                 GridiaConstants.DEPTH = (int)data["depth"];
                 GridiaConstants.SECTOR_SIZE = (int)data["sectorSize"];
                 GridiaConstants.SERVER_TIME_OFFSET = getSystemTime() - (long)data["time"];
+                GridiaConstants.IS_ADMIN = (bool)data["isAdmin"];
                 GridiaDriver.connectedWaitHandle.Set(); // :(
                 GridiaDriver.gameInitWaitHandle.WaitOne();
                 break;
@@ -104,7 +106,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
 
     //inbound
 
-    private void AddCreature(JObject data) 
+    private void AddCreature(JObject data)
     {
         int id = (int)data["id"];
 
@@ -117,10 +119,10 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         _game.tileMap.CreateCreature(id, image, x, y, z);
     }
 
-    private void MoveCreature(JObject data) 
+    private void MoveCreature(JObject data)
     {
         int id = (int)data["id"];
-        if (id != _game.view.FocusId) 
+        if (id != _game.view.FocusId)
         {
             int x = (int)data["loc"]["x"];
             int y = (int)data["loc"]["y"];
@@ -136,7 +138,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         _game.tileMap.RemoveCreature(id);
     }
 
-    private void Chat(JObject data) 
+    private void Chat(JObject data)
     {
         var chat = Locator.Get<ChatWindow>();
         chat.append((String)data["msg"]);
@@ -164,7 +166,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         var items = JsonConvert.DeserializeObject<List<ItemInstance>>(backToJson, new ItemInstanceConverter());
         var id = (int)data["id"];
         var type = (String)data["type"];
-        if (type == "Inventory") 
+        if (type == "Inventory")
         {
             Locator.Get<InventoryWindow>().Items = items;
         }
@@ -192,7 +194,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         }
     }
 
-    private void SectorData(JavaBinaryReader data) 
+    private void SectorData(JavaBinaryReader data)
     {
         var sx = data.ReadInt32();
         var sy = data.ReadInt32();
@@ -264,7 +266,8 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         Send(message);
     }
 
-    public void RequestSector(int x, int y, int z) {
+    public void RequestSector(int x, int y, int z)
+    {
         if (_sectorsRequested.Contains(new Vector3(x, y, z)))
         {
             return;
@@ -309,19 +312,19 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         Send(message);
     }
 
-	public void UseItem(String source, String dest, int sourceIndex, int destIndex)
-	{
-		Message message = new JsonMessageBuilder()
-			.Protocol(Outbound(GridiaProtocols.Serverbound.UseItem))
-				.Set("source", source)
-				.Set("dest", dest)
-				.Set("si", sourceIndex)
-				.Set("di", destIndex)
-				.Build();
-		Send(message);
-	}
+    public void UseItem(String source, String dest, int sourceIndex, int destIndex)
+    {
+        Message message = new JsonMessageBuilder()
+            .Protocol(Outbound(GridiaProtocols.Serverbound.UseItem))
+                .Set("source", source)
+                .Set("dest", dest)
+                .Set("si", sourceIndex)
+                .Set("di", destIndex)
+                .Build();
+        Send(message);
+    }
 
-    public void PickItemUse(int useIndex) 
+    public void PickItemUse(int useIndex)
     {
         Message message = new JsonMessageBuilder()
             .Protocol(Outbound(GridiaProtocols.Serverbound.PickItemUse))
@@ -362,6 +365,16 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         Message message = new JsonMessageBuilder()
             .Protocol(Outbound(GridiaProtocols.Serverbound.Hit))
                 .Set("loc", new { x = loc.x, y = loc.y, z = loc.z })
+                .Build();
+        Send(message);
+    }
+
+    public void AdminMakeItem(Vector3 loc, int itemIndex)
+    {
+        Message message = new JsonMessageBuilder()
+            .Protocol(Outbound(GridiaProtocols.Serverbound.AdminMakeItem))
+                .Set("loc", new { x = loc.x, y = loc.y, z = loc.z })
+                .Set("item", itemIndex)
                 .Build();
         Send(message);
     }
