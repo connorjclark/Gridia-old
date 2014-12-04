@@ -57,5 +57,10 @@ namespace Gridia
             }
             return uv;
         }
+
+        public void Delete()
+        {
+            UnityEngine.Object.Destroy(renderable);
+        }
     }
 }

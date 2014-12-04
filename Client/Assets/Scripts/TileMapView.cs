@@ -38,14 +38,21 @@ namespace Gridia
                 width = Mathf.CeilToInt(Screen.width / tileSize);
                 height = Mathf.CeilToInt(Screen.height / tileSize);
                 InitGridVertices();
+                if (layers != null)
+                {
+                    layers.ForEach(layer => {
+                        layer.Delete();
+                    });
+                }
+                layers = InitLayers();
             }
         }
 
-        private readonly TileMap _tileMap;
-        private readonly TextureManager _textureManager;
-        private readonly List<Layer> layers;
-        private readonly Lighting lighting;
-        private readonly Shader shader;
+        private TileMap _tileMap;
+        private TextureManager _textureManager;
+        private List<Layer> layers;
+        private Lighting lighting;
+        private Shader shader;
         private Vector3[] _gridVertices;
         private int width, height;
         private float _scale;
@@ -56,7 +63,6 @@ namespace Gridia
             _textureManager = textureManager;
             shader = FindShader();
             Scale = scale;
-            layers = InitLayers();
             lighting = new Lighting(this);
             IsLighting = false;
         }

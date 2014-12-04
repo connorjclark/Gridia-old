@@ -133,6 +133,18 @@ public class GridiaDriver : MonoBehaviour
         }
 
         ToolTipRenderable.instance.Render();
+
+        if (Event.current.type == EventType.KeyDown)
+        {
+            if (Event.current.keyCode == KeyCode.PageDown)
+            {
+                _game.view.Scale += 0.25f;
+            }
+            else if (Event.current.keyCode == KeyCode.PageUp)
+            {
+                _game.view.Scale -= 0.25f;
+            }
+        }
     }
 
     // :(
