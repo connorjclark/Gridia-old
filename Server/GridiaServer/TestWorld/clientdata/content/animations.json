@@ -1009,5 +1009,15 @@
         "sprite":0
       }
     ]
+  },
+  {
+    "id":45,
+    "name":"diescream",
+    "frames":[
+      {
+        "sound":"diescream",
+        "sprite":0
+      }
+    ]
   }
 ]

@@ -12,6 +12,7 @@ public class Creature {
     public CreatureImage image;
     public boolean belongsToPlayer;
     public Container inventory;
+    public int life = 3;
     public boolean justTeleported; // :(
     public boolean isFriendly;
     public String friendlyMessage = "Hello!";

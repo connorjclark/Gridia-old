@@ -10,6 +10,7 @@ import hoten.gridia.map.Coord;
 import hoten.gridia.content.ItemInstance;
 import hoten.gridia.Player;
 import hoten.gridia.content.ItemUse;
+import hoten.gridia.content.Monster;
 import hoten.gridia.map.Sector;
 import hoten.serving.message.Protocols;
 import hoten.serving.SocketHandler;
@@ -267,6 +268,18 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             }
         }
 
+        if (msg.startsWith("!monster ")) {
+            try {
+                String[] split = msg.split(" ", 3);
+                if (split.length == 2) {
+                    int id = Integer.parseInt(split[1]);
+                    Monster monster = _server.contentManager.getMonster(id);
+                    _server.createCreature(monster, player.creature.location.add(0, 1, 0));
+                }
+            } catch (NumberFormatException e) {
+            }
+        }
+
         _server.sendToAll(_messageBuilder.chat(player.username + " says: " + msg));
     }
 
@@ -407,8 +420,11 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
                 send(_messageBuilder.chat(creature.friendlyMessage));
             } else {
                 _server.sendToClientsWithAreaLoaded(_messageBuilder.animation(1), loc);
-                _server.killCreature(creature);
-                _server.addItemNear(loc, _server.contentManager.createItemInstance(1022), 10);
+                if (--creature.life <= 0) {
+                    _server.sendToClientsWithAreaLoaded(_messageBuilder.animation(45), loc);
+                    _server.killCreature(creature);
+                    _server.addItemNear(loc, _server.contentManager.createItemInstance(1022), 10);
+                }
             }
         }
     }
