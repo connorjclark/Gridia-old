@@ -3,7 +3,6 @@ package hoten.gridia;
 import hoten.gridia.content.ContentManager;
 import hoten.gridia.content.Item;
 import hoten.gridia.content.ItemInstance;
-import hoten.gridia.content.Monster;
 import hoten.gridia.map.Coord;
 import hoten.gridia.map.TileMap;
 import hoten.gridia.serializers.GridiaGson;
@@ -12,8 +11,6 @@ import hoten.gridia.worldgen.MapGenerator;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 

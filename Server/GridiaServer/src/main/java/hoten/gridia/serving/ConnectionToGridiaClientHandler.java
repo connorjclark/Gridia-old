@@ -240,7 +240,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         if (msg.startsWith("!image ")) {
             try {
                 String[] split = msg.split(" ");
-                int image = Integer.parseInt(split[1]);
+                int image = split.length > 1 ? Integer.parseInt(split[1]) : 0;
                 int width = split.length == 4 && split[2].matches("\\d+") ? Integer.parseInt(split[2]) : 1;
                 int height = split.length == 4 && split[3].matches("\\d+") ? Integer.parseInt(split[3]) : 1;
                 if (image == 0) {
@@ -249,6 +249,20 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
                     player.creature.image = new DefaultCreatureImage(image, width, height);
                 }
                 updatePlayerImage();
+            } catch (NumberFormatException e) {
+            }
+        }
+
+        if (msg.startsWith("!friendly ")) {
+            try {
+                String[] split = msg.split(" ", 3);
+                if (split.length == 3) {
+                    int img = Integer.parseInt(split[1]);
+                    String friendlyMessage = split[2];
+                    Creature creature = _server.createCreature(img, player.creature.location.add(0, 1, 0));
+                    creature.isFriendly = true;
+                    creature.friendlyMessage = friendlyMessage;
+                }
             } catch (NumberFormatException e) {
             }
         }
@@ -389,9 +403,13 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         Coord loc = _gson.fromJson(data.get("loc"), Coord.class);
         Creature creature = _server.tileMap.getCreature(loc);
         if (creature != null && !creature.belongsToPlayer) {
-            _server.sendToClientsWithAreaLoaded(_messageBuilder.animation(1), loc);
-            _server.killCreature(creature);
-            _server.addItemNear(loc, _server.contentManager.createItemInstance(1022), 10);
+            if (creature.isFriendly) {
+                send(_messageBuilder.chat(creature.friendlyMessage));
+            } else {
+                _server.sendToClientsWithAreaLoaded(_messageBuilder.animation(1), loc);
+                _server.killCreature(creature);
+                _server.addItemNear(loc, _server.contentManager.createItemInstance(1022), 10);
+            }
         }
     }
 

@@ -2,7 +2,6 @@ package hoten.gridia.worldgen;
 
 import com.google.gson.Gson;
 import hoten.delaunay.examples.TestDriver;
-import hoten.delaunay.examples.TestGraphImpl;
 import hoten.delaunay.examples.TestGraphImpl.ColorData;
 import hoten.delaunay.voronoi.VoronoiGraph;
 import hoten.gridia.content.ContentManager;
@@ -92,7 +91,6 @@ public class MapGenerator {
                     tile.floor = 100 + grassIndex * 20;
                 }
 
-                //System.out.println("e = " + e);
                 if (x == 0 || y == 0 || x == size - 1 || y == size - 1) {
                     tile.floor = 1;
                 } else {
