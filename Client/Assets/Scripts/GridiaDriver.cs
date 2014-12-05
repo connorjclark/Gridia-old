@@ -20,6 +20,7 @@ public class GridiaDriver : MonoBehaviour
     public ItemUsePickWindow itemUsePickWindow;
     public ItemInstance mouseDownItem = null; // :(
     public InputManager inputManager = new InputManager();
+    public List<FloatingText> floatingTexts = new List<FloatingText>();
 
     void Start()
     {
@@ -121,18 +122,30 @@ public class GridiaDriver : MonoBehaviour
         //temp :(
         var cm = Locator.Get<ContentManager>();
         var playerZ = (int) _game.view.Focus.Position.z;
+        var focusPos = _game.view.FocusPosition;
+        var tileSize = 32 * _game.view.Scale;
         foreach (var cre in _game.tileMap.creatures.ValuesToList()) 
         {
             var pos = cre.Position;
             if (playerZ == pos.z)
             {
-                var focusPos = _game.view.FocusPosition;
                 var relative = pos - focusPos;
-
-                var tileSize = 32 * _game.view.Scale;
                 var rect = new Rect(relative.x * tileSize, Screen.height - relative.y * tileSize - tileSize, tileSize, tileSize);
-
                 DrawCreature(rect, cre.Image);
+            }
+        }
+
+        foreach (var floatingText in floatingTexts)
+        {
+            if (floatingText.Coord.z == playerZ)
+            {
+                floatingText.Reposition(tileSize, focusPos);
+                floatingText.Tick();
+                floatingText.Render();
+                if (floatingText.Life <= 0)
+                {
+                    floatingTexts.Remove(floatingText);
+                }
             }
         }
 

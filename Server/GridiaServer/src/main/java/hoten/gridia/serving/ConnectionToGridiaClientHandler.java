@@ -61,7 +61,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
                     return _server.contentManager.createItemInstance(i, quantity);
                 })
                 .collect(Collectors.toList()));
-        while (inv.size() < 40) {
+        while (inv.size() < 30) {
             inv.add(_server.contentManager.createItemInstance(0));
         }
         player.creature.inventory = new Container(inv, Container.ContainerType.Inventory);
@@ -134,7 +134,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
     protected synchronized void close() {
         super.close();
         _server.removeCreature(player.creature);
-        _server.sendToAll(_messageBuilder.chat(player.username + " has left the building."));
+        _server.sendToAll(_messageBuilder.chat(player.username + " has left the building.", player.creature.location));
     }
 
     private void ProcessPlayerMove(JsonObject data) throws IOException {
@@ -309,7 +309,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         }
 
         if (msg.equals("!loc")) {
-            send(_messageBuilder.chat(player.creature.location.toString()));
+            send(_messageBuilder.chat(player.creature.location.toString(), player.creature.location));
         }
 
         if (msg.equals("!die")) {
@@ -335,7 +335,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             _server.devMode = !_server.devMode;
         }
 
-        _server.sendToAll(_messageBuilder.chat(player.username + " says: " + msg));
+        _server.sendToAll(_messageBuilder.chat(player.username + " says: " + msg, player.creature.location));
     }
 
     private void ExecuteItemUse(
@@ -387,7 +387,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         }
 
         if (use.successMessage != null) {
-            send(_messageBuilder.chat(use.successMessage));
+            send(_messageBuilder.chat(use.successMessage, player.creature.location));
         }
     }
 
@@ -444,7 +444,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             }
             updatePlayerImage();
         } else {
-            send(_messageBuilder.chat("You cannot equip a " + item.data.name));
+            send(_messageBuilder.chat("You cannot equip a " + item.data.name, player.creature.location));
         }
     }
 
@@ -455,7 +455,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             player.equipment.deleteSlot(slotIndex);
             updatePlayerImage();
         } else {
-            send(_messageBuilder.chat("Your inventory is full."));
+            send(_messageBuilder.chat("Your inventory is full.", player.creature.location));
         }
     }
 
@@ -472,7 +472,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         Creature creature = _server.tileMap.getCreature(loc);
         if (creature != null && !creature.belongsToPlayer) {
             if (creature.isFriendly) {
-                send(_messageBuilder.chat(creature.friendlyMessage));
+                send(_messageBuilder.chat(creature.friendlyMessage, player.creature.location));
             } else {
                 _server.hurtCreature(creature, 1);
             }

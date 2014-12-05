@@ -149,7 +149,7 @@ public class GridiaServerDriver {
                 server.moveCreatureTo(winner, winnerTeleportLocation, true);
             }
 
-            server.sendToAll(server.messageBuilder.chat("Game over! Most Antenae: " + highestAntenae));
+            server.sendToAll(server.messageBuilder.chat("Game over! Most Antenae: " + highestAntenae, winnerTeleportLocation));
             clearArena();
         } else {
             timeLeft -= arenaTickRate;

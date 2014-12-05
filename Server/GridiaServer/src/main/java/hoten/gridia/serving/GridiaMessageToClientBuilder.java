@@ -114,10 +114,11 @@ public class GridiaMessageToClientBuilder {
                 .build();
     }
 
-    public Message chat(String msg) {
+    public Message chat(String msg, Coord loc) {
         return new JsonMessageBuilder()
                 .protocol(outbound(Chat))
                 .set("msg", msg)
+                .set("loc", loc)
                 .build();
     }
 

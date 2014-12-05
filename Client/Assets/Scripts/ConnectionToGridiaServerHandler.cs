@@ -146,8 +146,15 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
 
     private void Chat(JObject data)
     {
+        var message = (String)data["msg"];
+        var x = (int)data["loc"]["x"];
+        var y = (int)data["loc"]["y"];
+        var z = (int)data["loc"]["z"];
+
         var chat = Locator.Get<ChatWindow>();
-        chat.append((String)data["msg"]);
+        chat.append(message);
+
+        Locator.Get<GridiaDriver>().floatingTexts.Add(new FloatingText(new Vector3(x, y, z), message));
     }
 
     private void SetFocus(JObject data)

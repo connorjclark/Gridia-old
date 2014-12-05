@@ -14,9 +14,6 @@ namespace Gridia
         public Label(Vector2 pos, String text, bool centered = false)
             : base(pos)
         {
-            var textSize = GUI.skin.label.CalcSize(new GUIContent(text));
-            _rect.width = textSize.x;
-            _rect.height = textSize.y;
             Text = text;
             Centered = centered;
         }
