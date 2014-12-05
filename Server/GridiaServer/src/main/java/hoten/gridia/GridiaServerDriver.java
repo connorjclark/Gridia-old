@@ -130,8 +130,8 @@ public class GridiaServerDriver {
             List<Creature> playersInArena = getPlayersInArena();
             Creature winner = playersInArena.stream()
                     .max((creature1, creature2) -> {
-                        int numAntanea1 = countItemInInventory(creature1, 447);
-                        int numAntanea2 = countItemInInventory(creature2, 447);
+                        int numAntanea1 = removeItemFromInventory(creature1, 447).quantity;
+                        int numAntanea2 = removeItemFromInventory(creature2, 447).quantity;
                         return Integer.compare(numAntanea1, numAntanea2);
                     }).get();
 
@@ -150,11 +150,16 @@ public class GridiaServerDriver {
         }
     }
 
-    private static int countItemInInventory(Creature creature, int itemId) {
-        return creature.inventory.getItems().stream()
-                .filter(item -> item.data.id == itemId)
-                .mapToInt(item -> item.quantity)
-                .sum();
+    private static ItemInstance removeItemFromInventory(Creature creature, int itemId) {
+        ItemInstance item = server.contentManager.createItemInstance(itemId, 0);
+        for (int i = 0; i < creature.inventory.size(); i++) {
+            ItemInstance itemAtSlot = creature.inventory.get(i);
+            if (itemAtSlot.data.id == itemId) {
+                item.quantity += itemAtSlot.quantity;
+                creature.inventory.deleteSlot(i);
+            }
+        }
+        return item;
     }
 
     private static void clearArena() {

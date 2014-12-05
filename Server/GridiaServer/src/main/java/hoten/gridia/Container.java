@@ -32,6 +32,10 @@ public class Container {
         this(items, ContainerType.Inventory);
     }
 
+    public int size() {
+        return _items.size();
+    }
+
     public List<ItemInstance> getItems() {
         return _items;
     }
