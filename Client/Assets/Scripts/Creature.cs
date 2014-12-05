@@ -40,9 +40,9 @@ namespace Gridia
             Position = new Vector3(x, y, z);
         }
 
-        public void ClearSnapshots() 
+        public void ClearSnapshots(int amountToKeep = 0) 
         {
-            _positions.Clear();
+            _positions.RemoveRange(0, _positions.Count - amountToKeep);
         }
 
         public void AddPositionSnapshot(Vector3 position) 
@@ -88,13 +88,21 @@ namespace Gridia
 
         public Vector3 GetPosition() 
         {
+            if (_positions.Count == 1)
+            {
+                return _positions[0].Position;
+            }
+
             long timeToRender = getSystemTime() - RENDER_DELAY;
             PositionSnapshot snapshotBefore = null;
             PositionSnapshot snapshotAfter = null;
 
             GetSnapshotBeforeAndAfter(timeToRender, out snapshotBefore, out snapshotAfter);
 
-            if (snapshotBefore == null) return Vector3.zero;
+            if (snapshotBefore == null)
+            {
+                return snapshotAfter != null ? snapshotAfter.Position : Vector3.zero;
+            }
             if (snapshotAfter == snapshotBefore) return snapshotBefore.Position;
 
             float interp = (float)(timeToRender - snapshotBefore.Timestamp) / (snapshotAfter.Timestamp - snapshotBefore.Timestamp);

@@ -9,9 +9,13 @@ public class Coord {
         this.y = y;
         this.z = z;
     }
-    
+
     public Coord add(int x1, int y1, int z1) {
         return new Coord(x + x1, y + y1, z + z1);
+    }
+
+    public Coord add(Coord other) {
+        return new Coord(x + other.x, y + other.y, z + other.z);
     }
 
     @Override
