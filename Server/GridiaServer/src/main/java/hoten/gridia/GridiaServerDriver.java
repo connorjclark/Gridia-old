@@ -128,12 +128,16 @@ public class GridiaServerDriver {
     private static void stepArena() {
         if (timeLeft == 0) {
             List<Creature> playersInArena = getPlayersInArena();
-            Creature winner = playersInArena.stream()
-                    .max((creature1, creature2) -> {
-                        int numAntanea1 = removeItemFromInventory(creature1, 447).quantity;
-                        int numAntanea2 = removeItemFromInventory(creature2, 447).quantity;
-                        return Integer.compare(numAntanea1, numAntanea2);
-                    }).get();
+            Creature winner = null;
+            int highestAntenae = 0;
+
+            for (Creature player : playersInArena) {
+                int amount = removeItemFromInventory(player, 447).quantity;
+                if (amount > highestAntenae) {
+                    winner = player;
+                    highestAntenae = amount;
+                }
+            }
 
             playersInArena.remove(winner);
 
@@ -141,9 +145,11 @@ public class GridiaServerDriver {
                 server.moveCreatureTo(creature, loserTeleportLocation, true);
             });
 
-            server.moveCreatureTo(winner, winnerTeleportLocation, true);
+            if (winner != null) {
+                server.moveCreatureTo(winner, winnerTeleportLocation, true);
+            }
 
-            server.sendToAll(server.messageBuilder.chat("Game over!"));
+            server.sendToAll(server.messageBuilder.chat("Game over! Most Antenae: " + highestAntenae));
             clearArena();
         } else {
             timeLeft -= arenaTickRate;

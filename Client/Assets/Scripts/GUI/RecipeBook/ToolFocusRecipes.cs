@@ -21,16 +21,16 @@ namespace Gridia
             var focusItem = Locator.Get<ContentManager>().GetItem(uses[0].focus).GetInstance(1);
             var focus = new ItemRenderable(Vector2.zero, focusItem);
 
-            AddChild(new Label(Vector2.zero, 32, 32, "+", true));
+            AddChild(new Label(Vector2.zero, "+", true));
             AddChild(focus);
-            AddChild(new Label(Vector2.zero, 32, 32, "=", true));
+            AddChild(new Label(Vector2.zero, "=", true));
 
             if (_uses.Count > 1)
             {
-                var nextButton = new Button(new Vector2(32, 32), 32, 32, ">");
+                var nextButton = new Button(new Vector2(32, 32), ">");
                 nextButton.OnClick = NextSelection;
 
-                var prevButton = new Button(new Vector2(32, 32), 32, 32, "<");
+                var prevButton = new Button(new Vector2(32, 32), "<");
                 prevButton.OnClick = PreviousSelection;
 
                 AddChild(prevButton);

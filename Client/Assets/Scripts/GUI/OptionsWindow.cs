@@ -13,23 +13,22 @@ namespace Gridia
         {
             Resizeable = false;
             var soundPlayer = Locator.Get<SoundPlayer>();
-            MakeButton("Log out", new Rect(0, 0, 80, 30), Application.Quit);
-            MakeButton("Next song", new Rect(0, 35, 80, 30), soundPlayer.EndCurrentSong);
-            MakeToggle(" Mute music", soundPlayer.MuteMusic, new Rect(0, 70, 100, 30), (value) => soundPlayer.MuteMusic = value);
-            MakeToggle(" Mute sfx", soundPlayer.MuteSfx, new Rect(0, 105, 100, 30), (value) => soundPlayer.MuteSfx = value);
+            MakeButton("Log out", new Vector2(0, 0), Application.Quit);
+            MakeButton("Next song", new Vector2(0, 35), soundPlayer.EndCurrentSong);
+            MakeToggle(" Mute music", soundPlayer.MuteMusic, new Vector2(0, 70), (value) => soundPlayer.MuteMusic = value);
+            MakeToggle(" Mute sfx", soundPlayer.MuteSfx, new Vector2(0, 105), (value) => soundPlayer.MuteSfx = value);
         }
 
-        private void MakeButton(String label, Rect rect, Action onClick) 
+        private void MakeButton(String label, Vector2 pos, Action onClick) 
         {
-            var button = new Button(new Vector2(rect.x, rect.y), rect.width, rect.height, label);
+            var button = new Button(pos, label);
             button.OnClick = onClick;
             AddChild(button);
         }
 
-        private void MakeToggle(String label, bool initialState, Rect rect, Action<bool> onToggle) 
+        private void MakeToggle(String label, bool initialState, Vector2 pos, Action<bool> onToggle) 
         {
-            var toggle = new Toggle(new Vector2(rect.x, rect.y), rect.width, rect.height, label, initialState);
-            toggle.Rect = rect;
+            var toggle = new Toggle(pos, label, initialState);
             toggle.OnToggle = onToggle;
             AddChild(toggle);
         }

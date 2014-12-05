@@ -12,11 +12,10 @@ namespace Gridia
         public Action<bool> OnToggle { private get; set; }
         private bool Selected { get; set; }
 
-        public Toggle(Vector2 pos, float width, float height, String label, bool initialState)
+        public Toggle(Vector2 pos, String label, bool initialState)
             : base(pos)
         {
-            _rect.width = width;
-            _rect.height = height;
+            
             Selected = initialState;
             Label = label;
         }
@@ -24,6 +23,9 @@ namespace Gridia
         public override void Render()
         {
             base.Render();
+            var textSize = GUI.skin.label.CalcSize(new GUIContent(Label));
+            _rect.width = textSize.x + 20; // :(
+            _rect.height = textSize.y;
             var newState = GUI.Toggle(Rect, Selected, Label);
             if (newState != Selected)
             {

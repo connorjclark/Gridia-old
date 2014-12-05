@@ -76,10 +76,10 @@ namespace Gridia
                 GetElement = getElement;
                 OnElementClick = onElementClick;
 
-                var prevPage = new Button(Vector2.zero, 100, 20, "Previous");
+                var prevPage = new Button(Vector2.zero, "Previous");
                 prevPage.OnClick = () => { ShowPage(_currentPage - 1); };
 
-                var nextPage = new Button(new Vector2(120, 0), 100, 20, "Next");
+                var nextPage = new Button(new Vector2(120, 0), "Next");
                 nextPage.OnClick = () => { ShowPage(_currentPage + 1); };
 
                 ShowPage(0);

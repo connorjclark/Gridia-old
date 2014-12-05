@@ -10,16 +10,17 @@ namespace Gridia
     {
         public String Text { get; set; }
 
-        public Button(Vector2 pos, float width, float height, String text)
+        public Button(Vector2 pos, String text)
             : base(pos)
         {
-            _rect.width = width;
-            _rect.height = height;
             Text = text;
         }
 
         public override void Render()
         {
+            var textSize = GUI.skin.label.CalcSize(new GUIContent(Text));
+            _rect.width = textSize.x + 20; // :(
+            _rect.height = textSize.y;
             // :(
             if (GUI.Button(Rect, Text) && OnClick != null) 
             {
