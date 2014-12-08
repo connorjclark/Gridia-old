@@ -24,7 +24,12 @@ public class GridiaGame
 
     public Vector3 GetSelectorCoord()
     {
-        return view.FocusPosition + selectorDelta + new Vector3(view.width / 2, view.height / 2);
+        return GetSelectorCoord(selectorDelta);
+    }
+
+    public Vector3 GetSelectorCoord(Vector3 sDelta)
+    {
+        return view.FocusPosition + sDelta + new Vector3(view.width / 2, view.height / 2);
     }
 
     public void PickUpItemAtSelection() 
@@ -42,7 +47,6 @@ public class GridiaGame
     public void UseItemAtSelection(int sourceIndex)
     {
         var destIndex = tileMap.ToIndex(GetSelectorCoord());
-        Debug.Log(GetSelectorCoord());
         UseItemAt("inv", sourceIndex, "world", destIndex);
     }
 

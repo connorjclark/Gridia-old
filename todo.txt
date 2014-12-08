@@ -1,6 +1,5 @@
 Controls
 
-  alt + shift to move item in world
   ctrl + shift or q to drop item from inv
   ctrl + alt to use hand on inventory item
   ctrl + alt + shift to move item in inventory
@@ -16,11 +15,13 @@ UI
 Refactoring
   
   xxxGui -> xxxWindow
+  States -> state folder
 
 Winter break
 
   Get game ready for demo launch
     Finish controls
+    Animations
     Only play sounds if nearby
     Accounts
     Admin accounts
@@ -31,6 +32,9 @@ Winter break
   Twitter
   Greenlight
   Refactor
+    State machine
+    Serving Java
+  Test coverage
 
 Spring semester:
 

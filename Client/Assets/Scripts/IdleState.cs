@@ -18,6 +18,7 @@ namespace Gridia
         {
             _driver = Locator.Get<GridiaDriver>();
             _game = Locator.Get<GridiaGame>();
+            _game.selectorDelta = Vector3.zero;
         }
 
         public override void Step(StateMachine stateMachine, float dt)
@@ -33,6 +34,12 @@ namespace Gridia
                 {
                     _driver.invGui.SlotSelected = numKeyPressed == 0 ? 9 : numKeyPressed - 1;
                 }
+            }
+
+            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftAlt)) 
+            {
+                End(stateMachine, dt, new ItemMovementState(_game.GetSelectorCoord()));
+                return;
             }
 
             var wasdKeysUp = _inputManager.Get4DirectionalInputUp();
@@ -142,7 +149,6 @@ namespace Gridia
             stateMachine.Step(dt);
             _driver.mouseDownItem = null;
             _game.hideSelector = true; // :( OnEnd()
-            _game.selectorDelta = Vector3.zero;
         }
 
         private int GetNumberKeyPressed()

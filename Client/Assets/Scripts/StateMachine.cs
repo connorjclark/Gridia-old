@@ -3,7 +3,8 @@ namespace Gridia
 {
     public abstract class State
     {
-        public abstract void Step (StateMachine stateMachine, float dt);
+        public abstract void Step(StateMachine stateMachine, float dt);
+        public virtual void OnGUI() { }
         protected InputManager _inputManager = Locator.Get<InputManager>();
     }
 
@@ -21,6 +22,14 @@ namespace Gridia
             if (CurrentState != null) 
             {
                 CurrentState.Step(this, dt);
+            }
+        }
+
+        public void OnGUI() 
+        {
+            if (CurrentState != null)
+            {
+                CurrentState.OnGUI();
             }
         }
     }
