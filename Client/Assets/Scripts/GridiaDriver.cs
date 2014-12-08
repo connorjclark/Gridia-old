@@ -21,6 +21,7 @@ public class GridiaDriver : MonoBehaviour
     public ItemInstance mouseDownItem = null; // :(
     public InputManager inputManager = new InputManager();
     public List<FloatingText> floatingTexts = new List<FloatingText>();
+    public Vector3 selectorDelta = Vector3.zero;
 
     void Start()
     {
@@ -56,8 +57,7 @@ public class GridiaDriver : MonoBehaviour
         Locator.Provide(_game);
 
         MonoBehaviour.print("connecting");
-        ConnectionToGridiaServerHandler conn = new ConnectionToGridiaServerHandler(_game, "localhost", 1234);
-        //ConnectionToGridiaServerHandler conn = new ConnectionToGridiaServerHandler(_game, "23.102.24.247", 1234);
+        ConnectionToGridiaServerHandler conn = new ConnectionToGridiaServerHandler(_game, SceneManager.GetArguement<String>("ip"), 1234);
         Locator.Provide(conn);
         conn.Start();
 
@@ -97,14 +97,21 @@ public class GridiaDriver : MonoBehaviour
 
     void InitTabbedGui() 
     {
-        tabbedGui.Add(1221, invGui, false); // :(
+        tabbedGui.Add(1221, invGui, true); // :(
         tabbedGui.Add(15, equipmentGui, false); // :(
-        tabbedGui.Add(147, chatGui, false); // :(
+        tabbedGui.Add(147, chatGui, true); // :(
 
         var options = new OptionsWindow(Vector2.zero);
         options.X = (Screen.width - options.Width) / 2;
         options.Y = (Screen.height - options.Height) / 2;
         tabbedGui.Add(0, options, false);
+    }
+
+    Vector2 GetRelativeScreenPosition(Vector3 playerPosition, Vector3 subjectCoord)
+    {
+        var tileSize = 32 * _game.view.Scale;
+        var relative = subjectCoord - playerPosition;
+        return new Vector2(relative.x * tileSize, Screen.height - relative.y * tileSize - tileSize);
     }
 
     void OnGUI() {
@@ -119,6 +126,7 @@ public class GridiaDriver : MonoBehaviour
             draggedItem.Render();
         }
 
+
         //temp :(
         var cm = Locator.Get<ContentManager>();
         var playerZ = (int) _game.view.Focus.Position.z;
@@ -129,14 +137,24 @@ public class GridiaDriver : MonoBehaviour
             var pos = cre.Position;
             if (playerZ == pos.z)
             {
-                var relative = pos - focusPos;
+                var relative = pos - focusPos; // :(
                 var rect = new Rect(relative.x * tileSize, Screen.height - relative.y * tileSize - tileSize, tileSize, tileSize);
-                DrawCreature(rect, cre.Image);
+                DrawCreature(rect, cre);
+
+                var labelRelative = pos - _game.view.FocusPosition; // :(
+                var nameLabel = new Label(new Vector2((labelRelative.x + 0.5f) * tileSize, Screen.height - (labelRelative.y + 1.5f) * tileSize), cre.Name, true, true); // :(
+                nameLabel.Render();
             }
         }
 
-        foreach (var floatingText in floatingTexts)
+        var selectorPos = focusPos + selectorDelta;
+        var selectorRelativePosition = GetRelativeScreenPosition(focusPos, selectorPos);
+        var selectorRect = new Rect(selectorRelativePosition.x, selectorRelativePosition.y, tileSize, tileSize);
+        //GUI.Box(selectorRect, "");
+
+        for (int i = 0; i < floatingTexts.Count; i++)
         {
+            var floatingText = floatingTexts[i];
             if (floatingText.Coord.z == playerZ)
             {
                 floatingText.Reposition(tileSize, focusPos);
@@ -144,7 +162,7 @@ public class GridiaDriver : MonoBehaviour
                 floatingText.Render();
                 if (floatingText.Life <= 0)
                 {
-                    floatingTexts.Remove(floatingText);
+                    floatingTexts.RemoveAt(i);
                 }
             }
         }
@@ -162,11 +180,31 @@ public class GridiaDriver : MonoBehaviour
                 _game.view.Scale -= 0.25f;
             }
         }
+        if (Event.current.type == EventType.KeyUp)
+        {
+            if (Event.current.keyCode == KeyCode.Tab)
+            {
+                chatGui.Visible = true;
+                GUI.FocusControl("ChatInput");
+            }
+            else if (Event.current.keyCode == KeyCode.Escape)
+            {
+                if (GUI.GetNameOfFocusedControl() == "ChatInput")
+                {
+                    GUI.FocusControl("");
+                }
+                else
+                {
+                    chatGui.Visible = false;
+                }
+            }
+        }
     }
 
     // :(
-    private void DrawCreature(Rect rect, CreatureImage image)
+    private void DrawCreature(Rect rect, Creature creature)
     {
+        var image = creature.Image;
         if (image is DefaultCreatureImage)
         {
             var defaultImage = image as DefaultCreatureImage;
@@ -188,7 +226,7 @@ public class GridiaDriver : MonoBehaviour
             DrawCreaturePart(rect, _textureManager.Arms, customImage.Arms);
             DrawCreaturePart(rect, _textureManager.Weapons, customImage.Weapon);
             DrawCreaturePart(rect, _textureManager.Shields, customImage.Shield);
-        }
+        }        
     }
 
     private void DrawCreaturePart(Rect rect, List<Texture> textures, int spriteIndex)

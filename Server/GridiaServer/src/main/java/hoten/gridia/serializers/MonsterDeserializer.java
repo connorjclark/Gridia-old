@@ -1,6 +1,5 @@
 package hoten.gridia.serializers;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -28,6 +27,7 @@ public class MonsterDeserializer implements JsonDeserializer<Monster> {
         JsonObject jsonObject = json.getAsJsonObject();
         Monster monster = new Monster();
         monster.id = jsonObject.get("id").getAsInt();
+        monster.name = jsonObject.get("name").getAsString();
 
         int spriteIndex = jsonObject.has("image") ? jsonObject.get("image").getAsInt() - 1 : 0; // :(
         if (jsonObject.has("image_type")) {

@@ -43,8 +43,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
     @Override
     protected void onConnectionSettled() throws IOException {
         player = new Player();
-        player.username = "Bill_" + hashCode();
-        player.creature = _server.createCreatureForPlayer();
+        player.creature = _server.createCreatureForPlayer("Player_" + hashCode());
         _server.announceNewPlayer(this, player);
         send(_messageBuilder.initialize(_server.tileMap.size, _server.tileMap.depth, _server.tileMap.sectorSize));
         send(_messageBuilder.setFocus(player.creature.id));
@@ -134,7 +133,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
     protected synchronized void close() {
         super.close();
         _server.removeCreature(player.creature);
-        _server.sendToAll(_messageBuilder.chat(player.username + " has left the building.", player.creature.location));
+        _server.sendToAll(_messageBuilder.chat(player.creature.name + " has left the building.", player.creature.location));
     }
 
     private void ProcessPlayerMove(JsonObject data) throws IOException {
@@ -330,12 +329,20 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
                 }
             }
         }
-        
+
         if (msg.equals("!dev")) {
             _server.devMode = !_server.devMode;
         }
 
-        _server.sendToAll(_messageBuilder.chat(player.username + " says: " + msg, player.creature.location));
+        if (msg.startsWith("!name ")) {
+            String[] split = msg.split("\\s+", 2);
+            if (split.length == 2) {
+                player.creature.name = split[1];
+                _server.sendToAll(_messageBuilder.renameCreature(player.creature));
+            }
+        }
+
+        _server.sendToAll(_messageBuilder.chat(player.creature.name + " says: " + msg, player.creature.location));
     }
 
     private void ExecuteItemUse(

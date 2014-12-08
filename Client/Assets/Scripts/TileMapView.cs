@@ -54,7 +54,7 @@ namespace Gridia
         private Lighting lighting;
         private Shader shader;
         private Vector3[] _gridVertices;
-        private int width, height;
+        public int width, height;
         private float _scale;
 
         public TileMapView(TileMap tileMap, TextureManager textureManager, float scale = 1.0f)

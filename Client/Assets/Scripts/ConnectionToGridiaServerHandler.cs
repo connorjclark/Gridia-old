@@ -91,6 +91,9 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
             case GridiaProtocols.Clientbound.UpdateCreatureImage:
                 UpdateCreatureImage(data);
                 break;
+            case GridiaProtocols.Clientbound.RenameCreature:
+                RenameCreature(data);
+                break;
         }
     }
 
@@ -109,6 +112,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
     private void AddCreature(JObject data)
     {
         int id = (int)data["id"];
+        var name = (String)data["name"];
 
         var backToJson = JsonConvert.SerializeObject(data["image"]); // :(
         var image = JsonConvert.DeserializeObject<CreatureImage>(backToJson, new CreatureImageConverter());
@@ -116,7 +120,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         int x = (int)data["loc"]["x"];
         int y = (int)data["loc"]["y"];
         int z = (int)data["loc"]["z"];
-        _game.tileMap.CreateCreature(id, image, x, y, z);
+        _game.tileMap.CreateCreature(id, name, image, x, y, z);
     }
 
     private void MoveCreature(JObject data)
@@ -133,7 +137,11 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
             _game.tileMap.MoveCreature(id, x, y, z, time);
             if (isTeleport)
             {
-                _game.tileMap.GetCreature(id).ClearSnapshots(1);
+                var cre = _game.tileMap.GetCreature(id);
+                if (cre != null)
+                {
+                    cre.ClearSnapshots(1);
+                }
             }
         }
     }
@@ -154,7 +162,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         var chat = Locator.Get<ChatWindow>();
         chat.append(message);
 
-        Locator.Get<GridiaDriver>().floatingTexts.Add(new FloatingText(new Vector3(x, y, z), message));
+        Locator.Get<GridiaDriver>().floatingTexts.Add(new FloatingText(new Vector3(x, y, z), " " + message));
     }
 
     private void SetFocus(JObject data)
@@ -268,6 +276,13 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         var backToJson = JsonConvert.SerializeObject(data["image"]); // :(
         var image = JsonConvert.DeserializeObject<CreatureImage>(backToJson, new CreatureImageConverter());
         _game.tileMap.GetCreature(id).Image = image;
+    }
+
+    private void RenameCreature(JObject data)
+    {
+        int id = (int)data["id"];
+        var name = (String)data["name"];
+        _game.tileMap.GetCreature(id).Name = name;
     }
 
     //outbound

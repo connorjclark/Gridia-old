@@ -10,22 +10,30 @@ namespace Gridia
     {
         public String Text { get; set; }
         public Vector2 ScrollPosition { get; set; }
+        public float TextHeight { get; private set; }
+        public float MaxScrollY { get; private set; }
 
         public TextArea(Vector2 pos, float width, float height)
             : base(pos)
         {
             Text = "";
-            _rect.width = width;
-            _rect.height = height;
+            _rect.width = width + 20;
+            _rect.height = height + 20;
         }
 
         public override void Render()
         {
             base.Render();
-            var textHeight = GUI.skin.GetStyle("TextArea").CalcSize(new GUIContent(Text)).y;
-            ScrollPosition = GUI.BeginScrollView(Rect, ScrollPosition, new Rect(0, 0, Width - 20, textHeight));
-            GUI.TextArea(new Rect(0, 0, Rect.width, Math.Max(textHeight, Height)), Text);
+            TextHeight = GUI.skin.GetStyle("TextArea").CalcHeight(new GUIContent(Text), Width);
+            ScrollPosition = GUI.BeginScrollView(Rect, ScrollPosition, new Rect(0, 0, Width - 20, TextHeight));
+            GUI.TextArea(new Rect(0, 0, Width, Math.Max(Height, TextHeight)), Text);
             GUI.EndScrollView();
+            CalculateMaxScrollY();
+        }
+
+        private void CalculateMaxScrollY() 
+        {
+            MaxScrollY = GUI.skin.GetStyle("TextArea").CalcHeight(new GUIContent(Text), Width) - Height;
         }
     }
 }

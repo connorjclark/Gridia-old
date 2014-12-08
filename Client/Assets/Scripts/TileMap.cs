@@ -59,9 +59,9 @@ namespace Gridia
             return sector;
         }
 
-        public Creature CreateCreature(int id, CreatureImage image, int x, int y, int z)
+        public Creature CreateCreature(int id, String name, CreatureImage image, int x, int y, int z)
         {
-            var cre = new Creature(id, image, x, y, z);
+            var cre = new Creature(id, name, image, x, y, z);
             return creatures[id] = cre;
         }
 

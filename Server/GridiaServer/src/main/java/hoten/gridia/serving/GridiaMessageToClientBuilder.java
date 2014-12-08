@@ -31,7 +31,16 @@ public class GridiaMessageToClientBuilder {
                 .protocol(outbound(AddCreature))
                 .set("id", cre.id)
                 .set("image", cre.image)
+                .set("name", cre.name)
                 .set("loc", cre.location)
+                .build();
+    }
+    
+    public Message renameCreature(Creature cre) {
+        return new JsonMessageBuilder()
+                .protocol(outbound(RenameCreature))
+                .set("id", cre.id)
+                .set("name", cre.name)
                 .build();
     }
 

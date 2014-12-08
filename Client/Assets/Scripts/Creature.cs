@@ -31,11 +31,13 @@ namespace Gridia
             } 
         }
         public int Id { get; private set; }
+        public String Name { get; set; }
         public CreatureImage Image { get; set; }
         private List<PositionSnapshot> _positions = new List<PositionSnapshot>();
 
-        public Creature(int id, CreatureImage image, int x, int y, int z) {
+        public Creature(int id, String name, CreatureImage image, int x, int y, int z) {
             Id = id;
+            Name = name;
             Image = image;
             Position = new Vector3(x, y, z);
         }

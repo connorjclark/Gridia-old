@@ -8,6 +8,7 @@ public class Creature {
     public static final UniqueIdentifiers uniqueIds = new UniqueIdentifiers();
 
     public final int id = uniqueIds.next();
+    public String name;
     public Coord location = new Coord(0, 0, 0);
     public CreatureImage image;
     public boolean belongsToPlayer;

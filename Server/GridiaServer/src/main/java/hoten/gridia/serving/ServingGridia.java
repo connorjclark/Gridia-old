@@ -157,7 +157,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     }
 
     public Creature createCreature(Monster mold, Coord loc) {
-        Creature cre = createCreature(mold.image, loc);
+        Creature cre = createCreature(mold.image, mold.name, loc);
         List<ItemInstance> items = new ArrayList<>();
         mold.drops.forEach(itemDrop -> {
             items.add(new ItemInstance(itemDrop));
@@ -167,11 +167,12 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     }
 
     public Creature createCreature(int image, Coord loc) {
-        return createCreature(new DefaultCreatureImage(image), loc);
+        return createCreature(new DefaultCreatureImage(image), "Monster", loc);
     }
 
-    public Creature createCreature(CreatureImage image, Coord loc) {
+    public Creature createCreature(CreatureImage image, String name, Coord loc) {
         Creature cre = new Creature();
+        cre.name = name;
         cre.image = image;
         cre.location = loc;
         Sector sector = tileMap.getSectorOf(cre.location);
@@ -181,13 +182,13 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         return cre;
     }
 
-    public Creature createCreatureForPlayer() {
+    public Creature createCreatureForPlayer(String name) {
         CustomPlayerImage image = new CustomPlayerImage();
         image.bareArms = (int) (Math.random() * 10);
         image.bareHead = (int) (Math.random() * 100);
         image.bareChest = (int) (Math.random() * 10);
         image.bareLegs = (int) (Math.random() * 10);
-        Creature cre = createCreature(image, GridiaServerDriver.getPlayerSpawn());
+        Creature cre = createCreature(image, name, GridiaServerDriver.getPlayerSpawn());
         cre.belongsToPlayer = true;
         return cre;
     }
@@ -195,7 +196,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     public void announceNewPlayer(ConnectionToGridiaClientHandler client, Player player) {
         Message message = new JsonMessageBuilder()
                 .protocol(outbound(Chat))
-                .set("msg", String.format("%s has joined the game!", player.username))
+                .set("msg", String.format("%s has joined the game!", player.creature.name))
                 .build();
         sendToAllBut(message, client);
     }

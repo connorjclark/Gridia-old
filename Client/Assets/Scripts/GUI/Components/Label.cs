@@ -10,12 +10,14 @@ namespace Gridia
     {
         public String Text { get; set; }
         public bool Centered { get; set; }
+        public bool Background { get; set; }
 
-        public Label(Vector2 pos, String text, bool centered = false)
+        public Label(Vector2 pos, String text, bool centered = false, bool background = false)
             : base(pos)
         {
             Text = text;
             Centered = centered;
+            Background = background;
         }
 
         public override void Render()
@@ -24,12 +26,12 @@ namespace Gridia
             var textSize = GUI.skin.label.CalcSize(new GUIContent(Text));
             _rect.width = textSize.x;
             _rect.height = textSize.y;
-            if (Centered)
+            var rect = Centered ? new Rect(X - textSize.x / 2, Y, textSize.x, Height) : Rect;
+            if (Background)
             {
-                X = (Width - textSize.x) / 2;
-                Y = (Height - textSize.y) / 2;
+                GUI.Box(rect, "");
             }
-            GUI.Label(Rect, Text);
+            GUI.Label(rect, Text);
         }
     }
 }
