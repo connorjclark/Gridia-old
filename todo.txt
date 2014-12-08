@@ -1,35 +1,10 @@
-Immediate todo:
-
-Sat
-
-Fix controls
-Movement speeds
-Equipment
-Melee
-
-Sun
-
-Magic
-World building
-
-Mon
-
-Map
-World gen
-Zooming
-
-Tues
-
-Make dungeon
-Teach Eric
-
-Wed & Thur
-
-Touch ups
-
 Controls
 
-  Shift + q to drop entire stack
+  alt + shift to move item in world
+  ctrl + shift or q to drop item from inv
+  ctrl + alt to use hand on inventory item
+  ctrl + alt + shift to move item in inventory
+  click on inventory slot to select item
 
 UI
 
@@ -37,36 +12,29 @@ UI
   hand uses don't show in recipe book?
   Show slot number for items 1-10 in inventory
   Move 'next' button in recipe book to far right
-  Chat message shows above player
-
-Features
-
-  Movement speeds
-  Big monsters
 
 Refactoring
   
   xxxGui -> xxxWindow
 
-Features
+Winter break
 
-By 11/11/14:
-  Tabbed UI
+  Get game ready for demo launch
+    Finish controls
+    Only play sounds if nearby
+    Accounts
+    Admin accounts
+    Mining
+    Raft
+  Set up blog, website, forums
+  Press kit
+  Twitter
+  Greenlight
   Refactor
 
-By 11/18/14:
-  Crafting
-  Smooth movement
-
-By 11/25/14:
-  Combat
-
-By 12/2/14:
-  World generation
-  Zoom in/out
-  Build a test dungeon  
-
 Spring semester:
+
+Magic
 
 Spell discovery:
   Runes placed in minecraft-esque fashion
