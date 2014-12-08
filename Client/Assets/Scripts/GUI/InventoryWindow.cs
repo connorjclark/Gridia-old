@@ -67,7 +67,11 @@ namespace Gridia
                     Locator.Get<GridiaDriver>().OpenRecipeBook(itemRend.Item);
                 };
                 itemRend.OnMouseDown = () => MouseDownSlot = slotIndex;
-                itemRend.OnClick = () => MouseUpSlot = slotIndex;
+                itemRend.OnClick = () =>
+                {
+                    MouseUpSlot = slotIndex;
+                    SlotSelected = slotIndex;
+                };
                 itemRend.OnMouseOver = () => MouseOverSlot = slotIndex;
                 itemRend.OnDoubleClick = () =>
                 {
