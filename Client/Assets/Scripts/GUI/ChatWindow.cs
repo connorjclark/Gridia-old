@@ -31,14 +31,14 @@ Press ESCAPE once to unfocus the chat box, and again to hide the chat.
 Press TAB once to show the chat, and again to set focus on it.
 
 To move an item, either drag it with your mouse to another location, your player, or your inventory window,
-Or, hold SHIFT and press QWEASDZXC to indicate the direction the item is in. (example: press S for under you, or D for to the right)
+Or, use the arrow keys and press shift
 
 To select an item in your inventory, either press 1,2,3...0 to select on of the first few items,
 Or, hold CTRL and press WASD to move your selection
 
-To use your selected item in the world, hold SPACE and press QWEASDZXC
+To use your selected item in the world, use the arrow keys and press SPACE
 
-To use your hand in the world, hold ALT and press QWEASDZXC
+To use your hand in the world, use the arrows keys and press ALT
 
 Press Q to drop a single item of your current selection
 

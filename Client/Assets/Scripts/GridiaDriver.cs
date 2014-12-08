@@ -21,7 +21,6 @@ public class GridiaDriver : MonoBehaviour
     public ItemInstance mouseDownItem = null; // :(
     public InputManager inputManager = new InputManager();
     public List<FloatingText> floatingTexts = new List<FloatingText>();
-    public Vector3 selectorDelta = Vector3.zero;
 
     void Start()
     {
@@ -110,7 +109,7 @@ public class GridiaDriver : MonoBehaviour
     Vector2 GetRelativeScreenPosition(Vector3 playerPosition, Vector3 subjectCoord)
     {
         var tileSize = 32 * _game.view.Scale;
-        var relative = subjectCoord - playerPosition;
+        var relative = subjectCoord - playerPosition + new Vector3(_game.view.width / 2, _game.view.height / 2);
         return new Vector2(relative.x * tileSize, Screen.height - relative.y * tileSize - tileSize);
     }
 
@@ -125,7 +124,6 @@ public class GridiaDriver : MonoBehaviour
             draggedItem.ToolTip = null;
             draggedItem.Render();
         }
-
 
         //temp :(
         var cm = Locator.Get<ContentManager>();
@@ -147,10 +145,13 @@ public class GridiaDriver : MonoBehaviour
             }
         }
 
-        var selectorPos = focusPos + selectorDelta;
-        var selectorRelativePosition = GetRelativeScreenPosition(focusPos, selectorPos);
-        var selectorRect = new Rect(selectorRelativePosition.x, selectorRelativePosition.y, tileSize, tileSize);
-        //GUI.Box(selectorRect, "");
+        if (!_game.hideSelector)
+        {
+            var selectorPos = focusPos + _game.selectorDelta;
+            var selectorRelativePosition = GetRelativeScreenPosition(focusPos, selectorPos);
+            var selectorRect = new Rect(selectorRelativePosition.x, selectorRelativePosition.y, tileSize, tileSize);
+            GUIDrawSelector(selectorRect);
+        }
 
         for (int i = 0; i < floatingTexts.Count; i++)
         {
@@ -199,6 +200,22 @@ public class GridiaDriver : MonoBehaviour
                 }
             }
         }
+    }
+
+    private Texture2D _staticRectTexture;
+    private GUIStyle _staticRectStyle;
+
+    public void GUIDrawSelector(Rect rect)
+    {
+        if (_staticRectTexture == null)
+        {
+            _staticRectTexture = new Texture2D(1, 1);
+            _staticRectTexture.SetPixel(0, 0, new Color32(0, 0, 255, 100));
+            _staticRectTexture.Apply();
+            _staticRectStyle = new GUIStyle();
+            _staticRectStyle.normal.background = _staticRectTexture;
+        }
+        GUI.Box(rect, GUIContent.none, _staticRectStyle);
     }
 
     // :(

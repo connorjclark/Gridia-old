@@ -13,7 +13,7 @@ namespace Gridia
         {
             Resizeable = false;
             var soundPlayer = Locator.Get<SoundPlayer>();
-            MakeButton("Log out", new Vector2(0, 0), () => SceneManager.LoadScene("ServerSelection"));
+            MakeButton("Log out", new Vector2(0, 0), Application.Quit);
             MakeButton("Next song", new Vector2(0, 35), soundPlayer.EndCurrentSong);
             MakeToggle(" Mute music", soundPlayer.MuteMusic, new Vector2(0, 70), (value) => soundPlayer.MuteMusic = value);
             MakeToggle(" Mute sfx", soundPlayer.MuteSfx, new Vector2(0, 105), (value) => soundPlayer.MuteSfx = value);

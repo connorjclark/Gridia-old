@@ -11,11 +11,13 @@ namespace Gridia
         private int sourceIndex;
         private String mouseDownLocation;
         private GridiaDriver _driver;
+        private GridiaGame _game;
 
         // :(
         public IdleState() 
         {
             _driver = Locator.Get<GridiaDriver>();
+            _game = Locator.Get<GridiaGame>();
         }
 
         public override void Step(StateMachine stateMachine, float dt)
@@ -33,52 +35,49 @@ namespace Gridia
                 }
             }
 
-            // :(
-            if (Input.GetKey(KeyCode.Space) && _inputManager.Valid9DirectionalInput()) 
+            var wasdKeysUp = _inputManager.Get4DirectionalInputUp();
+            var destinationUp = Locator.Get<GridiaGame>().view.Focus.Position + wasdKeysUp;
+            var wasdKeys = _inputManager.Get4DirectionalInput();
+            if (wasdKeysUp != Vector3.zero && Locator.Get<TileMap>().GetCreatureAt(destinationUp) != null)
             {
-                End(stateMachine, dt, new ItemUseState("inv", _driver.invGui.SlotSelected));
+                Locator.Get<ConnectionToGridiaServerHandler>().Hit(destinationUp);
+            }
+            else if (wasdKeys != Vector3.zero)
+            {
+                var destination = _game.view.Focus.Position + wasdKeys;
+                if (Locator.Get<TileMap>().Walkable(destination))
+                {
+                    End(stateMachine, dt, new PlayerMovementState(wasdKeys));
+                    return;
+                }
+            }
+
+            var arrowKeysUp = _inputManager.Get4DirectionalArrowKeysInputUp();
+            if (arrowKeysUp != Vector3.zero)
+            {
+                if (Input.GetKey(KeyCode.LeftControl))
+                {
+                    _driver.invGui.SlotSelectedX += (int)arrowKeysUp.x;
+                    _driver.invGui.SlotSelectedY += (int)-arrowKeysUp.y;
+                } else {
+                    _game.selectorDelta += arrowKeysUp;
+                    _game.hideSelector = false;
+                }
+            }
+
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                _game.PickUpItemAtSelection();
+            }
+            else if (Input.GetKeyUp(KeyCode.Space))
+            {
+                _game.UseItemAtSelection(_driver.invGui.SlotSelected);
                 return;
             }
-            else if (Input.GetKey(KeyCode.LeftAlt)) 
+            else if (Input.GetKeyUp(KeyCode.LeftAlt))
             {
-                End(stateMachine, dt, new ItemUseState("inv", -1));
+                _game.UseItemAtSelection(-1);
                 return;
-            }
-            
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                if (_inputManager.Valid9DirectionalInput()) 
-                {
-                    PickUpItemAt(_driver._game.view.Focus.Position + _inputManager.Get9DirectionalInput());
-                }
-            }
-            else if (Input.GetKey(KeyCode.LeftControl))
-            {
-                var dir = _inputManager.Get4DirectionalInputUp();
-                if (dir != Vector3.zero)
-                {
-                    _driver.invGui.SlotSelectedX += (int)dir.x;
-                    _driver.invGui.SlotSelectedY += (int)-dir.y;
-                }
-            }
-            else
-            {
-                var directionUp = _inputManager.Get4DirectionalInputUp();
-                var destinationUp = Locator.Get<GridiaGame>().view.Focus.Position + directionUp;
-                if (directionUp != Vector3.zero && Locator.Get<TileMap>().GetCreatureAt(destinationUp) != null)
-                {
-                    Locator.Get<ConnectionToGridiaServerHandler>().Hit(destinationUp);
-                }
-                else 
-                {
-                    var directionDown = _inputManager.Get4DirectionalInput();
-                    var destinationDown = Locator.Get<GridiaGame>().view.Focus.Position + directionDown;
-                    if (directionDown != Vector3.zero && Locator.Get<TileMap>().Walkable(destinationDown))
-                    {
-                        End(stateMachine, dt, new PlayerMovementState(directionDown));
-                        return;
-                    }
-                }
             }
 
             if (Input.GetMouseButtonDown(0))
@@ -142,6 +141,8 @@ namespace Gridia
             stateMachine.SetState(newState);
             stateMachine.Step(dt);
             _driver.mouseDownItem = null;
+            _game.hideSelector = true; // :( OnEnd()
+            _game.selectorDelta = Vector3.zero;
         }
 
         private int GetNumberKeyPressed()
