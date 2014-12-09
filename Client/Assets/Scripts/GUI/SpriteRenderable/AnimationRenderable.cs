@@ -52,7 +52,7 @@ namespace Gridia
                     CurrentFrameIndex = newFrameIndex;
                     if (CurrentFrame.Sound != null)
                     {
-                        Locator.Get<SoundPlayer>().SfxQueue.Enqueue(CurrentFrame.Sound);
+                        Locator.Get<SoundPlayer>().PlaySfx(CurrentFrame.Sound, Coord);
                     }
                 }
                 else

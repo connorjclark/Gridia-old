@@ -18,7 +18,7 @@ Winter break
 
   Get game ready for demo launch
     Client side hit prediction
-    Only play sounds if nearby
+    Fix old player positions staying / load existing players when log in
     Accounts
     Admin accounts
     Raft
@@ -26,6 +26,10 @@ Winter break
       enter a dungeon, random monsters spawn
     Roach arena
       start when standing in certain spots, players get teleported to arena
+    Item growth
+    Crossplatform
+      Linux
+      Mac
   Set up blog, website, forums
   Press kit
   Twitter
@@ -73,3 +77,4 @@ Wishlist
 sfxr
 Water ripple effect
 speed up music during combat
+browser version

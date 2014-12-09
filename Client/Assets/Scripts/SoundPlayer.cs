@@ -15,7 +15,6 @@ namespace Gridia
         [SerializeField]
         private AudioSource _audio;
         public Queue<String> MusicQueue = new Queue<String>();
-        public Queue<String> SfxQueue = new Queue<String>();
         private bool _muteMusic;
         public bool MuteMusic
         {
@@ -52,10 +51,6 @@ namespace Gridia
             {
                 PlayMusic(MusicQueue.Dequeue());
             }
-            if (SfxQueue.Count != 0)
-            {
-                PlaySfx(SfxQueue.Dequeue());
-            }
         }
 
         private List<String> Shuffle(List<String> list)
@@ -90,12 +85,15 @@ namespace Gridia
             _audio.Stop();
         }
 
-        public void PlaySfx(String name) 
+        public void PlaySfx(String name, Vector3 loc) 
         {
             if (!MuteSfx)
             {
                 var clip = GetAudioClip(name);
-                _audio.PlayOneShot(clip);
+                var playerLoc = Locator.Get<TileMapView>().Focus.Position;
+                var dist = Vector3.Distance(playerLoc, loc);
+                var volume = dist < 5 ? 1 : 1 / (1 + 0.25f * (dist - 5) * (dist - 5));
+                _audio.PlayOneShot(clip, volume);
             }
         }
 

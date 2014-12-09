@@ -19,8 +19,6 @@ import hoten.serving.ServingSocket;
 import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
-import static hoten.gridia.serving.GridiaProtocols.Clientbound.*;
-import hoten.serving.message.JsonMessageBuilder;
 import hoten.serving.message.Message;
 import java.util.ArrayList;
 import java.util.List;
@@ -194,11 +192,8 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     }
 
     public void announceNewPlayer(ConnectionToGridiaClientHandler client, Player player) {
-        Message message = new JsonMessageBuilder()
-                .protocol(outbound(Chat))
-                .set("msg", String.format("%s has joined the game!", player.creature.name))
-                .build();
-        sendToAllBut(message, client);
+        String chatMessage = String.format("%s has joined the game!", player.creature.name);
+        sendToAllBut(messageBuilder.chat(chatMessage, player.creature.location), client);
     }
 
     public void moveItem(Coord from, Coord to) {
