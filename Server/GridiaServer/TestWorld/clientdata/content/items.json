@@ -26,6 +26,7 @@
     "id":2,
     "burden":2,
     "value":0,
+    "rarity":1000,
     "name":"Germ Weed",
     "animations":[
       2
@@ -52,6 +53,7 @@
     "id":4,
     "burden":500,
     "value":2,
+    "rarity":1000,
     "name":"Medium Granite Rock",
     "animations":[
       267
@@ -78,6 +80,7 @@
     "id":6,
     "burden":2,
     "value":0,
+    "rarity":1000,
     "name":"Rye Weed",
     "animations":[
       6
@@ -2505,6 +2508,7 @@
     "id":185,
     "burden":5,
     "value":0,
+    "rarity":1000,
     "name":"Nightshade Mushroom",
     "animations":[
       428
@@ -4591,6 +4595,7 @@
     "id":341,
     "burden":100,
     "value":50,
+    "rarity":125,
     "name":"Coal",
     "animations":[
       657
@@ -11440,6 +11445,7 @@
     "id":852,
     "burden":2,
     "value":0,
+    "rarity":1000,
     "name":"Drak Root",
     "animations":[
       907
@@ -11492,6 +11498,7 @@
     "id":856,
     "burden":2,
     "value":0,
+    "rarity":1000,
     "name":"Orange Blossom",
     "animations":[
       908
@@ -11531,6 +11538,7 @@
     "id":859,
     "burden":2,
     "value":0,
+    "rarity":250,
     "name":"Feather Bloom",
     "animations":[
       969
@@ -11557,6 +11565,7 @@
     "id":861,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Ruge Mushroom",
     "animations":[
       970
@@ -11583,6 +11592,7 @@
     "id":863,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Hayeberry Bush",
     "animations":[
       971
@@ -11609,6 +11619,7 @@
     "id":865,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Gold Moss",
     "animations":[
       972
@@ -11725,6 +11736,7 @@
     "id":873,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Blue Bell Flower",
     "animations":[
       976
@@ -11751,6 +11763,7 @@
     "id":875,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Purple Rain Flower",
     "animations":[
       977
@@ -11777,6 +11790,7 @@
     "id":877,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Starburst Flower",
     "animations":[
       978
@@ -11803,6 +11817,7 @@
     "id":879,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Masik Vine",
     "animations":[
       979
@@ -11829,6 +11844,7 @@
     "id":881,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Fire Weed",
     "animations":[
       980
@@ -11855,6 +11871,7 @@
     "id":883,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Gyro Stem",
     "animations":[
       981
@@ -11881,6 +11898,7 @@
     "id":885,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Bamboo",
     "animations":[
       982
@@ -11907,6 +11925,7 @@
     "id":887,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Sage Grass",
     "animations":[
       983
@@ -11933,6 +11952,7 @@
     "id":889,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Bunt Grass",
     "animations":[
       984
@@ -11959,6 +11979,7 @@
     "id":891,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Redd Grass",
     "animations":[
       985
@@ -11985,6 +12006,7 @@
     "id":893,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Cattails",
     "animations":[
       986
@@ -12024,6 +12046,7 @@
     "id":896,
     "burden":2,
     "value":0,
+    "rarity":500,
     "name":"Green Fern",
     "animations":[
       987
@@ -12063,6 +12086,7 @@
     "id":899,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Red Fern",
     "animations":[
       988
@@ -12299,6 +12323,7 @@
     "id":917,
     "burden":500,
     "value":250,
+    "rarity":10,
     "name":"Zircon Ore",
     "animations":[
       658
@@ -12338,6 +12363,7 @@
     "id":920,
     "burden":1000,
     "value":400,
+    "rarity":2,
     "name":"Titanium Ore",
     "animations":[
       664
@@ -12377,6 +12403,7 @@
     "id":923,
     "burden":1000,
     "value":50,
+    "rarity":100,
     "name":"Copper Ore",
     "animations":[
       669
@@ -12416,6 +12443,7 @@
     "id":926,
     "burden":1000,
     "value":50,
+    "rarity":100,
     "name":"Silver Ore",
     "animations":[
       672
@@ -12455,6 +12483,7 @@
     "id":929,
     "burden":1000,
     "value":20,
+    "rarity":500,
     "name":"Iron Ore",
     "animations":[
       675
@@ -12494,6 +12523,7 @@
     "id":932,
     "burden":1000,
     "value":50,
+    "rarity":400,
     "name":"Magnetite Ore",
     "animations":[
       678
@@ -12533,6 +12563,7 @@
     "id":935,
     "burden":1000,
     "value":100,
+    "rarity":50,
     "name":"Gold Ore",
     "animations":[
       681
@@ -12572,6 +12603,7 @@
     "id":938,
     "burden":1500,
     "value":500,
+    "rarity":2,
     "name":"Hessite Ore",
     "animations":[
       684
@@ -12728,6 +12760,7 @@
     "id":950,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Clover",
     "animations":[
       989
@@ -12754,6 +12787,7 @@
     "id":952,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Zinnia",
     "animations":[
       990
@@ -12780,6 +12814,7 @@
     "id":954,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Alyssum",
     "animations":[
       991
@@ -12806,6 +12841,7 @@
     "id":956,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Yellow Fern",
     "animations":[
       992
@@ -12832,6 +12868,7 @@
     "id":958,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Black Tulip",
     "animations":[
       993
@@ -12871,6 +12908,7 @@
     "id":961,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"White Tulip",
     "animations":[
       994
@@ -12910,6 +12948,7 @@
     "id":964,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Blue Moss",
     "animations":[
       995
@@ -12963,6 +13002,7 @@
     "id":969,
     "burden":2,
     "value":1000,
+    "rarity":50,
     "name":"Mana Plant",
     "animations":[
       996,
@@ -13322,6 +13362,7 @@
     "id":997,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Grey Berry",
     "animations":[
       1002
@@ -13711,6 +13752,7 @@
     "id":1028,
     "burden":2,
     "value":0,
+    "rarity":500,
     "name":"Blue Shrooms",
     "animations":[
       1016
@@ -13724,6 +13766,7 @@
     "id":1029,
     "burden":2,
     "value":0,
+    "rarity":500,
     "name":"Red Shrooms",
     "animations":[
       1017
@@ -14527,6 +14570,7 @@
     "id":1093,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Cactus",
     "animations":[
       1003
@@ -14579,6 +14623,7 @@
     "id":1097,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Gyro Vine",
     "animations":[
       1004
@@ -14696,6 +14741,7 @@
     "id":1106,
     "burden":2,
     "value":0,
+    "rarity":750,
     "name":"Orange Blossom Moss",
     "animations":[
       1005
@@ -16114,6 +16160,7 @@
     "id":1210,
     "burden":500,
     "value":10,
+    "rarity":7500,
     "name":"Pile of Dirt",
     "animations":[
       1090
@@ -17499,6 +17546,7 @@
     "id":1311,
     "burden":2,
     "value":0,
+    "rarity":500,
     "name":"Jade Shrooms",
     "animations":[
       1183
@@ -17577,6 +17625,7 @@
     "id":1317,
     "burden":100,
     "value":50,
+    "rarity":125,
     "name":"Salt Ore",
     "animations":[
       1186
@@ -24091,6 +24140,7 @@
     "id":1806,
     "burden":1500,
     "value":1000,
+    "rarity":1,
     "name":"Magma Ore",
     "animations":[
       1471
@@ -25507,6 +25557,7 @@
     "id":1920,
     "burden":50,
     "value":100,
+    "rarity":10,
     "name":"Raw Ruby",
     "animations":[
       1703
@@ -25520,6 +25571,7 @@
     "id":1921,
     "burden":50,
     "value":150,
+    "rarity":5,
     "name":"Raw Emerald",
     "animations":[
       1701
@@ -25533,6 +25585,7 @@
     "id":1922,
     "burden":50,
     "value":75,
+    "rarity":20,
     "name":"Raw Sapphire",
     "animations":[
       1702
@@ -25546,6 +25599,7 @@
     "id":1923,
     "burden":10,
     "value":200,
+    "rarity":2,
     "name":"Raw Diamond",
     "animations":[
       1700
@@ -26812,6 +26866,7 @@
     "id":2020,
     "burden":40,
     "value":30,
+    "rarity":1000,
     "name":"Gruppie : .5 pound",
     "animations":[
       1669
@@ -26825,6 +26880,7 @@
     "id":2021,
     "burden":40,
     "value":60,
+    "rarity":500,
     "name":"Gruppie : 1 pound",
     "animations":[
       1679
@@ -26838,6 +26894,7 @@
     "id":2022,
     "burden":40,
     "value":90,
+    "rarity":250,
     "name":"Gruppie : 1.5 pound",
     "animations":[
       1689
@@ -26851,6 +26908,7 @@
     "id":2023,
     "burden":40,
     "value":120,
+    "rarity":125,
     "name":"Gruppie : 2 pound",
     "animations":[
       1699
@@ -26864,6 +26922,7 @@
     "id":2024,
     "burden":40,
     "value":150,
+    "rarity":62,
     "name":"Gruppie : 2.5 pound",
     "animations":[
       383
@@ -26877,6 +26936,7 @@
     "id":2025,
     "burden":40,
     "value":180,
+    "rarity":31,
     "name":"Gruppie : 3 pound",
     "animations":[
       383
@@ -26916,6 +26976,7 @@
     "id":2028,
     "burden":50,
     "value":40,
+    "rarity":500,
     "name":"Mackeral : 1 Pound",
     "animations":[
       1668
@@ -26929,6 +26990,7 @@
     "id":2029,
     "burden":75,
     "value":80,
+    "rarity":500,
     "name":"Mackeral : 3 Pound",
     "animations":[
       1678
@@ -26942,6 +27004,7 @@
     "id":2030,
     "burden":100,
     "value":120,
+    "rarity":250,
     "name":"Mackeral : 5 Pound",
     "animations":[
       342
@@ -26955,6 +27018,7 @@
     "id":2031,
     "burden":120,
     "value":160,
+    "rarity":100,
     "name":"Mackeral : 7 Pound",
     "animations":[
       1688
@@ -26968,6 +27032,7 @@
     "id":2032,
     "burden":150,
     "value":200,
+    "rarity":30,
     "name":"Mackeral : 10 Pound",
     "animations":[
       1698
@@ -27020,6 +27085,7 @@
     "id":2036,
     "burden":500,
     "value":500,
+    "rarity":15,
     "name":"Marlin : 50 Pound",
     "animations":[
       1738
@@ -27033,6 +27099,7 @@
     "id":2037,
     "burden":1000,
     "value":1000,
+    "rarity":10,
     "name":"Marlin : 100 Pound",
     "animations":[
       1736
@@ -27046,6 +27113,7 @@
     "id":2038,
     "burden":1500,
     "value":1500,
+    "rarity":5,
     "name":"Marlin : 150 Pound",
     "animations":[
       1746
@@ -29198,6 +29266,7 @@
     "id":2216,
     "burden":10,
     "value":250,
+    "rarity":1,
     "name":"Raw Rosette",
     "animations":[
       1992
@@ -29373,6 +29442,7 @@
     "id":2229,
     "burden":500,
     "value":250,
+    "rarity":9,
     "name":"Onyx Ore",
     "animations":[
       2023
@@ -31166,6 +31236,7 @@
     "id":2378,
     "burden":100,
     "value":100,
+    "rarity":200,
     "name":"Sulfur Ore",
     "animations":[
       1186
@@ -31179,6 +31250,7 @@
     "id":2379,
     "burden":100,
     "value":150,
+    "rarity":100,
     "name":"Phosphorous Ore",
     "animations":[
       1186
@@ -31192,6 +31264,7 @@
     "id":2380,
     "burden":10,
     "value":300,
+    "rarity":1,
     "name":"Raw Obsidian",
     "animations":[
       2248
@@ -31205,6 +31278,7 @@
     "id":2381,
     "burden":10,
     "value":350,
+    "rarity":1,
     "name":"Raw Jade",
     "animations":[
       1703
@@ -32283,6 +32357,7 @@
     "id":3025,
     "burden":50,
     "value":25,
+    "rarity":40,
     "name":"Raw Turquoise",
     "animations":[
       1764
@@ -32296,6 +32371,7 @@
     "id":3026,
     "burden":50,
     "value":50,
+    "rarity":30,
     "name":"Raw Garnet",
     "animations":[
       1765
@@ -33265,6 +33341,7 @@
     "id":3100,
     "burden":1000,
     "value":1000,
+    "rarity":1,
     "name":"Zephyrium Ore",
     "animations":[
       1870
@@ -33787,6 +33864,7 @@
     "id":3137,
     "burden":2,
     "value":0,
+    "rarity":1000,
     "name":"Dandelion",
     "animations":[
       1968

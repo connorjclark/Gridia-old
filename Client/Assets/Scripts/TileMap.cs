@@ -140,7 +140,7 @@ namespace Gridia
         public bool Walkable(int x, int y, int z) {
             var tile = GetTile(x, y, z);
             var loc = new Vector3(x, y, z);
-            return GetCreatureAt(loc) == null && tile.Item.Item.Walkable;
+            return GetCreatureAt(loc) == null && tile.Item.Item.Walkable && tile.Floor != 0;
         }
 
         public int Wrap (int value)

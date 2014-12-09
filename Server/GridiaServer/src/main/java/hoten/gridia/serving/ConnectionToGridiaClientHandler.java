@@ -9,9 +9,11 @@ import hoten.gridia.DefaultCreatureImage;
 import hoten.gridia.map.Coord;
 import hoten.gridia.content.ItemInstance;
 import hoten.gridia.Player;
+import hoten.gridia.content.Item;
 import hoten.gridia.content.ItemUse;
 import hoten.gridia.content.Monster;
 import hoten.gridia.map.Sector;
+import hoten.gridia.map.Tile;
 import hoten.serving.message.Protocols;
 import hoten.serving.SocketHandler;
 import hoten.serving.message.Message;
@@ -81,7 +83,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
 
         send(_messageBuilder.container(player.creature.inventory));
         send(_messageBuilder.container(player.equipment));
-        
+
         Message animMessage = _messageBuilder.animation(3, player.creature.location);
         _server.sendToClientsWithAreaLoaded(animMessage, player.creature.location);
         send(animMessage);
@@ -480,15 +482,22 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         _server.updateCreatureImage(player.creature);
     }
 
+    // hit or mine
     private void ProcessHit(JsonObject data) throws IOException {
         Coord loc = _gson.fromJson(data.get("loc"), Coord.class);
-        Creature creature = _server.tileMap.getCreature(loc);
+        Tile tile = _server.tileMap.getTile(loc);
+        Creature creature = tile.cre;
         if (creature != null && !creature.belongsToPlayer) {
             if (creature.isFriendly) {
                 send(_messageBuilder.chat(creature.friendlyMessage, player.creature.location));
             } else {
                 _server.hurtCreature(creature, 1);
             }
+        } else if (tile.floor == 0) {
+            _server.changeFloor(loc, 19);
+            int oreId = _server.contentManager.getRandomItemOfClassByRarity(Item.ItemClass.Ore).id;
+            _server.addItem(loc, _server.contentManager.createItemInstance(oreId));
+            _server.sendToClientsWithAreaLoaded(_messageBuilder.animation(25, loc), loc);
         }
     }
 

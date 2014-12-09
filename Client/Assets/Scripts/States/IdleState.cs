@@ -45,7 +45,7 @@ namespace Gridia
             var wasdKeysUp = _inputManager.Get4DirectionalInputUp();
             var destinationUp = Locator.Get<GridiaGame>().view.Focus.Position + wasdKeysUp;
             var wasdKeys = _inputManager.Get4DirectionalInput();
-            if (wasdKeysUp != Vector3.zero && Locator.Get<TileMap>().GetCreatureAt(destinationUp) != null)
+            if (wasdKeysUp != Vector3.zero && (Locator.Get<TileMap>().GetCreatureAt(destinationUp) != null || Locator.Get<TileMap>().GetTile(destinationUp).Floor == 0))
             {
                 Locator.Get<ConnectionToGridiaServerHandler>().Hit(destinationUp);
             }

@@ -68,3 +68,4 @@ Wishlist
 
 sfxr
 Water ripple effect
+speed up music during combat

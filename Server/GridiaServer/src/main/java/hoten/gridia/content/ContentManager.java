@@ -3,6 +3,7 @@ package hoten.gridia.content;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import hoten.gridia.content.Item.ItemClass;
 import hoten.gridia.serializers.ItemDeserializer;
 import hoten.gridia.serializers.MonsterDeserializer;
 import hoten.serving.fileutils.FileUtils;
@@ -11,7 +12,10 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public class ContentManager {
 
@@ -55,6 +59,27 @@ public class ContentManager {
         return _items.stream()
                 .filter(item -> item != null && item.name.equalsIgnoreCase(name))
                 .findFirst().get();
+    }
+
+    // cache?
+    public Item getRandomItemOfClassByRarity(ItemClass itemClass) {
+        List<Item> itemsOfClass = _items.stream()
+                .filter(item -> item != null && item.itemClass == itemClass)
+                .collect(Collectors.toList());
+        int totalRarity = itemsOfClass.stream()
+                .mapToInt(item -> item.rarity)
+                .sum();
+        int targetRarity = (int) (Math.random() * totalRarity);
+        
+        int raritySeen = 0;
+        for (Item item : itemsOfClass) {
+            raritySeen += item.rarity;
+            if (raritySeen > targetRarity) {
+                return item;
+            }
+        }
+        
+        return ItemInstance.NONE.data;
     }
 
     public Monster getMonster(int id) {
