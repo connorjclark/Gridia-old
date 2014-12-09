@@ -14,6 +14,7 @@ import hoten.gridia.content.Monster;
 import hoten.gridia.map.Sector;
 import hoten.serving.message.Protocols;
 import hoten.serving.SocketHandler;
+import hoten.serving.message.Message;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -80,6 +81,10 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
 
         send(_messageBuilder.container(player.creature.inventory));
         send(_messageBuilder.container(player.equipment));
+        
+        Message animMessage = _messageBuilder.animation(3, player.creature.location);
+        _server.sendToClientsWithAreaLoaded(animMessage, player.creature.location);
+        send(animMessage);
     }
 
     @Override
@@ -389,7 +394,8 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
                         _server.addItemNear(destIndex, productInstance, 3);
                     });
             if (use.animation != 0) {
-                _server.sendToClientsWithAreaLoaded(_messageBuilder.animation(use.animation), destIndex);
+                Coord loc = _server.tileMap.getCoordFromIndex(destIndex);
+                _server.sendToClientsWithAreaLoaded(_messageBuilder.animation(use.animation, loc), destIndex);
             }
         }
 

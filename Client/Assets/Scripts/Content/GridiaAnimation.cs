@@ -11,19 +11,10 @@ namespace Gridia
         public String Sound { get; set; }
     }
 
-    public class Animation
+    public class GridiaAnimation
     {
         public int Id { get; set; }
         public String Name { get; set; }
         public List<Frame> Frames { get; set; }
-
-        // temp
-        // this only plays the sound
-        public void Play() {
-            Frames.ForEach(f =>
-            {
-                if (f.Sound != null) Locator.Get<SoundPlayer>().SfxQueue.Enqueue(f.Sound);
-            });
-        }
     }
 }

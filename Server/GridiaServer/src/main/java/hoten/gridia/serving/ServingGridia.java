@@ -79,10 +79,12 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     }
 
     public void hurtCreature(Creature cre, int lifePoints) {
-        sendToClientsWithAreaLoaded(messageBuilder.animation(1), cre.location);
+        sendToClientsWithAreaLoaded(messageBuilder.animation(1, cre.location), cre.location);
         cre.life -= lifePoints;
         if (cre.life <= 0) {
+            sendToClientsWithAreaLoaded(messageBuilder.animation(45, cre.location), cre.location);
             dropCreatureInventory(cre);
+            addItemNear(cre.location, contentManager.createItemInstance(1022), 10);
             if (cre.belongsToPlayer) {
                 moveCreatureTo(cre, GridiaServerDriver.getPlayerSpawn(), true);
             } else {
@@ -100,8 +102,6 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
             for (int i = 0; i < items.size(); i++) {
                 cre.inventory.deleteSlot(i);
             }
-            sendToClientsWithAreaLoaded(messageBuilder.animation(45), cre.location);
-            addItemNear(cre.location, contentManager.createItemInstance(1022), 10);
         }
     }
 

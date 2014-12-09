@@ -266,8 +266,16 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
     private void Animation(JObject data)
     {
         var animId = (int)data["anim"];
-        var anim = Locator.Get<ContentManager>().GetAnimation(animId);
-        anim.Play(); // temp
+        var x = (int)data["loc"]["x"];
+        var y = (int)data["loc"]["y"];
+        var z = (int)data["loc"]["z"];
+        if (_game.view.Focus == null || z == _game.view.Focus.Position.z) 
+        {
+            var coord = new Vector3(x, y, z);
+            var anim = Locator.Get<ContentManager>().GetAnimation(animId);
+            var animRenderable = new AnimationRenderable(coord, anim);
+            Locator.Get<GridiaGame>().animations.Add(animRenderable);
+        }
     }
 
     private void UpdateCreatureImage(JObject data)

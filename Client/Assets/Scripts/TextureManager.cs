@@ -11,6 +11,7 @@ namespace Gridia
         public List<Texture> Items { get; private set; }
         public List<Texture> Creatures { get; private set; }
         public List<Texture> Templates { get; private set; }
+        public List<Texture> Animations { get; private set; }
         public List<Texture> Heads { get; private set; }
         public List<Texture> Chests { get; private set; }
         public List<Texture> Legs { get; private set; }
@@ -24,6 +25,7 @@ namespace Gridia
             Items = LoadTextures(worldName + "/items/items", 27);
             Creatures = LoadTextures(worldName + "/players/players", 8);
             Templates = LoadTextures(worldName + "/templates/template", 1);
+            Animations = LoadTextures(worldName + "/animations/animation", 2);
             Heads = LoadTextures(worldName + "/players/head", 2);
             Chests = LoadTextures(worldName + "/players/chest", 1);
             Legs = LoadTextures(worldName + "/players/legs", 1);

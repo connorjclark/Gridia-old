@@ -13,13 +13,11 @@ UI
 Refactoring
   
   xxxGui -> xxxWindow
-  States -> state folder
 
 Winter break
 
   Get game ready for demo launch
-    Finish controls
-    Animations
+    Client side hit prediction
     Only play sounds if nearby
     Accounts
     Admin accounts

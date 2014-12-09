@@ -8,6 +8,7 @@ public class GridiaGame
     public TileMap tileMap;
     public TileMapView view;
     public StateMachine stateMachine = new StateMachine();
+    public List<AnimationRenderable> animations = new List<AnimationRenderable>();
     public Vector3 selectorDelta = Vector3.zero;
     public bool hideSelector = true;
     public bool isConnected;
@@ -30,6 +31,13 @@ public class GridiaGame
     public Vector3 GetSelectorCoord(Vector3 sDelta)
     {
         return view.FocusPosition + sDelta + new Vector3(view.width / 2, view.height / 2);
+    }
+
+    public Vector3 GetScreenPosition(Vector3 coord) 
+    {
+        var tileSize = 32 * view.Scale;
+        var relative = coord - view.FocusPosition;
+        return new Vector2(relative.x * tileSize, Screen.height - relative.y * tileSize - tileSize);
     }
 
     public void PickUpItemAtSelection() 

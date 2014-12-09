@@ -8,9 +8,12 @@ namespace Gridia
 {
     public abstract class SpriteRenderable : Renderable
     {
+        protected bool RenderBox { get; set; }
+
         public SpriteRenderable(Vector2 pos)
             : base(pos)
         {
+            RenderBox = true;
             _rect.width = _rect.height = GridiaConstants.SPRITE_SIZE;
         }
 
@@ -22,7 +25,10 @@ namespace Gridia
         {
             base.Render();
 
-            GUI.Box(Rect, "");
+            if (RenderBox) 
+            {
+                GUI.Box(Rect, "");
+            }
 
             var textures = Locator.Get<TextureManager>(); // :(
             var spriteIndex = GetSpriteIndex();

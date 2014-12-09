@@ -12,7 +12,7 @@ namespace Gridia
         private readonly List<Item> items;
         private readonly List<Floor> floors;
         private readonly List<Monster> monsters;
-        private readonly List<Animation> animations;
+        private readonly List<GridiaAnimation> animations;
         private readonly List<ItemUse> uses;
         
         public ContentManager (String worldName)
@@ -20,7 +20,7 @@ namespace Gridia
             items = new ContentLoader<Item>().Load(worldName + "/content/items.json");
             floors = new ContentLoader<Floor>().Load(worldName + "/content/floors.json");
             monsters = new ContentLoader<Monster>().Load(worldName + "/content/monsters.json");
-            animations = new ContentLoader<Animation>().Load(worldName + "/content/animations.json");
+            animations = new ContentLoader<GridiaAnimation>().Load(worldName + "/content/animations.json");
             uses = new ContentLoader<ItemUse>().Load(worldName + "/content/itemuses.json");
         }
 
@@ -43,7 +43,7 @@ namespace Gridia
             return monsters[id];
         }
 
-        public Animation GetAnimation(int id)
+        public GridiaAnimation GetAnimation(int id)
         {
             return animations[id - 1]; // :(
         }

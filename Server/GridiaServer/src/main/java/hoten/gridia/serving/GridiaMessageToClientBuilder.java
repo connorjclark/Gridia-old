@@ -163,10 +163,11 @@ public class GridiaMessageToClientBuilder {
                 .build();
     }
 
-    public Message animation(int animation) {
+    public Message animation(int animation, Coord loc) {
         return new JsonMessageBuilder()
                 .protocol(outbound(Animation))
                 .set("anim", animation)
+                .set("loc", loc)
                 .build();
     }
 

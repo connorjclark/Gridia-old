@@ -153,6 +153,11 @@ public class GridiaDriver : MonoBehaviour
             GUIDrawSelector(selectorRect, new Color32(0, 0, 255, 100));
         }
 
+        foreach (var animation in _game.animations)
+        {
+            animation.Render();
+        }
+
         _game.stateMachine.OnGUI();
 
         for (int i = 0; i < floatingTexts.Count; i++)
@@ -276,6 +281,18 @@ public class GridiaDriver : MonoBehaviour
             _game.stateMachine.Step(Time.deltaTime);
         }
         _game.view.Render();
+        for (int i = 0; i < _game.animations.Count; i++)
+        {
+            var animation = _game.animations[i];
+            if (animation.Dead) 
+            {
+                _game.animations.RemoveAt(i);
+            }
+            else
+            {
+                animation.Step(Time.deltaTime);
+            }
+        }
         ResizeCamera(); // :( only on resize
     }
 
