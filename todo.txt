@@ -21,8 +21,11 @@ Winter break
     Only play sounds if nearby
     Accounts
     Admin accounts
-    Mining
     Raft
+    Random monster arena
+      enter a dungeon, random monsters spawn
+    Roach arena
+      start when standing in certain spots, players get teleported to arena
   Set up blog, website, forums
   Press kit
   Twitter

@@ -101,7 +101,7 @@ public class GridiaServerDriver {
                     }
                 }
             }
-        }, 0, 1000, TimeUnit.MILLISECONDS);
+        }, 0, arenaTickRate, TimeUnit.MILLISECONDS);
 
         System.out.println("Server started.");
     }
@@ -116,7 +116,7 @@ public class GridiaServerDriver {
 
     // hard code the roach quest for the presentation
     private static int arenaTickRate = 5000;
-    private static int arenaDuration = 30 * 1000;
+    private static int arenaDuration = 60 * 1000;
     private static Coord arenaLocation = new Coord(495, 481, 1);
     private static Coord winnerTeleportLocation = new Coord(550, 485, 1);
     private static Coord loserTeleportLocation = new Coord(550, 490, 1);
@@ -152,8 +152,14 @@ public class GridiaServerDriver {
             server.sendToAll(server.messageBuilder.chat("Game over! Most Antenae: " + highestAntenae, winnerTeleportLocation));
             clearArena();
         } else {
+            sayMessageInArena("Seconds left: " + timeLeft / 1000);
             timeLeft -= arenaTickRate;
         }
+    }
+
+    private static void sayMessageInArena(String msg) {
+        Coord middleOfArena = arenaLocation.add(arenaSize / 2, arenaSize / 2, 0);
+        server.sendToAll(server.messageBuilder.chat(msg, middleOfArena));
     }
 
     private static ItemInstance removeItemFromInventory(Creature creature, int itemId) {
@@ -185,6 +191,7 @@ public class GridiaServerDriver {
             Coord loc = arenaLocation.add(random.nextInt(arenaSize), random.nextInt(arenaSize), 0);
             server.createCreature(roach, loc);
         }
+        sayMessageInArena("BEGIN!");
     }
 
     private static List<Creature> getCreaturesInArea(Coord areaLocation, int size, Predicate<Creature> selector) {
