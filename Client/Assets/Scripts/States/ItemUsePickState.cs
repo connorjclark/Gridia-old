@@ -26,6 +26,11 @@ namespace Gridia
                 _pickWindow.Picks.TileSelectedX += (int)dir.x;
                 _pickWindow.Picks.TileSelectedY += (int)-dir.y;
             }
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                Locator.Get<ItemUsePickWindow>().SelectUse();
+                End();
+            }
         }
 
         public void End()

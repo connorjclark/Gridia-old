@@ -53,18 +53,5 @@ namespace Gridia
             Locator.Get<ConnectionToGridiaServerHandler>().PickItemUse(index);
             ItemUsePickState.End();
         }
-
-        public override void Render()
-        {
-            base.Render();
-            if (Event.current.type == EventType.KeyDown) 
-            {
-                if (Input.GetKey(KeyCode.Space))
-                {
-                    Locator.Get<ItemUsePickWindow>().SelectUse();
-                    ItemUsePickState.End();
-                }
-            }
-        }
     }
 }

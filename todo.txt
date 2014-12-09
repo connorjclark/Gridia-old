@@ -37,6 +37,8 @@ Winter break
 
 Spring semester:
 
+Quest scripting
+
 Magic
 
 Spell discovery:
@@ -49,7 +51,6 @@ Spell discovery:
 
 Land ownership:
   Server owned, Player owned, and unclaimed
-  change sector size to 49x49
   Partition sectors to 4 plots
   Non-contiguous land has a one-tile border of undevelopable land, to prevent blocking parts of the world
   Plots in PVP zones can have chests/doors be pick locked
