@@ -116,11 +116,13 @@ namespace Gridia
                     {
                         Texture textureForThisData;
 
-                        //hack for water template :(
-                        if (dataIndex == -2)
+                        //hack for template :(
+                        if (dataIndex <= -2)
                         {
+                            var templateId = dataIndex + 3;
+                            var typeToMatch = templateId == 0 ? 1 : 0;
                             textureForThisData = _textureManager.Templates[0];
-                            dataIndex = UseTemplate(0, 1, x + positionX, y + positionY, positionZ);
+                            dataIndex = UseTemplate(templateId, typeToMatch, x + positionX, y + positionY, positionZ);
                         }
                         else
                         {
@@ -274,7 +276,15 @@ namespace Gridia
             result.Add(new Layer(
                 "Floor layer",
                 this,
-                tile => tile.Floor == 1 ? -2 : tile.Floor,
+                tile => {
+                    if (tile.Floor == 0) {
+                        return -2;
+                    }
+                    if (tile.Floor == 1) {
+                        return -3;
+                    }
+                    return tile.Floor;
+                },
                 data => _textureManager.Floors[data / 100]
             ));
 
