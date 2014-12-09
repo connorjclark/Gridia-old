@@ -5,7 +5,7 @@
     "frames":[
       {
         "sound":"Caneswish",
-        "sprite":0
+        "sprite":1
       },
       {
         "sound":"Punch",
