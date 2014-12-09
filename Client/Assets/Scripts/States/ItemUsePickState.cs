@@ -20,7 +20,7 @@ namespace Gridia
         public override void Step(StateMachine stateMachine, float dt)
         {
             _stateMachine = stateMachine; // :(
-            var dir = Locator.Get<InputManager>().Get4DirectionalInputUp();
+            var dir = Locator.Get<InputManager>().Get4DirectionalArrowKeysInputUp();
             if (dir != Vector3.zero)
             {
                 _pickWindow.Picks.TileSelectedX += (int)dir.x;
