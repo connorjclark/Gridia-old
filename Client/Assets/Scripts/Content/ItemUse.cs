@@ -9,6 +9,7 @@ namespace Gridia
     {
         public int tool;
         public int focus;
+        public int successTool;
         public List<int> products;
     }
 }

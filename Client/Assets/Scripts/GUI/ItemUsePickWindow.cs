@@ -16,7 +16,8 @@ namespace Gridia
                 Picks.RemoveAllChildren();
                 for (int i = 0; i < value.Count; i++)
                 {
-                    var item = Locator.Get<ContentManager>().GetItem(value[i].products[0]).GetInstance(1);
+                    var itemToShow = value[i].successTool > 0 ? value[i].successTool : value[i].products[0];
+                    var item = Locator.Get<ContentManager>().GetItem(itemToShow).GetInstance(1);
                     var itemRend = new ItemRenderable(new Vector2(0, 0), item);
                     var index = i;
                     itemRend.OnClick = () => SelectUse(index);
