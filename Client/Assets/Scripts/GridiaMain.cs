@@ -40,6 +40,18 @@ public class GridiaGame
         return new Vector2(relative.x * tileSize, Screen.height - relative.y * tileSize - tileSize);
     }
 
+    public void DropItemAtSelection() 
+    {
+        DropItemAt(view.Focus.Position + selectorDelta);
+    }
+
+    private void DropItemAt(Vector3 dropItemLoc) 
+    {
+        var destIndex = Locator.Get<TileMap>().ToIndex(dropItemLoc);
+        var slotSelected = Locator.Get<GridiaDriver>().invGui.SlotSelected;
+        Locator.Get<ConnectionToGridiaServerHandler>().MoveItem("inv", "world", slotSelected, destIndex, 1); // :(
+    }
+
     public void PickUpItemAtSelection() 
     {
         PickUpItemAt(view.Focus.Position + selectorDelta);

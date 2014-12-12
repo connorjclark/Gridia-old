@@ -86,6 +86,10 @@ namespace Gridia
                 _game.UseItemAtSelection(-1);
                 return;
             }
+            else if (Input.GetKeyUp(KeyCode.Q))
+            {
+                _game.DropItemAtSelection();
+            }
 
             if (Input.GetMouseButtonDown(0))
             {

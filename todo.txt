@@ -27,6 +27,8 @@ Winter break
     Roach arena
       start when standing in certain spots, players get teleported to arena
     Item growth
+    Unload sectors
+    Launch server from client
     Crossplatform
       Linux
       Mac

@@ -33,15 +33,6 @@ namespace Gridia
             ResizeOnVertical = false;
             Items = new List<ItemInstance>();
             AddChild(_slots);
-            _slots.OnKeyUp = () =>
-            {
-                if (Event.current.keyCode == KeyCode.Q && Locator.Get<GridiaGame>().stateMachine.CurrentState is IdleState) 
-                {
-                    var destLocation = Locator.Get<TileMapView>().Focus.Position;
-                    var destIndex = Locator.Get<TileMap>().ToIndex(destLocation);
-                    Locator.Get<ConnectionToGridiaServerHandler>().MoveItem("inv", "world", SlotSelected, destIndex, 1);
-                }
-            };
         }
 
         public override void Render()
