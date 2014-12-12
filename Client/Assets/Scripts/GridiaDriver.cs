@@ -155,6 +155,7 @@ public class GridiaDriver : MonoBehaviour
 
         foreach (var animation in _game.animations)
         {
+            animation.Rect = new Rect(animation.X, animation.Y, tileSize, tileSize); // :(
             animation.Render();
         }
 
