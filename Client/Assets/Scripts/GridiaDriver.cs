@@ -209,20 +209,21 @@ public class GridiaDriver : MonoBehaviour
         }
     }
 
-    private Texture2D _staticRectTexture;
-    private GUIStyle _staticRectStyle;
+    // :(
+    private Dictionary<Color, Texture2D> _staticRectTexture = new Dictionary<Color,Texture2D>();
+    private Dictionary<Color, GUIStyle> _staticRectStyle = new Dictionary<Color,GUIStyle>();
 
     public void GUIDrawSelector(Rect rect, Color color)
     {
-        if (_staticRectTexture == null)
+        if (!_staticRectTexture.ContainsKey(color))
         {
-            _staticRectTexture = new Texture2D(1, 1);
-            _staticRectStyle = new GUIStyle();
-            _staticRectStyle.normal.background = _staticRectTexture;
+            _staticRectTexture[color] = new Texture2D(1, 1);
+            _staticRectStyle[color] = new GUIStyle();
+            _staticRectStyle[color].normal.background = _staticRectTexture[color];
         }
-        _staticRectTexture.SetPixel(0, 0, color);
-        _staticRectTexture.Apply();
-        GUI.Box(rect, GUIContent.none, _staticRectStyle);
+        _staticRectTexture[color].SetPixel(0, 0, color);
+        _staticRectTexture[color].Apply();
+        GUI.Box(rect, GUIContent.none, _staticRectStyle[color]);
     }
 
     // :(
