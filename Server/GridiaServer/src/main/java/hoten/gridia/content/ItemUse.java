@@ -8,6 +8,7 @@ public class ItemUse {
 
     public String name, successMessage, failureMessage;
     public int tool, focus, focusQuantityConsumed, animation, successTool;
+    public int surfaceGround = -1;
     public List<Integer> products = new ArrayList();
     public List<Integer> quantities = new ArrayList();
 

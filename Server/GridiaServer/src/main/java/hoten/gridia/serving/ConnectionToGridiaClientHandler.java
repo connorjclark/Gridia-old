@@ -352,6 +352,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         _server.sendToAll(_messageBuilder.chat(player.creature.name + " says: " + msg, player.creature.location));
     }
 
+    // :(
     private void ExecuteItemUse(
             ItemUse use,
             ItemInstance tool,
@@ -398,6 +399,10 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             if (use.animation != 0) {
                 Coord loc = _server.tileMap.getCoordFromIndex(destIndex);
                 _server.sendToClientsWithAreaLoaded(_messageBuilder.animation(use.animation, loc), destIndex);
+            }
+            if (use.surfaceGround != -1) {
+                Coord loc = _server.tileMap.getCoordFromIndex(destIndex);
+                _server.changeFloor(loc, use.surfaceGround);
             }
         }
 

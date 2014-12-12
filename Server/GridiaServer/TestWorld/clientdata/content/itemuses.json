@@ -3508,6 +3508,7 @@
     "tool":902,
     "focus":0,
     "focusQuantityConsumed":0,
+    "surfaceGround":100,
     "animation":39,
     "products":[
       1210
@@ -24142,6 +24143,7 @@
     "tool":271,
     "focus":0,
     "focusQuantityConsumed":0,
+    "surfaceGround":30,
     "products":[
 
     ],
@@ -24155,6 +24157,7 @@
     "tool":1026,
     "focus":0,
     "focusQuantityConsumed":0,
+    "surfaceGround":126,
     "products":[
 
     ],
@@ -27859,6 +27862,7 @@
     "tool":406,
     "focus":0,
     "focusQuantityConsumed":0,
+    "surfaceGround":39,
     "products":[
 
     ],
