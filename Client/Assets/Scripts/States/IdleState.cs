@@ -90,6 +90,10 @@ namespace Gridia
             {
                 _game.DropItemAtSelection();
             }
+            else if (Input.GetKeyUp(KeyCode.E))
+            {
+                _driver.invGui.EquipItemAtCurrentSelection();
+            }
 
             if (Input.GetMouseButtonDown(0))
             {

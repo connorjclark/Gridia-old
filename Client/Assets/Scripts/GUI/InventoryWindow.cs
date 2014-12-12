@@ -66,7 +66,7 @@ namespace Gridia
                 itemRend.OnMouseOver = () => MouseOverSlot = slotIndex;
                 itemRend.OnDoubleClick = () =>
                 {
-                    Locator.Get<ConnectionToGridiaServerHandler>().EquipItem(slotIndex);
+                    EquipItemAt(slotIndex);
                 };
                 _itemRenderables.Add(itemRend);
                 _slots.AddChild(itemRend);
@@ -81,6 +81,16 @@ namespace Gridia
         public ItemInstance GetItemAt(int index)
         {
             return _itemRenderables[index].Item;
+        }
+
+        public void EquipItemAtCurrentSelection()
+        {
+            EquipItemAt(SlotSelected);
+        }
+
+        private void EquipItemAt(int slotIndex)
+        {
+            Locator.Get<ConnectionToGridiaServerHandler>().EquipItem(slotIndex);
         }
 
         protected override void Resize()
