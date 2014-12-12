@@ -25,6 +25,7 @@ namespace Gridia
             {
                 _pickWindow.Picks.TileSelectedX += (int)dir.x;
                 _pickWindow.Picks.TileSelectedY += (int)-dir.y;
+                _pickWindow.SetWindowNameToCurrentSelection();
             }
             if (Input.GetKeyUp(KeyCode.Space))
             {

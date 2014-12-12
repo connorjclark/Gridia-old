@@ -8,10 +8,12 @@ namespace Gridia
 {
     public class ItemUsePickWindow : GridiaWindow
     {
+        private List<ItemUse> _uses;
         public List<ItemUse> Uses
         {
             set
             {
+                _uses = value;
                 _useRenderables = new List<ItemRenderable>();
                 Picks.RemoveAllChildren();
                 for (int i = 0; i < value.Count; i++)
@@ -28,6 +30,12 @@ namespace Gridia
                 CalculateRect();
                 X = (Screen.width / 2 - Width) / 2;
                 Y = (Screen.height - Height) / 2;
+
+                SetWindowNameToCurrentSelection();
+            }
+            get
+            {
+                return _uses;
             }
         }
         public ExtendibleGrid Picks = new ExtendibleGrid(Vector2.zero); // :(
@@ -40,6 +48,13 @@ namespace Gridia
         {
             Resizeable = false;
             AddChild(Picks);
+        }
+
+        public void SetWindowNameToCurrentSelection() 
+        {
+            var productId = Uses[Picks.TileSelected].products[0];
+            var productName = Locator.Get<ContentManager>().GetItem(productId).Name;
+            WindowName = productName;
         }
 
         public void SelectUse()
