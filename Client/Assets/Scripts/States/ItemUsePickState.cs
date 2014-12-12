@@ -20,22 +20,35 @@ namespace Gridia
         public override void Step(StateMachine stateMachine, float dt)
         {
             _stateMachine = stateMachine; // :(
-            var dir = Locator.Get<InputManager>().Get4DirectionalArrowKeysInputUp();
-            if (dir != Vector3.zero)
+            if (CheckForCancel())
             {
-                _pickWindow.Picks.TileSelectedX += (int)dir.x;
-                _pickWindow.Picks.TileSelectedY += (int)-dir.y;
-                _pickWindow.SetWindowNameToCurrentSelection();
-            }
-            if (Input.GetKeyUp(KeyCode.Space))
-            {
-                Locator.Get<ItemUsePickWindow>().SelectUse();
                 End();
             }
+            else
+            {
+                var dir = Locator.Get<InputManager>().Get4DirectionalArrowKeysInputUp(); // :(
+                if (dir != Vector3.zero)
+                {
+                    _pickWindow.Picks.TileSelectedX += (int)dir.x;
+                    _pickWindow.Picks.TileSelectedY += (int)-dir.y;
+                    _pickWindow.SetWindowNameToCurrentSelection();
+                }
+                if (Input.GetKeyUp(KeyCode.Space))
+                {
+                    Locator.Get<ItemUsePickWindow>().SelectUse();
+                    End();
+                }
+            }
+        }
+
+        private bool CheckForCancel() 
+        {
+            return Locator.Get<InputManager>().Get4DirectionalInput() != Vector3.zero;
         }
 
         public void End()
         {
+            Locator.Get<TabbedUI>().Remove(_pickWindow);
             _stateMachine.SetState(new IdleState());
         }
     }
