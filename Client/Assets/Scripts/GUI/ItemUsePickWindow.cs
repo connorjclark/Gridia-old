@@ -52,9 +52,16 @@ namespace Gridia
 
         public void SetWindowNameToCurrentSelection() 
         {
-            var productId = Uses[Picks.TileSelected].products[0];
-            var productName = Locator.Get<ContentManager>().GetItem(productId).Name;
-            WindowName = productName;
+            if (Picks.TileSelected < Uses.Count)
+            {
+                var productId = Uses[Picks.TileSelected].products.Count != 0 ? Uses[Picks.TileSelected].products[0] : Uses[Picks.TileSelected].successTool;
+                var productName = Locator.Get<ContentManager>().GetItem(productId).Name;
+                WindowName = productName;
+            }
+            else
+            {
+                Picks.TileSelected = 0;
+            }
         }
 
         public void SelectUse()

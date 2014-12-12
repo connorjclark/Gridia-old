@@ -363,18 +363,27 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             int destIndex
     ) throws IOException {
         if (use.successTool != -1) {
-            if (use.successTool == 0) {
-                tool.quantity -= 1;
-            } else {
-                tool = _server.contentManager.createItemInstance(use.successTool);
+            ItemInstance toolResult = null;
+            tool.quantity -= 1;
+            if (tool.quantity <= 0) {
+                tool = ItemInstance.NONE;
+            }
+            if (use.successTool != 0) {
+                toolResult = _server.contentManager.createItemInstance(use.successTool);
             }
 
             switch (source) {
                 case "world":
                     _server.changeItem(sourceIndex, tool);
+                    if (toolResult != null) {
+                        _server.addItemNear(_server.tileMap.getCoordFromIndex(sourceIndex), toolResult, 3);
+                    }
                     break;
                 case "inv":
                     player.creature.inventory.set(sourceIndex, tool);
+                    if (toolResult != null) {
+                        player.creature.inventory.add(toolResult);
+                    }
                     break;
             }
         }
