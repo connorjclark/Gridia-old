@@ -66,6 +66,7 @@ namespace Gridia
                 {
                     _driver.invGui.SlotSelectedX += (int)arrowKeysUp.x;
                     _driver.invGui.SlotSelectedY += (int)-arrowKeysUp.y;
+                    _driver.invGui.SetWindowNameToCurrentSelection();
                 } else {
                     _game.selectorDelta += arrowKeysUp;
                     _game.hideSelector = false;

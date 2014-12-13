@@ -35,6 +35,20 @@ namespace Gridia
             AddChild(_slots);
         }
 
+        // :(
+        public void SetWindowNameToCurrentSelection()
+        {
+            if (_slots.TileSelected < _slots.NumChildren)
+            {
+                var productName = _itemRenderables[_slots.TileSelected].Item.Item.Name;
+                WindowName = productName;
+            }
+            else
+            {
+                _slots.TileSelected = 0;
+            }
+        }
+
         public override void Render()
         {
             if (Event.current.type == EventType.Layout) 
@@ -71,6 +85,8 @@ namespace Gridia
                 _itemRenderables.Add(itemRend);
                 _slots.AddChild(itemRend);
             }
+
+            SetWindowNameToCurrentSelection();
         }
 
         public void SetItemAt(int index, ItemInstance item)
