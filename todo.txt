@@ -17,6 +17,9 @@ Refactoring
 Winter break
 
   Get game ready for demo launch
+    Tear down walls
+    Show version
+    Preloader
     Client side hit prediction
     Fix old player positions staying / load existing players when log in
     Accounts
