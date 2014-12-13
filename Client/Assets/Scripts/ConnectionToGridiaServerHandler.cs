@@ -232,9 +232,10 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
             {
                 var floor = data.ReadInt16();
                 var itemType = data.ReadInt16();
+                var itemQuantity = data.ReadInt16();
                 var tile = new Tile();
                 tile.Floor = floor;
-                tile.Item = new ItemInstance(cm.GetItem(itemType));
+                tile.Item = cm.GetItem(itemType).GetInstance(itemQuantity);
                 tiles[x, y] = tile;
             }
         }
