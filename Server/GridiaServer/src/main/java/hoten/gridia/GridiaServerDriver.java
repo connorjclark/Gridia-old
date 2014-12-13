@@ -18,6 +18,8 @@ import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GridiaServerDriver {
 
@@ -27,7 +29,7 @@ public class GridiaServerDriver {
     public static void main(String[] args) throws IOException {
         if (args.length == 0) {
             //args = "TestWorld DemoCity 30000 20 51235053089343 300 2 20".split("\\s+");
-            args = "TestWorld DemoCity".split("\\s+");
+            args = "TestWorld RoachCity".split("\\s+");
         }
 
         String worldName = args[0];
@@ -116,7 +118,7 @@ public class GridiaServerDriver {
 
     // hard code the roach quest for the presentation
     private static int arenaTickRate = 5000;
-    private static int arenaDuration = 60 * 1000;
+    private static int arenaDuration = 45 * 1000;
     private static Coord arenaLocation = new Coord(495, 481, 1);
     private static Coord winnerTeleportLocation = new Coord(550, 485, 1);
     private static Coord loserTeleportLocation = new Coord(550, 490, 1);
@@ -128,28 +130,30 @@ public class GridiaServerDriver {
     private static void stepArena() {
         if (timeLeft == 0) {
             List<Creature> playersInArena = getPlayersInArena();
-            Creature winner = null;
-            int highestAntenae = 0;
+            if (!playersInArena.isEmpty()) {
+                Creature winner = null;
+                int highestAntenae = 0;
 
-            for (Creature player : playersInArena) {
-                int amount = removeItemFromInventory(player, 447).quantity;
-                if (amount > highestAntenae) {
-                    winner = player;
-                    highestAntenae = amount;
+                for (Creature player : playersInArena) {
+                    int amount = removeItemFromInventory(player, 447).quantity;
+                    if (amount >= highestAntenae) {
+                        winner = player;
+                        highestAntenae = amount;
+                    }
                 }
-            }
 
-            playersInArena.remove(winner);
+                playersInArena.remove(winner);
 
-            playersInArena.forEach(creature -> {
-                server.moveCreatureTo(creature, loserTeleportLocation, true);
-            });
+                playersInArena.forEach(creature -> {
+                    server.moveCreatureTo(creature, loserTeleportLocation, true);
+                });
 
-            if (winner != null) {
                 server.moveCreatureTo(winner, winnerTeleportLocation, true);
-            }
 
-            server.sendToAll(server.messageBuilder.chat("Game over! Most Antenae: " + highestAntenae, winnerTeleportLocation));
+                server.sendToAll(server.messageBuilder.chat("Game over! Winner: " + winner.name + "\nMost Antenae: " + highestAntenae, winnerTeleportLocation));
+            } else {
+                server.sendToAll(server.messageBuilder.chat("Game over! Winner: None\nMost Antenae: 0", winnerTeleportLocation));
+            }
             clearArena();
         } else {
             sayMessageInArena("Seconds left: " + timeLeft / 1000);
@@ -185,11 +189,17 @@ public class GridiaServerDriver {
     private static void startArena() {
         arenaIsGoing = true;
         timeLeft = arenaDuration;
-        Monster roach = server.contentManager.getMonster(42);
+        Monster roachData = server.contentManager.getMonster(42);
+        try {
+            roachData = roachData.clone();
+            roachData.name = "";
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(GridiaServerDriver.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Random random = new Random();
         for (int i = 0; i < numRoaches; i++) {
             Coord loc = arenaLocation.add(random.nextInt(arenaSize), random.nextInt(arenaSize), 0);
-            server.createCreature(roach, loc);
+            server.createCreature(roachData, loc);
         }
         sayMessageInArena("BEGIN!");
     }
