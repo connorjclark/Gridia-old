@@ -138,10 +138,12 @@ public class GridiaDriver : MonoBehaviour
                 var relative = pos - focusPos; // :(
                 var rect = new Rect(relative.x * tileSize, Screen.height - relative.y * tileSize - tileSize, tileSize, tileSize);
                 DrawCreature(rect, cre);
-
-                var labelRelative = pos - _game.view.FocusPosition; // :(
-                var nameLabel = new Label(new Vector2((labelRelative.x + 0.5f) * tileSize, Screen.height - (labelRelative.y + 1.5f) * tileSize), cre.Name, true, true); // :(
-                nameLabel.Render();
+                if (cre.Name.Length > 0)
+                {
+                    var labelRelative = pos - _game.view.FocusPosition; // :(
+                    var nameLabel = new Label(new Vector2((labelRelative.x + 0.5f) * tileSize, Screen.height - (labelRelative.y + 1.5f) * tileSize), cre.Name, true, true); // :(
+                    nameLabel.Render();
+                }
             }
         }
 
