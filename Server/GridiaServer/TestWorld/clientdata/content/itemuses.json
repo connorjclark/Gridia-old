@@ -2077,20 +2077,6 @@
     "successTool":-1
   },
   {
-    "successMessage":"You mine some ore.",
-    "tool":901,
-    "focus":0,
-    "focusQuantityConsumed":0,
-    "animation":25,
-    "products":[
-      0
-    ],
-    "quantities":[
-      1
-    ],
-    "successTool":-1
-  },
-  {
     "successMessage":"You reduce the rock, making small rocks.",
     "tool":901,
     "focus":4,
