@@ -176,6 +176,17 @@ public class GridiaDriver : MonoBehaviour
             }
         }
 
+        // :(
+        _game.view.ForEachInView((x, y) =>
+        {
+            var tile = _game.tileMap.GetTile(x + (int)focusPos.x, y + (int)focusPos.y, (int)focusPos.z);
+            if (tile.Item.Quantity > 1)
+            {
+                var labelRect = new Rect((x - focusPos.x % 1) * tileSize, Screen.height - (y - focusPos.y % 1) * tileSize - tileSize, tileSize, tileSize);
+                GUI.Label(labelRect, tile.Item.Quantity.ToString());
+            }
+        });
+
         ToolTipRenderable.instance.Render();
 
         if (Event.current.type == EventType.KeyDown)

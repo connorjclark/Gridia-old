@@ -258,7 +258,8 @@ namespace Gridia
             lighting.SetLights(lights);
         }
 
-        private void ForEachInView(Action<int, int> task)
+        // :(
+        public void ForEachInView(Action<int, int> task)
         {
             for (int y = -1; y < height + 1; y++)
             {
