@@ -43,7 +43,7 @@ namespace Gridia
 
         private bool CheckForCancel() 
         {
-            return Locator.Get<InputManager>().Get4DirectionalInput() != Vector3.zero;
+            return Locator.Get<InputManager>().Get4DirectionalInput() != Vector3.zero || Input.GetKey(KeyCode.Escape);
         }
 
         public void End()
