@@ -17,7 +17,7 @@ public class GridiaGame
         Locator.Provide(stateMachine);
         tileMap = new TileMap(size, depth, sectorSize);
         Locator.Provide(tileMap);
-        view = new TileMapView(tileMap, Locator.Get<TextureManager>(), 1.25f);
+        view = new TileMapView(tileMap, Locator.Get<TextureManager>(), 1.75f);
         Locator.Provide(view);
         stateMachine.SetState(new IdleState());
         Locator.Get<SoundPlayer>().QueueRandomSongs();

@@ -197,7 +197,7 @@ public class GridiaDriver : MonoBehaviour
             }
             else if (Event.current.keyCode == KeyCode.PageUp)
             {
-                _game.view.Scale -= 0.25f;
+                _game.view.Scale = Math.Max(0.5f, _game.view.Scale - 0.25f);
             }
         }
         if (Event.current.type == EventType.KeyUp)
