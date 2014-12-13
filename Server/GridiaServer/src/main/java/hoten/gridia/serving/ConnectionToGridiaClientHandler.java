@@ -400,25 +400,13 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         }
 
         if ("world".equals(dest)) {
-            if (use.tool == 0) {
-                use.products.stream()
-                        .findFirst()
-                        .ifPresent(product -> {
-                            ItemInstance productInstance = _server.contentManager.createItemInstance(product);
-                            _server.addItemNear(destIndex, productInstance, 3);
-                        });
-                use.products.stream()
-                        .skip(1)
-                        .forEach(product -> {
-                            ItemInstance productInstance = _server.contentManager.createItemInstance(product);
-                            player.creature.inventory.add(productInstance);
-                        });
-            } else {
-                use.products.stream()
-                        .forEach(product -> {
-                            ItemInstance productInstance = _server.contentManager.createItemInstance(product);
-                            _server.addItemNear(destIndex, productInstance, 3);
-                        });
+            for (int i = 0; i < use.products.size(); i++) {
+                ItemInstance productInstance = _server.contentManager.createItemInstance(use.products.get(i), use.quantities.get(i));
+                if (i == 0 || use.tool != 0) {
+                    _server.addItemNear(destIndex, productInstance, 3);
+                } else {
+                    player.creature.inventory.add(productInstance);
+                }
             }
             if (use.animation != 0) {
                 Coord loc = _server.tileMap.getCoordFromIndex(destIndex);
