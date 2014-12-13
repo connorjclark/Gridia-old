@@ -34,17 +34,7 @@ namespace Gridia
             set
             {
                 _scale = value;
-                float tileSize = GridiaConstants.SPRITE_SIZE * _scale;
-                width = Mathf.CeilToInt(Screen.width / tileSize);
-                height = Mathf.CeilToInt(Screen.height / tileSize);
-                InitGridVertices();
-                if (layers != null)
-                {
-                    layers.ForEach(layer => {
-                        layer.Delete();
-                    });
-                }
-                layers = InitLayers();
+                Initialize();
             }
         }
 
@@ -67,8 +57,32 @@ namespace Gridia
             IsLighting = false;
         }
 
+        public void Initialize() 
+        {
+            float tileSize = GridiaConstants.SPRITE_SIZE * _scale;
+            width = Mathf.CeilToInt(Screen.width / tileSize);
+            height = Mathf.CeilToInt(Screen.height / tileSize);
+            InitGridVertices();
+            if (layers != null)
+            {
+                layers.ForEach(layer =>
+                {
+                    layer.Delete();
+                });
+            }
+            layers = InitLayers();
+        }
+
+        private int _prevZ; // :(
+
         public void Render()
         {
+            if (_prevZ != FocusPosition.z)
+            {
+                Initialize();
+                _prevZ = (int)FocusPosition.z;
+            }
+
             Action<int[], int, int> setTriangles = (triangles, offset, tileIndex) =>
             {
                 int vertexOffset = tileIndex * 4;
