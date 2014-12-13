@@ -32,6 +32,11 @@ public class Container {
         this(items, ContainerType.Inventory);
     }
 
+    public boolean containsItemId(int id) {
+        return _items.stream()
+                .anyMatch(item -> item.data.id == id);
+    }
+
     public int size() {
         return _items.size();
     }

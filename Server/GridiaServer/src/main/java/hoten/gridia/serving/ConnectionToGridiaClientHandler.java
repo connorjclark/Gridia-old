@@ -523,10 +523,14 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
                 _server.hurtCreature(creature, 1);
             }
         } else if (tile.floor == 0) {
-            _server.changeFloor(loc, 19);
-            int oreId = _server.contentManager.getRandomItemOfClassByRarity(Item.ItemClass.Ore).id;
-            _server.addItem(loc, _server.contentManager.createItemInstance(oreId));
-            _server.sendToClientsWithAreaLoaded(_messageBuilder.animation(25, loc), loc);
+            if (player.creature.inventory.containsItemId(901)) {
+                _server.changeFloor(loc, 19);
+                int oreId = _server.contentManager.getRandomItemOfClassByRarity(Item.ItemClass.Ore).id;
+                _server.addItem(loc, _server.contentManager.createItemInstance(oreId));
+                _server.sendToClientsWithAreaLoaded(_messageBuilder.animation(25, loc), loc);
+            } else {
+                send(_messageBuilder.chat("You need a pickaxe to mine!", player.creature.location));
+            }
         }
     }
 
