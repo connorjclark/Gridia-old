@@ -402,6 +402,24 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         if ("world".equals(dest)) {
             for (int i = 0; i < use.products.size(); i++) {
                 ItemInstance productInstance = _server.contentManager.createItemInstance(use.products.get(i), use.quantities.get(i));
+                if (productInstance.data.itemClass == Item.ItemClass.Cave_down) {
+                    if (player.creature.location.z == _server.tileMap.depth - 1) {
+                        continue;
+                    }
+                    Coord below = _server.tileMap.getCoordFromIndex(destIndex).add(0, 0, 1);
+                    _server.changeItem(_server.tileMap.getIndexFromCoord(below), _server.contentManager.createItemInstance(981));
+                    for (int x = -1; x <= 1; x++) {
+                        for (int y = -1; y <= 1; y++) {
+                            _server.changeFloor(below.add(x, y, 0), 19);
+                        }
+                    }
+                } else if (productInstance.data.itemClass == Item.ItemClass.Cave_up) {
+                    if (player.creature.location.z == 0) {
+                        continue;
+                    }
+                    Coord above = _server.tileMap.getCoordFromIndex(destIndex).add(0, 0, -1);
+                    _server.changeItem(_server.tileMap.getIndexFromCoord(above), _server.contentManager.createItemInstance(980));
+                }
                 if (i == 0 || use.tool != 0) {
                     _server.addItemNear(destIndex, productInstance, 3);
                 } else {

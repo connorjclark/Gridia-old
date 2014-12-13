@@ -29,7 +29,7 @@ public class GridiaServerDriver {
     public static void main(String[] args) throws IOException {
         if (args.length == 0) {
             //args = "TestWorld DemoCity 30000 20 51235053089343 300 2 20".split("\\s+");
-            args = "TestWorld RoachCity".split("\\s+");
+            args = "TestWorld DemoCity".split("\\s+");
         }
 
         String worldName = args[0];
@@ -98,7 +98,7 @@ public class GridiaServerDriver {
                         stepArena();
                     }
                 } else {
-                    if (playersInArena.size() > 0) {
+                    if (playersInArena.size() > 1) {
                         startArena();
                     }
                 }
@@ -118,7 +118,7 @@ public class GridiaServerDriver {
 
     // hard code the roach quest for the presentation
     private static int arenaTickRate = 5000;
-    private static int arenaDuration = 45 * 1000;
+    private static int arenaDuration = 30 * 1000;
     private static Coord arenaLocation = new Coord(495, 481, 1);
     private static Coord winnerTeleportLocation = new Coord(550, 485, 1);
     private static Coord loserTeleportLocation = new Coord(550, 490, 1);
