@@ -50,6 +50,17 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         return new ConnectionToGridiaClientHandler(this, newConnection);
     }
 
+    public void grow() {
+        tileMap.forAllTilesLoaded(x -> y -> z -> tile -> {
+            if (tile.item.data.growthDelta != 0) {
+                tile.item.age += 1;
+                if (tile.item.age >= tile.item.data.growthDelta) {
+                    changeItem(new Coord(x, y, z), contentManager.createItemInstance(tile.item.data.growthItem));
+                }
+            }
+        });
+    }
+
     public boolean anyPlayersOnline() {
         return !_clients.isEmpty();
     }

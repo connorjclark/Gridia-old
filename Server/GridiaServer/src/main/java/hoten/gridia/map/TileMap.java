@@ -6,6 +6,8 @@ import hoten.gridia.Creature;
 import hoten.gridia.content.ItemInstance;
 import hoten.serving.fileutils.FileUtils;
 import java.io.File;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class TileMap {
 
@@ -52,6 +54,24 @@ public class TileMap {
                     Sector sector = _sectors[x][y][z];
                     if (sector != null) {
                         _sectors[x][y][z] = _sectorLoader.load(mapName, sectorSize, x, y, z);
+                    }
+                }
+            }
+        }
+    }
+
+    // :( lol
+    public void forAllTilesLoaded(Function<Integer, Function<Integer, Function<Integer, Consumer<Tile>>>> func) {
+        for (int sx = 0; sx < sectorsAcross; sx++) {
+            for (int sy = 0; sy < sectorsAcross; sy++) {
+                for (int sz = 0; sz < depth; sz++) {
+                    Sector sector = _sectors[sx][sy][sz];
+                    if (sector != null) {
+                        for (int x = 0; x < sectorSize; x++) {
+                            for (int y = 0; y < sectorSize; y++) {
+                                func.apply(x + sx * sectorSize).apply(y + sy * sectorSize).apply(sz).accept(sector._tiles[x][y]);
+                            }
+                        }
                     }
                 }
             }

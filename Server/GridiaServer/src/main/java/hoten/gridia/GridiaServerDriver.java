@@ -29,7 +29,7 @@ public class GridiaServerDriver {
     public static void main(String[] args) throws IOException {
         if (args.length == 0) {
             //args = "TestWorld DemoCity 30000 20 51235053089343 300 2 20".split("\\s+");
-            args = "TestWorld DemoCity".split("\\s+");
+            args = "TestWorld RoachCity".split("\\s+");
         }
 
         String worldName = args[0];
@@ -85,6 +85,11 @@ public class GridiaServerDriver {
                 server.tileMap.save();
             }
         }, 0, 1, TimeUnit.MINUTES);
+
+        // grow items
+        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
+            server.grow();
+        }, 0, 10, TimeUnit.SECONDS);
 
         // hard code the roach quest for the presentation
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {

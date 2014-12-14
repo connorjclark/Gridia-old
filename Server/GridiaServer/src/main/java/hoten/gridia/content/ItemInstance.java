@@ -14,6 +14,7 @@ public class ItemInstance {
 
     public Item data;
     public int quantity;
+    public int age;
 
     public ItemInstance(Item data, int quantity) {
         this.data = data;

@@ -15,12 +15,12 @@ public class Item {
     }
 
     // :( make final?
-    public int id, wearImage, rarity;
+    public int id, wearImage, rarity, growthItem, growthDelta;
     public ItemClass itemClass;
     public ArmorSpot armorSpot;
     public String name;
     public boolean walkable, moveable, stackable;
-    
+
     public boolean isEquipable() {
         return itemClass == ItemClass.Armor || itemClass == ItemClass.Weapon || itemClass == ItemClass.Shield;
     }
