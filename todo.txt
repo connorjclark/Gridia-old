@@ -17,7 +17,6 @@ Refactoring
 Winter break
 
   Get game ready for demo launch
-    Tear down walls
     Preloader
     Client side hit prediction
     Fix old player positions staying / load existing players when log in
@@ -29,13 +28,12 @@ Winter break
     Roach arena
       start when standing in certain spots, players get teleported to arena
     Bar
-    Item growth
-    Unload sectors
+    Render large items
     Launch server from client
     Crossplatform
       Linux
       Mac
-  Set up blog, website, forums
+  Set up blog, website, forums, chatroom
   Press kit
   Twitter
   Greenlight

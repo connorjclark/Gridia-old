@@ -12,10 +12,7 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 public class ContentManager {
 
@@ -70,7 +67,7 @@ public class ContentManager {
                 .mapToInt(item -> item.rarity)
                 .sum();
         int targetRarity = (int) (Math.random() * totalRarity);
-        
+
         int raritySeen = 0;
         for (Item item : itemsOfClass) {
             raritySeen += item.rarity;
@@ -78,7 +75,7 @@ public class ContentManager {
                 return item;
             }
         }
-        
+
         return ItemInstance.NONE.data;
     }
 
@@ -95,13 +92,13 @@ public class ContentManager {
             return Arrays.asList();
         }
         return uses.stream()
-                .filter(u -> u.focus == focus.id)
+                .filter(u -> (u.focus == focus.id && u.focusSubType == null) || (u.focusSubType != null && u.focusSubType.equals(focus.subType)))
                 .collect(Collectors.toList());
     }
 
     public ItemUse getItemUse(Item tool, Item focus, int index) {
         return _itemUses.get(tool).stream()
-                .filter(u -> u.focus == focus.id)
+                .filter(u -> (u.focus == focus.id && u.focusSubType == null) || (u.focusSubType != null && u.focusSubType.equals(focus.subType)))
                 .skip(index)
                 .findFirst()
                 .get();

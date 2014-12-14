@@ -18,7 +18,7 @@ public class Item {
     public int id, wearImage, rarity, growthItem, growthDelta;
     public ItemClass itemClass;
     public ArmorSpot armorSpot;
-    public String name;
+    public String name, subType;
     public boolean walkable, moveable, stackable;
 
     public boolean isEquipable() {

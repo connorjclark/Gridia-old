@@ -54,7 +54,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         // fake an inventory
         List<ItemInstance> inv = new ArrayList();
         inv.addAll(Arrays.asList(
-                57, 335, 277, 280, 1067, 1068, 826, 1974,
+                57, 335, 277, 280, 1067, 900, 1068, 826, 1974,
                 1974, 1039, 171, 902, 901, 339, 341,
                 29, 19, 18, 12, 913, 34, 140
         ).stream()

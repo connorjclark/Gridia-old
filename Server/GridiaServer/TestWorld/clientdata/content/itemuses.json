@@ -1866,6 +1866,7 @@
   },
   {
     "successMessage":"You tear down the wall.",
+    "focusSubType":"WoodWall",
     "tool":900,
     "focus":0,
     "focusQuantityConsumed":1,
@@ -1879,6 +1880,7 @@
   },
   {
     "successMessage":"You tear down the wall.",
+    "focusSubType":"WoodDoor",
     "tool":900,
     "focus":0,
     "focusQuantityConsumed":1,
@@ -25542,6 +25544,7 @@
   },
   {
     "successMessage":"You smash the wall.",
+    "focusSubType":"WoodWall",
     "tool":837,
     "focus":0,
     "focusQuantityConsumed":1,
@@ -25555,6 +25558,7 @@
   },
   {
     "successMessage":"You smash the wall.",
+    "focusSubType":"StoneWall",
     "tool":837,
     "focus":0,
     "focusQuantityConsumed":1,
@@ -26617,6 +26621,7 @@
   },
   {
     "successMessage":"You smooth the land.",
+    "focusSubType":"Seeded Ground",
     "tool":902,
     "focus":0,
     "focusQuantityConsumed":1,
@@ -26630,6 +26635,7 @@
   },
   {
     "successMessage":"You bury the shards",
+    "focusSubType":"Trolkin shards",
     "tool":902,
     "focus":0,
     "focusQuantityConsumed":1,
@@ -26643,6 +26649,7 @@
   },
   {
     "successMessage":"You burn the shards",
+    "focusSubType":"Trolkin shards",
     "tool":335,
     "focus":0,
     "focusQuantityConsumed":1,
@@ -26656,6 +26663,7 @@
   },
   {
     "successMessage":"You burn the shards",
+    "focusSubType":"Trolkin shards",
     "tool":479,
     "focus":0,
     "focusQuantityConsumed":1,
@@ -26669,6 +26677,7 @@
   },
   {
     "successMessage":"You burn the shards",
+    "focusSubType":"Trolkin shards",
     "tool":280,
     "focus":0,
     "focusQuantityConsumed":1,

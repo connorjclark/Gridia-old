@@ -54,6 +54,7 @@ public class GridiaServerDriver {
         File clientDataDir = Paths.get(worldName, "clientdata").toFile();
         String localDataDirName = worldName;
         server = new ServingGridia(worldName, mapName, port, clientDataDir, localDataDirName);
+        server.tileMap.loadAll(); // :(
         server.startServer();
 
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
