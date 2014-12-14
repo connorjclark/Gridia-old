@@ -29,6 +29,7 @@ Winter break
       enter a dungeon, random monsters spawn
     Roach arena
       start when standing in certain spots, players get teleported to arena
+    Bar
     Item growth
     Unload sectors
     Launch server from client

@@ -14,26 +14,21 @@ namespace Gridia
         public FloatingText(Vector3 coord, String text)
             : base(Vector2.zero, text)
         {
-            Coord = coord;
+            Background = Centered = true;
             Life = 400;
+            Coord = coord;
         }
 
         public void Reposition(float tileSize, Vector3 playerLocation) 
         {
             var relative = Coord - playerLocation;
-            X = (relative.x - 1) * tileSize;
+            X = (relative.x + 0.5f) * tileSize;
             Y = Screen.height - (int)((relative.y + 1.5) * tileSize + 100 - Life / 8);
         }
 
         public void Tick() 
         {
             Life--;
-        }
-
-        public override void Render()
-        {
-            GUI.Box(Rect, "");
-            base.Render();
         }
     }
 }
