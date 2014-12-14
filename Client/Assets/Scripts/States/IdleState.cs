@@ -18,7 +18,7 @@ namespace Gridia
         {
             _driver = Locator.Get<GridiaDriver>();
             _game = Locator.Get<GridiaGame>();
-            _game.selectorDelta = Vector3.zero;
+            _game.SelectorDelta = Vector3.zero;
         }
 
         public override void Step(StateMachine stateMachine, float dt)
@@ -68,7 +68,7 @@ namespace Gridia
                     _driver.invGui.SlotSelectedY += (int)-arrowKeysUp.y;
                     _driver.invGui.SetWindowNameToCurrentSelection();
                 } else {
-                    _game.selectorDelta += arrowKeysUp;
+                    _game.SelectorDelta += arrowKeysUp;
                     _game.hideSelector = false;
                 }
             }

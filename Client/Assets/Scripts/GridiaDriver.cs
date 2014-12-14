@@ -149,7 +149,7 @@ public class GridiaDriver : MonoBehaviour
 
         if (!_game.hideSelector)
         {
-            var selectorPos = focusPos + _game.selectorDelta;
+            var selectorPos = focusPos + _game.SelectorDelta;
             var selectorRelativePosition = GetRelativeScreenPosition(focusPos, selectorPos);
             var selectorRect = new Rect(selectorRelativePosition.x, selectorRelativePosition.y, tileSize, tileSize);
             GUIDrawSelector(selectorRect, new Color32(0, 0, 255, 100));

@@ -9,7 +9,20 @@ namespace Gridia
     public class ItemMovementState : State
     {
         private Vector3 LocationOfItemToMove { get; set; }
-        private Vector3 DestinationSelectorDelta { get; set; }
+        public Vector3 _destinationSelectorDelta = Vector3.zero; // :(
+        public Vector3 DestinationSelectorDelta
+        {
+            get
+            {
+                return _destinationSelectorDelta;
+            }
+            set
+            {
+                _destinationSelectorDelta = value;
+                _destinationSelectorDelta.x = Mathf.Clamp(_destinationSelectorDelta.x, -2, 2);
+                _destinationSelectorDelta.y = Mathf.Clamp(_destinationSelectorDelta.y, -2, 2);
+            }
+        }
         private GridiaDriver _driver; // :( move to State?
         private GridiaGame _game;
 

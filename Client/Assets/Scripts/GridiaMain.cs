@@ -9,7 +9,22 @@ public class GridiaGame
     public TileMapView view;
     public StateMachine stateMachine = new StateMachine();
     public List<AnimationRenderable> animations = new List<AnimationRenderable>();
-    public Vector3 selectorDelta = Vector3.zero;
+
+    public Vector3 _selectorDelta = Vector3.zero;
+    public Vector3 SelectorDelta
+    {
+        get
+        {
+            return _selectorDelta;
+        }
+        set
+        {
+            _selectorDelta = value;
+            _selectorDelta.x = Mathf.Clamp(_selectorDelta.x, -2, 2);
+            _selectorDelta.y = Mathf.Clamp(_selectorDelta.y, -2, 2);
+        }
+    }
+
     public bool hideSelector = true;
     public bool isConnected;
 
@@ -25,7 +40,7 @@ public class GridiaGame
 
     public Vector3 GetSelectorCoord()
     {
-        return GetSelectorCoord(selectorDelta);
+        return GetSelectorCoord(SelectorDelta);
     }
 
     public Vector3 GetSelectorCoord(Vector3 sDelta)
@@ -42,7 +57,7 @@ public class GridiaGame
 
     public void DropItemAtSelection() 
     {
-        DropItemAt(view.Focus.Position + selectorDelta);
+        DropItemAt(view.Focus.Position + SelectorDelta);
     }
 
     private void DropItemAt(Vector3 dropItemLoc) 
@@ -54,7 +69,7 @@ public class GridiaGame
 
     public void PickUpItemAtSelection() 
     {
-        PickUpItemAt(view.Focus.Position + selectorDelta);
+        PickUpItemAt(view.Focus.Position + SelectorDelta);
     }
 
     private void PickUpItemAt(Vector3 pickupItemLoc)
