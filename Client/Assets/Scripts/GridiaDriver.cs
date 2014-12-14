@@ -9,6 +9,7 @@ using System;
 
 public class GridiaDriver : MonoBehaviour
 {
+    public static String VERSION = "v.1a"; // :(
     public static AutoResetEvent connectedWaitHandle = new AutoResetEvent(false);
     public static AutoResetEvent gameInitWaitHandle = new AutoResetEvent(false);
     public GridiaGame _game; // :(
@@ -188,6 +189,9 @@ public class GridiaDriver : MonoBehaviour
                 GUI.Label(labelRect, tile.Item.Quantity.ToString());
             }
         });
+
+        var versionLabelSize = GUI.skin.label.CalcSize(new GUIContent(VERSION));
+        GUI.Label(new Rect(0, 0, versionLabelSize.x, versionLabelSize.y), VERSION);
 
         ToolTipRenderable.instance.Render();
 
