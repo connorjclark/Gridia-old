@@ -31260,20 +31260,7 @@
     "stackable":true,
     "class":"Ore"
   },
-  {
-    "id":2380,
-    "burden":10,
-    "value":300,
-    "rarity":1,
-    "name":"Raw Obsidian",
-    "animations":[
-      2248
-    ],
-    "walkable":true,
-    "moveable":true,
-    "stackable":true,
-    "class":"Ore"
-  },
+  null,
   {
     "id":2381,
     "burden":10,
