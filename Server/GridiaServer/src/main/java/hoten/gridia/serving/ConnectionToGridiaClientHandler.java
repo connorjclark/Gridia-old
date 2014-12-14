@@ -524,7 +524,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         Creature creature = tile.cre;
         if (creature != null && !creature.belongsToPlayer) {
             if (creature.isFriendly) {
-                send(_messageBuilder.chat(creature.friendlyMessage, player.creature.location));
+                send(_messageBuilder.chat(creature.friendlyMessage, creature.location));
             } else {
                 _server.hurtCreature(creature, 1);
             }
