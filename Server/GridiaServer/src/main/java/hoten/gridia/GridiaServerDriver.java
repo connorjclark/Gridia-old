@@ -80,17 +80,17 @@ public class GridiaServerDriver {
             });
         }, 0, 1000, TimeUnit.MILLISECONDS);
 
-        // save every minute
+        // save
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
             if (server.anyPlayersOnline()) {
                 server.tileMap.save();
             }
-        }, 0, 1, TimeUnit.MINUTES);
+        }, 12, 12, TimeUnit.HOURS);
 
         // grow items
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
             server.grow();
-        }, 0, 10, TimeUnit.SECONDS);
+        }, 10, 10, TimeUnit.SECONDS);
 
         // hard code the roach quest for the presentation
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
@@ -104,7 +104,7 @@ public class GridiaServerDriver {
                         stepArena();
                     }
                 } else {
-                    if (playersInArena.size() > 1) {
+                    if (playersInArena.size() >= 1) {
                         startArena();
                     }
                 }
