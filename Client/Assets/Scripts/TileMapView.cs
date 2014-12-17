@@ -94,14 +94,14 @@ namespace Gridia
                 triangles[offset + 5] = vertexOffset + 3;
             };
 
-            Action<Vector2[], int, int, int> setTextureCoords = (uv, tileIndex, tileX, tileY) =>
+            Action<Vector2[], int, int, int, int, int> setTextureCoords = (uv, tileIndex, tileX, tileY, width, height) =>
             {
                 int offset = tileIndex * 4;
 
                 float x1 = tileX * GridiaConstants.SPRITE_UV;
-                float y1 = 1.0f - (tileY + 1) * GridiaConstants.SPRITE_UV; //smell
-                float x2 = x1 + GridiaConstants.SPRITE_UV;
-                float y2 = y1 + GridiaConstants.SPRITE_UV;
+                float y1 = 1.0f - (tileY + height) * GridiaConstants.SPRITE_UV; //smell
+                float x2 = x1 + GridiaConstants.SPRITE_UV * width;
+                float y2 = y1 + GridiaConstants.SPRITE_UV * height;
 
                 uv[offset + 0].Set(x1, y1);
                 uv[offset + 1].Set(x1, y2);
@@ -148,18 +148,21 @@ namespace Gridia
                         Dictionary<string, object> dic = new Dictionary<string, object>();
                         dic["texture"] = textureForThisData;
 
+                        var width = layer.GetWidth(tile);
+                        var height = layer.GetHeight(tile);
+
                         Vector2 tileOffset = layer.GetOffset(tile);
-                        if (tileOffset != Vector2.zero && numTilesOffGrid < OFF_GRID_TILES)
+                        if ((tileOffset != Vector2.zero || width != 1 || height != 1) && numTilesOffGrid < OFF_GRID_TILES)
                         {
                             int offTileIndex = NumGridTiles + numTilesOffGrid;
-                            SetTileVertices(offTileIndex * 4, x + tileOffset.x, y + tileOffset.y);
-                            setTextureCoords(layer.uv, offTileIndex, tileX, tileY);
+                            SetTileVertices(offTileIndex * 4, x + tileOffset.x, y + tileOffset.y, width, height);
+                            setTextureCoords(layer.uv, offTileIndex, tileX, tileY, width, height);
                             dic["tileIndex"] = offTileIndex;
                             numTilesOffGrid++;
                         }
                         else
                         {
-                            setTextureCoords(layer.uv, tileIndex, tileX, tileY);
+                            setTextureCoords(layer.uv, tileIndex, tileX, tileY, 1, 1);
                             dic["tileIndex"] = tileIndex;
                         }
                         elementList.Add(dic);
@@ -288,6 +291,8 @@ namespace Gridia
         {
             var result = new List<Layer>();
 
+            var contentManager = Locator.Get<ContentManager>();
+
             result.Add(new Layer(
                 "Floor layer",
                 this,
@@ -327,7 +332,9 @@ namespace Gridia
                     {
                         return Vector2.zero;
                     }
-                }
+                },
+                tile => tile.Item.Item.ImageWidth,
+                tile => tile.Item.Item.ImageHeight
             ));
 
             for (int i = 0; i < result.Count; i++) {
@@ -343,16 +350,16 @@ namespace Gridia
             int offset = 0;
             ForEachInView((x, y) =>
             {
-                SetTileVertices(offset, x, y);
+                SetTileVertices(offset, x, y, 1, 1);
                 offset += 4;
             });
         }
 
-        private void SetTileVertices(int offset, float x, float y) {
+        private void SetTileVertices(int offset, float x, float y, int width, int height) {
             float x1 = x * TileSize;
             float y1 = y * TileSize;
-            float x2 = x1 + TileSize;
-            float y2 = y1 + TileSize;
+            float x2 = x1 + TileSize * width;
+            float y2 = y1 + TileSize * height;
             _gridVertices[offset + 0] = new Vector3(x1, y1, 0);
             _gridVertices[offset + 1] = new Vector3(x1, y2, 0);
             _gridVertices[offset + 2] = new Vector3(x2, y2, 0);

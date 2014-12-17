@@ -43,6 +43,7 @@ To use your hand in the world, use the arrows keys and press ALT
 Press Q to drop a single item of your current selection
 
 ";
+            SetScrollToMax();
         }
 
         public void append(String line) 
