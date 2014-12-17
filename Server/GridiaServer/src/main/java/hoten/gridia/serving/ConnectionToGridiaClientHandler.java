@@ -349,6 +349,12 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             }
         }
 
+        if (msg.equals("!save")) {
+            _server.sendToAll(_messageBuilder.chat("Saving world...", player.creature.location));
+            _server.tileMap.save();
+            _server.sendToAll(_messageBuilder.chat("Saved!", player.creature.location));
+        }
+
         _server.sendToAll(_messageBuilder.chat(player.creature.name + " says: " + msg, player.creature.location));
     }
 

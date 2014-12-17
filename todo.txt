@@ -41,6 +41,7 @@ Winter break
     State machine
     Serving Java
     Test coverage
+    Command line interface to create/load world
     Everything!
 
 Spring semester:
