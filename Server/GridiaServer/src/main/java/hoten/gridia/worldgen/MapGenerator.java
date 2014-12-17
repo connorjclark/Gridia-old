@@ -6,6 +6,7 @@ import hoten.delaunay.examples.TestGraphImpl.ColorData;
 import hoten.delaunay.voronoi.VoronoiGraph;
 import hoten.gridia.content.ContentManager;
 import hoten.gridia.content.ItemInstance;
+import hoten.gridia.map.Coord;
 import hoten.gridia.map.Sector;
 import hoten.gridia.map.SectorLoader;
 import hoten.gridia.map.SectorSaver;
@@ -40,6 +41,7 @@ public class MapGenerator {
         mapMetaData.put("size", size);
         mapMetaData.put("depth", depth);
         mapMetaData.put("sectorSize", sectorSize);
+        mapMetaData.put("defaultPlayerSpawn", new Coord(size / 2, size / 2, 0));
 
         String metaDataJson = new Gson().toJson(mapMetaData);
         FileUtils.saveAs(new File(mapName + "/meta.json"), metaDataJson.getBytes());

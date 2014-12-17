@@ -28,8 +28,8 @@ public class GridiaServerDriver {
 
     public static void main(String[] args) throws IOException {
         if (args.length == 0) {
-            //args = "TestWorld DemoCity 30000 20 51235053089343 300 2 20".split("\\s+");
-            args = "TestWorld RoachCity".split("\\s+");
+            args = "TestWorld DemoCity 30000 20 51235053089343 300 2 20".split("\\s+");
+            //args = "TestWorld RoachCity".split("\\s+");
         }
 
         String worldName = args[0];
@@ -112,14 +112,6 @@ public class GridiaServerDriver {
         }, 0, arenaTickRate, TimeUnit.MILLISECONDS);
 
         System.out.println("Server started.");
-    }
-
-    // hard code spawn location
-    private static Coord playerSpawn = new Coord(498, 543, 0);
-
-    public static Coord getPlayerSpawn() {
-        Random random = new Random();
-        return playerSpawn.add(random.nextInt(3), random.nextInt(3), 0);
     }
 
     // hard code the roach quest for the presentation

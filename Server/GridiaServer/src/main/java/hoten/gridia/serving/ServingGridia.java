@@ -95,7 +95,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
             dropCreatureInventory(cre);
             addItemNear(cre.location, contentManager.createItemInstance(1022), 10);
             if (cre.belongsToPlayer) {
-                moveCreatureTo(cre, GridiaServerDriver.getPlayerSpawn(), true);
+                moveCreatureTo(cre, tileMap.getDefaultPlayerSpawn(), true);
             } else {
                 removeCreature(cre);
             }
@@ -197,7 +197,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         image.bareHead = (int) (Math.random() * 100);
         image.bareChest = (int) (Math.random() * 10);
         image.bareLegs = (int) (Math.random() * 10);
-        Creature cre = createCreature(image, name, GridiaServerDriver.getPlayerSpawn());
+        Creature cre = createCreature(image, name, tileMap.getDefaultPlayerSpawn());
         cre.belongsToPlayer = true;
         return cre;
     }

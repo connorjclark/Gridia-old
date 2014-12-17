@@ -6,6 +6,7 @@ import hoten.gridia.Creature;
 import hoten.gridia.content.ItemInstance;
 import hoten.serving.fileutils.FileUtils;
 import java.io.File;
+import java.util.Random;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -19,11 +20,16 @@ public class TileMap {
         int depth = metaData.get("depth").getAsInt();
         int sectorSize = metaData.get("sectorSize").getAsInt();
 
-        return new TileMap(mapName, size, depth, sectorSize, new JsonSectorLoader(), new SectorSaver());
+        TileMap tm = new TileMap(mapName, size, depth, sectorSize, new JsonSectorLoader(), new SectorSaver());
+
+        tm._defaultPlayerSpawn = new Gson().fromJson(metaData.get("defaultPlayerSpawn"), Coord.class);
+
+        return tm;
     }
 
     public final int size, depth, sectorSize, area, volume, sectorsAcross, sectorsFloor, sectorsTotal;
     public final String mapName;
+    private Coord _defaultPlayerSpawn = new Coord(498, 543, 0);
     private final Sector[][][] _sectors;
     private final SectorLoader _sectorLoader;
     private final SectorSaver _sectorSaver;
@@ -44,6 +50,11 @@ public class TileMap {
         _sectors = new Sector[sectorsAcross][sectorsAcross][depth];
         _sectorLoader = sectorLoader;
         _sectorSaver = sectorSaver;
+    }
+
+    public Coord getDefaultPlayerSpawn() {
+        Random random = new Random();
+        return _defaultPlayerSpawn.add(random.nextInt(3), random.nextInt(3), 0);
     }
 
     //temporary
