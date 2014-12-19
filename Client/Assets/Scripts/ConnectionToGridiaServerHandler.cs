@@ -55,8 +55,8 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
                 GridiaConstants.SECTOR_SIZE = (int)data["sectorSize"];
                 GridiaConstants.SERVER_TIME_OFFSET = getSystemTime() - (long)data["time"];
                 GridiaConstants.IS_ADMIN = (bool)data["isAdmin"];
-                GridiaDriver.connectedWaitHandle.Set(); // :(
-                GridiaDriver.gameInitWaitHandle.WaitOne();
+                ServerSelection.connectedWaitHandle.Set(); // :(
+                ServerSelection.gameInitWaitHandle.WaitOne();
                 break;
             case GridiaProtocols.Clientbound.AddCreature:
                 AddCreature(data);
@@ -425,6 +425,16 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
             .Protocol(Outbound(GridiaProtocols.Serverbound.AdminMakeFloor))
                 .Set("loc", new { x = loc.x, y = loc.y, z = loc.z })
                 .Set("floor", floorIndex)
+                .Build();
+        Send(message);
+    }
+
+    public void Register(String username, String passwordHash)
+    {
+        Message message = new JsonMessageBuilder()
+            .Protocol(Outbound(GridiaProtocols.Serverbound.Register))
+                .Set("username", username)
+                .Set("passwordHash", passwordHash)
                 .Build();
         Send(message);
     }

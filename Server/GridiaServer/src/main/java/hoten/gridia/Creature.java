@@ -5,7 +5,7 @@ import hoten.gridia.uniqueidentifiers.UniqueIdentifiers;
 
 public class Creature {
 
-    public static final UniqueIdentifiers uniqueIds = new UniqueIdentifiers();
+    private static final UniqueIdentifiers uniqueIds = new UniqueIdentifiers();
 
     public final int id = uniqueIds.next();
     public String name;
@@ -17,4 +17,8 @@ public class Creature {
     public boolean justTeleported; // :(
     public boolean isFriendly;
     public String friendlyMessage = "Hello!";
+
+    public void retire() {
+        uniqueIds.retire(id);
+    }
 }

@@ -4,11 +4,14 @@ import hoten.gridia.content.ContentManager;
 import hoten.gridia.map.Coord;
 import hoten.gridia.Creature;
 import hoten.gridia.Container;
+import hoten.gridia.Container.ContainerFactory;
+import hoten.gridia.Container.ContainerType;
 import hoten.gridia.CreatureImage;
 import hoten.gridia.CustomPlayerImage;
 import hoten.gridia.DefaultCreatureImage;
 import hoten.gridia.content.ItemInstance;
 import hoten.gridia.Player;
+import hoten.gridia.Player.PlayerFactory;
 import hoten.gridia.content.Monster;
 import hoten.gridia.map.Sector;
 import hoten.gridia.map.Tile;
@@ -20,10 +23,12 @@ import java.io.IOException;
 import java.net.Socket;
 import hoten.serving.message.Message;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler> {
 
@@ -35,12 +40,16 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     public final Map<Integer, Creature> creatures = new ConcurrentHashMap();
     private final Random random = new Random();
     public boolean devMode = false; // :(
+    public final PlayerFactory playerFactory;
+    public final ContainerFactory containerFactory;
 
     public ServingGridia(String worldName, String mapName, int port, File clientDataFolder, String localDataFolderName) throws IOException {
         super(port, new GridiaProtocols(), clientDataFolder, localDataFolderName);
         contentManager = new ContentManager(worldName);
         GridiaGson.initialize(contentManager);
         tileMap = TileMap.loadMap(worldName + "/" + mapName);
+        playerFactory = new PlayerFactory(worldName);
+        containerFactory = new ContainerFactory(worldName);
         instance = this;
     }
 
@@ -117,7 +126,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         Sector sector = tileMap.getSectorOf(cre.location);
         creatures.remove(cre.id);
         tileMap.getTile(cre.location).cre = null;
-        Creature.uniqueIds.retire(cre.id);
+        cre.retire();
         sendToClientsWithSectorLoaded(messageBuilder.removeCreature(cre), sector);
     }
 
@@ -171,7 +180,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         mold.drops.forEach(itemDrop -> {
             items.add(new ItemInstance(itemDrop));
         });
-        cre.inventory = new Container(items);
+        cre.inventory = containerFactory.create(ContainerType.Inventory, items);
         return cre;
     }
 

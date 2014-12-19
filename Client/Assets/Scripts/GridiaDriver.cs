@@ -1,17 +1,12 @@
 ﻿using Gridia;
-using System.IO;
-using System.Threading;
-using UnityEngine;
-using System.Linq;
-using Serving;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class GridiaDriver : MonoBehaviour
 {
     public static String VERSION = "v.1a"; // :(
-    public static AutoResetEvent connectedWaitHandle = new AutoResetEvent(false);
-    public static AutoResetEvent gameInitWaitHandle = new AutoResetEvent(false);
+    
     public GridiaGame _game; // :(
     public TextureManager _textureManager; // :(
     public TabbedUI tabbedGui; // :(
@@ -53,21 +48,11 @@ public class GridiaDriver : MonoBehaviour
         Locator.Provide(itemUsePickWindow);
         itemUsePickWindow.ScaleXY = guiScale;
 
-        _game = new GridiaGame();
-        Locator.Provide(_game);
-
-        MonoBehaviour.print("connecting");
-        ConnectionToGridiaServerHandler conn = new ConnectionToGridiaServerHandler(_game, SceneManager.GetArguement<String>("ip"), 1234);
-        Locator.Provide(conn);
-        conn.Start();
-
-        connectedWaitHandle.WaitOne();
+        _game = Locator.Get<GridiaGame>();
 
         Locator.Provide(new ContentManager("TestWorld")); // :(
         Locator.Provide(_textureManager = new TextureManager("TestWorld"));
         _game.Initialize(GridiaConstants.SIZE, GridiaConstants.DEPTH, GridiaConstants.SECTOR_SIZE); // :(
-
-        gameInitWaitHandle.Set();
 
         if (GridiaConstants.IS_ADMIN)
         {
@@ -76,6 +61,8 @@ public class GridiaDriver : MonoBehaviour
         }
 
         InitTabbedGui();
+
+        ServerSelection.gameInitWaitHandle.Set();
     }
 
     private RecipeBookWindow _recipeBook;

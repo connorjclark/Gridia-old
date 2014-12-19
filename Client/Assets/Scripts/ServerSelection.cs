@@ -6,18 +6,15 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using UnityEngine;
 
 namespace Gridia
 {
     public class ServerSelection : MonoBehaviour
     {
-        static byte[] GetBytes(string str)
-        {
-            byte[] bytes = new byte[str.Length * sizeof(char)];
-            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
-            return bytes;
-        }
+        public static AutoResetEvent connectedWaitHandle = new AutoResetEvent(false); // :(
+        public static AutoResetEvent gameInitWaitHandle = new AutoResetEvent(false);
 
         private RenderableContainer _displayList;
 
@@ -34,9 +31,8 @@ namespace Gridia
             connectButton.Y = 30;
             connectButton.OnClick = () =>
             {
-                var args = new Hashtable();
-                args["ip"] = ipInput.Text;
-                SceneManager.LoadScene("Main", args);
+                Connect(ipInput.Text, 1234);
+                SceneManager.LoadScene("ServerTitlescreen");
             };
         }
         
@@ -45,6 +41,17 @@ namespace Gridia
             _displayList.X = (Screen.width - _displayList.Width) / 2;
             _displayList.Y = (Screen.height - _displayList.Height) / 2;
             _displayList.Render();
+        }
+
+        private void Connect(String ip, int port)
+        {
+            Debug.Log("connecting");
+            var game = new GridiaGame();
+            Locator.Provide(game);
+            ConnectionToGridiaServerHandler conn = new ConnectionToGridiaServerHandler(game, ip, port);
+            Locator.Provide(conn);
+            conn.Start();
+            connectedWaitHandle.WaitOne();
         }
     }
 }

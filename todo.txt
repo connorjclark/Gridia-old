@@ -17,8 +17,6 @@ Refactoring
 Winter break
 
   Get game ready for demo launch
-    Client side hit prediction
-    Load existing players when log in
     Accounts
     Admin accounts
     Raft
@@ -31,6 +29,7 @@ Winter break
     Roach arena
       start when standing in certain spots, players get teleported to arena
     Bar
+    Load existing players when log in
   Set up forums, chatroom
   Press kit
   Greenlight
@@ -48,6 +47,8 @@ Spring semester:
 Quest scripting
 
 Magic
+
+Client side hit prediction?
 
 Spell discovery:
   Runes placed in minecraft-esque fashion

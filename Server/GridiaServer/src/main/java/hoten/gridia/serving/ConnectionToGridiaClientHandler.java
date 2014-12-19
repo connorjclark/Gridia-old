@@ -128,6 +128,9 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             case AdminMakeFloor:
                 ProcessAdminMakeFloor(data);
                 break;
+            case Register:
+                ProcessRegister(data);
+                break;
         }
     }
 
@@ -556,5 +559,11 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         Coord loc = _gson.fromJson(data.get("loc"), Coord.class);
         int floor = data.get("floor").getAsInt();
         _server.changeFloor(loc, floor);
+    }
+
+    private void ProcessRegister(JsonObject data) throws IOException {
+        String username = data.get("username").getAsString();
+        String passwordHash = data.get("password").getAsString();
+
     }
 }

@@ -7,29 +7,54 @@ import hoten.serving.fileutils.FileUtils;
 import hoten.gridia.uniqueidentifiers.FileResourceUniqueIdentifiers;
 import hoten.gridia.uniqueidentifiers.UniqueIdentifiers;
 import java.io.File;
+import java.nio.file.Files;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Container {
+
+    public static class ContainerFactory {
+
+        private final UniqueIdentifiers _uniqueIds;
+        private final String dir;
+
+        public ContainerFactory(String worldName) {
+            dir = worldName + "/containers/";
+            _uniqueIds = new FileResourceUniqueIdentifiers(dir);
+        }
+
+        public Container load(int id) {
+            String json = FileUtils.readTextFile(new File(dir + id + ".json"));
+            return GridiaGson.get().fromJson(json, Container.class);
+        }
+
+        public Container create(ContainerType type, int size) {
+            List<ItemInstance> items = IntStream.range(0, size)
+                    .boxed()
+                    .map(i -> ItemInstance.NONE)
+                    .collect(Collectors.toList());
+            return create(type, items);
+        }
+
+        public Container create(ContainerType type, List<ItemInstance> items) {
+            return new Container(_uniqueIds.next(), type, items);
+        }
+    }
 
     public enum ContainerType {
 
         Inventory, Equipment, Other
     }
 
-    public static final UniqueIdentifiers uniqueIds = new FileResourceUniqueIdentifiers("TestWorld/containers/");
-
     private final List<ItemInstance> _items;
     public final int id;
     public final ContainerType type;
 
-    public Container(List<ItemInstance> items, ContainerType type) {
+    public Container(int id, ContainerType type, List<ItemInstance> items) {
+        this.id = id;
         _items = items;
-        id = uniqueIds.next();
         this.type = type;
-    }
-
-    public Container(List<ItemInstance> items) {
-        this(items, ContainerType.Inventory);
     }
 
     public boolean containsItemId(int id) {
