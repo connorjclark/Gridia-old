@@ -1,12 +1,58 @@
+def run_command(command)
+  fixed_command = command
+    .gsub(%r"([^ /])/", '\1\\')
+    .gsub('//', '/')
+  `#{fixed_command}`
+end
+
+def for_each_platform(&proc)
+  puts "#{$build_dir}/**"
+  Dir.glob("#{$build_dir}/**").select { |f|
+    File.directory? f and not f.split('/').last.include? 'server-standalone'
+  }.each { |f|
+    proc.call(f)
+  }
+end
+
 print "Build name?\n> "
 build_name = $stdin.gets.chomp
 
-base_dir = "#{Dir.pwd}/builds/#{build_name}"
-win32 = "-buildWindowsPlayer #{base_dir}/win32/client.exe"
-win64 = "-buildWindows64Player #{base_dir}/win64/client.exe"
-osx = "-buildOSXPlayer #{base_dir}/osx/client.app"
-linux32 = "-buildLinux32Player #{base_dir}/linux32/client.app"
-linux64 = "-buildLinux64Player #{base_dir}/linux64/client.app"
+base_dir = Dir.pwd
+$build_dir = build_dir = "#{base_dir}/builds/#{build_name}"
+server_dir = "#{build_dir}/gridia-#{build_name}-server-standalone"
+win32 = "-buildWindowsPlayer #{build_dir}/gridia-#{build_name}-win32/client.exe"
+win64 = "-buildWindows64Player #{build_dir}/gridia-#{build_name}-win64/client.exe"
+osx = "-buildOSXPlayer #{build_dir}/gridia-#{build_name}-osx/client.app"
+linux32 = "-buildLinux32Player #{build_dir}/gridia-#{build_name}-linux32/client.app"
+linux64 = "-buildLinux64Player #{build_dir}/gridia-#{build_name}-linux64/client.app"
 
+puts 'building clients for each platform'
 unity = '"%PROGRAMFILES%/Unity/Editor/Unity.exe"'
-`#{unity} -batchmode -quit -projectPath E:/Dev/Gridia/Client #{win32} #{win64} #{osx} #{linux32} #{linux64}`
+`#{unity} -batchmode -quit -projectPath #{base_dir}/Client #{win32} #{win64} #{osx} #{linux32} #{linux64}`
+
+puts 'running maven'
+`cd Server/GridiaServer/ & mvn clean compile assembly:single`
+
+puts 'making server-standalone'
+run_command "echo f | xcopy Server/GridiaServer/target/server.jar #{server_dir}/server.jar"
+run_command "echo f | xcopy Server/GridiaServer/splash.txt #{server_dir}/splash.txt"
+run_command "xcopy Server/GridiaServer/worlds/TestWorld/clientdata #{server_dir}/worlds/TestWorld/clientdata //E //i"
+
+puts 'copying server to all platforms'
+for_each_platform do |f|
+  run_command "xcopy #{server_dir} #{f}/server //E //i"
+end
+
+puts 'zipping standalone server'
+run_command "7z a #{server_dir}.zip #{server_dir}"
+
+puts 'zipping all platforms'
+for_each_platform do |f|
+  run_command "7z a #{f}.zip #{f}"
+end
+
+puts 'cleaning up'
+run_command "rd #{server_dir} //Q //S"
+for_each_platform do |f|
+  run_command "rd #{f} //Q //S"
+end
