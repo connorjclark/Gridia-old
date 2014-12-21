@@ -294,14 +294,6 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             }
         }
 
-        if (msg.startsWith("!name ")) {
-            String[] split = msg.split("\\s+", 2);
-            if (split.length == 2) {
-                player.creature.name = split[1];
-                _server.sendToAll(_messageBuilder.renameCreature(player.creature));
-            }
-        }
-
         if (msg.equals("!save") && player.accountDetails.isAdmin) {
             _server.sendToAll(_messageBuilder.chat("Saving world...", player.creature.location));
             _server.tileMap.save();
