@@ -126,6 +126,7 @@ public class Player {
 
         public String username, passwordHash;
         public int inventoryId, equipmentId;
+        public boolean isAdmin;
 
         private AccountDetails() {
         }

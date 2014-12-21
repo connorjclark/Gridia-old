@@ -172,7 +172,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         }
 
         ItemInstance item = getItemFrom(source, sourceIndex);
-        if (item == ItemInstance.NONE || (!_server.devMode && !item.data.moveable)) {
+        if (item == ItemInstance.NONE || (!player.accountDetails.isAdmin && !item.data.moveable)) {
             return;
         }
         if (quantityToMove == -1) {
@@ -205,17 +205,6 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
     private void ProcessChat(JsonObject data) throws IOException {
         String msg = data.get("msg").getAsString();
 
-        if ("!clear".equals(msg)) {
-            int size = _server.tileMap.size;
-            for (int i = 0; i < size; i++) {
-                for (int j = 0; j < size; j++) {
-                    for (int k = 0; k < _server.tileMap.depth; k++) {
-                        _server.tileMap.setItem(ItemInstance.NONE, i, j, k);
-                    }
-                }
-            }
-        }
-
         if (msg.startsWith("!image ")) {
             try {
                 String[] split = msg.split(" ");
@@ -232,7 +221,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             }
         }
 
-        if (msg.startsWith("!friendly ")) {
+        if (msg.startsWith("!friendly ") && player.accountDetails.isAdmin) {
             try {
                 String[] split = msg.split(" ", 3);
                 if (split.length == 3) {
@@ -249,7 +238,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             }
         }
 
-        if (msg.startsWith("!monster ")) {
+        if (msg.startsWith("!monster ") && player.accountDetails.isAdmin) {
             try {
                 String[] split = msg.split(" ", 3);
                 if (split.length == 2) {
@@ -270,11 +259,11 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             }
         }
 
-        if (msg.equals("!del")) {
+        if (msg.equals("!del") && player.accountDetails.isAdmin) {
             _server.changeItem(player.creature.location.add(0, 1, 0), ItemInstance.NONE);
         }
 
-        if (msg.equals("!clr")) {
+        if (msg.equals("!clr") && player.accountDetails.isAdmin) {
             for (int i = 0; i < 20; i++) {
                 for (int j = 0; j < 20; j++) {
                     _server.changeItem(player.creature.location.add(i, j, 0), ItemInstance.NONE);
@@ -305,10 +294,6 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             }
         }
 
-        if (msg.equals("!dev")) {
-            _server.devMode = !_server.devMode;
-        }
-
         if (msg.startsWith("!name ")) {
             String[] split = msg.split("\\s+", 2);
             if (split.length == 2) {
@@ -317,7 +302,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             }
         }
 
-        if (msg.equals("!save")) {
+        if (msg.equals("!save") && player.accountDetails.isAdmin) {
             _server.sendToAll(_messageBuilder.chat("Saving world...", player.creature.location));
             _server.tileMap.save();
             _server.sendToAll(_messageBuilder.chat("Saved!", player.creature.location));
@@ -550,7 +535,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             Message animMessage = _messageBuilder.animation(3, player.creature.location);
             _server.sendToClientsWithAreaLoaded(animMessage, player.creature.location);
             send(animMessage);
-            
+
             _server.updateCreatureImage(player.creature);
         } catch (Player.PlayerFactory.BadLoginException ex) {
             send(_messageBuilder.genericEventListener(ex.getMessage()));

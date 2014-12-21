@@ -17,8 +17,6 @@ Refactoring
 Winter break
 
   Get game ready for demo launch
-    Accounts
-    Admin accounts
     Raft
     Launch server from client
     Crossplatform

@@ -23,12 +23,10 @@ import java.io.IOException;
 import java.net.Socket;
 import hoten.serving.message.Message;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler> {
 
@@ -39,7 +37,6 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     public final ContentManager contentManager;
     public final Map<Integer, Creature> creatures = new ConcurrentHashMap();
     private final Random random = new Random();
-    public boolean devMode = false; // :(
     public final PlayerFactory playerFactory;
     public final ContainerFactory containerFactory;
 
