@@ -16,15 +16,15 @@ public class Container {
     public static class ContainerFactory {
 
         private final UniqueIdentifiers _uniqueIds;
-        private final String dir;
+        private final File dir;
 
-        public ContainerFactory(String worldName) {
-            dir = worldName + "/containers/";
+        public ContainerFactory(File world) {
+            dir = new File(world, "containers/");
             _uniqueIds = new FileResourceUniqueIdentifiers(dir);
         }
 
         public Container load(int id) {
-            String json = FileUtils.readTextFile(new File(dir + id + ".json"));
+            String json = FileUtils.readTextFile(new File(dir, id + ".json"));
             return GridiaGson.get().fromJson(json, Container.class);
         }
 
@@ -41,9 +41,9 @@ public class Container {
             save(container);
             return container;
         }
-        
+
         public void save(Container container) {
-            FileUtils.saveAs(new File(dir + container.id + ".json"), GridiaGson.get().toJson(container).getBytes());
+            FileUtils.saveAs(new File(dir, container.id + ".json"), GridiaGson.get().toJson(container).getBytes());
         }
     }
 

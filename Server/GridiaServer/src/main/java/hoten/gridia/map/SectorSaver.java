@@ -6,9 +6,9 @@ import java.io.File;
 
 public class SectorSaver {
 
-    public void save(String mapName, Sector sector) {
-        String path = String.format(mapName + "/%d,%d,%d.json", sector.sx, sector.sy, sector.sz);
+    public void save(File map, Sector sector) {
         String json = GridiaGson.get().toJson(sector._tiles);
-        FileUtils.saveAs(new File(path), json.getBytes());
+        File file = new File(map, String.format("/%d,%d,%d.json", sector.sx, sector.sy, sector.sz));
+        FileUtils.saveAs(file, json.getBytes());
     }
 }

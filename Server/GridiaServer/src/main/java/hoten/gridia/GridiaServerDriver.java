@@ -9,12 +9,13 @@ import hoten.gridia.map.TileMap;
 import hoten.gridia.serializers.GridiaGson;
 import hoten.gridia.serving.ServingGridia;
 import hoten.gridia.worldgen.MapGenerator;
+import hoten.serving.fileutils.FileUtils;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
@@ -27,33 +28,73 @@ public class GridiaServerDriver {
     private static ServingGridia server;
 
     public static void main(String[] args) throws IOException {
-        if (args.length == 0) {
-            //args = "TestWorld DemoCity 30000 20 51235053089343 300 2 20".split("\\s+");
-            args = "TestWorld DemoCity".split("\\s+");
+        File splash = new File("splash.txt");
+        if (splash.exists()) {
+            System.out.println(FileUtils.readTextFile(splash));
         }
+        runServerMenu();
+    }
 
-        String worldName = args[0];
-        String mapName = args[1];
+    private static void runServerMenu() throws IOException {
+        Scanner scanner = new Scanner(System.in);
 
-        if (args.length != 2) {
-            int numPoints = Integer.parseInt(args[2]);
-            int numLloydRelaxations = Integer.parseInt(args[3]);
-            long seed = Long.parseLong(args[4]);
-
-            int mapSize = Integer.parseInt(args[5]);
-            int mapDepth = Integer.parseInt(args[6]);
-            int mapSectorSize = Integer.parseInt(args[7]);
-
-            ContentManager contentManager = new ContentManager(worldName);
-            GridiaGson.initialize(contentManager);
-            MapGenerator mapGenerator = new MapGenerator(contentManager, numPoints, numLloydRelaxations, seed);
-            TileMap tileMap = mapGenerator.generate(worldName + "/" + mapName, mapSize, mapDepth, mapSectorSize);
-            tileMap.save();
+        System.out.println("Load which world?\n");
+        File[] worlds = new File("worlds/").listFiles(file -> file.isDirectory());
+        for (int i = 0; i < worlds.length; i++) {
+            System.out.println(i + ") " + worlds[i].getName());
         }
+        int worldSelection = promptInt(scanner, "");
+        File world = worlds[worldSelection];
 
-        File clientDataDir = Paths.get(worldName, "clientdata").toFile();
-        String localDataDirName = worldName;
-        server = new ServingGridia(worldName, mapName, port, clientDataDir, localDataDirName);
+        System.out.println("Load which map, or generate a new one?\n");
+        File[] maps = new File(world, "maps").listFiles(file -> file.isDirectory());
+        for (int i = 0; i < maps.length; i++) {
+            System.out.println(i + 1 + ") " + maps[i].getName());
+        }
+        System.out.println("0) Generate Map");
+
+        int choice = promptInt(scanner, "");
+        switch (choice) {
+            case 0:
+                String mapName = promptString(scanner, "Map name?");
+                File map = new File(world, "maps/" + mapName);
+
+                int numPoints = promptInt(scanner, "How many voronoi points? (recommended: 30000)");
+                int numLloydRelaxations = promptInt(scanner, "How many lloyd relaxations? (recommended: at least 1)");
+                long seed = promptString(scanner, "Seed? (can be anything)").hashCode();
+
+                int mapSectorSize = promptInt(scanner, "Sector size? (recommended: 20)");
+                int mapSize = promptInt(scanner, "Map size? (MUST be a multiple of sector size!)");
+                int mapDepth = promptInt(scanner, "Depth? (at least 1, recommended: 2)");
+
+                ContentManager contentManager = new ContentManager(world);
+                GridiaGson.initialize(contentManager);
+                MapGenerator mapGenerator = new MapGenerator(contentManager, numPoints, numLloydRelaxations, seed);
+                TileMap tileMap = mapGenerator.generate(map, mapSize, mapDepth, mapSectorSize);
+                tileMap.save();
+                System.out.println("Map created!");
+                main(null);
+                break;
+            default:
+                loadWorld(world, maps[choice - 1].getName());
+                break;
+        }
+    }
+
+    private static int promptInt(Scanner scanner, String prompt) {
+        System.out.println(prompt);
+        return Integer.parseInt(scanner.nextLine());
+    }
+
+    private static String promptString(Scanner scanner, String prompt) {
+        System.out.println(prompt);
+        return scanner.nextLine();
+    }
+
+    private static void loadWorld(File world, String mapName) throws IOException {
+        File clientDataDir = new File(world, "clientdata");
+        String localDataDirName = world.getName();
+        server = new ServingGridia(world, mapName, port, clientDataDir, localDataDirName);
         server.tileMap.loadAll(); // :(
         server.startServer();
 
@@ -93,23 +134,25 @@ public class GridiaServerDriver {
         }, 10, 10, TimeUnit.SECONDS);
 
         // hard code the roach quest for the presentation
-        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
-            if (server.anyPlayersOnline()) {
-                List<Creature> playersInArena = getPlayersInArena();
+        if (mapName.equals("DemoCity")) {
+            Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
+                if (server.anyPlayersOnline()) {
+                    List<Creature> playersInArena = getPlayersInArena();
 
-                if (arenaIsGoing) {
-                    if (playersInArena.isEmpty()) {
-                        clearArena();
+                    if (arenaIsGoing) {
+                        if (playersInArena.isEmpty()) {
+                            clearArena();
+                        } else {
+                            stepArena();
+                        }
                     } else {
-                        stepArena();
-                    }
-                } else {
-                    if (playersInArena.size() >= 1) {
-                        startArena();
+                        if (playersInArena.size() >= 1) {
+                            startArena();
+                        }
                     }
                 }
-            }
-        }, 0, arenaTickRate, TimeUnit.MILLISECONDS);
+            }, 0, arenaTickRate, TimeUnit.MILLISECONDS);
+        }
 
         System.out.println("Server started.");
     }

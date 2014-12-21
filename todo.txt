@@ -34,7 +34,6 @@ Winter break
     State machine
     Serving Java
     Test coverage
-    Command line interface to create/load world
     Item.Item -> Item.Data
     Everything!
 

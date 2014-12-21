@@ -10,14 +10,14 @@ import org.apache.commons.io.FilenameUtils;
 
 public class FileResourceUniqueIdentifiers extends UniqueIdentifiers {
 
-    public FileResourceUniqueIdentifiers(String dir) {
+    public FileResourceUniqueIdentifiers(File dir) {
         super(100);
-        new File(dir).mkdirs();
+        dir.mkdirs(); // :(
         bufferIdsThatArentClaimed(dir);
     }
 
-    private void bufferIdsThatArentClaimed(String dir) {
-        List<File> files = FileUtils.getAllFilesInDirectory(new File(dir));
+    private void bufferIdsThatArentClaimed(File dir) {
+        List<File> files = FileUtils.getAllFilesInDirectory(dir);
         Set<Integer> idsInUse = files.stream()
                 .map(file -> FilenameUtils.removeExtension(file.getName()))
                 .filter(name -> name.matches("\\d+"))

@@ -34,22 +34,22 @@ public class MapGenerator {
         _seed = seed;
     }
 
-    public TileMap generate(String mapName, int size, int depth, int sectorSize) {
+    public TileMap generate(File map, int size, int depth, int sectorSize) {
         HashMap<String, Object> mapMetaData = new HashMap<>();
 
-        mapMetaData.put("name", mapName);
+        mapMetaData.put("name", map.getName());
         mapMetaData.put("size", size);
         mapMetaData.put("depth", depth);
         mapMetaData.put("sectorSize", sectorSize);
         mapMetaData.put("defaultPlayerSpawn", new Coord(size / 2, size / 2, 0));
 
         String metaDataJson = new Gson().toJson(mapMetaData);
-        FileUtils.saveAs(new File(mapName + "/meta.json"), metaDataJson.getBytes());
+        FileUtils.saveAs(new File(map, "meta.json"), metaDataJson.getBytes());
 
         VoronoiGraph graph = TestDriver.createVoronoiGraph(size, _numPoints, _numLloydRelaxations, _seed);
         BufferedImage mapImage = graph.createMap();
 
-        TileMap world = new TileMap(mapName, size, depth, sectorSize, createFakeLoader(), new SectorSaver());
+        TileMap world = new TileMap(map, size, depth, sectorSize, createFakeLoader(), new SectorSaver());
 
         HashMap<Integer, ColorData> colorBiomeMap = new HashMap<>();
 
@@ -143,7 +143,7 @@ public class MapGenerator {
     }
 
     private SectorLoader createFakeLoader() {
-        return (String mapName, int sectorSize, int sx, int sy, int sz) -> {
+        return (File map, int sectorSize, int sx, int sy, int sz) -> {
             Tile[][] tiles = new Tile[sectorSize][sectorSize];
             for (int x = 0; x < sectorSize; x++) {
                 tiles[x] = new Tile[sectorSize];

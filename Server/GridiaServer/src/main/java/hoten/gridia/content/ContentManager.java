@@ -19,10 +19,10 @@ public class ContentManager {
     private final List<Item> _items;
     private final Map<Item, List<ItemUse>> _itemUses;
     private final List<Monster> _monsters;
-    private final String _path;
+    private final File _content;
 
-    public ContentManager(String worldName) {
-        _path = String.format("%s/clientdata/content/", worldName);
+    public ContentManager(File world) {
+        _content = new File(world, "clientdata/content");
         _items = loadItems();
         _monsters = loadMonsters();
         ItemInstance.NONE.data = _items.get(0);
@@ -105,21 +105,21 @@ public class ContentManager {
     }
 
     private List<Item> loadItems() {
-        String json = FileUtils.readTextFile(new File(_path + "items.json"));
+        String json = FileUtils.readTextFile(new File(_content, "items.json"));
         Type type = new TypeToken<List<Item>>() {
         }.getType();
         return load(json, type);
     }
 
     private List<Monster> loadMonsters() {
-        String json = FileUtils.readTextFile(new File(_path + "monsters.json"));
+        String json = FileUtils.readTextFile(new File(_content, "monsters.json"));
         Type type = new TypeToken<List<Monster>>() {
         }.getType();
         return load(json, type);
     }
 
     private Map<Item, List<ItemUse>> loadItemUses() {
-        String json = FileUtils.readTextFile(new File(_path + "itemuses.json"));
+        String json = FileUtils.readTextFile(new File(_content, "itemuses.json"));
         Type type = new TypeToken<List<ItemUse>>() {
         }.getType();
         List<ItemUse> usesList = load(json, type);

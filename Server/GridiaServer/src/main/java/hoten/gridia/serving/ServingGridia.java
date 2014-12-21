@@ -40,13 +40,13 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     public final PlayerFactory playerFactory;
     public final ContainerFactory containerFactory;
 
-    public ServingGridia(String worldName, String mapName, int port, File clientDataFolder, String localDataFolderName) throws IOException {
+    public ServingGridia(File world, String mapName, int port, File clientDataFolder, String localDataFolderName) throws IOException {
         super(port, new GridiaProtocols(), clientDataFolder, localDataFolderName);
-        contentManager = new ContentManager(worldName);
+        contentManager = new ContentManager(world);
         GridiaGson.initialize(contentManager);
-        tileMap = TileMap.loadMap(worldName + "/" + mapName);
-        playerFactory = new PlayerFactory(worldName);
-        containerFactory = new ContainerFactory(worldName);
+        tileMap = TileMap.loadMap(world, mapName);
+        playerFactory = new PlayerFactory(world);
+        containerFactory = new ContainerFactory(world);
         instance = this;
     }
 

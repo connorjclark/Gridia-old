@@ -30,14 +30,14 @@ public class Player {
             }
         }
 
-        private final String dir;
+        private final File dir;
 
-        public PlayerFactory(String worldName) {
-            dir = worldName + "/Players/";
+        public PlayerFactory(File world) {
+            dir = new File(world, "Players/");
         }
 
         public Player load(ServingGridia server, String username, String passwordHash) throws BadLoginException {
-            File dataFile = new File(dir + username + ".json");
+            File dataFile = new File(dir, username + ".json");
             if (!dataFile.exists()) {
                 throw new BadLoginException("Bad user/password");
             }
@@ -59,7 +59,8 @@ public class Player {
             if (username.length() < 3) {
                 throw new BadRegistrationException("Username must be >2 characters");
             }
-            if (new File(dir + username + ".json").exists()) {
+
+            if (new File(dir, username + ".json").exists()) {
                 throw new BadRegistrationException("Username already exists");
             }
 

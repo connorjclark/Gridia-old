@@ -12,15 +12,16 @@ import java.util.function.Function;
 
 public class TileMap {
 
-    public static TileMap loadMap(String mapName) {
-        String json = FileUtils.readTextFile(new File(mapName + "/meta.json"));
+    public static TileMap loadMap(File world, String mapName) {
+        File map = new File(world, "maps/" + mapName);
+        String json = FileUtils.readTextFile(new File(map, "meta.json"));
         JsonObject metaData = new Gson().fromJson(json, JsonObject.class);
 
         int size = metaData.get("size").getAsInt();
         int depth = metaData.get("depth").getAsInt();
         int sectorSize = metaData.get("sectorSize").getAsInt();
 
-        TileMap tm = new TileMap(mapName, size, depth, sectorSize, new JsonSectorLoader(), new SectorSaver());
+        TileMap tm = new TileMap(map, size, depth, sectorSize, new JsonSectorLoader(), new SectorSaver());
 
         tm._defaultPlayerSpawn = new Gson().fromJson(metaData.get("defaultPlayerSpawn"), Coord.class);
 
@@ -28,17 +29,17 @@ public class TileMap {
     }
 
     public final int size, depth, sectorSize, area, volume, sectorsAcross, sectorsFloor, sectorsTotal;
-    public final String mapName;
+    public final File map;
     private Coord _defaultPlayerSpawn = new Coord(498, 543, 0);
     private final Sector[][][] _sectors;
     private final SectorLoader _sectorLoader;
     private final SectorSaver _sectorSaver;
 
-    public TileMap(String mapName, int size, int depth, int sectorSize, SectorLoader sectorLoader, SectorSaver sectorSaver) {
+    public TileMap(File map, int size, int depth, int sectorSize, SectorLoader sectorLoader, SectorSaver sectorSaver) {
         if (size % sectorSize != 0) {
             throw new IllegalArgumentException("sectorSize must be a factor of size");
         }
-        this.mapName = mapName;
+        this.map = map;
         this.size = size;
         this.depth = depth;
         this.sectorSize = sectorSize;
@@ -64,7 +65,7 @@ public class TileMap {
                 for (int z = 0; z < depth; z++) {
                     Sector sector = _sectors[x][y][z];
                     if (sector != null) {
-                        _sectors[x][y][z] = _sectorLoader.load(mapName, sectorSize, x, y, z);
+                        _sectors[x][y][z] = _sectorLoader.load(map, sectorSize, x, y, z);
                     }
                 }
             }
@@ -95,7 +96,7 @@ public class TileMap {
                 for (int z = 0; z < depth; z++) {
                     Sector sector = _sectors[x][y][z];
                     if (sector != null) {
-                        _sectorSaver.save(mapName, sector);
+                        _sectorSaver.save(map, sector);
                     }
                 }
             }
@@ -111,7 +112,7 @@ public class TileMap {
     public Sector getSector(int sx, int sy, int sz) {
         Sector sector = _sectors[sx][sy][sz];
         if (sector == null) {
-            _sectors[sx][sy][sz] = sector = _sectorLoader.load(mapName, sectorSize, sx, sy, sz);
+            _sectors[sx][sy][sz] = sector = _sectorLoader.load(map, sectorSize, sx, sy, sz);
         }
         return sector;
     }

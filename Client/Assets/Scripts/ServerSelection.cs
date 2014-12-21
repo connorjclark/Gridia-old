@@ -29,11 +29,38 @@ namespace Gridia
             var connectButton = new Button(Vector2.zero, "Connect");
             _displayList.AddChild(connectButton);
             connectButton.Y = 30;
+
+            var localServerButton = new Button(Vector2.zero, "Host local server");
+            _displayList.AddChild(localServerButton);
+            localServerButton.Y = 60;
+
             connectButton.OnClick = () =>
             {
                 Connect(ipInput.Text, 1234);
                 SceneManager.LoadScene("ServerTitlescreen");
             };
+
+            localServerButton.OnClick = HostLocal;
+        }
+
+        public void HostLocal()
+        {
+            var workingDirectory = "../Server/GridiaServer/target/";
+
+            //Create process
+            System.Diagnostics.Process pProcess = new System.Diagnostics.Process();
+
+            //strCommand is path and file name of command to run
+            pProcess.StartInfo.FileName = "java";
+
+            //strCommandParameters are parameters to pass to program
+            pProcess.StartInfo.Arguments = "-jar server.jar";
+
+            //Optional
+            pProcess.StartInfo.WorkingDirectory = workingDirectory;
+
+            //Start the process
+            pProcess.Start();
         }
         
         public void OnGUI()
