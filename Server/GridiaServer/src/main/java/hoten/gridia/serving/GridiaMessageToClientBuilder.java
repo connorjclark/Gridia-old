@@ -96,10 +96,11 @@ public class GridiaMessageToClientBuilder {
         return builder.build();
     }
 
-    public Message setFocus(int id) {
+    public Message setFocus(int id, boolean isAdmin) {
         return new JsonMessageBuilder()
                 .protocol(outbound(SetFocus))
                 .set("id", id)
+                .set("isAdmin", isAdmin)
                 .build();
     }
 
@@ -110,7 +111,6 @@ public class GridiaMessageToClientBuilder {
                 .set("size", size)
                 .set("depth", depth)
                 .set("sectorSize", sectorSize)
-                .set("isAdmin", true)
                 .build();
     }
 

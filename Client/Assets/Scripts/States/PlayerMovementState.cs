@@ -34,6 +34,11 @@ namespace Gridia
                 float movementModifier = Locator.Get<ContentManager>().GetFloor(floor).MovementModifier;
                 var timeForMovement = baseTime / movementModifier;
 
+                if (floor == 1 && Locator.Get<InventoryWindow>().HasRaft())
+                {
+                    timeForMovement = baseTime;
+                }
+
                 Locator.Get<ConnectionToGridiaServerHandler>().PlayerMove(_delta, (int)timeForMovement);
 
                 _cooldownUntil = now + (int)timeForMovement;

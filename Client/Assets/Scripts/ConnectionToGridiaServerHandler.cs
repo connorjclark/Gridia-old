@@ -57,7 +57,6 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
                 GridiaConstants.DEPTH = (int)data["depth"];
                 GridiaConstants.SECTOR_SIZE = (int)data["sectorSize"];
                 GridiaConstants.SERVER_TIME_OFFSET = getSystemTime() - (long)data["time"];
-                GridiaConstants.IS_ADMIN = (bool)data["isAdmin"];
                 ServerSelection.connectedWaitHandle.Set(); // :(
                 break;
             case GridiaProtocols.Clientbound.AddCreature:
@@ -172,6 +171,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
 
     private void SetFocus(JObject data)
     {
+        GridiaConstants.IS_ADMIN = (bool)data["isAdmin"];
         ServerSelection.gameInitWaitHandle.WaitOne();
         var id = (int)data["id"];
         _game.view.FocusId = id;

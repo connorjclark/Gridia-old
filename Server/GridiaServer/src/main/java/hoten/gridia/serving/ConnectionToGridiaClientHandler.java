@@ -520,7 +520,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         try {
             player = _server.playerFactory.load(_server, username, passwordHash);
             send(_messageBuilder.genericEventListener("success"));
-            send(_messageBuilder.setFocus(player.creature.id));
+            send(_messageBuilder.setFocus(player.creature.id, player.accountDetails.isAdmin));
             send(_messageBuilder.container(player.creature.inventory));
             send(_messageBuilder.container(player.equipment));
 

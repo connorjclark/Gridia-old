@@ -86,3 +86,6 @@ Client/build
 tmp_voronoi_data
 RoachCity/
 DemoCity/
+containers/
+Players/
+Server/GridiaServer/TestWorld/Players/aaa.json

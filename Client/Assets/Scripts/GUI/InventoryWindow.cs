@@ -104,6 +104,11 @@ namespace Gridia
             EquipItemAt(SlotSelected);
         }
 
+        public bool HasRaft()
+        {
+            return _itemRenderables.Any(itemR => itemR.Item.Item.Class == Item.ItemClass.Raft);
+        }
+
         private void EquipItemAt(int slotIndex)
         {
             Locator.Get<ConnectionToGridiaServerHandler>().EquipItem(slotIndex);
