@@ -17,7 +17,6 @@ Refactoring
 Winter break
 
   Get game ready for demo launch
-    lower music volume
     Crossplatform
       Linux
       Mac
