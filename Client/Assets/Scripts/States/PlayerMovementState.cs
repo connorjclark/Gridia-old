@@ -33,17 +33,19 @@ namespace Gridia
                 var floor = Locator.Get<GridiaGame>().tileMap.GetTile((int)destination.x, (int)destination.y, (int)destination.z).Floor;
                 float movementModifier = Locator.Get<ContentManager>().GetFloor(floor).MovementModifier;
                 var timeForMovement = baseTime / movementModifier;
+                var onRaft = false;
 
                 if (floor == 1 && Locator.Get<InventoryWindow>().HasRaft())
                 {
                     timeForMovement = baseTime;
+                    onRaft = true;
                 }
 
-                Locator.Get<ConnectionToGridiaServerHandler>().PlayerMove(_delta, (int)timeForMovement);
+                Locator.Get<ConnectionToGridiaServerHandler>().PlayerMove(_delta, onRaft, (int)timeForMovement);
 
                 _cooldownUntil = now + (int)timeForMovement;
-                Player.AddPositionSnapshot(Player.Position, now - Creature.RENDER_DELAY);
-                Player.AddPositionSnapshot(destination, _cooldownUntil - Creature.RENDER_DELAY);
+                Player.AddPositionSnapshot(Player.Position, onRaft, now - Creature.RENDER_DELAY);
+                Player.AddPositionSnapshot(destination, onRaft, _cooldownUntil - Creature.RENDER_DELAY);
             }
             else if (getSystemTime() > _cooldownUntil)
             {

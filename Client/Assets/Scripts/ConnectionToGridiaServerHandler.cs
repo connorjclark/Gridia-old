@@ -135,10 +135,11 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         int z = (int)data["loc"]["z"];
         long time = (long)data["time"];
         bool isTeleport = (bool)data["isTeleport"];
+        bool onRaft = (bool)data["onRaft"];
 
         if (id != _game.view.FocusId || isTeleport)
         {
-            _game.tileMap.MoveCreature(id, x, y, z, time);
+            _game.tileMap.MoveCreature(id, x, y, z, onRaft, time);
             if (isTeleport)
             {
                 var cre = _game.tileMap.GetCreature(id);
@@ -302,11 +303,12 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
 
     //outbound
 
-    public void PlayerMove(Vector3 delta, int timeForMovement)
+    public void PlayerMove(Vector3 delta, bool onRaft, int timeForMovement)
     {
         Message message = new JsonMessageBuilder()
             .Protocol(Outbound(GridiaProtocols.Serverbound.PlayerMove))
             .Set("delta", new { x = (int)delta.x, y = (int)delta.y, z = (int)delta.z }) // :(
+            .Set("onRaft", onRaft)
             .Set("timeForMovement", timeForMovement)
             .Build();
         Send(message);

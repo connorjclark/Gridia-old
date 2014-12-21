@@ -7,12 +7,14 @@ namespace Gridia
     public class Creature {
         class PositionSnapshot 
         {
-            public PositionSnapshot(Vector3 position, long time)
+            public PositionSnapshot(Vector3 position, bool onRaft, long time)
             {
                 Position = position;
+                OnRaft = onRaft;
                 Timestamp = time;
             }
             public Vector3 Position { get; set; }
+            public bool OnRaft { get; set; }
             public long Timestamp { get; set; }
 
             public override string ToString() {
@@ -21,10 +23,6 @@ namespace Gridia
         }
 
         public Vector3 Position {
-            set 
-            {
-                AddPositionSnapshot(value, getSystemTime() - RENDER_DELAY); // needed?
-            }
             get 
             {
                 return GetPosition();
@@ -39,7 +37,7 @@ namespace Gridia
             Id = id;
             Name = name;
             Image = image;
-            Position = new Vector3(x, y, z);
+            AddPositionSnapshot(new Vector3(x, y, z), false, getSystemTime() - RENDER_DELAY);
         }
 
         public void ClearSnapshots(int amountToKeep = 0) 
@@ -47,14 +45,14 @@ namespace Gridia
             _positions.RemoveRange(0, _positions.Count - amountToKeep);
         }
 
-        public void AddPositionSnapshot(Vector3 position) 
+        public void AddPositionSnapshot(Vector3 position, bool onRaft) 
         {
-            AddPositionSnapshot(position, getSystemTime());
+            AddPositionSnapshot(position, onRaft, getSystemTime());
         }
 
-        public void AddPositionSnapshot(Vector3 position, long time) 
+        public void AddPositionSnapshot(Vector3 position, bool onRaft, long time) 
         {
-            var snapshot = new PositionSnapshot(position, time);
+            var snapshot = new PositionSnapshot(position, onRaft, time);
             _positions.Add(snapshot);
             if (_positions.Count > 6) 
             {
@@ -110,6 +108,22 @@ namespace Gridia
             float interp = (float)(timeToRender - snapshotBefore.Timestamp) / (snapshotAfter.Timestamp - snapshotBefore.Timestamp);
             var snapshotPositionDelta = snapshotAfter.Position - snapshotBefore.Position;
             return snapshotBefore.Position + snapshotPositionDelta * interp;
+        }
+
+        public bool IsOnRaft()
+        {
+            long timeToRender = getSystemTime() - RENDER_DELAY;
+            PositionSnapshot snapshotBefore = null;
+            PositionSnapshot snapshotAfter = null;
+
+            GetSnapshotBeforeAndAfter(timeToRender, out snapshotBefore, out snapshotAfter);
+
+            if (snapshotBefore == null)
+            {
+                return snapshotAfter != null ? snapshotAfter.OnRaft : false;
+            }
+
+            return snapshotBefore.OnRaft || snapshotAfter.OnRaft;
         }
     }
 }

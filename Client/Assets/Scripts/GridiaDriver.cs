@@ -9,6 +9,7 @@ public class GridiaDriver : MonoBehaviour
     
     public GridiaGame _game; // :(
     public TextureManager _textureManager; // :(
+    public ContentManager _contentManager; // :(
     public TabbedUI tabbedGui; // :(
     public InventoryWindow invGui;
     public EquipmentWindow equipmentGui;
@@ -50,7 +51,7 @@ public class GridiaDriver : MonoBehaviour
 
         _game = Locator.Get<GridiaGame>();
 
-        Locator.Provide(new ContentManager("TestWorld")); // :(
+        Locator.Provide(_contentManager = new ContentManager("TestWorld")); // :(
         Locator.Provide(_textureManager = new TextureManager("TestWorld"));
         _game.Initialize(GridiaConstants.SIZE, GridiaConstants.DEPTH, GridiaConstants.SECTOR_SIZE); // :(
 
@@ -114,7 +115,6 @@ public class GridiaDriver : MonoBehaviour
         }
 
         //temp :(
-        var cm = Locator.Get<ContentManager>();
         var playerZ = (int) _game.view.Focus.Position.z;
         var focusPos = _game.view.FocusPosition;
         var tileSize = 32 * _game.view.Scale;
@@ -234,6 +234,13 @@ public class GridiaDriver : MonoBehaviour
     // :(
     private void DrawCreature(Rect rect, Creature creature)
     {
+        if (creature.IsOnRaft())
+        {
+            var raft = new ItemRenderable(Vector2.zero, _contentManager.GetItem(1211).GetInstance());
+            raft.Rect = rect;
+            raft.Render();
+        }
+
         var image = creature.Image;
         if (image is DefaultCreatureImage)
         {
@@ -256,7 +263,7 @@ public class GridiaDriver : MonoBehaviour
             DrawCreaturePart(rect, _textureManager.Arms, customImage.Arms);
             DrawCreaturePart(rect, _textureManager.Weapons, customImage.Weapon);
             DrawCreaturePart(rect, _textureManager.Shields, customImage.Shield);
-        }        
+        }
     }
 
     private void DrawCreaturePart(Rect rect, List<Texture> textures, int spriteIndex)

@@ -44,13 +44,14 @@ public class GridiaMessageToClientBuilder {
                 .build();
     }
 
-    public Message moveCreature(Creature cre, int timeoffset, boolean isTeleport) {
+    public Message moveCreature(Creature cre, int timeoffset, boolean isTeleport, boolean onRaft) {
         return new JsonMessageBuilder()
                 .protocol(outbound(MoveCreature))
                 .set("time", System.currentTimeMillis() + timeoffset)
                 .set("id", cre.id)
                 .set("loc", cre.location)
                 .set("isTeleport", isTeleport)
+                .set("onRaft", onRaft)
                 .build();
     }
 

@@ -70,12 +70,12 @@ namespace Gridia
             creatures.Remove(id);
         }
 
-        public void MoveCreature(int id, int x, int y, int z, long time)
+        public void MoveCreature(int id, int x, int y, int z, bool onRaft, long time)
         {
             var cre = GetCreature(id);
             if (cre != null)
             {
-                cre.AddPositionSnapshot(new Vector3(x, y, z), time);
+                cre.AddPositionSnapshot(new Vector3(x, y, z), onRaft, time);
             }
         }
 
