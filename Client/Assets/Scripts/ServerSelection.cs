@@ -45,22 +45,22 @@ namespace Gridia
 
         public void HostLocal()
         {
-            var workingDirectory = "../Server/GridiaServer/target/";
+            var processInfo = new System.Diagnostics.ProcessStartInfo();
+            processInfo.FileName = "java";
+            if (Application.isEditor)
+            {
+                processInfo.Arguments = "-jar target/server.jar";
+                processInfo.WorkingDirectory = "../Server/GridiaServer/";
+            }
+            else
+            {
+                processInfo.Arguments = "-jar server.jar";
+                processInfo.WorkingDirectory = "Server/GridiaServer/";
+            }
 
-            //Create process
-            System.Diagnostics.Process pProcess = new System.Diagnostics.Process();
-
-            //strCommand is path and file name of command to run
-            pProcess.StartInfo.FileName = "java";
-
-            //strCommandParameters are parameters to pass to program
-            pProcess.StartInfo.Arguments = "-jar server.jar";
-
-            //Optional
-            pProcess.StartInfo.WorkingDirectory = workingDirectory;
-
-            //Start the process
-            pProcess.Start();
+            System.Diagnostics.Process proc = new System.Diagnostics.Process();
+            proc.StartInfo = processInfo;
+            proc.Start();
         }
         
         public void OnGUI()

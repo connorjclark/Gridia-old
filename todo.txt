@@ -35,6 +35,7 @@ Winter break
     Serving Java
     Test coverage
     Item.Item -> Item.Data
+    lowercase-directory-names
     Everything!
 
 Spring semester:

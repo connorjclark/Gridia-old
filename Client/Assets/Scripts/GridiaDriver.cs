@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GridiaDriver : MonoBehaviour
-{
-    public static String VERSION = "v.1a"; // :(
-    
+{    
     public GridiaGame _game; // :(
     public TextureManager _textureManager; // :(
     public ContentManager _contentManager; // :(
@@ -182,8 +180,8 @@ public class GridiaDriver : MonoBehaviour
             }
         });
 
-        var versionLabelSize = GUI.skin.label.CalcSize(new GUIContent(VERSION));
-        GUI.Label(new Rect(0, 0, versionLabelSize.x, versionLabelSize.y), VERSION);
+        var versionLabelSize = GUI.skin.label.CalcSize(new GUIContent(GridiaConstants.VERSION));
+        GUI.Label(new Rect(0, 0, versionLabelSize.x, versionLabelSize.y), GridiaConstants.VERSION);
 
         ToolTipRenderable.instance.Render();
 

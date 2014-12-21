@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>hoten</groupId>
     <artifactId>GridiaServer</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-alpha</version>
     <packaging>jar</packaging>
     <build>
         <plugins>
@@ -26,6 +26,8 @@
                 <descriptorRefs>
                   <descriptorRef>jar-with-dependencies</descriptorRef>
                 </descriptorRefs>
+                <appendAssemblyId>false</appendAssemblyId>
+                <finalName>server</finalName>
               </configuration>
               <executions>
                 <execution>
