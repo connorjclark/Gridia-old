@@ -53,6 +53,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         switch ((GridiaProtocols.Clientbound)type)
         {
             case GridiaProtocols.Clientbound.Initialize:
+                GridiaConstants.WORLD_NAME = (String)data["worldName"];
                 GridiaConstants.SIZE = (int)data["size"];
                 GridiaConstants.DEPTH = (int)data["depth"];
                 GridiaConstants.SECTOR_SIZE = (int)data["sectorSize"];

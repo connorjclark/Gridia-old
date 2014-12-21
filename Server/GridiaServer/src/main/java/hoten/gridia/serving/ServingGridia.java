@@ -39,9 +39,11 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     private final Random random = new Random();
     public final PlayerFactory playerFactory;
     public final ContainerFactory containerFactory;
+    public final String worldName;
 
     public ServingGridia(File world, String mapName, int port, File clientDataFolder, String localDataFolderName) throws IOException {
         super(port, new GridiaProtocols(), clientDataFolder, localDataFolderName);
+        worldName = world.getName();
         contentManager = new ContentManager(world);
         GridiaGson.initialize(contentManager);
         tileMap = TileMap.loadMap(world, mapName);

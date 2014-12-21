@@ -2,6 +2,7 @@ using System;
 
 namespace Gridia
 {
+    // :(
     public class GridiaConstants
     {
         public const int NUM_TILES_IN_SPRITESHEET_ROW = 10;
@@ -14,5 +15,6 @@ namespace Gridia
         public static long SERVER_TIME_OFFSET;
         public static bool IS_ADMIN;
         public static String VERSION = "1.0-alpha"; // :(
+        public static String WORLD_NAME;
     }
 }

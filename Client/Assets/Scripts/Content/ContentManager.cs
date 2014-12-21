@@ -15,7 +15,7 @@ namespace Gridia
         private readonly List<GridiaAnimation> animations;
         private readonly List<ItemUse> uses;
         
-        public ContentManager (String worldName)
+        public ContentManager(String worldName)
         {
             items = new ContentLoader<Item>().Load(worldName + "/content/items.json");
             floors = new ContentLoader<Floor>().Load(worldName + "/content/floors.json");

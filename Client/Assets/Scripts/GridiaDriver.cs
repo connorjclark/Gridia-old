@@ -49,8 +49,8 @@ public class GridiaDriver : MonoBehaviour
 
         _game = Locator.Get<GridiaGame>();
 
-        Locator.Provide(_contentManager = new ContentManager("TestWorld")); // :(
-        Locator.Provide(_textureManager = new TextureManager("TestWorld"));
+        Locator.Provide(_contentManager = new ContentManager(GridiaConstants.WORLD_NAME));
+        Locator.Provide(_textureManager = new TextureManager(GridiaConstants.WORLD_NAME));
         _game.Initialize(GridiaConstants.SIZE, GridiaConstants.DEPTH, GridiaConstants.SECTOR_SIZE); // :(
 
         if (GridiaConstants.IS_ADMIN)

@@ -35,7 +35,7 @@ puts 'running maven'
 puts 'making server-standalone'
 run_command "echo f | xcopy Server/GridiaServer/target/server.jar #{server_dir}/server.jar"
 run_command "echo f | xcopy Server/GridiaServer/splash.txt #{server_dir}/splash.txt"
-run_command "xcopy Server/GridiaServer/worlds/TestWorld/clientdata #{server_dir}/worlds/TestWorld/clientdata //E //i"
+run_command "xcopy Server/GridiaServer/worlds/demo-world/clientdata #{server_dir}/worlds/demo-world/clientdata //E //i"
 
 puts 'copying server to all platforms'
 for_each_platform do |f|
