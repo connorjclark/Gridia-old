@@ -10,25 +10,19 @@ UI
   Show slot number for items 1-10 in inventory
   Move 'next' button in recipe book to far right
 
-Refactoring
-  
-  xxxGui -> xxxWindow
-
 Winter break
-
   Get game ready for demo launch
-    Crossplatform
-      Linux
-      Mac
     Random monster arena
       enter a dungeon, random monsters spawn
     Roach arena
       start when standing in certain spots, players get teleported to arena
     Bar
+    Playtests
   Set up forums, chatroom
   Press kit
   Greenlight
   Refactor
+    xxxGui -> xxxWindow
     Preloader
     State machine
     Serving Java
@@ -38,6 +32,10 @@ Winter break
     Everything!
 
 Spring semester:
+
+Crossplatform
+  Linux
+  Mac
 
 Quest scripting
 

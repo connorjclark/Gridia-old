@@ -22,25 +22,30 @@ namespace Gridia
             ChatInput.OnEnter = SendChatMessage;
             AddChild(ChatInput);
 
-            ChatInput.Text = "!name putYourNameHere";
-
             ChatArea.Text = @"Type below to chat!
 
 Press ESCAPE once to unfocus the chat box, and again to hide the chat.
 
 Press TAB once to show the chat, and again to set focus on it.
 
-To move an item, either drag it with your mouse to another location, your player, or your inventory window,
-Or, use the arrow keys and press shift
+To pick up an item, either drag it to your player/inventory,
+Or, use the arrow keys to select, and press SHIFT
 
-To select an item in your inventory, either press 1,2,3...0 to select on of the first few items,
-Or, hold CTRL and press WASD to move your selection
+To move an item, either drag it with your mouse to another location, your player, or your inventory window,
+Or, use the arrow keys to select the item to move, hold ALT+SHIFT, and move the item with the arrow keys
+
+To select an item in your inventory, either press 1,2,3...0 to select one of the first few items,
+Or, hold CTRL and use WASD to move your selection
 
 To use your selected item in the world, use the arrow keys and press SPACE
 
 To use your hand in the world, use the arrows keys and press ALT
 
 Press Q to drop a single item of your current selection
+
+To equip an item, double click on it
+Or, press E to equip your currently selected item
+________________________
 
 ";
             SetScrollToMax();

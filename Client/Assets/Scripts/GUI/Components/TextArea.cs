@@ -24,16 +24,16 @@ namespace Gridia
         public override void Render()
         {
             base.Render();
-            TextHeight = GUI.skin.GetStyle("TextArea").CalcHeight(new GUIContent(Text), Width);
+            TextHeight = GUI.skin.GetStyle("TextArea").CalcHeight(new GUIContent(Text), Width - 20);
             ScrollPosition = GUI.BeginScrollView(Rect, ScrollPosition, new Rect(0, 0, Width - 20, TextHeight));
-            GUI.TextArea(new Rect(0, 0, Width, Math.Max(Height, TextHeight)), Text);
+            GUI.TextArea(new Rect(0, 0, Width - 20, Math.Max(Height, TextHeight)), Text);
             GUI.EndScrollView();
             CalculateMaxScrollY();
         }
 
         private void CalculateMaxScrollY() 
         {
-            MaxScrollY = GUI.skin.GetStyle("TextArea").CalcHeight(new GUIContent(Text), Width) - Height;
+            MaxScrollY = GUI.skin.GetStyle("TextArea").CalcHeight(new GUIContent(Text), Width - 20) - Height;
         }
     }
 }
