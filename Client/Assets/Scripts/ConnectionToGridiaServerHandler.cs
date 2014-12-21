@@ -4,6 +4,8 @@ using Newtonsoft.Json.Linq;
 using Serving;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 using UnityEngine;
 
 public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
@@ -433,8 +435,9 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         Send(message);
     }
 
-    public void Register(String username, String passwordHash)
+    public void Register(String username, String password)
     {
+        var passwordHash = MD5.Create().ComputeHash(Encoding.ASCII.GetBytes(password));
         Message message = new JsonMessageBuilder()
             .Protocol(Outbound(GridiaProtocols.Serverbound.Register))
                 .Set("username", username)
@@ -443,8 +446,9 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         Send(message);
     }
 
-    public void Login(String username, String passwordHash)
+    public void Login(String username, String password)
     {
+        var passwordHash = MD5.Create().ComputeHash(Encoding.ASCII.GetBytes(password));
         Message message = new JsonMessageBuilder()
             .Protocol(Outbound(GridiaProtocols.Serverbound.Login))
                 .Set("username", username)

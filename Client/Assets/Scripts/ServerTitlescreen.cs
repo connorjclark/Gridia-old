@@ -34,8 +34,7 @@ namespace Gridia
             {
                 if (ErrorMessage == null)
                 {
-                    var passwordHash = passwordInput.Text;
-                    Locator.Get<ConnectionToGridiaServerHandler>().Login(usernameInput.Text, passwordHash);
+                    Locator.Get<ConnectionToGridiaServerHandler>().Login(usernameInput.Text, passwordInput.Text);
                 }
             };
             registerButton.OnClick = () =>

@@ -41,9 +41,7 @@ namespace Gridia
 
             registerButton.OnClick = () =>
             {
-                var username = usernameInput.Text;
-                var passwordHash = passwordInput.Text; // ...
-                Locator.Get<ConnectionToGridiaServerHandler>().Register(username, passwordHash);
+                Locator.Get<ConnectionToGridiaServerHandler>().Register(usernameInput.Text, passwordInput.Text);
             };
             backButton.OnClick = () =>
             {
