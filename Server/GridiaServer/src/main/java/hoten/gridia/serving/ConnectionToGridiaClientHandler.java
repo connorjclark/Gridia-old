@@ -508,28 +508,31 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         String username = data.get("username").getAsString();
         String passwordHash = data.get("passwordHash").getAsString();
         try {
-            _server.playerFactory.create(_server, username, passwordHash);
-            ProcessLogin(data);
+            doLogin(_server.playerFactory.create(_server, username, passwordHash));
         } catch (Player.PlayerFactory.BadRegistrationException ex) {
             send(_messageBuilder.genericEventListener(ex.getMessage()));
         }
+    }
+
+    private void doLogin(Player thePlayer) throws IOException {
+        player = thePlayer;
+        send(_messageBuilder.genericEventListener("success"));
+        send(_messageBuilder.setFocus(player.creature.id, player.accountDetails.isAdmin));
+        send(_messageBuilder.container(player.creature.inventory));
+        send(_messageBuilder.container(player.equipment));
+
+        Message animMessage = _messageBuilder.animation(3, player.creature.location);
+        _server.sendToClientsWithAreaLoaded(animMessage, player.creature.location);
+        send(animMessage);
+
+        _server.updateCreatureImage(player.creature);
     }
 
     private void ProcessLogin(JsonObject data) throws IOException {
         String username = data.get("username").getAsString();
         String passwordHash = data.get("passwordHash").getAsString();
         try {
-            player = _server.playerFactory.load(_server, username, passwordHash);
-            send(_messageBuilder.genericEventListener("success"));
-            send(_messageBuilder.setFocus(player.creature.id, player.accountDetails.isAdmin));
-            send(_messageBuilder.container(player.creature.inventory));
-            send(_messageBuilder.container(player.equipment));
-
-            Message animMessage = _messageBuilder.animation(3, player.creature.location);
-            _server.sendToClientsWithAreaLoaded(animMessage, player.creature.location);
-            send(animMessage);
-
-            _server.updateCreatureImage(player.creature);
+            doLogin( _server.playerFactory.load(_server, username, passwordHash));
         } catch (Player.PlayerFactory.BadLoginException ex) {
             send(_messageBuilder.genericEventListener(ex.getMessage()));
         }
