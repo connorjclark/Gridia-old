@@ -13,7 +13,9 @@ namespace Gridia
         private Dictionary<String, AudioClip> _audioClips = new Dictionary<String, AudioClip>();
         private AudioClip _currentMusic;
         [SerializeField]
-        private AudioSource _audio;
+        private AudioSource _musicAudio;
+        [SerializeField]
+        private AudioSource _sfxAudio;
         public Queue<String> MusicQueue = new Queue<String>();
         private bool _muteMusic;
         public bool MuteMusic
@@ -24,11 +26,11 @@ namespace Gridia
                 _muteMusic = value;
                 if (_muteMusic) 
                 {
-                    _audio.Pause();
+                    _musicAudio.Pause();
                 }
                 else
                 {
-                    _audio.Play();
+                    _musicAudio.Play();
                 }
             }
         }
@@ -37,7 +39,8 @@ namespace Gridia
 
         public void Start() 
         {
-            _audio.loop = false;
+            _musicAudio.loop = false;
+            _musicAudio.volume = 0.6f;
             MuteMusic = Application.isEditor;
         }
 
@@ -47,7 +50,7 @@ namespace Gridia
             {
                 QueueRandomSongs();
             }
-            if (!_audio.isPlaying && !_muteMusic) 
+            if (!_musicAudio.isPlaying && !_muteMusic) 
             {
                 PlayMusic(MusicQueue.Dequeue());
             }
@@ -72,17 +75,17 @@ namespace Gridia
         {
             CurrentSongName = name;
             var clip = GetAudioClip(name);
-            _audio.clip = clip;
+            _musicAudio.clip = clip;
             
             if (!_muteMusic) 
             {
-                _audio.Play();
+                _musicAudio.Play();
             }
         }
 
         public void EndCurrentSong() 
         {
-            _audio.Stop();
+            _musicAudio.Stop();
         }
 
         public void PlaySfx(String name, Vector3 loc) 
@@ -93,7 +96,7 @@ namespace Gridia
                 var playerLoc = Locator.Get<TileMapView>().Focus.Position;
                 var dist = Vector3.Distance(playerLoc, loc);
                 var volume = dist < 5 ? 1 : 1 / (1 + 0.25f * (dist - 5) * (dist - 5));
-                _audio.PlayOneShot(clip, volume);
+                _sfxAudio.PlayOneShot(clip, volume);
             }
         }
 
