@@ -14,6 +14,8 @@ namespace Gridia
     public class Register : MonoBehaviour
     {
         private RenderableContainer _displayList;
+        private bool LoadGame { get; set; }
+        private String ErrorMessage { get; set; }
 
         public void Start()
         {
@@ -33,7 +35,7 @@ namespace Gridia
             _displayList.AddChild(registerButton);
 
             var backButton = new Button(Vector2.zero, "Cancel");
-            backButton.X = 60;
+            backButton.X = 120;
             backButton.Y = 60;
             _displayList.AddChild(backButton);
 
@@ -42,11 +44,23 @@ namespace Gridia
                 var username = usernameInput.Text;
                 var passwordHash = passwordInput.Text; // ...
                 Locator.Get<ConnectionToGridiaServerHandler>().Register(username, passwordHash);
-                //SceneManager.LoadScene("ServerTitlescreen");
             };
             backButton.OnClick = () =>
             {
                 SceneManager.LoadScene("ServerTitlescreen");
+            };
+
+            Locator.Get<ConnectionToGridiaServerHandler>().GenericEventHandler = (data) =>
+            {
+                var message = (String)data["obj"];
+                if (message == "success")
+                {
+                    LoadGame = true;
+                }
+                else
+                {
+                    ErrorMessage = message;
+                }
             };
         }
 
@@ -55,6 +69,30 @@ namespace Gridia
             _displayList.X = (Screen.width - _displayList.Width) / 2;
             _displayList.Y = (Screen.height - _displayList.Height) / 2;
             _displayList.Render();
+
+            // :(
+            if (ErrorMessage != null)
+            {
+                var width = 400;
+                var height = 75;
+                var x = (Screen.width - width) / 2;
+                var y = (Screen.height - height) / 2;
+                GUI.Window(0, new Rect(x, y, width, height), id =>
+                {
+                    if (GUI.Button(new Rect(200 - 50 / 2, 30, 50, 20), "OK"))
+                    {
+                        ErrorMessage = null;
+                    }
+                }, ErrorMessage);
+            }
+        }
+
+        public void Update()
+        {
+            if (LoadGame)
+            {
+                SceneManager.LoadScene("Main");
+            }
         }
     }
 }

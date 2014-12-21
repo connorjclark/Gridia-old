@@ -7,7 +7,6 @@ import hoten.serving.fileutils.FileUtils;
 import hoten.gridia.uniqueidentifiers.FileResourceUniqueIdentifiers;
 import hoten.gridia.uniqueidentifiers.UniqueIdentifiers;
 import java.io.File;
-import java.nio.file.Files;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -38,7 +37,13 @@ public class Container {
         }
 
         public Container create(ContainerType type, List<ItemInstance> items) {
-            return new Container(_uniqueIds.next(), type, items);
+            Container container = new Container(_uniqueIds.next(), type, items);
+            save(container);
+            return container;
+        }
+        
+        public void save(Container container) {
+            FileUtils.saveAs(new File(dir + container.id + ".json"), GridiaGson.get().toJson(container).getBytes());
         }
     }
 

@@ -2,7 +2,6 @@ package hoten.gridia.serving;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import hoten.gridia.Container;
 import hoten.gridia.Creature;
 import hoten.gridia.CustomPlayerImage;
 import hoten.gridia.DefaultCreatureImage;
@@ -21,9 +20,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ConnectionToGridiaClientHandler extends SocketHandler {
 
@@ -45,48 +42,8 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
 
     @Override
     protected void onConnectionSettled() throws IOException {
-        player = new Player();
-        player.creature = _server.createCreatureForPlayer("Player_" + hashCode());
-        _server.announceNewPlayer(this, player);
+        System.out.println("Client has connected.");
         send(_messageBuilder.initialize(_server.tileMap.size, _server.tileMap.depth, _server.tileMap.sectorSize));
-        send(_messageBuilder.setFocus(player.creature.id));
-
-        // fake an inventory
-        List<ItemInstance> inv = new ArrayList();
-        inv.addAll(Arrays.asList(
-                57, 335, 277, 280, 1067, 900, 1068, 826, 1974,
-                1974, 1039, 171, 902, 901, 339, 341,
-                29, 19, 18, 12, 913, 34, 140
-        ).stream()
-                .map(i -> {
-                    int quantity = _server.contentManager.getItem(i).stackable ? 1000 : 1;
-                    return _server.contentManager.createItemInstance(i, quantity);
-                })
-                .collect(Collectors.toList()));
-        while (inv.size() < 30) {
-            inv.add(_server.contentManager.createItemInstance(0));
-        }
-        player.creature.inventory = new Container(inv, Container.ContainerType.Inventory);
-
-        // fake equipment
-        List<ItemInstance> equipment = new ArrayList();
-        equipment.add(_server.contentManager.createItemInstance(0));
-        equipment.add(_server.contentManager.createItemInstance(0));
-        equipment.add(_server.contentManager.createItemInstance(0));
-        equipment.add(_server.contentManager.createItemInstance(0));
-        equipment.add(_server.contentManager.createItemInstance(0));
-        player.equipment = new Container(equipment, Container.ContainerType.Equipment);
-        if (player.creature.image instanceof CustomPlayerImage) {
-            ((CustomPlayerImage) (player.creature.image)).moldToEquipment(player.equipment);
-        }
-        _server.updateCreatureImage(player.creature);
-
-        send(_messageBuilder.container(player.creature.inventory));
-        send(_messageBuilder.container(player.equipment));
-
-        Message animMessage = _messageBuilder.animation(3, player.creature.location);
-        _server.sendToClientsWithAreaLoaded(animMessage, player.creature.location);
-        send(animMessage);
     }
 
     @Override
@@ -131,6 +88,9 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
             case Register:
                 ProcessRegister(data);
                 break;
+            case Login:
+                ProcessLogin(data);
+                break;
         }
     }
 
@@ -142,8 +102,13 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
     @Override
     protected synchronized void close() {
         super.close();
-        _server.removeCreature(player.creature);
-        _server.sendToAll(_messageBuilder.chat(player.creature.name + " has left the building.", player.creature.location));
+        if (player != null) {
+            _server.removeCreature(player.creature);
+            _server.playerFactory.save(player);
+            _server.containerFactory.save(player.creature.inventory);
+            _server.containerFactory.save(player.equipment);
+            _server.sendToAll(_messageBuilder.chat(player.creature.name + " has left the building.", player.creature.location));
+        }
     }
 
     private void ProcessPlayerMove(JsonObject data) throws IOException {
@@ -563,7 +528,32 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
 
     private void ProcessRegister(JsonObject data) throws IOException {
         String username = data.get("username").getAsString();
-        String passwordHash = data.get("password").getAsString();
+        String passwordHash = data.get("passwordHash").getAsString();
+        try {
+            _server.playerFactory.create(_server, username, passwordHash);
+            ProcessLogin(data);
+        } catch (Player.PlayerFactory.BadRegistrationException ex) {
+            send(_messageBuilder.genericEventListener(ex.getMessage()));
+        }
+    }
 
+    private void ProcessLogin(JsonObject data) throws IOException {
+        String username = data.get("username").getAsString();
+        String passwordHash = data.get("passwordHash").getAsString();
+        try {
+            player = _server.playerFactory.load(_server, username, passwordHash);
+            send(_messageBuilder.genericEventListener("success"));
+            send(_messageBuilder.setFocus(player.creature.id));
+            send(_messageBuilder.container(player.creature.inventory));
+            send(_messageBuilder.container(player.equipment));
+
+            Message animMessage = _messageBuilder.animation(3, player.creature.location);
+            _server.sendToClientsWithAreaLoaded(animMessage, player.creature.location);
+            send(animMessage);
+            
+            _server.updateCreatureImage(player.creature);
+        } catch (Player.PlayerFactory.BadLoginException ex) {
+            send(_messageBuilder.genericEventListener(ex.getMessage()));
+        }
     }
 }

@@ -5,7 +5,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class UniqueIdentifiers {
 
-    protected int _nextNewId;
+    protected int _nextNewId = 1;
     protected int _expandAmount;
     protected final Queue<Integer> _available = new LinkedBlockingQueue();
     
@@ -30,7 +30,7 @@ public class UniqueIdentifiers {
     
     private void expand() {
         for (int i = 0; i < _expandAmount; i++) {
-            _available.add(++_nextNewId);
+            _available.add(_nextNewId++);
         }
     }
 }

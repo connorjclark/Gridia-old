@@ -179,6 +179,13 @@ public class GridiaMessageToClientBuilder {
                 .set("image", creature.image)
                 .build();
     }
+    
+    public Message genericEventListener(Object obj) {
+        return new JsonMessageBuilder()
+                .protocol(outbound(GenericEventListener))
+                .set("obj", obj)
+                .build();
+    }
 
     private Protocol outbound(Enum en) {
         return _outbound.apply(en);

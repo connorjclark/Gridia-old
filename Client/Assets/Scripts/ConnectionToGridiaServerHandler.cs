@@ -11,6 +11,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
     private GridiaGame _game;
     private HashSet<Vector3> _sectorsRequested = new HashSet<Vector3>();
     private HashSet<int> _creaturesRequested = new HashSet<int>();
+    public Action<JObject> GenericEventHandler { get; set; }
 
     public ConnectionToGridiaServerHandler(GridiaGame game, String host, int port)
         : base(host, port, new GridiaProtocols(), BoundDest.SERVER)
@@ -20,7 +21,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
 
     protected override void OnConnectionSettled()
     {
-        MonoBehaviour.print("Connection settled!");
+        Debug.Log("Connection settled!");
     }
 
     protected override void Run()
@@ -56,7 +57,6 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
                 GridiaConstants.SERVER_TIME_OFFSET = getSystemTime() - (long)data["time"];
                 GridiaConstants.IS_ADMIN = (bool)data["isAdmin"];
                 ServerSelection.connectedWaitHandle.Set(); // :(
-                ServerSelection.gameInitWaitHandle.WaitOne();
                 break;
             case GridiaProtocols.Clientbound.AddCreature:
                 AddCreature(data);
@@ -93,6 +93,9 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
                 break;
             case GridiaProtocols.Clientbound.RenameCreature:
                 RenameCreature(data);
+                break;
+            case GridiaProtocols.Clientbound.GenericEventHandler:
+                GenericEventHandler(data);
                 break;
         }
     }
@@ -167,6 +170,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
 
     private void SetFocus(JObject data)
     {
+        ServerSelection.gameInitWaitHandle.WaitOne();
         var id = (int)data["id"];
         _game.view.FocusId = id;
     }
@@ -433,6 +437,16 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
     {
         Message message = new JsonMessageBuilder()
             .Protocol(Outbound(GridiaProtocols.Serverbound.Register))
+                .Set("username", username)
+                .Set("passwordHash", passwordHash)
+                .Build();
+        Send(message);
+    }
+
+    public void Login(String username, String passwordHash)
+    {
+        Message message = new JsonMessageBuilder()
+            .Protocol(Outbound(GridiaProtocols.Serverbound.Login))
                 .Set("username", username)
                 .Set("passwordHash", passwordHash)
                 .Build();
