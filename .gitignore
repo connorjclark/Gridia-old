@@ -82,10 +82,8 @@ client_Data/
 /*.userprefs
 /*.pidb
 /*.booproj
-Client/build
-tmp_voronoi_data
+builds/
 RoachCity/
 DemoCity/
 containers/
 Players/
-Server/GridiaServer/TestWorld/Players/aaa.json
