@@ -6,7 +6,6 @@ def run_command(command)
 end
 
 def for_each_platform(&proc)
-  puts "#{$build_dir}/**"
   Dir.glob("#{$build_dir}/**").select { |f|
     File.directory? f and not f.split('/').last.include? 'server-standalone'
   }.each { |f|

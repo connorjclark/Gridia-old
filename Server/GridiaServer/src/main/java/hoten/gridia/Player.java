@@ -109,7 +109,7 @@ public class Player {
         }
 
         public void save(Player player) {
-            FileUtils.saveAs(new File(dir + player.accountDetails.username + ".json"), new Gson().toJson(player.accountDetails).getBytes());
+            FileUtils.saveAs(new File(dir, player.accountDetails.username + ".json"), new Gson().toJson(player.accountDetails).getBytes());
         }
     }
 

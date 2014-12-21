@@ -83,7 +83,6 @@ client_Data/
 /*.pidb
 /*.booproj
 builds/
-RoachCity/
-DemoCity/
+maps/
 containers/
 Players/

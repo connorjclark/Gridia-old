@@ -41,15 +41,17 @@ public class GridiaServerDriver {
         System.out.println("Load which world?\n");
         File[] worlds = new File("worlds/").listFiles(file -> file.isDirectory());
         for (int i = 0; i < worlds.length; i++) {
-            System.out.println(i + ") " + worlds[i].getName());
+            System.out.println(i + 1 + ") " + worlds[i].getName());
         }
         int worldSelection = promptInt(scanner, "");
-        File world = worlds[worldSelection];
+        File world = worlds[worldSelection - 1];
 
         System.out.println("Load which map, or generate a new one?\n");
         File[] maps = new File(world, "maps").listFiles(file -> file.isDirectory());
-        for (int i = 0; i < maps.length; i++) {
-            System.out.println(i + 1 + ") " + maps[i].getName());
+        if (maps != null) {
+            for (int i = 0; i < maps.length; i++) {
+                System.out.println(i + 1 + ") " + maps[i].getName());
+            }
         }
         System.out.println("0) Generate Map");
 
@@ -82,8 +84,14 @@ public class GridiaServerDriver {
     }
 
     private static int promptInt(Scanner scanner, String prompt) {
-        System.out.println(prompt);
-        return Integer.parseInt(scanner.nextLine());
+        while (true) {
+            System.out.println(prompt);
+            try {
+                return Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException ex) {
+                System.out.println("Value must be an integer.");
+            }
+        }
     }
 
     private static String promptString(Scanner scanner, String prompt) {
