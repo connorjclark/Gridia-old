@@ -26,7 +26,6 @@ Winter break
     Roach arena
       start when standing in certain spots, players get teleported to arena
     Bar
-    Load existing players when log in
   Set up forums, chatroom
   Press kit
   Greenlight

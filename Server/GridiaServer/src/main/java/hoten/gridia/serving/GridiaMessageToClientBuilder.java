@@ -2,6 +2,8 @@ package hoten.gridia.serving;
 
 import hoten.gridia.Creature;
 import hoten.gridia.Container;
+import hoten.gridia.CustomPlayerImage;
+import hoten.gridia.DefaultCreatureImage;
 import hoten.gridia.content.ItemInstance;
 import hoten.gridia.content.ItemUse;
 import hoten.gridia.map.Coord;
@@ -35,7 +37,7 @@ public class GridiaMessageToClientBuilder {
                 .set("loc", cre.location)
                 .build();
     }
-    
+
     public Message renameCreature(Creature cre) {
         return new JsonMessageBuilder()
                 .protocol(outbound(RenameCreature))
@@ -83,16 +85,30 @@ public class GridiaMessageToClientBuilder {
             }
         }
 
-        //builder.writeInt(creatures.size());
-        builder.writeInt(0);
-        // .remove?
-        /*creatures.stream().forEach((cre) -> {
-         builder.writeShort(cre.id)
-         .writeShort(cre.image)
-         .writeShort(cre.location.x)
-         .writeShort(cre.location.y)
-         .writeShort(cre.location.z);
-         });*/
+        builder.writeInt(creatures.size());
+        creatures.stream().forEach((cre) -> {
+            builder.writeShort(cre.id)
+                    .writeUTF(cre.name)
+                    .writeShort(cre.location.x)
+                    .writeShort(cre.location.y)
+                    .writeShort(cre.location.z);
+            if (cre.image instanceof DefaultCreatureImage) {
+                DefaultCreatureImage defaultImage = (DefaultCreatureImage) cre.image;
+                builder.writeShort(0)
+                        .writeShort(defaultImage.spriteIndex)
+                        .writeShort(defaultImage.width)
+                        .writeShort(defaultImage.height);
+            } else if (cre.image instanceof CustomPlayerImage) {
+                CustomPlayerImage customImage = (CustomPlayerImage) cre.image;
+                builder.writeShort(1)
+                        .writeShort(customImage.head)
+                        .writeShort(customImage.chest)
+                        .writeShort(customImage.legs)
+                        .writeShort(customImage.arms)
+                        .writeShort(customImage.weapon)
+                        .writeShort(customImage.shield);
+            }
+        });
 
         return builder.build();
     }
@@ -180,7 +196,7 @@ public class GridiaMessageToClientBuilder {
                 .set("image", creature.image)
                 .build();
     }
-    
+
     public Message genericEventListener(Object obj) {
         return new JsonMessageBuilder()
                 .protocol(outbound(GenericEventListener))

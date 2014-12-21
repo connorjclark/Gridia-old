@@ -114,6 +114,11 @@ public class GridiaDriver : MonoBehaviour
             draggedItem.Render();
         }
 
+        if (_game.view.Focus == null)
+        {
+            return;
+        }
+
         //temp :(
         var playerZ = (int) _game.view.Focus.Position.z;
         var focusPos = _game.view.FocusPosition;
@@ -290,6 +295,10 @@ public class GridiaDriver : MonoBehaviour
 
     void Update()
     {
+        if (_game.view.Focus == null)
+        {
+            return;
+        }
         if (_game.stateMachine != null) {
             _game.stateMachine.Step(Time.deltaTime);
         }

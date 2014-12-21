@@ -124,6 +124,7 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         int x = (int)data["loc"]["x"];
         int y = (int)data["loc"]["y"];
         int z = (int)data["loc"]["z"];
+
         _game.tileMap.CreateCreature(id, name, image, x, y, z);
     }
 
@@ -249,15 +250,36 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         _game.tileMap.SetSector(new Sector(tiles), sx, sy, sz);
 
         var numCreatures = data.ReadInt32();
-        /*for (int i = 0; i < numCreatures; i++)
+        for (int i = 0; i < numCreatures; i++)
         {
             var id = data.ReadInt16();
-            var image = data.ReadInt16();
+            var name = data.ReadJavaUTF();
             var x = data.ReadInt16();
             var y = data.ReadInt16();
             var z = data.ReadInt16();
-            _game.tileMap.CreateCreature(id, image, x, y, z);
-        }*/
+            var imageType = data.ReadInt16();
+            CreatureImage image = null;
+            if (imageType == 0)
+            {
+                var defaultImage = new DefaultCreatureImage();
+                defaultImage.SpriteIndex = data.ReadInt16();
+                defaultImage.Width = data.ReadInt16();
+                defaultImage.Height = data.ReadInt16();
+                image = defaultImage;
+            }
+            else if (imageType == 1)
+            {
+                var customImage = new CustomPlayerImage();
+                customImage.Head = data.ReadInt16();
+                customImage.Chest = data.ReadInt16();
+                customImage.Legs = data.ReadInt16();
+                customImage.Arms = data.ReadInt16();
+                customImage.Weapon = data.ReadInt16();
+                customImage.Shield = data.ReadInt16();
+                image = customImage;
+            }
+            _game.tileMap.CreateCreature(id, name, image, x, y, z);
+        }
     }
 
     private void ItemUsePick(JObject data)

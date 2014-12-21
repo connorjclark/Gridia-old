@@ -23,6 +23,11 @@ namespace Gridia
             lock (_lock) _dic.Remove(key);
         }
 
+        public bool HasKey(K key)
+        {
+            lock (_lock) return _dic.ContainsKey(key);
+        }
+
         public void TryGetValue(K key, out V value)
         {
             lock (_lock) _dic.TryGetValue(key, out value);
