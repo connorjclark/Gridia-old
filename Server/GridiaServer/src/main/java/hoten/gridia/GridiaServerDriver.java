@@ -70,7 +70,7 @@ public class GridiaServerDriver {
                 int mapDepth = promptInt(scanner, "Depth? (at least 1, recommended: 2)");
 
                 ContentManager contentManager = new ContentManager(world);
-                GridiaGson.initialize(contentManager);
+                GridiaGson.initialize(contentManager, null);
                 MapGenerator mapGenerator = new MapGenerator(contentManager, numPoints, numLloydRelaxations, seed);
                 TileMap tileMap = mapGenerator.generate(map, mapSize, mapDepth, mapSectorSize);
                 tileMap.save();

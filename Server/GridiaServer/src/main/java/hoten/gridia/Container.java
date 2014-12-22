@@ -28,17 +28,19 @@ public class Container {
             return GridiaGson.get().fromJson(json, Container.class);
         }
 
-        public Container create(ContainerType type, int size) {
+        public Container create(ContainerType type, int size, boolean saveToDisk) {
             List<ItemInstance> items = IntStream.range(0, size)
                     .boxed()
                     .map(i -> ItemInstance.NONE)
                     .collect(Collectors.toList());
-            return create(type, items);
+            return create(type, items, saveToDisk);
         }
 
-        public Container create(ContainerType type, List<ItemInstance> items) {
+        public Container create(ContainerType type, List<ItemInstance> items, boolean saveToDisk) {
             Container container = new Container(_uniqueIds.next(), type, items);
-            save(container);
+            if (saveToDisk) {
+                save(container);
+            }
             return container;
         }
 

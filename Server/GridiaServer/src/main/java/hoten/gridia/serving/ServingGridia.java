@@ -45,7 +45,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         super(port, new GridiaProtocols(), clientDataFolder, localDataFolderName);
         worldName = world.getName();
         contentManager = new ContentManager(world);
-        GridiaGson.initialize(contentManager);
+        GridiaGson.initialize(contentManager, this);
         tileMap = TileMap.loadMap(world, mapName);
         playerFactory = new PlayerFactory(world);
         containerFactory = new ContainerFactory(world);
@@ -183,12 +183,16 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         mold.drops.forEach(itemDrop -> {
             items.add(new ItemInstance(itemDrop));
         });
-        cre.inventory = containerFactory.create(ContainerType.Inventory, items);
+        cre.inventory = containerFactory.create(ContainerType.Inventory, items, false);
         return cre;
     }
 
     public Creature createCreature(int image, Coord loc) {
         return createCreature(new DefaultCreatureImage(image), "Monster", loc);
+    }
+    
+    public Creature createCreature(CreatureImage image, Coord loc) {
+        return createCreature(image, "Monster", loc);
     }
 
     public Creature createCreature(CreatureImage image, String name, Coord loc) {
@@ -199,6 +203,16 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         Sector sector = tileMap.getSectorOf(cre.location);
         tileMap.getTile(cre.location).cre = cre;
         sendToClientsWithSectorLoaded(messageBuilder.addCreature(cre), sector);
+        creatures.put(cre.id, cre);
+        return cre;
+    }
+    
+    // :(
+    public Creature createCreatureQuietly(CreatureImage image, String name, Coord loc) {
+        Creature cre = new Creature();
+        cre.name = name;
+        cre.image = image;
+        cre.location = loc;
         creatures.put(cre.id, cre);
         return cre;
     }

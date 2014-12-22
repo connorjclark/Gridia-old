@@ -89,7 +89,7 @@ public class Player {
             while (inv.size() < 30) {
                 inv.add(server.contentManager.createItemInstance(0));
             }
-            creature.inventory = server.containerFactory.create(ContainerType.Inventory, inv);
+            creature.inventory = server.containerFactory.create(ContainerType.Inventory, inv, true);
             accountDetails.inventoryId = creature.inventory.id;
 
             // fake equipment
@@ -100,7 +100,7 @@ public class Player {
             equipmentItems.add(server.contentManager.createItemInstance(0));
             equipmentItems.add(server.contentManager.createItemInstance(0));
 
-            Container equipment = server.containerFactory.create(ContainerType.Equipment, equipmentItems);
+            Container equipment = server.containerFactory.create(ContainerType.Equipment, equipmentItems, true);
             accountDetails.equipmentId = equipment.id;
             if (creature.image instanceof CustomPlayerImage) {
                 ((CustomPlayerImage) (creature.image)).moldToEquipment(equipment);
