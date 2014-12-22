@@ -139,6 +139,10 @@ public class TileMap {
         return getSectorOf(x, y, z).getTile(x % sectorSize, y % sectorSize);
     }
 
+    public int getFloor(Coord coord) {
+        return getTile(coord).floor;
+    }
+
     public int getFloor(int x, int y, int z) {
         return getTile(x, y, z).floor;
     }
@@ -178,6 +182,11 @@ public class TileMap {
 
     public Coord wrap(Coord loc) {
         return new Coord(wrap(loc.x), wrap(loc.y), loc.z);
+    }
+
+    public boolean walkable(Coord coord) {
+        Tile tile = getTile(coord);
+        return tile.cre == null && tile.item.data.walkable && tile.floor != 0;
     }
 
     public boolean walkable(int x, int y, int z) {

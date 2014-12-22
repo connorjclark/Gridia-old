@@ -143,7 +143,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         tileMap.getTile(loc).cre = cre;
         cre.location = loc;
         sendTo(messageBuilder.moveCreature(cre, timeInMillisecondsToMove, isTeleport, onRaft), client -> {
-            return client.hasSectorLoaded(sector) || client.hasSectorLoaded(sectorBefore) || client.player.creature == cre;
+            return client.hasSectorLoaded(sector) || client.hasSectorLoaded(sectorBefore) || (client.player != null && client.player.creature == cre);
         });
     }
 
@@ -309,6 +309,6 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
 
     public void updateContainerSlot(Container container, int slotIndex) {
         Message message = messageBuilder.updateContainerSlot(container, slotIndex);
-        sendTo(message, client -> client.player.creature.inventory.id == container.id || client.player.equipment.id == container.id);
+        sendTo(message, client -> client.player != null && (client.player.creature.inventory.id == container.id || client.player.equipment.id == container.id));
     }
 }

@@ -166,12 +166,12 @@ public class GridiaServerDriver {
     }
 
     // hard code the roach quest for the presentation
-    private static int arenaTickRate = 5000;
+    private static int arenaTickRate = 3000;
     private static int arenaDuration = 30 * 1000;
-    private static Coord arenaLocation = new Coord(495, 481, 1);
-    private static Coord winnerTeleportLocation = new Coord(550, 485, 1);
-    private static Coord loserTeleportLocation = new Coord(550, 490, 1);
-    private static int arenaSize = 23;
+    private static Coord arenaLocation = new Coord(70, 166, 1);
+    private static Coord winnerTeleportLocation = new Coord(88, 190, 0);
+    private static Coord loserTeleportLocation = new Coord(86, 192, 0);
+    private static int arenaSize = 24;
     private static int numRoaches = 50;
     private static boolean arenaIsGoing;
     private static int timeLeft;
@@ -194,7 +194,7 @@ public class GridiaServerDriver {
                 playersInArena.remove(winner);
 
                 playersInArena.forEach(creature -> {
-                    server.moveCreatureTo(creature, loserTeleportLocation, true);
+                    server.moveCreatureTo(creature, loserTeleportLocation.add((int) (Math.random() * 5), (int) (Math.random() * 6), 0), true);
                 });
 
                 server.moveCreatureTo(winner, winnerTeleportLocation, true);
@@ -205,6 +205,7 @@ public class GridiaServerDriver {
             }
             clearArena();
         } else {
+            spawnRoaches();
             sayMessageInArena("Seconds left: " + timeLeft / 1000);
             timeLeft -= arenaTickRate;
         }
@@ -235,9 +236,8 @@ public class GridiaServerDriver {
         });
     }
 
-    private static void startArena() {
-        arenaIsGoing = true;
-        timeLeft = arenaDuration;
+    private static void spawnRoaches() {
+        int numCurrently = getCreaturesInArea(arenaLocation, arenaSize, creature -> "".equals(creature.name)).size();
         Monster roachData = server.contentManager.getMonster(42);
         try {
             roachData = roachData.clone();
@@ -246,10 +246,18 @@ public class GridiaServerDriver {
             Logger.getLogger(GridiaServerDriver.class.getName()).log(Level.SEVERE, null, ex);
         }
         Random random = new Random();
-        for (int i = 0; i < numRoaches; i++) {
+        for (int i = numCurrently; i < numRoaches; i++) {
             Coord loc = arenaLocation.add(random.nextInt(arenaSize), random.nextInt(arenaSize), 0);
-            server.createCreature(roachData, loc);
+            if (server.tileMap.walkable(loc) && server.tileMap.getFloor(loc) != 0) {
+                server.createCreature(roachData, loc);
+            }
         }
+    }
+
+    private static void startArena() {
+        arenaIsGoing = true;
+        timeLeft = arenaDuration;
+        spawnRoaches();
         sayMessageInArena("BEGIN!");
     }
 

