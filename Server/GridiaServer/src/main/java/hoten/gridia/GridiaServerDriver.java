@@ -142,7 +142,7 @@ public class GridiaServerDriver {
         }, 10, 10, TimeUnit.SECONDS);
 
         // hard code the roach quest for the presentation
-        if (mapName.equals("DemoCity")) {
+        if (mapName.equals("demo-city")) {
             Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
                 if (server.anyPlayersOnline()) {
                     List<Creature> playersInArena = getPlayersInArena();
