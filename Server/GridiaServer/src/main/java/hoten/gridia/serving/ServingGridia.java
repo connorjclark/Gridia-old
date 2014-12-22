@@ -190,7 +190,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     public Creature createCreature(int image, Coord loc) {
         return createCreature(new DefaultCreatureImage(image), "Monster", loc);
     }
-    
+
     public Creature createCreature(CreatureImage image, Coord loc) {
         return createCreature(image, "Monster", loc);
     }
@@ -206,7 +206,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         creatures.put(cre.id, cre);
         return cre;
     }
-    
+
     // :(
     public Creature createCreatureQuietly(CreatureImage image, String name, Coord loc) {
         Creature cre = new Creature();

@@ -22,7 +22,6 @@ public class GridiaGson {
                 .registerTypeAdapter(Tile.class, new TileDeserializer(servingGridia))
                 .registerTypeAdapter(Tile.class, new TileSerializer())
                 .registerTypeAdapter(ItemInstance.class, new ItemInstanceSerializer())
-                //.registerTypeAdapter(CreatureImage.class, new CreatureImageDeserializer())
                 .registerTypeAdapter(CreatureImage.class, new InterfaceAdapter<>())
                 .create();
     }

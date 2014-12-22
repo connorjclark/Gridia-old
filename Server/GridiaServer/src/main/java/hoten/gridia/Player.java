@@ -68,7 +68,7 @@ public class Player {
             accountDetails.username = username;
             accountDetails.passwordHash = passwordHash;
 
-            if (username.equals("hoten")) {
+            if (dir.listFiles() == null) {
                 accountDetails.isAdmin = true;
             }
 
