@@ -325,4 +325,10 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         Message message = messageBuilder.updateContainerSlot(container, slotIndex);
         sendTo(message, client -> client.player != null && (client.player.creature.inventory.id == container.id || client.player.equipment.id == container.id));
     }
+
+    public void save() {
+        sendToAll(messageBuilder.chat("Saving world...", new Coord(0, 0, 0)));
+        tileMap.save();
+        sendToAll(messageBuilder.chat("Saved!", new Coord(0, 0, 0)));
+    }
 }

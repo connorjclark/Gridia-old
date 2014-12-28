@@ -3,7 +3,6 @@ package hoten.gridia;
 import hoten.gridia.content.ContentManager;
 import hoten.gridia.content.Item;
 import hoten.gridia.content.ItemInstance;
-import hoten.gridia.content.Monster;
 import hoten.gridia.map.Coord;
 import hoten.gridia.map.TileMap;
 import hoten.gridia.serializers.GridiaGson;
@@ -12,15 +11,9 @@ import hoten.gridia.worldgen.MapGenerator;
 import hoten.serving.fileutils.FileUtils;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Predicate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class GridiaServerDriver {
 
@@ -132,7 +125,7 @@ public class GridiaServerDriver {
         // save
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
             if (server.anyPlayersOnline()) {
-                server.tileMap.save();
+                server.save();
             }
         }, 12, 12, TimeUnit.HOURS);
 
@@ -141,145 +134,14 @@ public class GridiaServerDriver {
             server.grow();
         }, 10, 10, TimeUnit.SECONDS);
 
-        // hard code the roach quest for the presentation
         if (mapName.equals("demo-city")) {
-            Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
-                if (server.anyPlayersOnline()) {
-                    List<Creature> playersInArena = getPlayersInArena();
-
-                    if (arenaIsGoing) {
-                        if (playersInArena.isEmpty()) {
-                            clearArena();
-                        } else {
-                            stepArena();
-                        }
-                    } else {
-                        if (playersInArena.size() >= 1) {
-                            startArena();
-                        }
-                    }
-                }
-            }, 0, arenaTickRate, TimeUnit.MILLISECONDS);
+            RoachQuest roachQuest = new RoachQuest(server);
+            Executors.newScheduledThreadPool(1).scheduleAtFixedRate(roachQuest, 0, roachQuest.arenaTickRate, TimeUnit.MILLISECONDS);
         }
 
         System.out.println("Server started.");
     }
 
-    // hard code the roach quest for the presentation
-    private static int arenaTickRate = 3000;
-    private static int arenaDuration = 30 * 1000;
-    private static Coord arenaLocation = new Coord(70, 166, 1);
-    private static Coord winnerTeleportLocation = new Coord(88, 190, 0);
-    private static Coord loserTeleportLocation = new Coord(86, 192, 0);
-    private static int arenaSize = 24;
-    private static int numRoaches = 50;
-    private static boolean arenaIsGoing;
-    private static int timeLeft;
-
-    private static void stepArena() {
-        if (timeLeft == 0) {
-            List<Creature> playersInArena = getPlayersInArena();
-            if (!playersInArena.isEmpty()) {
-                Creature winner = null;
-                int highestAntenae = 0;
-
-                for (Creature player : playersInArena) {
-                    int amount = removeItemFromInventory(player, 447).quantity;
-                    if (amount >= highestAntenae) {
-                        winner = player;
-                        highestAntenae = amount;
-                    }
-                }
-
-                playersInArena.remove(winner);
-
-                playersInArena.forEach(creature -> {
-                    server.moveCreatureTo(creature, loserTeleportLocation.add((int) (Math.random() * 5), (int) (Math.random() * 6), 0), true);
-                });
-
-                server.moveCreatureTo(winner, winnerTeleportLocation, true);
-
-                server.sendToAll(server.messageBuilder.chat("Game over! Winner: " + winner.name + "\nMost Antenae: " + highestAntenae, winnerTeleportLocation));
-            } else {
-                server.sendToAll(server.messageBuilder.chat("Game over! Winner: None\nMost Antenae: 0", winnerTeleportLocation));
-            }
-            clearArena();
-        } else {
-            spawnRoaches();
-            sayMessageInArena("Seconds left: " + timeLeft / 1000);
-            timeLeft -= arenaTickRate;
-        }
-    }
-
-    private static void sayMessageInArena(String msg) {
-        Coord middleOfArena = arenaLocation.add(arenaSize / 2, arenaSize / 2, 0);
-        server.sendToAll(server.messageBuilder.chat(msg, middleOfArena));
-    }
-
-    private static ItemInstance removeItemFromInventory(Creature creature, int itemId) {
-        ItemInstance item = server.contentManager.createItemInstance(itemId, 0);
-        for (int i = 0; i < creature.inventory.size(); i++) {
-            ItemInstance itemAtSlot = creature.inventory.get(i);
-            if (itemAtSlot.data.id == itemId) {
-                item.quantity += itemAtSlot.quantity;
-                creature.inventory.deleteSlot(i);
-            }
-        }
-        return item;
-    }
-
-    private static void clearArena() {
-        arenaIsGoing = false;
-        List<Creature> monsters = getCreaturesInArea(arenaLocation, arenaSize, creature -> !creature.belongsToPlayer);
-        monsters.forEach(monster -> {
-            server.removeCreature(monster);
-        });
-    }
-
-    private static void spawnRoaches() {
-        int numCurrently = getCreaturesInArea(arenaLocation, arenaSize, creature -> "".equals(creature.name)).size();
-        Monster roachData = server.contentManager.getMonster(42);
-        try {
-            roachData = roachData.clone();
-            roachData.name = "";
-        } catch (CloneNotSupportedException ex) {
-            Logger.getLogger(GridiaServerDriver.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Random random = new Random();
-        for (int i = numCurrently; i < numRoaches; i++) {
-            Coord loc = arenaLocation.add(random.nextInt(arenaSize), random.nextInt(arenaSize), 0);
-            if (server.tileMap.walkable(loc) && server.tileMap.getFloor(loc) != 0) {
-                server.createCreature(roachData, loc);
-            }
-        }
-    }
-
-    private static void startArena() {
-        arenaIsGoing = true;
-        timeLeft = arenaDuration;
-        spawnRoaches();
-        sayMessageInArena("BEGIN!");
-    }
-
-    private static List<Creature> getCreaturesInArea(Coord areaLocation, int size, Predicate<Creature> selector) {
-        List<Creature> creaturesInArea = new ArrayList<>();
-        for (int x = 0; x < size; x++) {
-            for (int y = 0; y < size; y++) {
-                Coord loc = areaLocation.add(x, y, 0);
-                Creature cre = server.tileMap.getCreature(loc);
-                if (cre != null && selector.test(cre)) {
-                    creaturesInArea.add(cre);
-                }
-            }
-        }
-        return creaturesInArea;
-    }
-
-    private static List<Creature> getPlayersInArena() {
-        return getCreaturesInArea(arenaLocation, arenaSize, creature -> creature.belongsToPlayer);
-    }
-
-    // end arena code
     private static void moveMonstersRandomly() {
         server.creatures.values().stream()
                 .filter(cre -> !cre.belongsToPlayer)

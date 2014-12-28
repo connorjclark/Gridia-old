@@ -296,9 +296,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         }
 
         if (msg.equals("!save") && player.accountDetails.isAdmin) {
-            _server.sendToAll(_messageBuilder.chat("Saving world...", player.creature.location));
-            _server.tileMap.save();
-            _server.sendToAll(_messageBuilder.chat("Saved!", player.creature.location));
+            _server.save();
         }
 
         _server.sendToAll(_messageBuilder.chat(player.creature.name + " says: " + msg, player.creature.location));
@@ -532,7 +530,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         String username = data.get("username").getAsString();
         String passwordHash = data.get("passwordHash").getAsString();
         try {
-            doLogin( _server.playerFactory.load(_server, username, passwordHash));
+            doLogin(_server.playerFactory.load(_server, username, passwordHash));
         } catch (Player.PlayerFactory.BadLoginException ex) {
             send(_messageBuilder.genericEventListener(ex.getMessage()));
         }

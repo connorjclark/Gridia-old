@@ -18,6 +18,7 @@ namespace Gridia
             : base(pos)
         {
             Text = "";
+            MaxChars = int.MaxValue;
             TextFieldName = textFieldName;
             _rect.width = width;
             _rect.height = height;
