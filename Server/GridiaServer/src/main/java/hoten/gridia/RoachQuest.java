@@ -4,9 +4,6 @@ import hoten.gridia.content.Monster;
 import hoten.gridia.map.Coord;
 import hoten.gridia.serving.ServingGridia;
 import java.util.List;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 // hard code the roach quest :(
 public class RoachQuest extends Quest {
@@ -86,28 +83,16 @@ public class RoachQuest extends Quest {
 
     private void clearArena() {
         arenaIsGoing = false;
-        List<Creature> monsters = getCreaturesInArea(arenaLocation, arenaSize, creature -> !creature.belongsToPlayer);
+        List<Creature> monsters = getCreaturesInArea(arenaLocation, arenaSize, arenaSize, creature -> !creature.belongsToPlayer);
         monsters.forEach(monster -> {
             _server.removeCreature(monster);
         });
     }
 
     private void spawnRoaches() {
-        int numCurrently = getCreaturesInArea(arenaLocation, arenaSize, creature -> "".equals(creature.name)).size();
-        Monster roachData = _server.contentManager.getMonster(42);
-        try {
-            roachData = roachData.clone();
-            roachData.name = "";
-        } catch (CloneNotSupportedException ex) {
-            Logger.getLogger(GridiaServerDriver.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Random random = new Random();
-        for (int i = numCurrently; i < numRoaches; i++) {
-            Coord loc = arenaLocation.add(random.nextInt(arenaSize), random.nextInt(arenaSize), 0);
-            if (_server.tileMap.walkable(loc) && _server.tileMap.getFloor(loc) != 0) {
-                _server.createCreature(roachData, loc);
-            }
-        }
+        int numCurrently = getCreaturesInArea(arenaLocation, arenaSize, arenaSize, creature -> "".equals(creature.name)).size();
+        Monster roachData = cloneMonsterAndStripName(_server.contentManager.getMonster(42));
+        spawnInArea(roachData, numRoaches - numCurrently, arenaLocation, arenaSize, arenaSize);
     }
 
     private void startArena() {
@@ -118,6 +103,6 @@ public class RoachQuest extends Quest {
     }
 
     private List<Creature> getPlayersInArena() {
-        return getCreaturesInArea(arenaLocation, arenaSize, creature -> creature.belongsToPlayer);
+        return getPlayersInArea(arenaLocation, arenaSize, arenaSize);
     }
 }

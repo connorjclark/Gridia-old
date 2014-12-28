@@ -68,8 +68,10 @@ public class Player {
             accountDetails.username = username;
             accountDetails.passwordHash = passwordHash;
 
+            int invSize = 40;
             if (dir.listFiles() == null) {
                 accountDetails.isAdmin = true;
+                invSize = 60;
             }
 
             Creature creature = server.createCreatureForPlayer(username);
@@ -86,7 +88,7 @@ public class Player {
                         return server.contentManager.createItemInstance(i, quantity);
                     })
                     .collect(Collectors.toList()));
-            while (inv.size() < 30) {
+            while (inv.size() < invSize) {
                 inv.add(server.contentManager.createItemInstance(0));
             }
             creature.inventory = server.containerFactory.create(ContainerType.Inventory, inv, true);

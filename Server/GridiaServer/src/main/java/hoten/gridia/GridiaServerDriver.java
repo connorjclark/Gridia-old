@@ -137,6 +137,9 @@ public class GridiaServerDriver {
         if (mapName.equals("demo-city")) {
             RoachQuest roachQuest = new RoachQuest(server);
             Executors.newScheduledThreadPool(1).scheduleAtFixedRate(roachQuest, 0, roachQuest.arenaTickRate, TimeUnit.MILLISECONDS);
+
+            RandomDungeonQuest randomDungeonQuest = new RandomDungeonQuest(server);
+            Executors.newScheduledThreadPool(1).scheduleAtFixedRate(randomDungeonQuest, 0, randomDungeonQuest.arenaTickRate, TimeUnit.MILLISECONDS);
         }
 
         System.out.println("Server started on port 1234."); // :(

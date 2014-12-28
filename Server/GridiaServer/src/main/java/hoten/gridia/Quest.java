@@ -1,11 +1,15 @@
 package hoten.gridia;
 
 import hoten.gridia.content.ItemInstance;
+import hoten.gridia.content.Monster;
 import hoten.gridia.map.Coord;
 import hoten.gridia.serving.ServingGridia;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.function.Predicate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class Quest implements Runnable {
 
@@ -15,10 +19,10 @@ public abstract class Quest implements Runnable {
         _server = server;
     }
 
-    protected List<Creature> getCreaturesInArea(Coord areaLocation, int size, Predicate<Creature> selector) {
+    protected List<Creature> getCreaturesInArea(Coord areaLocation, int width, int height, Predicate<Creature> selector) {
         List<Creature> creaturesInArea = new ArrayList<>();
-        for (int x = 0; x < size; x++) {
-            for (int y = 0; y < size; y++) {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
                 Coord loc = areaLocation.add(x, y, 0);
                 Creature cre = _server.tileMap.getCreature(loc);
                 if (cre != null && selector.test(cre)) {
@@ -39,5 +43,30 @@ public abstract class Quest implements Runnable {
             }
         }
         return item;
+    }
+
+    protected Monster cloneMonsterAndStripName(Monster monster) {
+        try {
+            Monster cloned = monster.clone();
+            cloned.name = "";
+            return cloned;
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(GridiaServerDriver.class.getName()).log(Level.SEVERE, null, ex);
+            return monster;
+        }
+    }
+
+    protected void spawnInArea(Monster monster, int amount, Coord location, int width, int height) {
+        Random random = new Random();
+        for (int i = 0; i < amount; i++) {
+            Coord loc = location.add(random.nextInt(width), random.nextInt(height), 0);
+            if (_server.tileMap.walkable(loc) && _server.tileMap.getFloor(loc) != 0) {
+                _server.createCreature(monster, loc);
+            }
+        }
+    }
+    
+    protected List<Creature> getPlayersInArea(Coord location, int width, int height) {
+        return getCreaturesInArea(location, width, height, creature -> creature.belongsToPlayer);
     }
 }
