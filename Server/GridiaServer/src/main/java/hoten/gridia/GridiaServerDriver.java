@@ -139,7 +139,7 @@ public class GridiaServerDriver {
             Executors.newScheduledThreadPool(1).scheduleAtFixedRate(roachQuest, 0, roachQuest.arenaTickRate, TimeUnit.MILLISECONDS);
         }
 
-        System.out.println("Server started.");
+        System.out.println("Server started on port 1234."); // :(
     }
 
     private static void moveMonstersRandomly() {
