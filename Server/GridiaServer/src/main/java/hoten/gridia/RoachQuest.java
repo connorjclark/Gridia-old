@@ -1,20 +1,16 @@
 package hoten.gridia;
 
-import hoten.gridia.content.ItemInstance;
 import hoten.gridia.content.Monster;
 import hoten.gridia.map.Coord;
 import hoten.gridia.serving.ServingGridia;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-// hard code the roach quest
-public class RoachQuest implements Runnable {
+// hard code the roach quest :(
+public class RoachQuest extends Quest {
 
-    private final ServingGridia _server;
     public final int arenaTickRate = 3000;
     private final int arenaDuration = 30 * 1000;
     private final Coord arenaLocation = new Coord(70, 166, 1);
@@ -26,7 +22,7 @@ public class RoachQuest implements Runnable {
     private int timeLeft;
 
     public RoachQuest(ServingGridia server) {
-        _server = server;
+        super(server);
     }
 
     @Override
@@ -88,18 +84,6 @@ public class RoachQuest implements Runnable {
         _server.sendToAll(_server.messageBuilder.chat(msg, middleOfArena));
     }
 
-    private ItemInstance removeItemFromInventory(Creature creature, int itemId) {
-        ItemInstance item = _server.contentManager.createItemInstance(itemId, 0);
-        for (int i = 0; i < creature.inventory.size(); i++) {
-            ItemInstance itemAtSlot = creature.inventory.get(i);
-            if (itemAtSlot.data.id == itemId) {
-                item.quantity += itemAtSlot.quantity;
-                creature.inventory.deleteSlot(i);
-            }
-        }
-        return item;
-    }
-
     private void clearArena() {
         arenaIsGoing = false;
         List<Creature> monsters = getCreaturesInArea(arenaLocation, arenaSize, creature -> !creature.belongsToPlayer);
@@ -131,20 +115,6 @@ public class RoachQuest implements Runnable {
         timeLeft = arenaDuration;
         spawnRoaches();
         sayMessageInArena("BEGIN!");
-    }
-
-    private List<Creature> getCreaturesInArea(Coord areaLocation, int size, Predicate<Creature> selector) {
-        List<Creature> creaturesInArea = new ArrayList<>();
-        for (int x = 0; x < size; x++) {
-            for (int y = 0; y < size; y++) {
-                Coord loc = areaLocation.add(x, y, 0);
-                Creature cre = _server.tileMap.getCreature(loc);
-                if (cre != null && selector.test(cre)) {
-                    creaturesInArea.add(cre);
-                }
-            }
-        }
-        return creaturesInArea;
     }
 
     private List<Creature> getPlayersInArena() {
