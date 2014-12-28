@@ -12,8 +12,6 @@ UI
 
 Winter break
   Get game ready for demo launch
-    Random monster arena
-      enter a dungeon, random monsters spawn
     Bar
     Playtests
   Set up forums, chatroom

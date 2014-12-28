@@ -99,11 +99,11 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         cre.life -= lifePoints;
         if (cre.life <= 0) {
             sendToClientsWithAreaLoaded(messageBuilder.animation(45, cre.location), cre.location);
-            dropCreatureInventory(cre);
             addItemNear(cre.location, contentManager.createItemInstance(1022), 10);
             if (cre.belongsToPlayer) {
                 moveCreatureTo(cre, tileMap.getDefaultPlayerSpawn(), true);
             } else {
+                dropCreatureInventory(cre);
                 removeCreature(cre);
             }
         }

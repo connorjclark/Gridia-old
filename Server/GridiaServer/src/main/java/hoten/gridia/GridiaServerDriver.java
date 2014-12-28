@@ -134,6 +134,16 @@ public class GridiaServerDriver {
             server.grow();
         }, 10, 10, TimeUnit.SECONDS);
 
+        // lava
+        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
+            server.creatures.values().forEach(creature -> {
+                int floor = server.tileMap.getFloor(creature.location);
+                if (floor == 16 || floor == 48) {
+                    server.hurtCreature(creature, 1);
+                }
+            });
+        }, 1, 1, TimeUnit.SECONDS);
+
         if (mapName.equals("demo-city")) {
             RoachQuest roachQuest = new RoachQuest(server);
             Executors.newScheduledThreadPool(1).scheduleAtFixedRate(roachQuest, 0, roachQuest.arenaTickRate, TimeUnit.MILLISECONDS);
