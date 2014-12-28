@@ -17,30 +17,41 @@ namespace Gridia
         public static AutoResetEvent gameInitWaitHandle = new AutoResetEvent(false);
 
         private RenderableContainer _displayList;
+        private String ErrorMessage { get; set; }
 
         public void Start()
         {
             _displayList = new RenderableContainer(Vector2.zero);
 
-            var ipInput = new TextField(Vector2.zero, "ipInput", 300, 20);
-            _displayList.AddChild(ipInput);
-            ipInput.Text = "localhost";
+            _displayList.AddChild(CreateConnectButton(Vector2.zero, "localhost"));
+            _displayList.AddChild(CreateConnectButton(new Vector2(0, 30), "www.hotengames.com"));
 
-            var connectButton = new Button(Vector2.zero, "Connect");
+            var connectButton = new Button(new Vector2(0, 60), "Connect to other ip");
             _displayList.AddChild(connectButton);
-            connectButton.Y = 30;
 
-            var localServerButton = new Button(Vector2.zero, "Host local server");
+            var ipInput = new TextField(new Vector2(20, 90), "ipInput", 300, 20);
+            _displayList.AddChild(ipInput);
+            ipInput.Text = "enter ip here";
+
+            var localServerButton = new Button(new Vector2(0, 120), "Host local server");
             _displayList.AddChild(localServerButton);
-            localServerButton.Y = 60;
 
             connectButton.OnClick = () =>
             {
                 Connect(ipInput.Text, 1234);
-                SceneManager.LoadScene("ServerTitlescreen");
             };
 
             localServerButton.OnClick = HostLocal;
+        }
+
+        private Button CreateConnectButton(Vector2 location, String ip)
+        {
+            var connectButton = new Button(location, "Connect to " + ip);
+            connectButton.OnClick = () =>
+            {
+                Connect(ip, 1234);
+            };
+            return connectButton;
         }
 
         public void HostLocal()
@@ -67,17 +78,40 @@ namespace Gridia
             _displayList.X = (Screen.width - _displayList.Width) / 2;
             _displayList.Y = (Screen.height - _displayList.Height) / 2;
             _displayList.Render();
+            
+            // :(
+            if (ErrorMessage != null)
+            {
+                var width = 400;
+                var height = 75;
+                var x = (Screen.width - width) / 2;
+                var y = (Screen.height - height) / 2;
+                GUI.Window(0, new Rect(x, y, width, height), id =>
+                {
+                    if (GUI.Button(new Rect(200 - 50 / 2, 30, 50, 20), "OK"))
+                    {
+                        ErrorMessage = null;
+                    }
+                }, ErrorMessage);
+            }
         }
 
         private void Connect(String ip, int port)
         {
-            Debug.Log("connecting");
             var game = new GridiaGame();
-            Locator.Provide(game);
-            ConnectionToGridiaServerHandler conn = new ConnectionToGridiaServerHandler(game, ip, port);
-            Locator.Provide(conn);
-            conn.Start();
-            connectedWaitHandle.WaitOne();
+            try
+            {
+                var conn = new ConnectionToGridiaServerHandler(game, ip, port);
+                Locator.Provide(game);
+                Locator.Provide(conn);
+                conn.Start();
+                connectedWaitHandle.WaitOne();
+                SceneManager.LoadScene("ServerTitlescreen");
+            }
+            catch (SocketException ex)
+            {
+                ErrorMessage = "Could not connect to " + ip + " at port " + port;
+            }
         }
     }
 }
