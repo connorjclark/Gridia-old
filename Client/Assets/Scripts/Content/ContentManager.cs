@@ -17,11 +17,12 @@ namespace Gridia
         
         public ContentManager(String worldName)
         {
-            items = new ContentLoader<Item>().Load(worldName + "/content/items.json");
-            floors = new ContentLoader<Floor>().Load(worldName + "/content/floors.json");
-            monsters = new ContentLoader<Monster>().Load(worldName + "/content/monsters.json");
-            animations = new ContentLoader<GridiaAnimation>().Load(worldName + "/content/animations.json");
-            uses = new ContentLoader<ItemUse>().Load(worldName + "/content/itemuses.json");
+            var clientDataFolder = @"worlds\" + worldName + @"\clientdata"; // :(
+            items = new ContentLoader<Item>().Load(clientDataFolder + "/content/items.json");
+            floors = new ContentLoader<Floor>().Load(clientDataFolder + "/content/floors.json");
+            monsters = new ContentLoader<Monster>().Load(clientDataFolder + "/content/monsters.json");
+            animations = new ContentLoader<GridiaAnimation>().Load(clientDataFolder + "/content/animations.json");
+            uses = new ContentLoader<ItemUse>().Load(clientDataFolder + "/content/itemuses.json");
         }
 
         public Item GetItem(int id)

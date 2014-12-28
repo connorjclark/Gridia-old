@@ -94,7 +94,7 @@ public class GridiaServerDriver {
 
     private static void loadWorld(File world, String mapName) throws IOException {
         File clientDataDir = new File(world, "clientdata");
-        String localDataDirName = world.getName();
+        String localDataDirName = "worlds/" + world.getName() + "/clientdata";
         server = new ServingGridia(world, mapName, port, clientDataDir, localDataDirName);
         server.tileMap.loadAll(); // :(
         server.startServer();

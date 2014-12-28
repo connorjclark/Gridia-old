@@ -21,17 +21,18 @@ namespace Gridia
 
         public TextureManager (String worldName)
         {
-            Floors = LoadTextures(worldName + "/floors/floors", 3); // :(
-            Items = LoadTextures(worldName + "/items/items", 27);
-            Creatures = LoadTextures(worldName + "/players/players", 8);
-            Templates = LoadTextures(worldName + "/templates/template", 1);
-            Animations = LoadTextures(worldName + "/animations/animation", 2);
-            Heads = LoadTextures(worldName + "/players/head", 2);
-            Chests = LoadTextures(worldName + "/players/chest", 1);
-            Legs = LoadTextures(worldName + "/players/legs", 1);
-            Arms = LoadTextures(worldName + "/players/arms", 1);
-            Weapons = LoadTextures(worldName + "/players/weapon", 1);
-            Shields = LoadTextures(worldName + "/players/shield", 1);
+            var clientDataFolder = @"worlds\" + worldName + @"\clientdata"; // :(
+            Floors = LoadTextures(clientDataFolder + "/floors/floors", 3); // :(
+            Items = LoadTextures(clientDataFolder + "/items/items", 27);
+            Creatures = LoadTextures(clientDataFolder + "/players/players", 8);
+            Templates = LoadTextures(clientDataFolder + "/templates/template", 1);
+            Animations = LoadTextures(clientDataFolder + "/animations/animation", 2);
+            Heads = LoadTextures(clientDataFolder + "/players/head", 2);
+            Chests = LoadTextures(clientDataFolder + "/players/chest", 1);
+            Legs = LoadTextures(clientDataFolder + "/players/legs", 1);
+            Arms = LoadTextures(clientDataFolder + "/players/arms", 1);
+            Weapons = LoadTextures(clientDataFolder + "/players/weapon", 1);
+            Shields = LoadTextures(clientDataFolder + "/players/shield", 1);
         }
 
         private List<Texture> LoadTextures(String prefix, int numTextures)

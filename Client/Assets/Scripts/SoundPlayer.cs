@@ -64,7 +64,8 @@ namespace Gridia
 
         public void QueueRandomSongs() 
         {
-            var songs = Directory.GetFiles(GridiaConstants.WORLD_NAME + @"\sound\music", "*.ogg", SearchOption.AllDirectories)
+            var clientDataFolder = @"worlds\" + GridiaConstants.WORLD_NAME + @"\clientdata"; // :(
+            var songs = Directory.GetFiles(clientDataFolder + @"\sound\music", "*.ogg", SearchOption.AllDirectories)
                 .ToList()
                 .Select(fullSongPath => Path.GetFileNameWithoutExtension(fullSongPath))
                 .ToList();
@@ -118,7 +119,8 @@ namespace Gridia
 
         private String SearchForFile(String name) 
         {
-            foreach (string d in Directory.GetFiles(GridiaConstants.WORLD_NAME + @"\sound", "*.*", SearchOption.AllDirectories))
+            var clientDataFolder = @"worlds\" + GridiaConstants.WORLD_NAME + @"\clientdata"; // :(
+            foreach (string d in Directory.GetFiles(clientDataFolder + @"\sound", "*.*", SearchOption.AllDirectories))
             {
                 if (String.Equals(Path.GetFileNameWithoutExtension(d), name, StringComparison.OrdinalIgnoreCase))
                 {

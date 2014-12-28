@@ -65,7 +65,7 @@ $RECYCLE.BIN/
 /Server/GridiaServer/target/
 
 # Gridia
-Client/TestWorld/
+Client/worlds/
 Server/GridiaServer/TestWorld/json-world/
 *.meta
 *.suo

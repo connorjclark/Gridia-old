@@ -55,7 +55,6 @@ namespace Gridia
             else
             {
                 processInfo.Arguments = "-jar server.jar";
-                processInfo.WorkingDirectory = "server/";
             }
 
             System.Diagnostics.Process proc = new System.Diagnostics.Process();

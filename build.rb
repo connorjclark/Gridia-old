@@ -27,7 +27,7 @@ linux64 = "-buildLinux64Player #{build_dir}/gridia-#{build_name}-linux64/client.
 
 puts 'building clients for each platform'
 unity = '"%PROGRAMFILES%/Unity/Editor/Unity.exe"'
-`#{unity} -batchmode -quit -projectPath #{base_dir}/Client #{win32} #{win64} #{osx} #{linux32} #{linux64}`
+`#{unity} -batchmode -quit -projectPath #{base_dir}/Client #{win32}` #{win64} #{osx} #{linux32} #{linux64}`
 
 puts 'running maven'
 `cd Server/GridiaServer/ & mvn clean compile assembly:single`
@@ -39,7 +39,7 @@ run_command "xcopy Server/GridiaServer/worlds/demo-world/clientdata #{server_dir
 
 puts 'copying server to all platforms'
 for_each_platform do |f|
-  run_command "xcopy #{server_dir} #{f}/server //E //i"
+  run_command "xcopy #{server_dir} #{f} //E //i"
 end
 
 puts 'zipping standalone server'
