@@ -9,6 +9,8 @@ namespace Gridia
     public class TextField : Renderable
     {
         public String Text { get; set; }
+        public bool PasswordField { get; set; }
+        public int MaxChars { get; set; }
         public String TextFieldName { get; set; }
         public Action<String> OnEnter { private get; set; }
 
@@ -25,7 +27,14 @@ namespace Gridia
         {
             base.Render();
             GUI.SetNextControlName(TextFieldName);
-            Text = GUI.TextField(Rect, Text);
+            if (PasswordField)
+            {
+                Text = GUI.PasswordField(Rect, Text, '*', MaxChars);
+            }
+            else
+            {
+                Text = GUI.TextField(Rect, Text, MaxChars);
+            }
             if (Text != "" && Event.current.type == EventType.keyDown && Event.current.character == '\n')
             {
                 OnEnter(Text);

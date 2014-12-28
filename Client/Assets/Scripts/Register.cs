@@ -21,22 +21,26 @@ namespace Gridia
         {
             _displayList = new RenderableContainer(Vector2.zero);
 
-            var usernameInput = new TextField(Vector2.zero, "usernameInput", 300, 20);
+            var usernameLabel = new Label(Vector2.zero, "Username: ");
+            _displayList.AddChild(usernameLabel);
+
+            var usernameInput = new TextField(new Vector2(60, 0), "usernameInput", 300, 20);
+            usernameInput.MaxChars = 20;
             usernameInput.Text = SceneManager.GetArguement<String>("username");
             _displayList.AddChild(usernameInput);
 
-            var passwordInput = new TextField(Vector2.zero, "passwordInput", 300, 20);
-            passwordInput.Y = 30;
+            var passwordLabel = new Label(new Vector2(0, 30), "Password: ");
+            _displayList.AddChild(passwordLabel);
+
+            var passwordInput = new TextField(new Vector2(60, 30), "passwordInput", 300, 20);
+            passwordInput.PasswordField = true;
             passwordInput.Text = SceneManager.GetArguement<String>("password");
             _displayList.AddChild(passwordInput);
 
-            var registerButton = new Button(Vector2.zero, "Create Account");
-            registerButton.Y = 60;
+            var registerButton = new Button(new Vector2(0, 60), "Create Account");
             _displayList.AddChild(registerButton);
 
-            var backButton = new Button(Vector2.zero, "Cancel");
-            backButton.X = 120;
-            backButton.Y = 60;
+            var backButton = new Button(new Vector2(120, 60), "Cancel");
             _displayList.AddChild(backButton);
 
             registerButton.OnClick = () =>
