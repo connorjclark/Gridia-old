@@ -6,7 +6,7 @@ namespace Gridia
     public class ContentManager
     {
         public int ItemCount { get { return items.Count; } }
-        public int FloorCount { get { return 300; } } // :(
+        public int FloorCount { get { return floors.Count; } }
         public int MonsterCount { get { return monsters.Count; } }
         
         private readonly List<Item> items;

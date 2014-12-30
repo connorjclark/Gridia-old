@@ -64,7 +64,7 @@ public class TileMap {
             for (int y = 0; y < sectorsAcross; y++) {
                 for (int z = 0; z < depth; z++) {
                     Sector sector = _sectors[x][y][z];
-                    if (sector != null) {
+                    if (sector == null) {
                         _sectors[x][y][z] = _sectorLoader.load(map, sectorSize, x, y, z);
                     }
                 }

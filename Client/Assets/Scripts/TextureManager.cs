@@ -22,7 +22,7 @@ namespace Gridia
         public TextureManager (String worldName)
         {
             var clientDataFolder = @"worlds\" + worldName + @"\clientdata"; // :(
-            Floors = LoadTextures(clientDataFolder + "/floors/floors", 3); // :(
+            Floors = LoadTextures(clientDataFolder + "/floors/floors", 6); // :(
             Items = LoadTextures(clientDataFolder + "/items/items", 27);
             Creatures = LoadTextures(clientDataFolder + "/players/players", 8);
             Templates = LoadTextures(clientDataFolder + "/templates/template", 1);

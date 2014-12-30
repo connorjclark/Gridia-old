@@ -296,16 +296,23 @@ namespace Gridia
             result.Add(new Layer(
                 "Floor layer",
                 this,
-                tile => {
-                    if (tile.Floor == 0) {
+                tile =>
+                {
+                    if (tile.Floor == 0)
+                    {
                         return -2;
                     }
-                    if (tile.Floor == 1) {
+                    if (tile.Floor == 1)
+                    {
                         return -3;
                     }
                     return tile.Floor;
                 },
-                data => _textureManager.Floors[data / 100]
+                data =>
+                {
+                    if (data / 100 >= _textureManager.Floors.Count) Debug.Log(data);
+                 return   _textureManager.Floors[data / 100];
+                }
             ));
 
             result.Add(new Layer(
