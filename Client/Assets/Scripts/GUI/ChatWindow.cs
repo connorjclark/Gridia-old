@@ -24,9 +24,9 @@ namespace Gridia
 
             ChatArea.Text = @"Type below to chat!
 
-Press ESCAPE once to unfocus the chat box, and again to hide the chat.
-
 Press TAB once to show the chat, and again to set focus on it.
+
+Press ESCAPE once to unfocus the chat box, and again to hide the chat.
 
 To pick up an item, either drag it to your player/inventory,
 Or, use the arrow keys to select, and press SHIFT

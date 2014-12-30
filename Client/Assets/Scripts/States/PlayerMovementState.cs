@@ -37,7 +37,7 @@ namespace Gridia
 
                 if (floor == 1 && Locator.Get<InventoryWindow>().HasRaft())
                 {
-                    timeForMovement = baseTime;
+                    timeForMovement = baseTime / 2;
                     onRaft = true;
                 }
 
