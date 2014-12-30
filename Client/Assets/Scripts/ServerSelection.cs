@@ -33,8 +33,11 @@ namespace Gridia
             _displayList.AddChild(ipInput);
             ipInput.Text = "enter ip here";
 
-            var localServerButton = new Button(new Vector2(0, 120), "Host local server");
+            var localServerButton = new Button(new Vector2(0, 120), "Host local server*");
             _displayList.AddChild(localServerButton);
+
+            var java8WarningLabel = new Label(new Vector2(0, 150), "*To host a server, make sure you hava Java 8 installed and in your classpath!");
+            _displayList.AddChild(java8WarningLabel);
 
             connectButton.OnClick = () =>
             {
