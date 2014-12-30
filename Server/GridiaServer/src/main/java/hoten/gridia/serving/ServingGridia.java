@@ -40,6 +40,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     public final PlayerFactory playerFactory;
     public final ContainerFactory containerFactory;
     public final String worldName;
+    public final String version = "alpha-1.0";
 
     public ServingGridia(File world, String mapName, int port, File clientDataFolder, String localDataFolderName) throws IOException {
         super(port, new GridiaProtocols(), clientDataFolder, localDataFolderName);

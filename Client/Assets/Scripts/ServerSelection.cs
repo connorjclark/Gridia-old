@@ -17,10 +17,12 @@ namespace Gridia
         public static AutoResetEvent gameInitWaitHandle = new AutoResetEvent(false);
 
         private RenderableContainer _displayList;
-        private String ErrorMessage { get; set; }
+        public String ErrorMessage { get; set; }
 
         public void Start()
         {
+            Locator.Provide(this);
+
             _displayList = new RenderableContainer(Vector2.zero);
 
             _displayList.AddChild(CreateConnectButton(Vector2.zero, "localhost"));
@@ -85,7 +87,7 @@ namespace Gridia
             // :(
             if (ErrorMessage != null)
             {
-                var width = 400;
+                var width = 600;
                 var height = 75;
                 var x = (Screen.width - width) / 2;
                 var y = (Screen.height - height) / 2;
@@ -109,7 +111,10 @@ namespace Gridia
                 Locator.Provide(conn);
                 conn.Start();
                 connectedWaitHandle.WaitOne();
-                SceneManager.LoadScene("ServerTitlescreen");
+                if (ErrorMessage == null)
+                {
+                    SceneManager.LoadScene("ServerTitlescreen");
+                }
             }
             catch (SocketException ex)
             {

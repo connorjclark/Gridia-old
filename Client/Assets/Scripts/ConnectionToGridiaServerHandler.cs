@@ -53,11 +53,16 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         switch ((GridiaProtocols.Clientbound)type)
         {
             case GridiaProtocols.Clientbound.Initialize:
+                Debug.Log(data);
                 GridiaConstants.WORLD_NAME = (String)data["worldName"];
                 GridiaConstants.SIZE = (int)data["size"];
                 GridiaConstants.DEPTH = (int)data["depth"];
                 GridiaConstants.SECTOR_SIZE = (int)data["sectorSize"];
                 GridiaConstants.SERVER_TIME_OFFSET = getSystemTime() - (long)data["time"];
+                if (!GridiaConstants.VERSION.Equals((String)data["version"]))
+                {
+                    Locator.Get<ServerSelection>().ErrorMessage = "Incompatible client. Client version = " + GridiaConstants.VERSION + ". Server version = " + (String)data["version"];
+                }
                 ServerSelection.connectedWaitHandle.Set(); // :(
                 break;
             case GridiaProtocols.Clientbound.AddCreature:

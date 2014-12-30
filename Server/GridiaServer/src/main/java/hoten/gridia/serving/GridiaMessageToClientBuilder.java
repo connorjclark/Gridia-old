@@ -121,10 +121,11 @@ public class GridiaMessageToClientBuilder {
                 .build();
     }
 
-    public Message initialize(String worldName, int size, int depth, int sectorSize) {
+    public Message initialize(String version, String worldName, int size, int depth, int sectorSize) {
         return new JsonMessageBuilder()
                 .protocol(outbound(Initialize))
                 .set("time", System.currentTimeMillis())
+                .set("version", version)
                 .set("worldName", worldName)
                 .set("size", size)
                 .set("depth", depth)

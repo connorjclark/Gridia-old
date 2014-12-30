@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>hoten</groupId>
     <artifactId>GridiaServer</artifactId>
-    <version>1.0-alpha</version>
+    <version>alpha-1.0</version>
     <packaging>jar</packaging>
     <build>
         <plugins>

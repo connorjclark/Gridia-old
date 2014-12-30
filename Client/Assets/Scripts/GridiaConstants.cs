@@ -14,7 +14,7 @@ namespace Gridia
         public static int SIZE, DEPTH, SECTOR_SIZE; // :(
         public static long SERVER_TIME_OFFSET;
         public static bool IS_ADMIN;
-        public static String VERSION = "1.0-alpha"; // :(
+        public static String VERSION = "alpha-1.0"; // :(
         public static String WORLD_NAME;
     }
 }

@@ -43,7 +43,7 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
     @Override
     protected void onConnectionSettled() throws IOException {
         System.out.println("Client has connected.");
-        send(_messageBuilder.initialize(_server.worldName, _server.tileMap.size, _server.tileMap.depth, _server.tileMap.sectorSize));
+        send(_messageBuilder.initialize(_server.version, _server.worldName, _server.tileMap.size, _server.tileMap.depth, _server.tileMap.sectorSize));
     }
 
     @Override
