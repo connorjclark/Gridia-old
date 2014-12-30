@@ -104,10 +104,16 @@ public class ConnectionToGridiaClientHandler extends SocketHandler {
         super.close();
         if (player != null) {
             _server.removeCreature(player.creature);
+            save();
+            _server.sendToAll(_messageBuilder.chat(player.creature.name + " has left the building.", player.creature.location));
+        }
+    }
+    
+    public void save() {
+        if (player != null) {
             _server.playerFactory.save(player);
             _server.containerFactory.save(player.creature.inventory);
             _server.containerFactory.save(player.equipment);
-            _server.sendToAll(_messageBuilder.chat(player.creature.name + " has left the building.", player.creature.location));
         }
     }
 

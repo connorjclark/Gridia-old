@@ -3,6 +3,7 @@ package hoten.gridia;
 import com.google.gson.Gson;
 import hoten.gridia.Container.ContainerType;
 import hoten.gridia.content.ItemInstance;
+import hoten.gridia.map.Coord;
 import hoten.gridia.serializers.GridiaGson;
 import hoten.gridia.serving.ServingGridia;
 import hoten.serving.fileutils.FileUtils;
@@ -48,7 +49,7 @@ public class Player {
                 throw new BadLoginException("Bad user/password");
             }
 
-            Creature creature = server.createCreatureForPlayer(username);
+            Creature creature = server.createCreatureForPlayer(username, accountDetails.location);
             creature.inventory = server.containerFactory.load(accountDetails.inventoryId);
             Container equipment = server.containerFactory.load(accountDetails.equipmentId);
 
@@ -67,6 +68,7 @@ public class Player {
             AccountDetails accountDetails = new AccountDetails();
             accountDetails.username = username;
             accountDetails.passwordHash = passwordHash;
+            accountDetails.location = server.tileMap.getDefaultPlayerSpawn();
 
             int invSize = 40;
             if (dir.listFiles() == null) {
@@ -74,7 +76,7 @@ public class Player {
                 invSize = 60;
             }
 
-            Creature creature = server.createCreatureForPlayer(username);
+            Creature creature = server.createCreatureForPlayer(username, accountDetails.location);
 
             // fake an inventory
             List<ItemInstance> inv = new ArrayList();
@@ -115,6 +117,7 @@ public class Player {
         }
 
         public void save(Player player) {
+            player.accountDetails.location = player.creature.location;
             FileUtils.saveAs(new File(dir, player.accountDetails.username + ".json"), new Gson().toJson(player.accountDetails).getBytes());
         }
     }
@@ -134,6 +137,7 @@ public class Player {
         public String username, passwordHash;
         public int inventoryId, equipmentId;
         public boolean isAdmin;
+        public Coord location;
 
         private AccountDetails() {
         }

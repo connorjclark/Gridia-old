@@ -217,13 +217,13 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         return cre;
     }
 
-    public Creature createCreatureForPlayer(String name) {
+    public Creature createCreatureForPlayer(String name, Coord location) {
         CustomPlayerImage image = new CustomPlayerImage();
         image.bareArms = (int) (Math.random() * 10);
         image.bareHead = (int) (Math.random() * 100);
         image.bareChest = (int) (Math.random() * 10);
         image.bareLegs = (int) (Math.random() * 10);
-        Creature cre = createCreature(image, name, tileMap.getDefaultPlayerSpawn());
+        Creature cre = createCreature(image, name, location);
         cre.belongsToPlayer = true;
         return cre;
     }
@@ -329,6 +329,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     public void save() {
         sendToAll(messageBuilder.chat("Saving world...", new Coord(0, 0, 0)));
         tileMap.save();
+        _clients.forEach(client -> client.save());
         sendToAll(messageBuilder.chat("Saved!", new Coord(0, 0, 0)));
     }
 }

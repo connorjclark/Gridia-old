@@ -157,7 +157,7 @@ public class GridiaServerDriver {
 
     private static void moveMonstersRandomly() {
         server.creatures.values().stream()
-                .filter(cre -> !cre.belongsToPlayer)
+                .filter(cre -> !cre.belongsToPlayer && !cre.name.equals("Stacy the Mayor"))
                 .forEach(cre -> {
                     if (Math.random() > 0.5) {
                         server.moveCreatureRandomly(cre);
