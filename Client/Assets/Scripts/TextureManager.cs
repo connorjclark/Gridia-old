@@ -31,7 +31,7 @@ namespace Gridia
             Chests = LoadTextures(clientDataFolder + "/players/chest", 1);
             Legs = LoadTextures(clientDataFolder + "/players/legs", 1);
             Arms = LoadTextures(clientDataFolder + "/players/arms", 1);
-            Weapons = LoadTextures(clientDataFolder + "/players/weapon", 1);
+            Weapons = LoadTextures(clientDataFolder + "/players/weapon", 2);
             Shields = LoadTextures(clientDataFolder + "/players/shield", 1);
         }
 

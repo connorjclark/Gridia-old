@@ -127,7 +127,7 @@ public class GridiaServerDriver {
             if (server.anyPlayersOnline()) {
                 server.save();
             }
-        }, 12, 12, TimeUnit.HOURS);
+        }, 5, 5, TimeUnit.MINUTES);
 
         // grow items
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
