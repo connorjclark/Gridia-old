@@ -10,27 +10,18 @@ import hoten.gridia.map.Coord;
 import hoten.gridia.map.Sector;
 import hoten.gridia.map.Tile;
 import hoten.gridia.serializers.GridiaGson;
-import static hoten.gridia.serving.GridiaProtocols.Clientbound.*;
 import hoten.serving.message.BinaryMessageBuilder;
 import hoten.serving.message.JsonMessageBuilder;
 import hoten.serving.message.Message;
-import hoten.serving.message.Protocols.Protocol;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 public class GridiaMessageToClientBuilder {
 
-    private final Function<Enum, Protocol> _outbound;
-
-    public GridiaMessageToClientBuilder(Function<Enum, Protocol> outbound) {
-        _outbound = outbound;
-    }
-
     public Message addCreature(Creature cre) {
         return new JsonMessageBuilder()
-                .protocol(outbound(AddCreature))
+                .type("AddCreature")
                 .set("id", cre.id)
                 .set("image", cre.image)
                 .set("name", cre.name)
@@ -40,7 +31,7 @@ public class GridiaMessageToClientBuilder {
 
     public Message renameCreature(Creature cre) {
         return new JsonMessageBuilder()
-                .protocol(outbound(RenameCreature))
+                .type("RenameCreature")
                 .set("id", cre.id)
                 .set("name", cre.name)
                 .build();
@@ -48,7 +39,7 @@ public class GridiaMessageToClientBuilder {
 
     public Message moveCreature(Creature cre, int timeoffset, boolean isTeleport, boolean onRaft) {
         return new JsonMessageBuilder()
-                .protocol(outbound(MoveCreature))
+                .type("MoveCreature")
                 .set("time", System.currentTimeMillis() + timeoffset)
                 .set("id", cre.id)
                 .set("loc", cre.location)
@@ -59,7 +50,7 @@ public class GridiaMessageToClientBuilder {
 
     public Message removeCreature(Creature cre) {
         return new JsonMessageBuilder()
-                .protocol(outbound(RemoveCreature))
+                .type("RemoveCreature")
                 .set("id", cre.id)
                 .build();
     }
@@ -69,7 +60,7 @@ public class GridiaMessageToClientBuilder {
         Tile[][] tiles = sector._tiles;
 
         BinaryMessageBuilder builder = new BinaryMessageBuilder()
-                .protocol(outbound(SectorData))
+                .type("SectorData")
                 .writeInt(sector.sx)
                 .writeInt(sector.sy)
                 .writeInt(sector.sz);
@@ -115,7 +106,7 @@ public class GridiaMessageToClientBuilder {
 
     public Message setFocus(int id, boolean isAdmin) {
         return new JsonMessageBuilder()
-                .protocol(outbound(SetFocus))
+                .type("SetFocus")
                 .set("id", id)
                 .set("isAdmin", isAdmin)
                 .build();
@@ -123,7 +114,7 @@ public class GridiaMessageToClientBuilder {
 
     public Message initialize(String version, String worldName, int size, int depth, int sectorSize) {
         return new JsonMessageBuilder()
-                .protocol(outbound(Initialize))
+                .type("Initialize")
                 .set("time", System.currentTimeMillis())
                 .set("version", version)
                 .set("worldName", worldName)
@@ -135,7 +126,7 @@ public class GridiaMessageToClientBuilder {
 
     public Message container(Container container) {
         return new JsonMessageBuilder()
-                .protocol(outbound(Container))
+                .type("Container")
                 .set("items", container.getItems())
                 .set("type", container.type)
                 .set("id", container.id)
@@ -145,7 +136,7 @@ public class GridiaMessageToClientBuilder {
 
     public Message chat(String msg, Coord loc) {
         return new JsonMessageBuilder()
-                .protocol(outbound(Chat))
+                .type("Chat")
                 .set("msg", msg)
                 .set("loc", loc)
                 .build();
@@ -157,7 +148,7 @@ public class GridiaMessageToClientBuilder {
             tile.item = ItemInstance.NONE;
         }
         return new JsonMessageBuilder()
-                .protocol(outbound(TileUpdate))
+                .type("TileUpdate")
                 .set("loc", loc)
                 .set("item", tile.item.data.id)
                 .set("quantity", tile.item.quantity)
@@ -168,7 +159,7 @@ public class GridiaMessageToClientBuilder {
     public Message updateContainerSlot(Container container, int slotIndex) {
         ItemInstance item = container.get(slotIndex);
         return new JsonMessageBuilder()
-                .protocol(outbound(ContainerUpdate))
+                .type("ContainerUpdate")
                 .set("type", container.type)
                 .set("index", slotIndex)
                 .set("item", item.data.id)
@@ -178,14 +169,14 @@ public class GridiaMessageToClientBuilder {
 
     public Message itemUsePick(List<ItemUse> uses) {
         return new JsonMessageBuilder()
-                .protocol(outbound(ItemUsePick))
+                .type("ItemUsePick")
                 .set("uses", uses)
                 .build();
     }
 
     public Message animation(int animation, Coord loc) {
         return new JsonMessageBuilder()
-                .protocol(outbound(Animation))
+                .type("Animation")
                 .set("anim", animation)
                 .set("loc", loc)
                 .build();
@@ -193,7 +184,7 @@ public class GridiaMessageToClientBuilder {
 
     public Message updateCreatureImage(Creature creature) {
         return new JsonMessageBuilder()
-                .protocol(outbound(UpdateCreatureImage))
+                .type("UpdateCreatureImage")
                 .set("id", creature.id)
                 .set("image", creature.image)
                 .build();
@@ -201,12 +192,8 @@ public class GridiaMessageToClientBuilder {
 
     public Message genericEventListener(Object obj) {
         return new JsonMessageBuilder()
-                .protocol(outbound(GenericEventListener))
+                .type("GenericEventListener")
                 .set("obj", obj)
                 .build();
-    }
-
-    private Protocol outbound(Enum en) {
-        return _outbound.apply(en);
     }
 }

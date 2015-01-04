@@ -128,7 +128,7 @@ public class GridiaDriver : MonoBehaviour
             {
                 var relative = pos - focusPos; // :(
                 var rect = new Rect(relative.x * tileSize, Screen.height - relative.y * tileSize - tileSize, tileSize, tileSize);
-                DrawCreature(rect, cre);
+                _textureManager.DrawCreature(rect, cre, _game.view.Scale);
                 if (cre.Name.Length > 0)
                 {
                     var labelRelative = pos - _game.view.FocusPosition; // :(
@@ -232,50 +232,6 @@ public class GridiaDriver : MonoBehaviour
         _staticRectTexture[color].SetPixel(0, 0, color);
         _staticRectTexture[color].Apply();
         GUI.Box(rect, GUIContent.none, _staticRectStyle[color]);
-    }
-
-    // :(
-    private void DrawCreature(Rect rect, Creature creature)
-    {
-        if (creature.IsOnRaft())
-        {
-            var raft = new ItemRenderable(Vector2.zero, _contentManager.GetItem(1211).GetInstance());
-            raft.Rect = rect;
-            raft.Render();
-        }
-
-        var image = creature.Image;
-        if (image is DefaultCreatureImage)
-        {
-            var defaultImage = image as DefaultCreatureImage;
-            int spriteId = defaultImage.SpriteIndex;
-            int textureX = (spriteId % GridiaConstants.SPRITES_IN_SHEET) % GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
-            int textureY = 10 - (spriteId % GridiaConstants.SPRITES_IN_SHEET) / GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW - defaultImage.Height; // ?
-            var texCoords = new Rect(textureX / 10.0f, textureY / 10.0f, defaultImage.Width / 10.0f, defaultImage.Height / 10.0f); // :( don't hardcode 10
-            rect.width *= defaultImage.Width;
-            rect.height *= defaultImage.Height;
-            rect.y -= (defaultImage.Height - 1) * GridiaConstants.SPRITE_SIZE * _game.view.Scale;
-            GUI.DrawTextureWithTexCoords(rect, _textureManager.Creatures[spriteId / GridiaConstants.SPRITES_IN_SHEET], texCoords);
-        }
-        else if (image is CustomPlayerImage)
-        {
-            var customImage = image as CustomPlayerImage;
-            DrawCreaturePart(rect, _textureManager.Heads, customImage.Head);
-            DrawCreaturePart(rect, _textureManager.Chests, customImage.Chest);
-            DrawCreaturePart(rect, _textureManager.Legs, customImage.Legs);
-            DrawCreaturePart(rect, _textureManager.Arms, customImage.Arms);
-            DrawCreaturePart(rect, _textureManager.Weapons, customImage.Weapon);
-            DrawCreaturePart(rect, _textureManager.Shields, customImage.Shield);
-        }
-    }
-
-    private void DrawCreaturePart(Rect rect, List<Texture> textures, int spriteIndex)
-    {
-        var texture = textures[spriteIndex / GridiaConstants.SPRITES_IN_SHEET];
-        int textureX = (spriteIndex % GridiaConstants.SPRITES_IN_SHEET) % GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
-        int textureY = 9 - (spriteIndex % GridiaConstants.SPRITES_IN_SHEET) / GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
-        var texCoords = new Rect(textureX / 10.0f, textureY / 10.0f, 1 / 10.0f, 1 / 10.0f); // :( don't hardcode 10
-        GUI.DrawTextureWithTexCoords(rect, texture, texCoords);
     }
 
     public Vector2 getMouse()

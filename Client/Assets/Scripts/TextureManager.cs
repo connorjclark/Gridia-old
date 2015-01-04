@@ -12,12 +12,12 @@ namespace Gridia
         public List<Texture> Creatures { get; private set; }
         public List<Texture> Templates { get; private set; }
         public List<Texture> Animations { get; private set; }
-        public List<Texture> Heads { get; private set; }
-        public List<Texture> Chests { get; private set; }
-        public List<Texture> Legs { get; private set; }
-        public List<Texture> Arms { get; private set; }
-        public List<Texture> Weapons { get; private set; }
-        public List<Texture> Shields { get; private set; }
+        private List<Texture> Heads { get; set; }
+        private List<Texture> Chests { get; set; }
+        private List<Texture> Legs { get; set; }
+        private List<Texture> Arms { get; set; }
+        private List<Texture> Weapons { get; set; }
+        private List<Texture> Shields { get; set; }
 
         public TextureManager (String worldName)
         {
@@ -48,6 +48,56 @@ namespace Gridia
                 textures.Add(tex);
             }
             return textures;
+        }
+
+        private void DrawCreaturePart(Rect rect, List<Texture> textures, int spriteIndex)
+        {
+            int textureIndex = spriteIndex / GridiaConstants.SPRITES_IN_SHEET;
+            if (textureIndex >= textures.Count)
+            {
+                textureIndex = 0;
+            }
+            var texture = textures[textureIndex];
+            int textureX = (spriteIndex % GridiaConstants.SPRITES_IN_SHEET) % GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
+            int textureY = 9 - (spriteIndex % GridiaConstants.SPRITES_IN_SHEET) / GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
+            var texCoords = new Rect(textureX / 10.0f, textureY / 10.0f, 1 / 10.0f, 1 / 10.0f); // :( don't hardcode 10
+            GUI.DrawTextureWithTexCoords(rect, texture, texCoords);
+        }
+
+        public void DrawCreature(Rect rect, Creature creature, float scale)
+        {
+            // :(
+            if (creature.IsOnRaft())
+            {
+                var cm = Locator.Get<ContentManager>();
+                var raft = new ItemRenderable(Vector2.zero, cm.GetItem(1211).GetInstance());
+                raft.Rect = rect;
+                raft.Render();
+            }
+
+            var image = creature.Image;
+            if (image is DefaultCreatureImage)
+            {
+                var defaultImage = image as DefaultCreatureImage;
+                int spriteId = defaultImage.SpriteIndex;
+                int textureX = (spriteId % GridiaConstants.SPRITES_IN_SHEET) % GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
+                int textureY = 10 - (spriteId % GridiaConstants.SPRITES_IN_SHEET) / GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW - defaultImage.Height; // ?
+                var texCoords = new Rect(textureX / 10.0f, textureY / 10.0f, defaultImage.Width / 10.0f, defaultImage.Height / 10.0f); // :( don't hardcode 10
+                rect.width *= defaultImage.Width;
+                rect.height *= defaultImage.Height;
+                rect.y -= (defaultImage.Height - 1) * GridiaConstants.SPRITE_SIZE * scale;
+                GUI.DrawTextureWithTexCoords(rect, Creatures[spriteId / GridiaConstants.SPRITES_IN_SHEET], texCoords);
+            }
+            else if (image is CustomPlayerImage)
+            {
+                var customImage = image as CustomPlayerImage;
+                DrawCreaturePart(rect, Heads, customImage.Head);
+                DrawCreaturePart(rect, Chests, customImage.Chest);
+                DrawCreaturePart(rect, Legs, customImage.Legs);
+                DrawCreaturePart(rect, Arms, customImage.Arms);
+                DrawCreaturePart(rect, Weapons, customImage.Weapon);
+                DrawCreaturePart(rect, Shields, customImage.Shield);
+            }
         }
     }
 }

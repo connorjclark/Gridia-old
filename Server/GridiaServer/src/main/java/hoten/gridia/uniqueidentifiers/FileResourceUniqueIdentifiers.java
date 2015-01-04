@@ -1,11 +1,13 @@
 package hoten.gridia.uniqueidentifiers;
 
-import hoten.serving.fileutils.FileUtils;
+//import hoten.serving.fileutils.FileUtils;
 import java.io.File;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
 public class FileResourceUniqueIdentifiers extends UniqueIdentifiers {
@@ -17,7 +19,7 @@ public class FileResourceUniqueIdentifiers extends UniqueIdentifiers {
     }
 
     private void bufferIdsThatArentClaimed(File dir) {
-        List<File> files = FileUtils.getAllFilesInDirectory(dir);
+        Collection<File> files = FileUtils.listFiles(dir, null, true);
         Set<Integer> idsInUse = files.stream()
                 .map(file -> FilenameUtils.removeExtension(file.getName()))
                 .filter(name -> name.matches("\\d+"))

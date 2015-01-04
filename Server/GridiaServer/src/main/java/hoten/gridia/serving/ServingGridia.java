@@ -12,12 +12,14 @@ import hoten.gridia.DefaultCreatureImage;
 import hoten.gridia.content.ItemInstance;
 import hoten.gridia.Player;
 import hoten.gridia.Player.PlayerFactory;
+import hoten.gridia.content.Item;
+import hoten.gridia.content.ItemUse;
 import hoten.gridia.content.Monster;
 import hoten.gridia.map.Sector;
 import hoten.gridia.map.Tile;
 import hoten.gridia.map.TileMap;
 import hoten.gridia.serializers.GridiaGson;
-import hoten.serving.ServingSocket;
+import hoten.serving.filetransferring.ServingFileTransferring;
 import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
@@ -28,11 +30,11 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler> {
+public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaClientHandler> {
 
     public static ServingGridia instance; // :(
 
-    public final GridiaMessageToClientBuilder messageBuilder = new GridiaMessageToClientBuilder(this::outbound);
+    public final GridiaMessageToClientBuilder messageBuilder = new GridiaMessageToClientBuilder();
     public final TileMap tileMap;
     public final ContentManager contentManager;
     public final Map<Integer, Creature> creatures = new ConcurrentHashMap();
@@ -43,7 +45,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     public final String version = "alpha-1.0";
 
     public ServingGridia(File world, String mapName, int port, File clientDataFolder, String localDataFolderName) throws IOException {
-        super(port, new GridiaProtocols(), clientDataFolder, localDataFolderName);
+        super(port, clientDataFolder, localDataFolderName);
         worldName = world.getName();
         contentManager = new ContentManager(world);
         GridiaGson.initialize(contentManager, this);
@@ -54,8 +56,25 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
     }
 
     @Override
+    public void setupNewClient(ConnectionToGridiaClientHandler newClient) throws IOException {
+        super.setupNewClient(newClient);
+        System.out.println("Client has connected.");
+        newClient.send(messageBuilder.initialize(version, worldName, tileMap.size, tileMap.depth, tileMap.sectorSize));
+    }
+
+    @Override
+    protected void onClientClose(ConnectionToGridiaClientHandler client) throws IOException {
+        if (client.player != null) {
+            removeCreature(client.player.creature);
+            savePlayer(client.player);
+            Creature cre = client.player.creature;
+            sendToAll(messageBuilder.chat(cre.name + " has left the building.", cre.location));
+        }
+    }
+
+    @Override
     protected ConnectionToGridiaClientHandler makeNewConnection(Socket newConnection) throws IOException {
-        return new ConnectionToGridiaClientHandler(this, newConnection);
+        return new ConnectionToGridiaClientHandler(newConnection, this);
     }
 
     public void grow() {
@@ -184,7 +203,7 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         mold.drops.forEach(itemDrop -> {
             items.add(new ItemInstance(itemDrop));
         });
-        cre.inventory = containerFactory.create(ContainerType.Inventory, items, false);
+        cre.inventory = containerFactory.createOnlyInMemory(ContainerType.Inventory, items);
         return cre;
     }
 
@@ -327,10 +346,137 @@ public class ServingGridia extends ServingSocket<ConnectionToGridiaClientHandler
         sendTo(message, client -> client.player != null && (client.player.creature.inventory.id == container.id || client.player.equipment.id == container.id));
     }
 
-    public void save() {
+    public void save() throws IOException {
         sendToAll(messageBuilder.chat("Saving world...", new Coord(0, 0, 0)));
         tileMap.save();
-        _clients.forEach(client -> client.save());
+        for (ConnectionToGridiaClientHandler client : _clients) {
+            savePlayer(client.player);
+        }
         sendToAll(messageBuilder.chat("Saved!", new Coord(0, 0, 0)));
+    }
+
+    public void savePlayer(Player player) throws IOException {
+        if (player != null) {
+            playerFactory.save(player);
+            containerFactory.save(player.creature.inventory);
+            containerFactory.save(player.equipment);
+        }
+    }
+
+    public ItemInstance getItemFrom(Player player, String from, int index) {
+        switch (from) {
+            case "world":
+                return tileMap.getItem(tileMap.getCoordFromIndex(index));
+            case "inv":
+                if (index == -1) {
+                    return ItemInstance.NONE;
+                }
+                return player.creature.inventory.get(index);
+            default:
+                return ItemInstance.NONE;
+        }
+    }
+
+    public void removeItemAt(Player player, String from, int index, int quantity) {
+        switch (from) {
+            case "world":
+                reduceItemQuantity(tileMap.getCoordFromIndex(index), quantity);
+                break;
+            case "inv":
+                player.creature.inventory.reduceQuantityAt(index, quantity);
+                break;
+        }
+    }
+
+    // :(
+    public void executeItemUse(
+            ConnectionToGridiaClientHandler connection,
+            ItemUse use,
+            ItemInstance tool,
+            ItemInstance focus,
+            String source,
+            String dest,
+            int sourceIndex,
+            int destIndex
+    ) throws IOException {
+        ServingGridia server = connection.getServer();
+        Player player = connection.getPlayer();
+        if (use.successTool != -1) {
+            ItemInstance toolResult = null;
+            tool.quantity -= 1;
+            if (tool.quantity <= 0) {
+                tool = ItemInstance.NONE;
+            }
+            if (use.successTool != 0) {
+                toolResult = server.contentManager.createItemInstance(use.successTool);
+            }
+
+            switch (source) {
+                case "world":
+                    server.changeItem(sourceIndex, tool);
+                    if (toolResult != null) {
+                        server.addItemNear(server.tileMap.getCoordFromIndex(sourceIndex), toolResult, 3);
+                    }
+                    break;
+                case "inv":
+                    player.creature.inventory.set(sourceIndex, tool);
+                    if (toolResult != null) {
+                        player.creature.inventory.add(toolResult);
+                    }
+                    break;
+            }
+        }
+
+        if (use.focusQuantityConsumed > 0) {
+            if (focus != ItemInstance.NONE) {
+                focus.quantity -= use.focusQuantityConsumed;
+            }
+            switch (dest) {
+                case "world":
+                    server.updateTile(destIndex);
+                    break;
+            }
+        }
+
+        if ("world".equals(dest)) {
+            for (int i = 0; i < use.products.size(); i++) {
+                ItemInstance productInstance = server.contentManager.createItemInstance(use.products.get(i), use.quantities.get(i));
+                if (productInstance.data.itemClass == Item.ItemClass.Cave_down) {
+                    if (player.creature.location.z == server.tileMap.depth - 1) {
+                        continue;
+                    }
+                    Coord below = server.tileMap.getCoordFromIndex(destIndex).add(0, 0, 1);
+                    server.changeItem(server.tileMap.getIndexFromCoord(below), server.contentManager.createItemInstance(981));
+                    for (int x = -1; x <= 1; x++) {
+                        for (int y = -1; y <= 1; y++) {
+                            server.changeFloor(below.add(x, y, 0), 19);
+                        }
+                    }
+                } else if (productInstance.data.itemClass == Item.ItemClass.Cave_up) {
+                    if (player.creature.location.z == 0) {
+                        continue;
+                    }
+                    Coord above = server.tileMap.getCoordFromIndex(destIndex).add(0, 0, -1);
+                    server.changeItem(server.tileMap.getIndexFromCoord(above), server.contentManager.createItemInstance(980));
+                }
+                if (i == 0 || use.tool != 0) {
+                    server.addItemNear(destIndex, productInstance, 3);
+                } else {
+                    player.creature.inventory.add(productInstance);
+                }
+            }
+            if (use.animation != 0) {
+                Coord loc = server.tileMap.getCoordFromIndex(destIndex);
+                server.sendToClientsWithAreaLoaded(server.messageBuilder.animation(use.animation, loc), destIndex);
+            }
+            if (use.surfaceGround != -1) {
+                Coord loc = server.tileMap.getCoordFromIndex(destIndex);
+                server.changeFloor(loc, use.surfaceGround);
+            }
+        }
+
+        if (use.successMessage != null) {
+            connection.send(server.messageBuilder.chat(use.successMessage, player.creature.location));
+        }
     }
 }

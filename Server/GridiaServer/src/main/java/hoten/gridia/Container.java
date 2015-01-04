@@ -3,13 +3,14 @@ package hoten.gridia;
 import hoten.gridia.content.ItemInstance;
 import hoten.gridia.serializers.GridiaGson;
 import hoten.gridia.serving.ServingGridia;
-import hoten.serving.fileutils.FileUtils;
 import hoten.gridia.uniqueidentifiers.FileResourceUniqueIdentifiers;
 import hoten.gridia.uniqueidentifiers.UniqueIdentifiers;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import org.apache.commons.io.FileUtils;
 
 public class Container {
 
@@ -23,29 +24,40 @@ public class Container {
             _uniqueIds = new FileResourceUniqueIdentifiers(dir);
         }
 
-        public Container load(int id) {
-            String json = FileUtils.readTextFile(new File(dir, id + ".json"));
+        public Container load(int id) throws IOException {
+            String json = FileUtils.readFileToString(new File(dir, id + ".json"));
             return GridiaGson.get().fromJson(json, Container.class);
         }
 
-        public Container create(ContainerType type, int size, boolean saveToDisk) {
+        public Container create(ContainerType type, List<ItemInstance> items) throws IOException {
+            Container container = new Container(_uniqueIds.next(), type, items);
+            save(container);
+            return container;
+        }
+
+        public Container create(ContainerType type, int size) throws IOException {
             List<ItemInstance> items = IntStream.range(0, size)
                     .boxed()
                     .map(i -> ItemInstance.NONE)
                     .collect(Collectors.toList());
-            return create(type, items, saveToDisk);
+            return create(type, items);
         }
 
-        public Container create(ContainerType type, List<ItemInstance> items, boolean saveToDisk) {
+        public Container createOnlyInMemory(ContainerType type, List<ItemInstance> items) {
             Container container = new Container(_uniqueIds.next(), type, items);
-            if (saveToDisk) {
-                save(container);
-            }
             return container;
         }
 
-        public void save(Container container) {
-            FileUtils.saveAs(new File(dir, container.id + ".json"), GridiaGson.get().toJson(container).getBytes());
+        public Container createOnlyInMemory(ContainerType type, int size) {
+            List<ItemInstance> items = IntStream.range(0, size)
+                    .boxed()
+                    .map(i -> ItemInstance.NONE)
+                    .collect(Collectors.toList());
+            return createOnlyInMemory(type, items);
+        }
+
+        public void save(Container container) throws IOException {
+            FileUtils.writeStringToFile(new File(dir, container.id + ".json"), GridiaGson.get().toJson(container));
         }
     }
 
@@ -133,13 +145,5 @@ public class Container {
         } else {
             updateSlot(slotIndex);
         }
-    }
-}
-
-class InventoryLoader {
-
-    public Container load(int id) {
-        String json = FileUtils.readTextFile(new File("TestWorld/containers/" + id));
-        return GridiaGson.get().fromJson(json, Container.class);
     }
 }

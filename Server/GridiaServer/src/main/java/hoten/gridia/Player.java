@@ -6,12 +6,13 @@ import hoten.gridia.content.ItemInstance;
 import hoten.gridia.map.Coord;
 import hoten.gridia.serializers.GridiaGson;
 import hoten.gridia.serving.ServingGridia;
-import hoten.serving.fileutils.FileUtils;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.apache.commons.io.FileUtils;
 
 public class Player {
 
@@ -37,12 +38,12 @@ public class Player {
             dir = new File(world, "Players/");
         }
 
-        public Player load(ServingGridia server, String username, String passwordHash) throws BadLoginException {
+        public Player load(ServingGridia server, String username, String passwordHash) throws BadLoginException, IOException {
             File dataFile = new File(dir, username + ".json");
             if (!dataFile.exists()) {
                 throw new BadLoginException("Bad user/password");
             }
-            String json = FileUtils.readTextFile(dataFile);
+            String json = FileUtils.readFileToString(dataFile);
             AccountDetails accountDetails = GridiaGson.get().fromJson(json, AccountDetails.class);
 
             if (!accountDetails.passwordHash.equals(passwordHash)) {
@@ -56,7 +57,7 @@ public class Player {
             return new Player(accountDetails, creature, equipment);
         }
 
-        public Player create(ServingGridia server, String username, String passwordHash) throws BadRegistrationException {
+        public Player create(ServingGridia server, String username, String passwordHash) throws BadRegistrationException, IOException {
             if (username.length() < 3) {
                 throw new BadRegistrationException("Username must be >2 characters");
             }
@@ -93,7 +94,7 @@ public class Player {
             while (inv.size() < invSize) {
                 inv.add(server.contentManager.createItemInstance(0));
             }
-            creature.inventory = server.containerFactory.create(ContainerType.Inventory, inv, true);
+            creature.inventory = server.containerFactory.create(ContainerType.Inventory, inv);
             accountDetails.inventoryId = creature.inventory.id;
 
             // fake equipment
@@ -104,7 +105,7 @@ public class Player {
             equipmentItems.add(server.contentManager.createItemInstance(0));
             equipmentItems.add(server.contentManager.createItemInstance(0));
 
-            Container equipment = server.containerFactory.create(ContainerType.Equipment, equipmentItems, true);
+            Container equipment = server.containerFactory.create(ContainerType.Equipment, equipmentItems);
             accountDetails.equipmentId = equipment.id;
             if (creature.image instanceof CustomPlayerImage) {
                 ((CustomPlayerImage) (creature.image)).moldToEquipment(equipment);
@@ -116,20 +117,32 @@ public class Player {
             return player;
         }
 
-        public void save(Player player) {
+        public void save(Player player) throws IOException {
             player.accountDetails.location = player.creature.location;
-            FileUtils.saveAs(new File(dir, player.accountDetails.username + ".json"), new Gson().toJson(player.accountDetails).getBytes());
+            String json = new Gson().toJson(player.accountDetails);
+            FileUtils.writeStringToFile(new File(dir, player.accountDetails.username + ".json"), json);
         }
     }
 
     public final Creature creature;
     public final Container equipment;
     public final AccountDetails accountDetails;
+    // :(
+    public int useSourceIndex, useDestIndex;
+    public String useSource, useDest;
 
     private Player(AccountDetails accountDetails, Creature creature, Container equipment) {
         this.accountDetails = accountDetails;
         this.creature = creature;
         this.equipment = equipment;
+    }
+
+    public void updatePlayerImage(ServingGridia server) {
+        if (creature.image instanceof CustomPlayerImage) {
+            CustomPlayerImage image = (CustomPlayerImage) creature.image;
+            image.moldToEquipment(equipment);
+        }
+        server.updateCreatureImage(creature);
     }
 
     public static class AccountDetails {

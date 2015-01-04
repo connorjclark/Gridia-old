@@ -8,12 +8,12 @@ import hoten.gridia.map.TileMap;
 import hoten.gridia.serializers.GridiaGson;
 import hoten.gridia.serving.ServingGridia;
 import hoten.gridia.worldgen.MapGenerator;
-import hoten.serving.fileutils.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import org.apache.commons.io.FileUtils;
 
 public class GridiaServerDriver {
 
@@ -21,11 +21,15 @@ public class GridiaServerDriver {
     private static ServingGridia server;
 
     public static void main(String[] args) throws IOException {
+        showSplash();
+        runServerMenu();
+    }
+
+    private static void showSplash() throws IOException {
         File splash = new File("splash.txt");
         if (splash.exists()) {
-            System.out.println(FileUtils.readTextFile(splash));
+            System.out.println(FileUtils.readFileToString(splash));
         }
-        runServerMenu();
     }
 
     private static void runServerMenu() throws IOException {

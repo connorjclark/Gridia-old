@@ -12,14 +12,15 @@ import hoten.gridia.map.SectorLoader;
 import hoten.gridia.map.SectorSaver;
 import hoten.gridia.map.Tile;
 import hoten.gridia.map.TileMap;
-import hoten.serving.fileutils.FileUtils;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
+import org.apache.commons.io.FileUtils;
 
 public class MapGenerator {
 
@@ -34,7 +35,7 @@ public class MapGenerator {
         _seed = seed;
     }
 
-    public TileMap generate(File map, int size, int depth, int sectorSize) {
+    public TileMap generate(File map, int size, int depth, int sectorSize) throws IOException {
         HashMap<String, Object> mapMetaData = new HashMap<>();
 
         mapMetaData.put("name", map.getName());
@@ -44,7 +45,7 @@ public class MapGenerator {
         mapMetaData.put("defaultPlayerSpawn", new Coord(size / 2, size / 2, 0));
 
         String metaDataJson = new Gson().toJson(mapMetaData);
-        FileUtils.saveAs(new File(map, "meta.json"), metaDataJson.getBytes());
+        FileUtils.writeStringToFile(new File(map, "meta.json"), metaDataJson);
 
         VoronoiGraph graph = TestDriver.createVoronoiGraph(size, _numPoints, _numLloydRelaxations, _seed);
         BufferedImage mapImage = graph.createMap();

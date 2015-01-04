@@ -6,13 +6,14 @@ import com.google.gson.reflect.TypeToken;
 import hoten.gridia.content.Item.ItemClass;
 import hoten.gridia.serializers.ItemDeserializer;
 import hoten.gridia.serializers.MonsterDeserializer;
-import hoten.serving.fileutils.FileUtils;
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.apache.commons.io.FileUtils;
 
 public class ContentManager {
 
@@ -21,7 +22,7 @@ public class ContentManager {
     private final List<Monster> _monsters;
     private final File _content;
 
-    public ContentManager(File world) {
+    public ContentManager(File world) throws IOException {
         _content = new File(world, "clientdata/content");
         _items = loadItems();
         _monsters = loadMonsters();
@@ -104,22 +105,26 @@ public class ContentManager {
                 .get();
     }
 
-    private List<Item> loadItems() {
-        String json = FileUtils.readTextFile(new File(_content, "items.json"));
+    private String loadContentFile(String contentName) throws IOException {
+        return FileUtils.readFileToString(new File(_content, contentName + ".json"));
+    }
+
+    private List<Item> loadItems() throws IOException {
+        String json = loadContentFile("items");
         Type type = new TypeToken<List<Item>>() {
         }.getType();
         return load(json, type);
     }
 
-    private List<Monster> loadMonsters() {
-        String json = FileUtils.readTextFile(new File(_content, "monsters.json"));
+    private List<Monster> loadMonsters() throws IOException {
+        String json = loadContentFile("monsters");
         Type type = new TypeToken<List<Monster>>() {
         }.getType();
         return load(json, type);
     }
 
-    private Map<Item, List<ItemUse>> loadItemUses() {
-        String json = FileUtils.readTextFile(new File(_content, "itemuses.json"));
+    private Map<Item, List<ItemUse>> loadItemUses() throws IOException {
+        String json = loadContentFile("itemuses");
         Type type = new TypeToken<List<ItemUse>>() {
         }.getType();
         List<ItemUse> usesList = load(json, type);

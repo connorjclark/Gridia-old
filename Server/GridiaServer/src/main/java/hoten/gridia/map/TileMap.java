@@ -4,17 +4,21 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import hoten.gridia.Creature;
 import hoten.gridia.content.ItemInstance;
-import hoten.serving.fileutils.FileUtils;
 import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.io.FileUtils;
 
 public class TileMap {
 
-    public static TileMap loadMap(File world, String mapName) {
+    public static TileMap loadMap(File world, String mapName) throws IOException {
         File map = new File(world, "maps/" + mapName);
-        String json = FileUtils.readTextFile(new File(map, "meta.json"));
+        String json = FileUtils.readFileToString(new File(map, "meta.json"));
+
         JsonObject metaData = new Gson().fromJson(json, JsonObject.class);
 
         int size = metaData.get("size").getAsInt();
@@ -58,8 +62,8 @@ public class TileMap {
         return _defaultPlayerSpawn.add(random.nextInt(3), random.nextInt(3), 0);
     }
 
-    //temporary
-    public void loadAll() {
+    // :( temporary
+    public void loadAll() throws IOException {
         for (int x = 0; x < sectorsAcross; x++) {
             for (int y = 0; y < sectorsAcross; y++) {
                 for (int z = 0; z < depth; z++) {
@@ -90,7 +94,7 @@ public class TileMap {
         }
     }
 
-    public void save() {
+    public void save() throws IOException {
         for (int x = 0; x < sectorsAcross; x++) {
             for (int y = 0; y < sectorsAcross; y++) {
                 for (int z = 0; z < depth; z++) {
@@ -112,7 +116,11 @@ public class TileMap {
     public Sector getSector(int sx, int sy, int sz) {
         Sector sector = _sectors[sx][sy][sz];
         if (sector == null) {
-            _sectors[sx][sy][sz] = sector = _sectorLoader.load(map, sectorSize, sx, sy, sz);
+            try {
+                _sectors[sx][sy][sz] = sector = _sectorLoader.load(map, sectorSize, sx, sy, sz);
+            } catch (IOException ex) {
+                Logger.getLogger(TileMap.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return sector;
     }
