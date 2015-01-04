@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.io.FileUtils;
 
 public class GridiaServerDriver {
@@ -129,7 +131,11 @@ public class GridiaServerDriver {
         // save
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
             if (server.anyPlayersOnline()) {
-                server.save();
+                try {
+                    server.save();
+                } catch (IOException ex) {
+                    Logger.getLogger(GridiaServerDriver.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }, 5, 5, TimeUnit.MINUTES);
 
