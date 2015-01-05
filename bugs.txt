@@ -16,7 +16,6 @@ java.io.EOFException
         at java.lang.Thread.run(Thread.java:745)
 
 barrels
-just make chat global.
 Picking fruit when inventory is full deletes picked fruit
 animations show in top left corner for split seconds
 logout should take you back to log in screen

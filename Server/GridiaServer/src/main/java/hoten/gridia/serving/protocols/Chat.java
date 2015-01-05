@@ -37,9 +37,7 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                 connection.getPlayer().updatePlayerImage(server);
             } catch (NumberFormatException e) {
             }
-        }
-
-        if (msg.startsWith("!friendly ") && player.accountDetails.isAdmin) {
+        } else if (msg.startsWith("!friendly ") && player.accountDetails.isAdmin) {
             try {
                 String[] split = msg.split(" ", 3);
                 if (split.length == 3) {
@@ -54,9 +52,7 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                 }
             } catch (NumberFormatException e) {
             }
-        }
-
-        if (msg.startsWith("!monster ") && player.accountDetails.isAdmin) {
+        } else if (msg.startsWith("!monster ") && player.accountDetails.isAdmin) {
             try {
                 String[] split = msg.split(" ", 3);
                 if (split.length == 2) {
@@ -68,37 +64,25 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                 }
             } catch (NumberFormatException e) {
             }
-        }
-
-        if (msg.equals("!kill")) {
+        } else if (msg.equals("!kill")) {
             Creature cre = server.tileMap.getCreature(player.creature.location.add(0, 1, 0));
             if (cre != null) {
-                server.removeCreature(cre);
+                server.hurtCreature(cre, 100000);
             }
-        }
-
-        if (msg.equals("!del") && player.accountDetails.isAdmin) {
+        } else if (msg.equals("!del") && player.accountDetails.isAdmin) {
             server.changeItem(player.creature.location.add(0, 1, 0), ItemInstance.NONE);
-        }
-
-        if (msg.equals("!clr") && player.accountDetails.isAdmin) {
+        } else if (msg.equals("!clr") && player.accountDetails.isAdmin) {
             for (int i = 0; i < 20; i++) {
                 for (int j = 0; j < 20; j++) {
                     server.changeItem(player.creature.location.add(i, j, 0), ItemInstance.NONE);
                 }
             }
-        }
-
-        if (msg.equals("!loc")) {
-            Message message = server.messageBuilder.chat(player.creature.location.toString(), player.creature.location);
+        } else if (msg.equals("!loc")) {
+            Message message = server.messageBuilder.chat("You are at: " + player.creature.location.toString(), player.creature.location);
             connection.send(message);
-        }
-
-        if (msg.equals("!die")) {
+        } else if (msg.equals("!die")) {
             server.hurtCreature(player.creature, 100000);
-        }
-
-        if (msg.startsWith("!warp ")) {
+        } else if (msg.startsWith("!warp ")) {
             String[] split = msg.split("\\s+");
             if (split.length == 4) {
                 try {
@@ -111,12 +95,20 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                 } catch (NumberFormatException e) {
                 }
             }
-        }
-
-        if (msg.equals("!save") && player.accountDetails.isAdmin) {
+        } else if (msg.startsWith("!tp ")) {
+            String playerName = msg.split("\\s+", 2)[1];
+            Player otherPlayer = server.getPlayerWithName(playerName);
+            if (otherPlayer != null) {
+                server.moveCreatureTo(player.creature, otherPlayer.creature.location.add(0, -1, 0), true);
+            } else {
+                connection.send(server.messageBuilder.chat("Invalid player.", player.creature.location));
+            }
+        } else if (msg.equals("!save") && player.accountDetails.isAdmin) {
             server.save();
+        } else if (msg.startsWith("!")) {
+            connection.send(server.messageBuilder.chat("Invalid command.", player.creature.location));
+        } else {
+            server.sendToAll(server.messageBuilder.chat(player.creature.name + " says: " + msg, player.creature.location));
         }
-
-        server.sendToAll(server.messageBuilder.chat(player.creature.name + " says: " + msg, player.creature.location));
     }
 }

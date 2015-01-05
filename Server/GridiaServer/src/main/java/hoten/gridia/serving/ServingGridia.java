@@ -27,6 +27,7 @@ import hoten.serving.message.Message;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -478,5 +479,12 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         if (use.successMessage != null) {
             connection.send(server.messageBuilder.chat(use.successMessage, player.creature.location));
         }
+    }
+
+    public Player getPlayerWithName(String playerName) {
+        return _clients.stream()
+                .filter(client -> client.player != null && client.player.accountDetails.username.equals(playerName))
+                .map(client -> client.player)
+                .findFirst().orElse(null);
     }
 }
