@@ -53,12 +53,6 @@ public class GridiaDriver : MonoBehaviour
         Locator.Provide(_textureManager = new TextureManager(GridiaConstants.WORLD_NAME));
         _game.Initialize(GridiaConstants.SIZE, GridiaConstants.DEPTH, GridiaConstants.SECTOR_SIZE); // :(
 
-        if (GridiaConstants.IS_ADMIN)
-        {
-            var adminWindow = new AdminWindow(Vector2.zero);
-            tabbedGui.Add(10, adminWindow, false);
-        }
-
         InitTabbedGui();
 
         ServerSelection.gameInitWaitHandle.Set();

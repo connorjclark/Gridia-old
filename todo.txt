@@ -11,25 +11,21 @@ UI
   Move 'next' button in recipe book to far right
 
 Winter break
-  Get game ready for demo launch
-    Bar
-    Playtests
   Set up forums, chatroom
   Press kit
-  Greenlight
+  
   Refactor
     xxxGui -> xxxWindow
     Preloader
     State machine
-    Serving Java
     Test coverage
     Item.Item -> Item.Data
     lowercase-directory-names
     Everything!
-  Bugs
-    Picking fruit when inventory is full deletes picked fruit
 
 Spring semester:
+
+Greenlight
 
 Crossplatform
   Linux

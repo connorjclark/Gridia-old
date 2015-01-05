@@ -38,6 +38,13 @@ public class GridiaGame
         Locator.Get<SoundPlayer>().QueueRandomSongs();
     }
 
+    // :(
+    public void InitAdminWindowTab()
+    {
+        var adminWindow = new AdminWindow(Vector2.zero);
+        Locator.Get<GridiaDriver>().tabbedGui.Add(10, adminWindow, false);
+    }
+
     public Vector3 GetSelectorCoord()
     {
         return GetSelectorCoord(SelectorDelta);
