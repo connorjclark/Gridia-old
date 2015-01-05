@@ -34,9 +34,16 @@ namespace Gridia
             var java8WarningLabel = new Label(new Vector2(0, 150), "*To host a server, make sure you hava Java 8 installed and in your classpath!");
             _displayList.AddChild(java8WarningLabel);
 
+            var portLabel = new Label(new Vector2(0, 180), "Port: ");
+            _displayList.AddChild(portLabel);
+
+            var portInput = new TextField(new Vector2(30, 180), "portInput", 50, 20);
+            _displayList.AddChild(portInput);
+            portInput.Text = "1044";
+
             connectButton.OnClick = () =>
             {
-                Connect(ipInput.Text, 1234);
+                Connect(ipInput.Text, int.Parse(portInput.Text));
             };
 
             localServerButton.OnClick = HostLocal;
@@ -47,7 +54,7 @@ namespace Gridia
             var connectButton = new Button(location, "Connect to " + ip);
             connectButton.OnClick = () =>
             {
-                Connect(ip, 1234);
+                Connect(ip, 1044);
             };
             return connectButton;
         }

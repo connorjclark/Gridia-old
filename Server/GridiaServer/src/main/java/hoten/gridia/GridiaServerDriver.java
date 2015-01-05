@@ -21,7 +21,7 @@ import org.apache.commons.io.FileUtils;
 
 public class GridiaServerDriver {
 
-    private static final int port = 1234;
+    private static final int DEFAULT_PORT = 1044;
     private static ServingGridia server;
 
     public static void main(String[] args) throws IOException {
@@ -40,6 +40,14 @@ public class GridiaServerDriver {
     private static void runServerMenu() throws IOException {
         Scanner scanner = new Scanner(System.in);
 
+        System.out.println(String.format("Server port? (Leave blank for %d)\n", DEFAULT_PORT));
+        int port;
+        try {
+            port = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException ex) {
+            port = DEFAULT_PORT;
+        }
+
         System.out.println("Load which world?\n");
         File[] worlds = new File("worlds/").listFiles(file -> file.isDirectory());
         for (int i = 0; i < worlds.length; i++) {
@@ -48,7 +56,7 @@ public class GridiaServerDriver {
         int worldSelection = promptInt(scanner, "");
         File world = worlds[worldSelection - 1];
 
-        System.out.println("Load which map, or generate a new one?\n");
+        System.out.println("Load a map, or generate a new one?\n");
         File[] maps = new File(world, "maps").listFiles(file -> file.isDirectory());
         if (maps != null) {
             for (int i = 0; i < maps.length; i++) {
@@ -77,10 +85,10 @@ public class GridiaServerDriver {
                 TileMap tileMap = mapGenerator.generate(map, mapSize, mapDepth, mapSectorSize);
                 tileMap.save();
                 System.out.println("Map created!");
-                main(null);
+                loadWorld(world, mapName, port);
                 break;
             default:
-                loadWorld(world, maps[choice - 1].getName());
+                loadWorld(world, maps[choice - 1].getName(), port);
                 break;
         }
     }
@@ -101,7 +109,7 @@ public class GridiaServerDriver {
         return scanner.nextLine();
     }
 
-    private static void loadWorld(File world, String mapName) throws IOException {
+    private static void loadWorld(File world, String mapName, int port) throws IOException {
         File clientDataDir = new File(world, "clientdata");
         String localDataDirName = "worlds/" + world.getName() + "/clientdata";
         server = new ServingGridia(world, mapName, port, clientDataDir, localDataDirName);
@@ -165,7 +173,7 @@ public class GridiaServerDriver {
             Executors.newScheduledThreadPool(1).scheduleAtFixedRate(randomDungeonQuest, 0, randomDungeonQuest.arenaTickRate, TimeUnit.MILLISECONDS);
         }
 
-        System.out.println("Server started on port 1234."); // :(
+        System.out.println("Server started on port " + DEFAULT_PORT);
     }
 
     private static void moveMonstersRandomly() {
