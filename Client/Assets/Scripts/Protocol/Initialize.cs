@@ -15,7 +15,7 @@ namespace Gridia.Protocol
             GridiaConstants.SERVER_TIME_OFFSET = connection.getSystemTime() - (long)data["time"];
             if (!GridiaConstants.VERSION.Equals((String)data["version"]))
             {
-                Locator.Get<ServerSelection>().ErrorMessage = "Incompatible client. Client version = " + GridiaConstants.VERSION + ". Server version = " + (String)data["version"];
+                GridiaConstants.ErrorMessage = "Incompatible client. Client version = " + GridiaConstants.VERSION + ". Server version = " + (String)data["version"];
             }
             ServerSelection.connectedWaitHandle.Set(); // :(
         }

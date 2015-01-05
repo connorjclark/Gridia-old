@@ -179,6 +179,8 @@ public class GridiaDriver : MonoBehaviour
 
         ToolTipRenderable.instance.Render();
 
+        GridiaConstants.DrawErrorMessage();
+
         if (Event.current.type == EventType.KeyDown)
         {
             if (Event.current.keyCode == KeyCode.PageDown)

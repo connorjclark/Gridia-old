@@ -11,7 +11,6 @@ namespace Gridia
         public static AutoResetEvent gameInitWaitHandle = new AutoResetEvent(false);
 
         private RenderableContainer _displayList;
-        public String ErrorMessage { get; set; }
 
         public void Start()
         {
@@ -77,22 +76,7 @@ namespace Gridia
             _displayList.X = (Screen.width - _displayList.Width) / 2;
             _displayList.Y = (Screen.height - _displayList.Height) / 2;
             _displayList.Render();
-            
-            // :(
-            if (ErrorMessage != null)
-            {
-                var width = 600;
-                var height = 75;
-                var x = (Screen.width - width) / 2;
-                var y = (Screen.height - height) / 2;
-                GUI.Window(0, new Rect(x, y, width, height), id =>
-                {
-                    if (GUI.Button(new Rect(200 - 50 / 2, 30, 50, 20), "OK"))
-                    {
-                        ErrorMessage = null;
-                    }
-                }, ErrorMessage);
-            }
+            GridiaConstants.DrawErrorMessage();
         }
 
         private void Connect(String ip, int port)
@@ -112,19 +96,21 @@ namespace Gridia
                     }
                     catch (Exception ex)
                     {
-                        Debug.LogError(ex);
+                        Debug.Log(ex);
+                        GridiaConstants.ErrorMessage = "Connection to server has been lost.";
+                        GridiaConstants.ErrorMessageAction = () => { SceneManager.LoadScene("ServerSelection"); };
                     }
                 }).Start();
 
                 connectedWaitHandle.WaitOne();
-                if (ErrorMessage == null)
+                if (GridiaConstants.ErrorMessage == null)
                 {
                     SceneManager.LoadScene("ServerTitlescreen");
                 }
             }
             catch (SocketException ex)
             {
-                ErrorMessage = "Could not connect to " + ip + " at port " + port;
+                GridiaConstants.ErrorMessage = "Could not connect to " + ip + " at port " + port;
             }
         }
     }

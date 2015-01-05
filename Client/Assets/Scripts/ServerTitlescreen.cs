@@ -8,7 +8,6 @@ namespace Gridia
     {
         private RenderableContainer _displayList;
         private bool LoadGame { get; set; }
-        private String ErrorMessage { get; set; }
 
         public void Start()
         {
@@ -36,14 +35,14 @@ namespace Gridia
 
             loginButton.OnClick = () =>
             {
-                if (ErrorMessage == null)
+                if (GridiaConstants.ErrorMessage == null)
                 {
                     Locator.Get<ConnectionToGridiaServerHandler>().Login(usernameInput.Text, passwordInput.Text);
                 }
             };
             registerButton.OnClick = () =>
             {
-                if (ErrorMessage == null)
+                if (GridiaConstants.ErrorMessage == null)
                 {
                     var args = new Hashtable();
                     args["username"] = usernameInput.Text;
@@ -61,7 +60,7 @@ namespace Gridia
                 }
                 else
                 {
-                    ErrorMessage = message;
+                    GridiaConstants.ErrorMessage = message;
                 }
             };
         }
@@ -72,20 +71,7 @@ namespace Gridia
             _displayList.Y = (Screen.height - _displayList.Height) / 2;
             _displayList.Render();
 
-            if (ErrorMessage != null)
-            {
-                var width = 400;
-                var height = 75;
-                var x = (Screen.width - width) / 2;
-                var y = (Screen.height - height) / 2;
-                GUI.Window(0, new Rect(x, y, width, height), id =>
-                {
-                    if (GUI.Button(new Rect(200 - 50 / 2, 30, 50, 20), "OK"))
-                    {
-                        ErrorMessage = null;
-                    }
-                }, ErrorMessage);
-            }
+            GridiaConstants.DrawErrorMessage();
         }
 
         public void Update()
