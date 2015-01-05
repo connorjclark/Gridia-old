@@ -15,14 +15,14 @@ public class Login extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
         ServingGridia server = connection.getServer();
         String username = data.get("username").getAsString();
         String passwordHash = data.get("passwordHash").getAsString();
-        
+
         try {
             doLogin(connection, server.playerFactory.load(server, username, passwordHash));
         } catch (Player.PlayerFactory.BadLoginException ex) {
             connection.send(server.messageBuilder.genericEventHandler(ex.getMessage()));
         }
     }
-    
+
     // :(
     public void doLogin(ConnectionToGridiaClientHandler connection, Player thePlayer) throws IOException {
         ServingGridia server = connection.getServer();
@@ -37,5 +37,7 @@ public class Login extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
         connection.send(animMessage);
 
         thePlayer.updatePlayerImage(server);
+
+        server.sendToAll(server.messageBuilder.chat(thePlayer.accountDetails.username + " has joined the world!", thePlayer.creature.location));
     }
 }

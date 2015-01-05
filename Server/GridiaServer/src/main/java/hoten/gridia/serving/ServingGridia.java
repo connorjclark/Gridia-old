@@ -93,6 +93,11 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         return !_clients.isEmpty();
     }
 
+    @Override
+    public void sendToAll(Message message) {
+        sendTo(message, c -> c.player != null);
+    }
+
     public void sendToClientsWithSectorLoadedBut(Message message, Sector sector, ConnectionToGridiaClientHandler client) {
         sendTo(message, c -> c.hasSectorLoaded(sector) && client != c);
     }
