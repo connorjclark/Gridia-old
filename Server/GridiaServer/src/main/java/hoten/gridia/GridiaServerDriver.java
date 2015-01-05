@@ -173,7 +173,7 @@ public class GridiaServerDriver {
             Executors.newScheduledThreadPool(1).scheduleAtFixedRate(randomDungeonQuest, 0, randomDungeonQuest.arenaTickRate, TimeUnit.MILLISECONDS);
         }
 
-        System.out.println("Server started on port " + DEFAULT_PORT);
+        System.out.println("Server started on port " + port);
     }
 
     private static void moveMonstersRandomly() {

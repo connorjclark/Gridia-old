@@ -32,9 +32,7 @@ public class Login extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
         connection.send(server.messageBuilder.container(thePlayer.creature.inventory));
         connection.send(server.messageBuilder.container(thePlayer.equipment));
 
-        Message animMessage = server.messageBuilder.animation(3, thePlayer.creature.location);
-        server.sendToClientsWithAreaLoaded(animMessage, thePlayer.creature.location);
-        connection.send(animMessage);
+        server.playWarpAnimation(thePlayer.creature.location);
 
         thePlayer.updatePlayerImage(server);
 

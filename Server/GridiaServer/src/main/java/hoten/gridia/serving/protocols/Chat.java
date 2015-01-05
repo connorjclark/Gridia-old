@@ -90,7 +90,9 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                     int y = Integer.parseInt(split[2]);
                     int z = Integer.parseInt(split[3]);
                     if (server.tileMap.inBounds(x, y, z)) {
+                        server.playWarpAnimation(player.creature.location);
                         server.moveCreatureTo(player.creature, new Coord(x, y, z), true);
+                        server.playWarpAnimation(player.creature.location);
                     }
                 } catch (NumberFormatException e) {
                 }
@@ -99,12 +101,24 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
             String playerName = msg.split("\\s+", 2)[1];
             Player otherPlayer = server.getPlayerWithName(playerName);
             if (otherPlayer != null) {
+                server.playWarpAnimation(player.creature.location);
                 server.moveCreatureTo(player.creature, otherPlayer.creature.location.add(0, -1, 0), true);
+                server.playWarpAnimation(player.creature.location);
             } else {
                 connection.send(server.messageBuilder.chat("Invalid player.", player.creature.location));
             }
         } else if (msg.equals("!save") && player.accountDetails.isAdmin) {
             server.save();
+        } else if (msg.startsWith("!admin ") && player.accountDetails.isAdmin) {
+            String playerName = msg.split("\\s+", 2)[1];
+            Player otherPlayer = server.getPlayerWithName(playerName);
+            if (otherPlayer != null) {
+                otherPlayer.accountDetails.isAdmin = true;
+                server.savePlayer(otherPlayer);
+                server.sendToAll(server.messageBuilder.chat(player.creature.name + " is now an admin.", otherPlayer.creature.location));
+            } else {
+                connection.send(server.messageBuilder.chat("Invalid player.", player.creature.location));
+            }
         } else if (msg.startsWith("!")) {
             connection.send(server.messageBuilder.chat("Invalid command.", player.creature.location));
         } else {

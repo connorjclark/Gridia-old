@@ -27,7 +27,6 @@ import hoten.serving.message.Message;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -43,7 +42,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     public final PlayerFactory playerFactory;
     public final ContainerFactory containerFactory;
     public final String worldName;
-    public final String version = "alpha-1.0";
+    public final String version = "alpha-1.1";
 
     public ServingGridia(File world, String mapName, int port, File clientDataFolder, String localDataFolderName) throws IOException {
         super(port, clientDataFolder, localDataFolderName);
@@ -491,5 +490,10 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
                 .filter(client -> client.player != null && client.player.accountDetails.username.equals(playerName))
                 .map(client -> client.player)
                 .findFirst().orElse(null);
+    }
+
+    public void playWarpAnimation(Coord loc) {
+        Message animMessage = messageBuilder.animation(3, loc);
+        sendToAll(animMessage);
     }
 }
