@@ -190,9 +190,9 @@ public class GridiaMessageToClientBuilder {
                 .build();
     }
 
-    public Message genericEventListener(Object obj) {
+    public Message genericEventHandler(Object obj) {
         return new JsonMessageBuilder()
-                .type("GenericEventListener")
+                .type("GenericEventHandler")
                 .set("obj", obj)
                 .build();
     }

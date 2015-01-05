@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.NetworkInformation;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 using UnityEngine;
 
@@ -106,10 +100,22 @@ namespace Gridia
             var game = new GridiaGame();
             try
             {
-                var conn = new ConnectionToGridiaServerHandler(game, ip, port);
+                var conn = new ConnectionToGridiaServerHandler(ip, port, game);
                 Locator.Provide(game);
                 Locator.Provide(conn);
-                conn.Start();
+
+                new Thread(() =>
+                {
+                    try
+                    {
+                        conn.Start(() => Debug.Log("Connection settled!"), conn);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogError(ex);
+                    }
+                }).Start();
+
                 connectedWaitHandle.WaitOne();
                 if (ErrorMessage == null)
                 {

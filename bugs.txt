@@ -18,3 +18,4 @@ java.io.EOFException
 
 barrels
 just make chat global.
+load image on log in

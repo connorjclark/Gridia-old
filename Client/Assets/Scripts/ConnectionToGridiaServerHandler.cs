@@ -1,332 +1,56 @@
-﻿using Gridia;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using Serving;
+using Serving.FileTransferring;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
 
-public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
+public class ConnectionToGridiaServerHandler : SocketHandler
 {
     private GridiaGame _game;
     private HashSet<Vector3> _sectorsRequested = new HashSet<Vector3>();
     private HashSet<int> _creaturesRequested = new HashSet<int>();
     public Action<JObject> GenericEventHandler { get; set; }
 
-    public ConnectionToGridiaServerHandler(GridiaGame game, String host, int port)
-        : base(host, port, new GridiaProtocols(), BoundDest.SERVER)
+    private FileTransferringSocketReciever _socketHandler;
+
+    public ConnectionToGridiaServerHandler(String host, int port, GridiaGame game)
     {
+        _socketHandler = new FileTransferringSocketReciever(new SocketHandlerImpl(host, port));
         _game = game;
     }
 
-    protected override void OnConnectionSettled()
+    public void Start(Action onConnectionSettled, SocketHandler topLevelSocketHandler)
     {
-        Debug.Log("Connection settled!");
+        _socketHandler.Start(onConnectionSettled, topLevelSocketHandler);
     }
 
-    protected override void Run()
+    public void Close()
     {
-        try
-        {
-            base.Run();
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError(ex);
-        }
+        _socketHandler.Close();
     }
 
-    private long getSystemTime()
+    public void Send(Message message)
+    {
+        _socketHandler.Send(message);
+    }
+
+    public JavaBinaryReader GetInputStream()
+    {
+        return _socketHandler.GetInputStream();
+    }
+
+    public JavaBinaryWriter GetOutputStream()
+    {
+        return _socketHandler.GetOutputStream();
+    }
+
+    // :(
+    public long getSystemTime()
     {
         return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-    }
-
-    protected override void HandleData(int type, JObject data)
-    {
-        //TODO:
-        //Unity doesn't compile this : data["id"].Value<int>()
-        //So, I have to use: (int)data["id"]
-        //Why?
-        //MonoBehaviour.print((GridiaProtocols.Clientbound)type + " " + data);
-        switch ((GridiaProtocols.Clientbound)type)
-        {
-            case GridiaProtocols.Clientbound.Initialize:
-                Debug.Log(data);
-                GridiaConstants.WORLD_NAME = (String)data["worldName"];
-                GridiaConstants.SIZE = (int)data["size"];
-                GridiaConstants.DEPTH = (int)data["depth"];
-                GridiaConstants.SECTOR_SIZE = (int)data["sectorSize"];
-                GridiaConstants.SERVER_TIME_OFFSET = getSystemTime() - (long)data["time"];
-                if (!GridiaConstants.VERSION.Equals((String)data["version"]))
-                {
-                    Locator.Get<ServerSelection>().ErrorMessage = "Incompatible client. Client version = " + GridiaConstants.VERSION + ". Server version = " + (String)data["version"];
-                }
-                ServerSelection.connectedWaitHandle.Set(); // :(
-                break;
-            case GridiaProtocols.Clientbound.AddCreature:
-                AddCreature(data);
-                break;
-            case GridiaProtocols.Clientbound.MoveCreature:
-                MoveCreature(data);
-                break;
-            case GridiaProtocols.Clientbound.RemoveCreature:
-                RemoveCreature(data);
-                break;
-            case GridiaProtocols.Clientbound.Chat:
-                Chat(data);
-                break;
-            case GridiaProtocols.Clientbound.SetFocus:
-                SetFocus(data);
-                break;
-            case GridiaProtocols.Clientbound.TileUpdate:
-                TileUpdate(data);
-                break;
-            case GridiaProtocols.Clientbound.Container:
-                Container(data);
-                break;
-            case GridiaProtocols.Clientbound.ContainerUpdate:
-                ContainerUpdate(data);
-                break;
-            case GridiaProtocols.Clientbound.ItemUsePick:
-                ItemUsePick(data);
-                break;
-            case GridiaProtocols.Clientbound.Animation:
-                Animation(data);
-                break;
-            case GridiaProtocols.Clientbound.UpdateCreatureImage:
-                UpdateCreatureImage(data);
-                break;
-            case GridiaProtocols.Clientbound.RenameCreature:
-                RenameCreature(data);
-                break;
-            case GridiaProtocols.Clientbound.GenericEventHandler:
-                GenericEventHandler(data);
-                break;
-        }
-    }
-
-    protected override void HandleData(int type, JavaBinaryReader data)
-    {
-        switch ((GridiaProtocols.Clientbound)type)
-        {
-            case GridiaProtocols.Clientbound.SectorData:
-                SectorData(data);
-                break;
-        }
-    }
-
-    //inbound
-
-    private void AddCreature(JObject data)
-    {
-        int id = (int)data["id"];
-        var name = (String)data["name"];
-
-        var backToJson = JsonConvert.SerializeObject(data["image"]); // :(
-        var image = JsonConvert.DeserializeObject<CreatureImage>(backToJson, new CreatureImageConverter());
-
-        int x = (int)data["loc"]["x"];
-        int y = (int)data["loc"]["y"];
-        int z = (int)data["loc"]["z"];
-
-        _game.tileMap.CreateCreature(id, name, image, x, y, z);
-    }
-
-    private void MoveCreature(JObject data)
-    {
-        int id = (int)data["id"];
-        int x = (int)data["loc"]["x"];
-        int y = (int)data["loc"]["y"];
-        int z = (int)data["loc"]["z"];
-        long time = (long)data["time"];
-        bool isTeleport = (bool)data["isTeleport"];
-        bool onRaft = (bool)data["onRaft"];
-
-        if (id != _game.view.FocusId || isTeleport)
-        {
-            _game.tileMap.MoveCreature(id, x, y, z, onRaft, time);
-            if (isTeleport)
-            {
-                var cre = _game.tileMap.GetCreature(id);
-                if (cre != null)
-                {
-                    cre.ClearSnapshots(1);
-                }
-            }
-        }
-    }
-
-    private void RemoveCreature(JObject data)
-    {
-        int id = (int)data["id"];
-        _game.tileMap.RemoveCreature(id);
-    }
-
-    private void Chat(JObject data)
-    {
-        var message = (String)data["msg"];
-        var x = (int)data["loc"]["x"];
-        var y = (int)data["loc"]["y"];
-        var z = (int)data["loc"]["z"];
-
-        var chat = Locator.Get<ChatWindow>();
-        chat.append(message);
-
-        Locator.Get<GridiaDriver>().floatingTexts.Add(new FloatingText(new Vector3(x, y, z), " " + message));
-    }
-
-    private void SetFocus(JObject data)
-    {
-        GridiaConstants.IS_ADMIN = (bool)data["isAdmin"];
-        ServerSelection.gameInitWaitHandle.WaitOne();
-        var id = (int)data["id"];
-        _game.view.FocusId = id;
-    }
-
-    private void TileUpdate(JObject data)
-    {
-        var item = (int)data["item"];
-        var quantity = (int)data["quantity"];
-        var floor = (int)data["floor"];
-        var x = (int)data["loc"]["x"];
-        var y = (int)data["loc"]["y"];
-        var z = (int)data["loc"]["z"];
-        _game.tileMap.SetItem(Locator.Get<ContentManager>().GetItem(item).GetInstance(quantity), x, y, z);
-        _game.tileMap.SetFloor(floor, x, y, z);
-    }
-
-    private void Container(JObject data)
-    {
-        var backToJson = JsonConvert.SerializeObject(data["items"]); // :(
-        var items = JsonConvert.DeserializeObject<List<ItemInstance>>(backToJson, new ItemInstanceConverter());
-        var id = (int)data["id"];
-        var type = (String)data["type"];
-        if (type == "Inventory")
-        {
-            Locator.Get<InventoryWindow>().Items = items;
-        }
-        else
-        {
-            Locator.Get<EquipmentWindow>().Items = items;
-        }
-    }
-
-    private void ContainerUpdate(JObject data)
-    {
-        var type = (String)data["type"];
-        int index = (int)data["index"];
-        int item = (int)data["item"];
-        int quantity = (int)data["quantity"];
-        var itemInstance = Locator.Get<ContentManager>().GetItem(item).GetInstance(quantity);
-        // :(
-        if (type == "Inventory")
-        {
-            Locator.Get<InventoryWindow>().SetItemAt(index, itemInstance);
-        }
-        else if (type == "Equipment")
-        {
-            Locator.Get<EquipmentWindow>().SetItemAt(index, itemInstance);
-        }
-    }
-
-    private void SectorData(JavaBinaryReader data)
-    {
-        var sx = data.ReadInt32();
-        var sy = data.ReadInt32();
-        var sz = data.ReadInt32();
-        var sectorSize = _game.tileMap.SectorSize;
-        var tiles = new Tile[sectorSize, sectorSize];
-        var cm = Locator.Get<ContentManager>();
-
-        for (int x = 0; x < sectorSize; x++)
-        {
-            for (int y = 0; y < sectorSize; y++)
-            {
-                var floor = data.ReadInt16();
-                var itemType = data.ReadInt16();
-                var itemQuantity = data.ReadInt16();
-                var tile = new Tile();
-                tile.Floor = floor;
-                tile.Item = cm.GetItem(itemType).GetInstance(itemQuantity);
-                tiles[x, y] = tile;
-            }
-        }
-        _game.tileMap.SetSector(new Sector(tiles), sx, sy, sz);
-
-        var numCreatures = data.ReadInt32();
-        for (int i = 0; i < numCreatures; i++)
-        {
-            var id = data.ReadInt16();
-            var name = data.ReadJavaUTF();
-            var x = data.ReadInt16();
-            var y = data.ReadInt16();
-            var z = data.ReadInt16();
-            var imageType = data.ReadInt16();
-            CreatureImage image = null;
-            if (imageType == 0)
-            {
-                var defaultImage = new DefaultCreatureImage();
-                defaultImage.SpriteIndex = data.ReadInt16();
-                defaultImage.Width = data.ReadInt16();
-                defaultImage.Height = data.ReadInt16();
-                image = defaultImage;
-            }
-            else if (imageType == 1)
-            {
-                var customImage = new CustomPlayerImage();
-                customImage.Head = data.ReadInt16();
-                customImage.Chest = data.ReadInt16();
-                customImage.Legs = data.ReadInt16();
-                customImage.Arms = data.ReadInt16();
-                customImage.Weapon = data.ReadInt16();
-                customImage.Shield = data.ReadInt16();
-                image = customImage;
-            }
-            _game.tileMap.CreateCreature(id, name, image, x, y, z);
-        }
-    }
-
-    private void ItemUsePick(JObject data)
-    {
-        var uses = data["uses"].ToObject<List<ItemUse>>();
-        var usePickWindow = Locator.Get<ItemUsePickWindow>();
-        usePickWindow.Uses = uses;
-        var tabbedUI = Locator.Get<TabbedUI>();
-        tabbedUI.Add(10, usePickWindow, true);
-        usePickWindow.ItemUsePickState = new ItemUsePickState(usePickWindow);
-        Locator.Get<StateMachine>().SetState(usePickWindow.ItemUsePickState);
-    }
-
-    private void Animation(JObject data)
-    {
-        var animId = (int)data["anim"];
-        var x = (int)data["loc"]["x"];
-        var y = (int)data["loc"]["y"];
-        var z = (int)data["loc"]["z"];
-        if (_game.view.Focus == null || z == _game.view.Focus.Position.z) 
-        {
-            var coord = new Vector3(x, y, z);
-            var anim = Locator.Get<ContentManager>().GetAnimation(animId);
-            var animRenderable = new AnimationRenderable(coord, anim);
-            Locator.Get<GridiaGame>().animations.Add(animRenderable);
-        }
-    }
-
-    private void UpdateCreatureImage(JObject data)
-    {
-        int id = (int)data["id"];
-        var backToJson = JsonConvert.SerializeObject(data["image"]); // :(
-        var image = JsonConvert.DeserializeObject<CreatureImage>(backToJson, new CreatureImageConverter());
-        _game.tileMap.GetCreature(id).Image = image;
-    }
-
-    private void RenameCreature(JObject data)
-    {
-        int id = (int)data["id"];
-        var name = (String)data["name"];
-        _game.tileMap.GetCreature(id).Name = name;
     }
 
     //outbound
@@ -334,15 +58,15 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
     public void PlayerMove(Vector3 delta, bool onRaft, int timeForMovement)
     {
         Message message = new JsonMessageBuilder()
-            .Protocol(Outbound(GridiaProtocols.Serverbound.PlayerMove))
+            .Type("PlayerMove")
             .Set("delta", new { x = (int)delta.x, y = (int)delta.y, z = (int)delta.z }) // :(
             .Set("onRaft", onRaft)
             .Set("timeForMovement", timeForMovement)
             .Build();
-        Send(message);
+        _socketHandler.Send(message);
     }
 
-    public void RequestSector(int x, int y, int z)
+    public void SectorRequest(int x, int y, int z)
     {
         if (_sectorsRequested.Contains(new Vector3(x, y, z)))
         {
@@ -351,15 +75,15 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         _sectorsRequested.Add(new Vector3(x, y, z));
 
         Message message = new JsonMessageBuilder()
-            .Protocol(Outbound(GridiaProtocols.Serverbound.RequestSector))
+            .Type("SectorRequest")
             .Set("x", x)
             .Set("y", y)
             .Set("z", z)
             .Build();
-        Send(message);
+        _socketHandler.Send(message);
     }
 
-    public void RequestCreature(int id)
+    public void CreatureRequest(int id)
     {
         if (_creaturesRequested.Contains(id))
         {
@@ -369,121 +93,126 @@ public class ConnectionToGridiaServerHandler : ConnectionToServerHandler
         _creaturesRequested.Add(id);
 
         Message message = new JsonMessageBuilder()
-            .Protocol(Outbound(GridiaProtocols.Serverbound.RequestCreature))
+            .Type("CreatureRequest")
             .Set("id", id)
             .Build();
-        Send(message);
+        _socketHandler.Send(message);
     }
 
     public void MoveItem(String source, String dest, int sourceIndex, int destIndex, int quantity = -1)
     {
         Message message = new JsonMessageBuilder()
-            .Protocol(Outbound(GridiaProtocols.Serverbound.MoveItem))
+            .Type("MoveItem")
             .Set("source", source)
             .Set("dest", dest)
             .Set("si", sourceIndex)
             .Set("di", destIndex)
             .Set("quantity", quantity)
             .Build();
-        Send(message);
+        _socketHandler.Send(message);
     }
 
     public void UseItem(String source, String dest, int sourceIndex, int destIndex)
     {
         Message message = new JsonMessageBuilder()
-            .Protocol(Outbound(GridiaProtocols.Serverbound.UseItem))
+            .Type("UseItem")
                 .Set("source", source)
                 .Set("dest", dest)
                 .Set("si", sourceIndex)
                 .Set("di", destIndex)
                 .Build();
-        Send(message);
+        _socketHandler.Send(message);
     }
 
     public void PickItemUse(int useIndex)
     {
         Message message = new JsonMessageBuilder()
-            .Protocol(Outbound(GridiaProtocols.Serverbound.PickItemUse))
+            .Type("PickItemUse")
                 .Set("useIndex", useIndex)
                 .Build();
-        Send(message);
+        _socketHandler.Send(message);
     }
 
     public void Chat(String text)
     {
         Message message = new JsonMessageBuilder()
-            .Protocol(Outbound(GridiaProtocols.Serverbound.Chat))
+            .Type("Chat")
                 .Set("msg", text)
                 .Build();
-        Send(message);
+        _socketHandler.Send(message);
     }
 
     public void EquipItem(int slotIndex)
     {
         Message message = new JsonMessageBuilder()
-            .Protocol(Outbound(GridiaProtocols.Serverbound.EquipItem))
+            .Type("EquipItem")
                 .Set("slotIndex", slotIndex)
                 .Build();
-        Send(message);
+        _socketHandler.Send(message);
     }
 
     public void UnequipItem(int slotIndex)
     {
         Message message = new JsonMessageBuilder()
-            .Protocol(Outbound(GridiaProtocols.Serverbound.UnequipItem))
+            .Type("UnequipItem")
                 .Set("slotIndex", slotIndex)
                 .Build();
-        Send(message);
+        _socketHandler.Send(message);
     }
 
     public void Hit(Vector3 loc)
     {
         Message message = new JsonMessageBuilder()
-            .Protocol(Outbound(GridiaProtocols.Serverbound.Hit))
+            .Type("Hit")
                 .Set("loc", new { x = loc.x, y = loc.y, z = loc.z })
                 .Build();
-        Send(message);
+        _socketHandler.Send(message);
     }
 
     public void AdminMakeItem(Vector3 loc, int itemIndex)
     {
         Message message = new JsonMessageBuilder()
-            .Protocol(Outbound(GridiaProtocols.Serverbound.AdminMakeItem))
+            .Type("AdminMakeItem")
                 .Set("loc", new { x = loc.x, y = loc.y, z = loc.z })
                 .Set("item", itemIndex)
                 .Build();
-        Send(message);
+        _socketHandler.Send(message);
     }
 
     public void AdminMakeFloor(Vector3 loc, int floorIndex)
     {
         Message message = new JsonMessageBuilder()
-            .Protocol(Outbound(GridiaProtocols.Serverbound.AdminMakeFloor))
+            .Type("AdminMakeFloor")
                 .Set("loc", new { x = loc.x, y = loc.y, z = loc.z })
                 .Set("floor", floorIndex)
                 .Build();
-        Send(message);
+        _socketHandler.Send(message);
     }
 
     public void Register(String username, String password)
     {
         var passwordHash = MD5.Create().ComputeHash(Encoding.ASCII.GetBytes(password));
         Message message = new JsonMessageBuilder()
-            .Protocol(Outbound(GridiaProtocols.Serverbound.Register))
+            .Type("Register")
                 .Set("username", username)
                 .Set("passwordHash", passwordHash)
                 .Build();
-        Send(message);
+        _socketHandler.Send(message);
     }
 
     public void Login(String username, String password)
     {
         var passwordHash = MD5.Create().ComputeHash(Encoding.ASCII.GetBytes(password));
         Message message = new JsonMessageBuilder()
-            .Protocol(Outbound(GridiaProtocols.Serverbound.Login))
+            .Type("Login")
                 .Set("username", username)
                 .Set("passwordHash", passwordHash)
                 .Build();
-        Send(message);
+        _socketHandler.Send(message);
+    }
+
+    public GridiaGame GetGame()
+    {
+        return _game;
     }
 }

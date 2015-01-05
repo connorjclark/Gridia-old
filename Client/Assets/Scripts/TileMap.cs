@@ -54,7 +54,7 @@ namespace Gridia
             Sector sector = _sectors[sx, sy, z];
             if (sector == null)
             {
-                Locator.Get<ConnectionToGridiaServerHandler>().RequestSector(sx, sy, z);
+                Locator.Get<ConnectionToGridiaServerHandler>().SectorRequest(sx, sy, z);
             }
             return sector;
         }
@@ -87,7 +87,7 @@ namespace Gridia
             creatures.TryGetValue(id, out cre);
             if (cre == null)
             {
-                Locator.Get<ConnectionToGridiaServerHandler>().RequestCreature(id);
+                Locator.Get<ConnectionToGridiaServerHandler>().CreatureRequest(id);
             }
             return cre;
         }

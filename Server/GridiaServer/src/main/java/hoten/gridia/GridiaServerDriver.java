@@ -8,8 +8,10 @@ import hoten.gridia.map.TileMap;
 import hoten.gridia.serializers.GridiaGson;
 import hoten.gridia.serving.ServingGridia;
 import hoten.gridia.worldgen.MapGenerator;
+import hoten.serving.message.MessageHandler;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -23,6 +25,7 @@ public class GridiaServerDriver {
     private static ServingGridia server;
 
     public static void main(String[] args) throws IOException {
+        MessageHandler.loadMessageHandlers(Arrays.asList("hoten.gridia.serving.protocols"));
         showSplash();
         runServerMenu();
     }
