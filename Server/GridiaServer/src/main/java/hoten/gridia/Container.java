@@ -146,4 +146,11 @@ public class Container {
             updateSlot(slotIndex);
         }
     }
+
+    public boolean canFitItem(ItemInstance itemToTest) {
+        return _items.stream().
+                anyMatch(item -> {
+                    return item == ItemInstance.NONE || ItemInstance.stackable(item, itemToTest);
+                });
+    }
 }

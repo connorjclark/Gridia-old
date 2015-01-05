@@ -59,7 +59,7 @@ public class Player {
 
         public Player create(ServingGridia server, String username, String passwordHash) throws BadRegistrationException, IOException {
             if (username.length() < 3) {
-                throw new BadRegistrationException("Username must be >2 characters");
+                throw new BadRegistrationException("Username must be at least 3 characters");
             }
 
             if (new File(dir, username + ".json").exists()) {
@@ -74,7 +74,6 @@ public class Player {
             int invSize = 40;
             if (dir.listFiles() == null) {
                 accountDetails.isAdmin = true;
-                invSize = 60;
             }
 
             Creature creature = server.createCreatureForPlayer(username, accountDetails.location);

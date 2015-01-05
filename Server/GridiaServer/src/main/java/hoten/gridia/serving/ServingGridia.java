@@ -464,10 +464,11 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
                     Coord above = server.tileMap.getCoordFromIndex(destIndex).add(0, 0, -1);
                     server.changeItem(server.tileMap.getIndexFromCoord(above), server.contentManager.createItemInstance(980));
                 }
-                if (i == 0 || use.tool != 0) {
-                    server.addItemNear(destIndex, productInstance, 3);
-                } else {
+
+                if (i != 0 && use.tool == 0 && player.creature.inventory.canFitItem(productInstance)) {
                     player.creature.inventory.add(productInstance);
+                } else {
+                    server.addItemNear(destIndex, productInstance, 4);
                 }
             }
             if (use.animation != 0) {
