@@ -5,6 +5,7 @@ import hoten.gridia.Creature;
 import hoten.gridia.CustomPlayerImage;
 import hoten.gridia.DefaultCreatureImage;
 import hoten.gridia.Player;
+import hoten.gridia.content.Item;
 import hoten.gridia.content.ItemInstance;
 import hoten.gridia.content.Monster;
 import hoten.gridia.map.Coord;
@@ -13,6 +14,7 @@ import hoten.gridia.serving.ServingGridia;
 import hoten.serving.message.JsonMessageHandler;
 import hoten.serving.message.Message;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 
 // :( OCP!
 public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
@@ -109,6 +111,33 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
             }
         } else if (msg.equals("!save") && player.accountDetails.isAdmin) {
             server.save();
+        } else if (msg.startsWith("!item ") && player.accountDetails.isAdmin) {
+            String[] split = msg.replaceFirst("!item ", "").split(",", 2);
+            String itemInput = split[0];
+            String quantityInput = split.length == 2 ? split[1].trim() : "1";
+
+            Item item = ItemInstance.NONE.data;
+            try {
+                item = server.contentManager.getItem(Integer.parseInt(itemInput));
+            } catch (NumberFormatException e) {
+                try {
+                    item = server.contentManager.getItemByName(itemInput);
+                } catch (NoSuchElementException ex) {
+                }
+            }
+            int quantity;
+            try {
+                quantity = Integer.parseInt(quantityInput);
+            } catch (NumberFormatException e) {
+                quantity = -1;
+            }
+            if (item == ItemInstance.NONE.data) {
+                connection.send(server.messageBuilder.chat("Invalid item.", player.creature.location));
+            } else if (quantity == -1) {
+                connection.send(server.messageBuilder.chat("Invalid quantity.", player.creature.location));
+            } else {
+                server.addItemNear(player.creature.location.add(0, 1, 0), server.contentManager.createItemInstance(item.id, quantity), 3);
+            }
         } else if (msg.startsWith("!admin ") && player.accountDetails.isAdmin) {
             String playerName = msg.split("\\s+", 2)[1];
             Player otherPlayer = server.getPlayerWithName(playerName);
@@ -123,6 +152,9 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
             connection.send(server.messageBuilder.chat("Invalid command.", player.creature.location));
         } else {
             server.sendToAll(server.messageBuilder.chat(player.creature.name + " says: " + msg, player.creature.location));
+        }
+        if (msg.startsWith("!")) {
+            connection.send(server.messageBuilder.chat("Command: " + msg, player.creature.location));
         }
     }
 }

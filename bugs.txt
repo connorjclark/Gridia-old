@@ -15,7 +15,6 @@ java.io.EOFException
         at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
         at java.lang.Thread.run(Thread.java:745)
 
-barrels
 animations show in top left corner for split seconds
 logout should take you back to log in screen
 log in screen should let you disconnect from server
