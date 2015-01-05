@@ -2,7 +2,6 @@ Sawwing sfx is static-y
 Player position gets out of sync?
 players aren't removed on log out?
 freezes when minimized for awhile
-admin spawn - spawning items from end of list, wrong item is spawned. same for item drops.
 
 java.io.EOFException
         at java.io.DataInputStream.readFully(DataInputStream.java:197)
