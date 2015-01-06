@@ -162,5 +162,66 @@ namespace Gridia
             int z = (int)v.z;
             return x + y * Size + z * Area;
         }
+
+        //given the map wraps around, returns the signed distance between two coords
+        public float WrappedDistBetweenX(Vector3 loc1, Vector3 loc2)
+        {
+            var d1 = loc1.x - loc2.x;
+            var d2 = -(Size - loc1.x + loc2.x);
+            var d3 = Size + loc1.x - loc2.x;
+
+            if (Math.Abs(d1) < Math.Abs(d2))
+            {
+                if (Math.Abs(d1) < Math.Abs(d3))
+                {
+                    return d1;
+                }
+                else
+                {
+                    return d3;
+                }
+            }
+            else
+            {
+                if (Math.Abs(d2) < Math.Abs(d3))
+                {
+                    return d2;
+                }
+                else
+                {
+                    return d3;
+                }
+            }
+        }
+
+        public float WrappedDistBetweenY(Vector3 loc1, Vector3 loc2)
+        {
+            var d1 = loc1.y - loc2.y;
+            var d2 = -(Size - loc1.y + loc2.y);
+            var d3 = Size + loc1.y - loc2.y;
+
+            if (Math.Abs(d1) < Math.Abs(d2))
+            {
+                if (Math.Abs(d1) < Math.Abs(d3))
+                {
+                    return d1;
+                }
+                else
+                {
+                    return d3;
+                }
+            }
+            else
+            {
+                if (Math.Abs(d2) < Math.Abs(d3))
+                {
+                    return d2;
+                }
+                else
+                {
+                    return d3;
+                }
+            }
+        }
     }
 }

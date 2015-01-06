@@ -120,8 +120,11 @@ public class GridiaDriver : MonoBehaviour
             var pos = cre.Position;
             if (playerZ == pos.z)
             {
-                var relative = pos - focusPos; // :(
-                var rect = new Rect(relative.x * tileSize, Screen.height - relative.y * tileSize - tileSize, tileSize, tileSize);
+                // :(
+                var dx = _game.tileMap.WrappedDistBetweenX(pos, focusPos);
+                var dy = _game.tileMap.WrappedDistBetweenY(pos, focusPos);
+
+                var rect = new Rect(dx * tileSize, Screen.height - dy * tileSize - tileSize, tileSize, tileSize);
                 _textureManager.DrawCreature(rect, cre, _game.view.Scale);
                 if (cre.Name.Length > 0)
                 {

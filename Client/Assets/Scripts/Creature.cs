@@ -66,7 +66,7 @@ namespace Gridia
             return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - GridiaConstants.SERVER_TIME_OFFSET;
         }
 
-        public static int RENDER_DELAY = 0; // in ms (not needed???)
+        public static int RENDER_DELAY = 50; // in ms (not needed???)
 
         // see https://developer.valvesoftware.com/wiki/Source_Multiplayer_Networking
 
