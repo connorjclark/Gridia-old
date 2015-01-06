@@ -18,3 +18,6 @@ java.io.EOFException
 animations show in top left corner for split seconds
 logout should take you back to log in screen
 log in screen should let you disconnect from server
+.rar, don't .zip
+walking on edge of map
+!help

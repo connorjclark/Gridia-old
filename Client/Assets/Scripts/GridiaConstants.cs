@@ -15,7 +15,7 @@ namespace Gridia
         public static int SIZE, DEPTH, SECTOR_SIZE; // :(
         public static long SERVER_TIME_OFFSET;
         public static bool IS_ADMIN;
-        public static String VERSION = "alpha-1.1.preview.2"; // :(
+        public static String VERSION = "alpha-1.1"; // :(
         public static String WORLD_NAME;
         public static String ErrorMessage { get; set; }
         public static Action ErrorMessageAction { get; set; }
@@ -23,24 +23,25 @@ namespace Gridia
         // :(
         public static void DrawErrorMessage()
         {
-            if (GridiaConstants.ErrorMessage != null)
+            if (ErrorMessage != null)
             {
                 var width = 600;
-                var height = 75;
+                var height = GUI.skin.GetStyle("TextArea").CalcHeight(new GUIContent(ErrorMessage), width - 20) + 50;
                 var x = (Screen.width - width) / 2;
                 var y = (Screen.height - height) / 2;
                 GUI.Window(0, new Rect(x, y, width, height), id =>
                 {
-                    if (GUI.Button(new Rect((width - 50) / 2, 30, 50, 20), "OK"))
+                    GUILayout.TextArea(ErrorMessage);
+                    if (GUILayout.Button("OK"))
                     {
-                        GridiaConstants.ErrorMessage = null;
+                        ErrorMessage = null;
                         if (ErrorMessageAction != null)
                         {
                             ErrorMessageAction();
                             ErrorMessageAction = null;
                         }
                     }
-                }, GridiaConstants.ErrorMessage);
+                }, "Error.");
             }
         }
     }

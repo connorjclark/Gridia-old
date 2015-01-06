@@ -4,7 +4,6 @@ import hoten.gridia.content.ContentManager;
 import hoten.gridia.content.Item;
 import hoten.gridia.content.ItemInstance;
 import hoten.gridia.map.Coord;
-import hoten.gridia.map.Sector;
 import hoten.gridia.map.TileMap;
 import hoten.gridia.serializers.GridiaGson;
 import hoten.gridia.serving.ServingGridia;
