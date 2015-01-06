@@ -194,12 +194,7 @@ public class GridiaDriver : MonoBehaviour
         }
         if (Event.current.type == EventType.KeyUp)
         {
-            if (Event.current.keyCode == KeyCode.Tab)
-            {
-                chatGui.Visible = true;
-                GUI.FocusControl("ChatInput");
-            }
-            else if (Event.current.keyCode == KeyCode.Escape)
+            if (Event.current.keyCode == KeyCode.Return)
             {
                 if (GUI.GetNameOfFocusedControl() == "ChatInput")
                 {
@@ -207,8 +202,13 @@ public class GridiaDriver : MonoBehaviour
                 }
                 else
                 {
-                    chatGui.Visible = false;
+                    chatGui.Visible = true;
+                    GUI.FocusControl("ChatInput");
                 }
+            }
+            else if (Event.current.keyCode == KeyCode.Escape)
+            {
+                chatGui.Visible = false;
             }
         }
     }

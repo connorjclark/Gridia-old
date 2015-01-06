@@ -9,8 +9,9 @@ namespace Gridia
     // :( Todo: able to resize chat window
     public class ChatWindow : GridiaWindow
     {
-        private TextField ChatInput { get; set; }
+        public TextField ChatInput { get; private set; }
         private TextArea ChatArea { get; set; }
+        private int _maxChatAreaLength = 5000;
 
         public ChatWindow(Vector2 pos)
             : base(pos, "Chat")
@@ -24,9 +25,9 @@ namespace Gridia
 
             ChatArea.Text = @"Type below to chat!
 
-Press TAB once to show the chat, and again to set focus on it.
+Press ENTER to focus on the chat.
 
-Press ESCAPE once to unfocus the chat box, and again to hide the chat.
+Press ESCAPE to hide the chat.
 
 To pick up an item, either drag it to your player/inventory,
 Or, use the arrow keys to select, and press SHIFT
@@ -55,6 +56,11 @@ ________________________
         {
             var isAtMaxScrol = ChatArea.MaxScrollY == ChatArea.ScrollPosition.y;
             ChatArea.Text += line + '\n';
+            var length = ChatArea.Text.Length;
+            if (length > _maxChatAreaLength)
+            {
+                ChatArea.Text = ChatArea.Text.Substring(length - _maxChatAreaLength, _maxChatAreaLength);
+            }
             if (isAtMaxScrol)
             {
                 SetScrollToMax();
