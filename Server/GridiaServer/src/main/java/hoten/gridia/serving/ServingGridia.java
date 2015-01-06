@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaClientHandler> {
 
@@ -76,6 +77,13 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     @Override
     protected ConnectionToGridiaClientHandler makeNewConnection(Socket newConnection) throws IOException {
         return new ConnectionToGridiaClientHandler(newConnection, this);
+    }
+    
+    public String whoIsOnline() {
+        return "Players online: " + _clients.stream()
+                .filter(client -> client.player != null)
+                .map(client -> client.player.accountDetails.username)
+                .collect(Collectors.joining(", "));
     }
 
     public void grow() {

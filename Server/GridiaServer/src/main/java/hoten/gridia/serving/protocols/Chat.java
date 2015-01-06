@@ -82,6 +82,9 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
         } else if (msg.equals("!loc")) {
             Message message = server.messageBuilder.chat("You are at: " + player.creature.location.toString(), player.creature.location);
             connection.send(message);
+        } else if (msg.equals("!online")) {
+            Message message = server.messageBuilder.chat(server.whoIsOnline(), player.creature.location);
+            connection.send(message);
         } else if (msg.equals("!die")) {
             server.hurtCreature(player.creature, 100000);
         } else if (msg.startsWith("!warp ")) {

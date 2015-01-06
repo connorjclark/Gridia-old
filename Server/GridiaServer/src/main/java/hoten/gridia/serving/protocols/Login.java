@@ -37,5 +37,7 @@ public class Login extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
         thePlayer.updatePlayerImage(server);
 
         server.sendToAll(server.messageBuilder.chat(thePlayer.accountDetails.username + " has joined the world!", thePlayer.creature.location));
+    
+        connection.send(server.messageBuilder.chat(server.whoIsOnline(), thePlayer.creature.location));
     }
 }
