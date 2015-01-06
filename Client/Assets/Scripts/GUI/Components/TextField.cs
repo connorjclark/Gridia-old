@@ -39,7 +39,6 @@ namespace Gridia
             if (Text != "" && Event.current.type == EventType.keyDown && Event.current.character == '\n')
             {
                 OnEnter(Text);
-                Text = "";
             }
         }
     }

@@ -67,9 +67,17 @@ ________________________
             }
         }
 
-        private void SendChatMessage(String message) 
+        private void SendChatMessage(String message)
         {
-            Locator.Get<ConnectionToGridiaServerHandler>().Chat(message);
+            if (message.Length <= 200)
+            {
+                Locator.Get<ConnectionToGridiaServerHandler>().Chat(message);
+                ChatInput.Text = "";
+            }
+            else
+            {
+                GridiaConstants.ErrorMessage = "Message is " + message.Length + " characters long. Max is 200.";
+            }
         }
 
         private void SetScrollToMax() 
