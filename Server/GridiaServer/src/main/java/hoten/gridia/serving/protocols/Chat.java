@@ -147,7 +147,7 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
             if (otherPlayer != null) {
                 otherPlayer.accountDetails.isAdmin = true;
                 server.savePlayer(otherPlayer);
-                server.sendToAll(server.messageBuilder.chat(player.creature.name + " is now an admin.", otherPlayer.creature.location));
+                server.sendToAll(server.messageBuilder.chat(otherPlayer.creature.name + " is now an admin.", otherPlayer.creature.location));
             } else {
                 connection.send(server.messageBuilder.chat("Invalid player.", player.creature.location));
             }
