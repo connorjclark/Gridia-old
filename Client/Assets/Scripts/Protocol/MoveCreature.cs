@@ -12,7 +12,7 @@ namespace Gridia.Protocol
             int x = (int)data["loc"]["x"];
             int y = (int)data["loc"]["y"];
             int z = (int)data["loc"]["z"];
-            long time = (long)data["time"];
+            long time = (long)data["time"] - Creature.RENDER_DELAY;
             bool isTeleport = (bool)data["isTeleport"];
             bool onRaft = (bool)data["onRaft"];
 

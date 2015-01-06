@@ -54,7 +54,7 @@ namespace Gridia
         {
             var snapshot = new PositionSnapshot(position, onRaft, time);
             _positions.Add(snapshot);
-            if (_positions.Count > 6) 
+            if (_positions.Count > 9) 
             {
                 _positions.RemoveRange(0, 3);
             }
@@ -66,7 +66,7 @@ namespace Gridia
             return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - GridiaConstants.SERVER_TIME_OFFSET;
         }
 
-        public static int RENDER_DELAY = 100; // in ms
+        public static int RENDER_DELAY = 0; // in ms (not needed???)
 
         // see https://developer.valvesoftware.com/wiki/Source_Multiplayer_Networking
 

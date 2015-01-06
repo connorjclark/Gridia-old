@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaClientHandler> {
@@ -505,5 +506,9 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     public void playWarpAnimation(Coord loc) {
         Message animMessage = messageBuilder.animation(3, loc);
         sendToAll(animMessage);
+    }
+
+    public void forEachClient(Consumer<ConnectionToGridiaClientHandler> consumer) {
+        _clients.forEach(consumer);
     }
 }
