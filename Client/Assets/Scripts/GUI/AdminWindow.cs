@@ -29,7 +29,7 @@ namespace Gridia
                 },
                 (int index) =>
                 {
-                    var location = Locator.Get<TileMapView>().Focus.Position;
+                    var location = Locator.Get<GridiaGame>().GetSelectorCoord();
                     Locator.Get<ConnectionToGridiaServerHandler>().AdminMakeItem(location, index);
                 }
             );
@@ -46,7 +46,7 @@ namespace Gridia
                 },
                 (int index) =>
                 {
-                    var location = Locator.Get<TileMapView>().Focus.Position;
+                    var location = Locator.Get<GridiaGame>().GetSelectorCoord();
                     Locator.Get<ConnectionToGridiaServerHandler>().AdminMakeFloor(location, index);
                 }
             );
