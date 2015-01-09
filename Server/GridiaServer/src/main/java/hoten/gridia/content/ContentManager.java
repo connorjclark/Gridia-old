@@ -1,33 +1,31 @@
 package hoten.gridia.content;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import hoten.gridia.content.Item.ItemClass;
-import hoten.gridia.serializers.ItemDeserializer;
-import hoten.gridia.serializers.MonsterDeserializer;
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import org.apache.commons.io.FileUtils;
 
-public class ContentManager {
+public final class ContentManager {
 
     private final List<Item> _items;
     private final Map<Item, List<ItemUse>> _itemUses;
     private final List<Monster> _monsters;
-    private final File _content;
 
-    public ContentManager(File world) throws IOException {
-        _content = new File(world, "clientdata/content");
-        _items = loadItems();
-        _monsters = loadMonsters();
+    public ContentManager(List<Item> items, List<ItemUse> usesList, List<Monster> monsters) {
+        _items = items;
+        _itemUses = usesList.stream()
+                .collect(Collectors.groupingBy(u -> getItem(u.tool), Collectors.mapping(u -> u, Collectors.toList())));
+        _monsters = monsters;
         ItemInstance.NONE.data = _items.get(0);
-        _itemUses = loadItemUses();
+
+        // :(
+        ItemInstance decayedRemains = createItemInstance(490);
+        _monsters.stream()
+                .filter(monster -> monster != null)
+                .forEach(monster -> {
+                    monster.drops.add(decayedRemains);
+                });
     }
 
     public ItemInstance createItemInstance(int id, int quantity) {
@@ -56,7 +54,7 @@ public class ContentManager {
     public Item getItemByName(String name) {
         return _items.stream()
                 .filter(item -> item != null && item.name.equalsIgnoreCase(name))
-                .findFirst().get();
+                .findFirst().orElseThrow(() -> new RuntimeException("No such item: " + name));
     }
 
     // cache?
@@ -105,38 +103,7 @@ public class ContentManager {
                 .get();
     }
 
-    private String loadContentFile(String contentName) throws IOException {
-        return FileUtils.readFileToString(new File(_content, contentName + ".json"));
-    }
-
-    private List<Item> loadItems() throws IOException {
-        String json = loadContentFile("items");
-        Type type = new TypeToken<List<Item>>() {
-        }.getType();
-        return load(json, type);
-    }
-
-    private List<Monster> loadMonsters() throws IOException {
-        String json = loadContentFile("monsters");
-        Type type = new TypeToken<List<Monster>>() {
-        }.getType();
-        return load(json, type);
-    }
-
-    private Map<Item, List<ItemUse>> loadItemUses() throws IOException {
-        String json = loadContentFile("itemuses");
-        Type type = new TypeToken<List<ItemUse>>() {
-        }.getType();
-        List<ItemUse> usesList = load(json, type);
-        return usesList.stream()
-                .collect(Collectors.groupingBy(u -> getItem(u.tool), Collectors.mapping(u -> u, Collectors.toList())));
-    }
-
-    private List load(String json, Type type) {
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Item.class, new ItemDeserializer()) // :(
-                .registerTypeAdapter(Monster.class, new MonsterDeserializer(this))
-                .create();
-        return gson.fromJson(json, type);
+    public ItemInstance createItemInstanceByName(String itemName) {
+        return createItemInstance(getItemByName(itemName).id);
     }
 }

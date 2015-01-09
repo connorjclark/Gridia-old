@@ -16,6 +16,7 @@ Winter break
   
   Refactor
     xxxGui -> xxxWindow
+    itemusages -> usages
     Preloader
     State machine
     Test coverage

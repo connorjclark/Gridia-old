@@ -1,5 +1,7 @@
 package hoten.gridia.content;
 
+import java.util.Objects;
+
 public class ItemInstance {
 
     public static final ItemInstance NONE = new ItemInstance(new Item(), 0);
@@ -20,10 +22,36 @@ public class ItemInstance {
         this.data = data;
         this.quantity = quantity;
     }
-    
+
     public ItemInstance(ItemInstance item) {
         data = item.data;
         quantity = item.quantity;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 73 * hash + Objects.hashCode(this.data);
+        hash = 73 * hash + this.quantity;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ItemInstance other = (ItemInstance) obj;
+        if (!Objects.equals(this.data, other.data)) {
+            return false;
+        }
+        if (this.quantity != other.quantity) {
+            return false;
+        }
+        return true;
     }
 
     @Override

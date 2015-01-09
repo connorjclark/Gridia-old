@@ -7,7 +7,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import hoten.gridia.DefaultCreatureImage;
-import hoten.gridia.content.ContentManager;
+import hoten.gridia.content.Item;
 import hoten.gridia.content.ItemInstance;
 import hoten.gridia.content.Monster;
 import java.lang.reflect.Type;
@@ -16,10 +16,10 @@ import java.util.List;
 
 public class MonsterDeserializer implements JsonDeserializer<Monster> {
 
-    private final ContentManager _contentManager;
+    private final List<Item> _items; // :(
 
-    public MonsterDeserializer(ContentManager contentManager) {
-        _contentManager = contentManager;
+    public MonsterDeserializer(List<Item> items) {
+        _items = items;
     }
 
     @Override
@@ -42,7 +42,6 @@ public class MonsterDeserializer implements JsonDeserializer<Monster> {
         }
 
         List<ItemInstance> drops = new ArrayList<>();
-        drops.add(_contentManager.createItemInstance(490)); // :(
         if (jsonObject.has("treasure")) {
             JsonArray treasures = jsonObject.get("treasure").getAsJsonArray();
             for (int i = 0; i < treasures.size(); i++) {
@@ -50,9 +49,11 @@ public class MonsterDeserializer implements JsonDeserializer<Monster> {
                 String itemName = treasure.get("item").getAsString();
                 // :(
                 if (!itemName.contains("<")) {
-                    int type = _contentManager.getItemByName(itemName).id;
+                    Item data = _items.stream()
+                            .filter(item -> item != null && item.name.equalsIgnoreCase(itemName))
+                            .findFirst().get();
                     int quantity = treasure.get("quantity").getAsInt();
-                    ItemInstance item = _contentManager.createItemInstance(type, quantity);
+                    ItemInstance item = new ItemInstance(data, quantity);
                     drops.add(item);
                 }
             }

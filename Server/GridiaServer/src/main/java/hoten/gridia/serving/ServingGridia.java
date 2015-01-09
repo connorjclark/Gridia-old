@@ -15,6 +15,11 @@ import hoten.gridia.Player.PlayerFactory;
 import hoten.gridia.content.Item;
 import hoten.gridia.content.ItemUse;
 import hoten.gridia.content.Monster;
+import hoten.gridia.content.UsageProcessor;
+import hoten.gridia.content.UsageProcessor.ContainerItemWrapper;
+import hoten.gridia.content.UsageProcessor.ItemWrapper;
+import hoten.gridia.content.UsageProcessor.WorldItemWrapper;
+import hoten.gridia.content.WorldContentLoader;
 import hoten.gridia.map.Sector;
 import hoten.gridia.map.Tile;
 import hoten.gridia.map.TileMap;
@@ -44,12 +49,12 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     public final PlayerFactory playerFactory;
     public final ContainerFactory containerFactory;
     public final String worldName;
-    public final String version = "alpha-1.1";
+    public final String version = "alpha-1.2.dev";
 
     public ServingGridia(File world, String mapName, int port, File clientDataFolder, String localDataFolderName) throws IOException {
         super(port, clientDataFolder, localDataFolderName);
         worldName = world.getName();
-        contentManager = new ContentManager(world);
+        contentManager = new WorldContentLoader(world).load();
         GridiaGson.initialize(contentManager, this);
         tileMap = TileMap.loadMap(world, mapName);
         playerFactory = new PlayerFactory(world);
@@ -79,7 +84,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     protected ConnectionToGridiaClientHandler makeNewConnection(Socket newConnection) throws IOException {
         return new ConnectionToGridiaClientHandler(newConnection, this);
     }
-    
+
     public String whoIsOnline() {
         return "Players online: " + _clients.stream()
                 .filter(client -> client.player != null)
@@ -378,17 +383,16 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         }
     }
 
-    public ItemInstance getItemFrom(Player player, String from, int index) {
+    public ItemWrapper getItemFrom(Player player, String from, int index) {
         switch (from) {
             case "world":
-                return tileMap.getItem(tileMap.getCoordFromIndex(index));
+                Coord location = tileMap.getCoordFromIndex(index);
+                return new WorldItemWrapper(this, location);
             case "inv":
-                if (index == -1) {
-                    return ItemInstance.NONE;
-                }
-                return player.creature.inventory.get(index);
+                Container container = player.creature.inventory;
+                return new ContainerItemWrapper(container, index);
             default:
-                return ItemInstance.NONE;
+                throw new RuntimeException("Invalid source");
         }
     }
 
@@ -403,8 +407,23 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         }
     }
 
-    // :(
     public void executeItemUse(
+            ConnectionToGridiaClientHandler connection,
+            ItemUse use,
+            ItemInstance tool,
+            ItemInstance focus,
+            String source,
+            String dest,
+            int sourceIndex,
+            int destIndex
+    ) throws IOException {
+        ItemWrapper toolWrapper = getItemFrom(connection.player, source, sourceIndex);
+        ItemWrapper focusWrapper = getItemFrom(connection.player, dest, destIndex);
+        new UsageProcessor(contentManager).processUsage(use, toolWrapper, focusWrapper);
+    }
+
+    // :(
+    public void executeItemUseOLD(
             ConnectionToGridiaClientHandler connection,
             ItemUse use,
             ItemInstance tool,

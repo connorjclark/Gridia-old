@@ -106,7 +106,10 @@ public class Container {
         return addToFirstAvailableSlot(itemToAdd);
     }
 
-    public boolean add(ItemInstance itemToAdd, int slotIndex) {
+    public boolean add(int slotIndex, ItemInstance itemToAdd) {
+        if (slotIndex == -1) {
+            return addToFirstAvailableSlot(itemToAdd);
+        }
         if (slotIndex > _items.size()) {
             return false;
         }
@@ -121,7 +124,7 @@ public class Container {
 
     private boolean addToFirstAvailableSlot(ItemInstance itemToAdd) {
         for (int i = 0; i < _items.size(); i++) {
-            if (add(itemToAdd, i)) {
+            if (add(i, itemToAdd)) {
                 return true;
             }
         }

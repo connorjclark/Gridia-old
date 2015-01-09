@@ -1,5 +1,7 @@
 package hoten.gridia.content;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+
 public class Item {
 
     public enum ItemClass {
@@ -23,5 +25,10 @@ public class Item {
 
     public boolean isEquipable() {
         return itemClass == ItemClass.Armor || itemClass == ItemClass.Weapon || itemClass == ItemClass.Shield;
+    }
+
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
     }
 }

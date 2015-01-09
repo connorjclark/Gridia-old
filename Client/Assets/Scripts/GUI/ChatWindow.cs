@@ -25,7 +25,7 @@ namespace Gridia
 
             ChatArea.Text = @"Type below to chat!
 
-Press ENTER to focus on the chat.
+Press ENTER to focus/unfocus on the chat.
 
 Press ESCAPE to hide the chat.
 

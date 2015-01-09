@@ -3,6 +3,7 @@ package hoten.gridia;
 import hoten.gridia.content.ContentManager;
 import hoten.gridia.content.Item;
 import hoten.gridia.content.ItemInstance;
+import hoten.gridia.content.WorldContentLoader;
 import hoten.gridia.map.Coord;
 import hoten.gridia.map.TileMap;
 import hoten.gridia.serializers.GridiaGson;
@@ -79,7 +80,7 @@ public class GridiaServerDriver {
                 int mapSize = promptInt(scanner, "Map size? (MUST be a multiple of sector size!)");
                 int mapDepth = promptInt(scanner, "Depth? (at least 1, recommended: 2)");
 
-                ContentManager contentManager = new ContentManager(world);
+                ContentManager contentManager = new WorldContentLoader(world).load();
                 GridiaGson.initialize(contentManager, null);
                 MapGenerator mapGenerator = new MapGenerator(contentManager, numPoints, numLloydRelaxations, seed);
                 TileMap tileMap = mapGenerator.generate(map, mapSize, mapDepth, mapSectorSize);

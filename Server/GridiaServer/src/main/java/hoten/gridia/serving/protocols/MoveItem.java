@@ -3,6 +3,7 @@ package hoten.gridia.serving.protocols;
 import com.google.gson.JsonObject;
 import hoten.gridia.Player;
 import hoten.gridia.content.ItemInstance;
+import hoten.gridia.content.UsageProcessor.ItemWrapper;
 import hoten.gridia.serving.ConnectionToGridiaClientHandler;
 import hoten.gridia.serving.ServingGridia;
 import hoten.serving.message.JsonMessageHandler;
@@ -23,29 +24,20 @@ public class MoveItem extends JsonMessageHandler<ConnectionToGridiaClientHandler
             return;
         }
 
-        ItemInstance item = server.getItemFrom(player, source, sourceIndex);
-        if (item == ItemInstance.NONE || (!player.accountDetails.isAdmin && !item.data.moveable)) {
+        ItemWrapper itemToMoveWrapped = server.getItemFrom(player, source, sourceIndex);
+        ItemInstance itemToMove = itemToMoveWrapped.getItemInstance();
+        if (itemToMove == ItemInstance.NONE || (!player.accountDetails.isAdmin && !itemToMove.data.moveable)) {
             return;
         }
-        if (quantityToMove == -1) {
-            quantityToMove = item.quantity;
+        if (quantityToMove == -1) { // :(
+            quantityToMove = itemToMove.quantity;
         }
-        item = new ItemInstance(item);
-        item.quantity = quantityToMove;
+        itemToMove = new ItemInstance(itemToMove);
+        itemToMove.quantity = quantityToMove;
 
-        boolean moveSuccessful = false;
-        switch (dest) {
-            case "world":
-                moveSuccessful = server.addItem(server.tileMap.getCoordFromIndex(destIndex), item);
-                break;
-            case "inv":
-                if (destIndex == -1) {
-                    moveSuccessful = player.creature.inventory.add(item);
-                } else {
-                    moveSuccessful = player.creature.inventory.add(item, destIndex);
-                }
-                break;
-        }
+        ItemWrapper destItemWrapped = server.getItemFrom(player, dest, destIndex);
+
+        boolean moveSuccessful = destItemWrapped.addItemHere(itemToMove);
 
         if (!moveSuccessful) {
             return;
