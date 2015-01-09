@@ -17,27 +17,27 @@ public class CustomPlayerImage implements CreatureImage {
         ItemInstance weaponEquipment = equipment.get(Item.ArmorSpot.Weapon.ordinal());
 
         if (headEquipment != ItemInstance.NONE) {
-            head = headEquipment.data.wearImage;
+            head = headEquipment.getData().wearImage;
         } else {
             head = bareHead;
         }
         if (chestEquipment != ItemInstance.NONE) {
-            chest = chestEquipment.data.wearImage;
+            chest = chestEquipment.getData().wearImage;
         } else {
             chest = bareChest;
         }
         if (legsEquipment != ItemInstance.NONE) {
-            legs = legsEquipment.data.wearImage;
+            legs = legsEquipment.getData().wearImage;
         } else {
             legs = bareLegs;
         }
         if (shieldEquipment != ItemInstance.NONE) {
-            shield = shieldEquipment.data.wearImage;
+            shield = shieldEquipment.getData().wearImage;
         } else {
             shield = 0;
         }
         if (weaponEquipment != ItemInstance.NONE) {
-            weapon = weaponEquipment.data.wearImage;
+            weapon = weaponEquipment.getData().wearImage;
         } else {
             weapon = 0;
         }

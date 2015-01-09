@@ -4,35 +4,57 @@ import java.util.Objects;
 
 public class ItemInstance {
 
-    public static final ItemInstance NONE = new ItemInstance(new Item(), 0);
+    // :(
+    public static ItemInstance NONE;
+
+    public static void setBlankItemInstance(ItemInstance item) {
+        if (NONE != null) {
+            throw new RuntimeException("Blank item has already been set!");
+        }
+        NONE = item;
+    }
 
     public static boolean stackable(ItemInstance item1, ItemInstance item2) {
-        if (item1.data.id != item2.data.id || !item1.data.stackable) {
+        if (item1._data.id != item2._data.id || !item1._data.stackable) {
             return false;
         }
-        int q = item1.quantity + item2.quantity;
+        int q = item1._quantity + item2._quantity;
         return q < 1000;
     }
 
-    public Item data;
-    public int quantity;
+    private final Item _data;
+    private final int _quantity;
     public int age;
 
     public ItemInstance(Item data, int quantity) {
-        this.data = data;
-        this.quantity = quantity;
+        this._data = data;
+        this._quantity = quantity;
     }
 
     public ItemInstance(ItemInstance item) {
-        data = item.data;
-        quantity = item.quantity;
+        _data = item._data;
+        _quantity = item._quantity;
+        age = item.age;
+    }
+
+    public ItemInstance remove(int amount) {
+        int newQuantity = _quantity - amount;
+        if (newQuantity <= 0) {
+            return ItemInstance.NONE;
+        } else {
+            return new ItemInstance(_data, newQuantity);
+        }
+    }
+
+    public ItemInstance add(int amount) {
+        return remove(-amount);
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 73 * hash + Objects.hashCode(this.data);
-        hash = 73 * hash + this.quantity;
+        hash = 73 * hash + Objects.hashCode(this._data);
+        hash = 73 * hash + this._quantity;
         return hash;
     }
 
@@ -45,10 +67,10 @@ public class ItemInstance {
             return false;
         }
         final ItemInstance other = (ItemInstance) obj;
-        if (!Objects.equals(this.data, other.data)) {
+        if (!Objects.equals(this._data, other._data)) {
             return false;
         }
-        if (this.quantity != other.quantity) {
+        if (this._quantity != other._quantity) {
             return false;
         }
         return true;
@@ -56,6 +78,14 @@ public class ItemInstance {
 
     @Override
     public String toString() {
-        return data.name + (quantity != 1 ? String.format(" (%d)", quantity) : "");
+        return _data.name + (_quantity != 1 ? String.format(" (%d)", _quantity) : "");
+    }
+
+    public Item getData() {
+        return _data;
+    }
+
+    public int getQuantity() {
+        return _quantity;
     }
 }

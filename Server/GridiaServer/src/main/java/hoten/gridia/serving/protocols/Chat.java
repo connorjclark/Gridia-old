@@ -119,7 +119,7 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
             String itemInput = split[0];
             String quantityInput = split.length == 2 ? split[1].trim() : "1";
 
-            Item item = ItemInstance.NONE.data;
+            Item item = ItemInstance.NONE.getData();
             try {
                 item = server.contentManager.getItem(Integer.parseInt(itemInput));
             } catch (NumberFormatException e) {
@@ -134,7 +134,7 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
             } catch (NumberFormatException e) {
                 quantity = -1;
             }
-            if (item == ItemInstance.NONE.data) {
+            if (item == ItemInstance.NONE.getData()) {
                 connection.send(server.messageBuilder.chat("Invalid item.", player.creature.location));
             } else if (quantity == -1) {
                 connection.send(server.messageBuilder.chat("Invalid quantity.", player.creature.location));

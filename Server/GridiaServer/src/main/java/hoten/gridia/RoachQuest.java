@@ -49,7 +49,7 @@ public class RoachQuest extends Quest {
                 int highestAntenae = 0;
 
                 for (Creature player : playersInArena) {
-                    int amount = removeItemFromInventory(player, 447).quantity;
+                    int amount = removeItemFromInventory(player, 447).getQuantity();
                     if (amount >= highestAntenae) {
                         winner = player;
                         highestAntenae = amount;

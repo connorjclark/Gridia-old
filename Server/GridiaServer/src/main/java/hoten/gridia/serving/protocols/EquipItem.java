@@ -18,8 +18,8 @@ public class EquipItem extends JsonMessageHandler<ConnectionToGridiaClientHandle
         
         ItemInstance item = player.creature.inventory.get(slotIndex);
         // :(
-        if (item.data.isEquipable()) {
-            int armorSlotIndex = item.data.armorSpot.ordinal();
+        if (item.getData().isEquipable()) {
+            int armorSlotIndex = item.getData().armorSpot.ordinal();
             if (player.equipment.isEmpty(armorSlotIndex)) {
                 player.creature.inventory.deleteSlot(slotIndex);
                 player.equipment.set(armorSlotIndex, item);
@@ -29,7 +29,7 @@ public class EquipItem extends JsonMessageHandler<ConnectionToGridiaClientHandle
             }
             player.updatePlayerImage(server);
         } else {
-            connection.send(server.messageBuilder.chat("You cannot equip a " + item.data.name, player.creature.location));
+            connection.send(server.messageBuilder.chat("You cannot equip a " + item.getData().name, player.creature.location));
         }
     }
 }

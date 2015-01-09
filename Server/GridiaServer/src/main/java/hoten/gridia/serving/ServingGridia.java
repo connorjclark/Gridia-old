@@ -9,16 +9,15 @@ import hoten.gridia.Container.ContainerType;
 import hoten.gridia.CreatureImage;
 import hoten.gridia.CustomPlayerImage;
 import hoten.gridia.DefaultCreatureImage;
+import hoten.gridia.ItemWrapper;
+import hoten.gridia.ItemWrapper.ContainerItemWrapper;
+import hoten.gridia.ItemWrapper.WorldItemWrapper;
 import hoten.gridia.content.ItemInstance;
 import hoten.gridia.Player;
 import hoten.gridia.Player.PlayerFactory;
-import hoten.gridia.content.Item;
 import hoten.gridia.content.ItemUse;
 import hoten.gridia.content.Monster;
 import hoten.gridia.content.UsageProcessor;
-import hoten.gridia.content.UsageProcessor.ContainerItemWrapper;
-import hoten.gridia.content.UsageProcessor.ItemWrapper;
-import hoten.gridia.content.UsageProcessor.WorldItemWrapper;
 import hoten.gridia.content.WorldContentLoader;
 import hoten.gridia.map.Sector;
 import hoten.gridia.map.Tile;
@@ -94,10 +93,10 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
 
     public void grow() {
         tileMap.forAllTilesLoaded(x -> y -> z -> tile -> {
-            if (tile.item.data.growthDelta != 0) {
+            if (tile.item.getData().growthDelta != 0) {
                 tile.item.age += 1;
-                if (tile.item.age >= tile.item.data.growthDelta) {
-                    changeItem(new Coord(x, y, z), contentManager.createItemInstance(tile.item.data.growthItem));
+                if (tile.item.age >= tile.item.getData().growthDelta) {
+                    changeItem(new Coord(x, y, z), contentManager.createItemInstance(tile.item.getData().growthItem));
                 }
             }
         });
@@ -276,7 +275,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     public void moveItem(Coord from, Coord to) {
         ItemInstance fromItem = tileMap.getItem(from);
         ItemInstance toItem = tileMap.getItem(to);
-        if (toItem.data.id == 0) {
+        if (toItem.getData().id == 0) {
             changeItem(from, ItemInstance.NONE);
             changeItem(to, fromItem);
         }
@@ -293,13 +292,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     }
 
     public void reduceItemQuantity(Coord loc, int amount) {
-        ItemInstance item = tileMap.getItem(loc);
-        item.quantity -= amount;
-        if (item.quantity == 0) {
-            changeItem(loc, ItemInstance.NONE);
-        } else {
-            updateTile(loc);
-        }
+        changeItem(loc, tileMap.getItem(loc).remove(amount));
     }
 
     public void changeItem(int index, ItemInstance item) {
@@ -319,12 +312,10 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     public boolean addItem(Coord loc, ItemInstance itemToAdd) {
         ItemInstance currentItem = tileMap.getTile(loc).item;
         boolean willStack = ItemInstance.stackable(currentItem, itemToAdd);
-        if (currentItem.data.id != 0 && !willStack) {
+        if (currentItem.getData().id != 0 && !willStack) {
             return false;
         }
-        int q = currentItem.quantity + itemToAdd.quantity;
-        itemToAdd.quantity = q;
-        changeItem(loc, itemToAdd);
+        changeItem(loc, itemToAdd.add(currentItem.getQuantity()));
         return true;
     }
 
@@ -420,98 +411,18 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         ItemWrapper toolWrapper = getItemFrom(connection.player, source, sourceIndex);
         ItemWrapper focusWrapper = getItemFrom(connection.player, dest, destIndex);
         new UsageProcessor(contentManager).processUsage(use, toolWrapper, focusWrapper);
-    }
 
-    // :(
-    public void executeItemUseOLD(
-            ConnectionToGridiaClientHandler connection,
-            ItemUse use,
-            ItemInstance tool,
-            ItemInstance focus,
-            String source,
-            String dest,
-            int sourceIndex,
-            int destIndex
-    ) throws IOException {
-        ServingGridia server = connection.getServer();
-        Player player = connection.getPlayer();
-        if (use.successTool != -1) {
-            ItemInstance toolResult = null;
-            tool.quantity -= 1;
-            if (tool.quantity <= 0) {
-                tool = ItemInstance.NONE;
-            }
-            if (use.successTool != 0) {
-                toolResult = server.contentManager.createItemInstance(use.successTool);
-            }
-
-            switch (source) {
-                case "world":
-                    server.changeItem(sourceIndex, tool);
-                    if (toolResult != null) {
-                        server.addItemNear(server.tileMap.getCoordFromIndex(sourceIndex), toolResult, 3);
-                    }
-                    break;
-                case "inv":
-                    player.creature.inventory.set(sourceIndex, tool);
-                    if (toolResult != null) {
-                        player.creature.inventory.add(toolResult);
-                    }
-                    break;
-            }
+        // :(
+        if (use.animation != 0) {
+            Coord loc = tileMap.getCoordFromIndex(destIndex);
+            sendToClientsWithAreaLoaded(messageBuilder.animation(use.animation, loc), destIndex);
         }
-
-        if (use.focusQuantityConsumed > 0) {
-            if (focus != ItemInstance.NONE) {
-                focus.quantity -= use.focusQuantityConsumed;
-            }
-            switch (dest) {
-                case "world":
-                    server.updateTile(destIndex);
-                    break;
-            }
+        if (use.surfaceGround != -1) {
+            Coord loc = tileMap.getCoordFromIndex(destIndex);
+            changeFloor(loc, use.surfaceGround);
         }
-
-        if ("world".equals(dest)) {
-            for (int i = 0; i < use.products.size(); i++) {
-                ItemInstance productInstance = server.contentManager.createItemInstance(use.products.get(i), use.quantities.get(i));
-                if (productInstance.data.itemClass == Item.ItemClass.Cave_down) {
-                    if (player.creature.location.z == server.tileMap.depth - 1) {
-                        continue;
-                    }
-                    Coord below = server.tileMap.getCoordFromIndex(destIndex).add(0, 0, 1);
-                    server.changeItem(server.tileMap.getIndexFromCoord(below), server.contentManager.createItemInstance(981));
-                    for (int x = -1; x <= 1; x++) {
-                        for (int y = -1; y <= 1; y++) {
-                            server.changeFloor(below.add(x, y, 0), 19);
-                        }
-                    }
-                } else if (productInstance.data.itemClass == Item.ItemClass.Cave_up) {
-                    if (player.creature.location.z == 0) {
-                        continue;
-                    }
-                    Coord above = server.tileMap.getCoordFromIndex(destIndex).add(0, 0, -1);
-                    server.changeItem(server.tileMap.getIndexFromCoord(above), server.contentManager.createItemInstance(980));
-                }
-
-                if (i != 0 && use.tool == 0 && player.creature.inventory.canFitItem(productInstance)) {
-                    player.creature.inventory.add(productInstance);
-                } else {
-                    server.addItemNear(destIndex, productInstance, 4);
-                }
-            }
-            if (use.animation != 0) {
-                Coord loc = server.tileMap.getCoordFromIndex(destIndex);
-                server.sendToClientsWithAreaLoaded(server.messageBuilder.animation(use.animation, loc), destIndex);
-            }
-            if (use.surfaceGround != -1) {
-                Coord loc = server.tileMap.getCoordFromIndex(destIndex);
-                server.changeFloor(loc, use.surfaceGround);
-            }
-        }
-
         if (use.successMessage != null) {
-            connection.send(server.messageBuilder.chat(use.successMessage, player.creature.location));
+            connection.send(messageBuilder.chat(use.successMessage, connection.getPlayer().creature.location));
         }
     }
 

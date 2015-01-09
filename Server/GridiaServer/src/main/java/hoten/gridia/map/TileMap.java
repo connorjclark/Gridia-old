@@ -194,12 +194,12 @@ public class TileMap {
 
     public boolean walkable(Coord coord) {
         Tile tile = getTile(coord);
-        return tile.cre == null && tile.item.data.walkable && tile.floor != 0;
+        return tile.cre == null && tile.item.getData().walkable && tile.floor != 0;
     }
 
     public boolean walkable(int x, int y, int z) {
         Tile tile = getTile(x, y, z);
-        return tile.cre == null && tile.item.data.walkable && tile.floor != 0;
+        return tile.cre == null && tile.item.getData().walkable && tile.floor != 0;
     }
 
     public Coord getCoordFromIndex(int index) {

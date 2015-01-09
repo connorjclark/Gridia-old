@@ -1,13 +1,8 @@
 package hoten.gridia.content;
 
-import hoten.gridia.content.UsageProcessor.ContainerItemWrapper;
-import hoten.gridia.content.UsageProcessor.ItemWrapper;
+import hoten.gridia.ItemWrapper;
 import hoten.gridia.content.UsageProcessor.UsageResult;
-import hoten.gridia.content.UsageProcessor.WorldItemWrapper;
-import hoten.gridia.map.Coord;
-import hoten.gridia.serving.ServingGridia;
 import java.io.IOException;
-import org.easymock.EasyMock;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -19,7 +14,6 @@ public class UsageProcessorTest {
     private static ContentManager _contentManager;
     private UsageProcessor _processor;
     private final ItemInstance _hand = ItemInstance.NONE;
-    private final ItemWrapper _handWrapped = new ContainerItemWrapper(null, -1);
 
     @BeforeClass
     public static void setUpClass() throws IOException {
@@ -65,45 +59,45 @@ public class UsageProcessorTest {
     }
 
     private UsageResult meatOnFireUsage(int amountOfMeat) {
-        ItemInstance tool = _contentManager.createItemInstanceByName("Meat");
-        tool.quantity = amountOfMeat;
+        ItemInstance tool = _contentManager.createItemInstanceByName("Meat", amountOfMeat);
         ItemInstance focus = _contentManager.createItemInstanceByName("Fire");
-        ItemUse usage = _contentManager.getItemUse(tool.data, focus.data, 0);
+        ItemUse usage = _contentManager.getItemUse(tool.getData(), focus.getData(), 0);
         return _processor.getUsageResult(usage, tool, focus);
     }
-    
+
     @Test
     public void testDecreaseToolQuantity() {
         UsageResult result = meatOnFireUsage(10);
-        assertEquals(9, result.tool.quantity);
+        ItemInstance expected = _contentManager.createItemInstanceByName("Meat", 9);
+        assertEquals(expected, result.tool);
     }
 
     @Test
     public void testNoDecreaseFocusQuantity() {
         UsageResult result = meatOnFireUsage(1);
-        assertEquals(1, result.focus.quantity);
+        assertEquals(1, result.focus.getQuantity());
     }
-    
+
     @Test
     public void testToolBecomesEmptyItemWhenQuantityReachesZero() {
         UsageResult result = meatOnFireUsage(1);
         assertEquals(ItemInstance.NONE, result.tool);
     }
-    
+
     private UsageResult axeOnLogUsage(int amountOfLogs) {
         ItemInstance tool = _contentManager.createItemInstanceByName("Axe");
-        ItemInstance focus = _contentManager.createItemInstanceByName("Logs");
-        focus.quantity = amountOfLogs;
-        ItemUse usage = _contentManager.getItemUse(tool.data, focus.data, 0);
+        ItemInstance focus = _contentManager.createItemInstanceByName("Logs", amountOfLogs);
+        ItemUse usage = _contentManager.getItemUse(tool.getData(), focus.getData(), 0);
         return _processor.getUsageResult(usage, tool, focus);
     }
 
     @Test
     public void testDecreaseFocusQuantity() {
         UsageResult result = axeOnLogUsage(10);
-        assertEquals(9, result.focus.quantity);
+        ItemInstance expected = _contentManager.createItemInstanceByName("Logs", 9);
+        assertEquals(expected, result.focus);
     }
-    
+
     @Test
     public void testFocusBecomesEmptyItemWhenQuantityReachesZero() {
         UsageResult result = axeOnLogUsage(1);
@@ -113,39 +107,86 @@ public class UsageProcessorTest {
     private UsageResult axeOnTreeUsage() {
         ItemInstance tool = _contentManager.createItemInstanceByName("Axe");
         ItemInstance focus = _contentManager.createItemInstanceByName("Tree");
-        ItemUse usage = _contentManager.getItemUse(tool.data, focus.data, 0);
+        ItemUse usage = _contentManager.getItemUse(tool.getData(), focus.getData(), 0);
         return _processor.getUsageResult(usage, tool, focus);
     }
 
     @Test
     public void testProducts() {
         UsageResult result = axeOnTreeUsage();
-        assertEquals("Stump", result.products.get(0).data.name);
-        assertEquals("Logs", result.products.get(1).data.name);
-        assertEquals("Branches", result.products.get(2).data.name);
+        assertEquals("Stump", result.products.get(0).getData().name);
+        assertEquals("Logs", result.products.get(1).getData().name);
+        assertEquals("Branches", result.products.get(2).getData().name);
     }
 
     @Test
     public void testProductQuantities() {
         UsageResult result = axeOnTreeUsage();
-        assertEquals(1, result.products.get(0).quantity);
-        assertEquals(2, result.products.get(1).quantity);
-        assertEquals(5, result.products.get(2).quantity);
+        assertEquals(1, result.products.get(0).getQuantity());
+        assertEquals(2, result.products.get(1).getQuantity());
+        assertEquals(5, result.products.get(2).getQuantity());
     }
 
     @Test
-    public void testContainerToWorldUsageFirstProductGoesToWorld() {
+    public void testContainerToWorldUsageFirstProductGoesToWorldRestToContainer() {
         ItemInstance ripeAppleTree = _contentManager.createItemInstanceByName("Ripe Apple Tree");
         ItemInstance bareAppleTree = _contentManager.createItemInstanceByName("Bare Apple Tree");
+        ItemInstance apples = _contentManager.createItemInstanceByName("Apple", 10);
+        
+        ItemWrapper mockToolWrapped = createMock(ItemWrapper.class);
+        expect(mockToolWrapped.getItemInstance()).andReturn(_hand).anyTimes();
+        expect(mockToolWrapped.addItemToSource(apples)).andReturn(true);
+        replay(mockToolWrapped);
 
-        ItemWrapper mockFocusWrapped = createNiceMock(WorldItemWrapper.class);
+        ItemWrapper mockFocusWrapped = createMock(ItemWrapper.class);
         expect(mockFocusWrapped.getItemInstance()).andReturn(ripeAppleTree);
+        /* expect */ mockFocusWrapped.changeWrappedItem(ItemInstance.NONE);
+        expectLastCall();
         expect(mockFocusWrapped.addItemToSource(bareAppleTree)).andReturn(true);
         replay(mockFocusWrapped);
 
-        ItemUse usage = _contentManager.getItemUse(_hand.data, ripeAppleTree.data, 0);
-        _processor.processUsage(usage, _handWrapped, mockFocusWrapped);
+        ItemUse usage = _contentManager.getItemUse(_hand.getData(), ripeAppleTree.getData(), 0);
+        _processor.processUsage(usage, mockToolWrapped, mockFocusWrapped);
 
-        EasyMock.verify(mockFocusWrapped);
+        verify(mockFocusWrapped);
+    }
+
+    @Test
+    public void testToolDoesntChangeWhenIsHand() {
+        ItemInstance closedDoor = _contentManager.createItemInstanceByName("Closed Door");
+        ItemUse usage = _contentManager.getItemUse(_hand.getData(), closedDoor.getData(), 0);
+
+        ItemWrapper mockToolWrapped = createMock(ItemWrapper.class);
+        expect(mockToolWrapped.getItemInstance()).andReturn(_hand).anyTimes();
+        replay(mockToolWrapped);
+
+        ItemWrapper mockFocusWrapped = createNiceMock(ItemWrapper.class);
+        expect(mockFocusWrapped.getItemInstance()).andReturn(closedDoor);
+        replay(mockFocusWrapped);
+
+        _processor.processUsage(usage, mockToolWrapped, mockFocusWrapped);
+        
+        verify(mockToolWrapped);
+    }
+    
+    @Test
+    public void testToolWhenNotHandAndFocusChanges() {
+        ItemInstance axe = _contentManager.createItemInstanceByName("Axe");
+        ItemInstance tree = _contentManager.createItemInstanceByName("Tree");
+        ItemUse usage = _contentManager.getItemUse(axe.getData(), tree.getData(), 0);
+
+        ItemWrapper mockToolWrapped = createNiceMock(ItemWrapper.class);
+        expect(mockToolWrapped.getItemInstance()).andReturn(axe).anyTimes();
+        mockToolWrapped.changeWrappedItem(anyObject());
+        replay(mockToolWrapped);
+
+        ItemWrapper mockFocusWrapped = createNiceMock(ItemWrapper.class);
+        expect(mockFocusWrapped.getItemInstance()).andReturn(tree).anyTimes();
+        mockFocusWrapped.changeWrappedItem(anyObject());
+        replay(mockFocusWrapped);
+
+        _processor.processUsage(usage, mockToolWrapped, mockFocusWrapped);
+        
+        verify(mockToolWrapped);
     }
 }

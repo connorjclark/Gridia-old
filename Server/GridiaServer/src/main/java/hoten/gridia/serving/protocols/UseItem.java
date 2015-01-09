@@ -22,9 +22,9 @@ public class UseItem extends JsonMessageHandler<ConnectionToGridiaClientHandler>
         int destIndex = data.get("di").getAsInt();
 
         ItemInstance tool = server.getItemFrom(player, source, sourceIndex).getItemInstance();
-        ItemInstance focus = server.getItemFrom(player,dest, destIndex).getItemInstance();
+        ItemInstance focus = server.getItemFrom(player, dest, destIndex).getItemInstance();
 
-        List<ItemUse> uses = server.contentManager.getItemUses(tool.data, focus.data);
+        List<ItemUse> uses = server.contentManager.getItemUses(tool.getData(), focus.getData());
 
         if (uses.isEmpty()) {
             return;

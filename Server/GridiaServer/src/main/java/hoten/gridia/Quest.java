@@ -37,8 +37,8 @@ public abstract class Quest implements Runnable {
         ItemInstance item = _server.contentManager.createItemInstance(itemId, 0);
         for (int i = 0; i < creature.inventory.size(); i++) {
             ItemInstance itemAtSlot = creature.inventory.get(i);
-            if (itemAtSlot.data.id == itemId) {
-                item.quantity += itemAtSlot.quantity;
+            if (itemAtSlot.getData().id == itemId) {
+                item = item.add(itemAtSlot.getQuantity());
                 creature.inventory.deleteSlot(i);
             }
         }
@@ -65,7 +65,7 @@ public abstract class Quest implements Runnable {
             }
         }
     }
-    
+
     protected List<Creature> getPlayersInArea(Coord location, int width, int height) {
         return getCreaturesInArea(location, width, height, creature -> creature.belongsToPlayer);
     }

@@ -78,7 +78,7 @@ public class Container {
 
     public boolean containsItemId(int id) {
         return _items.stream()
-                .anyMatch(item -> item.data.id == id);
+                .anyMatch(item -> item.getData().id == id);
     }
 
     public int size() {
@@ -114,11 +114,10 @@ public class Container {
             return false;
         }
         ItemInstance currentItem = get(slotIndex);
-        if (!ItemInstance.stackable(itemToAdd, currentItem) && currentItem.data.id != 0) {
+        if (!ItemInstance.stackable(itemToAdd, currentItem) && currentItem.getData().id != 0) {
             return false;
         }
-        itemToAdd.quantity = itemToAdd.quantity + currentItem.quantity;
-        set(slotIndex, itemToAdd);
+        set(slotIndex, itemToAdd.add(currentItem.getQuantity()));
         return true;
     }
 
@@ -141,13 +140,7 @@ public class Container {
     }
 
     public void reduceQuantityAt(int slotIndex, int amount) {
-        ItemInstance item = get(slotIndex);
-        item.quantity -= amount;
-        if (item.quantity <= 0) {
-            set(slotIndex, ItemInstance.NONE);
-        } else {
-            updateSlot(slotIndex);
-        }
+        set(slotIndex, get(slotIndex).remove(amount));
     }
 
     public boolean canFitItem(ItemInstance itemToTest) {
