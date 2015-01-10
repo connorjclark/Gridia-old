@@ -30,7 +30,7 @@ namespace Gridia
             ResizeOnHorizontal = ResizeOnVertical = true;
             WindowId = _NEXT_WINDOW_ID++;
             WindowName = windowName;
-            BorderSize = 20;
+            BorderSize = 25;
         }
 
         public override void Render() 
@@ -54,6 +54,8 @@ namespace Gridia
             if (Visible) 
             {
                 MouseOver = Rect.Contains(Event.current.mousePosition);
+
+                GUI.skin = Skin;
 
                 // what a hack...
                 var modifiedRect = GUI.Window(WindowId, new Rect(X, Y, Width + BorderSize * 2, Height + BorderSize * 2), windowId =>

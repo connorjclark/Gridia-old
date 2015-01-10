@@ -57,7 +57,7 @@ namespace Gridia
 
         private class BulkViewer : RenderableContainer
         {
-            private ExtendibleGrid _bulk = new ExtendibleGrid(new Vector2(0, 30));
+            private ExtendibleGrid _bulk = new ExtendibleGrid(new Vector2(0, 50));
             private int _currentPage;
             private int _perPage = 50;
             private Vector2 vector2;

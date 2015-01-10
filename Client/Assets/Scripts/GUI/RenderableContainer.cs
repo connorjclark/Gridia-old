@@ -28,7 +28,6 @@ namespace Gridia
             {
                 foreach (var child in _children.ToList())
                 {
-                    GUI.color = child.Color;
                     child.Render();
                 }
             }

@@ -62,7 +62,7 @@ namespace Gridia
             var selectorPos = focusPos + DestinationSelectorDelta;
             var selectorRelativePosition = _driver.GetRelativeScreenPosition(focusPos, selectorPos);
             var selectorRect = new Rect(selectorRelativePosition.x, selectorRelativePosition.y, tileSize, tileSize);
-            _driver.GUIDrawSelector(selectorRect, new Color32(0, 255, 0, 100));
+            GridiaConstants.GUIDrawSelector(selectorRect, new Color32(0, 255, 0, 100));
         }
 
         private void MoveDestinationSelector()

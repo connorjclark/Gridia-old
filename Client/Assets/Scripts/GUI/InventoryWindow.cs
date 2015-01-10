@@ -54,6 +54,7 @@ namespace Gridia
             if (Event.current.type == EventType.Layout) 
             {
                 MouseDownSlot = MouseUpSlot = MouseOverSlot = -1;
+                SetWindowNameToCurrentSelection();
             }
             base.Render();
         }

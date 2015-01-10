@@ -11,35 +11,45 @@ namespace Gridia
         public static AutoResetEvent gameInitWaitHandle = new AutoResetEvent(false);
 
         private RenderableContainer _displayList;
+        private GUISkin _gridiaGuiSkin;
 
         public void Start()
         {
+            GridiaConstants.LoadGUISkins();
+
             Locator.Provide(this);
 
             _displayList = new RenderableContainer(Vector2.zero);
 
-            _displayList.AddChild(CreateConnectButton(Vector2.zero, "localhost"));
-            _displayList.AddChild(CreateConnectButton(new Vector2(0, 30), "www.hotengames.com"));
+            _displayList.AddChild(CreateConnectButton(Vector2.zero, "localhost", 1044));
+            _displayList.AddChild(CreateConnectButton(Vector2.zero, "www.hotengames.com", 1044));
 
-            var connectButton = new Button(new Vector2(0, 60), "Connect to other ip");
-            _displayList.AddChild(connectButton);
+            // Connect to specified port
 
-            var ipInput = new TextField(new Vector2(20, 90), "ipInput", 300, 20);
-            _displayList.AddChild(ipInput);
+            var connectContainer = new RenderableContainer(Vector2.zero);
+            _displayList.AddChild(connectContainer);
+
+            var connectButton = new Button(Vector2.zero, "Connect to other ip");
+            connectContainer.AddChild(connectButton);
+
+            var ipInput = new TextField(new Vector2(160, 6), "ipInput", 150, 30);
+            connectContainer.AddChild(ipInput);
             ipInput.Text = "enter ip here";
 
-            var localServerButton = new Button(new Vector2(0, 120), "Host local server*");
+            var portLabel = new Label(new Vector2(320, 10), "Port:  ");
+            connectContainer.AddChild(portLabel);
+
+            var portInput = new TextField(new Vector2(360, 12), "portInput", 50, 20);
+            connectContainer.AddChild(portInput);
+            portInput.Text = "1044";
+
+            // Host local server
+
+            var localServerButton = new Button(Vector2.zero, "Host local server*");
             _displayList.AddChild(localServerButton);
 
-            var java8WarningLabel = new Label(new Vector2(0, 150), "*To host a server, make sure you hava Java 8 installed and in your classpath!");
+            var java8WarningLabel = new Label(Vector2.zero, "*To host a server, make sure you have Java 8 installed and in your classpath!");
             _displayList.AddChild(java8WarningLabel);
-
-            var portLabel = new Label(new Vector2(0, 180), "Port: ");
-            _displayList.AddChild(portLabel);
-
-            var portInput = new TextField(new Vector2(30, 180), "portInput", 50, 20);
-            _displayList.AddChild(portInput);
-            portInput.Text = "1044";
 
             connectButton.OnClick = () =>
             {
@@ -47,14 +57,18 @@ namespace Gridia
             };
 
             localServerButton.OnClick = HostLocal;
+
+            var cursorTexture = Resources.Load<Texture2D>("GUI Components/cursorHand_grey");
+            Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
         }
 
-        private Button CreateConnectButton(Vector2 location, String ip)
+        private Button CreateConnectButton(Vector2 location, String hostname, int port)
         {
-            var connectButton = new Button(location, "Connect to " + ip);
+            var text = String.Format("Connect to {0}:{1}", hostname, port);
+            var connectButton = new Button(location, text);
             connectButton.OnClick = () =>
             {
-                Connect(ip, 1044);
+                Connect(hostname, port);
             };
             return connectButton;
         }
@@ -80,14 +94,28 @@ namespace Gridia
         
         public void OnGUI()
         {
-            _displayList.X = (Screen.width - _displayList.Width) / 2;
             _displayList.Y = (Screen.height - _displayList.Height) / 2;
             _displayList.Render();
+
+            var runningY = 0.0f;
+            var spacing = 15;
+            for (int i = 0; i < _displayList.NumChildren; i++)
+            {
+                var child = _displayList.GetChildAt(i);
+                child.X = (Screen.width - child.Width) / 2;
+                child.Y = runningY;
+                runningY += child.Height + spacing;
+            }
+
             GridiaConstants.DrawErrorMessage();
         }
 
         private void Connect(String ip, int port)
         {
+            if (GridiaConstants.ErrorMessage != null)
+            {
+                return;
+            }
             var game = new GridiaGame();
             try
             {

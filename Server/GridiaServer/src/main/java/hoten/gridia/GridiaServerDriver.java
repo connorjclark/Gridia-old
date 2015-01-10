@@ -149,7 +149,7 @@ public class GridiaServerDriver {
                     Logger.getLogger(GridiaServerDriver.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        }, 5, 5, TimeUnit.MINUTES);
+        }, 15, 15, TimeUnit.MINUTES);
 
         // grow items
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {

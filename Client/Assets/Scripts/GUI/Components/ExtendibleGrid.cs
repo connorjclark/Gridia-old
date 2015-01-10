@@ -43,7 +43,7 @@ namespace Gridia
             if (TileSelected != -1 && TileSelected < NumChildren)
             {
                 var rect = _children[TileSelected].Rect;
-                Locator.Get<GridiaDriver>().GUIDrawSelector(rect, new Color32(255, 255, 0, 50)); // :(
+                GridiaConstants.GUIDrawSelector(rect, new Color32(255, 255, 0, 50)); // :(
             }
         }
 

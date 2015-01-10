@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gridia
@@ -19,6 +20,16 @@ namespace Gridia
         public static String WORLD_NAME;
         public static String ErrorMessage { get; set; }
         public static Action ErrorMessageAction { get; set; }
+        public static List<GUISkin> Skins { get; set; }
+
+        public static void LoadGUISkins()
+        {
+            Skins = new List<GUISkin>();
+            for (int i = 0; i < 1; i++)
+            {
+                Skins.Add(Resources.Load("gridia-gui-skin-" + i) as GUISkin);
+            }
+        }
 
         // :(
         public static void DrawErrorMessage()
@@ -29,9 +40,10 @@ namespace Gridia
                 var height = GUI.skin.GetStyle("TextArea").CalcHeight(new GUIContent(ErrorMessage), width - 20) + 50;
                 var x = (Screen.width - width) / 2;
                 var y = (Screen.height - height) / 2;
-                GUI.Window(0, new Rect(x, y, width, height), id =>
+                GUI.Window(0, new Rect(x, y, width, height + 5), id =>
                 {
                     GUILayout.TextArea(ErrorMessage);
+                    GUILayout.BeginArea(new Rect((width - 50) / 2, height - 25, 50, 50));
                     if (GUILayout.Button("OK"))
                     {
                         ErrorMessage = null;
@@ -41,8 +53,26 @@ namespace Gridia
                             ErrorMessageAction = null;
                         }
                     }
+                    GUILayout.EndArea();
                 }, "Error.");
             }
+        }
+
+        // :(
+        private static Dictionary<Color, Texture2D> _staticRectTexture = new Dictionary<Color, Texture2D>();
+        private static Dictionary<Color, GUIStyle> _staticRectStyle = new Dictionary<Color, GUIStyle>();
+
+        public static void GUIDrawSelector(Rect rect, Color color)
+        {
+            if (!_staticRectTexture.ContainsKey(color))
+            {
+                _staticRectTexture[color] = new Texture2D(1, 1);
+                _staticRectStyle[color] = new GUIStyle();
+                _staticRectStyle[color].normal.background = _staticRectTexture[color];
+            }
+            _staticRectTexture[color].SetPixel(0, 0, color);
+            _staticRectTexture[color].Apply();
+            GUI.Box(rect, GUIContent.none, _staticRectStyle[color]);
         }
     }
 }

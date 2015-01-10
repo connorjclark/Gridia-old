@@ -5,7 +5,7 @@ import hoten.gridia.uniqueidentifiers.UniqueIdentifiers;
 
 public class Creature {
 
-    private static final UniqueIdentifiers uniqueIds = new UniqueIdentifiers();
+    private static final UniqueIdentifiers uniqueIds = new UniqueIdentifiers(100);
 
     public final int id = uniqueIds.next();
     public String name;

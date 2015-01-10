@@ -129,7 +129,7 @@ public class GridiaDriver : MonoBehaviour
                 if (cre.Name.Length > 0)
                 {
                     var labelRelative = pos - _game.view.FocusPosition; // :(
-                    var nameLabel = new Label(new Vector2((labelRelative.x + 0.5f) * tileSize, Screen.height - (labelRelative.y + 1.5f) * tileSize), cre.Name, true, true); // :(
+                    var nameLabel = new Label(new Vector2((labelRelative.x + 0.5f) * tileSize, Screen.height - (labelRelative.y + 1.5f) * tileSize), cre.Name, true); // :(
                     nameLabel.Render();
                 }
             }
@@ -140,7 +140,7 @@ public class GridiaDriver : MonoBehaviour
             var selectorPos = focusPos + _game.SelectorDelta;
             var selectorRelativePosition = GetRelativeScreenPosition(focusPos, selectorPos);
             var selectorRect = new Rect(selectorRelativePosition.x, selectorRelativePosition.y, tileSize, tileSize);
-            GUIDrawSelector(selectorRect, new Color32(0, 0, 255, 100));
+            GridiaConstants.GUIDrawSelector(selectorRect, new Color32(0, 0, 255, 100));
         }
 
         foreach (var animation in _game.animations)
@@ -214,23 +214,6 @@ public class GridiaDriver : MonoBehaviour
                 chatGui.Visible = false;
             }
         }
-    }
-
-    // :(
-    private Dictionary<Color, Texture2D> _staticRectTexture = new Dictionary<Color,Texture2D>();
-    private Dictionary<Color, GUIStyle> _staticRectStyle = new Dictionary<Color,GUIStyle>();
-
-    public void GUIDrawSelector(Rect rect, Color color)
-    {
-        if (!_staticRectTexture.ContainsKey(color))
-        {
-            _staticRectTexture[color] = new Texture2D(1, 1);
-            _staticRectStyle[color] = new GUIStyle();
-            _staticRectStyle[color].normal.background = _staticRectTexture[color];
-        }
-        _staticRectTexture[color].SetPixel(0, 0, color);
-        _staticRectTexture[color].Apply();
-        GUI.Box(rect, GUIContent.none, _staticRectStyle[color]);
     }
 
     public Vector2 getMouse()

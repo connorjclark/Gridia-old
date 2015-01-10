@@ -18,9 +18,10 @@ namespace Gridia
 
         public override void Render()
         {
+            base.Render();
             var textSize = GUI.skin.label.CalcSize(new GUIContent(Text));
             _rect.width = textSize.x + 20; // :(
-            _rect.height = textSize.y;
+            _rect.height = textSize.y * 2;
             // :(
             if (GUI.Button(Rect, Text) && OnClick != null) 
             {

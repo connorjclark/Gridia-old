@@ -8,6 +8,8 @@ namespace Gridia
 {
     public abstract class Renderable
     {
+        public GUISkin Skin { get; set; }
+
         public RenderableContainer Parent { get; set; }
         protected Rect _rect;
         public Rect Rect
@@ -98,14 +100,16 @@ namespace Gridia
         {
             Rect = new Rect(pos.x, pos.y, 0, 0);
             Color = new Color32(255, 255, 255, 255);
+            Skin = GridiaConstants.Skins[0]; // :(
         }
 
-        // :(
         public virtual void Render()
         {
+            GUI.skin = Skin;
+            GUI.color = Color;
         }
 
-        public virtual void HandleEvents() 
+        public virtual void HandleEvents()
         {
             if (Rect.Contains(Event.current.mousePosition))
             {

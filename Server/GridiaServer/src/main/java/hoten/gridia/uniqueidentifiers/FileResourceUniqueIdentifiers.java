@@ -1,9 +1,7 @@
 package hoten.gridia.uniqueidentifiers;
 
-//import hoten.serving.fileutils.FileUtils;
 import java.io.File;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -12,8 +10,8 @@ import org.apache.commons.io.FilenameUtils;
 
 public class FileResourceUniqueIdentifiers extends UniqueIdentifiers {
 
-    public FileResourceUniqueIdentifiers(File dir) {
-        super(100);
+    public FileResourceUniqueIdentifiers(File dir, int expandAmount) {
+        super(expandAmount);
         dir.mkdirs(); // :(
         bufferIdsThatArentClaimed(dir);
     }

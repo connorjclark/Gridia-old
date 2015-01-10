@@ -10,19 +10,22 @@ UI
   Show slot number for items 1-10 in inventory
   Move 'next' button in recipe book to far right
 
-Winter break
+Meta
   Set up forums, chatroom
   Press kit
   
-  Refactor
-    xxxGui -> xxxWindow
-    itemusages -> usages
-    Preloader
-    State machine
-    Test coverage
-    Item.Item -> Item.Data
-    lowercase-directory-names
-    Everything!
+Refactor
+  xxxGui -> xxxWindow
+  itemusages -> usages
+  Preloader
+  State machine
+  Test coverage
+  Item.Item -> Item.Data
+  lowercase-directory-names
+  Everything!
+
+Tests, code coverage and cyclomatic complexity
+  ContentManager
 
 Spring semester:
 

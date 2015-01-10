@@ -21,7 +21,7 @@ public class Container {
 
         public ContainerFactory(File world) {
             dir = new File(world, "containers/");
-            _uniqueIds = new FileResourceUniqueIdentifiers(dir);
+            _uniqueIds = new FileResourceUniqueIdentifiers(dir, 100);
         }
 
         public Container load(int id) throws IOException {
