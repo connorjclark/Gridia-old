@@ -129,7 +129,7 @@ public class GridiaDriver : MonoBehaviour
                 if (cre.Name.Length > 0)
                 {
                     var labelRelative = pos - _game.view.FocusPosition; // :(
-                    var nameLabel = new Label(new Vector2((labelRelative.x + 0.5f) * tileSize, Screen.height - (labelRelative.y + 1.5f) * tileSize), cre.Name, true); // :(
+                    var nameLabel = new Label(new Vector2((labelRelative.x + 0.5f) * tileSize, Screen.height - (labelRelative.y + 1.5f) * tileSize), cre.Name, true, true); // :(
                     nameLabel.Render();
                 }
             }
@@ -275,7 +275,7 @@ public class GridiaDriver : MonoBehaviour
     public void OnApplicationQuit() 
     {
         Application.CancelQuit();
-        //Locator.Get<ConnectionToServerHandler>().End();
+        Locator.Get<ConnectionToGridiaServerHandler>().Close();
         if (!Application.isEditor)
         {
             System.Diagnostics.Process.GetCurrentProcess().Kill();
