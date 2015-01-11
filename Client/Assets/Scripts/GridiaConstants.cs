@@ -74,5 +74,15 @@ namespace Gridia
             _staticRectTexture[color].Apply();
             GUI.Box(rect, GUIContent.none, _staticRectStyle[color]);
         }
+
+        public static void OnApplicationQuit()
+        {
+            Application.CancelQuit();
+            Locator.Get<ConnectionToGridiaServerHandler>().Close();
+            if (!Application.isEditor)
+            {
+                System.Diagnostics.Process.GetCurrentProcess().Kill();
+            }
+        }
     }
 }

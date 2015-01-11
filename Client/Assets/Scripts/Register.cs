@@ -96,5 +96,10 @@ namespace Gridia
                 SceneManager.LoadScene("Main");
             }
         }
+
+        public void OnApplicationQuit()
+        {
+            GridiaConstants.OnApplicationQuit();
+        }
     }
 }

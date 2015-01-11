@@ -9,7 +9,6 @@ UI
   hand uses don't show in recipe book?
   Show slot number for items 1-10 in inventory
   Move 'next' button in recipe book to far right
-  logout -> go to server selection screen
   close to desktop
   disconnect from server at log in screen
 
@@ -34,7 +33,6 @@ Tests, code coverage and cyclomatic complexity
 
 Misc
   mute music on minimize
-  fix register buttons
   commands:
     !kick
     !w

@@ -274,11 +274,6 @@ public class GridiaDriver : MonoBehaviour
 
     public void OnApplicationQuit() 
     {
-        Application.CancelQuit();
-        Locator.Get<ConnectionToGridiaServerHandler>().Close();
-        if (!Application.isEditor)
-        {
-            System.Diagnostics.Process.GetCurrentProcess().Kill();
-        }
+        GridiaConstants.OnApplicationQuit();
     }
 }
