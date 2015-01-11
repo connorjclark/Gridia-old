@@ -23,6 +23,7 @@ namespace Gridia
         {
             base.Render();
             _windows.ForEach(w => w.Render());
+
         }
 
         public override void HandleEvents()
@@ -43,6 +44,7 @@ namespace Gridia
                 _tabs.AddChild(tab);
                 SetTabTransparency(_tabs.NumChildren - 1);
                 Dirty = true;
+                window.Icon = new ItemImageRenderable(Vector2.zero, tabItemSpriteIndex);
             }
         }
 

@@ -11,6 +11,7 @@ namespace Gridia
         private static int _NEXT_WINDOW_ID;
 
         public int WindowId { get; private set; }
+        public Renderable Icon { get; set; }
         public bool Resizeable { get; set; }
         public bool Moveable { get; set; }
         public bool Visible { get; set; }
@@ -60,6 +61,14 @@ namespace Gridia
                 // what a hack...
                 var modifiedRect = GUI.Window(WindowId, new Rect(X, Y, Width + BorderSize * 2, Height + BorderSize * 2), windowId =>
                 {
+                    if (Icon != null)
+                    {
+                        Icon.Width = 4 * BorderSize / 5;
+                        Icon.Height = 4 * BorderSize / 5;
+                        Icon.X = BorderSize / 5;
+                        Icon.Y = BorderSize / 5;
+                        Icon.Render();
+                    }
                     if (Moveable) 
                     {
                         RenderDrag();
