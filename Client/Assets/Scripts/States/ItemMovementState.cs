@@ -43,7 +43,7 @@ namespace Gridia
                 {
                     var sourceIndex = _driver._game.tileMap.ToIndex(LocationOfItemToMove); // :(
                     var destinationIndex = _driver._game.tileMap.ToIndex(destination);
-                    Locator.Get<ConnectionToGridiaServerHandler>().MoveItem("world", "world", sourceIndex, destinationIndex);
+                    Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(0, 0, sourceIndex, destinationIndex);
                 }
                 _game.hideSelector = true;
                 stateMachine.SetState(new IdleState());

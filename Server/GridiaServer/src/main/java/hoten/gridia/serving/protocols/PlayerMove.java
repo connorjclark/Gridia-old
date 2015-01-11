@@ -20,5 +20,6 @@ public class PlayerMove extends JsonMessageHandler<ConnectionToGridiaClientHandl
         
         Coord loc = server.tileMap.wrap(player.creature.location.add(delta));
         server.moveCreatureTo(player.creature, loc, timeForMovement, false, onRaft);
+        player.openedContainers.clear();
     }
 }

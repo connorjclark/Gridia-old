@@ -18,10 +18,10 @@ public class GridiaGson {
 
     public static void initialize(ContentManager contentManager, ServingGridia servingGridia) {
         _gson = new GsonBuilder()
+                .registerTypeAdapter(ItemInstance.class, new ItemInstanceSerializer())
                 .registerTypeAdapter(ItemInstance.class, new ItemInstanceDeserializer(contentManager))
                 .registerTypeAdapter(Tile.class, new TileDeserializer(servingGridia))
                 .registerTypeAdapter(Tile.class, new TileSerializer())
-                .registerTypeAdapter(ItemInstance.class, new ItemInstanceSerializer())
                 .registerTypeAdapter(CreatureImage.class, new InterfaceAdapter<>())
                 .create();
     }

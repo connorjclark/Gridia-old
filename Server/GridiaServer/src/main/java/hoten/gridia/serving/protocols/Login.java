@@ -29,15 +29,15 @@ public class Login extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
         connection.player = thePlayer;
         connection.send(server.messageBuilder.genericEventHandler("success"));
         connection.send(server.messageBuilder.setFocus(thePlayer.creature.id, thePlayer.accountDetails.isAdmin));
-        connection.send(server.messageBuilder.container(thePlayer.creature.inventory));
-        connection.send(server.messageBuilder.container(thePlayer.equipment));
+        connection.send(server.messageBuilder.container(thePlayer.creature.inventory, -199));
+        connection.send(server.messageBuilder.container(thePlayer.equipment, -999));
 
         server.playWarpAnimation(thePlayer.creature.location);
 
         thePlayer.updatePlayerImage(server);
 
         server.sendToAll(server.messageBuilder.chat(thePlayer.accountDetails.username + " has joined the world!", thePlayer.creature.location));
-    
+
         connection.send(server.messageBuilder.chat(server.whoIsOnline(), thePlayer.creature.location));
     }
 }

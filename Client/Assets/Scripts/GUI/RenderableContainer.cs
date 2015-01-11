@@ -98,7 +98,7 @@ namespace Gridia
             Dirty = true;
         }
 
-        protected void CalculateRect() 
+        public void CalculateRect() 
         {
             var width = 0f;
             var height = 0f;

@@ -68,7 +68,7 @@ public class GridiaMessageToClientBuilder {
         for (int x = 0; x < tiles.length; x++) {
             for (int y = 0; y < tiles.length; y++) {
                 builder.writeShort(tiles[x][y].floor);
-                builder.writeShort(tiles[x][y].item.getData().id);
+                builder.writeShort(tiles[x][y].item.getItem().id);
                 builder.writeShort(tiles[x][y].item.getQuantity());
                 if (tiles[x][y].cre != null) {
                     creatures.add(tiles[x][y].cre);
@@ -124,12 +124,13 @@ public class GridiaMessageToClientBuilder {
                 .build();
     }
 
-    public Message container(Container container) {
+    public Message container(Container container, int tabGfxItemId) {
         return new JsonMessageBuilder()
                 .type("Container")
                 .set("items", container.getItems())
                 .set("type", container.type)
                 .set("id", container.id)
+                .set("tabGfxItemId", tabGfxItemId)
                 .gson(GridiaGson.get()) // :(
                 .build();
     }
@@ -146,7 +147,7 @@ public class GridiaMessageToClientBuilder {
         return new JsonMessageBuilder()
                 .type("TileUpdate")
                 .set("loc", loc)
-                .set("item", tile.item.getData().id)
+                .set("item", tile.item.getItem().id)
                 .set("quantity", tile.item.getQuantity())
                 .set("floor", tile.floor)
                 .build();
@@ -156,9 +157,9 @@ public class GridiaMessageToClientBuilder {
         ItemInstance item = container.get(slotIndex);
         return new JsonMessageBuilder()
                 .type("ContainerUpdate")
-                .set("type", container.type)
+                .set("id", container.id)
                 .set("index", slotIndex)
-                .set("item", item.getData().id)
+                .set("item", item.getItem().id)
                 .set("quantity", item.getQuantity())
                 .build();
     }

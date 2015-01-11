@@ -15,14 +15,19 @@ namespace Gridia.Protocol
             var items = JsonConvert.DeserializeObject<List<ItemInstance>>(backToJson, new ItemInstanceConverter());
             var id = (int)data["id"];
             var type = (String)data["type"];
+            var tabGfxItemId = (int)data["tabGfxItemId"];
 
             if (type == "Inventory")
             {
-                Locator.Get<InventoryWindow>().Items = items;
+                Locator.Get<GridiaDriver>().invGui.Set(items, id);
+            }
+            else if (type == "Equipment")
+            {
+                Locator.Get<EquipmentWindow>().Items = items; // :(
             }
             else
             {
-                Locator.Get<EquipmentWindow>().Items = items;
+                Locator.Get<GridiaDriver>().AddNewContainer(items, id, tabGfxItemId);
             }
         }
     }

@@ -37,7 +37,7 @@ public abstract class Quest implements Runnable {
         ItemInstance item = _server.contentManager.createItemInstance(itemId, 0);
         for (int i = 0; i < creature.inventory.size(); i++) {
             ItemInstance itemAtSlot = creature.inventory.get(i);
-            if (itemAtSlot.getData().id == itemId) {
+            if (itemAtSlot.getItem().id == itemId) {
                 item = item.add(itemAtSlot.getQuantity());
                 creature.inventory.deleteSlot(i);
             }

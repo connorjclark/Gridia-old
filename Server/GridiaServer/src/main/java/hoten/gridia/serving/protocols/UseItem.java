@@ -1,7 +1,9 @@
 package hoten.gridia.serving.protocols;
 
 import com.google.gson.JsonObject;
+import hoten.gridia.ItemWrapper;
 import hoten.gridia.Player;
+import hoten.gridia.content.Item;
 import hoten.gridia.content.ItemInstance;
 import hoten.gridia.content.ItemUse;
 import hoten.gridia.serving.ConnectionToGridiaClientHandler;
@@ -16,22 +18,25 @@ public class UseItem extends JsonMessageHandler<ConnectionToGridiaClientHandler>
     protected void handle(ConnectionToGridiaClientHandler connection, JsonObject data) throws IOException {
         ServingGridia server = connection.getServer();
         Player player = connection.getPlayer();
-        String source = data.get("source").getAsString();
-        String dest = data.get("dest").getAsString();
+        int source = data.get("source").getAsInt();
+        int dest = data.get("dest").getAsInt();
         int sourceIndex = data.get("si").getAsInt();
         int destIndex = data.get("di").getAsInt();
 
-        ItemInstance tool = server.getItemFrom(player, source, sourceIndex).getItemInstance();
-        ItemInstance focus = server.getItemFrom(player, dest, destIndex).getItemInstance();
+        ItemWrapper tool = server.getItemFrom(player, source, sourceIndex);
+        ItemWrapper focus = server.getItemFrom(player, dest, destIndex);
 
-        List<ItemUse> uses = server.contentManager.getItemUses(tool.getData(), focus.getData());
+        List<ItemUse> uses = server.contentManager.getItemUses(tool.getItemInstance().getItem(), focus.getItemInstance().getItem());
 
         if (uses.isEmpty()) {
+            if (tool.getItemInstance() == ItemInstance.NONE && focus.getItemInstance().getItem().itemClass == Item.ItemClass.Container) {
+                new ContainerRequest().requestContainer(server, connection, focus.getItemInstance());
+            }
             return;
         }
 
         if (uses.size() == 1) {
-            server.executeItemUse(connection, uses.get(0), tool, focus, source, dest, sourceIndex, destIndex);
+            server.executeItemUse(connection, uses.get(0), tool, focus, destIndex);
         } else {
             connection.send(server.messageBuilder.itemUsePick(uses));
             player.useSource = source;

@@ -9,7 +9,7 @@ UI
   hand uses don't show in recipe book?
   Show slot number for items 1-10 in inventory
   Move 'next' button in recipe book to far right
-  close to desktop
+  color of quantity labels
 
 Meta
   Set up forums, chatroom
@@ -25,6 +25,7 @@ Refactor
   Test coverage
   Item.Item -> Item.Data
   lowercase-directory-names
+  kill the Locator
   Everything!
 
 Tests, code coverage and cyclomatic complexity

@@ -69,9 +69,10 @@ public class GridiaGame
 
     private void DropItemAt(Vector3 dropItemLoc) 
     {
+        var driver = Locator.Get<GridiaDriver>();
         var destIndex = Locator.Get<TileMap>().ToIndex(dropItemLoc);
-        var slotSelected = Locator.Get<GridiaDriver>().invGui.SlotSelected;
-        Locator.Get<ConnectionToGridiaServerHandler>().MoveItem("inv", "world", slotSelected, destIndex, 1); // :(
+        var slotSelected = driver.invGui.SlotSelected;
+        Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(driver.invGui.ContainerId, 0, slotSelected, destIndex, 1); // :(
     }
 
     public void PickUpItemAtSelection() 
@@ -81,19 +82,21 @@ public class GridiaGame
 
     private void PickUpItemAt(Vector3 pickupItemLoc)
     {
+        var driver = Locator.Get<GridiaDriver>();
         pickupItemLoc = tileMap.Wrap(pickupItemLoc);
         var pickupItemIndex = tileMap.ToIndex(pickupItemLoc);
-        Locator.Get<ConnectionToGridiaServerHandler>().MoveItem("world", "inv", pickupItemIndex, -1); // :(
+        Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(0, driver.invGui.ContainerId, pickupItemIndex, -1); // :(
     }
 
     public void UseItemAtSelection(int sourceIndex)
     {
+        var driver = Locator.Get<GridiaDriver>();
         var destIndex = tileMap.ToIndex(GetSelectorCoord());
-        UseItemAt("inv", sourceIndex, "world", destIndex);
+        UseItemAt(driver.invGui.ContainerId, sourceIndex, 0, destIndex);
     }
 
-    private void UseItemAt(String source, int sourceIndex, String dest, int destIndex) 
+    private void UseItemAt(int source, int sourceIndex, int dest, int destIndex) 
     {
-        Locator.Get<ConnectionToGridiaServerHandler>().UseItem(source, "world", sourceIndex, destIndex);
+        Locator.Get<ConnectionToGridiaServerHandler>().UseItem(source, dest, sourceIndex, destIndex);
     }
 }

@@ -22,6 +22,7 @@ public class ItemInstanceDeserializer implements JsonDeserializer<ItemInstance> 
         JsonObject jsonObject = json.getAsJsonObject();
         int itemType = jsonObject.get("type").getAsInt();
         int quantity = jsonObject.get("quantity").getAsInt();
-        return _contentManager.createItemInstance(itemType, quantity);
+        JsonObject data = jsonObject.has("data") ? jsonObject.get("data").getAsJsonObject() : null;
+        return _contentManager.createItemInstance(itemType, quantity, data);
     }
 }

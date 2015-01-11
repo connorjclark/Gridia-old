@@ -57,7 +57,7 @@ public class ConnectionToGridiaServerHandler : SocketHandler
 
     public void PlayerMove(Vector3 delta, bool onRaft, int timeForMovement)
     {
-        Message message = new JsonMessageBuilder()
+        var message = new JsonMessageBuilder()
             .Type("PlayerMove")
             .Set("delta", new { x = (int)delta.x, y = (int)delta.y, z = (int)delta.z }) // :(
             .Set("onRaft", onRaft)
@@ -74,7 +74,7 @@ public class ConnectionToGridiaServerHandler : SocketHandler
         }
         _sectorsRequested.Add(new Vector3(x, y, z));
 
-        Message message = new JsonMessageBuilder()
+        var message = new JsonMessageBuilder()
             .Type("SectorRequest")
             .Set("x", x)
             .Set("y", y)
@@ -92,16 +92,16 @@ public class ConnectionToGridiaServerHandler : SocketHandler
         //Debug.LogError("no creature of id: " + id); // :(
         _creaturesRequested.Add(id);
 
-        Message message = new JsonMessageBuilder()
+        var message = new JsonMessageBuilder()
             .Type("CreatureRequest")
             .Set("id", id)
             .Build();
         _socketHandler.Send(message);
     }
 
-    public void MoveItem(String source, String dest, int sourceIndex, int destIndex, int quantity = -1)
+    public void MoveItem(int source, int dest, int sourceIndex, int destIndex, int quantity = -1)
     {
-        Message message = new JsonMessageBuilder()
+        var message = new JsonMessageBuilder()
             .Type("MoveItem")
             .Set("source", source)
             .Set("dest", dest)
@@ -112,102 +112,111 @@ public class ConnectionToGridiaServerHandler : SocketHandler
         _socketHandler.Send(message);
     }
 
-    public void UseItem(String source, String dest, int sourceIndex, int destIndex)
+    public void UseItem(int source, int dest, int sourceIndex, int destIndex)
     {
-        Message message = new JsonMessageBuilder()
+        var message = new JsonMessageBuilder()
             .Type("UseItem")
-                .Set("source", source)
-                .Set("dest", dest)
-                .Set("si", sourceIndex)
-                .Set("di", destIndex)
-                .Build();
+            .Set("source", source)
+            .Set("dest", dest)
+            .Set("si", sourceIndex)
+            .Set("di", destIndex)
+            .Build();
         _socketHandler.Send(message);
     }
 
     public void PickItemUse(int useIndex)
     {
-        Message message = new JsonMessageBuilder()
+        var message = new JsonMessageBuilder()
             .Type("PickItemUse")
-                .Set("useIndex", useIndex)
-                .Build();
+            .Set("useIndex", useIndex)
+            .Build();
         _socketHandler.Send(message);
     }
 
     public void Chat(String text)
     {
-        Message message = new JsonMessageBuilder()
+        var message = new JsonMessageBuilder()
             .Type("Chat")
-                .Set("msg", text)
-                .Build();
+            .Set("msg", text)
+            .Build();
         _socketHandler.Send(message);
     }
 
     public void EquipItem(int slotIndex)
     {
-        Message message = new JsonMessageBuilder()
+        var message = new JsonMessageBuilder()
             .Type("EquipItem")
-                .Set("slotIndex", slotIndex)
-                .Build();
+            .Set("slotIndex", slotIndex)
+            .Build();
         _socketHandler.Send(message);
     }
 
     public void UnequipItem(int slotIndex)
     {
-        Message message = new JsonMessageBuilder()
+        var message = new JsonMessageBuilder()
             .Type("UnequipItem")
-                .Set("slotIndex", slotIndex)
-                .Build();
+            .Set("slotIndex", slotIndex)
+            .Build();
         _socketHandler.Send(message);
     }
 
     public void Hit(Vector3 loc)
     {
-        Message message = new JsonMessageBuilder()
+        var message = new JsonMessageBuilder()
             .Type("Hit")
-                .Set("loc", new { x = loc.x, y = loc.y, z = loc.z })
-                .Build();
+            .Set("loc", new { x = loc.x, y = loc.y, z = loc.z })
+            .Build();
         _socketHandler.Send(message);
     }
 
     public void AdminMakeItem(Vector3 loc, int itemIndex)
     {
-        Message message = new JsonMessageBuilder()
+        var message = new JsonMessageBuilder()
             .Type("AdminMakeItem")
-                .Set("loc", new { x = loc.x, y = loc.y, z = loc.z })
-                .Set("item", itemIndex)
-                .Build();
+            .Set("loc", new { x = loc.x, y = loc.y, z = loc.z })
+            .Set("item", itemIndex)
+            .Build();
         _socketHandler.Send(message);
     }
 
     public void AdminMakeFloor(Vector3 loc, int floorIndex)
     {
-        Message message = new JsonMessageBuilder()
+        var message = new JsonMessageBuilder()
             .Type("AdminMakeFloor")
-                .Set("loc", new { x = loc.x, y = loc.y, z = loc.z })
-                .Set("floor", floorIndex)
-                .Build();
+            .Set("loc", new { x = loc.x, y = loc.y, z = loc.z })
+            .Set("floor", floorIndex)
+            .Build();
         _socketHandler.Send(message);
     }
 
     public void Register(String username, String password)
     {
         var passwordHash = MD5.Create().ComputeHash(Encoding.ASCII.GetBytes(password));
-        Message message = new JsonMessageBuilder()
+        var message = new JsonMessageBuilder()
             .Type("Register")
-                .Set("username", username)
-                .Set("passwordHash", passwordHash)
-                .Build();
+            .Set("username", username)
+            .Set("passwordHash", passwordHash)
+            .Build();
         _socketHandler.Send(message);
     }
 
     public void Login(String username, String password)
     {
         var passwordHash = MD5.Create().ComputeHash(Encoding.ASCII.GetBytes(password));
-        Message message = new JsonMessageBuilder()
+        var message = new JsonMessageBuilder()
             .Type("Login")
-                .Set("username", username)
-                .Set("passwordHash", passwordHash)
-                .Build();
+            .Set("username", username)
+            .Set("passwordHash", passwordHash)
+            .Build();
+        _socketHandler.Send(message);
+    }
+
+    public void ContainerRequest(Vector3 loc)
+    {
+        var message = new JsonMessageBuilder()
+            .Type("ContainerRequest")
+            .Set("loc", new { x = loc.x, y = loc.y, z = loc.z })
+            .Build();
         _socketHandler.Send(message);
     }
 

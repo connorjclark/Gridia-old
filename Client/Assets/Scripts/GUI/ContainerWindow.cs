@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gridia;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,16 +7,8 @@ using UnityEngine;
 
 namespace Gridia
 {
-    public class InventoryWindow : GridiaWindow
+    public class ContainerWindow : GridiaWindow
     {
-        public List<ItemInstance> Items
-        {
-            set
-            {
-                ViewItems(value);
-            }
-        }
-
         public int SlotSelected { get { return _slots.TileSelected; } set { _slots.TileSelected = value; } }
         public int SlotSelectedX { get { return _slots.TileSelectedX; } set { _slots.TileSelectedX = value; } }
         public int SlotSelectedY { get { return _slots.TileSelectedY; } set { _slots.TileSelectedY = value; } }
@@ -24,24 +17,24 @@ namespace Gridia
         public int MouseUpSlot { get; private set; }
         public int MouseOverSlot { get; private set; }
 
+        public int ContainerId { get; private set; }
         private List<ItemRenderable> _itemRenderables;
         private ExtendibleGrid _slots = new ExtendibleGrid(Vector2.zero); // :(
 
-        public InventoryWindow(Vector2 pos)
-            : base(pos, "Inventory")
+        public ContainerWindow(Vector2 pos)
+            : base(pos, "Container")
         {
             ResizeOnVertical = false;
-            Items = new List<ItemInstance>();
+            Set(new List<ItemInstance>(), 0);
             AddChild(_slots);
         }
 
         // :(
         public void SetWindowNameToCurrentSelection()
         {
-            if (_slots.TileSelected < _slots.NumChildren)
+            if (_itemRenderables != null && _slots.TileSelected < _slots.NumChildren)
             {
-                var productName = _itemRenderables[_slots.TileSelected].Item.Item.Name;
-                WindowName = productName;
+                WindowName = _itemRenderables[_slots.TileSelected].Item.ToString();
             }
             else
             {
@@ -59,7 +52,13 @@ namespace Gridia
             base.Render();
         }
 
-        public void ViewItems(List<ItemInstance> items) 
+        public void Set(List<ItemInstance> items, int id)
+        {
+            ContainerId = id;
+            ViewItems(items);
+        }
+
+        private void ViewItems(List<ItemInstance> items) 
         {
             _itemRenderables = new List<ItemRenderable>();
 

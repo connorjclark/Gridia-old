@@ -1,5 +1,7 @@
 package hoten.gridia.content;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import java.util.Objects;
 
 public class ItemInstance {
@@ -15,24 +17,26 @@ public class ItemInstance {
     }
 
     public static boolean stackable(ItemInstance item1, ItemInstance item2) {
-        if (item1._data.id != item2._data.id || !item1._data.stackable) {
+        if (item1._item.id != item2._item.id || !item1._item.stackable) {
             return false;
         }
         int q = item1._quantity + item2._quantity;
-        return q < 1000;
+        return q <= 100000;
     }
 
-    private final Item _data;
+    private final Item _item;
     private final int _quantity;
     public int age;
+    private JsonObject _data;
 
-    public ItemInstance(Item data, int quantity) {
-        this._data = data;
-        this._quantity = quantity;
+    public ItemInstance(Item item, int quantity, JsonObject data) {
+        _item = item;
+        _quantity = quantity;
+        _data = data;
     }
 
     public ItemInstance(ItemInstance item) {
-        _data = item._data;
+        _item = item._item;
         _quantity = item._quantity;
         age = item.age;
     }
@@ -42,7 +46,7 @@ public class ItemInstance {
         if (newQuantity <= 0) {
             return ItemInstance.NONE;
         } else {
-            return new ItemInstance(_data, newQuantity);
+            return new ItemInstance(_item, newQuantity, _data);
         }
     }
 
@@ -53,7 +57,7 @@ public class ItemInstance {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 73 * hash + Objects.hashCode(this._data);
+        hash = 73 * hash + Objects.hashCode(this._item);
         hash = 73 * hash + this._quantity;
         return hash;
     }
@@ -67,7 +71,7 @@ public class ItemInstance {
             return false;
         }
         final ItemInstance other = (ItemInstance) obj;
-        if (!Objects.equals(this._data, other._data)) {
+        if (!Objects.equals(this._item, other._item)) {
             return false;
         }
         if (this._quantity != other._quantity) {
@@ -78,14 +82,21 @@ public class ItemInstance {
 
     @Override
     public String toString() {
-        return _data.name + (_quantity != 1 ? String.format(" (%d)", _quantity) : "");
+        return _item.name + (_quantity != 1 ? String.format(" (%d)", _quantity) : "");
     }
 
-    public Item getData() {
-        return _data;
+    public Item getItem() {
+        return _item;
     }
 
     public int getQuantity() {
         return _quantity;
+    }
+
+    public JsonObject getData() {
+        if (_data == null) {
+            _data = new JsonObject();
+        }
+        return _data;
     }
 }

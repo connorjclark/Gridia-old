@@ -1,6 +1,7 @@
 package hoten.gridia.serving.protocols;
 
 import com.google.gson.JsonObject;
+import hoten.gridia.ItemWrapper;
 import hoten.gridia.Player;
 import hoten.gridia.content.ItemInstance;
 import hoten.gridia.content.ItemUse;
@@ -18,10 +19,10 @@ public class PickItemUse extends JsonMessageHandler<ConnectionToGridiaClientHand
         Player player = connection.getPlayer();
         int useIndex = data.get("useIndex").getAsInt();
 
-        ItemInstance tool = server.getItemFrom(player, player.useSource, player.useSourceIndex).getItemInstance();
-        ItemInstance focus = server.getItemFrom(player, player.useDest, player.useDestIndex).getItemInstance();
-        List<ItemUse> uses = server.contentManager.getItemUses(tool.getData(), focus.getData());
+        ItemWrapper tool = server.getItemFrom(player, player.useSource, player.useSourceIndex);
+        ItemWrapper focus = server.getItemFrom(player, player.useDest, player.useDestIndex);
+        List<ItemUse> uses = server.contentManager.getItemUses(tool.getItemInstance().getItem(), focus.getItemInstance().getItem());
         ItemUse use = uses.get(useIndex);
-        server.executeItemUse(connection, use, tool, focus, player.useSource, player.useDest, player.useSourceIndex, player.useDestIndex);
+        server.executeItemUse(connection, use, tool, focus, player.useDest);
     }
 }

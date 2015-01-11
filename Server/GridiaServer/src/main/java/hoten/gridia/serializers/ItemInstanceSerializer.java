@@ -12,8 +12,12 @@ public class ItemInstanceSerializer implements JsonSerializer<ItemInstance> {
     @Override
     public JsonElement serialize(ItemInstance item, Type type, JsonSerializationContext jsc) {
         JsonObject obj = new JsonObject();
-        obj.addProperty("type", item.getData().id);
+        obj.addProperty("type", item.getItem().id);
         obj.addProperty("quantity", item.getQuantity());
+        JsonObject data = item.getData();
+        if (data != null && !data.entrySet().isEmpty()) {
+            obj.add("data", item.getData());
+        }
         return obj;
     }
 }

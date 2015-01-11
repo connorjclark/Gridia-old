@@ -9,7 +9,7 @@ public class GridiaDriver : MonoBehaviour
     public TextureManager _textureManager; // :(
     public ContentManager _contentManager; // :(
     public TabbedUI tabbedGui; // :(
-    public InventoryWindow invGui;
+    public ContainerWindow invGui;
     public EquipmentWindow equipmentGui;
     public ChatWindow chatGui;
     public ItemUsePickWindow itemUsePickWindow;
@@ -31,7 +31,7 @@ public class GridiaDriver : MonoBehaviour
         Locator.Provide(tabbedGui);
         tabbedGui.ScaleXY = guiScale;
 
-        invGui = new InventoryWindow(new Vector2(0, Int32.MaxValue));
+        invGui = new ContainerWindow(new Vector2(0, Int32.MaxValue));
         Locator.Provide(invGui);
         invGui.ScaleXY = guiScale;
 
@@ -263,6 +263,68 @@ public class GridiaDriver : MonoBehaviour
         y = _game.tileMap.Wrap(y + (int)_game.view.FocusPosition.y);
 
         return new Vector3(x, y, z);
+    }
+
+    public void RemoveAllOpenContainers()
+    {
+        for (int i = tabbedGui.NumWindows() - 1; i >= 0; i--)
+        {
+            var window = tabbedGui.GetWindowAt(i);
+            if (window is ContainerWindow && window != invGui)
+            {
+                tabbedGui.Remove(window);
+            }
+        }
+    }
+
+    public void AddNewContainer(List<ItemInstance> items, int id, int tabGfxItemId)
+    {
+        var numOpenContainers = GetNumberOfOpenContainers();
+        var containerWindow = new ContainerWindow(new Vector2(0, Math.Min(Screen.height - 120, (numOpenContainers - 1) * 120)));
+        containerWindow.ScaleXY = 1.5f;
+        containerWindow.Set(items, id);
+        tabbedGui.Add(_contentManager.GetItem(tabGfxItemId).Animations[0], containerWindow, true);
+    }
+
+    public int GetNumberOfOpenContainers()
+    {
+        var count = 0;
+        for (int i = 0; i < tabbedGui.NumWindows(); i++)
+        {
+            if (tabbedGui.GetWindowAt(i) is ContainerWindow)
+            {
+                count += 1;
+            }
+        }
+        return count;
+    }
+
+    private ContainerWindow GetOpenContainerWith(Predicate<ContainerWindow> predicate)
+    {
+        for (int i = 0; i < tabbedGui.NumWindows(); i++)
+        {
+            var window = tabbedGui.GetWindowAt(i);
+            if (window is ContainerWindow && predicate(window as ContainerWindow))
+            {
+                return window as ContainerWindow;
+            }
+        }
+        return null;
+    }
+
+    public ContainerWindow GetOpenContainerWithMouseUp()
+    {
+        return GetOpenContainerWith(containerWindow => containerWindow.MouseUpSlot != -1);
+    }
+
+    public ContainerWindow GetOpenContainerWithMouseDown()
+    {
+        return GetOpenContainerWith(containerWindow => containerWindow.MouseDownSlot != -1);
+    }
+
+    public ContainerWindow GetOpenContainerWithId(int id)
+    {
+        return GetOpenContainerWith(containerWindow => containerWindow.ContainerId == id);
     }
 
     void ResizeCamera()

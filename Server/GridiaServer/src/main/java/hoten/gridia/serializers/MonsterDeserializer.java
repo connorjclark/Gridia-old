@@ -53,7 +53,7 @@ public class MonsterDeserializer implements JsonDeserializer<Monster> {
                             .filter(item -> item != null && item.name.equalsIgnoreCase(itemName))
                             .findFirst().get();
                     int quantity = treasure.get("quantity").getAsInt();
-                    ItemInstance item = new ItemInstance(data, quantity);
+                    ItemInstance item = new ItemInstance(data, quantity, null);
                     drops.add(item);
                 }
             }

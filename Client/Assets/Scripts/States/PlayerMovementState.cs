@@ -35,7 +35,7 @@ namespace Gridia
                 var timeForMovement = baseTime / movementModifier;
                 var onRaft = false;
 
-                if (floor == 1 && Locator.Get<InventoryWindow>().HasRaft())
+                if (floor == 1 && Locator.Get<GridiaDriver>().invGui.HasRaft())
                 {
                     timeForMovement = baseTime / 2;
                     onRaft = true;

@@ -24,7 +24,7 @@ namespace Gridia
 
             // inv window
 
-            var invWindow = new InventoryWindow(Vector2.zero);
+            var invWindow = new ContainerWindow(Vector2.zero);
             tabWindow.Add(123, invWindow, true);
 
             var inv = new List<ItemInstance>();
@@ -33,7 +33,7 @@ namespace Gridia
                 inv.Add(cm.GetItem(i).GetInstance(i));
             }
 
-            invWindow.Items = inv;
+            invWindow.Set(inv, 0);
 
             invWindow.ScaleXY = 2f;
 

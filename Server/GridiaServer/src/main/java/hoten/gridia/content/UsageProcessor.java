@@ -20,24 +20,21 @@ public class UsageProcessor {
     }
 
     List<ItemUse> findUsages(ItemInstance tool, ItemInstance focus) {
-        return _contentManager.getItemUses(tool.getData(), focus.getData());
+        return _contentManager.getItemUses(tool.getItem(), focus.getItem());
     }
 
     UsageResult getUsageResult(ItemUse usage, ItemInstance tool, ItemInstance focus) {
         UsageResult result = new UsageResult();
 
-        result.tool = new ItemInstance(tool);
-        result.focus = new ItemInstance(focus);
-
-        result.tool = result.tool.remove(usage.toolQuantityConsumed);
-        result.focus = result.focus.remove(usage.focusQuantityConsumed);
+        result.tool = tool.remove(usage.toolQuantityConsumed);
+        result.focus = focus.remove(usage.focusQuantityConsumed);
 
         // :(
         result.products = new ArrayList<>();
         for (int i = 0; i < usage.products.size(); i++) {
             int itemId = usage.products.get(i);
             int itemQuantity = usage.quantities.get(i);
-            result.products.add(_contentManager.createItemInstance(itemId, itemQuantity));
+            result.products.add(_contentManager.createItemInstance(itemId, itemQuantity, focus.getData()));
         }
 
         return result;

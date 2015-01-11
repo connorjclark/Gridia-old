@@ -61,7 +61,7 @@ public class UsageProcessorTest {
     private UsageResult meatOnFireUsage(int amountOfMeat) {
         ItemInstance tool = _contentManager.createItemInstanceByName("Meat", amountOfMeat);
         ItemInstance focus = _contentManager.createItemInstanceByName("Fire");
-        ItemUse usage = _contentManager.getItemUse(tool.getData(), focus.getData(), 0);
+        ItemUse usage = _contentManager.getItemUse(tool.getItem(), focus.getItem(), 0);
         return _processor.getUsageResult(usage, tool, focus);
     }
 
@@ -87,7 +87,7 @@ public class UsageProcessorTest {
     private UsageResult axeOnLogUsage(int amountOfLogs) {
         ItemInstance tool = _contentManager.createItemInstanceByName("Axe");
         ItemInstance focus = _contentManager.createItemInstanceByName("Logs", amountOfLogs);
-        ItemUse usage = _contentManager.getItemUse(tool.getData(), focus.getData(), 0);
+        ItemUse usage = _contentManager.getItemUse(tool.getItem(), focus.getItem(), 0);
         return _processor.getUsageResult(usage, tool, focus);
     }
 
@@ -107,16 +107,16 @@ public class UsageProcessorTest {
     private UsageResult axeOnTreeUsage() {
         ItemInstance tool = _contentManager.createItemInstanceByName("Axe");
         ItemInstance focus = _contentManager.createItemInstanceByName("Tree");
-        ItemUse usage = _contentManager.getItemUse(tool.getData(), focus.getData(), 0);
+        ItemUse usage = _contentManager.getItemUse(tool.getItem(), focus.getItem(), 0);
         return _processor.getUsageResult(usage, tool, focus);
     }
 
     @Test
     public void testProducts() {
         UsageResult result = axeOnTreeUsage();
-        assertEquals("Stump", result.products.get(0).getData().name);
-        assertEquals("Logs", result.products.get(1).getData().name);
-        assertEquals("Branches", result.products.get(2).getData().name);
+        assertEquals("Stump", result.products.get(0).getItem().name);
+        assertEquals("Logs", result.products.get(1).getItem().name);
+        assertEquals("Branches", result.products.get(2).getItem().name);
     }
 
     @Test
@@ -145,7 +145,7 @@ public class UsageProcessorTest {
         expect(mockFocusWrapped.addItemToSource(bareAppleTree)).andReturn(true);
         replay(mockFocusWrapped);
 
-        ItemUse usage = _contentManager.getItemUse(_hand.getData(), ripeAppleTree.getData(), 0);
+        ItemUse usage = _contentManager.getItemUse(_hand.getItem(), ripeAppleTree.getItem(), 0);
         _processor.processUsage(usage, mockToolWrapped, mockFocusWrapped);
 
         verify(mockFocusWrapped);
@@ -154,7 +154,7 @@ public class UsageProcessorTest {
     @Test
     public void testToolDoesntChangeWhenIsHand() {
         ItemInstance closedDoor = _contentManager.createItemInstanceByName("Closed Door");
-        ItemUse usage = _contentManager.getItemUse(_hand.getData(), closedDoor.getData(), 0);
+        ItemUse usage = _contentManager.getItemUse(_hand.getItem(), closedDoor.getItem(), 0);
 
         ItemWrapper mockToolWrapped = createMock(ItemWrapper.class);
         expect(mockToolWrapped.getItemInstance()).andReturn(_hand).anyTimes();
@@ -173,7 +173,7 @@ public class UsageProcessorTest {
     public void testToolWhenNotHandAndFocusChanges() {
         ItemInstance axe = _contentManager.createItemInstanceByName("Axe");
         ItemInstance tree = _contentManager.createItemInstanceByName("Tree");
-        ItemUse usage = _contentManager.getItemUse(axe.getData(), tree.getData(), 0);
+        ItemUse usage = _contentManager.getItemUse(axe.getItem(), tree.getItem(), 0);
 
         ItemWrapper mockToolWrapped = createNiceMock(ItemWrapper.class);
         expect(mockToolWrapped.getItemInstance()).andReturn(axe).anyTimes();

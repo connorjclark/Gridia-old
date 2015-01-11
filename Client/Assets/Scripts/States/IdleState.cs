@@ -9,7 +9,7 @@ namespace Gridia
     public class IdleState : State
     {
         private int sourceIndex;
-        private String mouseDownLocation;
+        private int mouseDownLocation = -1;
         private GridiaDriver _driver;
         private GridiaGame _game;
 
@@ -43,17 +43,25 @@ namespace Gridia
             }
 
             var wasdKeysUp = _inputManager.Get4DirectionalInputUp();
-            var destinationUp = Locator.Get<GridiaGame>().view.Focus.Position + wasdKeysUp;
             var wasdKeys = _inputManager.Get4DirectionalInput();
-            if (wasdKeysUp != Vector3.zero && (Locator.Get<TileMap>().GetCreatureAt(destinationUp) != null || Locator.Get<TileMap>().GetTile(destinationUp).Floor == 0))
+            if (wasdKeysUp != Vector3.zero)
             {
-                Locator.Get<ConnectionToGridiaServerHandler>().Hit(destinationUp);
+                var destinationUp = Locator.Get<GridiaGame>().view.Focus.Position + wasdKeysUp;
+                if (Locator.Get<TileMap>().GetCreatureAt(destinationUp) != null || Locator.Get<TileMap>().GetTile(destinationUp).Floor == 0)
+                {
+                    Locator.Get<ConnectionToGridiaServerHandler>().Hit(destinationUp);
+                }
+                else if (Locator.Get<TileMap>().GetTile(destinationUp).Item.Item.Class == Item.ItemClass.Container)
+                {
+                    Locator.Get<ConnectionToGridiaServerHandler>().ContainerRequest(destinationUp);
+                }
             }
             else if (wasdKeys != Vector3.zero)
             {
                 var destination = _game.view.Focus.Position + wasdKeys;
                 if (Locator.Get<TileMap>().Walkable(destination))
                 {
+                    Locator.Get<GridiaDriver>().RemoveAllOpenContainers();
                     End(stateMachine, dt, new PlayerMovementState(wasdKeys));
                     return;
                 }
@@ -98,41 +106,42 @@ namespace Gridia
 
             if (Input.GetMouseButtonDown(0))
             {
-                // :(
-                if (_driver.invGui.MouseDownSlot != -1)
+                var openContainerWithMouseDown = _driver.GetOpenContainerWithMouseDown();
+                if (openContainerWithMouseDown != null)
                 {
-                    mouseDownLocation = "inv";
-                    sourceIndex = _driver.invGui.MouseDownSlot;
-                    _driver.mouseDownItem = _driver.invGui.GetItemAt(_driver.invGui.MouseDownSlot);
+                    mouseDownLocation = openContainerWithMouseDown.ContainerId;
+                    sourceIndex = openContainerWithMouseDown.MouseDownSlot;
+                    _driver.mouseDownItem = _driver.invGui.GetItemAt(openContainerWithMouseDown.MouseDownSlot);
                 }
                 else if (!_driver.isMouseOverGUI())
                 {
-                    mouseDownLocation = "world";
+                    mouseDownLocation = 0;
                     var downCoord = _driver.getTileLocationOfMouse();
                     _driver.mouseDownItem = _driver._game.tileMap.GetTile((int)downCoord.x, (int)downCoord.y, (int)downCoord.z).Item;
                     sourceIndex = _driver._game.tileMap.ToIndex(downCoord);
                 }
             }
-            else if (Input.GetMouseButtonUp(0) && mouseDownLocation != null)
+            else if (Input.GetMouseButtonUp(0) && mouseDownLocation != -1)
             {
-                String dest;
-                int destIndex;
-                if (_driver.invGui.MouseUpSlot != -1)
+                int dest, destIndex;
+
+                var openContainerWithMouseUp = _driver.GetOpenContainerWithMouseUp();
+                if (openContainerWithMouseUp != null)
                 {
-                    dest = "inv";
-                    destIndex = _driver.invGui.MouseUpSlot;
+                    dest = openContainerWithMouseUp.ContainerId;
+                    destIndex = openContainerWithMouseUp.MouseUpSlot;
                 }
                 else
                 {
                     var tileLocUp = _driver.getTileLocationOfMouse();
                     if (tileLocUp == _driver._game.tileMap.Wrap(_driver._game.view.Focus.Position))
                     {
-                        dest = "inv";
+                        dest = _driver.invGui.ContainerId;
                         destIndex = -1;
                     }
                     else 
                     {
-                        dest = "world";
+                        dest = 0;
                         destIndex = _driver._game.tileMap.ToIndex(tileLocUp);
                     }
                 }
@@ -140,7 +149,7 @@ namespace Gridia
                 Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(mouseDownLocation, dest, sourceIndex, destIndex);
 
                 _driver.mouseDownItem =  null;
-                mouseDownLocation = null;
+                mouseDownLocation = -1;
             }
         }
 
@@ -148,7 +157,7 @@ namespace Gridia
         {
             var pickupItemLoc = _driver._game.tileMap.Wrap(loc);
             var pickupItemIndex = _driver._game.tileMap.ToIndex(pickupItemLoc);
-            Locator.Get<ConnectionToGridiaServerHandler>().MoveItem("world", "inv", pickupItemIndex, -1);
+            Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(0, _driver.invGui.ContainerId, pickupItemIndex, -1);
         }
 
         private void End(StateMachine stateMachine, float dt, State newState) 

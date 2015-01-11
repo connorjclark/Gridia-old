@@ -1,9 +1,11 @@
 package hoten.gridia.content;
 
+import com.google.gson.JsonObject;
 import hoten.gridia.content.Item.ItemClass;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public final class ContentManager {
@@ -17,7 +19,7 @@ public final class ContentManager {
         _itemUses = usesList.stream()
                 .collect(Collectors.groupingBy(u -> getItem(u.tool), Collectors.mapping(u -> u, Collectors.toList())));
         _monsters = monsters;
-        ItemInstance.setBlankItemInstance(new ItemInstance(_items.get(0), 0));
+        ItemInstance.setBlankItemInstance(new ItemInstance(_items.get(0), 0, null));
 
         // :(
         ItemInstance decayedRemains = createItemInstance(490);
@@ -27,8 +29,8 @@ public final class ContentManager {
                     monster.drops.add(decayedRemains);
                 });
     }
-
-    public ItemInstance createItemInstance(int id, int quantity) {
+    
+    public ItemInstance createItemInstance(int id, int quantity, JsonObject data) {
         if (id == 0) {
             return ItemInstance.NONE;
         }
@@ -37,11 +39,15 @@ public final class ContentManager {
             System.err.println("null item: " + id);
             return ItemInstance.NONE;
         }
-        return new ItemInstance(item, quantity);
+        return new ItemInstance(item, quantity, data);
+    }
+
+    public ItemInstance createItemInstance(int id, int quantity) {
+        return createItemInstance(id, quantity, null);
     }
 
     public ItemInstance createItemInstance(int id) {
-        return createItemInstance(id, 1);
+        return createItemInstance(id, 1, null);
     }
 
     public Item getItem(int id) {
@@ -54,7 +60,7 @@ public final class ContentManager {
     public Item getItemByName(String name) {
         return _items.stream()
                 .filter(item -> item != null && item.name.equalsIgnoreCase(name))
-                .findFirst().orElseThrow(() -> new RuntimeException("No such item: " + name));
+                .findFirst().orElseThrow(() -> new NoSuchElementException("No such item: " + name));
     }
 
     // cache?
@@ -75,7 +81,7 @@ public final class ContentManager {
             }
         }
 
-        return ItemInstance.NONE.getData();
+        return ItemInstance.NONE.getItem();
     }
 
     public Monster getMonster(int id) {

@@ -7,7 +7,9 @@ import hoten.gridia.uniqueidentifiers.FileResourceUniqueIdentifiers;
 import hoten.gridia.uniqueidentifiers.UniqueIdentifiers;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.apache.commons.io.FileUtils;
@@ -18,19 +20,31 @@ public class Container {
 
         private final UniqueIdentifiers _uniqueIds;
         private final File dir;
+        private final Map<Integer, Container> _containers = new HashMap<>();
 
         public ContainerFactory(File world) {
             dir = new File(world, "containers/");
             _uniqueIds = new FileResourceUniqueIdentifiers(dir, 100);
         }
 
-        public Container load(int id) throws IOException {
+        public Container get(int id) throws IOException {
+            if (_containers.containsKey(id)) {
+                return _containers.get(id);
+            } else {
+                return load(id);
+            }
+        }
+
+        private Container load(int id) throws IOException {
             String json = FileUtils.readFileToString(new File(dir, id + ".json"));
-            return GridiaGson.get().fromJson(json, Container.class);
+            Container container = GridiaGson.get().fromJson(json, Container.class);
+            _containers.put(id, container);
+            return container;
         }
 
         public Container create(ContainerType type, List<ItemInstance> items) throws IOException {
             Container container = new Container(_uniqueIds.next(), type, items);
+            _containers.put(container.id, container);
             save(container);
             return container;
         }
@@ -59,6 +73,12 @@ public class Container {
         public void save(Container container) throws IOException {
             FileUtils.writeStringToFile(new File(dir, container.id + ".json"), GridiaGson.get().toJson(container));
         }
+
+        public void saveAll() throws IOException {
+            for (Container container : _containers.values()) {
+                save(container);
+            }
+        }
     }
 
     public enum ContainerType {
@@ -68,7 +88,7 @@ public class Container {
 
     private final List<ItemInstance> _items;
     public final int id;
-    public final ContainerType type;
+    public final ContainerType type; // :(
 
     public Container(int id, ContainerType type, List<ItemInstance> items) {
         this.id = id;
@@ -78,7 +98,7 @@ public class Container {
 
     public boolean containsItemId(int id) {
         return _items.stream()
-                .anyMatch(item -> item.getData().id == id);
+                .anyMatch(item -> item.getItem().id == id);
     }
 
     public int size() {
@@ -114,7 +134,7 @@ public class Container {
             return false;
         }
         ItemInstance currentItem = get(slotIndex);
-        if (!ItemInstance.stackable(itemToAdd, currentItem) && currentItem.getData().id != 0) {
+        if (!ItemInstance.stackable(itemToAdd, currentItem) && currentItem.getItem().id != 0) {
             return false;
         }
         set(slotIndex, itemToAdd.add(currentItem.getQuantity()));

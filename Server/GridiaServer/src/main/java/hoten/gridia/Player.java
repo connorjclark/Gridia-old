@@ -2,6 +2,7 @@ package hoten.gridia;
 
 import com.google.gson.Gson;
 import hoten.gridia.Container.ContainerType;
+import hoten.gridia.content.Item;
 import hoten.gridia.content.ItemInstance;
 import hoten.gridia.map.Coord;
 import hoten.gridia.serializers.GridiaGson;
@@ -10,7 +11,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.apache.commons.io.FileUtils;
 
@@ -51,8 +54,8 @@ public class Player {
             }
 
             Creature creature = server.createCreatureForPlayer(username, accountDetails.location);
-            creature.inventory = server.containerFactory.load(accountDetails.inventoryId);
-            Container equipment = server.containerFactory.load(accountDetails.equipmentId);
+            creature.inventory = server.containerFactory.get(accountDetails.inventoryId);
+            Container equipment = server.containerFactory.get(accountDetails.equipmentId);
 
             return new Player(accountDetails, creature, equipment);
         }
@@ -79,7 +82,7 @@ public class Player {
             Creature creature = server.createCreatureForPlayer(username, accountDetails.location);
 
             // fake an inventory
-            List<ItemInstance> inv = new ArrayList();
+            List<ItemInstance> inv = new ArrayList<>();
             inv.addAll(Arrays.asList(
                     57, 335, 277, 280, 1067, 900, 1068, 826,
                     1974, 1039, 171, 902, 901, 339, 341,
@@ -92,6 +95,13 @@ public class Player {
                     .collect(Collectors.toList()));
             while (inv.size() < invSize) {
                 inv.add(server.contentManager.createItemInstance(0));
+            }
+            inv = new ArrayList<>();
+            for (int i = 0; i < 3000; i++) {
+                Item item = server.contentManager.getItem(i);
+                if (item != null && item.itemClass == Item.ItemClass.Container) {
+                    inv.add(server.contentManager.createItemInstance(i));
+                }
             }
             creature.inventory = server.containerFactory.create(ContainerType.Inventory, inv);
             accountDetails.inventoryId = creature.inventory.id;
@@ -126,9 +136,10 @@ public class Player {
     public final Creature creature;
     public final Container equipment;
     public final AccountDetails accountDetails;
+    public final Set<Integer> openedContainers = new HashSet();
     // :(
     public int useSourceIndex, useDestIndex;
-    public String useSource, useDest;
+    public int useSource, useDest;
 
     private Player(AccountDetails accountDetails, Creature creature, Container equipment) {
         this.accountDetails = accountDetails;

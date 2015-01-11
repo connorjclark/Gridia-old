@@ -15,6 +15,7 @@ import hoten.gridia.ItemWrapper.WorldItemWrapper;
 import hoten.gridia.content.ItemInstance;
 import hoten.gridia.Player;
 import hoten.gridia.Player.PlayerFactory;
+import hoten.gridia.content.Item;
 import hoten.gridia.content.ItemUse;
 import hoten.gridia.content.Monster;
 import hoten.gridia.content.UsageProcessor;
@@ -23,6 +24,7 @@ import hoten.gridia.map.Sector;
 import hoten.gridia.map.Tile;
 import hoten.gridia.map.TileMap;
 import hoten.gridia.serializers.GridiaGson;
+import hoten.gridia.serving.protocols.ContainerRequest;
 import hoten.serving.filetransferring.ServingFileTransferring;
 import java.io.File;
 import java.io.IOException;
@@ -93,10 +95,10 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
 
     public void grow() {
         tileMap.forAllTilesLoaded(x -> y -> z -> tile -> {
-            if (tile.item.getData().growthDelta != 0) {
+            if (tile.item.getItem().growthDelta != 0) {
                 tile.item.age += 1;
-                if (tile.item.age >= tile.item.getData().growthDelta) {
-                    changeItem(new Coord(x, y, z), contentManager.createItemInstance(tile.item.getData().growthItem));
+                if (tile.item.age >= tile.item.getItem().growthDelta) {
+                    changeItem(new Coord(x, y, z), contentManager.createItemInstance(tile.item.getItem().growthItem));
                 }
             }
         });
@@ -275,7 +277,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     public void moveItem(Coord from, Coord to) {
         ItemInstance fromItem = tileMap.getItem(from);
         ItemInstance toItem = tileMap.getItem(to);
-        if (toItem.getData().id == 0) {
+        if (toItem.getItem().id == 0) {
             changeItem(from, ItemInstance.NONE);
             changeItem(to, fromItem);
         }
@@ -312,7 +314,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     public boolean addItem(Coord loc, ItemInstance itemToAdd) {
         ItemInstance currentItem = tileMap.getTile(loc).item;
         boolean willStack = ItemInstance.stackable(currentItem, itemToAdd);
-        if (currentItem.getData().id != 0 && !willStack) {
+        if (currentItem.getItem().id != 0 && !willStack) {
             return false;
         }
         changeItem(loc, itemToAdd.add(currentItem.getQuantity()));
@@ -355,6 +357,14 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     public void updateContainerSlot(Container container, int slotIndex) {
         Message message = messageBuilder.updateContainerSlot(container, slotIndex);
         sendTo(message, client -> client.player != null && (client.player.creature.inventory.id == container.id || client.player.equipment.id == container.id));
+        sendTo(message, client -> {
+            if (client.player == null) {
+                return false;
+            }
+            return client.player.creature.inventory.id == container.id
+                    || client.player.equipment.id == container.id
+                    || client.player.openedContainers.contains(container.id);
+        });
     }
 
     public void save() throws IOException {
@@ -363,6 +373,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         for (ConnectionToGridiaClientHandler client : _clients) {
             savePlayer(client.player);
         }
+        containerFactory.saveAll();
         sendToAll(messageBuilder.chat("Saved!", new Coord(0, 0, 0)));
     }
 
@@ -374,42 +385,27 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         }
     }
 
-    public ItemWrapper getItemFrom(Player player, String from, int index) {
-        switch (from) {
-            case "world":
-                Coord location = tileMap.getCoordFromIndex(index);
-                return new WorldItemWrapper(this, location);
-            case "inv":
-                Container container = player.creature.inventory;
+    public ItemWrapper getItemFrom(Player player, int from, int index) {
+        if (from == 0) {
+            Coord location = tileMap.getCoordFromIndex(index);
+            return new WorldItemWrapper(this, location);
+        } else {
+            try {
+                Container container = containerFactory.get(from);
                 return new ContainerItemWrapper(container, index);
-            default:
-                throw new RuntimeException("Invalid source");
-        }
-    }
-
-    public void removeItemAt(Player player, String from, int index, int quantity) {
-        switch (from) {
-            case "world":
-                reduceItemQuantity(tileMap.getCoordFromIndex(index), quantity);
-                break;
-            case "inv":
-                player.creature.inventory.reduceQuantityAt(index, quantity);
-                break;
+            } catch (IOException ex) {
+                throw new RuntimeException("Invalid source", ex);
+            }
         }
     }
 
     public void executeItemUse(
             ConnectionToGridiaClientHandler connection,
             ItemUse use,
-            ItemInstance tool,
-            ItemInstance focus,
-            String source,
-            String dest,
-            int sourceIndex,
-            int destIndex
+            ItemWrapper toolWrapper,
+            ItemWrapper focusWrapper,
+            int destIndex // :(
     ) throws IOException {
-        ItemWrapper toolWrapper = getItemFrom(connection.player, source, sourceIndex);
-        ItemWrapper focusWrapper = getItemFrom(connection.player, dest, destIndex);
         new UsageProcessor(contentManager).processUsage(use, toolWrapper, focusWrapper);
 
         // :(

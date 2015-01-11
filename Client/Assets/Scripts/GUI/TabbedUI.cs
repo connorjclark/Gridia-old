@@ -53,7 +53,9 @@ namespace Gridia
             {
                 _windows.RemoveAt(index);
                 _tabs.RemoveChildAt(index);
+                _tabs.CalculateRect();
                 Dirty = true;
+                _rect.x = Int32.MaxValue;
             }
         }
 
@@ -86,6 +88,16 @@ namespace Gridia
             var tab = _tabs.GetChildAt(index);
             var alpha = (byte)(_windows[index].Visible ? 255 : 100);
             tab.Color = new Color32(255, 255, 255, alpha);
+        }
+
+        public int NumWindows()
+        {
+            return _windows.Count;
+        }
+
+        public GridiaWindow GetWindowAt(int index)
+        {
+            return _windows[index];
         }
 
         class ItemImageRenderable : SpriteRenderable
