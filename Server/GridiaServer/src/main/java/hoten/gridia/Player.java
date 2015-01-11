@@ -96,13 +96,7 @@ public class Player {
             while (inv.size() < invSize) {
                 inv.add(server.contentManager.createItemInstance(0));
             }
-            inv = new ArrayList<>();
-            for (int i = 0; i < 3000; i++) {
-                Item item = server.contentManager.getItem(i);
-                if (item != null && item.itemClass == Item.ItemClass.Container) {
-                    inv.add(server.contentManager.createItemInstance(i));
-                }
-            }
+
             creature.inventory = server.containerFactory.create(ContainerType.Inventory, inv);
             accountDetails.inventoryId = creature.inventory.id;
 

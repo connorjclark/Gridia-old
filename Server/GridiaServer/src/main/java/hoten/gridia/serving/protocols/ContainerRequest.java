@@ -33,7 +33,6 @@ public class ContainerRequest extends JsonMessageHandler<ConnectionToGridiaClien
                     container = server.containerFactory.get(itemData.get("containerId").getAsInt());
                 } else {
                     container = server.containerFactory.create(Container.ContainerType.Other, 20);
-                    container.add(server.contentManager.createItemInstance(1));
                     itemData.addProperty("containerId", container.id);
                     server.sendToAll(server.messageBuilder.chat(player.accountDetails.username + ": Ah! That brand new container smell.", player.creature.location));
                 }
