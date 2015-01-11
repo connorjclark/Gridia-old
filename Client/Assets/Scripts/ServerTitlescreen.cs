@@ -33,6 +33,13 @@ namespace Gridia
             var registerButton = new Button(new Vector2(100, 60), "Register");
             _displayList.AddChild(registerButton);
 
+            var disconnectButton = new Button(new Vector2(210, 60), "Disconnect from server");
+            _displayList.AddChild(disconnectButton);
+            disconnectButton.OnClick = () => {
+                Locator.Get<ConnectionToGridiaServerHandler>().Close();
+                SceneManager.LoadScene("ServerSelection");
+            };
+
             loginButton.OnClick = () =>
             {
                 if (GridiaConstants.ErrorMessage == null)

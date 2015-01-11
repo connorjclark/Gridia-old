@@ -10,7 +10,6 @@ UI
   Show slot number for items 1-10 in inventory
   Move 'next' button in recipe book to far right
   close to desktop
-  disconnect from server at log in screen
 
 Meta
   Set up forums, chatroom

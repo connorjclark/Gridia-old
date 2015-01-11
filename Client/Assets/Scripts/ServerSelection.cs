@@ -58,6 +58,12 @@ namespace Gridia
 
             localServerButton.OnClick = HostLocal;
 
+            // close application
+
+            var closeButton = new Button(Vector2.zero, "Exit Gridia");
+            _displayList.AddChild(closeButton);
+            closeButton.OnClick = Application.Quit;
+
             var cursorTexture = Resources.Load<Texture2D>("GUI Components/cursorHand_grey");
             Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
         }
