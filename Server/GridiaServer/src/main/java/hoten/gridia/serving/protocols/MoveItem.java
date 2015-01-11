@@ -37,7 +37,7 @@ public class MoveItem extends JsonMessageHandler<ConnectionToGridiaClientHandler
         itemToMove.age = sourceItem.age;
         ItemWrapper destItemWrapped = server.getItemFrom(player, dest, destIndex);
 
-        boolean moveSuccessful = destItemWrapped.addItemHere(sourceItem);
+        boolean moveSuccessful = destItemWrapped.addItemHere(itemToMove);
         if (!moveSuccessful) {
             return;
         }

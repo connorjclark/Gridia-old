@@ -9,9 +9,14 @@ UI
   hand uses don't show in recipe book?
   Show slot number for items 1-10 in inventory
   Move 'next' button in recipe book to far right
+  logout -> go to server selection screen
+  close to desktop
+  disconnect from server at log in screen
 
 Meta
   Set up forums, chatroom
+    http://www.liquidweb.com/kb/how-to-install-docker-on-ubuntu-14-04-lts/
+    Discourse
   Press kit
   
 Refactor
@@ -26,6 +31,13 @@ Refactor
 
 Tests, code coverage and cyclomatic complexity
   ContentManager
+
+Misc
+  mute music on minimize
+  fix register buttons
+  commands:
+    !kick
+    !w
 
 Spring semester:
 
