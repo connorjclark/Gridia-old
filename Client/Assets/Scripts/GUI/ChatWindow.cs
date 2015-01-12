@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace Gridia
@@ -52,10 +53,25 @@ ________________________
             SetScrollToMax();
         }
 
-        public void append(String line) 
+        private String ParseBold(String text)
+        {
+            return Regex.Replace(text, @"\*(.*)\*", "<b>$1</b>");
+        }
+
+        private String ParseItalics(String text)
+        {
+            return Regex.Replace(text, @"\*\*(.*)\*\*", "<i>$1</i>");
+        }
+
+        private String ParseRichText(String text)
+        {
+            return ParseBold(ParseItalics(text));
+        }
+
+        public void append(String username, String text) 
         {
             var isAtMaxScrol = ChatArea.MaxScrollY == ChatArea.ScrollPosition.y;
-            ChatArea.Text += line + '\n';
+            ChatArea.Text += String.Format("<color=navy><b>{0} says</b></color>: {1}\n", username, ParseRichText(text));
             var length = ChatArea.Text.Length;
             if (length > _maxChatAreaLength)
             {

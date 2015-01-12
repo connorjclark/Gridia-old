@@ -25,7 +25,7 @@ public class Hit extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
         Creature creature = tile.cre;
         if (creature != null && !creature.belongsToPlayer) {
             if (creature.isFriendly) {
-                connection.send(server.messageBuilder.chat(creature.friendlyMessage, creature.location));
+                connection.send(server.messageBuilder.chat(creature.name, creature.friendlyMessage, creature.location));
             } else {
                 server.hurtCreature(creature, 1);
             }

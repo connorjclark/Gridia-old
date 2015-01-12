@@ -2,6 +2,9 @@ Controls
 
   ctrl + alt to use hand on inventory item
   ctrl + alt + shift to move item in inventory
+  right shift,ctrl,alt...
+  equip item: ctrl + e
+  move selector between containers?
 
 UI
 
@@ -33,6 +36,7 @@ Tests, code coverage and cyclomatic complexity
   ContentManager
 
 Misc
+  drag-item-under-windows bug
   mute music on minimize
   commands:
     !kick

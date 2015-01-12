@@ -34,7 +34,7 @@ public class ContainerRequest extends JsonMessageHandler<ConnectionToGridiaClien
                 } else {
                     container = server.containerFactory.create(Container.ContainerType.Other, 20);
                     itemData.addProperty("containerId", container.id);
-                    server.sendToAll(server.messageBuilder.chat(player.accountDetails.username + ": Ah! That brand new container smell.", player.creature.location));
+                    server.sendToAll(server.messageBuilder.chat(player.accountDetails.username, "Ah! That brand new container smell.", player.creature.location));
                 }
             }
             if (!player.openedContainers.contains(container.id)) {

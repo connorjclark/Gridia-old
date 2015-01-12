@@ -9,15 +9,16 @@ namespace Gridia.Protocol
     {
         protected override void Handle(ConnectionToGridiaServerHandler connection, JObject data)
         {
-            var message = (String)data["msg"];
+            var user = (String)data["user"];
+            var text = (String)data["text"];
             var x = (int)data["loc"]["x"]; // :(
             var y = (int)data["loc"]["y"];
             var z = (int)data["loc"]["z"];
 
             var chat = Locator.Get<ChatWindow>();
-            chat.append(message);
+            chat.append(user, text);
 
-            Locator.Get<GridiaDriver>().floatingTexts.Add(new FloatingText(new Vector3(x, y, z), " " + message));
+            Locator.Get<GridiaDriver>().floatingTexts.Add(new FloatingText(new Vector3(x, y, z), " " + text));
         }
     }
 }

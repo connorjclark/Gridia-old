@@ -135,12 +135,18 @@ public class GridiaMessageToClientBuilder {
                 .build();
     }
 
-    public Message chat(String msg, Coord loc) {
+    public Message chat(String user, String text, Coord loc) {
         return new JsonMessageBuilder()
                 .type("Chat")
-                .set("msg", msg)
+                .set("user", user)
+                .set("text", text)
                 .set("loc", loc)
                 .build();
+    }
+
+    // :(
+    public Message chat(String text, Coord loc) {
+        return chat("WORLD", text, loc);
     }
 
     public Message updateTile(Coord loc, Tile tile) {

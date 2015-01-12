@@ -154,7 +154,7 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
         } else if (msg.startsWith("!")) {
             connection.send(server.messageBuilder.chat("Invalid command.", player.creature.location));
         } else {
-            server.sendToAll(server.messageBuilder.chat(player.creature.name + " says: " + msg, player.creature.location));
+            server.sendToAll(server.messageBuilder.chat(player.creature.name, msg, player.creature.location));
         }
         if (msg.startsWith("!")) {
             connection.send(server.messageBuilder.chat("Command: " + msg, player.creature.location));
