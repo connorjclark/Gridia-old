@@ -1,5 +1,7 @@
+using Serving.FileTransferring;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Gridia
 {
@@ -14,15 +16,29 @@ namespace Gridia
         private readonly List<Monster> monsters;
         private readonly List<GridiaAnimation> animations;
         private readonly List<ItemUse> uses;
+        private readonly FileSystem _fileSystem;
         
-        public ContentManager(String worldName)
+        public ContentManager(String worldName, FileSystem fileSystem)
         {
-            var clientDataFolder = @"worlds\" + worldName + @"\clientdata"; // :(
-            items = new ContentLoader<Item>().Load(clientDataFolder + "/content/items.json");
-            floors = new ContentLoader<Floor>().Load(clientDataFolder + "/content/floors.json");
-            monsters = new ContentLoader<Monster>().Load(clientDataFolder + "/content/monsters.json");
-            animations = new ContentLoader<GridiaAnimation>().Load(clientDataFolder + "/content/animations.json");
-            uses = new ContentLoader<ItemUse>().Load(clientDataFolder + "/content/itemuses.json");
+            _fileSystem = fileSystem;
+            var clientDataFolder = @"worlds/" + worldName + @"/clientdata"; // :(
+            items = Load<Item>(clientDataFolder + "/content/items.json");
+            floors = Load<Floor>(clientDataFolder + "/content/floors.json");
+            monsters = Load<Monster>(clientDataFolder + "/content/monsters.json");
+            animations = Load<GridiaAnimation>(clientDataFolder + "/content/animations.json");
+            uses = Load<ItemUse>(clientDataFolder + "/content/itemuses.json");
+        }
+
+        public ContentManager(String worldName)
+            : this(worldName, new RegularFileSystem())
+        {
+        }
+
+        private List<T> Load<T>(String filePath) where T : new()
+        {
+            var bytes = _fileSystem.ReadAllBytes(filePath);
+            var json = Encoding.UTF8.GetString(bytes);
+            return new ContentLoader<T>().Load(json);
         }
 
         public Item GetItem(int id)

@@ -113,6 +113,25 @@
      <Compile Include="Assets\Scripts\Sector.cs" />
      <Compile Include="Assets\Scripts\ServerSelection.cs" />
      <Compile Include="Assets\Scripts\ServerTitlescreen.cs" />
+     <Compile Include="Assets\Scripts\Serving\BinaryMessageHandler.cs" />
+     <Compile Include="Assets\Scripts\Serving\FileTransferring\FileSystem.cs" />
+     <Compile Include="Assets\Scripts\Serving\FileTransferring\FileTransferringSocketReciever.cs" />
+     <Compile Include="Assets\Scripts\Serving\FileTransferring\RegularFileSystem.cs" />
+     <Compile Include="Assets\Scripts\Serving\JavaBinaryReader.cs" />
+     <Compile Include="Assets\Scripts\Serving\JavaBinaryWriter.cs" />
+     <Compile Include="Assets\Scripts\Serving\JsonMessageBuilder.cs" />
+     <Compile Include="Assets\Scripts\Serving\JsonMessageHandler.cs" />
+     <Compile Include="Assets\Scripts\Serving\Message.cs" />
+     <Compile Include="Assets\Scripts\Serving\MessageHandler.cs" />
+     <Compile Include="Assets\Scripts\Serving\MiscUtil\BigEndianBitConverter.cs" />
+     <Compile Include="Assets\Scripts\Serving\MiscUtil\EndianBinaryReader.cs" />
+     <Compile Include="Assets\Scripts\Serving\MiscUtil\EndianBinaryWriter.cs" />
+     <Compile Include="Assets\Scripts\Serving\MiscUtil\EndianBitConverter.cs" />
+     <Compile Include="Assets\Scripts\Serving\MiscUtil\Endianness.cs" />
+     <Compile Include="Assets\Scripts\Serving\MiscUtil\LittleEndianBitConverter.cs" />
+     <Compile Include="Assets\Scripts\Serving\ReflexionExtension.cs" />
+     <Compile Include="Assets\Scripts\Serving\SocketHandler.cs" />
+     <Compile Include="Assets\Scripts\Serving\SocketHandlerImpl.cs" />
      <Compile Include="Assets\Scripts\SoundPlayer.cs" />
      <Compile Include="Assets\Scripts\States\IdleState.cs" />
      <Compile Include="Assets\Scripts\States\ItemMovementState.cs" />
@@ -125,14 +144,8 @@
      <Compile Include="Assets\Scripts\Utilities.cs" />
      <None Include="Assets\Resources\shaders\Unlit-Alpha.shader" />
      <None Include="Assets\Resources\shaders\Sprites-Diffuse.shader" />
- <Reference Include="MiscUtil">
- <HintPath>E:/Dev/Gridia/Client/Assets/Plugins/MiscUtil.dll</HintPath>
- </Reference>
  <Reference Include="Newtonsoft.Json">
  <HintPath>E:/Dev/Gridia/Client/Assets/Plugins/Newtonsoft.Json.dll</HintPath>
- </Reference>
- <Reference Include="Serving">
- <HintPath>E:/Dev/Gridia/Client/Assets/Plugins/Serving.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

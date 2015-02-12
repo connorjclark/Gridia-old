@@ -166,7 +166,7 @@ namespace Gridia
             globalRect.x = Math.Min(globalRect.x, Screen.width - globalRect.width);
             globalRect.y = Math.Min(globalRect.y, Screen.height - globalRect.height);
 
-            ToolTipRenderable.instance.ToolTip = ToolTip();
+            ToolTipRenderable.instance.ToolTipMessage = ToolTip();
             ToolTipRenderable.instance.Rect = globalRect;
         }
     }

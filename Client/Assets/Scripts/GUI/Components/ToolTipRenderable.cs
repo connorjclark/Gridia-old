@@ -10,7 +10,7 @@ namespace Gridia
     {
         public static ToolTipRenderable instance = new ToolTipRenderable(Vector2.zero);
 
-        public String ToolTip { get; set; }
+        public String ToolTipMessage { get; set; }
 
         private ToolTipRenderable(Vector2 pos)
             : base(pos) { }
@@ -18,9 +18,9 @@ namespace Gridia
         public override void Render()
         {
             base.Render();
-            if (ToolTip != null)
+            if (ToolTipMessage != null)
             {
-                var toolTip = ToolTip;
+                var toolTip = ToolTipMessage;
                 GUI.Window(100, Rect, windowId =>
                 {
                     var width = 200;
@@ -28,7 +28,7 @@ namespace Gridia
                     GUI.Box(new Rect((Rect.width - width) / 2, (Rect.height - height) / 2, width, height), toolTip);
                     GUI.BringWindowToFront(windowId);
                 }, "");
-                ToolTip = null;
+                ToolTipMessage = null;
             }
         }
     }

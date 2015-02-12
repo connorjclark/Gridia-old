@@ -7,15 +7,14 @@ namespace Gridia
 {
     public class ContentLoader<T> where T: new()
     {
-        public List<T> Load(string filepath)
+        public List<T> Load(string json)
         {
-            return LoadFromJSON(filepath);
+            return LoadFromJSON(json);
         }
 
-        private List<T> LoadFromJSON(string filepath)
+        private List<T> LoadFromJSON(string json)
         {
-            var data = File.ReadAllText(filepath, Encoding.UTF8);
-            var results = JsonConvert.DeserializeObject<List<T>>(data);
+            var results = JsonConvert.DeserializeObject<List<T>>(json);
 
             for (int i = 0; i < results.Count; i++)
             {
