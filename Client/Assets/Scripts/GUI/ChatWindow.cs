@@ -26,27 +26,28 @@ namespace Gridia
 
             ChatArea.Text = @"Type below to chat!
 
-Press ENTER to focus/unfocus on the chat.
+For a video demonstration and introduction to Gridia, check out this video on YouTube: https://www.youtube.com/watch?v=zpi_QMDMhW0
 
-Press ESCAPE to hide the chat.
+Press ENTER to focus/unfocus on the chat. Press ESCAPE to hide the chat, and ENTER to bring it back.
 
-To pick up an item, either drag it to your player/inventory,
-Or, use the arrow keys to select, and press SHIFT
+To pick up an item, either drag it to your player/inventory. Or, use the arrow keys to select, and press SHIFT
 
-To move an item, either drag it with your mouse to another location, your player, or your inventory window,
-Or, use the arrow keys to select the item to move, hold ALT+SHIFT, and move the item with the arrow keys
+To move an item, either drag it with your mouse to another location, your player, your inventory window, or a container/container window. Or, use the arrow keys to select the item to move, hold ALT+SHIFT, and move the item with the arrow keys
+
+To open a chest, first make sure that it is not closed. Use your hands on it by highlighting it with the arrow keys and pressing ALT. To view its contents, move into it, or if the container is solid, highlight it and press ALT.
 
 To select an item in your inventory, either press 1,2,3...0 to select one of the first few items,
-Or, hold CTRL and use WASD to move your selection
+Or, hold CTRL and use the arrow keys to move your selection
 
-To use your selected item in the world, use the arrow keys and press SPACE
+To use your selected item in the world, use the arrow keys and press SPACE 
 
 To use your hand in the world, use the arrows keys and press ALT
 
 Press Q to drop a single item of your current selection
 
-To equip an item, double click on it
-Or, press E to equip your currently selected item
+To equip an item, double click on it. Or, press E to equip your currently selected item
+
+Pretty chat: *bold* **italics** ***both***
 ________________________
 
 ";

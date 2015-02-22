@@ -43,7 +43,12 @@ run_command "xcopy Server/GridiaServer/worlds/demo-world/maps/demo-city #{server
 
 puts 'copying server to all platforms but webplayer'
 for_each_platform do |f|
-  run_command "xcopy #{server_dir} #{f} //E //i" unless f.include? "-wp"
+  run_command "xcopy #{server_dir} #{f} //E //i" unless f.include? "gridia-#{build_name}-wp"
+end
+
+puts 'copying instructions.odt'
+for_each_platform do |f|
+  run_command "copy #{base_dir}/instructions.odt #{f}"
 end
 
 puts 'zipping standalone server'
