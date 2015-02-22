@@ -2,6 +2,7 @@ def run_command(command)
   fixed_command = command
     .gsub(%r"([^ /])/", '\1\\')
     .gsub('//', '/')
+  puts fixed_command
   `#{fixed_command}`
 end
 
@@ -24,10 +25,12 @@ win64 = "-buildWindows64Player #{build_dir}/gridia-#{build_name}-win64/client.ex
 osx = "-buildOSXPlayer #{build_dir}/gridia-#{build_name}-osx/client.app"
 linux32 = "-buildLinux32Player #{build_dir}/gridia-#{build_name}-linux32/client.app"
 linux64 = "-buildLinux64Player #{build_dir}/gridia-#{build_name}-linux64/client.app"
+wp = "-buildWebPlayer #{build_dir}/gridia-#{build_name}-wp"
 
 puts 'building clients for each platform'
-unity = '"%PROGRAMFILES%/Unity/Editor/Unity.exe"'
-`#{unity} -batchmode -quit -projectPath #{base_dir}/Client #{win32} #{win64} #{osx} #{linux32} #{linux64}`
+#unity = '"%PROGRAMFILES%/Unity/Editor/Unity.exe"'
+unity = '"E:\Unity-4.6\Editor\Unity.exe"'
+`#{unity} -batchmode -quit -projectPath #{base_dir}/Client #{win32} #{win64} #{osx} #{linux32} #{linux64} #{wp}`
 
 puts 'running maven'
 `cd Server/GridiaServer/ & mvn clean compile assembly:single`
@@ -38,9 +41,9 @@ run_command "echo f | xcopy Server/GridiaServer/splash.txt #{server_dir}/splash.
 run_command "xcopy Server/GridiaServer/worlds/demo-world/clientdata #{server_dir}/worlds/demo-world/clientdata //E //i"
 run_command "xcopy Server/GridiaServer/worlds/demo-world/maps/demo-city #{server_dir}/worlds/demo-world/maps/demo-city //E //i"
 
-puts 'copying server to all platforms'
+puts 'copying server to all platforms but webplayer'
 for_each_platform do |f|
-  run_command "xcopy #{server_dir} #{f} //E //i"
+  run_command "xcopy #{server_dir} #{f} //E //i" unless f.include? "-wp"
 end
 
 puts 'zipping standalone server'

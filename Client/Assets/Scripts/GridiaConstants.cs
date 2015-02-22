@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Serving.FileTransferring;
 
 namespace Gridia
 {
@@ -81,8 +82,18 @@ namespace Gridia
             Locator.Get<ConnectionToGridiaServerHandler>().Close();
             if (!Application.isEditor)
             {
-                System.Diagnostics.Process.GetCurrentProcess().Kill();
+                #if !UNITY_WEBPLAYER
+                    System.Diagnostics.Process.GetCurrentProcess().Kill();
+                #endif
             }
+        }
+
+        public static FileSystem GetFileSystem() {
+            #if UNITY_WEBPLAYER
+                return new FlashUnityBridgeFileSystem();
+            #else
+                return new RegularFileSystem();
+            #endif
         }
     }
 }

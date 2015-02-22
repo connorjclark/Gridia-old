@@ -18,8 +18,8 @@ namespace Gridia
         public int MouseOverSlot { get; private set; }
 
         public int ContainerId { get; private set; }
-        private List<ItemRenderable> _itemRenderables;
-        private ExtendibleGrid _slots = new ExtendibleGrid(Vector2.zero); // :(
+        protected List<ItemRenderable> _itemRenderables;
+        protected ExtendibleGrid _slots = new ExtendibleGrid(Vector2.zero); // :(
 
         public ContainerWindow(Vector2 pos)
             : base(pos, "Container")
@@ -58,7 +58,7 @@ namespace Gridia
             ViewItems(items);
         }
 
-        private void ViewItems(List<ItemInstance> items) 
+        protected virtual void ViewItems(List<ItemInstance> items) 
         {
             _itemRenderables = new List<ItemRenderable>();
 

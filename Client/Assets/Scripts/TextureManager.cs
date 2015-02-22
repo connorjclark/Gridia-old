@@ -1,63 +1,100 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using UnityEngine;
+using Serving.FileTransferring;
 
 namespace Gridia
 {
     public class TextureManager
     {
-        public List<Texture> Floors { get; private set; }
-        public List<Texture> Items { get; private set; }
-        public List<Texture> Creatures { get; private set; }
-        public List<Texture> Templates { get; private set; }
-        public List<Texture> Animations { get; private set; }
-        private List<Texture> Heads { get; set; }
-        private List<Texture> Chests { get; set; }
-        private List<Texture> Legs { get; set; }
-        private List<Texture> Arms { get; set; }
-        private List<Texture> Weapons { get; set; }
-        private List<Texture> Shields { get; set; }
+        public TextureListWrapper Floors { get; private set; }
+        public TextureListWrapper Items { get; private set; }
+        public TextureListWrapper Creatures { get; private set; }
+        public TextureListWrapper Templates { get; private set; }
+        public TextureListWrapper Animations { get; private set; }
+        private TextureListWrapper Heads { get; set; }
+        private TextureListWrapper Chests { get; set; }
+        private TextureListWrapper Legs { get; set; }
+        private TextureListWrapper Arms { get; set; }
+        private TextureListWrapper Weapons { get; set; }
+        private TextureListWrapper Shields { get; set; }
+        public bool DoneLoading { get; private set; }
+        private readonly FileSystem _fileSystem;
 
-        public TextureManager (String worldName)
+        public TextureManager(String worldName)
         {
-            var clientDataFolder = @"worlds\" + worldName + @"\clientdata"; // :(
-            Floors = LoadTextures(clientDataFolder + "/floors/floors", 6); // :(
-            Items = LoadTextures(clientDataFolder + "/items/items", 27);
-            Creatures = LoadTextures(clientDataFolder + "/players/players", 8);
-            Templates = LoadTextures(clientDataFolder + "/templates/template", 1);
-            Animations = LoadTextures(clientDataFolder + "/animations/animation", 2);
-            Heads = LoadTextures(clientDataFolder + "/players/head", 2);
-            Chests = LoadTextures(clientDataFolder + "/players/chest", 1);
-            Legs = LoadTextures(clientDataFolder + "/players/legs", 1);
-            Arms = LoadTextures(clientDataFolder + "/players/arms", 1);
-            Weapons = LoadTextures(clientDataFolder + "/players/weapon", 2);
-            Shields = LoadTextures(clientDataFolder + "/players/shield", 1);
+            _fileSystem = GridiaConstants.GetFileSystem();
+            Initiate(worldName);
         }
 
-        private List<Texture> LoadTextures(String prefix, int numTextures)
-        {
-            var textures = new List<Texture>();
+        private void Initiate(String worldName) {
+            var clientDataFolder = @"worlds\" + worldName + @"\clientdata\"; // :(
+
+            var fallbackTexture = new Texture2D(320, 320);
+            fallbackTexture.filterMode = FilterMode.Point;
+            fallbackTexture.wrapMode = TextureWrapMode.Clamp;
+
+            var lists = new TextureListWrapper[]
+            {
+                Floors = new TextureListWrapper(clientDataFolder + @"floors\floors", fallbackTexture, _fileSystem),
+                Items = new TextureListWrapper(clientDataFolder + @"items\items", fallbackTexture, _fileSystem),
+                Creatures = new TextureListWrapper(clientDataFolder + @"players\players", fallbackTexture, _fileSystem),
+                Templates = new TextureListWrapper(clientDataFolder + @"templates\template", fallbackTexture, _fileSystem),
+                Animations = new TextureListWrapper(clientDataFolder + @"animations\animation", fallbackTexture, _fileSystem),
+                Heads = new TextureListWrapper(clientDataFolder + @"players\head", fallbackTexture, _fileSystem),
+                Chests = new TextureListWrapper(clientDataFolder + @"players\chest", fallbackTexture, _fileSystem),
+                Legs = new TextureListWrapper(clientDataFolder + @"players\legs", fallbackTexture, _fileSystem),
+                Arms = new TextureListWrapper(clientDataFolder + @"players\arms", fallbackTexture, _fileSystem),
+                Weapons = new TextureListWrapper(clientDataFolder + @"players\weapon", fallbackTexture, _fileSystem),
+                Shields = new TextureListWrapper(clientDataFolder + @"players\shield", fallbackTexture, _fileSystem)
+            };
+
+            /*var numTextures = new int[] {
+                6,
+                27,
+                8,
+                1,
+                2,
+                2,
+                1,
+                1,
+                1,
+                2,
+                1
+            };*/ // :(
+
+            /*for (var i = 0; i < lists.Length; i++) {
+                var list = lists[i];
+                var numTexture = numTextures[i];
+                LoadTextures(list.Textures, "", numTexture);
+            }*/
+            DoneLoading = true;
+        }
+
+        private void LoadTextures(List<Texture> into, String prefix, int numTextures) {
             for (var i = 0; i < numTextures; i++ )
             {
-                byte[] data = File.ReadAllBytes(prefix + i + ".png");
-                var tex = new Texture2D(320, 320);
-                tex.filterMode = FilterMode.Point;
-                tex.wrapMode = TextureWrapMode.Clamp;
-                tex.LoadImage(data);
-                textures.Add(tex);
+                var data = _fileSystem.ReadAllBytes(prefix + i + ".png");
+                MainThreadQueue.Add(() => {
+                    var tex = new Texture2D(320, 320);
+                    tex.filterMode = FilterMode.Point;
+                    tex.wrapMode = TextureWrapMode.Clamp;
+                    tex.LoadImage(data);
+                    into.Add(tex);
+                });
             }
-            return textures;
         }
 
-        private void DrawCreaturePart(Rect rect, List<Texture> textures, int spriteIndex)
+        private void DrawCreaturePart(Rect rect, TextureListWrapper textures, int spriteIndex)
         {
             int textureIndex = spriteIndex / GridiaConstants.SPRITES_IN_SHEET;
             if (textureIndex >= textures.Count)
             {
                 textureIndex = 0;
             }
-            var texture = textures[textureIndex];
+            var texture = textures.GetTexture(textureIndex);
             int textureX = (spriteIndex % GridiaConstants.SPRITES_IN_SHEET) % GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
             int textureY = 9 - (spriteIndex % GridiaConstants.SPRITES_IN_SHEET) / GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
             var texCoords = new Rect(textureX / 10.0f, textureY / 10.0f, 1 / 10.0f, 1 / 10.0f); // :( don't hardcode 10
@@ -86,7 +123,7 @@ namespace Gridia
                 rect.width *= defaultImage.Width;
                 rect.height *= defaultImage.Height;
                 rect.y -= (defaultImage.Height - 1) * GridiaConstants.SPRITE_SIZE * scale;
-                GUI.DrawTextureWithTexCoords(rect, Creatures[spriteId / GridiaConstants.SPRITES_IN_SHEET], texCoords);
+                GUI.DrawTextureWithTexCoords(rect, Creatures.GetTextureForSprite(spriteId), texCoords);
             }
             else if (image is CustomPlayerImage)
             {

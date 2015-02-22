@@ -16,8 +16,12 @@ namespace Gridia.Protocol
             if (!GridiaConstants.VERSION.Equals((String)data["version"]))
             {
                 GridiaConstants.ErrorMessage = "Incompatible client. Client version = " + GridiaConstants.VERSION + ". Server version = " + (String)data["version"] + ". Visit www.hotengames.com for the newest client.";
+                GridiaConstants.ErrorMessageAction = connection.Close;
+            } else
+            {
+                //ServerSelection.connectedWaitHandle.Set(); // :(
+                ServerSelection.connected = true;
             }
-            ServerSelection.connectedWaitHandle.Set(); // :(
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !UNITY_WEBPLAYER
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,7 +21,17 @@ namespace Serving.FileTransferring
 
         public List<String> GetFiles(String directory)
         {
-            return new List<String>(Directory.GetFiles(directory));
+            return new List<String>(Directory.GetFiles(directory, "*", SearchOption.AllDirectories));
+        }
+
+        public List<String> GetFiles(String directory, String searchPattern)
+        {
+            return new List<String>(Directory.GetFiles(directory, searchPattern, SearchOption.AllDirectories));
+        }
+
+        public List<String> GetFiles(String directory, String searchPattern, SearchOption searchOption)
+        {
+            return new List<String>(Directory.GetFiles(directory, searchPattern, searchOption));
         }
 
         public bool Exists(String path)
@@ -31,6 +42,11 @@ namespace Serving.FileTransferring
         public byte[] ReadAllBytes(String path)
         {
             return File.ReadAllBytes(path);
+        }
+
+        public string ReadString(String path)
+        {
+            return File.ReadAllText(path);
         }
 
         public void Read(string path)
@@ -44,3 +60,4 @@ namespace Serving.FileTransferring
         }
     }
 }
+#endif

@@ -35,7 +35,6 @@ public class GridiaGame
         view = new TileMapView(tileMap, Locator.Get<TextureManager>(), 1.75f);
         Locator.Provide(view);
         stateMachine.SetState(new IdleState());
-        Locator.Get<SoundPlayer>().QueueRandomSongs();
     }
 
     // :(

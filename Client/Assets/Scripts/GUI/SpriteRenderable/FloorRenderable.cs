@@ -24,7 +24,7 @@ namespace Gridia
         public override Texture GetTexture(int spriteIndex)
         {
             var textures = Locator.Get<TextureManager>(); // :(
-            return textures.Floors[spriteIndex / GridiaConstants.SPRITES_IN_SHEET];
+            return textures.Floors.GetTextureForSprite(spriteIndex);
         }
     }
 }

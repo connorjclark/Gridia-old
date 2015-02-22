@@ -23,7 +23,7 @@ namespace Gridia.Protocol
             }
             else if (type == "Equipment")
             {
-                Locator.Get<EquipmentWindow>().Items = items; // :(
+                Locator.Get<GridiaDriver>().equipmentGui.Set(items, id);
             }
             else
             {

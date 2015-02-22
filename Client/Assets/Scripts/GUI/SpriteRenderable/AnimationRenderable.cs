@@ -33,7 +33,7 @@ namespace Gridia
         public override Texture GetTexture(int spriteIndex)
         {
             var textures = Locator.Get<TextureManager>(); // :(
-            return textures.Animations[spriteIndex / GridiaConstants.SPRITES_IN_SHEET];
+            return textures.Animations.GetTextureForSprite(spriteIndex);
         }
 
         public void Step(float dt) 

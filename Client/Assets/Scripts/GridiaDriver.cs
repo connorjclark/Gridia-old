@@ -19,6 +19,7 @@ public class GridiaDriver : MonoBehaviour
 
     void Start()
     {
+        MainThreadQueue.Instantiate();
         Locator.Provide(inputManager);
 
         Locator.Provide(this);
@@ -47,15 +48,8 @@ public class GridiaDriver : MonoBehaviour
         Locator.Provide(itemUsePickWindow);
         itemUsePickWindow.ScaleXY = guiScale;
 
-        _game = Locator.Get<GridiaGame>();
-
         Locator.Provide(_contentManager = new ContentManager(GridiaConstants.WORLD_NAME));
         Locator.Provide(_textureManager = new TextureManager(GridiaConstants.WORLD_NAME));
-        _game.Initialize(GridiaConstants.SIZE, GridiaConstants.DEPTH, GridiaConstants.SECTOR_SIZE); // :(
-
-        InitTabbedGui();
-
-        ServerSelection.gameInitWaitHandle.Set();
     }
 
     private RecipeBookWindow _recipeBook;
@@ -94,7 +88,15 @@ public class GridiaDriver : MonoBehaviour
         return new Vector2(relative.x * tileSize, Screen.height - relative.y * tileSize - tileSize);
     }
 
+    bool IsGameReady() {
+        return _contentManager.DoneLoading && _textureManager.DoneLoading && _game != null;
+    }
+
     void OnGUI() {
+        if (!IsGameReady())
+        {
+            return;
+        }
         inputManager.Step();
         tabbedGui.Render();
         tabbedGui.HandleEvents();
@@ -231,11 +233,22 @@ public class GridiaDriver : MonoBehaviour
 
     void Update()
     {
+        if (_contentManager.DoneLoading && _textureManager.DoneLoading && _game == null) {
+            _game = Locator.Get<GridiaGame>();
+            InitTabbedGui();
+            _game.Initialize(GridiaConstants.SIZE, GridiaConstants.DEPTH, GridiaConstants.SECTOR_SIZE); // :(
+            ServerSelection.gameInitWaitHandle.Set();
+        }
+        if (!IsGameReady())
+        {
+            return;
+        }
         if (_game.view.Focus == null)
         {
             return;
         }
-        if (_game.stateMachine != null) {
+        if (_game.stateMachine != null)
+        {
             _game.stateMachine.Step(Time.deltaTime);
         }
         _game.view.Render();
@@ -270,7 +283,7 @@ public class GridiaDriver : MonoBehaviour
         for (int i = tabbedGui.NumWindows() - 1; i >= 0; i--)
         {
             var window = tabbedGui.GetWindowAt(i);
-            if (window is ContainerWindow && window != invGui)
+            if (window is ContainerWindow && window != invGui && window != equipmentGui)
             {
                 tabbedGui.Remove(window);
             }

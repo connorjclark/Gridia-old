@@ -14,7 +14,15 @@ namespace Gridia.Protocol
             int quantity = (int)data["quantity"];
 
             var itemInstance = Locator.Get<ContentManager>().GetItem(item).GetInstance(quantity);
-            Locator.Get<GridiaDriver>().GetOpenContainerWithId(id).SetItemAt(index, itemInstance);
+            var container = Locator.Get<GridiaDriver>().GetOpenContainerWithId(id);
+            if (container != null) 
+            {
+                container.SetItemAt(index, itemInstance);
+            }
+            else
+            {
+                UnityEngine.Debug.Log("Null contianer ....");
+            }
         }
     }
 }

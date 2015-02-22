@@ -135,7 +135,7 @@ namespace Gridia
                         {
                             var templateId = dataIndex + 3;
                             var typeToMatch = templateId == 0 ? 1 : 0;
-                            textureForThisData = _textureManager.Templates[0];
+                            textureForThisData = _textureManager.Templates.GetTexture(0);
                             dataIndex = UseTemplate(templateId, typeToMatch, x + positionX, y + positionY, positionZ);
                         }
                         else
@@ -310,8 +310,8 @@ namespace Gridia
                 },
                 data =>
                 {
-                    if (data / 100 >= _textureManager.Floors.Count) Debug.Log(data);
-                 return   _textureManager.Floors[data / 100];
+                    //if (data / 100 >= _textureManager.Floors.Count) Debug.Log(data); // :(
+                    return _textureManager.Floors.GetTextureForSprite(data);
                 }
             ));
 
@@ -328,7 +328,7 @@ namespace Gridia
                     int frame = (int)((Time.time * 6) % animations.Length);//smell :(
                     return animations[frame];
                 },
-                data => _textureManager.Items[data / 100],
+                data => _textureManager.Items.GetTextureForSprite(data),
                 tile =>
                 {
                     if (tile.Item.Item.Name.Contains("Cut"))
