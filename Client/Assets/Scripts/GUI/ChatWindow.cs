@@ -64,15 +64,19 @@ ________________________
 
         private void SendChatMessage(String message)
         {
-            if (message.Length <= 200)
+            if (!RichText.HtmlIsValid(message))
             {
-                Locator.Get<ConnectionToGridiaServerHandler>().Chat(message);
-                ChatInput.Text = "";
+                GridiaConstants.ErrorMessage = "Invalid html.";
+                return;
             }
-            else
+            if (message.Length > 200)
             {
                 GridiaConstants.ErrorMessage = "Message is " + message.Length + " characters long. Max is 200.";
+                return;
             }
+
+            Locator.Get<ConnectionToGridiaServerHandler>().Chat(message);
+            ChatInput.Text = "";
         }
 
         private void SetScrollToMax() 

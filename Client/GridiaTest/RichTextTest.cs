@@ -1,8 +1,5 @@
-﻿using System;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Gridia;
-using JsonDotNet.Extras.CustomConverters;
 
 namespace GridiaTest
 {
@@ -66,26 +63,17 @@ namespace GridiaTest
             Assert.AreEqual("*bold* **italics** ***both***", _richText.ToString());
         }
 
-        private bool HtmlIsValid(String html)
-        {
-            var numOpeningBoldTags = html.Split(new[] { "<b>" }, StringSplitOptions.None).Length;
-            var numClosingBoldTags = html.Split(new[] { "</b>" }, StringSplitOptions.None).Length;
-            var numOpeningItalicsTags = html.Split(new[] { "<i>" }, StringSplitOptions.None).Length;
-            var numClosingItalicsTags = html.Split(new[] { "</i>" }, StringSplitOptions.None).Length;
-            return numOpeningBoldTags == numClosingBoldTags && numOpeningItalicsTags == numClosingItalicsTags;
-        }
-
         [TestMethod]
         public void ValidHtml()
         {
-            Assert.IsTrue(HtmlIsValid("<b>This is <i>a</i> test</b>"));
-            Assert.IsTrue(HtmlIsValid("<b>This is \n<i>a\n</i> test</b>"));
+            Assert.IsTrue(RichText.HtmlIsValid("<b>This is <i>a</i> test</b>"));
+            Assert.IsTrue(RichText.HtmlIsValid("<b>This is \n<i>a\n</i> test</b>"));
         }
 
         [TestMethod]
         public void InvalidHtml()
         {
-            Assert.IsFalse(HtmlIsValid("<b>This is <i>a test</b>"));
+            Assert.IsFalse(RichText.HtmlIsValid("<b>This is <i>a test</b>"));
         }
 
         [TestMethod]
@@ -96,7 +84,7 @@ namespace GridiaTest
             {
                 _richText.Append("*This long string should have a high chance of getting cut off somewhere in the middle*");
             }
-            Assert.IsTrue(HtmlIsValid(_richText.ToString()));
+            Assert.IsTrue(RichText.HtmlIsValid(_richText.ToString()));
         }
     }
 }

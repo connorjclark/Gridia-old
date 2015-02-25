@@ -8,6 +8,15 @@ namespace Gridia
 {
     public class RichText
     {
+        public static bool HtmlIsValid(String html)
+        {
+            var numOpeningBoldTags = html.Split(new[] { "<b>" }, StringSplitOptions.None).Length;
+            var numClosingBoldTags = html.Split(new[] { "</b>" }, StringSplitOptions.None).Length;
+            var numOpeningItalicsTags = html.Split(new[] { "<i>" }, StringSplitOptions.None).Length;
+            var numClosingItalicsTags = html.Split(new[] { "</i>" }, StringSplitOptions.None).Length;
+            return numOpeningBoldTags == numClosingBoldTags && numOpeningItalicsTags == numClosingItalicsTags;
+        }
+
         public int MaxLength { get; set; }
         private String _text;
         private readonly Queue<String> _entries = new Queue<String>(); 
