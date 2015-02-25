@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace Gridia
@@ -12,19 +8,21 @@ namespace Gridia
     {
         public TextField ChatInput { get; private set; }
         private TextArea ChatArea { get; set; }
-        private int _maxChatAreaLength = 5000;
 
         public ChatWindow(Vector2 pos)
             : base(pos, "Chat")
         {
-            ChatArea = new TextArea(Vector2.zero, 150, 125);
+            ChatArea = new TextArea(Vector2.zero, 150, 125) {MaxLength = 500};
             AddChild(ChatArea);
 
-            ChatInput = new TextField(new Vector2(0, ChatArea.Height + 10), "ChatInput", 150, 30);
-            ChatInput.OnEnter = SendChatMessage;
+            ChatInput = new TextField(new Vector2(0, ChatArea.Height + 10), "ChatInput", 150, 30)
+            {
+                OnEnter = SendChatMessage
+            };
             AddChild(ChatInput);
 
-            ChatArea.Text = @"Type below to chat!
+            // :(
+            ChatArea.Append(@"Type below to chat!
 
 For a video demonstration and introduction to Gridia, check out this video on YouTube: https://www.youtube.com/watch?v=zpi_QMDMhW0
 
@@ -47,38 +45,18 @@ Press Q to drop a single item of your current selection
 
 To equip an item, double click on it. Or, press E to equip your currently selected item
 
-Pretty chat: *bold* **italics** ***both***
+Pretty chat: \*bold\* \*\*italics\*\* \*\*\*both\*\*\*
 ________________________
 
-";
+");
             SetScrollToMax();
-        }
-
-        private String ParseBold(String text)
-        {
-            return Regex.Replace(text, @"\*(.*)\*", "<b>$1</b>");
-        }
-
-        private String ParseItalics(String text)
-        {
-            return Regex.Replace(text, @"\*\*(.*)\*\*", "<i>$1</i>");
-        }
-
-        private String ParseRichText(String text)
-        {
-            return ParseBold(ParseItalics(text));
         }
 
         public void append(String username, String text) 
         {
-            var isAtMaxScrol = ChatArea.MaxScrollY == ChatArea.ScrollPosition.y;
-            ChatArea.Text += String.Format("<color=navy><b>{0} says</b></color>: {1}\n", username, ParseRichText(text));
-            var length = ChatArea.Text.Length;
-            if (length > _maxChatAreaLength)
-            {
-                ChatArea.Text = ChatArea.Text.Substring(length - _maxChatAreaLength, _maxChatAreaLength);
-            }
-            if (isAtMaxScrol)
+            var isAtMaxScroll = ChatArea.MaxScrollY == ChatArea.ScrollPosition.y;
+            ChatArea.Append(String.Format("<color=navy><b>{0} says</b></color>: {1}\n", username, text));
+            if (isAtMaxScroll)
             {
                 SetScrollToMax();
             }
