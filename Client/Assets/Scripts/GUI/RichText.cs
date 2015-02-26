@@ -46,12 +46,12 @@ namespace Gridia
 
         private String ParseBold(String text)
         {
-            return Regex.Replace(text, @"(?<!\\)\*(.*)(?<!\\)\*", "<b>$1</b>");
+            return Regex.Replace(text, @"(?<!\\)\*(.+?)(?<!\\)\*", "<b>$1</b>");
         }
 
         private String ParseItalics(String text)
         {
-            return Regex.Replace(text, @"\*\*(.*)\*\*", "<i>$1</i>");
+            return Regex.Replace(text, @"\*\*(.+?)\*\*", "<i>$1</i>");
         }
 
         private String UnescapeAsterisk(String text)

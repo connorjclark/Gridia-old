@@ -22,10 +22,24 @@ namespace GridiaTest
         }
 
         [TestMethod]
+        public void MultipleBoldParsing()
+        {
+            _richText.Append("Shrek is *love*, Shrek is *life*");
+            Assert.AreEqual("Shrek is <b>love</b>, Shrek is <b>life</b>", _richText.ToString());
+        }
+
+        [TestMethod]
         public void ItalicsParsing()
         {
             _richText.Append("Shrek is **life**");
             Assert.AreEqual("Shrek is <i>life</i>", _richText.ToString());
+        }
+
+        [TestMethod]
+        public void MultipleItalicsParsing()
+        {
+            _richText.Append("Shrek is **love**, Shrek is **life**");
+            Assert.AreEqual("Shrek is <i>love</i>, Shrek is <i>life</i>", _richText.ToString());
         }
 
         [TestMethod]
