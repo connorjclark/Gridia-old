@@ -55,7 +55,7 @@ ________________________
             SetScrollToMax();
         }
 
-        public void append(String username, String text) 
+        public void Append(String username, String text) 
         {
             Append(String.Format("<color=navy><b>{0} says</b></color>: {1}", username, text));
         }
