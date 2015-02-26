@@ -36,6 +36,7 @@ To pick up an item, either drag it to your player/inventory. Or, use the arrow k
 To move an item, either drag it with your mouse to another location, your player, your inventory window, or a container/container window. Or, use the *arrow keys* to select the item to move, hold *ALT+SHIFT*, and move the item with the *arrow keys*
 
 To open a chest, first make sure that it is not closed. Use your hands on it by highlighting it with the *arrow keys* and pressing *ALT*. To view its contents, move into it, or if the container is solid, highlight it and press *ALT*.
+When you have multiple containers open, press *TAB* to change the container focus.
 
 To select an item in your inventory, either press 1,2,3...0 to select one of the first few items,
 Or, hold *CTRL* and use the *arrow keys* to move your selection
@@ -50,7 +51,6 @@ To equip an item, *double click* on it. Or, press *E* to equip your currently se
 
 Pretty chat: \*bold\* \*\*italics\*\* \*\*\*both\*\*\*
 ________________________
-
 ";
             SetScrollToMax();
         }

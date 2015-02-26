@@ -18,6 +18,19 @@ namespace Gridia
         public int MouseOverSlot { get; private set; }
 
         public int ContainerId { get; private set; }
+
+        public bool ShowSelected
+        {
+            get { return _slots.ShowSelected; }
+            set { _slots.ShowSelected = value; }
+        }
+
+        public Color SelectedColor
+        {
+            get { return _slots.SelectedColor; }
+            set { _slots.SelectedColor = value; }
+        }
+
         protected List<ItemRenderable> _itemRenderables;
         protected ExtendibleGrid _slots = new ExtendibleGrid(Vector2.zero); // :(
 
@@ -63,7 +76,8 @@ namespace Gridia
             _itemRenderables = new List<ItemRenderable>();
 
             _slots.RemoveAllChildren();
-            for (int i = 0; i < items.Count; i++)
+            ShowSelected = false;
+            for (var i = 0; i < items.Count; i++)
             {
                 var itemRend = new ItemRenderable(Vector2.zero, items[i]);
                 var slotIndex = i;

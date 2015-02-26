@@ -42,6 +42,11 @@ namespace Gridia
                 return;
             }
 
+            if (Input.GetKeyUp(KeyCode.Tab))
+            {
+                _driver.MoveSelectedContainerToNext();
+            }
+
             var wasdKeysUp = _inputManager.Get4DirectionalInputUp();
             var wasdKeys = _inputManager.Get4DirectionalInput();
             if (wasdKeysUp != Vector3.zero)
@@ -75,7 +80,13 @@ namespace Gridia
                     _driver.invGui.SlotSelectedX += (int)arrowKeysUp.x;
                     _driver.invGui.SlotSelectedY += (int)-arrowKeysUp.y;
                     _driver.invGui.SetWindowNameToCurrentSelection();
-                } else {
+                } else if (_driver.SelectedContainer != null)
+                {
+                    _driver.SelectedContainer.SlotSelectedX += (int)arrowKeysUp.x;
+                    _driver.SelectedContainer.SlotSelectedY -= (int)arrowKeysUp.y;
+                }
+                else
+                {
                     _game.SelectorDelta += arrowKeysUp;
                     _game.hideSelector = false;
                 }

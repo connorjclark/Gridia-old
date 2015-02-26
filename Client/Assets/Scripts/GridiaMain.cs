@@ -27,6 +27,7 @@ public class GridiaGame
 
     public bool hideSelector = true;
     public bool isConnected;
+    private GridiaDriver _driver;
 
     public void Initialize(int size, int depth, int sectorSize) {
         Locator.Provide(stateMachine);
@@ -35,13 +36,14 @@ public class GridiaGame
         view = new TileMapView(tileMap, Locator.Get<TextureManager>(), 1.75f);
         Locator.Provide(view);
         stateMachine.SetState(new IdleState());
+        _driver = Locator.Get<GridiaDriver>();
     }
 
     // :(
     public void InitAdminWindowTab()
     {
         var adminWindow = new AdminWindow(Vector2.zero);
-        Locator.Get<GridiaDriver>().tabbedGui.Add(10, adminWindow, false);
+        _driver.tabbedGui.Add(10, adminWindow, false);
     }
 
     public Vector3 GetSelectorCoord()
@@ -49,6 +51,7 @@ public class GridiaGame
         return GetSelectorCoord(SelectorDelta);
     }
 
+    // :(
     public Vector3 GetSelectorCoord(Vector3 sDelta)
     {
         return view.FocusPosition + sDelta + new Vector3(view.width / 2, view.height / 2);
@@ -63,35 +66,56 @@ public class GridiaGame
 
     public void DropItemAtSelection() 
     {
-        DropItemAt(view.Focus.Position + SelectorDelta);
+        if (_driver.SelectedContainer == null)
+        {
+            DropItemAt(view.Focus.Position + SelectorDelta);
+        }
+        else
+        {
+            var destIndex = _driver.SelectedContainer.SlotSelected;
+            var slotSelected = _driver.invGui.SlotSelected;
+            Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(_driver.invGui.ContainerId, _driver.SelectedContainer.ContainerId, slotSelected, destIndex, 1); // :(
+        }
     }
 
     private void DropItemAt(Vector3 dropItemLoc) 
     {
-        var driver = Locator.Get<GridiaDriver>();
         var destIndex = Locator.Get<TileMap>().ToIndex(dropItemLoc);
-        var slotSelected = driver.invGui.SlotSelected;
-        Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(driver.invGui.ContainerId, 0, slotSelected, destIndex, 1); // :(
+        var slotSelected = _driver.invGui.SlotSelected;
+        Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(_driver.invGui.ContainerId, 0, slotSelected, destIndex, 1); // :(
     }
 
     public void PickUpItemAtSelection() 
     {
-        PickUpItemAt(view.Focus.Position + SelectorDelta);
+        if (_driver.SelectedContainer == null)
+        {
+            PickUpItemAt(view.Focus.Position + SelectorDelta);
+        }
+        else
+        {
+            var pickupItemIndex = _driver.SelectedContainer.SlotSelected;
+            Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(_driver.SelectedContainer.ContainerId, _driver.invGui.ContainerId, pickupItemIndex, -1); // :(
+        }
     }
 
     private void PickUpItemAt(Vector3 pickupItemLoc)
     {
-        var driver = Locator.Get<GridiaDriver>();
         pickupItemLoc = tileMap.Wrap(pickupItemLoc);
         var pickupItemIndex = tileMap.ToIndex(pickupItemLoc);
-        Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(0, driver.invGui.ContainerId, pickupItemIndex, -1); // :(
+        Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(0, _driver.invGui.ContainerId, pickupItemIndex, -1); // :(
     }
 
     public void UseItemAtSelection(int sourceIndex)
     {
-        var driver = Locator.Get<GridiaDriver>();
-        var destIndex = tileMap.ToIndex(GetSelectorCoord());
-        UseItemAt(driver.invGui.ContainerId, sourceIndex, 0, destIndex);
+        if (_driver.SelectedContainer == null)
+        {
+            var destIndex = tileMap.ToIndex(GetSelectorCoord());
+            UseItemAt(_driver.invGui.ContainerId, sourceIndex, 0, destIndex);
+        }
+        else
+        {
+            UseItemAt(_driver.invGui.ContainerId, sourceIndex, _driver.SelectedContainer.ContainerId, _driver.SelectedContainer.SlotSelected);
+        }
     }
 
     private void UseItemAt(int source, int sourceIndex, int dest, int destIndex) 

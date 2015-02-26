@@ -16,7 +16,7 @@ namespace Gridia
                 _uses = value;
                 _useRenderables = new List<ItemRenderable>();
                 Picks.RemoveAllChildren();
-                for (int i = 0; i < value.Count; i++)
+                for (var i = 0; i < value.Count; i++)
                 {
                     var itemToShow = value[i].successTool > 0 ? value[i].successTool : value[i].products[0];
                     var item = Locator.Get<ContentManager>().GetItem(itemToShow).GetInstance(1);
@@ -48,6 +48,7 @@ namespace Gridia
         {
             Resizeable = false;
             AddChild(Picks);
+            Picks.ShowSelected = true;
         }
 
         public void SetWindowNameToCurrentSelection() 

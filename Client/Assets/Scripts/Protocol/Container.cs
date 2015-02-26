@@ -17,17 +17,20 @@ namespace Gridia.Protocol
             var type = (String)data["type"];
             var tabGfxItemId = (int)data["tabGfxItemId"];
 
-            if (type == "Inventory")
+            switch (type)
             {
-                Locator.Get<GridiaDriver>().invGui.Set(items, id);
-            }
-            else if (type == "Equipment")
-            {
-                Locator.Get<GridiaDriver>().equipmentGui.Set(items, id);
-            }
-            else
-            {
-                Locator.Get<GridiaDriver>().AddNewContainer(items, id, tabGfxItemId);
+                case "Inventory":
+                    var invWindow = Locator.Get<GridiaDriver>().invGui;
+                    invWindow.Set(items, id);
+                    invWindow.ShowSelected = true;
+                    invWindow.SelectedColor = new Color32(255, 255, 0, 50);
+                    break;
+                case "Equipment":
+                    Locator.Get<GridiaDriver>().equipmentGui.Set(items, id);
+                    break;
+                default:
+                    Locator.Get<GridiaDriver>().AddNewContainer(items, id, tabGfxItemId);
+                    break;
             }
         }
     }

@@ -10,6 +10,8 @@ namespace Gridia
     {
         public int TilesAcross { get; private set; }
         public int TilesColumn { get { return Mathf.CeilToInt((float)NumChildren / TilesAcross); } }
+        public bool ShowSelected { get; set; }
+        public Color SelectedColor { get; set; }
         public int TileSelected { get; set; }
         public int TileSelectedX
         {
@@ -34,17 +36,17 @@ namespace Gridia
             : base(pos)
         {
             TilesAcross = 10;
+            ShowSelected = false;
+            SelectedColor = new Color32(255, 255, 0, 50);
         }
 
         public override void Render() 
         {
             base.Render();
             // :(
-            if (TileSelected != -1 && TileSelected < NumChildren)
-            {
-                var rect = _children[TileSelected].Rect;
-                GridiaConstants.GUIDrawSelector(rect, new Color32(255, 255, 0, 50)); // :(
-            }
+            if (!ShowSelected || TileSelected == -1 || TileSelected >= NumChildren) return;
+            var rect = _children[TileSelected].Rect;
+            GridiaConstants.GUIDrawSelector(rect, SelectedColor); // :(
         }
 
         public override void AddChild(Renderable child) 

@@ -1,6 +1,7 @@
 ﻿using Gridia;
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json.Utilities;
 using UnityEngine;
 
 public class GridiaDriver : MonoBehaviour
@@ -16,6 +17,7 @@ public class GridiaDriver : MonoBehaviour
     public ItemInstance mouseDownItem = null; // :(
     public InputManager inputManager = new InputManager();
     public List<FloatingText> floatingTexts = new List<FloatingText>();
+    public ContainerWindow SelectedContainer { get; set; }
 
     void Start()
     {
@@ -23,7 +25,7 @@ public class GridiaDriver : MonoBehaviour
         Locator.Provide(inputManager);
 
         Locator.Provide(this);
-        Locator.Provide<SoundPlayer>(GetComponent<SoundPlayer>());
+        Locator.Provide(GetComponent<SoundPlayer>());
         ResizeCamera();
 
         float guiScale = 1.75f;
@@ -280,7 +282,7 @@ public class GridiaDriver : MonoBehaviour
 
     public void RemoveAllOpenContainers()
     {
-        for (int i = tabbedGui.NumWindows() - 1; i >= 0; i--)
+        for (var i = tabbedGui.NumWindows() - 1; i >= 0; i--)
         {
             var window = tabbedGui.GetWindowAt(i);
             if (window is ContainerWindow && window != invGui && window != equipmentGui)
@@ -288,13 +290,18 @@ public class GridiaDriver : MonoBehaviour
                 tabbedGui.Remove(window);
             }
         }
+        if (SelectedContainer != null)
+        {
+            MoveSelectedContainerToNext();
+        }
     }
 
     public void AddNewContainer(List<ItemInstance> items, int id, int tabGfxItemId)
     {
         var numOpenContainers = GetNumberOfOpenContainers();
-        var containerWindow = new ContainerWindow(new Vector2(0, Math.Min(Screen.height - 120, (numOpenContainers - 1) * 120)));
+        var containerWindow = new ContainerWindow(new Vector2(0, Math.Min(Screen.height - 120, (numOpenContainers - 2) * 120)));
         containerWindow.ScaleXY = 1.5f;
+        containerWindow.SelectedColor = new Color32(0, 0, 255, 100);
         containerWindow.Set(items, id);
         tabbedGui.Add(_contentManager.GetItem(tabGfxItemId).Animations[0], containerWindow, true);
     }
@@ -302,7 +309,7 @@ public class GridiaDriver : MonoBehaviour
     public int GetNumberOfOpenContainers()
     {
         var count = 0;
-        for (int i = 0; i < tabbedGui.NumWindows(); i++)
+        for (var i = 0; i < tabbedGui.NumWindows(); i++)
         {
             if (tabbedGui.GetWindowAt(i) is ContainerWindow)
             {
@@ -314,7 +321,7 @@ public class GridiaDriver : MonoBehaviour
 
     private ContainerWindow GetOpenContainerWith(Predicate<ContainerWindow> predicate)
     {
-        for (int i = 0; i < tabbedGui.NumWindows(); i++)
+        for (var i = 0; i < tabbedGui.NumWindows(); i++)
         {
             var window = tabbedGui.GetWindowAt(i);
             if (window is ContainerWindow && predicate(window as ContainerWindow))
@@ -338,6 +345,51 @@ public class GridiaDriver : MonoBehaviour
     public ContainerWindow GetOpenContainerWithId(int id)
     {
         return GetOpenContainerWith(containerWindow => containerWindow.ContainerId == id);
+    }
+
+    // :(
+    public List<ContainerWindow> GetListOfSelectableContainerWindows()
+    {
+        var list = new List<ContainerWindow>();
+        for (var i = 0; i < tabbedGui.NumWindows(); i++)
+        {
+            var window = tabbedGui.GetWindowAt(i);
+            if (window is ContainerWindow && window != invGui && window != equipmentGui)
+            {
+                list.Add(window as ContainerWindow);
+            }
+        }
+        return list;
+    } 
+
+    // :(
+    public void MoveSelectedContainerToNext()
+    {
+        var containers = GetListOfSelectableContainerWindows();
+        ContainerWindow nextContainer;
+        if (SelectedContainer == null && containers.Count != 0)
+        {
+            nextContainer = containers[0];
+            _game.hideSelector = true;
+        }
+        else 
+        {
+            var index = containers.IndexOf(SelectedContainer);
+            nextContainer = index != containers.Count - 1 ? containers[index + 1] : null;
+        }
+        if (SelectedContainer != null)
+        {
+            SelectedContainer.ShowSelected = false;
+        }
+        if (nextContainer != null)
+        {
+            nextContainer.ShowSelected = true;
+        }
+        else
+        {
+            _game.hideSelector = false;
+        }
+        SelectedContainer = nextContainer;
     }
 
     void ResizeCamera()
