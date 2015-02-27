@@ -11,6 +11,7 @@ public class FlashFileSystem : MonoBehaviour
 	public const string SUCCESS = "success";
 	public const string PENDING = "pending";
 	public const string FAILURE = "failure";
+    public const int UNLIMITED_SIZE = 1024*1024*10 + 1;
 
 	private static IDictionary<string, object> _callbacks = new Dictionary<string, object>();
 
@@ -112,6 +113,13 @@ public class FlashFileSystem : MonoBehaviour
 		_callbacks[guid] = callback;
 		Application.ExternalCall("unityBridgeRequestUserToAdjustSharedObjectSettings", guid);
 	}
+
+    public void RequestMinimumSize(int size, Action<string> callback)
+    {
+        var guid = Guid.NewGuid().ToString();
+        _callbacks[guid] = callback;
+        Application.ExternalCall("unityBridgeRequestMinimumSize", size, guid);
+    }
 
 	public void NoArgumentCallback(string guid)
 	{

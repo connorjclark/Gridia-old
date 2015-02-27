@@ -55,3 +55,8 @@ function unityBridgeRequestUserToAdjustSharedObjectSettingsDone(guid) {
   $("#flashDiv").insertAfter("#unityPlayer");
   sendMessageToUnity("NoArgumentCallback", guid);
 }
+
+function unityBridgeRequestMinimumSize(size, guid) {
+  result = bridgeSwf.sharedObjectRequestMinimumSize(size);
+  sendMessageToUnity("StringCallback", guid + "|" + result);
+}

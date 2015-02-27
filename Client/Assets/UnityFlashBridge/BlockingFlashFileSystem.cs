@@ -141,4 +141,23 @@ public class BlockingFlashFileSystem
     _signal.WaitOne();
     return result;
   }
+
+  public void RequestMinimumSize(int size)
+  {
+      var status = FlashFileSystem.FAILURE;
+      MainThreadQueue.Add(() =>
+      {
+          _flashFileSystem.RequestMinimumSize(size, theStatus =>
+          {
+              status = theStatus;
+              _signal.Set();
+          });
+      });
+      _signal.WaitOne();
+
+      if (status == FlashFileSystem.FAILURE || status == FlashFileSystem.PENDING)
+      {
+          EnsureSharedObjectSettingsAreValid();
+      }
+  }
 }

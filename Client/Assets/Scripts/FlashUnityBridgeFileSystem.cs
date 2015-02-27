@@ -18,6 +18,7 @@ public class FlashUnityBridgeFileSystem : FileSystem
     public void InitDirectory(String path)
     {
         _flash.Init(path);
+        RequestMinimumSize(FlashFileSystem.UNLIMITED_SIZE);
     }
 
     public void CreateDirectory(String directory)
@@ -59,8 +60,12 @@ public class FlashUnityBridgeFileSystem : FileSystem
 
     public void Write(string path, byte[] data)
     {
-        UnityEngine.Debug.Log("Write " + path + " data length: " + data.Length);
         _flash.Set(path, data);
+    }
+
+    public void RequestMinimumSize(int size)
+    {
+        _flash.RequestMinimumSize(size);
     }
 }
 #endif
