@@ -88,3 +88,6 @@ containers/
 Players/
 
 bin/
+*.user
+Client/Client-csharp.sln
+Client/Client.sln
