@@ -91,3 +91,5 @@ bin/
 *.user
 Client/Client-csharp.sln
 Client/Client.sln
+Client/Assembly-CSharp-vs.csproj
+Client/Assembly-CSharp.csproj
