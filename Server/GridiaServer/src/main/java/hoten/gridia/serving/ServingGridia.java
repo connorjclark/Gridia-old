@@ -404,19 +404,26 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
             ItemWrapper focusWrapper,
             int destIndex // :(
     ) throws IOException {
-        new UsageProcessor(contentManager).processUsage(use, toolWrapper, focusWrapper);
+        boolean success = new UsageProcessor(contentManager).processUsage(use, toolWrapper, focusWrapper);
 
-        // :(
-        if (use.animation != 0) {
-            Coord loc = tileMap.getCoordFromIndex(destIndex);
-            sendToClientsWithAreaLoaded(messageBuilder.animation(use.animation, loc), destIndex);
-        }
-        if (use.surfaceGround != -1) {
-            Coord loc = tileMap.getCoordFromIndex(destIndex);
-            changeFloor(loc, use.surfaceGround);
-        }
-        if (use.successMessage != null) {
-            connection.send(messageBuilder.chat(use.successMessage, connection.getPlayer().creature.location));
+        if (success) {
+            if (use.animation != 0) {
+                Coord loc = tileMap.getCoordFromIndex(destIndex);
+                sendToClientsWithAreaLoaded(messageBuilder.animation(use.animation, loc), destIndex);
+            }
+            if (use.surfaceGround != -1) {
+                Coord loc = tileMap.getCoordFromIndex(destIndex);
+                changeFloor(loc, use.surfaceGround);
+            }
+            if (use.successMessage != null) {
+                connection.send(messageBuilder.chat(use.successMessage, connection.getPlayer().creature.location));
+            }
+        } else {
+            if (use.failureMessage != null) {
+                connection.send(messageBuilder.chat(use.failureMessage, connection.getPlayer().creature.location));
+            } else {
+                connection.send(messageBuilder.chat("Something went wrong...", connection.getPlayer().creature.location));
+            }
         }
     }
 

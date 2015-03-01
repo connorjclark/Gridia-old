@@ -1,6 +1,8 @@
 package hoten.gridia.content;
 
 import hoten.gridia.ItemWrapper;
+import hoten.gridia.content.Item.ItemClass;
+import hoten.gridia.map.Coord;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,11 +54,59 @@ public class UsageProcessor {
                 tool.addItemToSource(result.products.get(i));
             }
         }
+
+        Item firstResult = result.products.get(0).getItem();
+        if (firstResult.isCave()) {
+            ItemWrapper.WorldItemWrapper focusAsWorld = (ItemWrapper.WorldItemWrapper) focus;
+            if (firstResult.itemClass == ItemClass.Cave_down) {
+                if (focusAsWorld.getItemBelow() == ItemInstance.NONE) {
+                    focusAsWorld.setItemBelow(_contentManager.createItemInstance(981));
+                }
+            } else {
+                if (focusAsWorld.getItemAbove() == ItemInstance.NONE) {
+                    focusAsWorld.setItemAbove(_contentManager.createItemInstance(980));
+                }
+            }
+        }
     }
 
-    public void processUsage(ItemUse usage, ItemWrapper tool, ItemWrapper focus) {
+    private boolean isCaveOrNothing(ItemInstance item) {
+        return item.getItem().isCave() || item == ItemInstance.NONE;
+    }
+
+    private boolean validate(UsageResult result, ItemUse usage, ItemWrapper tool, ItemWrapper focus) {
+        boolean focusIsContainer = focus instanceof ItemWrapper.ContainerItemWrapper;
+        if (focusIsContainer && usage.surfaceGround != -1) {
+            return false;
+        }
+
+        Item firstResult = result.products.get(0).getItem();
+        if (firstResult.isCave()) {
+            if (focusIsContainer) {
+                return false;
+            } else {
+                ItemWrapper.WorldItemWrapper focusAsWorld = (ItemWrapper.WorldItemWrapper) focus;
+                if (firstResult.itemClass == ItemClass.Cave_down) {
+                    if (focusAsWorld.isLowestLevel() || !isCaveOrNothing(focusAsWorld.getItemBelow())) {
+                        return false;
+                    }
+                } else if (firstResult.itemClass == ItemClass.Cave_up) {
+                    if (focusAsWorld.isHighestLevel() || !isCaveOrNothing(focusAsWorld.getItemAbove())) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public boolean processUsage(ItemUse usage, ItemWrapper tool, ItemWrapper focus) {
         UsageResult result = getUsageResult(usage, tool.getItemInstance(), focus.getItemInstance());
-        // todo: validate
-        implementResult(result, tool, focus);
+        boolean success = validate(result, usage, tool, focus);
+        if (success) {
+            implementResult(result, tool, focus);
+        }
+        return success;
     }
 }

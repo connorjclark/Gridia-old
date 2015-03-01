@@ -27,6 +27,10 @@ public class Item {
         return itemClass == ItemClass.Armor || itemClass == ItemClass.Weapon || itemClass == ItemClass.Shield;
     }
 
+    public boolean isCave() {
+        return itemClass == ItemClass.Cave_down || itemClass == ItemClass.Cave_up;
+    }
+
     @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this);

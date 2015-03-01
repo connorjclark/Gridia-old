@@ -45,6 +45,30 @@ public interface ItemWrapper {
         public ItemInstance getItemInstance() {
             return _item;
         }
+
+        public boolean isHighestLevel() {
+            return _location.z == 0;
+        }
+
+        public boolean isLowestLevel() {
+            return _location.z == _server.tileMap.depth - 1;
+        }
+
+        public ItemInstance getItemBelow() {
+            return _server.tileMap.getItem(_location.add(0, 0, 1));
+        }
+
+        public ItemInstance getItemAbove() {
+            return _server.tileMap.getItem(_location.add(0, 0, -1));
+        }
+
+        public void setItemBelow(ItemInstance newItem) {
+            _server.changeItem(_location.add(0, 0, 1), newItem);
+        }
+
+        public void setItemAbove(ItemInstance newItem) {
+            _server.changeItem(_location.add(0, 0, -1), newItem);
+        }
     }
 
     public static class ContainerItemWrapper implements ItemWrapper {
