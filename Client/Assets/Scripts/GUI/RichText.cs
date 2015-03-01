@@ -8,18 +8,21 @@ namespace Gridia
 {
     public class RichText
     {
+        private const String AsteriskLookback = @"(?<!\\)\*";
+        private static readonly String BoldPattern = String.Format("{0}(.+?){0}", AsteriskLookback);
+        private static readonly String ItalicsPattern = String.Format("{0}{0}(.+?){0}{0}", AsteriskLookback);
+        private static readonly String BothPattern = String.Format("{0}{0}{0}(.+?){0}{0}{0}", AsteriskLookback);
+
         public static bool HtmlIsValid(String html)
         {
-            var numOpeningBoldTags = html.Split(new[] { "<b>" }, StringSplitOptions.None).Length;
-            var numClosingBoldTags = html.Split(new[] { "</b>" }, StringSplitOptions.None).Length;
-            var numOpeningItalicsTags = html.Split(new[] { "<i>" }, StringSplitOptions.None).Length;
-            var numClosingItalicsTags = html.Split(new[] { "</i>" }, StringSplitOptions.None).Length;
-            return numOpeningBoldTags == numClosingBoldTags && numOpeningItalicsTags == numClosingItalicsTags;
+            Func<String, int> countTags = tag => html.Split(new[] {tag}, StringSplitOptions.None).Length;
+            Func<String, bool> tagIsBalanced = tag => countTags(tag) == countTags(tag.Insert(1, "/"));
+            return tagIsBalanced("<b>") && tagIsBalanced("<i>") && tagIsBalanced("<color>");
         }
 
         public int MaxLength { get; set; }
         private String _text;
-        private readonly Queue<String> _entries = new Queue<String>(); 
+        private readonly Queue<String> _entries = new Queue<String>();
 
         public RichText()
         {
@@ -46,12 +49,18 @@ namespace Gridia
 
         private String ParseBold(String text)
         {
-            return Regex.Replace(text, @"(?<!\\)\*(.+?)(?<!\\)\*", "<b>$1</b>");
+            return Regex.Replace(text, BoldPattern, "<b>$1</b>");
         }
 
         private String ParseItalics(String text)
         {
-            return Regex.Replace(text, @"\*\*(.+?)\*\*", "<i>$1</i>");
+            return Regex.Replace(text, ItalicsPattern, "<i>$1</i>");
+        }
+
+        // :(
+        private String ParseBoth(String text)
+        {
+            return Regex.Replace(text, BothPattern, "<i><b>$1</b></i>");
         }
 
         private String UnescapeAsterisk(String text)
@@ -61,7 +70,7 @@ namespace Gridia
 
         private String Parse(String text)
         {
-            return UnescapeAsterisk(ParseBold(ParseItalics(text)));
+            return UnescapeAsterisk(ParseBold(ParseItalics(ParseBoth(text))));
         }
 
         public override String ToString()
