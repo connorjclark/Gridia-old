@@ -1,5 +1,17 @@
 [
    {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
       "successMessage":"You cut down the bush.",
       "tool":57,
       "focus":251,
@@ -11846,26 +11858,109 @@
    {
       "successMessage":"You fill the bucket with water.",
       "tool":1120,
-      "focus":557,
+      "focus":0,
+      "focusQuantityConsumed":0,
       "successTool":1121,
       "products":[
-         556,
-         555,
-         554,
-         553,
-         552,
-         551,
-         550,
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
+      "successMessage":"You fill the bucket with water.",
+      "tool":1120,
+      "focus":550,
+      "successTool":1121,
+      "products":[
          558
       ],
       "quantities":[
-         1,
-         1,
-         1,
-         1,
-         1,
-         1,
-         1,
+         1
+      ]
+   },
+   {
+      "successMessage":"You fill the bucket with water.",
+      "tool":1120,
+      "focus":551,
+      "successTool":1121,
+      "products":[
+         550
+      ],
+      "quantities":[
+         1
+      ]
+   },
+   {
+      "successMessage":"You fill the bucket with water.",
+      "tool":1120,
+      "focus":552,
+      "successTool":1121,
+      "products":[
+         551
+      ],
+      "quantities":[
+         1
+      ]
+   },
+   {
+      "successMessage":"You fill the bucket with water.",
+      "tool":1120,
+      "focus":553,
+      "successTool":1121,
+      "products":[
+         552
+      ],
+      "quantities":[
+         1
+      ]
+   },
+   {
+      "successMessage":"You fill the bucket with water.",
+      "tool":1120,
+      "focus":554,
+      "successTool":1121,
+      "products":[
+         553
+      ],
+      "quantities":[
+         1
+      ]
+   },
+   {
+      "successMessage":"You fill the bucket with water.",
+      "tool":1120,
+      "focus":555,
+      "successTool":1121,
+      "products":[
+         554
+      ],
+      "quantities":[
+         1
+      ]
+   },
+   {
+      "successMessage":"You fill the bucket with water.",
+      "tool":1120,
+      "focus":556,
+      "successTool":1121,
+      "products":[
+         555
+      ],
+      "quantities":[
+         1
+      ]
+   },
+   {
+      "successMessage":"You fill the bucket with water.",
+      "tool":1120,
+      "focus":557,
+      "successTool":1121,
+      "products":[
+         556
+      ],
+      "quantities":[
          1
       ]
    },
@@ -13014,11 +13109,35 @@
       ]
    },
    {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
       "successMessage":"You recharge the jewelry.",
       "tool":1119,
       "focus":1890,
       "focusQuantityConsumed":0,
       "successTool":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
       "products":[
 
       ],
@@ -13040,11 +13159,35 @@
       ]
    },
    {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
       "successMessage":"You recharge the jewelry.",
       "tool":1119,
       "focus":377,
       "focusQuantityConsumed":0,
       "successTool":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
       "products":[
 
       ],
@@ -13066,11 +13209,35 @@
       ]
    },
    {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
       "successMessage":"You recharge the jewelry.",
       "tool":1119,
       "focus":379,
       "focusQuantityConsumed":0,
       "successTool":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
       "products":[
 
       ],
@@ -13092,11 +13259,35 @@
       ]
    },
    {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
       "successMessage":"You recharge the jewelry.",
       "tool":1119,
       "focus":789,
       "focusQuantityConsumed":0,
       "successTool":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
       "products":[
 
       ],
@@ -13118,11 +13309,35 @@
       ]
    },
    {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
       "successMessage":"You recharge the jewelry.",
       "tool":1119,
       "focus":791,
       "focusQuantityConsumed":0,
       "successTool":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
       "products":[
 
       ],
@@ -13144,11 +13359,35 @@
       ]
    },
    {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
       "successMessage":"You recharge the jewelry.",
       "tool":1119,
       "focus":793,
       "focusQuantityConsumed":0,
       "successTool":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
       "products":[
 
       ],
@@ -13170,11 +13409,35 @@
       ]
    },
    {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
       "successMessage":"You recharge the jewelry.",
       "tool":1119,
       "focus":2220,
       "focusQuantityConsumed":0,
       "successTool":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
       "products":[
 
       ],
@@ -13196,11 +13459,35 @@
       ]
    },
    {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
       "successMessage":"You recharge the jewelry.",
       "tool":1119,
       "focus":796,
       "focusQuantityConsumed":0,
       "successTool":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
       "products":[
 
       ],
@@ -13222,11 +13509,35 @@
       ]
    },
    {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
       "successMessage":"You recharge the jewelry.",
       "tool":1119,
       "focus":798,
       "focusQuantityConsumed":0,
       "successTool":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
       "products":[
 
       ],
@@ -13248,11 +13559,35 @@
       ]
    },
    {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
       "successMessage":"You recharge the jewelry.",
       "tool":1119,
       "focus":800,
       "focusQuantityConsumed":0,
       "successTool":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
       "products":[
 
       ],
@@ -13274,11 +13609,35 @@
       ]
    },
    {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
       "successMessage":"You recharge the jewelry.",
       "tool":1119,
       "focus":801,
       "focusQuantityConsumed":0,
       "successTool":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
       "products":[
 
       ],
@@ -13300,11 +13659,35 @@
       ]
    },
    {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
       "successMessage":"You recharge the jewelry.",
       "tool":1119,
       "focus":803,
       "focusQuantityConsumed":0,
       "successTool":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
       "products":[
 
       ],
@@ -13326,11 +13709,35 @@
       ]
    },
    {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
       "successMessage":"You recharge the wand.",
       "tool":1119,
       "focus":58,
       "focusQuantityConsumed":0,
       "successTool":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
       "products":[
 
       ],
@@ -13352,11 +13759,35 @@
       ]
    },
    {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
       "successMessage":"You recharge the wand.",
       "tool":1119,
       "focus":446,
       "focusQuantityConsumed":0,
       "successTool":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
       "products":[
 
       ],
@@ -13378,11 +13809,35 @@
       ]
    },
    {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
       "successMessage":"You recharge the wand.",
       "tool":1119,
       "focus":67,
       "focusQuantityConsumed":0,
       "successTool":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
       "products":[
 
       ],
@@ -13404,11 +13859,35 @@
       ]
    },
    {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
       "successMessage":"You recharge the wand.",
       "tool":1119,
       "focus":28,
       "focusQuantityConsumed":0,
       "successTool":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
       "products":[
 
       ],
@@ -13430,11 +13909,35 @@
       ]
    },
    {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
       "successMessage":"You recharge the wand.",
       "tool":1119,
       "focus":869,
       "focusQuantityConsumed":0,
       "successTool":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
       "products":[
 
       ],
@@ -13456,11 +13959,35 @@
       ]
    },
    {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
       "successMessage":"You recharge the wand.",
       "tool":1119,
       "focus":445,
       "focusQuantityConsumed":0,
       "successTool":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
       "products":[
 
       ],
@@ -13482,6 +14009,18 @@
       ]
    },
    {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
       "successMessage":"You recharge the wand.",
       "tool":1119,
       "focus":147,
@@ -13495,11 +14034,35 @@
       ]
    },
    {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
       "successMessage":"You recharge the wand.",
       "tool":1119,
       "focus":77,
       "focusQuantityConsumed":0,
       "successTool":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
       "products":[
 
       ],
@@ -29502,17 +30065,39 @@
       ]
    },
    {
-      "successMessage":"You Get a Mug of Beer.",
-      "tool":1704,
-      "focus":1740,
+      "tool":1068,
+      "focus":1723,
+      "toolQuantityConsumed":0,
       "animation":22,
-      "successTool":1705,
       "products":[
-         1747,
          1698
       ],
       "quantities":[
-         1,
+         1
+      ]
+   },
+   {
+      "successMessage":"You Get a Mug of Beer.",
+      "tool":1704,
+      "focus":3179,
+      "focusQuantityConsumed":0,
+      "successTool":1705,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
+      "successMessage":"You Get a Mug of Beer.",
+      "tool":1704,
+      "focus":1740,
+      "successTool":1705,
+      "products":[
+         1747
+      ],
+      "quantities":[
          1
       ]
    },
@@ -29529,28 +30114,98 @@
       ]
    },
    {
+      "successMessage":"You open the barrel.",
+      "tool":0,
+      "focus":3181,
+      "successTool":560,
+      "products":[
+         1740
+      ],
+      "quantities":[
+         1
+      ]
+   },
+   {
+      "successMessage":"You Get a Mug of Beer",
+      "tool":1704,
+      "focus":1747,
+      "successTool":1705,
+      "products":[
+         1746
+      ],
+      "quantities":[
+         1
+      ]
+   },
+   {
+      "successMessage":"You Get a Mug of Beer",
+      "tool":1704,
+      "focus":1746,
+      "successTool":1705,
+      "products":[
+         1745
+      ],
+      "quantities":[
+         1
+      ]
+   },
+   {
+      "successMessage":"You Get a Mug of Beer",
+      "tool":1704,
+      "focus":1745,
+      "successTool":1705,
+      "products":[
+         1744
+      ],
+      "quantities":[
+         1
+      ]
+   },
+   {
+      "successMessage":"You Get a Mug of Beer",
+      "tool":1704,
+      "focus":1744,
+      "successTool":1705,
+      "products":[
+         1743
+      ],
+      "quantities":[
+         1
+      ]
+   },
+   {
+      "successMessage":"You Get a Mug of Beer",
+      "tool":1704,
+      "focus":1743,
+      "successTool":1705,
+      "products":[
+         1742
+      ],
+      "quantities":[
+         1
+      ]
+   },
+   {
+      "successMessage":"You Get a Mug of Beer",
+      "tool":1704,
+      "focus":1742,
+      "successTool":1705,
+      "products":[
+         1741
+      ],
+      "quantities":[
+         1
+      ]
+   },
+   {
       "successMessage":"You Get a Mug of Beer",
       "tool":1704,
       "focus":1741,
       "successTool":1705,
       "products":[
-         558,
-         1741,
-         1742,
-         1743,
-         1744,
-         1745,
-         1746,
-         1740
+         558
       ],
       "quantities":[
-         1,
-         1,
-         1,
-         1,
-         1,
-         1,
-         1,
          1
       ]
    },
@@ -29679,34 +30334,133 @@
       ]
    },
    {
+      "tool":1121,
+      "focus":549,
+      "successTool":1120,
+      "products":[
+         570
+      ],
+      "quantities":[
+         1
+      ]
+   },
+   {
+      "successMessage":"You close the barrel.",
+      "tool":560,
+      "focus":1752,
+      "successTool":0,
+      "products":[
+         3182
+      ],
+      "quantities":[
+         1
+      ]
+   },
+   {
+      "successMessage":"You open the barrel.",
+      "tool":0,
+      "focus":3182,
+      "successTool":560,
+      "products":[
+         1752
+      ],
+      "quantities":[
+         1
+      ]
+   },
+   {
+      "successMessage":"You Get a chalice of Wine.",
+      "tool":151,
+      "focus":1752,
+      "successTool":150,
+      "products":[
+         1759
+      ],
+      "quantities":[
+         1
+      ]
+   },
+   {
+      "successMessage":"You Get a chalice of Wine",
+      "tool":151,
+      "focus":1759,
+      "successTool":150,
+      "products":[
+         1758
+      ],
+      "quantities":[
+         1
+      ]
+   },
+   {
+      "successMessage":"You Get a chalice of Wine",
+      "tool":151,
+      "focus":1758,
+      "successTool":150,
+      "products":[
+         1757
+      ],
+      "quantities":[
+         1
+      ]
+   },
+   {
+      "successMessage":"You Get a chalice of Wine",
+      "tool":151,
+      "focus":1757,
+      "successTool":150,
+      "products":[
+         1756
+      ],
+      "quantities":[
+         1
+      ]
+   },
+   {
+      "successMessage":"You Get a chalice of Wine",
+      "tool":151,
+      "focus":1756,
+      "successTool":150,
+      "products":[
+         1755
+      ],
+      "quantities":[
+         1
+      ]
+   },
+   {
+      "successMessage":"You Get a chalice of Wine",
+      "tool":151,
+      "focus":1755,
+      "successTool":150,
+      "products":[
+         1754
+      ],
+      "quantities":[
+         1
+      ]
+   },
+   {
+      "successMessage":"You Get a chalice of Wine",
+      "tool":151,
+      "focus":1754,
+      "successTool":150,
+      "products":[
+         1753
+      ],
+      "quantities":[
+         1
+      ]
+   },
+   {
       "successMessage":"You Get a chalice of Wine",
       "tool":151,
       "focus":1753,
       "successTool":150,
       "products":[
-         558,
-         1753,
-         1754,
-         1755,
-         1756,
-         1757,
-         1758,
-         1759,
-         1752,
-         3182,
-         570
+         558
       ],
       "quantities":[
-         1,
-         1,
-         1,
-         1,
-         1,
-         1,
-         1,
-         1,
-         1,
-         1,
          1
       ]
    },
@@ -30069,6 +30823,18 @@
       "focus":119,
       "focusQuantityConsumed":0,
       "successTool":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
       "products":[
 
       ],
@@ -31222,15 +31988,25 @@
       ]
    },
    {
-      "tool":900,
-      "focus":4,
+      "tool":1699,
+      "focus":1698,
+      "focusQuantityConsumed":0,
       "successTool":0,
       "products":[
-         1932,
          1676
       ],
       "quantities":[
-         1,
+         1
+      ]
+   },
+   {
+      "tool":900,
+      "focus":4,
+      "toolQuantityConsumed":0,
+      "products":[
+         1932
+      ],
+      "quantities":[
          1
       ]
    },
@@ -31316,6 +32092,18 @@
       ],
       "quantities":[
          2
+      ]
+   },
+   {
+      "tool":944,
+      "focus":140,
+      "focusQuantityConsumed":0,
+      "successTool":1936,
+      "products":[
+
+      ],
+      "quantities":[
+
       ]
    },
    {
@@ -33644,6 +34432,18 @@
       ]
    },
    {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
       "successMessage":"You set the stone.",
       "tool":1928,
       "focus":3095,
@@ -33707,6 +34507,18 @@
       ]
    },
    {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
       "successMessage":"You recharge the jewelry.",
       "tool":1119,
       "focus":3080,
@@ -33720,11 +34532,35 @@
       ]
    },
    {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
       "successMessage":"You recharge the jewelry.",
       "tool":1119,
       "focus":3060,
       "focusQuantityConsumed":0,
       "successTool":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
+      "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
       "products":[
 
       ],
@@ -35752,6 +36588,18 @@
    },
    {
       "tool":0,
+      "focus":0,
+      "focusQuantityConsumed":0,
+      "toolQuantityConsumed":0,
+      "products":[
+
+      ],
+      "quantities":[
+
+      ]
+   },
+   {
+      "tool":0,
       "focus":2214,
       "focusQuantityConsumed":0,
       "toolQuantityConsumed":0,
@@ -35925,15 +36773,24 @@
    },
    {
       "successMessage":"You spread poison on the weapon.",
+      "tool":3156,
+      "focus":3159,
+      "successTool":3157,
+      "products":[
+         339
+      ],
+      "quantities":[
+         1
+      ]
+   },
+   {
       "tool":3146,
       "focus":339,
       "successTool":0,
       "products":[
-         3159,
-         339
+         3159
       ],
       "quantities":[
-         1,
          1
       ]
    },
