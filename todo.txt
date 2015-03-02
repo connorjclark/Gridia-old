@@ -1,10 +1,19 @@
+Issues to look into
+
+  Sawwing sfx is static-y
+  Player position gets out of sync?
+  freezes when minimized for awhile
+  animations show in top left corner for split seconds
+  issues when walking on edge of map
+  drag-item-under-windows bug
+  unity bridge request md5 hash
+  WavFile - some sounds do not work. Woodcutting plays twice, why?
+
 Controls
 
-  ctrl + alt to use hand on inventory item
-  ctrl + alt + shift to move item in inventory
+  move items between/within containers w/ keyboard
   right shift,ctrl,alt...
   equip item: ctrl + e
-  move selector between containers?
 
 UI
 
@@ -13,6 +22,7 @@ UI
   Show slot number for items 1-10 in inventory
   Move 'next' button in recipe book to far right
   color of quantity labels
+  swap local connect / hotengames
 
 Meta
   Set up forums, chatroom
@@ -21,7 +31,8 @@ Meta
   Press kit
   Tigsource
   /r/indiegames - post imagine cup video
-  
+  .rar, don't .zip
+
 Refactor
   xxxGui -> xxxWindow
   itemusages -> usages
@@ -37,7 +48,6 @@ Tests, code coverage and cyclomatic complexity
   ContentManager
 
 Misc
-  drag-item-under-windows bug
   mute music on minimize
   commands:
     !kick
@@ -90,3 +100,6 @@ sfxr
 Water ripple effect
 speed up music during combat
 browser version
+auto-convert .ogg sounds files
+sparse map structure, procedual generation
+Shearing sheep (Item usages on creatures)
