@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+
 namespace Gridia
 {
     public class ItemInstance
@@ -28,11 +29,6 @@ namespace Gridia
             var quantity = (int)jObject["quantity"];
             return Locator.Get<ContentManager>().GetItem(id).GetInstance(quantity);
         }
-
-        private bool FieldExists(string fieldName, JObject jObject)
-        {
-            return jObject[fieldName] != null;
-        }
     }
 
     public abstract class JsonCreationConverter<T> : JsonConverter
@@ -58,10 +54,10 @@ namespace Gridia
                                          JsonSerializer serializer)
         {
             // Load JObject from stream
-            JObject jObject = JObject.Load(reader);
+            var jObject = JObject.Load(reader);
 
             // Create target object based on JObject
-            T target = Create(objectType, jObject);
+            var target = Create(objectType, jObject);
 
             // Populate the object properties
             serializer.Populate(jObject.CreateReader(), target);

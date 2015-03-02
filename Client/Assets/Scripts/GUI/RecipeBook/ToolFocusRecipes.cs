@@ -1,15 +1,12 @@
-﻿using Gridia;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Gridia
 {
     public class ToolFocusRecipes : ExtendibleGrid
     {
-        private List<ItemUse> _uses;
+        private readonly List<ItemUse> _uses;
         private int _currentSelection;
         private List<ItemRenderable> _products;
 
@@ -18,7 +15,7 @@ namespace Gridia
         {
             _uses = uses;
 
-            var focusItem = Locator.Get<ContentManager>().GetItem(uses[0].focus).GetInstance(1);
+            var focusItem = Locator.Get<ContentManager>().GetItem(uses[0].Focus).GetInstance(1);
             var focus = new ItemRenderable(Vector2.zero, focusItem);
 
             AddChild(new Label(Vector2.zero, "+", true));
@@ -27,11 +24,9 @@ namespace Gridia
 
             if (_uses.Count > 1)
             {
-                var nextButton = new Button(new Vector2(32, 32), ">");
-                nextButton.OnClick = NextSelection;
+                var nextButton = new Button(new Vector2(32, 32), ">") {OnClick = NextSelection};
 
-                var prevButton = new Button(new Vector2(32, 32), "<");
-                prevButton.OnClick = PreviousSelection;
+                var prevButton = new Button(new Vector2(32, 32), "<") {OnClick = PreviousSelection};
 
                 AddChild(prevButton);
                 AddChild(nextButton);
@@ -63,7 +58,7 @@ namespace Gridia
 
             var cm = Locator.Get<ContentManager>();
             var use = _uses[_currentSelection];
-            _products = use.products
+            _products = use.Products
                 .Select(product => cm.GetItem(product).GetInstance(1))
                 .Select(product => new ItemRenderable(Vector2.zero, product))
                 .ToList();

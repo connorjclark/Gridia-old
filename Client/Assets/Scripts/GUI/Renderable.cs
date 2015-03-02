@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Gridia
@@ -11,7 +8,7 @@ namespace Gridia
         public GUISkin Skin { get; set; }
 
         public RenderableContainer Parent { get; set; }
-        protected Rect _rect;
+        protected Rect _rect; // :(
         public Rect Rect
         {
             get 
@@ -166,8 +163,8 @@ namespace Gridia
             globalRect.x = Math.Min(globalRect.x, Screen.width - globalRect.width);
             globalRect.y = Math.Min(globalRect.y, Screen.height - globalRect.height);
 
-            ToolTipRenderable.instance.ToolTipMessage = ToolTip();
-            ToolTipRenderable.instance.Rect = globalRect;
+            ToolTipRenderable.Instance.ToolTipMessage = ToolTip();
+            ToolTipRenderable.Instance.Rect = globalRect;
         }
     }
 }

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using UnityEngine;
 
 namespace Gridia
 {
     public class RecipeBookWindow : GridiaWindow
     {
-        private ExtendibleGrid _toolFocusGrid;
-        private ScrollView _scrollView;
+        private readonly ExtendibleGrid _toolFocusGrid;
+        private readonly ScrollView _scrollView;
 
         public RecipeBookWindow(Vector2 pos, ItemInstance tool) 
             : base(pos, "Recipe Book")
@@ -19,7 +16,7 @@ namespace Gridia
 
             var usesWithTool = Locator.Get<ContentManager>().GetUses(tool);
             usesWithTool
-                .GroupBy(use => use.focus)
+                .GroupBy(use => use.Focus)
                 .ToList()
                 .ForEach(usesWithFocus => {
                     var uses = usesWithFocus.ToList();
@@ -37,11 +34,6 @@ namespace Gridia
             base.Render();
             _toolFocusGrid.SetTilesAcross(1); // :(
             _scrollView.Width = _toolFocusGrid.Width / _toolFocusGrid.TrueScale.x + BorderSize * 2;
-        }
-
-        protected override void Resize()
-        {
-            base.Resize();
         }
     }
 }

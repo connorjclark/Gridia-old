@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Gridia
 {
     // :(
     public class ItemUsePickState : State
     {
-        private ItemUsePickWindow _pickWindow;
+        private readonly ItemUsePickWindow _pickWindow;
         private StateMachine _stateMachine;
 
         public ItemUsePickState(ItemUsePickWindow pickWindow) 

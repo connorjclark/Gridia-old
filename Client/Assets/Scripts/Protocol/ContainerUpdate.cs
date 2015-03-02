@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using Serving;
-using System;
 
 namespace Gridia.Protocol
 {
@@ -8,10 +7,10 @@ namespace Gridia.Protocol
     {
         protected override void Handle(ConnectionToGridiaServerHandler connection, JObject data)
         {
-            var id = (int)data["id"];
-            int index = (int)data["index"];
-            int item = (int)data["item"];
-            int quantity = (int)data["quantity"];
+            var id = (int) data["id"];
+            var index = (int) data["index"];
+            var item = (int) data["item"];
+            var quantity = (int) data["quantity"];
 
             var itemInstance = Locator.Get<ContentManager>().GetItem(item).GetInstance(quantity);
             var container = Locator.Get<GridiaDriver>().GetOpenContainerWithId(id);

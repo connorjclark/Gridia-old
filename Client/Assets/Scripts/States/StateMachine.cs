@@ -1,11 +1,10 @@
-using UnityEngine;
 namespace Gridia
 {
     public abstract class State
     {
         public abstract void Step(StateMachine stateMachine, float dt);
         public virtual void OnGUI() { }
-        protected InputManager _inputManager = Locator.Get<InputManager>();
+        protected InputManager InputManager = Locator.Get<InputManager>();
     }
 
     public class StateMachine

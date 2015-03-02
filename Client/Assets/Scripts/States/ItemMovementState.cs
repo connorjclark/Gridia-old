@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Gridia
 {
     public class ItemMovementState : State
     {
         private Vector3 LocationOfItemToMove { get; set; }
-        public Vector3 _destinationSelectorDelta = Vector3.zero; // :(
+        private Vector3 _destinationSelectorDelta = Vector3.zero; // :(
         public Vector3 DestinationSelectorDelta
         {
             get
@@ -23,8 +19,8 @@ namespace Gridia
                 _destinationSelectorDelta.y = Mathf.Clamp(_destinationSelectorDelta.y, -2, 2);
             }
         }
-        private GridiaDriver _driver; // :( move to State?
-        private GridiaGame _game;
+        private readonly GridiaDriver _driver; // :( move to State?
+        private readonly GridiaGame _game;
 
         public ItemMovementState(Vector3 locationOfItemToMove) 
         {
@@ -35,17 +31,17 @@ namespace Gridia
 
         public override void Step(StateMachine stateMachine, float dt)
         {
-            _game.hideSelector = false;
+            _game.HideSelector = false;
             if (HasMoveBeenConfirmed()) 
             {
                 var destination = _game.GetSelectorCoord(DestinationSelectorDelta);
                 if (destination != LocationOfItemToMove) 
                 {
-                    var sourceIndex = _driver._game.tileMap.ToIndex(LocationOfItemToMove); // :(
-                    var destinationIndex = _driver._game.tileMap.ToIndex(destination);
+                    var sourceIndex = _driver.Game.TileMap.ToIndex(LocationOfItemToMove); // :(
+                    var destinationIndex = _driver.Game.TileMap.ToIndex(destination);
                     Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(0, 0, sourceIndex, destinationIndex);
                 }
-                _game.hideSelector = true;
+                _game.HideSelector = true;
                 stateMachine.SetState(new IdleState());
             }
             else 
@@ -57,8 +53,8 @@ namespace Gridia
         public override void OnGUI() 
         {
             base.OnGUI();
-            var focusPos = _game.view.FocusPosition;
-            var tileSize = 32 * _game.view.Scale;
+            var focusPos = _game.View.FocusPosition;
+            var tileSize = 32 * _game.View.Scale;
             var selectorPos = focusPos + DestinationSelectorDelta;
             var selectorRelativePosition = _driver.GetRelativeScreenPosition(focusPos, selectorPos);
             var selectorRect = new Rect(selectorRelativePosition.x, selectorRelativePosition.y, tileSize, tileSize);
@@ -67,7 +63,7 @@ namespace Gridia
 
         private void MoveDestinationSelector()
         {
-            var arrowKeysUp = _inputManager.Get4DirectionalArrowKeysInputUp();
+            var arrowKeysUp = InputManager.Get4DirectionalArrowKeysInputUp();
             if (arrowKeysUp != Vector3.zero)
             {
                 DestinationSelectorDelta += arrowKeysUp;

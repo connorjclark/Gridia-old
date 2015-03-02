@@ -15,8 +15,8 @@ namespace Gridia.Protocol
             var y = (int)data["loc"]["y"];
             var z = (int)data["loc"]["z"];
 
-            game.tileMap.SetItem(Locator.Get<ContentManager>().GetItem(item).GetInstance(quantity), x, y, z);
-            game.tileMap.SetFloor(floor, x, y, z);
+            game.TileMap.SetItem(Locator.Get<ContentManager>().GetItem(item).GetInstance(quantity), x, y, z);
+            game.TileMap.SetFloor(floor, x, y, z);
         }
     }
 }

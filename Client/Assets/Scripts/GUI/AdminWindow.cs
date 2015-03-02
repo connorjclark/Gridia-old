@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Gridia
 {
     public class AdminWindow : GridiaWindow
     {
-        private BulkViewer _bulkItems;
-        private BulkViewer _bulkFloors;
-        private ContentManager _contentManager;
+        private readonly BulkViewer _bulkItems;
+        private readonly BulkViewer _bulkFloors;
+        private readonly ContentManager _contentManager;
 
         public AdminWindow(Vector2 pos)
             : base(pos, "Admin Control Panel")
@@ -19,15 +16,9 @@ namespace Gridia
 
             _bulkItems = new BulkViewer(
                 Vector2.zero,
-                () =>
-                {
-                    return _contentManager.ItemCount;
-                },
-                (int index) =>
-                {
-                    return new ItemRenderable(Vector2.zero, _contentManager.GetItem(index).GetInstance());
-                },
-                (int index) =>
+                () => _contentManager.ItemCount,
+                index => new ItemRenderable(Vector2.zero, _contentManager.GetItem(index).GetInstance()),
+                index =>
                 {
                     var location = Locator.Get<GridiaGame>().GetSelectorCoord();
                     Locator.Get<ConnectionToGridiaServerHandler>().AdminMakeItem(location, index);
@@ -35,16 +26,10 @@ namespace Gridia
             );
 
             _bulkFloors = new BulkViewer(
-                new Vector2(10 * GridiaConstants.SPRITE_SIZE, 0),
-                () =>
-                {
-                    return _contentManager.FloorCount;
-                },
-                (int index) =>
-                {
-                    return new FloorRenderable(Vector2.zero, index);
-                },
-                (int index) =>
+                new Vector2(10 * GridiaConstants.SpriteSize, 0),
+                () => _contentManager.FloorCount,
+                index => new FloorRenderable(Vector2.zero, index),
+                index =>
                 {
                     var location = Locator.Get<GridiaGame>().GetSelectorCoord();
                     Locator.Get<ConnectionToGridiaServerHandler>().AdminMakeFloor(location, index);
@@ -57,10 +42,10 @@ namespace Gridia
 
         private class BulkViewer : RenderableContainer
         {
-            private ExtendibleGrid _bulk = new ExtendibleGrid(new Vector2(0, 50));
+            private readonly ExtendibleGrid _bulk = new ExtendibleGrid(new Vector2(0, 50));
             private int _currentPage;
-            private int _perPage = 50;
-            private Vector2 vector2;
+            private const int PerPage = 50;
+            private Vector2 _vector2;
 
             public BulkViewer(
                 Vector2 pos,
@@ -72,15 +57,13 @@ namespace Gridia
             {
                 _bulk.TileSelected = -1;
 
-                GetNumElements = getNumElements;
-                GetElement = getElement;
-                OnElementClick = onElementClick;
+                _getNumElements = getNumElements;
+                _getElement = getElement;
+                _onElementClick = onElementClick;
 
-                var prevPage = new Button(Vector2.zero, "Previous");
-                prevPage.OnClick = () => { ShowPage(_currentPage - 1); };
+                var prevPage = new Button(Vector2.zero, "Previous") {OnClick = () => { ShowPage(_currentPage - 1); }};
 
-                var nextPage = new Button(new Vector2(120, 0), "Next");
-                nextPage.OnClick = () => { ShowPage(_currentPage + 1); };
+                var nextPage = new Button(new Vector2(120, 0), "Next") {OnClick = () => { ShowPage(_currentPage + 1); }};
 
                 ShowPage(0);
 
@@ -89,15 +72,15 @@ namespace Gridia
                 AddChild(_bulk);
             }
 
-            private Func<int> GetNumElements;
+            private readonly Func<int> _getNumElements;
 
-            private Func<int, Renderable> GetElement;
+            private readonly Func<int, Renderable> _getElement;
 
-            private Action<int> OnElementClick;
+            private readonly Action<int> _onElementClick;
 
             private void ShowPage(int page)
             {
-                var maxPage = GetNumElements() / _perPage - 1;
+                var maxPage = _getNumElements() / PerPage - 1;
                 if (page == -1)
                 {
                     page = maxPage;
@@ -109,16 +92,16 @@ namespace Gridia
                 _currentPage = page;
 
                 _bulk.RemoveAllChildren();
-                var firstItemToShow = page * _perPage;
-                var lastItemToShow = Math.Min(GetNumElements(), firstItemToShow + _perPage);
+                var firstItemToShow = page * PerPage;
+                var lastItemToShow = Math.Min(_getNumElements(), firstItemToShow + PerPage);
 
-                for (int i = firstItemToShow; i < lastItemToShow; i++)
+                for (var i = firstItemToShow; i < lastItemToShow; i++)
                 {
-                    int elementIndex = i;
-                    var element = GetElement(i);
+                    var elementIndex = i;
+                    var element = _getElement(i);
                     element.OnClick = () =>
                     {
-                        OnElementClick(elementIndex);
+                        _onElementClick(elementIndex);
                     };
                     _bulk.AddChild(element);
                 }

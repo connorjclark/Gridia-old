@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Gridia
 {
     public class ItemUse
     {
-        public int tool;
-        public int focus;
-        public int successTool;
-        public List<int> products;
+        public int Tool;
+        public int Focus;
+        public int SuccessTool;
+        public List<int> Products;
     }
 }

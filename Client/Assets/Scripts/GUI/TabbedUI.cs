@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Gridia
 {
     public class TabbedUI : GridiaWindow
     {
-        private List<GridiaWindow> _windows = new List<GridiaWindow>(); // :(
-        private ExtendibleGrid _tabs = new ExtendibleGrid(Vector2.zero);
+        private readonly List<GridiaWindow> _windows = new List<GridiaWindow>(); // :(
+        private readonly ExtendibleGrid _tabs = new ExtendibleGrid(Vector2.zero);
 
         public TabbedUI(Vector2 pos)
             : base(pos, "Tabs")
@@ -23,7 +21,6 @@ namespace Gridia
         {
             base.Render();
             _windows.ForEach(w => w.Render());
-
         }
 
         public override void HandleEvents()
@@ -38,9 +35,11 @@ namespace Gridia
             {
                 window.Visible = visible;
                 _windows.Add(window);
-                var tab = new ItemImageRenderable(Vector2.zero, tabItemSpriteIndex);
-                tab.ToolTip = () => window.WindowName;
-                tab.OnClick = () => ToggleVisiblity(window);
+                var tab = new ItemImageRenderable(Vector2.zero, tabItemSpriteIndex)
+                {
+                    ToolTip = () => window.WindowName,
+                    OnClick = () => ToggleVisiblity(window)
+                };
                 _tabs.AddChild(tab);
                 SetTabTransparency(_tabs.NumChildren - 1);
                 Dirty = true;
@@ -51,14 +50,12 @@ namespace Gridia
         public void Remove(GridiaWindow window) 
         {
             var index = _windows.IndexOf(window);
-            if (index != -1)
-            {
-                _windows.RemoveAt(index);
-                _tabs.RemoveChildAt(index);
-                _tabs.CalculateRect();
-                Dirty = true;
-                _rect.x = Int32.MaxValue;
-            }
+            if (index == -1) return;
+            _windows.RemoveAt(index);
+            _tabs.RemoveChildAt(index);
+            _tabs.CalculateRect();
+            Dirty = true;
+            _rect.x = Int32.MaxValue;
         }
 
         public void ToggleVisiblity(GridiaWindow window)
@@ -68,11 +65,9 @@ namespace Gridia
 
         public void ToggleVisiblity(int index)
         {
-            if (index < _windows.Count) 
-            {
-                _windows[index].Visible = !_windows[index].Visible;
-                SetTabTransparency(index);
-            }
+            if (index >= _windows.Count) return;
+            _windows[index].Visible = !_windows[index].Visible;
+            SetTabTransparency(index);
         }
 
         public bool MouseOverAny() 
@@ -104,7 +99,7 @@ namespace Gridia
 
         class ItemImageRenderable : SpriteRenderable
         {
-            public int SpriteIndex { get; set; }
+            private int SpriteIndex { get; set; }
 
             public ItemImageRenderable(Vector2 pos, int spriteIndex)
                 : base(pos)

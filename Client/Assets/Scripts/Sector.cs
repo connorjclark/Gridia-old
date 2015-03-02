@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Gridia
+﻿namespace Gridia
 {
     public class Sector
     {
-        private Tile[,] _tiles;
+        private readonly Tile[,] _tiles;
 
         public Sector(Tile[,] tiles) {
             _tiles = tiles;

@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Gridia
 {
     public class ConcurrentDictionary<K, V>
     {
-        private Dictionary<K, V> _dic = new Dictionary<K, V>();
-        private Object _lock = new Object();
+        private readonly Dictionary<K, V> _dic = new Dictionary<K, V>();
+        private readonly Object _lock = new Object();
 
         public V this[K key] { 
             get {

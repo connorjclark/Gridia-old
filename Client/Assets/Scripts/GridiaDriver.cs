@@ -1,179 +1,172 @@
 ﻿using Gridia;
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json.Utilities;
 using UnityEngine;
 
 public class GridiaDriver : MonoBehaviour
 {    
-    public GridiaGame _game; // :(
-    public TextureManager _textureManager; // :(
-    public ContentManager _contentManager; // :(
-    public TabbedUI tabbedGui; // :(
-    public ContainerWindow invGui;
-    public EquipmentWindow equipmentGui;
-    public ChatWindow chatGui;
-    public ItemUsePickWindow itemUsePickWindow;
-    public ItemInstance mouseDownItem = null; // :(
-    public InputManager inputManager = new InputManager();
-    public List<FloatingText> floatingTexts = new List<FloatingText>();
+    public GridiaGame Game; // :(
+    public TextureManager TextureManager; // :(
+    public ContentManager ContentManager; // :(
+    public TabbedUI TabbedGui; // :(
+    public ContainerWindow InvGui;
+    public EquipmentWindow EquipmentGui;
+    public ChatWindow ChatGui;
+    public ItemUsePickWindow ItemUsePickWindow;
+    public ItemInstance MouseDownItem = null; // :(
+    public InputManager InputManager = new InputManager();
+    public List<FloatingText> FloatingTexts = new List<FloatingText>();
     public ContainerWindow SelectedContainer { get; set; }
 
     void Start()
     {
         MainThreadQueue.Instantiate();
-        Locator.Provide(inputManager);
+        Locator.Provide(InputManager);
 
         Locator.Provide(this);
         Locator.Provide(GetComponent<SoundPlayer>());
         ResizeCamera();
 
-        float guiScale = 1.75f;
+        const float guiScale = 1.75f;
 
-        tabbedGui = new TabbedUI(new Vector2(Int32.MaxValue, 0));
-        Locator.Provide(tabbedGui);
-        tabbedGui.ScaleXY = guiScale;
+        TabbedGui = new TabbedUI(new Vector2(Int32.MaxValue, 0));
+        Locator.Provide(TabbedGui);
+        TabbedGui.ScaleXY = guiScale;
 
-        invGui = new ContainerWindow(new Vector2(0, Int32.MaxValue));
-        Locator.Provide(invGui);
-        invGui.ScaleXY = guiScale;
+        InvGui = new ContainerWindow(new Vector2(0, Int32.MaxValue));
+        Locator.Provide(InvGui);
+        InvGui.ScaleXY = guiScale;
 
-        equipmentGui = new EquipmentWindow(new Vector2(0, 0));
-        Locator.Provide(equipmentGui);
-        equipmentGui.ScaleXY = guiScale;
+        EquipmentGui = new EquipmentWindow(new Vector2(0, 0));
+        Locator.Provide(EquipmentGui);
+        EquipmentGui.ScaleXY = guiScale;
 
-        chatGui = new ChatWindow(new Vector2(Int32.MaxValue, Int32.MaxValue));
-        Locator.Provide(chatGui);
-        chatGui.ScaleXY = guiScale;
+        ChatGui = new ChatWindow(new Vector2(Int32.MaxValue, Int32.MaxValue));
+        Locator.Provide(ChatGui);
+        ChatGui.ScaleXY = guiScale;
 
-        itemUsePickWindow = new ItemUsePickWindow(new Vector2(0, 0));
-        Locator.Provide(itemUsePickWindow);
-        itemUsePickWindow.ScaleXY = guiScale;
+        ItemUsePickWindow = new ItemUsePickWindow(new Vector2(0, 0));
+        Locator.Provide(ItemUsePickWindow);
+        ItemUsePickWindow.ScaleXY = guiScale;
 
-        Locator.Provide(_contentManager = new ContentManager(GridiaConstants.WORLD_NAME));
-        Locator.Provide(_textureManager = new TextureManager(GridiaConstants.WORLD_NAME));
+        Locator.Provide(ContentManager = new ContentManager(GridiaConstants.WorldName));
+        Locator.Provide(TextureManager = new TextureManager(GridiaConstants.WorldName));
     }
 
+    // :(
     private RecipeBookWindow _recipeBook;
     public void OpenRecipeBook(ItemInstance item) 
     {
-        if (item.Item.Id != 0) 
+        if (item.Item.Id == 0) return;
+        if (_recipeBook != null) 
         {
-            var rect = new Rect(0, 0, 300, 300);
-            if (_recipeBook != null) 
-            {
-                rect = _recipeBook.Rect;
-                tabbedGui.Remove(_recipeBook);
-            }
-            _recipeBook = new RecipeBookWindow(Vector2.zero, item);
-            _recipeBook.ScaleXY = 1.75f;
-            tabbedGui.Add(2008, _recipeBook, true);
+            TabbedGui.Remove(_recipeBook);
         }
+        _recipeBook = new RecipeBookWindow(Vector2.zero, item) {ScaleXY = 1.75f};
+        TabbedGui.Add(2008, _recipeBook, true);
     }
 
     void InitTabbedGui() 
     {
-        tabbedGui.Add(1221, invGui, true); // :(
-        tabbedGui.Add(15, equipmentGui, false); // :(
-        tabbedGui.Add(147, chatGui, true); // :(
+        TabbedGui.Add(1221, InvGui, true); // :(
+        TabbedGui.Add(15, EquipmentGui, false); // :(
+        TabbedGui.Add(147, ChatGui, true); // :(
 
         var options = new OptionsWindow(Vector2.zero);
         options.X = (Screen.width - options.Width) / 2;
         options.Y = (Screen.height - options.Height) / 2;
-        tabbedGui.Add(0, options, false);
+        TabbedGui.Add(0, options, false);
     }
 
     public Vector2 GetRelativeScreenPosition(Vector3 playerPosition, Vector3 subjectCoord)
     {
-        var tileSize = 32 * _game.view.Scale;
-        var relative = subjectCoord - playerPosition + new Vector3(_game.view.width / 2, _game.view.height / 2);
+        var tileSize = 32 * Game.View.Scale;
+        var relative = subjectCoord - playerPosition + new Vector3(Game.View.Width / 2, Game.View.Height / 2);
         return new Vector2(relative.x * tileSize, Screen.height - relative.y * tileSize - tileSize);
     }
 
     bool IsGameReady() {
-        return _contentManager.DoneLoading && _textureManager.DoneLoading && _game != null;
+        return ContentManager.DoneLoading && TextureManager.DoneLoading && Game != null;
     }
 
+    // :(
     void OnGUI() {
         if (!IsGameReady())
         {
             return;
         }
-        inputManager.Step();
-        tabbedGui.Render();
-        tabbedGui.HandleEvents();
-        if (mouseDownItem != null)
+        InputManager.Step();
+        TabbedGui.Render();
+        TabbedGui.HandleEvents();
+        if (MouseDownItem != null)
         {
             var rect = new Rect((int)Input.mousePosition.x - 16, Screen.height - (int)Input.mousePosition.y - 16, 32, 32);
-            var draggedItem = new ItemRenderable(new Vector2(rect.x, rect.y), mouseDownItem);
-            draggedItem.ToolTip = null;
+            var draggedItem = new ItemRenderable(new Vector2(rect.x, rect.y), MouseDownItem) {ToolTip = null};
             draggedItem.Render();
         }
 
-        if (_game.view.Focus == null)
+        if (Game.View.Focus == null)
         {
             return;
         }
 
         //temp :(
-        var playerZ = (int) _game.view.Focus.Position.z;
-        var focusPos = _game.view.FocusPosition;
-        var tileSize = 32 * _game.view.Scale;
-        foreach (var cre in _game.tileMap.creatures.ValuesToList()) 
+        var playerZ = (int) Game.View.Focus.Position.z;
+        var focusPos = Game.View.FocusPosition;
+        var tileSize = 32 * Game.View.Scale;
+        foreach (var cre in Game.TileMap.Creatures.ValuesToList()) 
         {
             var pos = cre.Position;
             if (playerZ == pos.z)
             {
                 // :(
-                var dx = _game.tileMap.WrappedDistBetweenX(pos, focusPos);
-                var dy = _game.tileMap.WrappedDistBetweenY(pos, focusPos);
+                var dx = Game.TileMap.WrappedDistBetweenX(pos, focusPos);
+                var dy = Game.TileMap.WrappedDistBetweenY(pos, focusPos);
 
                 var rect = new Rect(dx * tileSize, Screen.height - dy * tileSize - tileSize, tileSize, tileSize);
-                _textureManager.DrawCreature(rect, cre, _game.view.Scale);
+                TextureManager.DrawCreature(rect, cre, Game.View.Scale);
                 if (cre.Name.Length > 0)
                 {
-                    var labelRelative = pos - _game.view.FocusPosition; // :(
+                    var labelRelative = pos - Game.View.FocusPosition; // :(
                     var nameLabel = new Label(new Vector2((labelRelative.x + 0.5f) * tileSize, Screen.height - (labelRelative.y + 1.5f) * tileSize), cre.Name, true, true); // :(
                     nameLabel.Render();
                 }
             }
         }
 
-        if (!_game.hideSelector)
+        if (!Game.HideSelector)
         {
-            var selectorPos = focusPos + _game.SelectorDelta;
+            var selectorPos = focusPos + Game.SelectorDelta;
             var selectorRelativePosition = GetRelativeScreenPosition(focusPos, selectorPos);
             var selectorRect = new Rect(selectorRelativePosition.x, selectorRelativePosition.y, tileSize, tileSize);
             GridiaConstants.GUIDrawSelector(selectorRect, new Color32(0, 0, 255, 100));
         }
 
-        foreach (var animation in _game.animations)
+        foreach (var animation in Game.Animations)
         {
             animation.Rect = new Rect(animation.X, animation.Y, tileSize, tileSize); // :(
             animation.Render();
         }
 
-        _game.stateMachine.OnGUI();
+        Game.StateMachine.OnGUI();
 
-        for (int i = 0; i < floatingTexts.Count; i++)
+        for (var i = 0; i < FloatingTexts.Count; i++)
         {
-            var floatingText = floatingTexts[i];
-            if (floatingText.Coord.z == playerZ)
+            var floatingText = FloatingTexts[i];
+            if (floatingText.Coord.z != playerZ) continue;
+            floatingText.Reposition(tileSize, focusPos);
+            floatingText.Tick();
+            floatingText.Render();
+            if (floatingText.Life <= 0)
             {
-                floatingText.Reposition(tileSize, focusPos);
-                floatingText.Tick();
-                floatingText.Render();
-                if (floatingText.Life <= 0)
-                {
-                    floatingTexts.RemoveAt(i);
-                }
+                FloatingTexts.RemoveAt(i);
             }
         }
 
         // :(
-        _game.view.ForEachInView((x, y) =>
+        Game.View.ForEachInView((x, y) =>
         {
-            var tile = _game.tileMap.GetTile(x + (int)focusPos.x, y + (int)focusPos.y, (int)focusPos.z);
+            var tile = Game.TileMap.GetTile(x + (int)focusPos.x, y + (int)focusPos.y, (int)focusPos.z);
             if (tile.Item.Quantity > 1)
             {
                 var labelRect = new Rect((x - focusPos.x % 1) * tileSize, Screen.height - (y - focusPos.y % 1) * tileSize - tileSize, tileSize, tileSize);
@@ -181,85 +174,88 @@ public class GridiaDriver : MonoBehaviour
             }
         });
 
-        var versionLabelSize = GUI.skin.label.CalcSize(new GUIContent(GridiaConstants.VERSION));
-        GUI.Label(new Rect(0, 0, versionLabelSize.x, versionLabelSize.y), GridiaConstants.VERSION);
+        var versionLabelSize = GUI.skin.label.CalcSize(new GUIContent(GridiaConstants.Version));
+        GUI.Label(new Rect(0, 0, versionLabelSize.x, versionLabelSize.y), GridiaConstants.Version);
 
-        ToolTipRenderable.instance.Render();
+        ToolTipRenderable.Instance.Render();
 
         GridiaConstants.DrawErrorMessage();
 
-        if (Event.current.type == EventType.KeyDown)
+        switch (Event.current.type)
         {
-            if (Event.current.keyCode == KeyCode.PageDown)
-            {
-                _game.view.Scale += 0.25f;
-            }
-            else if (Event.current.keyCode == KeyCode.PageUp)
-            {
-                _game.view.Scale = Math.Max(0.5f, _game.view.Scale - 0.25f);
-            }
-        }
-        if (Event.current.type == EventType.KeyUp)
-        {
-            if (Event.current.keyCode == KeyCode.Return)
-            {
-                if (GUI.GetNameOfFocusedControl() == "ChatInput")
+            case EventType.KeyDown:
+                switch (Event.current.keyCode)
                 {
-                    GUI.FocusControl("");
+                    case KeyCode.PageDown:
+                        Game.View.Scale += 0.25f;
+                        break;
+                    case KeyCode.PageUp:
+                        Game.View.Scale = Math.Max(0.5f, Game.View.Scale - 0.25f);
+                        break;
                 }
-                else
+                break;
+            case EventType.KeyUp:
+                switch (Event.current.keyCode)
                 {
-                    chatGui.Visible = true;
-                    GUI.FocusControl("ChatInput");
+                    case KeyCode.Return:
+                        if (GUI.GetNameOfFocusedControl() == "ChatInput")
+                        {
+                            GUI.FocusControl("");
+                        }
+                        else
+                        {
+                            ChatGui.Visible = true;
+                            GUI.FocusControl("ChatInput");
+                        }
+                        break;
+                    case KeyCode.Escape:
+                        ChatGui.Visible = false;
+                        break;
                 }
-            }
-            else if (Event.current.keyCode == KeyCode.Escape)
-            {
-                chatGui.Visible = false;
-            }
+                break;
         }
     }
 
-    public Vector2 getMouse()
+    public Vector2 GetMouse()
     {
         var pos = Input.mousePosition;
         pos.y = Screen.height - pos.y;
         return pos;
     }
 
-    public bool isMouseOverGUI() 
+    public bool IsMouseOverGui() 
     {
-        var mouse = getMouse();
-        return tabbedGui.MouseOverAny() || tabbedGui.ResizingAny();
+        var mouse = GetMouse();
+        return TabbedGui.MouseOverAny() || TabbedGui.ResizingAny();
     }
 
     void Update()
     {
-        if (_contentManager.DoneLoading && _textureManager.DoneLoading && _game == null) {
-            _game = Locator.Get<GridiaGame>();
+        if (ContentManager.DoneLoading && TextureManager.DoneLoading && Game == null) {
+            Game = Locator.Get<GridiaGame>();
             InitTabbedGui();
-            _game.Initialize(GridiaConstants.SIZE, GridiaConstants.DEPTH, GridiaConstants.SECTOR_SIZE); // :(
+            Game.Initialize(GridiaConstants.Size, GridiaConstants.Depth, GridiaConstants.SectorSize); // :(
             ServerSelection.gameInitWaitHandle.Set();
         }
         if (!IsGameReady())
         {
             return;
         }
-        if (_game.view.Focus == null)
+        if (Game.View.Focus == null)
         {
             return;
         }
-        if (_game.stateMachine != null)
+        if (Game.StateMachine != null)
         {
-            _game.stateMachine.Step(Time.deltaTime);
+            Game.StateMachine.Step(Time.deltaTime);
         }
-        _game.view.Render();
-        for (int i = 0; i < _game.animations.Count; i++)
+        Game.View.Render();
+        for (int i = 0; i < Game.Animations.Count; i++)
         {
-            var animation = _game.animations[i];
+            var animation = Game.Animations[i];
             if (animation.Dead) 
             {
-                _game.animations.RemoveAt(i);
+                Game.Animations.RemoveAt(i);
             }
             else
             {
@@ -269,25 +265,25 @@ public class GridiaDriver : MonoBehaviour
         ResizeCamera(); // :( only on resize
     }
 
-    public Vector3 getTileLocationOfMouse() {
-        int x = (int)(Input.mousePosition.x / (GridiaConstants.SPRITE_SIZE * _game.view.Scale));
-        int y = (int)(Input.mousePosition.y / (GridiaConstants.SPRITE_SIZE * _game.view.Scale));
-        int z = (int)_game.view.Focus.Position.z;
+    public Vector3 GetTileLocationOfMouse() {
+        var x = (int)(Input.mousePosition.x / (GridiaConstants.SpriteSize * Game.View.Scale));
+        var y = (int)(Input.mousePosition.y / (GridiaConstants.SpriteSize * Game.View.Scale));
+        var z = (int)Game.View.Focus.Position.z;
 
-        x = _game.tileMap.Wrap(x + (int)_game.view.FocusPosition.x);
-        y = _game.tileMap.Wrap(y + (int)_game.view.FocusPosition.y);
+        x = Game.TileMap.Wrap(x + (int)Game.View.FocusPosition.x);
+        y = Game.TileMap.Wrap(y + (int)Game.View.FocusPosition.y);
 
         return new Vector3(x, y, z);
     }
 
     public void RemoveAllOpenContainers()
     {
-        for (var i = tabbedGui.NumWindows() - 1; i >= 0; i--)
+        for (var i = TabbedGui.NumWindows() - 1; i >= 0; i--)
         {
-            var window = tabbedGui.GetWindowAt(i);
-            if (window is ContainerWindow && window != invGui && window != equipmentGui)
+            var window = TabbedGui.GetWindowAt(i);
+            if (window is ContainerWindow && window != InvGui && window != EquipmentGui)
             {
-                tabbedGui.Remove(window);
+                TabbedGui.Remove(window);
             }
         }
         if (SelectedContainer != null)
@@ -299,19 +295,22 @@ public class GridiaDriver : MonoBehaviour
     public void AddNewContainer(List<ItemInstance> items, int id, int tabGfxItemId)
     {
         var numOpenContainers = GetNumberOfOpenContainers();
-        var containerWindow = new ContainerWindow(new Vector2(0, Math.Min(Screen.height - 120, (numOpenContainers - 2) * 120)));
-        containerWindow.ScaleXY = 1.5f;
-        containerWindow.SelectedColor = new Color32(0, 0, 255, 100);
+        var containerWindow =
+            new ContainerWindow(new Vector2(0, Math.Min(Screen.height - 120, (numOpenContainers - 2)*120)))
+            {
+                ScaleXY = 1.5f,
+                SelectedColor = new Color32(0, 0, 255, 100)
+            };
         containerWindow.Set(items, id);
-        tabbedGui.Add(_contentManager.GetItem(tabGfxItemId).Animations[0], containerWindow, true);
+        TabbedGui.Add(ContentManager.GetItem(tabGfxItemId).Animations[0], containerWindow, true);
     }
 
     public int GetNumberOfOpenContainers()
     {
         var count = 0;
-        for (var i = 0; i < tabbedGui.NumWindows(); i++)
+        for (var i = 0; i < TabbedGui.NumWindows(); i++)
         {
-            if (tabbedGui.GetWindowAt(i) is ContainerWindow)
+            if (TabbedGui.GetWindowAt(i) is ContainerWindow)
             {
                 count += 1;
             }
@@ -321,9 +320,9 @@ public class GridiaDriver : MonoBehaviour
 
     private ContainerWindow GetOpenContainerWith(Predicate<ContainerWindow> predicate)
     {
-        for (var i = 0; i < tabbedGui.NumWindows(); i++)
+        for (var i = 0; i < TabbedGui.NumWindows(); i++)
         {
-            var window = tabbedGui.GetWindowAt(i);
+            var window = TabbedGui.GetWindowAt(i);
             if (window is ContainerWindow && predicate(window as ContainerWindow))
             {
                 return window as ContainerWindow;
@@ -351,10 +350,10 @@ public class GridiaDriver : MonoBehaviour
     public List<ContainerWindow> GetListOfSelectableContainerWindows()
     {
         var list = new List<ContainerWindow>();
-        for (var i = 0; i < tabbedGui.NumWindows(); i++)
+        for (var i = 0; i < TabbedGui.NumWindows(); i++)
         {
-            var window = tabbedGui.GetWindowAt(i);
-            if (window is ContainerWindow && window != invGui && window != equipmentGui)
+            var window = TabbedGui.GetWindowAt(i);
+            if (window is ContainerWindow && window != InvGui && window != EquipmentGui)
             {
                 list.Add(window as ContainerWindow);
             }
@@ -370,7 +369,7 @@ public class GridiaDriver : MonoBehaviour
         if (SelectedContainer == null && containers.Count != 0)
         {
             nextContainer = containers[0];
-            _game.hideSelector = true;
+            Game.HideSelector = true;
         }
         else 
         {
@@ -387,14 +386,14 @@ public class GridiaDriver : MonoBehaviour
         }
         else
         {
-            _game.hideSelector = false;
+            Game.HideSelector = false;
         }
         SelectedContainer = nextContainer;
     }
 
     void ResizeCamera()
     {
-        Camera camera = Camera.main;
+        var camera = Camera.main;
         camera.orthographicSize = Screen.height / 2.0f;
         camera.transform.position = new Vector3(Screen.width / 2.0f, Screen.height / 2.0f, -100);
     }

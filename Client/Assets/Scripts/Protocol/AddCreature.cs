@@ -9,17 +9,17 @@ namespace Gridia.Protocol
     {
         protected override void Handle(ConnectionToGridiaServerHandler connection, JObject data)
         {
-            int id = (int)data["id"];
-            var name = (String)data["name"];
+            var id = (int) data["id"];
+            var name = (string) data["name"];
 
             var backToJson = JsonConvert.SerializeObject(data["image"]); // :(
             var image = JsonConvert.DeserializeObject<CreatureImage>(backToJson, new CreatureImageConverter());
 
-            int x = (int)data["loc"]["x"];
-            int y = (int)data["loc"]["y"];
-            int z = (int)data["loc"]["z"];
+            var x = (int) data["loc"]["x"];
+            var y = (int) data["loc"]["y"];
+            var z = (int) data["loc"]["z"];
 
-            connection.GetGame().tileMap.CreateCreature(id, name, image, x, y, z);
+            connection.GetGame().TileMap.CreateCreature(id, name, image, x, y, z);
         }
     }
 }

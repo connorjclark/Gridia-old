@@ -8,7 +8,7 @@ namespace Gridia
     {
         public TextField ChatInput { get; private set; }
         private TextArea ChatArea { get; set; }
-        private String _helpMessage;
+        private readonly String _helpMessage;
 
         public ChatWindow(Vector2 pos)
             : base(pos, "Chat")

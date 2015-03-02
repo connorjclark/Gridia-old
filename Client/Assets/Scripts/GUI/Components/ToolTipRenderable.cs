@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Gridia
 {
     public class ToolTipRenderable : Renderable
     {
-        public static ToolTipRenderable instance = new ToolTipRenderable(Vector2.zero);
+        public static ToolTipRenderable Instance = new ToolTipRenderable(Vector2.zero);
 
         public String ToolTipMessage { get; set; }
 
@@ -18,18 +15,16 @@ namespace Gridia
         public override void Render()
         {
             base.Render();
-            if (ToolTipMessage != null)
+            if (ToolTipMessage == null) return;
+            var toolTip = ToolTipMessage;
+            GUI.Window(100, Rect, windowId =>
             {
-                var toolTip = ToolTipMessage;
-                GUI.Window(100, Rect, windowId =>
-                {
-                    var width = 200;
-                    var height = 30;
-                    GUI.Box(new Rect((Rect.width - width) / 2, (Rect.height - height) / 2, width, height), toolTip);
-                    GUI.BringWindowToFront(windowId);
-                }, "");
-                ToolTipMessage = null;
-            }
+                const int width = 200;
+                const int height = 30;
+                GUI.Box(new Rect((Rect.width - width) / 2, (Rect.height - height) / 2, width, height), toolTip);
+                GUI.BringWindowToFront(windowId);
+            }, "");
+            ToolTipMessage = null;
         }
     }
 }

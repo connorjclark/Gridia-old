@@ -10,9 +10,9 @@ namespace Gridia
         public readonly Func<Tile, Vector2> GetOffset;
         public readonly Func<Tile, int> GetWidth;
         public readonly Func<Tile, int> GetHeight;
-        public readonly GameObject renderable;
+        public readonly GameObject Renderable;
         public readonly Vector2[] uv;
-        public readonly Mesh mesh;
+        public readonly Mesh Mesh;
         private readonly TileMapView _view;
 
         public Layer (
@@ -27,30 +27,30 @@ namespace Gridia
             _view = view;
             GetTileData = getTileData;
             GetTexture = getTexture;
-            GetOffset = getOffset != null ? getOffset : tile => Vector2.zero;
-            GetWidth = getWidth != null ? getWidth : tile => 1;
-            GetHeight = getHeight != null ? getHeight : tile => 1;
-            renderable = InitRenderable(name);
-            mesh = renderable.GetComponent<MeshFilter>().mesh; //smell
+            GetOffset = getOffset ?? (tile => Vector2.zero);
+            GetWidth = getWidth ?? (tile => 1);
+            GetHeight = getHeight ?? (tile => 1);
+            Renderable = InitRenderable(name);
+            Mesh = Renderable.GetComponent<MeshFilter>().mesh; //smell
             uv = InitUV();
         }
 
         public void ApplyUV()
         {
-            mesh.uv = uv;
+            Mesh.uv = uv;
         }
 
         private GameObject InitRenderable(string name)
         {
-            GameObject renderable = new GameObject(name, typeof(MeshRenderer), typeof(MeshFilter));
+            var renderable = new GameObject(name, typeof(MeshRenderer), typeof(MeshFilter));
             renderable.GetComponent<MeshFilter>().mesh = new Mesh();
             return renderable;
         }
 
         private Vector2[] InitUV()
         {
-            Vector2[] uv = new Vector2[_view.NumTiles * 4];
-            for (int i = 0; i < uv.Length; i++)
+            var uv = new Vector2[_view.NumTiles * 4];
+            for (var i = 0; i < uv.Length; i++)
             {
                 uv[i] = new Vector2();
             }
@@ -59,7 +59,7 @@ namespace Gridia
 
         public void Delete()
         {
-            UnityEngine.Object.Destroy(renderable);
+            UnityEngine.Object.Destroy(Renderable);
         }
     }
 }

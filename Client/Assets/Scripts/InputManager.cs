@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gridia
 {
     public class InputManager
     {
-        private Dictionary<KeyCode, float> lastHitTimes = new Dictionary<KeyCode, float>();
-        private float _doubleHitThreshold = 0.3f;
+        private readonly Dictionary<KeyCode, float> _lastHitTimes = new Dictionary<KeyCode, float>();
+        private const float DoubleHitThreshold = 0.3f;
         private KeyCode _doublePressKeyCode = KeyCode.None;
 
         public void Step()
         {
             _doublePressKeyCode = KeyCode.None;
-            var keyCode = Event.current.keyCode;
             if (Event.current.type == EventType.KeyUp)
             {
                 HandleKeyCodeUp(Event.current.keyCode);
@@ -37,8 +33,6 @@ namespace Gridia
 
             return direction;
         }
-
-
 
         // :(
         public Vector3 Get4DirectionalInputUp()
@@ -81,11 +75,11 @@ namespace Gridia
 
         private void HandleKeyCodeUp(KeyCode keyCode) 
         {
-            if (lastHitTimes.ContainsKey(keyCode) && Time.time - lastHitTimes[keyCode] < _doubleHitThreshold)
+            if (_lastHitTimes.ContainsKey(keyCode) && Time.time - _lastHitTimes[keyCode] < DoubleHitThreshold)
             {
                 _doublePressKeyCode = keyCode;
             }
-            lastHitTimes[keyCode] = Time.time;
+            _lastHitTimes[keyCode] = Time.time;
         }
     }
 }

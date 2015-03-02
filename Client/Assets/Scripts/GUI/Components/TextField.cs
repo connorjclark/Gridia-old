@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Gridia
@@ -28,14 +25,7 @@ namespace Gridia
         {
             base.Render();
             GUI.SetNextControlName(TextFieldName);
-            if (PasswordField)
-            {
-                Text = GUI.PasswordField(Rect, Text, '*', MaxChars);
-            }
-            else
-            {
-                Text = GUI.TextField(Rect, Text, MaxChars);
-            }
+            Text = PasswordField ? GUI.PasswordField(Rect, Text, '*', MaxChars) : GUI.TextField(Rect, Text, MaxChars);
             if (Text != "" && Event.current.type == EventType.keyDown && Event.current.character == '\n')
             {
                 OnEnter(Text);

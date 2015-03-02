@@ -11,8 +11,8 @@ namespace Gridia
         public int Count { get { return Textures.Count; } }
         public String Prefix { get; private set; }
         public Texture FallbackTexture { get; private set; }
-        private FileSystem _fileSystem;
-        private List<int> _requestedTextureIndices = new List<int>();
+        private readonly FileSystem _fileSystem;
+        private readonly List<int> _requestedTextureIndices = new List<int>();
 
         public TextureListWrapper(String prefix, Texture fallbackTexture, FileSystem fileSystem)
         {
@@ -37,7 +37,7 @@ namespace Gridia
 
         public Texture GetTextureForSprite(int spriteIndex) 
         {
-            var textureIndex = spriteIndex / GridiaConstants.SPRITES_IN_SHEET;
+            var textureIndex = spriteIndex / GridiaConstants.SpritesInSheet;
             return GetTexture(textureIndex);
         }
 

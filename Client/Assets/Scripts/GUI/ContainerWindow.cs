@@ -1,17 +1,14 @@
-﻿using Gridia;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Gridia
 {
     public class ContainerWindow : GridiaWindow
     {
-        public int SlotSelected { get { return _slots.TileSelected; } set { _slots.TileSelected = value; } }
-        public int SlotSelectedX { get { return _slots.TileSelectedX; } set { _slots.TileSelectedX = value; } }
-        public int SlotSelectedY { get { return _slots.TileSelectedY; } set { _slots.TileSelectedY = value; } }
+        public int SlotSelected { get { return Slots.TileSelected; } set { Slots.TileSelected = value; } }
+        public int SlotSelectedX { get { return Slots.TileSelectedX; } set { Slots.TileSelectedX = value; } }
+        public int SlotSelectedY { get { return Slots.TileSelectedY; } set { Slots.TileSelectedY = value; } }
         // :(
         public int MouseDownSlot { get; private set; }
         public int MouseUpSlot { get; private set; }
@@ -21,37 +18,37 @@ namespace Gridia
 
         public bool ShowSelected
         {
-            get { return _slots.ShowSelected; }
-            set { _slots.ShowSelected = value; }
+            get { return Slots.ShowSelected; }
+            set { Slots.ShowSelected = value; }
         }
 
         public Color SelectedColor
         {
-            get { return _slots.SelectedColor; }
-            set { _slots.SelectedColor = value; }
+            get { return Slots.SelectedColor; }
+            set { Slots.SelectedColor = value; }
         }
 
-        protected List<ItemRenderable> _itemRenderables;
-        protected ExtendibleGrid _slots = new ExtendibleGrid(Vector2.zero); // :(
+        protected List<ItemRenderable> ItemRenderables;
+        protected ExtendibleGrid Slots = new ExtendibleGrid(Vector2.zero); // :(
 
         public ContainerWindow(Vector2 pos)
             : base(pos, "Container")
         {
             ResizeOnVertical = false;
             Set(new List<ItemInstance>(), 0);
-            AddChild(_slots);
+            AddChild(Slots);
         }
 
         // :(
         public void SetWindowNameToCurrentSelection()
         {
-            if (_itemRenderables != null && _slots.TileSelected < _slots.NumChildren)
+            if (ItemRenderables != null && Slots.TileSelected < Slots.NumChildren)
             {
-                WindowName = _itemRenderables[_slots.TileSelected].Item.ToString();
+                WindowName = ItemRenderables[Slots.TileSelected].Item.ToString();
             }
             else
             {
-                _slots.TileSelected = 0;
+                Slots.TileSelected = 0;
             }
         }
 
@@ -73,9 +70,9 @@ namespace Gridia
 
         protected virtual void ViewItems(List<ItemInstance> items) 
         {
-            _itemRenderables = new List<ItemRenderable>();
+            ItemRenderables = new List<ItemRenderable>();
 
-            _slots.RemoveAllChildren();
+            Slots.RemoveAllChildren();
             ShowSelected = false;
             for (var i = 0; i < items.Count; i++)
             {
@@ -96,8 +93,8 @@ namespace Gridia
                 {
                     EquipItemAt(slotIndex);
                 };
-                _itemRenderables.Add(itemRend);
-                _slots.AddChild(itemRend);
+                ItemRenderables.Add(itemRend);
+                Slots.AddChild(itemRend);
             }
 
             SetWindowNameToCurrentSelection();
@@ -105,12 +102,12 @@ namespace Gridia
 
         public void SetItemAt(int index, ItemInstance item)
         {
-            _itemRenderables[index].Item = item;
+            ItemRenderables[index].Item = item;
         }
 
         public ItemInstance GetItemAt(int index)
         {
-            return _itemRenderables[index].Item;
+            return ItemRenderables[index].Item;
         }
 
         public void EquipItemAtCurrentSelection()
@@ -120,7 +117,7 @@ namespace Gridia
 
         public bool HasRaft()
         {
-            return _itemRenderables.Any(itemR => itemR.Item.Item.Class == Item.ItemClass.Raft);
+            return ItemRenderables.Any(itemR => itemR.Item.Item.Class == Item.ItemClass.Raft);
         }
 
         private void EquipItemAt(int slotIndex)
@@ -131,13 +128,13 @@ namespace Gridia
         protected override void Resize()
         {
             base.Resize();
-            _slots.FitToWidth(Width - BorderSize * 2);
+            Slots.FitToWidth(Width - BorderSize * 2);
 
             var availableHeight = Screen.height - BorderSize * 2;
-            int maxTilesColumn = Mathf.FloorToInt(availableHeight / _slots.GetTileHeight());
-            while (_slots.TilesColumn > maxTilesColumn)
+            var maxTilesColumn = Mathf.FloorToInt(availableHeight / Slots.GetTileHeight());
+            while (Slots.TilesColumn > maxTilesColumn)
             {
-                _slots.SetTilesAcross(_slots.TilesAcross + 1);
+                Slots.SetTilesAcross(Slots.TilesAcross + 1);
             }
         }
     }

@@ -1,8 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Gridia
 {
@@ -33,28 +30,27 @@ namespace Gridia
         {
             if (jObject["spriteIndex"] != null)
             {
-                var image = new DefaultCreatureImage();
-                image.SpriteIndex = (int)jObject["spriteIndex"];
-                image.Width = (int)jObject["width"];
-                image.Height = (int)jObject["height"];
+                var image = new DefaultCreatureImage
+                {
+                    SpriteIndex = (int) jObject["spriteIndex"],
+                    Width = (int) jObject["width"],
+                    Height = (int) jObject["height"]
+                };
                 return image;
             }
             else
             {
-                var image = new CustomPlayerImage();
-                image.Head = (int)jObject["head"];
-                image.Arms = (int)jObject["arms"];
-                image.Legs = (int)jObject["legs"];
-                image.Chest = (int)jObject["chest"];
-                image.Weapon = (int)jObject["weapon"];
-                image.Shield = (int)jObject["shield"];
+                var image = new CustomPlayerImage
+                {
+                    Head = (int) jObject["head"],
+                    Arms = (int) jObject["arms"],
+                    Legs = (int) jObject["legs"],
+                    Chest = (int) jObject["chest"],
+                    Weapon = (int) jObject["weapon"],
+                    Shield = (int) jObject["shield"]
+                };
                 return image;
             }
-        }
-
-        private bool FieldExists(string fieldName, JObject jObject)
-        {
-            return jObject[fieldName] != null;
         }
     }
 }

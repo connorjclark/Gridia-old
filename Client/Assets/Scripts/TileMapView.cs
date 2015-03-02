@@ -6,7 +6,7 @@ namespace Gridia
 {
     public class TileMapView
     {
-        public static int OFF_GRID_TILES = 400; // stress test this limit
+        public static int OffGridTiles = 400; // stress test this limit
 
         public Creature Focus { 
             get 
@@ -20,13 +20,13 @@ namespace Gridia
             get {
                 var cre = Focus;
                 var pos = cre == null ? Vector3.zero : cre.Position;
-                return pos - new Vector3(width / 2, height / 2, 0);
+                return pos - new Vector3(Width / 2, Height / 2, 0);
             }
         }
         public bool IsLighting { get; set; }
-        public int NumGridTiles { get { return (width + 2) * (height + 2); } }
-        public int NumTiles { get { return NumGridTiles + OFF_GRID_TILES; } }
-        public float TileSize { get { return GridiaConstants.SPRITE_SIZE * _scale; } }
+        public int NumGridTiles { get { return (Width + 2) * (Height + 2); } }
+        public int NumTiles { get { return NumGridTiles + OffGridTiles; } }
+        public float TileSize { get { return GridiaConstants.SpriteSize * _scale; } }
 
         public float Scale
         {
@@ -38,39 +38,39 @@ namespace Gridia
             }
         }
 
-        private TileMap _tileMap;
-        private TextureManager _textureManager;
-        private List<Layer> layers;
-        private Lighting lighting;
-        private Shader shader;
+        private readonly TileMap _tileMap;
+        private readonly TextureManager _textureManager;
+        private List<Layer> _layers;
+        private readonly Lighting _lighting;
+        private readonly Shader _shader;
         private Vector3[] _gridVertices;
-        public int width, height;
+        public int Width, Height;
         private float _scale;
 
         public TileMapView(TileMap tileMap, TextureManager textureManager, float scale = 1.0f)
         {
             _tileMap = tileMap;
             _textureManager = textureManager;
-            shader = FindShader();
+            _shader = FindShader();
             Scale = scale;
-            lighting = new Lighting(this);
+            _lighting = new Lighting(this);
             IsLighting = false;
         }
 
         public void Initialize() 
         {
-            float tileSize = GridiaConstants.SPRITE_SIZE * _scale;
-            width = Mathf.CeilToInt(Screen.width / tileSize);
-            height = Mathf.CeilToInt(Screen.height / tileSize);
+            var tileSize = GridiaConstants.SpriteSize * _scale;
+            Width = Mathf.CeilToInt(Screen.width / tileSize);
+            Height = Mathf.CeilToInt(Screen.height / tileSize);
             InitGridVertices();
-            if (layers != null)
+            if (_layers != null)
             {
-                layers.ForEach(layer =>
+                _layers.ForEach(layer =>
                 {
                     layer.Delete();
                 });
             }
-            layers = InitLayers();
+            _layers = InitLayers();
         }
 
         private int _prevZ; // :(
@@ -85,7 +85,7 @@ namespace Gridia
 
             Action<int[], int, int> setTriangles = (triangles, offset, tileIndex) =>
             {
-                int vertexOffset = tileIndex * 4;
+                var vertexOffset = tileIndex * 4;
                 triangles[offset + 0] = vertexOffset;
                 triangles[offset + 1] = vertexOffset + 1;
                 triangles[offset + 2] = vertexOffset + 2;
@@ -96,12 +96,12 @@ namespace Gridia
 
             Action<Vector2[], int, int, int, int, int> setTextureCoords = (uv, tileIndex, tileX, tileY, width, height) =>
             {
-                int offset = tileIndex * 4;
+                var offset = tileIndex * 4;
 
-                float x1 = tileX * GridiaConstants.SPRITE_UV;
-                float y1 = 1.0f - (tileY + height) * GridiaConstants.SPRITE_UV; //smell
-                float x2 = x1 + GridiaConstants.SPRITE_UV * width;
-                float y2 = y1 + GridiaConstants.SPRITE_UV * height;
+                var x1 = tileX * GridiaConstants.SpriteUv;
+                var y1 = 1.0f - (tileY + height) * GridiaConstants.SpriteUv; //smell
+                var x2 = x1 + GridiaConstants.SpriteUv * width;
+                var y2 = y1 + GridiaConstants.SpriteUv * height;
 
                 uv[offset + 0].Set(x1, y1);
                 uv[offset + 1].Set(x1, y2);
@@ -111,21 +111,21 @@ namespace Gridia
 
             Action<Layer> drawLayer = layer =>
             {
-                List<int[]> triangleBatches = new List<int[]>();
-                List<Texture> textureBatches = new List<Texture>();
-                List<Dictionary<string, object>> elementList = new List<Dictionary<string, object>>();
+                var triangleBatches = new List<int[]>();
+                var textureBatches = new List<Texture>();
+                var elementList = new List<Dictionary<string, object>>();
 
-                int tileIndex = 0;
+                var tileIndex = 0;
                 var pos = FocusPosition;
-                int positionX = (int)pos.x;
-                int positionY = (int)pos.y;
-                int positionZ = (int)pos.z;
-                int numTilesOffGrid = 0;
+                var positionX = (int) pos.x;
+                var positionY = (int) pos.y;
+                var positionZ = (int) pos.z;
+                var numTilesOffGrid = 0;
 
                 ForEachInView((x, y) =>
                 {
-                    Tile tile = _tileMap.GetTile(x + positionX, y + positionY, positionZ);
-                    int dataIndex = layer.GetTileData(tile);
+                    var tile = _tileMap.GetTile(x + positionX, y + positionY, positionZ);
+                    var dataIndex = layer.GetTileData(tile);
                     if (dataIndex != -1)
                     {
                         Texture textureForThisData;
@@ -143,18 +143,18 @@ namespace Gridia
                             textureForThisData = layer.GetTexture(dataIndex);
                         }
 
-                        int tileX = (dataIndex % 100) % GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
-                        int tileY = (dataIndex % 100) / GridiaConstants.NUM_TILES_IN_SPRITESHEET_ROW;
-                        Dictionary<string, object> dic = new Dictionary<string, object>();
+                        var tileX = (dataIndex % 100) % GridiaConstants.NumTilesInSpritesheetRow;
+                        var tileY = (dataIndex % 100) / GridiaConstants.NumTilesInSpritesheetRow;
+                        var dic = new Dictionary<string, object>();
                         dic["texture"] = textureForThisData;
 
                         var width = layer.GetWidth(tile);
                         var height = layer.GetHeight(tile);
 
-                        Vector2 tileOffset = layer.GetOffset(tile);
-                        if ((tileOffset != Vector2.zero || width != 1 || height != 1) && numTilesOffGrid < OFF_GRID_TILES)
+                        var tileOffset = layer.GetOffset(tile);
+                        if ((tileOffset != Vector2.zero || width != 1 || height != 1) && numTilesOffGrid < OffGridTiles)
                         {
-                            int offTileIndex = NumGridTiles + numTilesOffGrid;
+                            var offTileIndex = NumGridTiles + numTilesOffGrid;
                             SetTileVertices(offTileIndex * 4, x + tileOffset.x, y + tileOffset.y, width, height);
                             setTextureCoords(layer.uv, offTileIndex, tileX, tileY, width, height);
                             dic["tileIndex"] = offTileIndex;
@@ -177,15 +177,15 @@ namespace Gridia
 
                 elementList.Sort((e1, e2) =>
                 {
-                    int tileSheet1Hash = e1["texture"].GetHashCode();
-                    int tileSheet2Hash = e2["texture"].GetHashCode();
+                    var tileSheet1Hash = e1["texture"].GetHashCode();
+                    var tileSheet2Hash = e2["texture"].GetHashCode();
                     return tileSheet1Hash == tileSheet2Hash ? 0 : (tileSheet1Hash > tileSheet2Hash ? 1 : -1);
                 });
 
                 Action<Texture, int, int> drawBatch = (texture, count, offset) =>
                 {
-                    int[] tri = new int[count * 6];
-                    for (int i = 0; i < count; i++)
+                    var tri = new int[count * 6];
+                    for (var i = 0; i < count; i++)
                     {
                         setTriangles(tri, i * 6, (int)elementList[i + offset]["tileIndex"]);
                     }
@@ -194,17 +194,17 @@ namespace Gridia
                     textureBatches.Add(texture);
                 };
 
-                int offsetForNextBatch = 0;
-                for (int i = 1; i < elementList.Count; i++)
+                var offsetForNextBatch = 0;
+                for (var i = 1; i < elementList.Count; i++)
                 {
                     var currentElement = elementList[i];
                     var prevElement = elementList[i - 1];
-                    Texture currentTexture = currentElement["texture"] as Texture;
-                    Texture prevTexture = prevElement["texture"] as Texture;
+                    var currentTexture = currentElement["texture"] as Texture;
+                    var prevTexture = prevElement["texture"] as Texture;
                     if (currentTexture != prevTexture)
                     {
-                        int count = (i - offsetForNextBatch) * 6;
-                        int offset = offsetForNextBatch * 6 * 2;
+                        var count = (i - offsetForNextBatch) * 6;
+                        var offset = offsetForNextBatch * 6 * 2;
 
                         count = i - offsetForNextBatch;
                         offset = offsetForNextBatch;
@@ -216,35 +216,34 @@ namespace Gridia
 
                 drawBatch((Texture)elementList[elementList.Count - 1]["texture"], (elementList.Count - offsetForNextBatch), offsetForNextBatch);
 
-                layer.mesh.vertices = _gridVertices;
+                layer.Mesh.vertices = _gridVertices;
 
                 layer.ApplyUV();
 
-                Material[] materials = new Material[textureBatches.Count];
+                var materials = new Material[textureBatches.Count];
 
-                for (int i = 0; i < triangleBatches.Count; i++)
+                for (var i = 0; i < triangleBatches.Count; i++)
                 {
-                    Material material = new Material(shader);
-                    material.mainTexture = textureBatches[i];
+                    var material = new Material(_shader) {mainTexture = textureBatches[i]};
                     materials[i] = material;
                 }
 
-                layer.renderable.renderer.materials = materials;
+                layer.Renderable.renderer.materials = materials;
 
-                layer.mesh.subMeshCount = triangleBatches.Count;
-                for (int i = 0; i < triangleBatches.Count; i++)
+                layer.Mesh.subMeshCount = triangleBatches.Count;
+                for (var i = 0; i < triangleBatches.Count; i++)
                 {
-                    layer.mesh.SetTriangles(triangleBatches[i], i);
+                    layer.Mesh.SetTriangles(triangleBatches[i], i);
                 }
 
-                var layerz = layer.renderable.transform.position.z;
-                Vector3 renderablePosition = TileSize * Utilities.Vector3Residual(-pos);
+                var layerz = layer.Renderable.transform.position.z;
+                var renderablePosition = TileSize * Utilities.Vector3Residual(-pos);
                 var newLayerPos = Utilities.Vector3Floor(renderablePosition);
                 newLayerPos.z = layerz; // :(
-                layer.renderable.transform.position = newLayerPos;
+                layer.Renderable.transform.position = newLayerPos;
             };
 
-            layers.ForEach(drawLayer);
+            _layers.ForEach(drawLayer);
 
             if (IsLighting)
             {
@@ -259,10 +258,10 @@ namespace Gridia
 
         private void UpdateLighting()
         {
-            List<Vector3> lights = new List<Vector3>();
-            int posX = (int)Focus.Position.x;
-            int posY = (int)Focus.Position.y;
-            int posZ = (int)Focus.Position.z;
+            var lights = new List<Vector3>();
+            var posX = (int) Focus.Position.x;
+            var posY = (int) Focus.Position.y;
+            var posZ = (int) Focus.Position.z;
             ForEachInView((x, y) =>
             {
                 var tile = _tileMap.GetTile(x + posX, y + posY, posZ);
@@ -272,15 +271,15 @@ namespace Gridia
                     lights.Add(new Vector3(x, y, lightIntensity));
                 }
             });
-            lighting.SetLights(lights);
+            _lighting.SetLights(lights);
         }
 
         // :(
         public void ForEachInView(Action<int, int> task)
         {
-            for (int y = -1; y < height + 1; y++)
+            for (var y = -1; y < Height + 1; y++)
             {
-                for (int x = -1; x < width + 1; x++)
+                for (var x = -1; x < Width + 1; x++)
                 {
                     task(x, y);
                 }
@@ -298,21 +297,16 @@ namespace Gridia
                 this,
                 tile =>
                 {
-                    if (tile.Floor == 0)
+                    switch (tile.Floor)
                     {
-                        return -2;
-                    }
-                    if (tile.Floor == 1)
-                    {
-                        return -3;
+                        case 0:
+                            return -2;
+                        case 1:
+                            return -3;
                     }
                     return tile.Floor;
                 },
-                data =>
-                {
-                    //if (data / 100 >= _textureManager.Floors.Count) Debug.Log(data); // :(
-                    return _textureManager.Floors.GetTextureForSprite(data);
-                }
+                data => _textureManager.Floors.GetTextureForSprite(data)
             ));
 
             result.Add(new Layer(
@@ -320,12 +314,12 @@ namespace Gridia
                 this, 
                 tile =>
                 {
-                    int[] animations = tile.Item.Item.Animations;
+                    var animations = tile.Item.Item.Animations;
                     if (animations == null || animations.Length == 0)
                     {
                         return -1;
                     }
-                    int frame = (int)((Time.time * 6) % animations.Length);//smell :(
+                    var frame = (int)((Time.time * 6) % animations.Length);//smell :(
                     return animations[frame];
                 },
                 data => _textureManager.Items.GetTextureForSprite(data),
@@ -344,8 +338,9 @@ namespace Gridia
                 tile => tile.Item.Item.ImageHeight
             ));
 
-            for (int i = 0; i < result.Count; i++) {
-                result[i].renderable.transform.position = new Vector3(0, 0, -i);
+            for (var i = 0; i < result.Count; i++)
+            {
+                result[i].Renderable.transform.position = new Vector3(0, 0, -i);
             }
 
             return result;
@@ -354,7 +349,7 @@ namespace Gridia
         private void InitGridVertices()
         {
             _gridVertices = new Vector3[NumTiles * 4];
-            int offset = 0;
+            var offset = 0;
             ForEachInView((x, y) =>
             {
                 SetTileVertices(offset, x, y, 1, 1);
@@ -363,10 +358,10 @@ namespace Gridia
         }
 
         private void SetTileVertices(int offset, float x, float y, int width, int height) {
-            float x1 = x * TileSize;
-            float y1 = y * TileSize;
-            float x2 = x1 + TileSize * width;
-            float y2 = y1 + TileSize * height;
+            var x1 = x * TileSize;
+            var y1 = y * TileSize;
+            var x2 = x1 + TileSize * width;
+            var y2 = y1 + TileSize * height;
             _gridVertices[offset + 0] = new Vector3(x1, y1, 0);
             _gridVertices[offset + 1] = new Vector3(x1, y2, 0);
             _gridVertices[offset + 2] = new Vector3(x2, y2, 0);
@@ -377,19 +372,19 @@ namespace Gridia
         //this is only for floors right now
         //more uses?
         private int UseTemplate(int templateId, int typeToMatch, int x, int y, int z) {
-            int size = _tileMap.Size;
-            int xl = x == 0 ? size - 1 : x - 1;
-            int xr = x == size - 1 ? 0 : x + 1;
-            int yu = y == 0 ? size - 1 : y + 1;
-            int yd = y == size - 1 ? 0 : y - 1;
+            var size = _tileMap.Size;
+            var xl = x == 0 ? size - 1 : x - 1;
+            var xr = x == size - 1 ? 0 : x + 1;
+            var yu = y == 0 ? size - 1 : y + 1;
+            var yd = y == size - 1 ? 0 : y - 1;
 
-            bool above = _tileMap.GetTile(x, yu, z).Floor == typeToMatch;
-            bool below = _tileMap.GetTile(x, yd, z).Floor == typeToMatch;
-            bool left = _tileMap.GetTile(xl, y, z).Floor == typeToMatch;
-            bool right = _tileMap.GetTile(xr, y, z).Floor == typeToMatch;
+            var above = _tileMap.GetTile(x, yu, z).Floor == typeToMatch;
+            var below = _tileMap.GetTile(x, yd, z).Floor == typeToMatch;
+            var left = _tileMap.GetTile(xl, y, z).Floor == typeToMatch;
+            var right = _tileMap.GetTile(xr, y, z).Floor == typeToMatch;
 
-            int offset = templateId * 50;
-            int v = (above ? 1 : 0) + (below ? 2 : 0) + (left ? 4 : 0) + (right ? 8 : 0);
+            var offset = templateId * 50;
+            var v = (above ? 1 : 0) + (below ? 2 : 0) + (left ? 4 : 0) + (right ? 8 : 0);
             
 
             // this is where the complicated crap kicks in
@@ -398,10 +393,10 @@ namespace Gridia
             // this is mostly guess work. I think. I wrote this code years ago. I know it works,
             // so I just copy and pasted. Shame on me.
 
-            bool upleft = _tileMap.GetTile(xl, yu, z).Floor == typeToMatch;
-            bool upright = _tileMap.GetTile(xr, yu, z).Floor == typeToMatch;
-            bool downleft = _tileMap.GetTile(xl, yd, z).Floor == typeToMatch;
-            bool downright = _tileMap.GetTile(xr, yd, z).Floor == typeToMatch;
+            var upleft = _tileMap.GetTile(xl, yu, z).Floor == typeToMatch;
+            var upright = _tileMap.GetTile(xr, yu, z).Floor == typeToMatch;
+            var downleft = _tileMap.GetTile(xl, yd, z).Floor == typeToMatch;
+            var downright = _tileMap.GetTile(xr, yd, z).Floor == typeToMatch;
 
             if (v == 15)
             {

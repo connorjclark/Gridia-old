@@ -5,9 +5,9 @@ namespace Gridia
 {
     public class PlayerMovementState : State
     {
-        private Creature Player { get { return Locator.Get<TileMapView>().Focus; } }
+        private static Creature Player { get { return Locator.Get<TileMapView>().Focus; } }// :(
         private long _cooldownUntil;
-        private Vector3 _delta;
+        private readonly Vector3 _delta;
 
         public PlayerMovementState(Vector3 delta)
         {
@@ -15,9 +15,9 @@ namespace Gridia
         }
 
         // :(
-        private long getSystemTime()
+        private long GetSystemTime()
         {
-            return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - GridiaConstants.SERVER_TIME_OFFSET;
+            return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - GridiaConstants.ServerTimeOffset;
         }
 
         public override void Step(StateMachine stateMachine, float dt)
@@ -25,17 +25,17 @@ namespace Gridia
             if (Player == null) return;
             if (_cooldownUntil == 0)
             {
-                var destination = Locator.Get<GridiaGame>().view.Focus.Position + _delta;
+                var destination = Locator.Get<GridiaGame>().View.Focus.Position + _delta;
 
-                var now = getSystemTime();
+                var now = GetSystemTime();
 
-                var baseTime = 250; // :(
-                var floor = Locator.Get<GridiaGame>().tileMap.GetTile((int)destination.x, (int)destination.y, (int)destination.z).Floor;
-                float movementModifier = Locator.Get<ContentManager>().GetFloor(floor).MovementModifier;
+                const int baseTime = 250; // :(
+                var floor = Locator.Get<GridiaGame>().TileMap.GetTile((int)destination.x, (int)destination.y, (int)destination.z).Floor;
+                var movementModifier = Locator.Get<ContentManager>().GetFloor(floor).MovementModifier;
                 var timeForMovement = baseTime / movementModifier;
                 var onRaft = false;
 
-                if (floor == 1 && Locator.Get<GridiaDriver>().invGui.HasRaft())
+                if (floor == 1 && Locator.Get<GridiaDriver>().InvGui.HasRaft())
                 {
                     timeForMovement = baseTime / 2;
                     onRaft = true;
@@ -47,7 +47,7 @@ namespace Gridia
                 Player.AddPositionSnapshot(Player.Position, onRaft, now - Creature.RENDER_DELAY);
                 Player.AddPositionSnapshot(destination, onRaft, _cooldownUntil - Creature.RENDER_DELAY);
             }
-            else if (getSystemTime() > _cooldownUntil)
+            else if (GetSystemTime() > _cooldownUntil)
             {
                 End(stateMachine);
             }

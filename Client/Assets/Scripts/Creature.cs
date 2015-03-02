@@ -63,7 +63,7 @@ namespace Gridia
         // :(
         private long getSystemTime()
         {
-            return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - GridiaConstants.SERVER_TIME_OFFSET;
+            return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - GridiaConstants.ServerTimeOffset;
         }
 
         public static int RENDER_DELAY = 50; // in ms (not needed???)

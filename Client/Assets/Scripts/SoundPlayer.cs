@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using UnityEngine;
 using Serving.FileTransferring;
@@ -13,7 +12,7 @@ namespace Gridia
 {
     public class SoundPlayer : MonoBehaviour
     {
-        private Dictionary<String, WavFile> _wavFiles = new Dictionary<String, WavFile>();
+        private readonly Dictionary<String, WavFile> _wavFiles = new Dictionary<String, WavFile>();
         private AudioClip _currentMusic;
         [SerializeField]
         private AudioSource _musicAudio;
@@ -47,7 +46,7 @@ namespace Gridia
         {
             _musicAudio.loop = false;
             _musicAudio.volume = 0.6f;
-            //MuteMusic = Application.isEditor;
+            MuteMusic = Application.isEditor;
             _fileSystem = GridiaConstants.GetFileSystem();
         }
 
@@ -77,7 +76,7 @@ namespace Gridia
         {
             LoadingQueue = true;
             new Thread(() => {
-                var clientDataFolder = @"worlds\" + GridiaConstants.WORLD_NAME + @"\clientdata"; // :(
+                var clientDataFolder = @"worlds\" + GridiaConstants.WorldName + @"\clientdata"; // :(
                 Debug.Log("queueing songs...");
                 // recursively? :(
                 var songs = _fileSystem.GetFiles(clientDataFolder + @"\sound\music")
@@ -183,7 +182,7 @@ namespace Gridia
 
         private String SearchForFile(String name) 
         {
-            var clientDataFolder = @"worlds\" + GridiaConstants.WORLD_NAME + @"\clientdata"; // :(
+            var clientDataFolder = @"worlds\" + GridiaConstants.WorldName + @"\clientdata"; // :(
             foreach (string d in _fileSystem.GetFiles(clientDataFolder + @"\sound", "*", SearchOption.AllDirectories))
             {
                 if (String.Equals(Path.GetFileNameWithoutExtension(d), name, StringComparison.OrdinalIgnoreCase))

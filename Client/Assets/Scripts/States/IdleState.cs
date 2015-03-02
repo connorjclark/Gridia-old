@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Gridia
 {
     public class IdleState : State
     {
-        private int sourceIndex;
-        private int mouseDownLocation = -1;
-        private GridiaDriver _driver;
-        private GridiaGame _game;
+        private int _sourceIndex;
+        private int _mouseDownLocation = -1;
+        private readonly GridiaDriver _driver;
+        private readonly GridiaGame _game;
 
         // :(
         public IdleState() 
@@ -28,11 +24,11 @@ namespace Gridia
             {
                 if (Input.GetKey(KeyCode.LeftShift)) 
                 {
-                    _driver.tabbedGui.ToggleVisiblity(numKeyPressed - 1);
+                    _driver.TabbedGui.ToggleVisiblity(numKeyPressed - 1);
                 }
                 else 
                 {
-                    _driver.invGui.SlotSelected = numKeyPressed == 0 ? 9 : numKeyPressed - 1;
+                    _driver.InvGui.SlotSelected = numKeyPressed == 0 ? 9 : numKeyPressed - 1;
                 }
             }
 
@@ -47,11 +43,11 @@ namespace Gridia
                 _driver.MoveSelectedContainerToNext();
             }
 
-            var wasdKeysUp = _inputManager.Get4DirectionalInputUp();
-            var wasdKeys = _inputManager.Get4DirectionalInput();
+            var wasdKeysUp = InputManager.Get4DirectionalInputUp();
+            var wasdKeys = InputManager.Get4DirectionalInput();
             if (wasdKeysUp != Vector3.zero)
             {
-                var destinationUp = Locator.Get<GridiaGame>().view.Focus.Position + wasdKeysUp;
+                var destinationUp = Locator.Get<GridiaGame>().View.Focus.Position + wasdKeysUp;
                 if (Locator.Get<TileMap>().GetCreatureAt(destinationUp) != null || Locator.Get<TileMap>().GetTile(destinationUp).Floor == 0)
                 {
                     Locator.Get<ConnectionToGridiaServerHandler>().Hit(destinationUp);
@@ -63,7 +59,7 @@ namespace Gridia
             }
             else if (wasdKeys != Vector3.zero)
             {
-                var destination = _game.view.Focus.Position + wasdKeys;
+                var destination = _game.View.Focus.Position + wasdKeys;
                 if (Locator.Get<TileMap>().Walkable(destination))
                 {
                     Locator.Get<GridiaDriver>().RemoveAllOpenContainers();
@@ -72,14 +68,14 @@ namespace Gridia
                 }
             }
 
-            var arrowKeysUp = _inputManager.Get4DirectionalArrowKeysInputUp();
+            var arrowKeysUp = InputManager.Get4DirectionalArrowKeysInputUp();
             if (arrowKeysUp != Vector3.zero)
             {
                 if (Input.GetKey(KeyCode.LeftControl))
                 {
-                    _driver.invGui.SlotSelectedX += (int)arrowKeysUp.x;
-                    _driver.invGui.SlotSelectedY += (int)-arrowKeysUp.y;
-                    _driver.invGui.SetWindowNameToCurrentSelection();
+                    _driver.InvGui.SlotSelectedX += (int)arrowKeysUp.x;
+                    _driver.InvGui.SlotSelectedY += (int)-arrowKeysUp.y;
+                    _driver.InvGui.SetWindowNameToCurrentSelection();
                 } else if (_driver.SelectedContainer != null)
                 {
                     _driver.SelectedContainer.SlotSelectedX += (int)arrowKeysUp.x;
@@ -88,7 +84,7 @@ namespace Gridia
                 else
                 {
                     _game.SelectorDelta += arrowKeysUp;
-                    _game.hideSelector = false;
+                    _game.HideSelector = false;
                 }
             }
 
@@ -98,7 +94,7 @@ namespace Gridia
             }
             else if (Input.GetKeyUp(KeyCode.Space))
             {
-                _game.UseItemAtSelection(_driver.invGui.SlotSelected);
+                _game.UseItemAtSelection(_driver.InvGui.SlotSelected);
                 return;
             }
             else if (Input.GetKeyUp(KeyCode.LeftAlt))
@@ -112,7 +108,7 @@ namespace Gridia
             }
             else if (Input.GetKeyUp(KeyCode.E))
             {
-                _driver.invGui.EquipItemAtCurrentSelection();
+                _driver.InvGui.EquipItemAtCurrentSelection();
             }
 
             if (Input.GetMouseButtonDown(0))
@@ -120,19 +116,19 @@ namespace Gridia
                 var openContainerWithMouseDown = _driver.GetOpenContainerWithMouseDown();
                 if (openContainerWithMouseDown != null)
                 {
-                    mouseDownLocation = openContainerWithMouseDown.ContainerId;
-                    sourceIndex = openContainerWithMouseDown.MouseDownSlot;
-                    _driver.mouseDownItem = _driver.invGui.GetItemAt(openContainerWithMouseDown.MouseDownSlot);
+                    _mouseDownLocation = openContainerWithMouseDown.ContainerId;
+                    _sourceIndex = openContainerWithMouseDown.MouseDownSlot;
+                    _driver.MouseDownItem = _driver.InvGui.GetItemAt(openContainerWithMouseDown.MouseDownSlot);
                 }
-                else if (!_driver.isMouseOverGUI())
+                else if (!_driver.IsMouseOverGui())
                 {
-                    mouseDownLocation = 0;
-                    var downCoord = _driver.getTileLocationOfMouse();
-                    _driver.mouseDownItem = _driver._game.tileMap.GetTile((int)downCoord.x, (int)downCoord.y, (int)downCoord.z).Item;
-                    sourceIndex = _driver._game.tileMap.ToIndex(downCoord);
+                    _mouseDownLocation = 0;
+                    var downCoord = _driver.GetTileLocationOfMouse();
+                    _driver.MouseDownItem = _driver.Game.TileMap.GetTile((int)downCoord.x, (int)downCoord.y, (int)downCoord.z).Item;
+                    _sourceIndex = _driver.Game.TileMap.ToIndex(downCoord);
                 }
             }
-            else if (Input.GetMouseButtonUp(0) && mouseDownLocation != -1)
+            else if (Input.GetMouseButtonUp(0) && _mouseDownLocation != -1)
             {
                 int dest, destIndex;
 
@@ -144,45 +140,38 @@ namespace Gridia
                 }
                 else
                 {
-                    var tileLocUp = _driver.getTileLocationOfMouse();
-                    if (tileLocUp == _driver._game.tileMap.Wrap(_driver._game.view.Focus.Position))
+                    var tileLocUp = _driver.GetTileLocationOfMouse();
+                    if (tileLocUp == _driver.Game.TileMap.Wrap(_driver.Game.View.Focus.Position))
                     {
-                        dest = _driver.invGui.ContainerId;
+                        dest = _driver.InvGui.ContainerId;
                         destIndex = -1;
                     }
                     else 
                     {
                         dest = 0;
-                        destIndex = _driver._game.tileMap.ToIndex(tileLocUp);
+                        destIndex = _driver.Game.TileMap.ToIndex(tileLocUp);
                     }
                 }
 
-                Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(mouseDownLocation, dest, sourceIndex, destIndex);
+                Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(_mouseDownLocation, dest, _sourceIndex, destIndex);
 
-                _driver.mouseDownItem =  null;
-                mouseDownLocation = -1;
+                _driver.MouseDownItem =  null;
+                _mouseDownLocation = -1;
             }
-        }
-
-        private void PickUpItemAt(Vector3 loc) 
-        {
-            var pickupItemLoc = _driver._game.tileMap.Wrap(loc);
-            var pickupItemIndex = _driver._game.tileMap.ToIndex(pickupItemLoc);
-            Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(0, _driver.invGui.ContainerId, pickupItemIndex, -1);
         }
 
         private void End(StateMachine stateMachine, float dt, State newState) 
         {
-            _driver.mouseDownItem = null;
+            _driver.MouseDownItem = null;
             stateMachine.SetState(newState);
             stateMachine.Step(dt);
-            _driver.mouseDownItem = null;
-            _game.hideSelector = true; // :( OnEnd()
+            _driver.MouseDownItem = null;
+            _game.HideSelector = true; // :( OnEnd()
         }
 
         private int GetNumberKeyPressed()
         {
-            for (int i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++)
             {
                 if (Input.GetKeyDown("" + i) || Input.GetKeyDown("[" + i + "]"))
                 {

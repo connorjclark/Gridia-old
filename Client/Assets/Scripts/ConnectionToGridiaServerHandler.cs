@@ -10,13 +10,13 @@ using Gridia;
 
 public class ConnectionToGridiaServerHandler : SocketHandler
 {
-    private GridiaGame _game;
-    private HashSet<Vector3> _sectorsRequested = new HashSet<Vector3>();
-    private HashSet<int> _creaturesRequested = new HashSet<int>();
+    private readonly GridiaGame _game;
+    private readonly HashSet<Vector3> _sectorsRequested = new HashSet<Vector3>();
+    private readonly HashSet<int> _creaturesRequested = new HashSet<int>();
     public Action<JObject> GenericEventHandler { get; set; }
     public String FileDownloadStatus { get { return _socketHandler.CurrentStatus; } }
 
-    private FileTransferringSocketReciever _socketHandler;
+    private readonly FileTransferringSocketReciever _socketHandler;
 
     public ConnectionToGridiaServerHandler(String host, int port, GridiaGame game)
     {

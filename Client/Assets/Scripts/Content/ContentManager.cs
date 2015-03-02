@@ -8,28 +8,28 @@ namespace Gridia
 {
     public class ContentManager
     {
-        public int ItemCount { get { return items.Count; } }
-        public int FloorCount { get { return floors.Count; } }
-        public int MonsterCount { get { return monsters.Count; } }
+        public int ItemCount { get { return _items.Count; } }
+        public int FloorCount { get { return _floors.Count; } }
+        public int MonsterCount { get { return _monsters.Count; } }
         public bool DoneLoading { get; private set; }
         
-        private List<Item> items;
-        private List<Floor> floors;
-        private List<Monster> monsters;
-        private List<GridiaAnimation> animations;
-        private List<ItemUse> uses;
-        private FileSystem _fileSystem;
+        private List<Item> _items;
+        private List<Floor> _floors;
+        private List<Monster> _monsters;
+        private List<GridiaAnimation> _animations;
+        private List<ItemUse> _uses;
+        private readonly FileSystem _fileSystem;
         
         public ContentManager(String worldName)
         {
             _fileSystem = GridiaConstants.GetFileSystem();
             new Thread(() => {
                 var clientDataFolder = @"worlds/" + worldName + @"/clientdata"; // :(
-                items = Load<Item>(clientDataFolder + "/content/items.json");
-                floors = Load<Floor>(clientDataFolder + "/content/floors.json");
-                monsters = Load<Monster>(clientDataFolder + "/content/monsters.json");
-                animations = Load<GridiaAnimation>(clientDataFolder + "/content/animations.json");
-                uses = Load<ItemUse>(clientDataFolder + "/content/itemuses.json");
+                _items = Load<Item>(clientDataFolder + "/content/items.json");
+                _floors = Load<Floor>(clientDataFolder + "/content/floors.json");
+                _monsters = Load<Monster>(clientDataFolder + "/content/monsters.json");
+                _animations = Load<GridiaAnimation>(clientDataFolder + "/content/animations.json");
+                _uses = Load<ItemUse>(clientDataFolder + "/content/itemuses.json");
                 DoneLoading = true;
             }).Start();
         }
@@ -38,38 +38,33 @@ namespace Gridia
         {
             var bytes = _fileSystem.ReadAllBytes(filePath);
             var json = Encoding.UTF8.GetString(bytes);
-            //var json = _fileSystem.ReadString(filePath);
-            //UnityEngine.Debug.Log("json = " + json); // :(
             return new ContentLoader<T>().Load(json);
         }
 
         public Item GetItem(int id)
         {
-            var item = items[id];
-            if (item == null) {
-                return items[0];
-            }
-            return items[id];
+            var item = _items[id];
+            return item == null ? _items[0] : _items[id];
         }
 
         public Floor GetFloor(int id)
         {
-            return floors[id];
+            return _floors[id];
         }
 
         public Monster GetMonster(int id)
         {
-            return monsters[id];
+            return _monsters[id];
         }
 
         public GridiaAnimation GetAnimation(int id)
         {
-            return animations[id - 1]; // :(
+            return _animations[id - 1]; // :(
         }
 
         public List<ItemUse> GetUses(ItemInstance tool) 
         {
-            return uses.FindAll(u => u.tool == tool.Item.Id);
+            return _uses.FindAll(u => u.Tool == tool.Item.Id);
         }
     }
 }

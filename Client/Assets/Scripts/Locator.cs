@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class Locator
 {
-    private static Dictionary<Type, Object> _services = new Dictionary<Type, Object>();
+    private static readonly Dictionary<Type, Object> _services = new Dictionary<Type, Object>();
 
     public static void Provide<T>(T service)
     {

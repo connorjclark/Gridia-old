@@ -1,16 +1,15 @@
 ﻿using Gridia;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GridiaGame
 {
-    public TileMap tileMap;
-    public TileMapView view;
-    public StateMachine stateMachine = new StateMachine();
-    public List<AnimationRenderable> animations = new List<AnimationRenderable>();
+    public TileMap TileMap;
+    public TileMapView View;
+    public StateMachine StateMachine = new StateMachine();
+    public List<AnimationRenderable> Animations = new List<AnimationRenderable>();
 
-    public Vector3 _selectorDelta = Vector3.zero;
+    private Vector3 _selectorDelta = Vector3.zero;
     public Vector3 SelectorDelta
     {
         get
@@ -25,17 +24,17 @@ public class GridiaGame
         }
     }
 
-    public bool hideSelector = true;
-    public bool isConnected;
+    public bool HideSelector = true;
+    public bool IsConnected;
     private GridiaDriver _driver;
 
     public void Initialize(int size, int depth, int sectorSize) {
-        Locator.Provide(stateMachine);
-        tileMap = new TileMap(size, depth, sectorSize);
-        Locator.Provide(tileMap);
-        view = new TileMapView(tileMap, Locator.Get<TextureManager>(), 1.75f);
-        Locator.Provide(view);
-        stateMachine.SetState(new IdleState());
+        Locator.Provide(StateMachine);
+        TileMap = new TileMap(size, depth, sectorSize);
+        Locator.Provide(TileMap);
+        View = new TileMapView(TileMap, Locator.Get<TextureManager>(), 1.75f);
+        Locator.Provide(View);
+        StateMachine.SetState(new IdleState());
         _driver = Locator.Get<GridiaDriver>();
     }
 
@@ -43,7 +42,7 @@ public class GridiaGame
     public void InitAdminWindowTab()
     {
         var adminWindow = new AdminWindow(Vector2.zero);
-        _driver.tabbedGui.Add(10, adminWindow, false);
+        _driver.TabbedGui.Add(10, adminWindow, false);
     }
 
     public Vector3 GetSelectorCoord()
@@ -54,13 +53,13 @@ public class GridiaGame
     // :(
     public Vector3 GetSelectorCoord(Vector3 sDelta)
     {
-        return view.FocusPosition + sDelta + new Vector3(view.width / 2, view.height / 2);
+        return View.FocusPosition + sDelta + new Vector3(View.Width / 2, View.Height / 2);
     }
 
     public Vector3 GetScreenPosition(Vector3 coord) 
     {
-        var tileSize = 32 * view.Scale;
-        var relative = coord - view.FocusPosition;
+        var tileSize = 32 * View.Scale;
+        var relative = coord - View.FocusPosition;
         return new Vector2(relative.x * tileSize, Screen.height - relative.y * tileSize - tileSize);
     }
 
@@ -68,53 +67,53 @@ public class GridiaGame
     {
         if (_driver.SelectedContainer == null)
         {
-            DropItemAt(view.Focus.Position + SelectorDelta);
+            DropItemAt(View.Focus.Position + SelectorDelta);
         }
         else
         {
             var destIndex = _driver.SelectedContainer.SlotSelected;
-            var slotSelected = _driver.invGui.SlotSelected;
-            Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(_driver.invGui.ContainerId, _driver.SelectedContainer.ContainerId, slotSelected, destIndex, 1); // :(
+            var slotSelected = _driver.InvGui.SlotSelected;
+            Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(_driver.InvGui.ContainerId, _driver.SelectedContainer.ContainerId, slotSelected, destIndex, 1); // :(
         }
     }
 
     private void DropItemAt(Vector3 dropItemLoc) 
     {
         var destIndex = Locator.Get<TileMap>().ToIndex(dropItemLoc);
-        var slotSelected = _driver.invGui.SlotSelected;
-        Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(_driver.invGui.ContainerId, 0, slotSelected, destIndex, 1); // :(
+        var slotSelected = _driver.InvGui.SlotSelected;
+        Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(_driver.InvGui.ContainerId, 0, slotSelected, destIndex, 1); // :(
     }
 
     public void PickUpItemAtSelection() 
     {
         if (_driver.SelectedContainer == null)
         {
-            PickUpItemAt(view.Focus.Position + SelectorDelta);
+            PickUpItemAt(View.Focus.Position + SelectorDelta);
         }
         else
         {
             var pickupItemIndex = _driver.SelectedContainer.SlotSelected;
-            Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(_driver.SelectedContainer.ContainerId, _driver.invGui.ContainerId, pickupItemIndex, -1); // :(
+            Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(_driver.SelectedContainer.ContainerId, _driver.InvGui.ContainerId, pickupItemIndex, -1); // :(
         }
     }
 
     private void PickUpItemAt(Vector3 pickupItemLoc)
     {
-        pickupItemLoc = tileMap.Wrap(pickupItemLoc);
-        var pickupItemIndex = tileMap.ToIndex(pickupItemLoc);
-        Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(0, _driver.invGui.ContainerId, pickupItemIndex, -1); // :(
+        pickupItemLoc = TileMap.Wrap(pickupItemLoc);
+        var pickupItemIndex = TileMap.ToIndex(pickupItemLoc);
+        Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(0, _driver.InvGui.ContainerId, pickupItemIndex, -1); // :(
     }
 
     public void UseItemAtSelection(int sourceIndex)
     {
         if (_driver.SelectedContainer == null)
         {
-            var destIndex = tileMap.ToIndex(GetSelectorCoord());
-            UseItemAt(_driver.invGui.ContainerId, sourceIndex, 0, destIndex);
+            var destIndex = TileMap.ToIndex(GetSelectorCoord());
+            UseItemAt(_driver.InvGui.ContainerId, sourceIndex, 0, destIndex);
         }
         else
         {
-            UseItemAt(_driver.invGui.ContainerId, sourceIndex, _driver.SelectedContainer.ContainerId, _driver.SelectedContainer.SlotSelected);
+            UseItemAt(_driver.InvGui.ContainerId, sourceIndex, _driver.SelectedContainer.ContainerId, _driver.SelectedContainer.SlotSelected);
         }
     }
 

@@ -9,11 +9,11 @@ namespace Gridia.Protocol
         {
             ServerSelection.gameInitWaitHandle.WaitOne(); // :(
             var game = connection.GetGame();
-            GridiaConstants.IS_ADMIN = (bool)data["isAdmin"];
-            var id = (int)data["id"];
+            GridiaConstants.IsAdmin = (bool) data["isAdmin"];
+            var id = (int) data["id"];
 
-            game.view.FocusId = id;
-            if (GridiaConstants.IS_ADMIN)
+            game.View.FocusId = id;
+            if (GridiaConstants.IsAdmin)
             {
                 game.InitAdminWindowTab();
             }

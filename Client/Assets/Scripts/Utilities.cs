@@ -7,8 +7,8 @@ namespace Gridia
     {
         public static Vector2 Vector2FromAngle(double radians)
         {
-            float x = (float)Math.Cos(radians);
-            float y = (float)Math.Sin(radians);
+            var x = (float)Math.Cos(radians);
+            var y = (float)Math.Sin(radians);
             return new Vector2(x, y);
         }
 
@@ -34,19 +34,19 @@ namespace Gridia
 
         public static int CompareAbsoluteValues(float a, float b) 
         {
-            if (a == b) return 0;
+            if (Math.Abs(a - b) < 0.0000001f) return 0;
             if (Mathf.Abs(a) > Mathf.Abs(b)) return 1;
             return -1;
         }
 
         public static Vector3 GetRelativeDirection(Vector3 from, Vector3 to) {
-            Vector3 heading = to - from;
+            var heading = to - from;
             return heading / heading.magnitude;
         }
 
         public static Vector3 RandomDirection()
         {
-            int value = UnityEngine.Random.Range(1, 4);
+            var value = UnityEngine.Random.Range(1, 4);
             switch (value)
             {
                 case 1: return Vector3.up;

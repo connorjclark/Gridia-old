@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Gridia
@@ -45,7 +42,7 @@ namespace Gridia
             base.Render();
             // :(
             if (!ShowSelected || TileSelected == -1 || TileSelected >= NumChildren) return;
-            var rect = _children[TileSelected].Rect;
+            var rect = Children[TileSelected].Rect;
             GridiaConstants.GUIDrawSelector(rect, SelectedColor); // :(
         }
 
@@ -73,12 +70,12 @@ namespace Gridia
         // assumption: all tiles are the same size
         public float GetTileWidth() 
         {
-            return NumChildren == 0 ? 0 : _children[0].Width;
+            return NumChildren == 0 ? 0 : Children[0].Width;
         }
 
         public float GetTileHeight()
         {
-            return NumChildren == 0 ? 0 : _children[0].Height;
+            return NumChildren == 0 ? 0 : Children[0].Height;
         }
 
         private void PositionTile(Renderable tile, int index) 
@@ -91,9 +88,9 @@ namespace Gridia
         private void PositionTiles() 
         {
             Dirty = true;
-            for (int i = 0; i < NumChildren; i++)
+            for (var i = 0; i < NumChildren; i++)
             {
-                PositionTile(_children[i], i);
+                PositionTile(Children[i], i);
             }
         }
     }

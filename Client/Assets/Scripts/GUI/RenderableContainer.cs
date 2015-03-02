@@ -1,46 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Gridia
 {
     public class RenderableContainer : Renderable
     {
-        public int NumChildren { get { return _children.Count; } }
-        protected List<Renderable> _children = new List<Renderable>();
+        public int NumChildren { get { return Children.Count; } }
+        protected List<Renderable> Children = new List<Renderable>();
 
         public RenderableContainer(Vector2 pos)
             : base(pos) { }
 
         public override void Render()
         {
-            if (_children.Any(c => c.Dirty)) 
+            lock (Children)
             {
-                CalculateRect();
-                Dirty = true;
-                _children.ForEach(c => c.Dirty = false);
-            }
-
-            GUI.BeginGroup(new Rect(X, Y, Int32.MaxValue, Int32.MaxValue));
-            lock (_children)
-            {
-                foreach (var child in _children.ToList())
+                if (Children.Any(c => c.Dirty))
+                {
+                    CalculateRect();
+                    Dirty = true;
+                    Children.ForEach(c => c.Dirty = false);
+                }
+                GUI.BeginGroup(new Rect(X, Y, Int32.MaxValue, Int32.MaxValue));
+                foreach (var child in Children.ToList())
                 {
                     child.Render();
                 }
+                GUI.EndGroup();
             }
-            GUI.EndGroup();
         }
 
         public override void HandleEvents() 
         {
             GUI.BeginGroup(new Rect(X, Y, Int32.MaxValue, Int32.MaxValue));
             base.HandleEvents();
-            lock (_children)
+            lock (Children)
             {
-                foreach (var child in _children.ToList())
+                foreach (var child in Children.ToList())
                 {
                     child.HandleEvents();
                 }
@@ -53,7 +51,7 @@ namespace Gridia
             if (child.Parent == null)
             {
                 child.Parent = this;
-                lock (_children) _children.Add(child);
+                lock (Children) Children.Add(child);
                 Dirty = true;
                 child.Dirty = true;
             }
@@ -63,21 +61,27 @@ namespace Gridia
             }
         }
 
-        public Renderable GetChildAt(int index) 
+        public Renderable GetChildAt(int index)
         {
-            return _children[index];
+            lock (Children)
+            {
+                return Children[index];
+            }
         }
 
-        public int GetIndexOfChild(Renderable child) 
+        public int GetIndexOfChild(Renderable child)
         {
-            return _children.IndexOf(child);
+            lock (Children)
+            {
+                return Children.IndexOf(child);
+            }
         }
 
         public void RemoveChild(Renderable child) 
         {
-            lock (_children)
+            lock (Children)
             {
-                if (!_children.Remove(child))
+                if (!Children.Remove(child))
                 {
                     throw new Exception("Child not found: " + child);
                 }
@@ -88,13 +92,13 @@ namespace Gridia
 
         public void RemoveChildAt(int index) 
         {
-            lock (_children) _children.RemoveAt(index);
+            lock (Children) Children.RemoveAt(index);
             Dirty = true;
         }
 
         public void RemoveAllChildren() 
         {
-            lock (_children) _children.Clear();
+            lock (Children) Children.Clear();
             Dirty = true;
         }
 
@@ -102,7 +106,7 @@ namespace Gridia
         {
             var width = 0f;
             var height = 0f;
-            foreach (var child in _children)
+            foreach (var child in Children)
             {
                 width = Math.Max(width, (child.Width + child.X) );
                 height = Math.Max(height, (child.Height + child.Y) );

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gridia
 {
     public class GUITestDriver : MonoBehaviour
     {
-        RenderableContainer displayList;
-        TabbedUI tabWindow;
+        RenderableContainer _displayList;
+        TabbedUI _tabWindow;
 
         public void Start() 
         {
@@ -19,16 +16,15 @@ namespace Gridia
             Locator.Provide(cm = new ContentManager("demo-world"));
             Locator.Provide(new TextureManager("demo-world"));
 
-            tabWindow = new TabbedUI(new Vector2(float.MaxValue, 0));
-            tabWindow.ScaleXY = 3;
+            _tabWindow = new TabbedUI(new Vector2(float.MaxValue, 0)) {ScaleXY = 3};
 
             // inv window
 
             var invWindow = new ContainerWindow(Vector2.zero);
-            tabWindow.Add(123, invWindow, true);
+            _tabWindow.Add(123, invWindow, true);
 
             var inv = new List<ItemInstance>();
-            for (int i = 0; i < 25; i++)
+            for (var i = 0; i < 25; i++)
             {
                 inv.Add(cm.GetItem(i).GetInstance(i));
             }
@@ -39,15 +35,15 @@ namespace Gridia
 
             // test window
 
-            displayList = new RenderableContainer(Vector2.zero);
+            _displayList = new RenderableContainer(Vector2.zero);
             var container = new RenderableContainer(Vector2.zero);
             var container2 = new ExtendibleGrid(new Vector2(32, 64));
             container2.SetTilesAcross(6);
 
-            displayList.AddChild(container);
-            displayList.AddChild(container2);
+            _displayList.AddChild(container);
+            _displayList.AddChild(container2);
 
-            for (int x = 0; x < 5; x++)
+            for (var x = 0; x < 5; x++)
             {
                 var renderable = new ItemRenderable(new Vector2(x * 32, 0), cm.GetItem(x).GetInstance(1));
                 container.AddChild(renderable);
@@ -55,7 +51,7 @@ namespace Gridia
             }
             container.ScaleXY = Mathf.Sqrt(2);
 
-            for (int x = 0; x < 25; x++)
+            for (var x = 0; x < 25; x++)
             {
                 var renderable = new ItemRenderable(new Vector2(x * 32, 0), cm.GetItem(x).GetInstance(1));
                 container2.AddChild(renderable);
@@ -63,8 +59,8 @@ namespace Gridia
             container2.ScaleXY = 2;
 
             var testWindow = new GridiaWindow(Vector2.zero, "test");
-            testWindow.AddChild(displayList);
-            tabWindow.Add(11, testWindow, true);
+            testWindow.AddChild(_displayList);
+            _tabWindow.Add(11, testWindow, true);
 
             // components
 
@@ -74,13 +70,13 @@ namespace Gridia
 
             var componentsWindow = new GridiaWindow(Vector2.zero, "components");
             componentsWindow.AddChild(components);
-            tabWindow.Add(12, componentsWindow, true);
+            _tabWindow.Add(12, componentsWindow, true);
         }
 
         public void OnGUI() 
         {
-            tabWindow.Render();
-            ToolTipRenderable.instance.Render();
+            _tabWindow.Render();
+            ToolTipRenderable.Instance.Render();
         }
     }
 }

@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Gridia 
 {
     public class GridiaWindow : RenderableContainer
     {
-        private static int _NEXT_WINDOW_ID;
+        private static int _nextWindowId;
 
         public int WindowId { get; private set; }
         public Renderable Icon { get; set; }
@@ -29,7 +26,7 @@ namespace Gridia
             _rect.width = _rect.height = 300;
             Resizeable = Moveable = Visible = true;
             ResizeOnHorizontal = ResizeOnVertical = true;
-            WindowId = _NEXT_WINDOW_ID++;
+            WindowId = _nextWindowId++;
             WindowName = windowName;
             BorderSize = 25;
         }
@@ -52,53 +49,49 @@ namespace Gridia
             {
                 Resize();
             }
-            if (Visible) 
+            if (!Visible) return;
+            MouseOver = Rect.Contains(Event.current.mousePosition);
+
+            GUI.skin = Skin;
+
+            // what a hack...
+            var modifiedRect = GUI.Window(WindowId, new Rect(X, Y, Width + BorderSize * 2, Height + BorderSize * 2), windowId =>
             {
-                MouseOver = Rect.Contains(Event.current.mousePosition);
-
-                GUI.skin = Skin;
-
-                // what a hack...
-                var modifiedRect = GUI.Window(WindowId, new Rect(X, Y, Width + BorderSize * 2, Height + BorderSize * 2), windowId =>
+                if (Icon != null)
                 {
-                    if (Icon != null)
-                    {
-                        Icon.Width = 4 * BorderSize / 5;
-                        Icon.Height = 4 * BorderSize / 5;
-                        Icon.X = BorderSize / 5;
-                        Icon.Y = BorderSize / 5;
-                        Icon.Render();
-                    }
-                    if (Moveable) 
-                    {
-                        RenderDrag();
-                    }
-                    if (Resizeable)
-                    {
-                        RenderResize();
-                    }
-                    GUILayout.BeginArea(new Rect(BorderSize - X, BorderSize - Y, Int32.MaxValue, Int32.MaxValue));
-                    base.Render();
-                    GUILayout.EndArea();
-                }, WindowName);
-
-                Rect = new Rect(modifiedRect.x, modifiedRect.y, modifiedRect.width - BorderSize * 2, modifiedRect.height - BorderSize * 2);
-
-                if (!ResizingWindow)
-                {
-                    ClampPosition();
+                    Icon.Width = 4 * BorderSize / 5;
+                    Icon.Height = 4 * BorderSize / 5;
+                    Icon.X = BorderSize / 5;
+                    Icon.Y = BorderSize / 5;
+                    Icon.Render();
                 }
+                if (Moveable) 
+                {
+                    RenderDrag();
+                }
+                if (Resizeable)
+                {
+                    RenderResize();
+                }
+                GUILayout.BeginArea(new Rect(BorderSize - X, BorderSize - Y, Int32.MaxValue, Int32.MaxValue));
+                base.Render();
+                GUILayout.EndArea();
+            }, WindowName);
+
+            Rect = new Rect(modifiedRect.x, modifiedRect.y, modifiedRect.width - BorderSize * 2, modifiedRect.height - BorderSize * 2);
+
+            if (!ResizingWindow)
+            {
+                ClampPosition();
             }
         }
 
         public override void HandleEvents()
         {
-            if (Visible)
-            {
-                GUI.BeginGroup(new Rect(BorderSize, BorderSize, Int32.MaxValue, Int32.MaxValue));
-                base.HandleEvents();
-                GUI.EndGroup();
-            }
+            if (!Visible) return;
+            GUI.BeginGroup(new Rect(BorderSize, BorderSize, Int32.MaxValue, Int32.MaxValue));
+            base.HandleEvents();
+            GUI.EndGroup();
         }
 
         protected virtual void Resize()

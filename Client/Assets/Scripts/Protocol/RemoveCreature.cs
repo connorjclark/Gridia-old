@@ -7,9 +7,9 @@ namespace Gridia.Protocol
     {
         protected override void Handle(ConnectionToGridiaServerHandler connection, JObject data)
         {
-            int id = (int)data["id"];
+            var id = (int) data["id"];
 
-            connection.GetGame().tileMap.RemoveCreature(id);
+            connection.GetGame().TileMap.RemoveCreature(id);
         }
     }
 }

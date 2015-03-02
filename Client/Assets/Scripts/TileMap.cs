@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gridia
@@ -12,9 +11,9 @@ namespace Gridia
 
     public class TileMap
     {
-        private Tile[] tiles;
-        public ConcurrentDictionary<int, Creature> creatures = new ConcurrentDictionary<int, Creature>();
-        private Sector[, ,] _sectors;
+        private Tile[] _tiles;
+        public ConcurrentDictionary<int, Creature> Creatures = new ConcurrentDictionary<int, Creature>();
+        private readonly Sector[, ,] _sectors;
         public int Size { get; private set; }
         public int Depth { get; private set; }
         public int SectorSize { get; private set; }
@@ -51,7 +50,7 @@ namespace Gridia
             y = Wrap(y);
             var sx = x / SectorSize;
             var sy = y / SectorSize;
-            Sector sector = _sectors[sx, sy, z];
+            var sector = _sectors[sx, sy, z];
             if (sector == null)
             {
                 Locator.Get<ConnectionToGridiaServerHandler>().SectorRequest(sx, sy, z);
@@ -61,15 +60,15 @@ namespace Gridia
 
         public void CreateCreature(int id, String name, CreatureImage image, int x, int y, int z)
         {
-            if (!creatures.HasKey(id))
+            if (!Creatures.HasKey(id))
             {
-                creatures[id] = new Creature(id, name, image, x, y, z);
+                Creatures[id] = new Creature(id, name, image, x, y, z);
             }
         }
 
         public void RemoveCreature(int id)
         {
-            creatures.Remove(id);
+            Creatures.Remove(id);
         }
 
         public void MoveCreature(int id, int x, int y, int z, bool onRaft, long time)
@@ -84,7 +83,7 @@ namespace Gridia
         public Creature GetCreature(int id) 
         {
             Creature cre;
-            creatures.TryGetValue(id, out cre);
+            Creatures.TryGetValue(id, out cre);
             if (cre == null)
             {
                 Locator.Get<ConnectionToGridiaServerHandler>().CreatureRequest(id);
@@ -94,7 +93,7 @@ namespace Gridia
 
         public Creature GetCreatureAt(Vector3 loc) 
         {
-            return creatures.ValuesToList().Find(cre => 
+            return Creatures.ValuesToList().Find(cre => 
             {
                 var pos = cre.Position;
                 return (int)pos.x == loc.x && (int)pos.y == loc.y && pos.z == loc.z;
@@ -112,8 +111,7 @@ namespace Gridia
             y = Wrap(y);
             var sector = GetSectorOf(x, y, z);
             if (sector == null) {
-                var tileFacade = new Tile();
-                tileFacade.Item = new ItemInstance(Locator.Get<ContentManager>().GetItem(0));
+                var tileFacade = new Tile {Item = new ItemInstance(Locator.Get<ContentManager>().GetItem(0))};
                 return tileFacade;
             }
             return sector.GetTile(x % SectorSize, y % SectorSize);
@@ -129,11 +127,6 @@ namespace Gridia
             GetTile (x, y, z).Item = item;
         }
 
-        /*private Tile GetTileOfCreature(Creature creature) {
-            var pos = creature.Position;
-            return GetTile((int)pos.x, (int)pos.y, (int)pos.z);
-        }*/
-
         public bool Walkable(Vector3 destination)
         {
             return Walkable((int)destination.x, (int)destination.y, (int)destination.z);
@@ -147,7 +140,7 @@ namespace Gridia
 
         public int Wrap (int value)
         {
-            int mod = value % Size;
+            var mod = value % Size;
             return mod < 0 ? Size + mod : mod;
         }
 
@@ -157,9 +150,9 @@ namespace Gridia
         }
 
         public int ToIndex(Vector3 v) {
-            int x = Wrap((int)v.x);
-            int y = Wrap((int)v.y);
-            int z = (int)v.z;
+            var x = Wrap((int)v.x);
+            var y = Wrap((int)v.y);
+            var z = (int)v.z;
             return x + y * Size + z * Area;
         }
 
@@ -172,25 +165,11 @@ namespace Gridia
 
             if (Math.Abs(d1) < Math.Abs(d2))
             {
-                if (Math.Abs(d1) < Math.Abs(d3))
-                {
-                    return d1;
-                }
-                else
-                {
-                    return d3;
-                }
+                return Math.Abs(d1) < Math.Abs(d3) ? d1 : d3;
             }
             else
             {
-                if (Math.Abs(d2) < Math.Abs(d3))
-                {
-                    return d2;
-                }
-                else
-                {
-                    return d3;
-                }
+                return Math.Abs(d2) < Math.Abs(d3) ? d2 : d3;
             }
         }
 
@@ -202,25 +181,11 @@ namespace Gridia
 
             if (Math.Abs(d1) < Math.Abs(d2))
             {
-                if (Math.Abs(d1) < Math.Abs(d3))
-                {
-                    return d1;
-                }
-                else
-                {
-                    return d3;
-                }
+                return Math.Abs(d1) < Math.Abs(d3) ? d1 : d3;
             }
             else
             {
-                if (Math.Abs(d2) < Math.Abs(d3))
-                {
-                    return d2;
-                }
-                else
-                {
-                    return d3;
-                }
+                return Math.Abs(d2) < Math.Abs(d3) ? d2 : d3;
             }
         }
     }

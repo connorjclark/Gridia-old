@@ -8,20 +8,20 @@ namespace Gridia.Protocol
         protected override void Handle(ConnectionToGridiaServerHandler connection, JObject data)
         {
             var game = connection.GetGame();
-            int id = (int)data["id"];
-            int x = (int)data["loc"]["x"];
-            int y = (int)data["loc"]["y"];
-            int z = (int)data["loc"]["z"];
-            long time = (long)data["time"] - Creature.RENDER_DELAY;
-            bool isTeleport = (bool)data["isTeleport"];
-            bool onRaft = (bool)data["onRaft"];
+            var id = (int) data["id"];
+            var x = (int) data["loc"]["x"];
+            var y = (int) data["loc"]["y"];
+            var z = (int) data["loc"]["z"];
+            var time = (long) data["time"] - Creature.RENDER_DELAY;
+            var isTeleport = (bool) data["isTeleport"];
+            var onRaft = (bool) data["onRaft"];
 
-            if (id != game.view.FocusId || isTeleport)
+            if (id != game.View.FocusId || isTeleport)
             {
-                game.tileMap.MoveCreature(id, x, y, z, onRaft, time);
+                game.TileMap.MoveCreature(id, x, y, z, onRaft, time);
                 if (isTeleport)
                 {
-                    var cre = game.tileMap.GetCreature(id);
+                    var cre = game.TileMap.GetCreature(id);
                     if (cre != null)
                     {
                         cre.ClearSnapshots(1);

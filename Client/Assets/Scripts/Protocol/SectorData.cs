@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using Serving;
+﻿using Serving;
 
 namespace Gridia.Protocol
 {
@@ -11,27 +10,25 @@ namespace Gridia.Protocol
             var sx = data.ReadInt32();
             var sy = data.ReadInt32();
             var sz = data.ReadInt32();
-            var sectorSize = connection.GetGame().tileMap.SectorSize;
+            var sectorSize = connection.GetGame().TileMap.SectorSize;
             var tiles = new Tile[sectorSize, sectorSize];
             var cm = Locator.Get<ContentManager>();
 
-            for (int x = 0; x < sectorSize; x++)
+            for (var x = 0; x < sectorSize; x++)
             {
-                for (int y = 0; y < sectorSize; y++)
+                for (var y = 0; y < sectorSize; y++)
                 {
                     var floor = data.ReadInt16();
                     var itemType = data.ReadInt16();
                     var itemQuantity = data.ReadInt16();
-                    var tile = new Tile();
-                    tile.Floor = floor;
-                    tile.Item = cm.GetItem(itemType).GetInstance(itemQuantity);
+                    var tile = new Tile {Floor = floor, Item = cm.GetItem(itemType).GetInstance(itemQuantity)};
                     tiles[x, y] = tile;
                 }
             }
-            game.tileMap.SetSector(new Sector(tiles), sx, sy, sz);
+            game.TileMap.SetSector(new Sector(tiles), sx, sy, sz);
 
             var numCreatures = data.ReadInt32();
-            for (int i = 0; i < numCreatures; i++)
+            for (var i = 0; i < numCreatures; i++)
             {
                 var id = data.ReadInt16();
                 var name = data.ReadJavaUTF();
@@ -40,26 +37,31 @@ namespace Gridia.Protocol
                 var z = data.ReadInt16();
                 var imageType = data.ReadInt16();
                 CreatureImage image = null;
-                if (imageType == 0)
+                switch (imageType)
                 {
-                    var defaultImage = new DefaultCreatureImage();
-                    defaultImage.SpriteIndex = data.ReadInt16();
-                    defaultImage.Width = data.ReadInt16();
-                    defaultImage.Height = data.ReadInt16();
-                    image = defaultImage;
+                    case 0:
+                        var defaultImage = new DefaultCreatureImage
+                        {
+                            SpriteIndex = data.ReadInt16(),
+                            Width = data.ReadInt16(),
+                            Height = data.ReadInt16()
+                        };
+                        image = defaultImage;
+                        break;
+                    case 1:
+                        var customImage = new CustomPlayerImage
+                        {
+                            Head = data.ReadInt16(),
+                            Chest = data.ReadInt16(),
+                            Legs = data.ReadInt16(),
+                            Arms = data.ReadInt16(),
+                            Weapon = data.ReadInt16(),
+                            Shield = data.ReadInt16()
+                        };
+                        image = customImage;
+                        break;
                 }
-                else if (imageType == 1)
-                {
-                    var customImage = new CustomPlayerImage();
-                    customImage.Head = data.ReadInt16();
-                    customImage.Chest = data.ReadInt16();
-                    customImage.Legs = data.ReadInt16();
-                    customImage.Arms = data.ReadInt16();
-                    customImage.Weapon = data.ReadInt16();
-                    customImage.Shield = data.ReadInt16();
-                    image = customImage;
-                }
-                game.tileMap.CreateCreature(id, name, image, x, y, z);
+                game.TileMap.CreateCreature(id, name, image, x, y, z);
             }
         }
     }

@@ -1,12 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-//using System.Net.NetworkInformation;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
 using UnityEngine;
 
 namespace Gridia
@@ -24,17 +16,21 @@ namespace Gridia
             var usernameLabel = new Label(Vector2.zero, "Username: ");
             _displayList.AddChild(usernameLabel);
 
-            var usernameInput = new TextField(new Vector2(80, 0), "usernameInput", 300, 20);
-            usernameInput.MaxChars = 20;
-            usernameInput.Text = SceneManager.GetArguement<String>("username");
+            var usernameInput = new TextField(new Vector2(80, 0), "usernameInput", 300, 20)
+            {
+                MaxChars = 20,
+                Text = SceneManager.GetArguement<String>("username")
+            };
             _displayList.AddChild(usernameInput);
 
             var passwordLabel = new Label(new Vector2(0, 30), "Password: ");
             _displayList.AddChild(passwordLabel);
 
-            var passwordInput = new TextField(new Vector2(80, 30), "passwordInput", 300, 20);
-            passwordInput.PasswordField = true;
-            passwordInput.Text = SceneManager.GetArguement<String>("password");
+            var passwordInput = new TextField(new Vector2(80, 30), "passwordInput", 300, 20)
+            {
+                PasswordField = true,
+                Text = SceneManager.GetArguement<String>("password")
+            };
             _displayList.AddChild(passwordInput);
 
             var registerButton = new Button(new Vector2(0, 60), "Create Account");
@@ -73,20 +69,18 @@ namespace Gridia
             _displayList.Render();
 
             // :(
-            if (ErrorMessage != null)
+            if (ErrorMessage == null) return;
+            const int width = 400;
+            const int height = 75;
+            var x = (Screen.width - width) / 2;
+            var y = (Screen.height - height) / 2;
+            GUI.Window(0, new Rect(x, y, width, height), id =>
             {
-                var width = 400;
-                var height = 75;
-                var x = (Screen.width - width) / 2;
-                var y = (Screen.height - height) / 2;
-                GUI.Window(0, new Rect(x, y, width, height), id =>
+                if (GUI.Button(new Rect(200 - 50 / 2, 30, 50, 20), "OK"))
                 {
-                    if (GUI.Button(new Rect(200 - 50 / 2, 30, 50, 20), "OK"))
-                    {
-                        ErrorMessage = null;
-                    }
-                }, ErrorMessage);
-            }
+                    ErrorMessage = null;
+                }
+            }, ErrorMessage);
         }
 
         public void Update()

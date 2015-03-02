@@ -20,13 +20,13 @@ namespace Gridia.Protocol
             switch (type)
             {
                 case "Inventory":
-                    var invWindow = Locator.Get<GridiaDriver>().invGui;
+                    var invWindow = Locator.Get<GridiaDriver>().InvGui;
                     invWindow.Set(items, id);
                     invWindow.ShowSelected = true;
                     invWindow.SelectedColor = new Color32(255, 255, 0, 50);
                     break;
                 case "Equipment":
-                    Locator.Get<GridiaDriver>().equipmentGui.Set(items, id);
+                    Locator.Get<GridiaDriver>().EquipmentGui.Set(items, id);
                     break;
                 default:
                     Locator.Get<GridiaDriver>().AddNewContainer(items, id, tabGfxItemId);

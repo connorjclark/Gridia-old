@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Net.Sockets;
 using System.Threading;
 using UnityEngine;
@@ -100,8 +99,7 @@ namespace Gridia
                     processInfo.Arguments = "-jar server.jar";
                 }
 
-                System.Diagnostics.Process proc = new System.Diagnostics.Process();
-                proc.StartInfo = processInfo;
+                var proc = new System.Diagnostics.Process {StartInfo = processInfo};
                 proc.Start();
             }
         #endif
@@ -123,8 +121,7 @@ namespace Gridia
             if (connecting)
             {
                 var labelMessage = _conn.FileDownloadStatus;
-                var centeredTextStyle = new GUIStyle("label");
-                centeredTextStyle.fontSize = 16;
+                var centeredTextStyle = new GUIStyle("label") {fontSize = 16};
                 var textSize = centeredTextStyle.CalcSize(new GUIContent(labelMessage));
                 var x = (Screen.width - textSize.x) / 2;
                 var y = (Screen.height - textSize.y) / 2;
@@ -136,8 +133,8 @@ namespace Gridia
                 _displayList.Render();
 
                 var runningY = 0.0f;
-                var spacing = 15;
-                for (int i = 0; i < _displayList.NumChildren; i++)
+                const int spacing = 15;
+                for (var i = 0; i < _displayList.NumChildren; i++)
                 {
                     var child = _displayList.GetChildAt(i);
                     child.X = (Screen.width - child.Width) / 2;

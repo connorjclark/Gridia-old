@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using Serving;
-using System;
 
 namespace Gridia.Protocol
 {
@@ -8,10 +7,10 @@ namespace Gridia.Protocol
     {
         protected override void Handle(ConnectionToGridiaServerHandler connection, JObject data)
         {
-            int id = (int)data["id"];
-            var name = (String)data["name"];
+            var id = (int) data["id"];
+            var name = (string) data["name"];
 
-            connection.GetGame().tileMap.GetCreature(id).Name = name;
+            connection.GetGame().TileMap.GetCreature(id).Name = name;
         }
     }
 }

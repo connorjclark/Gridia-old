@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Gridia
@@ -24,15 +21,13 @@ namespace Gridia
 
         private void MakeButton(String label, Vector2 pos, Action onClick) 
         {
-            var button = new Button(pos, label);
-            button.OnClick = onClick;
+            var button = new Button(pos, label) {OnClick = onClick};
             AddChild(button);
         }
 
         private void MakeToggle(String label, bool initialState, Vector2 pos, Action<bool> onToggle) 
         {
-            var toggle = new Toggle(pos, label, initialState);
-            toggle.OnToggle = onToggle;
+            var toggle = new Toggle(pos, label, initialState) {OnToggle = onToggle};
             AddChild(toggle);
         }
     }
