@@ -29128,32 +29128,6 @@
       ]
    },
    {
-      "successMessage":"You milk the cow.",
-      "tool":1120,
-      "focus":0,
-      "focusQuantityConsumed":0,
-      "toolQuantityConsumed":0,
-      "products":[
-         1052
-      ],
-      "quantities":[
-         2
-      ]
-   },
-   {
-      "successMessage":"You shear the sheep.",
-      "tool":277,
-      "focus":0,
-      "focusQuantityConsumed":0,
-      "toolQuantityConsumed":0,
-      "products":[
-         1666
-      ],
-      "quantities":[
-         1
-      ]
-   },
-   {
       "successMessage":"You get some cuttings.",
       "tool":277,
       "focus":2150,
