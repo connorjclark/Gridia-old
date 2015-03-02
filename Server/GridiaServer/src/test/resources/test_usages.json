@@ -25,11 +25,10 @@
   {
     "tool":8,
     "focus":9,
+    "successTool":10,
     "products":[
-      4
     ],
     "quantities":[
-      1
     ],
     "focusQuantityConsumed": 0
   },

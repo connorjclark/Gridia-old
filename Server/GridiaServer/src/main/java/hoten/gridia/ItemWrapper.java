@@ -28,7 +28,7 @@ public interface ItemWrapper {
 
         @Override
         public boolean addItemToSource(ItemInstance itemToAdd) {
-            return _server.addItemNear(_location, itemToAdd, 3);
+            return _server.addItemNear(_location, itemToAdd, 6, true);
         }
 
         @Override
@@ -68,6 +68,14 @@ public interface ItemWrapper {
 
         public void setItemAbove(ItemInstance newItem) {
             _server.changeItem(_location.add(0, 0, -1), newItem);
+        }
+
+        public boolean moveItemAbove() {
+            return _server.moveItemOutOfTheWay(_location.add(0, 0, -1));
+        }
+
+        public boolean moveItemBelow() {
+            return _server.moveItemOutOfTheWay(_location.add(0, 0, 1));
         }
     }
 

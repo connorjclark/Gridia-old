@@ -138,7 +138,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         cre.life -= lifePoints;
         if (cre.life <= 0) {
             sendToClientsWithAreaLoaded(messageBuilder.animation(45, cre.location), cre.location);
-            addItemNear(cre.location, contentManager.createItemInstance(1022), 10);
+            addItemNear(cre.location, contentManager.createItemInstance(1022), 10, true);
             if (cre.belongsToPlayer) {
                 moveCreatureTo(cre, tileMap.getDefaultPlayerSpawn(), true);
             } else {
@@ -152,7 +152,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         if (cre.inventory != null) {
             List<ItemInstance> items = cre.inventory.getItems();
             items.stream().forEach((item) -> {
-                addItemNear(cre.location, item, 10);
+                addItemNear(cre.location, item, 10, true);
             });
             for (int i = 0; i < items.size(); i++) {
                 cre.inventory.deleteSlot(i);
@@ -321,10 +321,10 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
 
     //attempts to add an item at location, but if it is occupied, finds a nearby location
     //goes target, leftabove target, above target, rightabove target, left target, right target, leftbelow target...
-    public boolean addItemNear(Coord loc, ItemInstance item, int bufferzone) {
+    public boolean addItemNear(Coord loc, ItemInstance item, int bufferzone, boolean includeTargetLocation) {
         int x0 = loc.x;
         int y0 = loc.y;
-        for (int offset = 0; offset <= bufferzone; offset++) {
+        for (int offset = includeTargetLocation ? 0 : 1; offset <= bufferzone; offset++) {
             for (int y1 = y0 - offset; y1 <= offset + y0; y1++) {
                 if (y1 == y0 - offset || y1 == y0 + offset) {
                     for (int x1 = x0 - offset; x1 <= offset + x0; x1++) {
@@ -349,7 +349,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     }
 
     public boolean addItemNear(int index, ItemInstance item, int bufferzone) {
-        return addItemNear(tileMap.getCoordFromIndex(index), item, bufferzone);
+        return addItemNear(tileMap.getCoordFromIndex(index), item, bufferzone, true);
     }
 
     public void updateContainerSlot(Container container, int slotIndex) {
@@ -441,5 +441,9 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
 
     public void forEachClient(Consumer<ConnectionToGridiaClientHandler> consumer) {
         _clients.forEach(consumer);
+    }
+
+    public boolean moveItemOutOfTheWay(Coord loc) {
+        return addItemNear(loc, tileMap.getItem(loc), 10, false);
     }
 }

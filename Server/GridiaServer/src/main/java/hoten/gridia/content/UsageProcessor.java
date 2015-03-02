@@ -12,6 +12,7 @@ public class UsageProcessor {
 
         public ItemInstance tool;
         public ItemInstance focus;
+        public ItemInstance successTool;
         public List<ItemInstance> products;
     }
 
@@ -31,6 +32,10 @@ public class UsageProcessor {
         result.tool = tool.remove(usage.toolQuantityConsumed);
         result.focus = focus.remove(usage.focusQuantityConsumed);
 
+        if (usage.successTool != -1) {
+            result.successTool = _contentManager.createItemInstance(usage.successTool, 1, tool.getData());
+        }
+
         // :(
         result.products = new ArrayList<>();
         for (int i = 0; i < usage.products.size(); i++) {
@@ -42,9 +47,37 @@ public class UsageProcessor {
         return result;
     }
 
+    // :(
+    private void makeCaveIfNecessary(UsageResult result, ItemWrapper focus) {
+        if (!result.products.isEmpty()) {
+            Item firstResult = result.products.get(0).getItem();
+            if (firstResult.isCave()) {
+                ItemWrapper.WorldItemWrapper focusAsWorld = (ItemWrapper.WorldItemWrapper) focus;
+                if (firstResult.itemClass == ItemClass.Cave_down) {
+                    ItemInstance below = focusAsWorld.getItemBelow();
+                    if (below.getItem().itemClass != ItemClass.Cave_up) {
+                        if (below == ItemInstance.NONE || focusAsWorld.moveItemBelow()) {
+                            focusAsWorld.setItemBelow(_contentManager.createItemInstance(981));
+                        }
+                    }
+                } else {
+                    ItemInstance above = focusAsWorld.getItemAbove();
+                    if (above.getItem().itemClass != ItemClass.Cave_down) {
+                        if (above == ItemInstance.NONE || focusAsWorld.moveItemAbove()) {
+                            focusAsWorld.setItemAbove(_contentManager.createItemInstance(980));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     void implementResult(UsageResult result, ItemWrapper tool, ItemWrapper focus) {
         if (tool.getItemInstance() != ItemInstance.NONE) {
             tool.changeWrappedItem(result.tool);
+            if (result.successTool != null) {
+                tool.addItemToSource(result.successTool);
+            }
         }
         focus.changeWrappedItem(result.focus);
         for (int i = 0; i < result.products.size(); i++) {
@@ -52,20 +85,6 @@ public class UsageProcessor {
                 focus.addItemToSource(result.products.get(i));
             } else {
                 tool.addItemToSource(result.products.get(i));
-            }
-        }
-
-        Item firstResult = result.products.get(0).getItem();
-        if (firstResult.isCave()) {
-            ItemWrapper.WorldItemWrapper focusAsWorld = (ItemWrapper.WorldItemWrapper) focus;
-            if (firstResult.itemClass == ItemClass.Cave_down) {
-                if (focusAsWorld.getItemBelow() == ItemInstance.NONE) {
-                    focusAsWorld.setItemBelow(_contentManager.createItemInstance(981));
-                }
-            } else {
-                if (focusAsWorld.getItemAbove() == ItemInstance.NONE) {
-                    focusAsWorld.setItemAbove(_contentManager.createItemInstance(980));
-                }
             }
         }
     }
@@ -80,19 +99,21 @@ public class UsageProcessor {
             return false;
         }
 
-        Item firstResult = result.products.get(0).getItem();
-        if (firstResult.isCave()) {
-            if (focusIsContainer) {
-                return false;
-            } else {
-                ItemWrapper.WorldItemWrapper focusAsWorld = (ItemWrapper.WorldItemWrapper) focus;
-                if (firstResult.itemClass == ItemClass.Cave_down) {
-                    if (focusAsWorld.isLowestLevel() || !isCaveOrNothing(focusAsWorld.getItemBelow())) {
-                        return false;
-                    }
-                } else if (firstResult.itemClass == ItemClass.Cave_up) {
-                    if (focusAsWorld.isHighestLevel() || !isCaveOrNothing(focusAsWorld.getItemAbove())) {
-                        return false;
+        if (!result.products.isEmpty()) {
+            Item firstResult = result.products.get(0).getItem();
+            if (firstResult.isCave()) {
+                if (focusIsContainer) {
+                    return false;
+                } else {
+                    ItemWrapper.WorldItemWrapper focusAsWorld = (ItemWrapper.WorldItemWrapper) focus;
+                    if (firstResult.itemClass == ItemClass.Cave_down) {
+                        if (focusAsWorld.isLowestLevel()) {
+                            return false;
+                        }
+                    } else if (firstResult.itemClass == ItemClass.Cave_up) {
+                        if (focusAsWorld.isHighestLevel()) {
+                            return false;
+                        }
                     }
                 }
             }
@@ -105,6 +126,7 @@ public class UsageProcessor {
         UsageResult result = getUsageResult(usage, tool.getItemInstance(), focus.getItemInstance());
         boolean success = validate(result, usage, tool, focus);
         if (success) {
+            makeCaveIfNecessary(result, focus);
             implementResult(result, tool, focus);
         }
         return success;

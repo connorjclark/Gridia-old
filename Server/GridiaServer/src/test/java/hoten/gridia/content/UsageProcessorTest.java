@@ -132,7 +132,7 @@ public class UsageProcessorTest {
         ItemInstance ripeAppleTree = _contentManager.createItemInstanceByName("Ripe Apple Tree");
         ItemInstance bareAppleTree = _contentManager.createItemInstanceByName("Bare Apple Tree");
         ItemInstance apples = _contentManager.createItemInstanceByName("Apple", 10);
-        
+
         ItemWrapper mockToolWrapped = createMock(ItemWrapper.class);
         expect(mockToolWrapped.getItemInstance()).andReturn(_hand).anyTimes();
         expect(mockToolWrapped.addItemToSource(apples)).andReturn(true);
@@ -157,7 +157,7 @@ public class UsageProcessorTest {
         ItemUse usage = _contentManager.getItemUse(_hand.getItem(), closedDoor.getItem(), 0);
 
         ItemWrapper mockToolWrapped = createMock(ItemWrapper.class);
-        expect(mockToolWrapped.getItemInstance()).andReturn(_hand).anyTimes();
+        expect(mockToolWrapped.getItemInstance()).andReturn(_hand).atLeastOnce();
         replay(mockToolWrapped);
 
         ItemWrapper mockFocusWrapped = createNiceMock(ItemWrapper.class);
@@ -165,28 +165,49 @@ public class UsageProcessorTest {
         replay(mockFocusWrapped);
 
         _processor.processUsage(usage, mockToolWrapped, mockFocusWrapped);
-        
+
         verify(mockToolWrapped);
     }
-    
+
     @Test
-    public void testToolWhenNotHandAndFocusChanges() {
+    public void testFocusChangesWhenToolNotHand() {
         ItemInstance axe = _contentManager.createItemInstanceByName("Axe");
         ItemInstance tree = _contentManager.createItemInstanceByName("Tree");
         ItemUse usage = _contentManager.getItemUse(axe.getItem(), tree.getItem(), 0);
 
         ItemWrapper mockToolWrapped = createNiceMock(ItemWrapper.class);
-        expect(mockToolWrapped.getItemInstance()).andReturn(axe).anyTimes();
-        mockToolWrapped.changeWrappedItem(anyObject());
+        expect(mockToolWrapped.getItemInstance()).andReturn(axe).atLeastOnce();
+        /* expect */ mockToolWrapped.changeWrappedItem(anyObject());
         replay(mockToolWrapped);
 
         ItemWrapper mockFocusWrapped = createNiceMock(ItemWrapper.class);
-        expect(mockFocusWrapped.getItemInstance()).andReturn(tree).anyTimes();
-        mockFocusWrapped.changeWrappedItem(anyObject());
+        expect(mockFocusWrapped.getItemInstance()).andReturn(tree).atLeastOnce();
+        /* expect */ mockFocusWrapped.changeWrappedItem(anyObject());
         replay(mockFocusWrapped);
 
         _processor.processUsage(usage, mockToolWrapped, mockFocusWrapped);
-        
+
+        verify(mockToolWrapped);
+    }
+
+    @Test
+    public void testSuccessToolIsAddedToToolSource() {
+        ItemInstance meat = _contentManager.createItemInstanceByName("Meat");
+        ItemInstance fire = _contentManager.createItemInstanceByName("Fire");
+        ItemInstance cookedMeat = _contentManager.createItemInstanceByName("Cooked Meat");
+        ItemUse usage = _contentManager.getItemUse(meat.getItem(), fire.getItem(), 0);
+
+        ItemWrapper mockToolWrapped = createNiceMock(ItemWrapper.class);
+        expect(mockToolWrapped.getItemInstance()).andReturn(meat).atLeastOnce();
+        expect(mockToolWrapped.addItemToSource(cookedMeat)).andReturn(true).once();
+        replay(mockToolWrapped);
+
+        ItemWrapper mockFocusWrapped = createNiceMock(ItemWrapper.class);
+        expect(mockFocusWrapped.getItemInstance()).andReturn(fire).atLeastOnce();
+        replay(mockFocusWrapped);
+
+        _processor.processUsage(usage, mockToolWrapped, mockFocusWrapped);
+
         verify(mockToolWrapped);
     }
 }
