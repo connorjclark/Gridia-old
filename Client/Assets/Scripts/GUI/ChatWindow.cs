@@ -22,10 +22,12 @@ namespace Gridia
             };
             AddChild(ChatInput);
 
-            Append("Type !help for instructions.");
+            Append("Type !help for instructions.\nIf you find any *bugs*, please *report* them here: https://github.com/Hoten/Gridia/issues");
 
             // :(
             _helpMessage = @"<color=blue>*Gridia instructions*</color>
+
+If you find any *bugs*, please *report* them here: https://github.com/Hoten/Gridia/issues
 
 For a video demonstration and introduction to Gridia, check out this video on YouTube: https://www.youtube.com/watch?v=zpi_QMDMhW0
 
