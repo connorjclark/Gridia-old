@@ -23,8 +23,8 @@ namespace Gridia
 
             _displayList = new RenderableContainer(Vector2.zero);
 
-            _displayList.AddChild(CreateConnectButton(Vector2.zero, "localhost", 1044));
             _displayList.AddChild(CreateConnectButton(Vector2.zero, "www.hotengames.com", 1044));
+            _displayList.AddChild(CreateConnectButton(Vector2.zero, "localhost", 1044));
 
             // Connect to specified port
 

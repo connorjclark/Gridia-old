@@ -22,7 +22,6 @@ UI
   Show slot number for items 1-10 in inventory
   Move 'next' button in recipe book to far right
   color of quantity labels
-  swap local connect / hotengames
 
 Meta
   Set up forums, chatroom
