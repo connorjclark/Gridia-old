@@ -52,12 +52,7 @@ namespace Gridia
 
         private void DrawCreaturePart(Rect rect, TextureListWrapper textures, int spriteIndex)
         {
-            var textureIndex = spriteIndex / GridiaConstants.SpritesInSheet;
-            if (textureIndex >= textures.Count)
-            {
-                textureIndex = 0;
-            }
-            var texture = textures.GetTexture(textureIndex);
+            var texture = textures.GetTextureForSprite(spriteIndex);
             var textureX = (spriteIndex % GridiaConstants.SpritesInSheet) % GridiaConstants.NumTilesInSpritesheetRow;
             var textureY = 9 - (spriteIndex % GridiaConstants.SpritesInSheet) / GridiaConstants.NumTilesInSpritesheetRow;
             var texCoords = new Rect(textureX / 10.0f, textureY / 10.0f, 1 / 10.0f, 1 / 10.0f); // :( don't hardcode 10

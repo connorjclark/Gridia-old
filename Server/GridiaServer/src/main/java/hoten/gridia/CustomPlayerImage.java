@@ -42,5 +42,4 @@ public class CustomPlayerImage implements CreatureImage {
             weapon = 0;
         }
     }
-
 }
