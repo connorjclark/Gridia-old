@@ -1,38 +1,43 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Gridia
 {
-    public class ToolFocusRecipes : ExtendibleGrid
+    public class ToolFocusRecipes : RenderableContainer
     {
         private readonly List<ItemUse> _uses;
         private int _currentSelection;
         private List<ItemRenderable> _products;
+        private readonly Label _equalsLabel;
+        private readonly Button _nextButton;
 
         public ToolFocusRecipes(Vector2 pos, List<ItemUse> uses)
             : base(pos)
         {
             _uses = uses;
 
-            var focusItem = Locator.Get<ContentManager>().GetItem(uses[0].Focus).GetInstance(1);
-            var focus = new ItemRenderable(Vector2.zero, focusItem);
+            var focusItem = Locator.Get<ContentManager>().GetItem(uses[0].Focus).GetInstance();
 
-            AddChild(new Label(Vector2.zero, "+", true));
-            AddChild(focus);
-            AddChild(new Label(Vector2.zero, "=", true));
+            AddChild(new Label(new Vector2(5, 12), "+", true));
+            AddChild(new ItemRenderable(new Vector2(15, 0), focusItem));
+            AddChild(_equalsLabel = new Label(new Vector2(LastChildRight() + 5, 12), "=", true));
 
             if (_uses.Count > 1)
             {
-                var nextButton = new Button(new Vector2(32, 32), ">") {OnClick = NextSelection};
-
-                var prevButton = new Button(new Vector2(32, 32), "<") {OnClick = PreviousSelection};
-
+                var prevButton = new Button(new Vector2(LastChildRight()+ 5, 0), "<") { OnClick = PreviousSelection };
                 AddChild(prevButton);
-                AddChild(nextButton);
+                _nextButton = new Button(new Vector2(LastChildRight() + 40, 0), ">") { OnClick = NextSelection };
+                AddChild(_nextButton);
             }
 
             DisplayCurrentSelection();
+            CalculateRect();
+        }
+
+        private float LastChildRight()
+        {
+            var child = Children[Children.Count - 1];
+            return child.X + child.Width;
         }
 
         private void NextSelection()
@@ -54,16 +59,36 @@ namespace Gridia
         private void DisplayCurrentSelection()
         {
             if (_products != null)
-                _products.ToList().ForEach(p => RemoveChild(p));
+            {
+                _products.ForEach(RemoveChild);
+                _products.Clear();
+            }
+            else
+            {
+                _products = new List<ItemRenderable>();
+            }
 
             var cm = Locator.Get<ContentManager>();
             var use = _uses[_currentSelection];
-            _products = use.Products
-                .Select(product => cm.GetItem(product).GetInstance(1))
-                .Select(product => new ItemRenderable(Vector2.zero, product))
-                .ToList();
-
-            _products.ForEach(product => AddChild(product));
+            use.Products.ForEach(product =>
+            {
+                var item = cm.GetItem(product).GetInstance();
+                float x;
+                if (_products.Count == 0)
+                {
+                    x = _nextButton != null
+                        ? (_nextButton.Width + _nextButton.X + 60)
+                        : (_equalsLabel.Width + _equalsLabel.X + 10);
+                }
+                else
+                {
+                    x = LastChildRight() + 5;
+                }
+                var renderable = new ItemRenderable(Vector2.zero, item);
+                AddChild(renderable);
+                renderable.X = x;
+                _products.Add(renderable);
+            });
         }
     }
 }

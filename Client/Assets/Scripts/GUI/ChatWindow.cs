@@ -13,7 +13,7 @@ namespace Gridia
         public ChatWindow(Vector2 pos)
             : base(pos, "Chat")
         {
-            ChatArea = new TextArea(Vector2.zero, 150, 125) {MaxLength = 500};
+            ChatArea = new TextArea(Vector2.zero, 150, 125) {MaxLength = 10000};
             AddChild(ChatArea);
 
             ChatInput = new TextField(new Vector2(0, ChatArea.Height + 10), "ChatInput", 150, 30)
@@ -44,6 +44,8 @@ To select an item in your inventory, either press 1,2,3...0 to select one of the
 Or, hold *CTRL* and use the *arrow keys* to move your selection
 
 To use your selected item in the world, use the *arrow keys* and press *SPACE*
+
+Right click on an item in a container to view its Recipe Book
 
 To use your hand in the world, use the arrows keys and press *ALT*
 

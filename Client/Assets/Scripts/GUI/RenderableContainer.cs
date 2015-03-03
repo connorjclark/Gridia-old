@@ -38,10 +38,7 @@ namespace Gridia
             base.HandleEvents();
             lock (Children)
             {
-                foreach (var child in Children.ToList())
-                {
-                    child.HandleEvents();
-                }
+                Children.ForEach(child => child.HandleEvents());
             }
             GUI.EndGroup();
         }
@@ -106,10 +103,13 @@ namespace Gridia
         {
             var width = 0f;
             var height = 0f;
-            foreach (var child in Children)
+            lock (Children)
             {
-                width = Math.Max(width, (child.Width + child.X) );
-                height = Math.Max(height, (child.Height + child.Y) );
+                foreach (var child in Children)
+                {
+                    width = Math.Max(width, (child.Width + child.X) );
+                    height = Math.Max(height, (child.Height + child.Y) );
+                }
             }
             _rect.width = width / TrueScale.x;
             _rect.height = height / TrueScale.y;

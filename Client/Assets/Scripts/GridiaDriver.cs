@@ -17,6 +17,7 @@ public class GridiaDriver : MonoBehaviour
     public InputManager InputManager = new InputManager();
     public List<FloatingText> FloatingTexts = new List<FloatingText>();
     public ContainerWindow SelectedContainer { get; set; }
+    private const float GuiScale = 1.75f;
 
     void Start()
     {
@@ -27,27 +28,25 @@ public class GridiaDriver : MonoBehaviour
         Locator.Provide(GetComponent<SoundPlayer>());
         ResizeCamera();
 
-        const float guiScale = 1.75f;
-
         TabbedGui = new TabbedUI(new Vector2(Int32.MaxValue, 0));
         Locator.Provide(TabbedGui);
-        TabbedGui.ScaleXY = guiScale;
+        TabbedGui.ScaleXY = GuiScale;
 
         InvGui = new ContainerWindow(new Vector2(0, Int32.MaxValue));
         Locator.Provide(InvGui);
-        InvGui.ScaleXY = guiScale;
+        InvGui.ScaleXY = GuiScale;
 
         EquipmentGui = new EquipmentWindow(new Vector2(0, 0));
         Locator.Provide(EquipmentGui);
-        EquipmentGui.ScaleXY = guiScale;
+        EquipmentGui.ScaleXY = GuiScale;
 
         ChatGui = new ChatWindow(new Vector2(Int32.MaxValue, Int32.MaxValue));
         Locator.Provide(ChatGui);
-        ChatGui.ScaleXY = guiScale;
+        ChatGui.ScaleXY = GuiScale;
 
         ItemUsePickWindow = new ItemUsePickWindow(new Vector2(0, 0));
         Locator.Provide(ItemUsePickWindow);
-        ItemUsePickWindow.ScaleXY = guiScale;
+        ItemUsePickWindow.ScaleXY = GuiScale;
 
         Locator.Provide(ContentManager = new ContentManager(GridiaConstants.WorldName));
         Locator.Provide(TextureManager = new TextureManager(GridiaConstants.WorldName));
@@ -62,7 +61,7 @@ public class GridiaDriver : MonoBehaviour
         {
             TabbedGui.Remove(_recipeBook);
         }
-        _recipeBook = new RecipeBookWindow(Vector2.zero, item) {ScaleXY = 1.75f};
+        _recipeBook = new RecipeBookWindow(Vector2.zero, item) { ScaleXY = GuiScale };
         TabbedGui.Add(2008, _recipeBook, true);
     }
 
@@ -225,7 +224,6 @@ public class GridiaDriver : MonoBehaviour
 
     public bool IsMouseOverGui() 
     {
-        var mouse = GetMouse();
         return TabbedGui.MouseOverAny() || TabbedGui.ResizingAny();
     }
 
