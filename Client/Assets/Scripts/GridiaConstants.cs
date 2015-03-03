@@ -17,7 +17,7 @@ namespace Gridia
         public static int Size, Depth, SectorSize; // :(
         public static long ServerTimeOffset;
         public static bool IsAdmin;
-        public static String Version = "alpha-1.2.dev"; // :(
+        public static String Version = "alpha-1.3"; // :(
         public static String WorldName;
         public static String ErrorMessage { get; set; }
         public static Action ErrorMessageAction { get; set; }

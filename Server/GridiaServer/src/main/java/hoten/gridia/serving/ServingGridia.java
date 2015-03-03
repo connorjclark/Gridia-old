@@ -48,7 +48,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     public final PlayerFactory playerFactory;
     public final ContainerFactory containerFactory;
     public final String worldName;
-    public final String version = "alpha-1.2.dev";
+    public final String version = "alpha-1.3";
 
     public ServingGridia(File world, String mapName, int port, File clientDataFolder, String localDataFolderName) throws IOException {
         super(port, clientDataFolder, localDataFolderName);

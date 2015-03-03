@@ -48,6 +48,7 @@ Tests, code coverage and cyclomatic complexity
 
 Misc
   mute music on minimize
+  bug - you can equip stacks of items
   commands:
     !kick
     !w
