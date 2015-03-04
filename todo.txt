@@ -1,4 +1,17 @@
-Issues to look into
+Priority features
+
+  Item usages on creatures (Shearing sheep)
+  Context menu, using items with mouse
+  Scripting
+    Combat
+    Tutorial island (~10-15 minutes)
+      Deep water
+  Objectives / Achievements
+  NPC merchants
+    Player owned
+  Land ownership
+
+Issues
 
   Sawwing sfx is static-y
   Player position gets out of sync?
@@ -8,6 +21,15 @@ Issues to look into
   drag-item-under-windows bug
   unity bridge request md5 hash
   WavFile - some sounds do not work. Woodcutting plays twice, why?
+  you can equip stacks of items
+  GZipStream does not work in Unity
+  Clean up project structure
+  Gridia namespace
+  Unity doesn't compile this : 
+    JsonConvert issue: data["id"].Value<int>() doesn't compile in Unity. Forced to do (int)data["id"]
+  Client side hit prediction - worth doing?
+  Graphical layering of items is messed up
+  Filling in cave w/ shovel should destroy corresponding exit / entrance
 
 Controls
 
@@ -23,16 +45,8 @@ UI
   Move 'next' button in recipe book to far right
   color of quantity labels
 
-Meta
-  Set up forums, chatroom
-    http://www.liquidweb.com/kb/how-to-install-docker-on-ubuntu-14-04-lts/
-    Discourse
-  Press kit
-  Tigsource
-  /r/indiegames - post imagine cup video
-  .rar, don't .zip
-
 Refactor
+
   xxxGui -> xxxWindow
   itemusages -> usages
   Preloader
@@ -44,38 +58,33 @@ Refactor
   Everything!
 
 Tests, code coverage and cyclomatic complexity
+
   ContentManager
 
 Misc
+
   mute music on minimize
-  bug - you can equip stacks of items
   commands:
     !kick
     !w
 
-Spring semester:
-
-Greenlight
-
 Crossplatform
+
   Linux
   Mac
 
-Quest scripting
-
 Magic
 
-Client side hit prediction?
-
-Spell discovery:
-  Runes placed in minecraft-esque fashion
-  Discovering a certain attribute: shape and specific runes
-  Town gives a spell for free. Example: healing. Show player that a plus and a certain rune is for healing
-  Quests will then give players tips on the shape for a spell, or the rune for a spell
-  Discovery != usage
-  Specific runes needed is random for each player, to prevent easily 'cheating'  
+  Spell discovery
+    Runes placed in minecraft-esque fashion
+    Discovering a certain attribute: shape and specific runes
+    Town gives a spell for free. Example: healing. Show player that a plus and a certain rune is for healing
+    Quests will then give players tips on the shape for a spell, or the rune for a spell
+    Discovery != usage
+    Specific runes needed is random for each player, to prevent easily 'cheating'  
 
 Land ownership:
+
   Server owned, Player owned, and unclaimed
   Partition sectors to 4 plots
   Non-contiguous land has a one-tile border of undevelopable land, to prevent blocking parts of the world
@@ -86,20 +95,24 @@ Land ownership:
   After x amount of time, if player does not log in, their land is put up for auction by the town
   Taxes?
 
-Issues
+Meta
 
-GZipStream does not work in Unity
-Clean up project structure
-Gridia namespace
-Unity doesn't compile this : 
-  JsonConvert issue: data["id"].Value<int>() doesn't compile in Unity. Forced to do (int)data["id"]
-  
-Wishlist
+  Set up forums, chatroom
+    http://www.liquidweb.com/kb/how-to-install-docker-on-ubuntu-14-04-lts/
+    Discourse
+  Press kit
+  Tigsource
+  /r/indiegames - post imagine cup video
+  .rar, don't .zip
+  Greenlight
 
-sfxr
-Water ripple effect
-speed up music during combat
-browser version
-auto-convert .ogg sounds files
-sparse map structure, procedual generation
-Shearing sheep (Item usages on creatures)
+Nice-to-have
+
+  sfxr
+  Water ripple effect
+  speed up music during combat
+  browser version
+  auto-convert .ogg sounds files
+  sparse map structure, procedual generation
+  "ground status" - water, ploughed, etc... Allows for flooding areas, and other stuff
+    bit-array on sector
