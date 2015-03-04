@@ -117,7 +117,7 @@ public class GridiaServerDriver {
         server = new ServingGridia(world, mapName, port, clientDataDir, localDataDirName);
         server.tileMap.loadAll(); // :(
         server.startServer();
-        
+
         new ServingFlashPolicy(port).start();
 
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {

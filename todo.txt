@@ -1,6 +1,5 @@
 Priority features
 
-  Item usages on creatures (Shearing sheep)
   Context menu, using items with mouse
   Scripting
     Combat
@@ -30,6 +29,7 @@ Issues
   Client side hit prediction - worth doing?
   Graphical layering of items is messed up
   Filling in cave w/ shovel should destroy corresponding exit / entrance
+  Item usages on creatures (Shearing sheep)
 
 Controls
 
@@ -116,3 +116,4 @@ Nice-to-have
   sparse map structure, procedual generation
   "ground status" - water, ploughed, etc... Allows for flooding areas, and other stuff
     bit-array on sector
+    ploughed should be a ground status
