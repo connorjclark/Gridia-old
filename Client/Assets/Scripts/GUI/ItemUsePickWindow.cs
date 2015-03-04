@@ -15,7 +15,7 @@ namespace Gridia
                 Picks.RemoveAllChildren();
                 for (var i = 0; i < value.Count; i++)
                 {
-                    var itemToShow = value[i].SuccessTool > 0 ? value[i].SuccessTool : value[i].Products[0];
+                    var itemToShow = value[i].GetIdentifyingItem();
                     var item = Locator.Get<ContentManager>().GetItem(itemToShow).GetInstance(1);
                     var itemRend = new ItemRenderable(new Vector2(0, 0), item);
                     var index = i;
@@ -52,7 +52,7 @@ namespace Gridia
         {
             if (Picks.TileSelected < Uses.Count)
             {
-                var productId = Uses[Picks.TileSelected].Products.Count != 0 ? Uses[Picks.TileSelected].Products[0] : Uses[Picks.TileSelected].SuccessTool;
+                var productId = Uses[Picks.TileSelected].GetIdentifyingItem();
                 var productName = Locator.Get<ContentManager>().GetItem(productId).Name;
                 WindowName = productName;
             }
