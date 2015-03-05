@@ -1,7 +1,8 @@
 def start() {
 }
-    
-def update() {
+
+every(2.seconds) {
+    println "tick..."
 }
     
 def end() {

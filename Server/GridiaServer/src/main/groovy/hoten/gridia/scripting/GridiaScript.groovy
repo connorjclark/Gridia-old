@@ -2,18 +2,24 @@ package hoten.gridia.scripting
 
 import hoten.gridia.serving.ServingGridia
 import hoten.gridia.content.Item;
+import java.util.concurrent.TimeUnit
 
 class GridiaScript {
     def ServingGridia server
     def EventDispatcher eventDispatcher
+    def scheduledTasks = []
     
     def GridiaScript(ServingGridia server, EventDispatcher eventDispatcher) {
         this.server = server
         this.eventDispatcher = eventDispatcher
     }
-    
+
     def announce(params) {
         server.announce(params.from, params.message)
+    }
+    
+    def every(duration, closure) {
+        scheduledTasks += scheduler.scheduleAtFixedRate(closure, 0, duration, TimeUnit.MILLISECONDS)
     }
     
     def propertyMissing(String name) {

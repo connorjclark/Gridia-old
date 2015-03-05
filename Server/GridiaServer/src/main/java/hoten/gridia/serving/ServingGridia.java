@@ -98,10 +98,6 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         eventDispatcher.dispatch(type, event);
     }
 
-    public void updateScripts() {
-        scriptExecutor.update();
-    }
-
     @Override
     public void setupNewClient(ConnectionToGridiaClientHandler newClient) throws IOException {
         super.setupNewClient(newClient);

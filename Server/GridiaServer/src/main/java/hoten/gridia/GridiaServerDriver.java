@@ -1,10 +1,7 @@
 package hoten.gridia;
 
 import hoten.gridia.content.ContentManager;
-import hoten.gridia.content.Item;
-import hoten.gridia.content.ItemInstance;
 import hoten.gridia.content.WorldContentLoader;
-import hoten.gridia.map.Coord;
 import hoten.gridia.map.TileMap;
 import hoten.gridia.serializers.GridiaGson;
 import hoten.gridia.serving.ServingGridia;
@@ -160,15 +157,6 @@ public class GridiaServerDriver {
             RandomDungeonQuest randomDungeonQuest = new RandomDungeonQuest(server);
             Executors.newScheduledThreadPool(1).scheduleAtFixedRate(randomDungeonQuest, 0, randomDungeonQuest.arenaTickRate, TimeUnit.MILLISECONDS);
         }
-
-        // scripting
-        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
-            try {
-                server.updateScripts();
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }, 1000, 1000, TimeUnit.MILLISECONDS);
 
         System.out.println("Server started on port " + port);
     }

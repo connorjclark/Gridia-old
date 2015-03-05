@@ -2,7 +2,7 @@ def start() {
     creatures = server.creatures
 }
 
-def update() {
+every(1.second) {
     creatures.findAll { !it.value.justTeleported }.each {
         creature = it.value
         itemUnder = server.tileMap.getItem(creature.location)
@@ -16,4 +16,3 @@ def update() {
         }
     }
 }
-
