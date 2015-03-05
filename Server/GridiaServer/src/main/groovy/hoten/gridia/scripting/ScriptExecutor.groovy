@@ -18,12 +18,9 @@ class ScriptExecutor {
             /years?/ : 1000 * 60 * 60 * 24 * 7 * 52.1775
         ]
         Integer.metaClass.propertyMissing = { String name ->
-            def match = timeUnits.find { name =~ it.key }
-            if (match) {
-                delegate * match.value
-            } else {
-                throw new MissingPropertyException(name, ScriptExecutor)
-            }
+            timeUnits.find { name =~ it.key }?.value?.multiply(delegate).with {
+				((long)it) ?: {  new MissingPropertyException(name, ScriptExecutor) }()
+			}
         }
     }
     
