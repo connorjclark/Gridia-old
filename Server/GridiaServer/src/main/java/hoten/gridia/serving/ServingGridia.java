@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.net.Socket;
 import hoten.serving.message.Message;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -47,6 +48,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     public static ServingGridia instance; // :(
 
     private final hoten.gridia.scripting.ScriptExecutor scriptExecutor = new hoten.gridia.scripting.ScriptExecutor();
+    private final hoten.gridia.scripting.EventDispatcher eventDispatcher = new hoten.gridia.scripting.EventDispatcher();
     private GroovyShell shell;
     public final GridiaMessageToClientBuilder messageBuilder = new GridiaMessageToClientBuilder();
     public final TileMap tileMap;
@@ -80,11 +82,19 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     private Script addScript(String name) throws IOException {
         String scriptPath = name + ".groovy";
         DelegatingScript script = (DelegatingScript) shell.parse(new File(scriptPath));
-        script.setDelegate(new hoten.gridia.scripting.GridiaScript(this));
+        script.setDelegate(new hoten.gridia.scripting.GridiaScript(this, eventDispatcher));
         scriptExecutor.addScript(script);
         return script;
     }
-    
+
+    public void dispatchEvent(String type, Object... eventParams) {
+        Map event = new HashMap();
+        for (int i = 0; i < eventParams.length; i += 2) {
+            event.put(eventParams[i], eventParams[i + 1]);
+        }
+        eventDispatcher.dispatch(type, event);
+    }
+
     public void updateScripts() {
         scriptExecutor.update();
     }
@@ -295,8 +305,9 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         return cre;
     }
 
-    public void announce(String message) {
-        sendToAll(messageBuilder.chat(message, new Coord(0, 0, 0)));
+    public void announce(String from, String message) {
+        System.out.println(from + ": " + message);
+        sendToAll(messageBuilder.chat(from, message, new Coord(0, 0, 0)));
     }
 
     public void announceNewPlayer(ConnectionToGridiaClientHandler client, Player player) {

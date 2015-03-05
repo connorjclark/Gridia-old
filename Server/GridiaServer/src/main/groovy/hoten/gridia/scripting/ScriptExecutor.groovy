@@ -3,11 +3,6 @@ package hoten.gridia.scripting
 // Todo: catch exceptions
 class ScriptExecutor {
     def scripts = []
-    def gridiaScript = new GridiaScript()
-    
-    public ScriptExecutor() {
-        println "create exec"
-    }
     
     def update() {
         scripts.each { it.update() }
@@ -15,6 +10,7 @@ class ScriptExecutor {
     
     def addScript(script) {
         scripts += script
+        script.run()
         script.start()
     }
     

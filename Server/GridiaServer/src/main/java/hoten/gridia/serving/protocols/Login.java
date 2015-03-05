@@ -5,7 +5,6 @@ import hoten.gridia.Player;
 import hoten.gridia.serving.ConnectionToGridiaClientHandler;
 import hoten.gridia.serving.ServingGridia;
 import hoten.serving.message.JsonMessageHandler;
-import hoten.serving.message.Message;
 import java.io.IOException;
 
 public class Login extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
@@ -36,7 +35,7 @@ public class Login extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
 
         thePlayer.updatePlayerImage(server);
 
-        server.sendToAll(server.messageBuilder.chat(thePlayer.accountDetails.username + " has joined the world!", thePlayer.creature.location));
+        server.dispatchEvent("onPlayerLogin", "player", thePlayer);
 
         connection.send(server.messageBuilder.chat(server.whoIsOnline(), thePlayer.creature.location));
     }
