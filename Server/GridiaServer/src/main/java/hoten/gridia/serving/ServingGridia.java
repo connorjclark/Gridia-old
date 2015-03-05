@@ -59,9 +59,11 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     public final ContainerFactory containerFactory;
     public final String worldName;
     public final String version = "alpha-1.3";
+    public final File worldTopDirectory;
 
     public ServingGridia(File world, String mapName, int port, File clientDataFolder, String localDataFolderName) throws IOException {
         super(port, clientDataFolder, localDataFolderName);
+        worldTopDirectory = world;
         worldName = world.getName();
         contentManager = new WorldContentLoader(world).load();
         GridiaGson.initialize(contentManager, this);
@@ -70,6 +72,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         containerFactory = new ContainerFactory(world);
         setUpScripting();
         addScript("TestScript");
+        addScript("Stairs");
         instance = this;
     }
 
@@ -80,8 +83,8 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     }
 
     private Script addScript(String name) throws IOException {
-        String scriptPath = name + ".groovy";
-        DelegatingScript script = (DelegatingScript) shell.parse(new File(scriptPath));
+        File scriptFile = new File(worldTopDirectory, "scripts/" + name + ".groovy");
+        DelegatingScript script = (DelegatingScript) shell.parse(scriptFile);
         script.setDelegate(new hoten.gridia.scripting.GridiaScript(this, eventDispatcher));
         scriptExecutor.addScript(script);
         return script;

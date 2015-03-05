@@ -13,9 +13,11 @@ class EventDispatcher {
     
     def dispatch(type, event) {
         type = type.toUpperCase() // :(
-        registeredEvents[type].each {
-            it.event = event
-            it.call(event)
+        if (registeredEvents[type] != null) {
+            registeredEvents[type].each {
+                it.event = event
+                it.call()
+            }
         }
     }
 }
