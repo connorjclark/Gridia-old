@@ -74,7 +74,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         playerFactory = new PlayerFactory(world);
         containerFactory = new ContainerFactory(world);
         setUpScripting();
-        Arrays.asList("Login", "Stairs", "Growth").forEach(scriptName -> {
+        Arrays.asList("Login", "Stairs", "Growth", "FloorDamage").forEach(scriptName -> {
             try {
                 addScript(scriptName);
             } catch (IOException ex) {

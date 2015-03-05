@@ -123,16 +123,6 @@ public class GridiaServerDriver {
             }
         }, 0, 1500, TimeUnit.MILLISECONDS);
 
-        // lava
-        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
-            server.creatures.values().forEach(creature -> {
-                int floor = server.tileMap.getFloor(creature.location);
-                if (floor == 16 || floor == 48) {
-                    server.hurtCreature(creature, 1);
-                }
-            });
-        }, 1, 1, TimeUnit.SECONDS);
-
         // roach quest and random monster dungeon
         if (mapName.equals("demo-city")) {
             RoachQuest roachQuest = new RoachQuest(server);
