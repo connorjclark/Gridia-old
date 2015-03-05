@@ -76,7 +76,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         setUpScripting();
         Arrays.asList("Login", "Stairs", "Growth", "FloorDamage").forEach(scriptName -> {
             try {
-                addScript(scriptName);
+                addScript(new File(worldTopDirectory, "scripts/" + scriptName + ".groovy"));
             } catch (IOException ex) {
                 Logger.getLogger(ServingGridia.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -90,9 +90,17 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         shell = new GroovyShell(GridiaServerDriver.class.getClassLoader(), new Binding(), compilerConfiguration);
     }
 
-    private Script addScript(String name) throws IOException {
-        File scriptFile = new File(worldTopDirectory, "scripts/" + name + ".groovy");
+    public Script addScript(File scriptFile) throws IOException {
         DelegatingScript script = (DelegatingScript) shell.parse(scriptFile);
+        return addScript(script);
+    }
+
+    public Script addScript(String scriptText) throws IOException {
+        DelegatingScript script = (DelegatingScript) shell.parse(scriptText);
+        return addScript(script);
+    }
+
+    private Script addScript(DelegatingScript script) throws IOException {
         script.setDelegate(new hoten.gridia.scripting.GridiaScript(this, eventDispatcher));
         scriptExecutor.addScript(script);
         return script;
@@ -314,7 +322,6 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     }
 
     public void announce(String from, String message) {
-        System.out.println(from + ": " + message);
         sendToAll(messageBuilder.chat(from, message, new Coord(0, 0, 0)));
     }
 

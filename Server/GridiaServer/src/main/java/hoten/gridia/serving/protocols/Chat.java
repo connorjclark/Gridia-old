@@ -15,6 +15,7 @@ import hoten.serving.message.JsonMessageHandler;
 import hoten.serving.message.Message;
 import java.io.IOException;
 import java.util.NoSuchElementException;
+import org.codehaus.groovy.control.CompilationFailedException;
 
 // :( OCP!
 public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
@@ -25,7 +26,14 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
         Player player = connection.getPlayer();
         String msg = data.get("msg").getAsString();
 
-        if (msg.startsWith("!image ")) {
+        if (msg.startsWith("!script ")) {
+            String script = msg.split(" ", 2)[1];
+            try {
+                server.addScript(script);
+            } catch (CompilationFailedException ex) {
+                connection.send(server.messageBuilder.chat("That didn't parse!\n" + ex, player.creature.location));
+            }
+        } else if (msg.startsWith("!image ")) {
             try {
                 String[] split = msg.split(" ");
                 int image = split.length > 1 ? Integer.parseInt(split[1]) : 0;
