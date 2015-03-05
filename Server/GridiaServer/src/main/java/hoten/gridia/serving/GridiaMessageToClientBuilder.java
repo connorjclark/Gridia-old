@@ -177,10 +177,10 @@ public class GridiaMessageToClientBuilder {
                 .build();
     }
 
-    public Message animation(int animation, Coord loc) {
+    public Message animation(String name, Coord loc) {
         return new JsonMessageBuilder()
                 .type("Animation")
-                .set("anim", animation)
+                .set("name", name)
                 .set("loc", loc)
                 .build();
     }

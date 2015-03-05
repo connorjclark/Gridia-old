@@ -112,7 +112,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
             savePlayer(client.player);
             Creature cre = client.player.creature;
             sendToAll(messageBuilder.chat(cre.name + " has left the building.", cre.location));
-            playWarpAnimation(cre.location);
+            playAnimation("WarpOut", cre.location);
         }
     }
 
@@ -171,10 +171,10 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     }
 
     public void hurtCreature(Creature cre, int lifePoints) {
-        sendToClientsWithAreaLoaded(messageBuilder.animation(1, cre.location), cre.location);
+        sendToClientsWithAreaLoaded(messageBuilder.animation("Attack", cre.location), cre.location);
         cre.life -= lifePoints;
         if (cre.life <= 0) {
-            sendToClientsWithAreaLoaded(messageBuilder.animation(45, cre.location), cre.location);
+            sendToClientsWithAreaLoaded(messageBuilder.animation("diescream", cre.location), cre.location);
             addItemNear(cre.location, contentManager.createItemInstance(1022), 10, true);
             if (cre.belongsToPlayer) {
                 moveCreatureTo(cre, tileMap.getDefaultPlayerSpawn(), true);
@@ -449,7 +449,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         boolean success = new UsageProcessor(contentManager).processUsage(use, toolWrapper, focusWrapper);
 
         if (success) {
-            if (use.animation != 0) {
+            if (use.animation != null) {
                 Coord loc = tileMap.getCoordFromIndex(destIndex);
                 sendToClientsWithAreaLoaded(messageBuilder.animation(use.animation, loc), destIndex);
             }
@@ -476,8 +476,8 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
                 .findFirst().orElse(null);
     }
 
-    public void playWarpAnimation(Coord loc) {
-        Message animMessage = messageBuilder.animation(3, loc);
+    public void playAnimation(String name, Coord loc) {
+        Message animMessage = messageBuilder.animation(name, loc);
         sendToAll(animMessage);
     }
 

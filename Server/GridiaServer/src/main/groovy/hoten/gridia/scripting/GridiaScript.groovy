@@ -18,6 +18,10 @@ class GridiaScript {
         server.announce(params.from, params.message)
     }
     
+    def playAnimation(params) {
+        server.playAnimation(params.name, params.location)
+    }
+    
     def every(duration, closure) {
         scheduledTasks += scheduler.scheduleAtFixedRate(closure, 0, duration, TimeUnit.MILLISECONDS)
     }

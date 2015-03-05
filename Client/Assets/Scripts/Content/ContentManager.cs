@@ -57,9 +57,9 @@ namespace Gridia
             return _monsters[id];
         }
 
-        public GridiaAnimation GetAnimation(int id)
+        public GridiaAnimation GetAnimation(string name)
         {
-            return _animations[id - 1]; // :(
+            return _animations.Find(anim => anim.Name == name);
         }
 
         public List<ItemUse> GetUses(ItemInstance tool) 

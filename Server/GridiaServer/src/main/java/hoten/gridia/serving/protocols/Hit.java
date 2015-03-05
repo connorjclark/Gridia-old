@@ -34,7 +34,7 @@ public class Hit extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                 server.changeFloor(loc, 19);
                 int oreId = Math.random() > 0.7 ? 0 : server.contentManager.getRandomItemOfClassByRarity(Item.ItemClass.Ore).id;
                 server.addItem(loc, server.contentManager.createItemInstance(oreId));
-                server.sendToClientsWithAreaLoaded(server.messageBuilder.animation(25, loc), loc);
+                server.sendToClientsWithAreaLoaded(server.messageBuilder.animation("MiningSound", loc), loc);
             } else {
                 connection.send(server.messageBuilder.chat("You need a pickaxe to mine!", player.creature.location));
             }
