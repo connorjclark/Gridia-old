@@ -34,12 +34,15 @@ import java.io.IOException;
 import java.net.Socket;
 import hoten.serving.message.Message;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.codehaus.groovy.control.CompilerConfiguration;
 
@@ -71,8 +74,13 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         playerFactory = new PlayerFactory(world);
         containerFactory = new ContainerFactory(world);
         setUpScripting();
-        addScript("TestScript");
-        addScript("Stairs");
+        Arrays.asList("Login", "Stairs", "Growth").forEach(scriptName -> {
+            try {
+                addScript(scriptName);
+            } catch (IOException ex) {
+                Logger.getLogger(ServingGridia.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
         instance = this;
     }
 
@@ -128,6 +136,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
                 .collect(Collectors.joining(", "));
     }
 
+    // :(
     public void grow() {
         tileMap.forAllTilesLoaded(x -> y -> z -> tile -> {
             if (tile.item.getItem().growthDelta != 0) {

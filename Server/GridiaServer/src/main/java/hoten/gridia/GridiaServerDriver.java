@@ -123,22 +123,6 @@ public class GridiaServerDriver {
             }
         }, 0, 1500, TimeUnit.MILLISECONDS);
 
-        // save
-        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
-            if (server.anyPlayersOnline()) {
-                try {
-                    server.save();
-                } catch (IOException ex) {
-                    Logger.getLogger(GridiaServerDriver.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }, 15, 15, TimeUnit.MINUTES);
-
-        // grow items
-        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
-            server.grow();
-        }, 10, 10, TimeUnit.SECONDS);
-
         // lava
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
             server.creatures.values().forEach(creature -> {
