@@ -169,6 +169,7 @@ public class GridiaServerDriver {
             });
         }, 1, 1, TimeUnit.SECONDS);
 
+        // roach quest and random monster dungeon
         if (mapName.equals("demo-city")) {
             RoachQuest roachQuest = new RoachQuest(server);
             Executors.newScheduledThreadPool(1).scheduleAtFixedRate(roachQuest, 0, roachQuest.arenaTickRate, TimeUnit.MILLISECONDS);
@@ -176,6 +177,15 @@ public class GridiaServerDriver {
             RandomDungeonQuest randomDungeonQuest = new RandomDungeonQuest(server);
             Executors.newScheduledThreadPool(1).scheduleAtFixedRate(randomDungeonQuest, 0, randomDungeonQuest.arenaTickRate, TimeUnit.MILLISECONDS);
         }
+
+        // scripting
+        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
+            try {
+                server.updateScripts();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }, 1, 1, TimeUnit.SECONDS);
 
         System.out.println("Server started on port " + port);
     }

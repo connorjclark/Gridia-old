@@ -1,5 +1,9 @@
 package hoten.gridia.serving;
 
+import groovy.lang.Binding;
+import groovy.lang.GroovyShell;
+import groovy.lang.Script;
+import groovy.util.DelegatingScript;
 import hoten.gridia.content.ContentManager;
 import hoten.gridia.map.Coord;
 import hoten.gridia.Creature;
@@ -9,6 +13,7 @@ import hoten.gridia.Container.ContainerType;
 import hoten.gridia.CreatureImage;
 import hoten.gridia.CustomPlayerImage;
 import hoten.gridia.DefaultCreatureImage;
+import hoten.gridia.GridiaServerDriver;
 import hoten.gridia.ItemWrapper;
 import hoten.gridia.ItemWrapper.ContainerItemWrapper;
 import hoten.gridia.ItemWrapper.WorldItemWrapper;
@@ -35,11 +40,14 @@ import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import org.codehaus.groovy.control.CompilerConfiguration;
 
 public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaClientHandler> {
 
     public static ServingGridia instance; // :(
 
+    private final hoten.gridia.scripting.ScriptExecutor scriptExecutor = new hoten.gridia.scripting.ScriptExecutor();
+    private GroovyShell shell;
     public final GridiaMessageToClientBuilder messageBuilder = new GridiaMessageToClientBuilder();
     public final TileMap tileMap;
     public final ContentManager contentManager;
@@ -58,7 +66,27 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         tileMap = TileMap.loadMap(world, mapName);
         playerFactory = new PlayerFactory(world);
         containerFactory = new ContainerFactory(world);
+        setUpScripting();
+        addScript("TestScript");
         instance = this;
+    }
+
+    private void setUpScripting() {
+        CompilerConfiguration compilerConfiguration = new CompilerConfiguration();
+        compilerConfiguration.setScriptBaseClass(DelegatingScript.class.getName());
+        shell = new GroovyShell(GridiaServerDriver.class.getClassLoader(), new Binding(), compilerConfiguration);
+    }
+
+    private Script addScript(String name) throws IOException {
+        String scriptPath = name + ".groovy";
+        DelegatingScript script = (DelegatingScript) shell.parse(new File(scriptPath));
+        script.setDelegate(new hoten.gridia.scripting.GridiaScript(this));
+        scriptExecutor.addScript(script);
+        return script;
+    }
+    
+    public void updateScripts() {
+        scriptExecutor.update();
     }
 
     @Override
@@ -265,6 +293,10 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         Creature cre = createCreature(image, name, location);
         cre.belongsToPlayer = true;
         return cre;
+    }
+
+    public void announce(String message) {
+        sendToAll(messageBuilder.chat(message, new Coord(0, 0, 0)));
     }
 
     public void announceNewPlayer(ConnectionToGridiaClientHandler client, Player player) {
