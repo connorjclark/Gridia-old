@@ -1,23 +1,18 @@
 package hoten.gridia.scripting
 
 class EventDispatcher {
-    def registeredEvents = [:]
+    def registeredEvents = [:].withDefault { [] } 
     
     def addEventListener(String type, closure) {
         type = type.toUpperCase() // :(
-        if (registeredEvents[type] == null) {
-            registeredEvents[type] = []
-        }
         registeredEvents[type] += closure
     }
     
     def dispatch(type, event) {
         type = type.toUpperCase() // :(
-        if (registeredEvents[type] != null) {
-            registeredEvents[type].each {
-                it.event = event
-                it.call()
-            }
+        registeredEvents[type].each {
+            it.event = event
+            it.call()
         }
     }
 }
