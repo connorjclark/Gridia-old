@@ -38,7 +38,7 @@ namespace Gridia
             var TILE_SIZE = 32f * _view.Scale;
             var lightGameObject = new GameObject("a light");
             lightGameObject.AddComponent<Light>();
-            var light = lightGameObject.light;
+            var light = lightGameObject.GetComponent<Light>();
             light.type = LightType.Point;
             light.range = 100;
             light.intensity = 1f;

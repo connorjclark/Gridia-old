@@ -228,7 +228,7 @@ namespace Gridia
                     materials[i] = material;
                 }
 
-                layer.Renderable.renderer.materials = materials;
+                layer.Renderable.GetComponent<Renderer>().materials = materials;
 
                 layer.Mesh.subMeshCount = triangleBatches.Count;
                 for (var i = 0; i < triangleBatches.Count; i++)
