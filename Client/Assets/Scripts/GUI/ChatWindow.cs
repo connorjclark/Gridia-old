@@ -96,6 +96,7 @@ ________________________
                 Locator.Get<ConnectionToGridiaServerHandler>().Chat(message);
             }
             ChatInput.Text = "";
+            SetScrollToMax();
         }
 
         private void SetScrollToMax() 
