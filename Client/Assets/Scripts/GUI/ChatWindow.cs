@@ -18,7 +18,7 @@ namespace Gridia
 
             ChatInput = new TextField(new Vector2(0, ChatArea.Height + 10), "ChatInput", 150, 30)
             {
-                OnEnter = SendChatMessage
+                OnEnter = () => SendChatMessage(ChatInput.Text)
             };
             AddChild(ChatInput);
 

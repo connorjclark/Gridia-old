@@ -40,13 +40,10 @@ namespace Gridia
                 SceneManager.LoadScene("ServerSelection");
             };
 
-            loginButton.OnClick = () =>
-            {
-                if (GridiaConstants.ErrorMessage == null)
-                {
-                    Locator.Get<ConnectionToGridiaServerHandler>().Login(usernameInput.Text, passwordInput.Text);
-                }
+            loginButton.OnClick = usernameInput.OnEnter = passwordInput.OnEnter = () => {
+                SendLoginRequest(usernameInput.Text, passwordInput.Text);
             };
+            
             registerButton.OnClick = () =>
             {
                 if (GridiaConstants.ErrorMessage == null)
@@ -68,6 +65,7 @@ namespace Gridia
                 else
                 {
                     GridiaConstants.ErrorMessage = message;
+                    loggingIn = false;
                 }
             };
         }
@@ -92,6 +90,17 @@ namespace Gridia
         public void OnApplicationQuit()
         {
             GridiaConstants.OnApplicationQuit();
+        }
+
+        private bool loggingIn = false; // :(
+
+        private void SendLoginRequest(string username, string password)
+        {
+            if (GridiaConstants.ErrorMessage == null && !loggingIn)
+            {
+                loggingIn = true;
+                Locator.Get<ConnectionToGridiaServerHandler>().Login(username, password);
+            }
         }
     }
 }

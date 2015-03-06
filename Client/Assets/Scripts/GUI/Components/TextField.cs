@@ -9,7 +9,7 @@ namespace Gridia
         public bool PasswordField { get; set; }
         public int MaxChars { get; set; }
         public String TextFieldName { get; set; }
-        public Action<String> OnEnter { private get; set; }
+        public Action OnEnter { private get; set; }
 
         public TextField(Vector2 pos, String textFieldName, float width, float height)
             : base(pos)
@@ -26,9 +26,9 @@ namespace Gridia
             base.Render();
             GUI.SetNextControlName(TextFieldName);
             Text = PasswordField ? GUI.PasswordField(Rect, Text, '*', MaxChars) : GUI.TextField(Rect, Text, MaxChars);
-            if (Text != "" && Event.current.type == EventType.keyDown && Event.current.character == '\n')
+            if (OnEnter != null && Text != "" && Event.current.type == EventType.keyDown && Event.current.character == '\n')
             {
-                OnEnter(Text);
+                OnEnter();
             }
         }
     }
