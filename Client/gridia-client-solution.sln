@@ -4,7 +4,7 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{12F44184-A422-5F27-22E6-507969043F15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WavDecoder", "Assets\WaveDecoder\WavDecorder\WavDecoder.csproj", "{22BA3D79-114A-44BC-9E36-0DE21A5C6D38}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WavDecoder", "Assets\WaveDecoder\WavDecoder\WavDecoder.csproj", "{22BA3D79-114A-44BC-9E36-0DE21A5C6D38}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WavFileTest", "WavDecoderTest\WavFileTest.csproj", "{6BDBCB53-4A92-4F32-BA76-387057360B2A}"
 EndProject

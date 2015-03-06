@@ -7,8 +7,8 @@
     <ProjectGuid>{22BA3D79-114A-44BC-9E36-0DE21A5C6D38}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WavDecorder</RootNamespace>
-    <AssemblyName>WavDecorder</AssemblyName>
+    <RootNamespace>WavDecoder</RootNamespace>
+    <AssemblyName>WavDecoder</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

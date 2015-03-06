@@ -57,7 +57,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Assets\WaveDecoder\WavDecorder\WavDecoder.csproj">
+    <ProjectReference Include="..\Assets\WaveDecoder\WavDecoder\WavDecoder.csproj">
       <Project>{22BA3D79-114A-44BC-9E36-0DE21A5C6D38}</Project>
       <Name>WavDecoder</Name>
     </ProjectReference>
