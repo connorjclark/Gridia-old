@@ -9,7 +9,7 @@ import hoten.gridia.map.Tile;
 import hoten.gridia.serializers.GridiaGson;
 import hoten.gridia.serving.ConnectionToGridiaClientHandler;
 import hoten.gridia.serving.ServingGridia;
-import hoten.serving.message.JsonMessageHandler;
+import com.hoten.servingjava.message.JsonMessageHandler;
 import java.io.IOException;
 
 // hit or mine

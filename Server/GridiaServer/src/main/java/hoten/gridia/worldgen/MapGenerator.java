@@ -1,9 +1,9 @@
 package hoten.gridia.worldgen;
 
 import com.google.gson.Gson;
-import hoten.delaunay.examples.TestDriver;
-import hoten.delaunay.examples.TestGraphImpl.ColorData;
-import hoten.delaunay.voronoi.VoronoiGraph;
+import com.hoten.delaunay.examples.TestDriver;
+import com.hoten.delaunay.examples.TestGraphImpl.ColorData;
+import com.hoten.delaunay.voronoi.VoronoiGraph;
 import hoten.gridia.content.ContentManager;
 import hoten.gridia.content.ItemInstance;
 import hoten.gridia.map.Coord;

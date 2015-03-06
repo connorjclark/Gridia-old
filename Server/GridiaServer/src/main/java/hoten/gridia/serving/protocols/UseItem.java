@@ -8,7 +8,7 @@ import hoten.gridia.content.ItemInstance;
 import hoten.gridia.content.ItemUse;
 import hoten.gridia.serving.ConnectionToGridiaClientHandler;
 import hoten.gridia.serving.ServingGridia;
-import hoten.serving.message.JsonMessageHandler;
+import com.hoten.servingjava.message.JsonMessageHandler;
 import java.io.IOException;
 import java.util.List;
 

@@ -2,9 +2,9 @@ package hoten.gridia.serving;
 
 import hoten.gridia.Player;
 import hoten.gridia.map.Sector;
-import hoten.serving.SocketHandler;
-import hoten.serving.SocketHandlerImpl;
-import hoten.serving.message.Message;
+import com.hoten.servingjava.SocketHandler;
+import com.hoten.servingjava.SocketHandlerImpl;
+import com.hoten.servingjava.message.Message;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;

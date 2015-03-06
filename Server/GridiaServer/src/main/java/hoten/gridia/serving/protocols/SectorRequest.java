@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import hoten.gridia.map.Sector;
 import hoten.gridia.serving.ConnectionToGridiaClientHandler;
 import hoten.gridia.serving.ServingGridia;
-import hoten.serving.message.JsonMessageHandler;
+import com.hoten.servingjava.message.JsonMessageHandler;
 import java.io.IOException;
 
 public class SectorRequest extends JsonMessageHandler<ConnectionToGridiaClientHandler> {

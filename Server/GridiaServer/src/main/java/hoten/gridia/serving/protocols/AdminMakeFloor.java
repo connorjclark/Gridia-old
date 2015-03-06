@@ -5,7 +5,7 @@ import hoten.gridia.map.Coord;
 import hoten.gridia.serializers.GridiaGson;
 import hoten.gridia.serving.ConnectionToGridiaClientHandler;
 import hoten.gridia.serving.ServingGridia;
-import hoten.serving.message.JsonMessageHandler;
+import com.hoten.servingjava.message.JsonMessageHandler;
 
 public class AdminMakeFloor extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
 

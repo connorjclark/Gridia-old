@@ -28,11 +28,11 @@ import hoten.gridia.map.Sector;
 import hoten.gridia.map.Tile;
 import hoten.gridia.map.TileMap;
 import hoten.gridia.serializers.GridiaGson;
-import hoten.serving.filetransferring.ServingFileTransferring;
+import com.hoten.servingjava.filetransferring.ServingFileTransferring;
 import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
-import hoten.serving.message.Message;
+import com.hoten.servingjava.message.Message;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -61,7 +61,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     public final PlayerFactory playerFactory;
     public final ContainerFactory containerFactory;
     public final String worldName;
-    public final String version = "alpha-1.3";
+    public final String version = "alpha-1.4-dev";
     public final File worldTopDirectory;
 
     public ServingGridia(File world, String mapName, int port, File clientDataFolder, String localDataFolderName) throws IOException {

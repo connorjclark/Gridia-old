@@ -6,7 +6,7 @@ import hoten.gridia.Player;
 import hoten.gridia.content.ItemInstance;
 import hoten.gridia.serving.ConnectionToGridiaClientHandler;
 import hoten.gridia.serving.ServingGridia;
-import hoten.serving.message.JsonMessageHandler;
+import com.hoten.servingjava.message.JsonMessageHandler;
 
 public class MoveItem extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
 

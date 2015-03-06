@@ -19,7 +19,9 @@ public final class ContentManager {
         _itemUses = usesList.stream()
                 .collect(Collectors.groupingBy(u -> getItem(u.tool), Collectors.mapping(u -> u, Collectors.toList())));
         _monsters = monsters;
-        ItemInstance.setBlankItemInstance(new ItemInstance(_items.get(0), 0, null));
+        if (ItemInstance.NONE == null) {
+            ItemInstance.setBlankItemInstance(new ItemInstance(_items.get(0), 0, null));
+        }
 
         // :(
         ItemInstance decayedRemains = createItemInstance(490);
@@ -29,7 +31,7 @@ public final class ContentManager {
                     monster.drops.add(decayedRemains);
                 });
     }
-    
+
     public ItemInstance createItemInstance(int id, int quantity, JsonObject data) {
         if (id == 0) {
             return ItemInstance.NONE;

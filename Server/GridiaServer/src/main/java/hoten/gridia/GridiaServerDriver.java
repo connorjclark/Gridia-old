@@ -6,8 +6,8 @@ import hoten.gridia.map.TileMap;
 import hoten.gridia.serializers.GridiaGson;
 import hoten.gridia.serving.ServingGridia;
 import hoten.gridia.worldgen.MapGenerator;
-import hoten.serving.ServingFlashPolicy;
-import hoten.serving.message.MessageHandler;
+import com.hoten.servingjava.ServingPolicyFile;
+import com.hoten.servingjava.message.MessageHandler;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -113,7 +113,7 @@ public class GridiaServerDriver {
         server.tileMap.loadAll(); // :(
         server.startServer();
 
-        new ServingFlashPolicy(port).start();
+        new ServingPolicyFile(port).start();
 
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
             if (server.anyPlayersOnline()) {
