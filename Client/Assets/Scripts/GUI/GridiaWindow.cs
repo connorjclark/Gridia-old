@@ -29,6 +29,9 @@ namespace Gridia
             WindowId = _nextWindowId++;
             WindowName = windowName;
             BorderSize = 25;
+            OnMouseOver = () => { Alpha = 255; };
+            OnMouseLeave = () => { Alpha = 150; };
+            Alpha = 150;
         }
 
         public override void Render() 
@@ -52,7 +55,7 @@ namespace Gridia
             if (!Visible) return;
             MouseOver = Rect.Contains(Event.current.mousePosition);
 
-            GUI.skin = Skin;
+            ApplySkinAndColor();
 
             // what a hack...
             var modifiedRect = GUI.Window(WindowId, new Rect(X, Y, Width + BorderSize * 2, Height + BorderSize * 2), windowId =>

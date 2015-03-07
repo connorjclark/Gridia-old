@@ -82,7 +82,9 @@ namespace Gridia
 
         public bool Dirty { get; set; }
 
-        public Color32 Color { get; set; }
+        public Color32 _color;
+        public Color32 Color { get { return _color; } set { _color = value; } }
+        public byte Alpha { get { return _color.a; } set { _color.a = value; } }
 
         // :(
         public Action OnClick { protected get; set; } // really just mouse up... :(
@@ -90,6 +92,7 @@ namespace Gridia
         public Action OnMouseDown { private get; set; }
         public Action OnRightClick { private get; set; }
         public Action OnMouseOver { private get; set; }
+        public Action OnMouseLeave { private get; set; }
         public Action OnKeyUp { private get; set; }
         public Func<String> ToolTip { private get; set; }
 
@@ -100,16 +103,40 @@ namespace Gridia
             Skin = GridiaConstants.Skins[0]; // :(
         }
 
-        public virtual void Render()
+        protected void ApplySkinAndColor()
         {
             GUI.skin = Skin;
             GUI.color = Color;
         }
 
+        public virtual void Render()
+        {
+            ApplySkinAndColor();
+        }
+
+        private bool _mouseOverLastFrame;
+
         public virtual void HandleEvents()
         {
-            if (Rect.Contains(Event.current.mousePosition))
+            var mouse = Event.current.mousePosition;
+            bool mouseOver;
+
+            var asGridiaWindow = this as GridiaWindow;
+            if (asGridiaWindow != null)
             {
+                var borderSize = asGridiaWindow.BorderSize;
+                var width = Width + borderSize*2;
+                var height = Height + borderSize*2;
+                mouseOver = new Rect(-borderSize, -borderSize, width, height).Contains(mouse);
+            }
+            else
+            {
+                mouseOver = Rect.Contains(mouse);
+            }
+
+            if (mouseOver)
+            {
+                if (OnMouseOver != null) OnMouseOver();
                 if (Event.current.type == EventType.MouseUp)
                 {
                     if (Event.current.button == 0)
@@ -136,13 +163,18 @@ namespace Gridia
                 {
                     RenderTooltip();
                 }
-                if (OnMouseOver != null) OnMouseOver();
+            }
+            else if (_mouseOverLastFrame && OnMouseLeave != null)
+            {
+                OnMouseLeave();
             }
 
             if (Event.current.type == EventType.KeyUp)
             {
                 if (OnKeyUp != null) OnKeyUp();
             }
+
+            _mouseOverLastFrame = mouseOver;
         }
 
         public void RenderTooltip()
