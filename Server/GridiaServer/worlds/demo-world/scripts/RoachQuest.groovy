@@ -1,16 +1,11 @@
 duration = 30.seconds
 numRoaches = 50
 tick = 3.seconds
-arenaSize = 24
-arenaLoc = loc(70, 166, 1)
+arena = area(loc(70, 166, 1), 24, 24)
 winnerTeleportLoc = loc(88, 190)
 loserTeleportLoc = loc(86, 192)
 roaches = []
 arenaIsGoing = false
-
-def findPlayersInArena() {
-    findPlayers(at: arenaLoc, width: arenaSize, height: arenaSize)
-}
 
 every(tick) {
     roaches = roaches.findAll { it.alive }
@@ -20,7 +15,7 @@ every(tick) {
         return
     }
     
-    playersInArena = findPlayersInArena()
+    playersInArena = findPlayers(area: arena)
     if (arenaIsGoing) {
         if (playersInArena) {
             stepArena(playersInArena)
@@ -60,12 +55,12 @@ def spawnRoaches() {
     int currentAmount = roaches.size()
     roach = server.contentManager.getMonster(42)
     roachData = cloneMonsterAndStripName(roach)
-    newRoaches = spawn(monster: roachData, at: arenaLoc, amount: numRoaches - currentAmount, width: arenaSize, height: arenaSize)
+    newRoaches = spawn(monster: roachData, area: arena, amount: numRoaches - currentAmount)
     roaches.addAll(newRoaches)
 }
 
 def announceInArena(message) {
-    announce(from: "ROACH ARENA", at: arenaLoc.add((int)arenaSize/2, (int)arenaSize/2, 0), message: message)
+    announce(from: "ROACH ARENA", at: arena.middle, message: message)
 }
 
 def clearArena() {
@@ -79,5 +74,5 @@ def startArena() {
     timeLeft = duration
     spawnRoaches()
     announceInArena("BEGIN!")
-    announceInArena("OBJECTIVE - Collect the most antenae!")
+    announceInArena("*OBJECTIVE - Collect the most antenae!*")
 }

@@ -22,6 +22,12 @@ class GridiaScript {
         new Coord(x, y, z)
     }
     
+    def area(l, w, h) {
+        def mx = (int)(l.x + w/2)
+        def my = (int)(l.y + h/2)
+        [loc: l, width: w, height: h, middle: loc(mx, my, l.z)]
+    }
+    
     def findCreatures(Map params) {
         if (params.area) {
             params.width = params.area.width
@@ -48,8 +54,8 @@ class GridiaScript {
         def itemRemoved = server.contentManager.createItemInstance(params.itemId, 0)
         params.container.getItems().eachWithIndex { item, i ->
             if (item.item.id == params.itemId) {
-                item = item.add item.quantity
-                container.deleteSlot i
+                itemRemoved = itemRemoved.add item.quantity
+                params.container.deleteSlot i
             }
         }
         itemRemoved
