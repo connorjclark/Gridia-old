@@ -7,22 +7,21 @@ namespace Gridia
 {
     public class ServerSelection : MonoBehaviour
     {
-        public static bool connected = false; // :(
+        public static bool connected; // :(
         public static AutoResetEvent gameInitWaitHandle = new AutoResetEvent(false);
 
         private RenderableContainer _displayList;
         private GUISkin _gridiaGuiSkin;
-        private bool connecting = false;
+        private bool connecting;
         private ConnectionToGridiaServerHandler _conn;
 
         public void Start()
         {
-            GridiaConstants.LoadGUISkins();
+            GridiaConstants.InitializeGuiStuff();
 
             Locator.Provide(this);
 
-            _displayList = new RenderableContainer(Vector2.zero);
-
+            _displayList = new RenderableContainer(Vector2.zero) {ScaleXY = GridiaConstants.GuiScale};
             _displayList.AddChild(CreateConnectButton(Vector2.zero, "www.hotengames.com", 1044));
             _displayList.AddChild(CreateConnectButton(Vector2.zero, "localhost", 1044));
 
@@ -34,14 +33,16 @@ namespace Gridia
             var connectButton = new Button(Vector2.zero, "Connect to other ip");
             connectContainer.AddChild(connectButton);
 
-            var ipInput = new TextField(new Vector2(160, 6), "ipInput", 150, 30);
+            var scale = GridiaConstants.GuiScale*1.25f;
+
+            var ipInput = new TextField(new Vector2(90*scale, 3*scale), "ipInput", 150, 30);
             connectContainer.AddChild(ipInput);
             ipInput.Text = "enter ip here";
 
-            var portLabel = new Label(new Vector2(320, 10), "Port:  ");
+            var portLabel = new Label(new Vector2(180*scale, 5*scale), "Port:  ");
             connectContainer.AddChild(portLabel);
 
-            var portInput = new TextField(new Vector2(360, 12), "portInput", 50, 20);
+            var portInput = new TextField(new Vector2(200*scale, 6*scale), "portInput", 50, 20);
             connectContainer.AddChild(portInput);
             portInput.Text = "1044";
 
@@ -87,8 +88,7 @@ namespace Gridia
         #if !UNITY_WEBPLAYER
             public void HostLocal()
             {
-                var processInfo = new System.Diagnostics.ProcessStartInfo();
-                processInfo.FileName = "java";
+                var processInfo = new System.Diagnostics.ProcessStartInfo {FileName = "java"};
                 if (Application.isEditor)
                 {
                     processInfo.Arguments = "-jar target/server.jar";

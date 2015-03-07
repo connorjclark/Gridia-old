@@ -10,13 +10,13 @@ namespace Gridia
 
         public void Start() 
         {
-            GridiaConstants.LoadGUISkins();
+            GridiaConstants.InitializeGuiStuff();
 
             ContentManager cm;
             Locator.Provide(cm = new ContentManager("demo-world"));
             Locator.Provide(new TextureManager("demo-world"));
 
-            _tabWindow = new TabbedUI(new Vector2(float.MaxValue, 0)) {ScaleXY = 3};
+            _tabWindow = new TabbedUI(new Vector2(float.MaxValue, 0)) {ScaleXY = GridiaConstants.GuiScale};
 
             // inv window
 

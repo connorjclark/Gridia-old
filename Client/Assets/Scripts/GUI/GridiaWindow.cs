@@ -17,7 +17,8 @@ namespace Gridia
 		public bool ResizingWindow { get; private set; }
         public bool ResizeOnHorizontal { get; set; }
         public bool ResizeOnVertical { get; set; }
-		public float BorderSize { get; set; }
+        private float _borderSize;
+		public float BorderSize { get { return _borderSize*ScaleY; } set { _borderSize = value/ScaleY; } }
 		public String WindowName { get; set; }
 
         public GridiaWindow(Vector2 pos, String windowName)
@@ -28,7 +29,7 @@ namespace Gridia
             ResizeOnHorizontal = ResizeOnVertical = true;
             WindowId = _nextWindowId++;
             WindowName = windowName;
-            BorderSize = 25;
+            _borderSize = 15;
             OnMouseOver = () => { Alpha = 255; };
             OnMouseLeave = () => { Alpha = 150; };
             Alpha = 150;

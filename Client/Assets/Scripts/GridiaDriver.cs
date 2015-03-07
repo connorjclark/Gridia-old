@@ -17,7 +17,6 @@ public class GridiaDriver : MonoBehaviour
     public InputManager InputManager = new InputManager();
     public List<FloatingText> FloatingTexts = new List<FloatingText>();
     public ContainerWindow SelectedContainer { get; set; }
-    private const float GuiScale = 1.75f;
 
     void Start()
     {
@@ -30,23 +29,23 @@ public class GridiaDriver : MonoBehaviour
 
         TabbedGui = new TabbedUI(new Vector2(Int32.MaxValue, 0));
         Locator.Provide(TabbedGui);
-        TabbedGui.ScaleXY = GuiScale;
+        TabbedGui.ScaleXY = GridiaConstants.GuiScale;
 
         InvGui = new ContainerWindow(new Vector2(0, Int32.MaxValue));
         Locator.Provide(InvGui);
-        InvGui.ScaleXY = GuiScale;
+        InvGui.ScaleXY = GridiaConstants.GuiScale;
 
         EquipmentGui = new EquipmentWindow(new Vector2(0, 0));
         Locator.Provide(EquipmentGui);
-        EquipmentGui.ScaleXY = GuiScale;
+        EquipmentGui.ScaleXY = GridiaConstants.GuiScale;
 
         ChatGui = new ChatWindow(new Vector2(Int32.MaxValue, Int32.MaxValue));
         Locator.Provide(ChatGui);
-        ChatGui.ScaleXY = GuiScale;
+        ChatGui.ScaleXY = GridiaConstants.GuiScale;
 
         ItemUsePickWindow = new ItemUsePickWindow(new Vector2(0, 0));
         Locator.Provide(ItemUsePickWindow);
-        ItemUsePickWindow.ScaleXY = GuiScale;
+        ItemUsePickWindow.ScaleXY = GridiaConstants.GuiScale;
 
         Locator.Provide(ContentManager = new ContentManager(GridiaConstants.WorldName));
         Locator.Provide(TextureManager = new TextureManager(GridiaConstants.WorldName));
@@ -61,7 +60,7 @@ public class GridiaDriver : MonoBehaviour
         {
             TabbedGui.Remove(_recipeBook);
         }
-        _recipeBook = new RecipeBookWindow(Vector2.zero, item) { ScaleXY = GuiScale };
+        _recipeBook = new RecipeBookWindow(Vector2.zero, item) { ScaleXY = GridiaConstants.GuiScale };
         TabbedGui.Add(2008, _recipeBook, true);
     }
 
@@ -71,7 +70,7 @@ public class GridiaDriver : MonoBehaviour
         TabbedGui.Add(15, EquipmentGui, false); // :(
         TabbedGui.Add(147, ChatGui, true); // :(
 
-        var options = new OptionsWindow(Vector2.zero);
+        var options = new OptionsWindow(Vector2.zero) {ScaleXY = GridiaConstants.GuiScale};
         options.X = (Screen.width - options.Width) / 2;
         options.Y = (Screen.height - options.Height) / 2;
         TabbedGui.Add(0, options, false);

@@ -23,7 +23,7 @@ namespace Gridia
             var textSize = GUI.skin.label.CalcSize(new GUIContent(Text));
             _rect.width = textSize.x;
             _rect.height = textSize.y;
-            var rect = Centered ? new Rect(X - textSize.x / 2, Y, textSize.x, Height) : Rect;
+            var rect = Centered ? new Rect(X - textSize.x/2, Y, textSize.x, Height) : Rect;
             if (Background)
             {
                 GUI.Box(rect, "");

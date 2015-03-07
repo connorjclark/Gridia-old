@@ -22,8 +22,25 @@ namespace Gridia
         public static String ErrorMessage { get; set; }
         public static Action ErrorMessageAction { get; set; }
         public static List<GUISkin> Skins { get; set; }
+        public static float GuiScale { get; private set; }
+        public static int FontSize { get; private set; }
 
-        public static void LoadGUISkins()
+        public static void InitializeGuiStuff()
+        {
+            LoadGuiSkins();
+            GuiScale = Screen.height / 125f / 4;
+            FontSize = (int)(GuiScale * 10);
+            var skin = Skins[0];
+            skin.textArea.fontSize = FontSize;
+            skin.textField.fontSize = FontSize;
+            skin.label.fontSize = FontSize;
+            skin.box.fontSize = FontSize;
+            skin.window.fontSize = FontSize;
+            skin.button.fontSize = FontSize;
+            skin.toggle.fontSize = FontSize;
+        }
+
+        private static void LoadGuiSkins()
         {
             Skins = new List<GUISkin>();
             for (var i = 0; i < 1; i++)

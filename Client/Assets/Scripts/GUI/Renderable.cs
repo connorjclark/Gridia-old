@@ -190,7 +190,10 @@ namespace Gridia
                 deltaY = Mathf.Lerp(0, 100, ratio);
             }
 
-            var globalRect = new Rect(Input.mousePosition.x + 10, Screen.height - Input.mousePosition.y - deltaY + 10, 250, 50);
+            var trueScale = TrueScale;
+            var width = 140 * trueScale.x;
+            var height = 25 * trueScale.y;
+            var globalRect = new Rect(Input.mousePosition.x + 10, Screen.height - Input.mousePosition.y - deltaY + 10, width, height);
 
             globalRect.x = Math.Min(globalRect.x, Screen.width - globalRect.width);
             globalRect.y = Math.Min(globalRect.y, Screen.height - globalRect.height);

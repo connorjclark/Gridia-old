@@ -11,29 +11,29 @@ namespace Gridia
 
         public void Start()
         {
-            _displayList = new RenderableContainer(Vector2.zero);
+            _displayList = new RenderableContainer(Vector2.zero) {ScaleXY = GridiaConstants.GuiScale};
 
-            var usernameLabel = new Label(Vector2.zero, "Username: ");
+            var usernameLabel = new Label(Vector2.zero, "Username", true);
             _displayList.AddChild(usernameLabel);
 
-            var usernameInput = new TextField(new Vector2(80, 0), "usernameInput", 300, 20);
+            var usernameInput = new TextField(Vector2.zero, "usernameInput", 300, 20);
             _displayList.AddChild(usernameInput);
 
-            var passwordLabel = new Label(new Vector2(0, 30), "Password: ");
+            var passwordLabel = new Label(Vector2.zero, "Password", true);
             _displayList.AddChild(passwordLabel);
 
-            var passwordInput = new TextField(new Vector2(80, 30), "passwordInput", 300, 20);
+            var passwordInput = new TextField(Vector2.zero, "passwordInput", 300, 20);
             passwordInput.PasswordField = true;
 
             _displayList.AddChild(passwordInput);
 
-            var loginButton = new Button(new Vector2(0, 60), "Login");
+            var loginButton = new Button(Vector2.zero, "Login");
             _displayList.AddChild(loginButton);
 
-            var registerButton = new Button(new Vector2(100, 60), "Register");
+            var registerButton = new Button(Vector2.zero, "Register");
             _displayList.AddChild(registerButton);
 
-            var disconnectButton = new Button(new Vector2(210, 60), "Disconnect from server");
+            var disconnectButton = new Button(Vector2.zero, "Disconnect from server");
             _displayList.AddChild(disconnectButton);
             disconnectButton.OnClick = () => {
                 Locator.Get<ConnectionToGridiaServerHandler>().Close();
@@ -72,9 +72,18 @@ namespace Gridia
 
         public void OnGUI()
         {
-            _displayList.X = (Screen.width - _displayList.Width) / 2;
             _displayList.Y = (Screen.height - _displayList.Height) / 2;
             _displayList.Render();
+
+            var runningY = 0.0f;
+            const int spacing = 15;
+            for (var i = 0; i < _displayList.NumChildren; i++)
+            {
+                var child = _displayList.GetChildAt(i);
+                child.X = (Screen.width - child.Width) / 2;
+                child.Y = runningY;
+                runningY += child.Height + spacing;
+            }
 
             GridiaConstants.DrawErrorMessage();
         }

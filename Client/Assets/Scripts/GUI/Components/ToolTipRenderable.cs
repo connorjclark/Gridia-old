@@ -5,7 +5,11 @@ namespace Gridia
 {
     public class ToolTipRenderable : Renderable
     {
-        public static ToolTipRenderable Instance = new ToolTipRenderable(Vector2.zero);
+        private static ToolTipRenderable _instance;
+        public static ToolTipRenderable Instance
+        {
+            get { return _instance ?? (_instance = new ToolTipRenderable(Vector2.zero)); }
+        }
 
         public String ToolTipMessage { get; set; }
 
@@ -19,9 +23,9 @@ namespace Gridia
             var toolTip = ToolTipMessage;
             GUI.Window(100, Rect, windowId =>
             {
-                const int width = 200;
-                const int height = 30;
-                GUI.Box(new Rect((Rect.width - width) / 2, (Rect.height - height) / 2, width, height), toolTip);
+                var width = Width * 0.9f;
+                var height = Height * 0.8f;
+                GUI.Box(new Rect((Width - width) / 2, (Height - height) / 2, width, height), toolTip);
                 GUI.BringWindowToFront(windowId);
             }, "");
             ToolTipMessage = null;
