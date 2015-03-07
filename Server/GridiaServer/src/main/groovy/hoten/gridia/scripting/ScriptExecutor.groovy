@@ -19,8 +19,8 @@ class ScriptExecutor {
         ]
         Integer.metaClass.propertyMissing = { String name ->
             timeUnits.find { name =~ it.key }?.value?.multiply(delegate).with {
-				((long)it) ?: {  new MissingPropertyException(name, ScriptExecutor) }()
-			}
+                ((long)it) ?: {  new MissingPropertyException(name, ScriptExecutor) }()
+            }
         }
     }
     

@@ -121,11 +121,8 @@ public class GridiaServerDriver {
             }
         }, 0, 1500, TimeUnit.MILLISECONDS);
 
-        // roach quest and random monster dungeon
+        // random monster dungeon
         if (mapName.equals("demo-city")) {
-            RoachQuest roachQuest = new RoachQuest(server);
-            Executors.newScheduledThreadPool(1).scheduleAtFixedRate(roachQuest, 0, roachQuest.arenaTickRate, TimeUnit.MILLISECONDS);
-
             RandomDungeonQuest randomDungeonQuest = new RandomDungeonQuest(server);
             Executors.newScheduledThreadPool(1).scheduleAtFixedRate(randomDungeonQuest, 0, randomDungeonQuest.arenaTickRate, TimeUnit.MILLISECONDS);
         }

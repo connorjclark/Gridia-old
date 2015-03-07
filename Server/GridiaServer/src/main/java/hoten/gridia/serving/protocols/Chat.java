@@ -103,9 +103,7 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                     int y = Integer.parseInt(split[2]);
                     int z = Integer.parseInt(split[3]);
                     if (server.tileMap.inBounds(x, y, z)) {
-                        server.playAnimation("WarpOut", player.creature.location);
-                        server.moveCreatureTo(player.creature, new Coord(x, y, z), true);
-                        server.playAnimation("WarpIn", player.creature.location);
+                        server.teleport(player.creature, new Coord(x, y, z));
                     }
                 } catch (NumberFormatException e) {
                 }

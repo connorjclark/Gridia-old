@@ -1,8 +1,12 @@
 package hoten.gridia.scripting
 
 import hoten.gridia.serving.ServingGridia
-import hoten.gridia.content.Item;
+import hoten.gridia.content.Item
+import hoten.gridia.map.Coord
+import hoten.gridia.content.Monster
 import java.util.concurrent.TimeUnit
+import java.util.logging.Level
+import java.util.logging.Logger
 
 class GridiaScript {
     def ServingGridia server
@@ -12,6 +16,71 @@ class GridiaScript {
     def GridiaScript(ServingGridia server, EventDispatcher eventDispatcher) {
         this.server = server
         this.eventDispatcher = eventDispatcher
+    }
+    
+    def loc(x, y, z = 0) {
+        new Coord(x, y, z)
+    }
+    
+    def findCreatures(params) {
+        def creatures = []
+        for (x in 0..<params.width) {
+            for (y in 0..<params.height) {
+                def loc = params.at.add(x, y, 0)
+                def cre = server.tileMap.getCreature(loc)
+                if (cre != null) creatures += cre
+            }
+        }
+        creatures
+    }
+    
+    def findPlayers(params) {
+        findCreatures(params).findAll { it.belongsToPlayer }
+    }
+    
+    def removeItemFrom(params) {
+        def itemRemoved = server.contentManager.createItemInstance(params.itemId, 0)
+        params.container.getItems().eachWithIndex { item, i ->
+            if (item.item.id == params.itemId) {
+                item = item.add item.quantity
+                container.deleteSlot i
+            }
+        }
+        itemRemoved
+    }
+    
+    def cloneMonsterAndStripName(params) {
+        def cloned = params.monster.clone()
+        cloned.name = ""
+        cloned
+    }
+    
+    def walkable(loc) {
+        server.tileMap.walkable(loc)
+    }
+    
+    def floor(loc) {
+        server.tileMap.getFloor(loc)
+    }
+    
+    def spawn(params) {
+        def spawned = []
+        def rand = new Random()
+        params.amount.times {
+            def loc = params.at.add(rand.nextInt(params.width), rand.nextInt(params.height), 0)
+            if (walkable(loc) && floor(loc)) {
+                spawned += server.createCreature(params.monster, loc)
+            }
+        }
+        spawned
+    }
+    
+    def remove(creature) {
+        server.removeCreature(creature)
+    }
+    
+    def teleport(params) {
+        server.teleport(params.target, params.to)
     }
 
     def announce(params) {
@@ -23,7 +92,19 @@ class GridiaScript {
     }
     
     def every(duration, closure) {
-        scheduledTasks += scheduler.scheduleAtFixedRate(closure, 0, duration, TimeUnit.MILLISECONDS)
+        def catching = {
+            try {
+                closure.call()
+            } catch (ex) {
+                announce(from: "SCRIPT EXECUTOR", message: "Script error: $ex")
+                Logger.getLogger(GridiaScript.class.getName()).log(Level.SEVERE, null, ex);
+                future.cancel()
+                scheduledTasks -= future
+            }
+        }
+        catching.delegate = this
+        def future = scheduler.scheduleAtFixedRate(catching, 0, duration, TimeUnit.MILLISECONDS)
+        scheduledTasks += future
     }
     
     def propertyMissing(String name) {
@@ -35,6 +116,7 @@ class GridiaScript {
     }
     
     def methodMissing(String name, args) {
+        println "$name, $args"
         if (name.startsWith("listenFor") && args.length == 1 && args[0] instanceof Closure) {
             def type = name.replaceFirst("listenFor", "")
             eventDispatcher.addEventListener(type, args[0])

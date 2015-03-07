@@ -81,6 +81,9 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
                 Logger.getLogger(ServingGridia.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
+        if ("demo-city".equals(worldName)) {
+            addScript(new File(worldTopDirectory, "scripts/RoachQuest.groovy"));
+        }
         instance = this;
     }
 
@@ -503,5 +506,11 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
 
     public boolean moveItemOutOfTheWay(Coord loc) {
         return addItemNear(loc, tileMap.getItem(loc), 10, false);
+    }
+
+    public void teleport(Creature creature, Coord coord) {
+        playAnimation("WarpOut", creature.location);
+        moveCreatureTo(creature, coord, true);
+        playAnimation("WarpIn", coord);
     }
 }

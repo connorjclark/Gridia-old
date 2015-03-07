@@ -71,6 +71,7 @@ Server/GridiaServer/TestWorld/json-world/
 *.suo
 Client/packages
 Client/.nuget/NuGet.exe
+/s[0-9]*
 
 # Unity
 client_Data/
