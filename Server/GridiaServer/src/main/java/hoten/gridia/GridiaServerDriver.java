@@ -121,12 +121,6 @@ public class GridiaServerDriver {
             }
         }, 0, 1500, TimeUnit.MILLISECONDS);
 
-        // random monster dungeon
-        if (mapName.equals("demo-city")) {
-            RandomDungeonQuest randomDungeonQuest = new RandomDungeonQuest(server);
-            Executors.newScheduledThreadPool(1).scheduleAtFixedRate(randomDungeonQuest, 0, randomDungeonQuest.arenaTickRate, TimeUnit.MILLISECONDS);
-        }
-
         System.out.println("Server started on port " + port);
     }
 

@@ -74,17 +74,21 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         playerFactory = new PlayerFactory(world);
         containerFactory = new ContainerFactory(world);
         setUpScripting();
-        Arrays.asList("Login", "Stairs", "Growth", "FloorDamage").forEach(scriptName -> {
+        addScripts(Arrays.asList("Login", "Stairs", "Growth", "FloorDamage"));
+        if ("demo-city".equals(mapName)) {
+            addScripts(Arrays.asList("RoachQuest", "RandomMonsterDungeonQuest"));
+        }
+        instance = this;
+    }
+
+    private void addScripts(List<String> scripts) {
+        scripts.forEach(scriptName -> {
             try {
                 addScript(new File(worldTopDirectory, "scripts/" + scriptName + ".groovy"));
             } catch (IOException ex) {
                 Logger.getLogger(ServingGridia.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        if ("demo-city".equals(worldName)) {
-            addScript(new File(worldTopDirectory, "scripts/RoachQuest.groovy"));
-        }
-        instance = this;
     }
 
     private void setUpScripting() {
@@ -324,8 +328,8 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         return cre;
     }
 
-    public void announce(String from, String message) {
-        sendToAll(messageBuilder.chat(from, message, new Coord(0, 0, 0)));
+    public void announce(String from, String message, Coord loc) {
+        sendToAll(messageBuilder.chat(from, message, loc));
     }
 
     public void announceNewPlayer(ConnectionToGridiaClientHandler client, Player player) {

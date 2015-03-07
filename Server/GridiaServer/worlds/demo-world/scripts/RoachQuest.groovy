@@ -13,6 +13,8 @@ def findPlayersInArena() {
 }
 
 every(tick) {
+    roaches = roaches.findAll { it.alive }
+    
     // :(
     if (!server.anyPlayersOnline()) {
         return
@@ -57,13 +59,13 @@ def stepArena(playersInArena) {
 def spawnRoaches() {
     int currentAmount = roaches.size()
     roach = server.contentManager.getMonster(42)
-    roachData = cloneMonsterAndStripName(monster: roach)
+    roachData = cloneMonsterAndStripName(roach)
     newRoaches = spawn(monster: roachData, at: arenaLoc, amount: numRoaches - currentAmount, width: arenaSize, height: arenaSize)
     roaches.addAll(newRoaches)
 }
 
 def announceInArena(message) {
-    announce(from: "ROACH ARENA", message: message)
+    announce(from: "ROACH ARENA", at: arenaLoc.add((int)arenaSize/2, (int)arenaSize/2, 0), message: message)
 }
 
 def clearArena() {

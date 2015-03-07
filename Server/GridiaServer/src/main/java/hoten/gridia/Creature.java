@@ -21,4 +21,8 @@ public class Creature {
     public void retire() {
         uniqueIds.retire(id);
     }
+    
+    public boolean isAlive() {
+        return life > 0;
+    }
 }

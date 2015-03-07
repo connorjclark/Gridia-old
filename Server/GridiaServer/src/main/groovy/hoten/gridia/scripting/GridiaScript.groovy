@@ -22,7 +22,13 @@ class GridiaScript {
         new Coord(x, y, z)
     }
     
-    def findCreatures(params) {
+    def findCreatures(Map params) {
+        if (params.area) {
+            params.width = params.area.width
+            params.height = params.area.height
+            params.at = params.area.loc
+        }
+        
         def creatures = []
         for (x in 0..<params.width) {
             for (y in 0..<params.height) {
@@ -34,11 +40,11 @@ class GridiaScript {
         creatures
     }
     
-    def findPlayers(params) {
+    def findPlayers(Map params) {
         findCreatures(params).findAll { it.belongsToPlayer }
     }
     
-    def removeItemFrom(params) {
+    def removeItemFrom(Map params) {
         def itemRemoved = server.contentManager.createItemInstance(params.itemId, 0)
         params.container.getItems().eachWithIndex { item, i ->
             if (item.item.id == params.itemId) {
@@ -49,8 +55,8 @@ class GridiaScript {
         itemRemoved
     }
     
-    def cloneMonsterAndStripName(params) {
-        def cloned = params.monster.clone()
+    def cloneMonsterAndStripName(monster) {
+        def cloned = monster.clone()
         cloned.name = ""
         cloned
     }
@@ -63,7 +69,13 @@ class GridiaScript {
         server.tileMap.getFloor(loc)
     }
     
-    def spawn(params) {
+    def spawn(Map params) {
+        if (params.area) {
+            params.at = params.area.loc
+            params.width = params.area.width
+            params.height = params.area.height
+        }
+        
         def spawned = []
         def rand = new Random()
         params.amount.times {
@@ -79,15 +91,18 @@ class GridiaScript {
         server.removeCreature(creature)
     }
     
-    def teleport(params) {
+    def teleport(Map params) {
         server.teleport(params.target, params.to)
     }
 
-    def announce(params) {
-        server.announce(params.from, params.message)
+    def announce(Map params) {
+        params.from = params.from ?: "WORLD"
+        params.at = params.at ?: loc(0, 0)
+        
+        server.announce(params.from, params.message, params.at)
     }
     
-    def playAnimation(params) {
+    def playAnimation(Map params) {
         server.playAnimation(params.name, params.location)
     }
     
@@ -116,7 +131,6 @@ class GridiaScript {
     }
     
     def methodMissing(String name, args) {
-        println "$name, $args"
         if (name.startsWith("listenFor") && args.length == 1 && args[0] instanceof Closure) {
             def type = name.replaceFirst("listenFor", "")
             eventDispatcher.addEventListener(type, args[0])
