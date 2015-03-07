@@ -137,8 +137,8 @@ class GridiaScript {
     }
     
     def methodMissing(String name, args) {
-        if (name.startsWith("listenFor") && args.length == 1 && args[0] instanceof Closure) {
-            def type = name.replaceFirst("listenFor", "")
+        if (name.startsWith("on") && args.length == 1 && args[0] instanceof Closure) {
+            def type = name.replaceFirst("on", "")
             eventDispatcher.addEventListener(type, args[0])
         } else if (['start', 'update', 'end'].every { it != name } ) {
             throw new MissingMethodException(name, GridiaScript, args)

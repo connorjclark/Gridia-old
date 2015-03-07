@@ -1,4 +1,4 @@
-listenForPlayerLogin {
+onPlayerLogin {
     player = event.player
     loc = player.creature.location
     playAnimation(name: "WarpIn", location: loc)
