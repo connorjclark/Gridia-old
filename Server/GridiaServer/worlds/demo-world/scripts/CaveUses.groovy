@@ -3,7 +3,7 @@ def isContainerWrapper(wrapper) {
 }
 
 def getCave(event) {
-    if (event.result?.products?.first()?.item?.isCave() && !isContainerWrapper(event.focus)) {
+    if (event.result.products?.getAt(0)?.item?.isCave()) {
         event.result.products[0].item
     }
 }
@@ -11,6 +11,7 @@ def getCave(event) {
 onValidateItemUse {
     cave = getCave(event)
     if (!cave) return
+    if (isContainerWrapper(event.focus)) return "You can't make a $cave.name in a container!"
     
     if (cave.itemClass == ItemClass.Cave_down) {
         if (event.focus.isLowestLevel()) return "You can't dig any lower"
