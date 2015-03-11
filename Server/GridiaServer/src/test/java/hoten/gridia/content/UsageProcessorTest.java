@@ -128,7 +128,7 @@ public class UsageProcessorTest {
     }
 
     @Test
-    public void testContainerToWorldUsageFirstProductGoesToWorldRestToContainer() {
+    public void testContainerToWorldUsageFirstProductGoesToWorldRestToContainer() throws ItemUseException {
         ItemInstance ripeAppleTree = _contentManager.createItemInstanceByName("Ripe Apple Tree");
         ItemInstance bareAppleTree = _contentManager.createItemInstanceByName("Bare Apple Tree");
         ItemInstance apples = _contentManager.createItemInstanceByName("Apple", 10);
@@ -152,7 +152,7 @@ public class UsageProcessorTest {
     }
 
     @Test
-    public void testToolDoesntChangeWhenIsHand() {
+    public void testToolDoesntChangeWhenIsHand() throws ItemUseException {
         ItemInstance closedDoor = _contentManager.createItemInstanceByName("Closed Door");
         ItemUse usage = _contentManager.getItemUse(_hand.getItem(), closedDoor.getItem(), 0);
 
@@ -170,7 +170,7 @@ public class UsageProcessorTest {
     }
 
     @Test
-    public void testFocusChangesWhenToolNotHand() {
+    public void testFocusChangesWhenToolNotHand() throws ItemUseException {
         ItemInstance axe = _contentManager.createItemInstanceByName("Axe");
         ItemInstance tree = _contentManager.createItemInstanceByName("Tree");
         ItemUse usage = _contentManager.getItemUse(axe.getItem(), tree.getItem(), 0);
@@ -191,7 +191,7 @@ public class UsageProcessorTest {
     }
 
     @Test
-    public void testSuccessToolIsAddedToToolSource() {
+    public void testSuccessToolIsAddedToToolSource() throws ItemUseException {
         ItemInstance meat = _contentManager.createItemInstanceByName("Meat");
         ItemInstance fire = _contentManager.createItemInstanceByName("Fire");
         ItemInstance cookedMeat = _contentManager.createItemInstanceByName("Cooked Meat");

@@ -13,9 +13,9 @@ onValidateItemUse {
     if (!cave) return
     
     if (cave.itemClass == ItemClass.Cave_down) {
-        if (event.focus.isLowestLevel()) return false
+        if (event.focus.isLowestLevel()) return "You can't dig any lower"
     } else if (cave.itemClass == ItemClass.Cave_up) {
-        if (event.focus.isHighestLevel()) return false
+        if (event.focus.isHighestLevel()) return "You can't go any higher"
     }
 }
 

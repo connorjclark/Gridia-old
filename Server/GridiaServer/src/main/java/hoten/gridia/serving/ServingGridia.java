@@ -21,6 +21,7 @@ import hoten.gridia.content.ItemInstance;
 import hoten.gridia.Player;
 import hoten.gridia.Player.PlayerFactory;
 import hoten.gridia.content.ItemUse;
+import hoten.gridia.content.ItemUseException;
 import hoten.gridia.content.Monster;
 import hoten.gridia.content.UsageProcessor;
 import hoten.gridia.content.WorldContentLoader;
@@ -471,9 +472,8 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
             ItemWrapper focusWrapper,
             int destIndex // :(
     ) throws IOException {
-        boolean success = usageProcessor.processUsage(use, toolWrapper, focusWrapper);
-
-        if (success) {
+        try {
+            usageProcessor.processUsage(use, toolWrapper, focusWrapper);
             if (use.animation != null) {
                 Coord loc = tileMap.getCoordFromIndex(destIndex);
                 sendToClientsWithAreaLoaded(messageBuilder.animation(use.animation, loc), destIndex);
@@ -485,12 +485,12 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
             if (use.successMessage != null) {
                 connection.send(messageBuilder.chat(use.successMessage, connection.getPlayer().creature.location));
             }
-        } else {
+        } catch (ItemUseException ex) {
+            String failureMessage = ex.getMessage();
             if (use.failureMessage != null) {
-                connection.send(messageBuilder.chat(use.failureMessage, connection.getPlayer().creature.location));
-            } else {
-                connection.send(messageBuilder.chat("Something went wrong...", connection.getPlayer().creature.location));
+                failureMessage = use.failureMessage + "\n" + failureMessage;
             }
+            connection.send(messageBuilder.chat(failureMessage, connection.getPlayer().creature.location));
         }
     }
 

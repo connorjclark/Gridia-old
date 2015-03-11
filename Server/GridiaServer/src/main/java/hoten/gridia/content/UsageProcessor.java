@@ -62,20 +62,16 @@ public class UsageProcessor {
         }
     }
 
-    protected boolean validate(UsageResult result, ItemUse usage, ItemWrapper tool, ItemWrapper focus) {
+    protected void validate(UsageResult result, ItemUse usage, ItemWrapper tool, ItemWrapper focus) throws ItemUseException {
         boolean focusIsContainer = focus instanceof ItemWrapper.ContainerItemWrapper;
         if (focusIsContainer && usage.surfaceGround != -1) {
-            return false;
+            throw new ItemUseException("You can't change the ground of a container slot");
         }
-        return true;
     }
 
-    public boolean processUsage(ItemUse usage, ItemWrapper tool, ItemWrapper focus) {
+    public void processUsage(ItemUse usage, ItemWrapper tool, ItemWrapper focus) throws ItemUseException {
         UsageResult result = getUsageResult(usage, tool.getItemInstance(), focus.getItemInstance());
-        boolean success = validate(result, usage, tool, focus);
-        if (success) {
-            implementResult(result, usage, tool, focus);
-        }
-        return success;
+        validate(result, usage, tool, focus);
+        implementResult(result, usage, tool, focus);
     }
 }
