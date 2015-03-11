@@ -3,7 +3,7 @@ def isContainerWrapper(wrapper) {
 }
 
 def getCave(event) {
-    if (event.result.products?.getAt(0)?.item?.isCave()) {
+    if (event.result.products?.getAt(0)?.item?.cave) {
         event.result.products[0].item
     }
 }
@@ -37,6 +37,20 @@ onCompleteItemUse {
         if (above.item.itemClass != ItemClass.Cave_down) {
             if (above.isNothing() || focus.moveItemAbove()) {
                 focus.itemAbove = server.contentManager.createItemInstance(980)
+            }
+        }
+    }
+}
+
+onCompleteItemUse {
+    if (event.tool.itemInstance.item.name == "Shovel" && event.focus.itemInstance.item.cave) {
+        if (event.focus.itemInstance.item.itemClass == ItemClass.Cave_down) {
+            if (event.focus.itemBelow.item.itemClass == ItemClass.Cave_up) {
+                event.focus.itemBelow = server.contentManager.createItemInstance(0)
+            }
+        } else {
+            if (event.focus.itemAbove.item.itemClass == ItemClass.Cave_down) {
+                event.focus.itemAbove = server.contentManager.createItemInstance(0)
             }
         }
     }
