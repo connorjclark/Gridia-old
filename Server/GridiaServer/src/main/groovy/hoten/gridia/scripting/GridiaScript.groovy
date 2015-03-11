@@ -29,10 +29,12 @@ class GridiaScript {
     }
     
     def findCreatures(Map params) {
-        if (params.area) {
-            params.width = params.area.width
-            params.height = params.area.height
-            params.at = params.area.loc
+        params.with {
+            if (area) {
+                width = area.width
+                height = area.height
+                at = area.loc
+            }
         }
         
         def creatures = []
@@ -138,11 +140,10 @@ class GridiaScript {
     
     def methodMissing(String name, args) {
         if (name.startsWith("on") && args.length == 1 && args[0] instanceof Closure) {
-            def type = name.replaceFirst("on", "")
+            def type = name.replaceFirst("on", "").toUpperCase()
             eventDispatcher.addEventListener(type, args[0])
         } else if (['start', 'update', 'end'].every { it != name } ) {
             throw new MissingMethodException(name, GridiaScript, args)
         }
     }
 }
-

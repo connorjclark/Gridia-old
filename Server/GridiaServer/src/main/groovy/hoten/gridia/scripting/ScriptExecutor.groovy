@@ -37,4 +37,3 @@ class ScriptExecutor {
         script.scheduledTasks.each { it.cancel() }
     }    
 }
-
