@@ -1,8 +1,6 @@
 package hoten.gridia.content;
 
 import hoten.gridia.ItemWrapper;
-import hoten.gridia.content.Item.ItemClass;
-import hoten.gridia.map.Coord;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,32 +45,7 @@ public class UsageProcessor {
         return result;
     }
 
-    // :(
-    private void makeCaveIfNecessary(UsageResult result, ItemWrapper focus) {
-        if (!result.products.isEmpty()) {
-            Item firstResult = result.products.get(0).getItem();
-            if (firstResult.isCave()) {
-                ItemWrapper.WorldItemWrapper focusAsWorld = (ItemWrapper.WorldItemWrapper) focus;
-                if (firstResult.itemClass == ItemClass.Cave_down) {
-                    ItemInstance below = focusAsWorld.getItemBelow();
-                    if (below.getItem().itemClass != ItemClass.Cave_up) {
-                        if (below == ItemInstance.NONE || focusAsWorld.moveItemBelow()) {
-                            focusAsWorld.setItemBelow(_contentManager.createItemInstance(981));
-                        }
-                    }
-                } else {
-                    ItemInstance above = focusAsWorld.getItemAbove();
-                    if (above.getItem().itemClass != ItemClass.Cave_down) {
-                        if (above == ItemInstance.NONE || focusAsWorld.moveItemAbove()) {
-                            focusAsWorld.setItemAbove(_contentManager.createItemInstance(980));
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    void implementResult(UsageResult result, ItemWrapper tool, ItemWrapper focus) {
+    protected void implementResult(UsageResult result, ItemUse usage, ItemWrapper tool, ItemWrapper focus) {
         if (tool.getItemInstance() != ItemInstance.NONE) {
             tool.changeWrappedItem(result.tool);
             if (result.successTool != null) {
@@ -89,36 +62,11 @@ public class UsageProcessor {
         }
     }
 
-    private boolean isCaveOrNothing(ItemInstance item) {
-        return item.getItem().isCave() || item == ItemInstance.NONE;
-    }
-
-    private boolean validate(UsageResult result, ItemUse usage, ItemWrapper tool, ItemWrapper focus) {
+    protected boolean validate(UsageResult result, ItemUse usage, ItemWrapper tool, ItemWrapper focus) {
         boolean focusIsContainer = focus instanceof ItemWrapper.ContainerItemWrapper;
         if (focusIsContainer && usage.surfaceGround != -1) {
             return false;
         }
-
-        if (!result.products.isEmpty()) {
-            Item firstResult = result.products.get(0).getItem();
-            if (firstResult.isCave()) {
-                if (focusIsContainer) {
-                    return false;
-                } else {
-                    ItemWrapper.WorldItemWrapper focusAsWorld = (ItemWrapper.WorldItemWrapper) focus;
-                    if (firstResult.itemClass == ItemClass.Cave_down) {
-                        if (focusAsWorld.isLowestLevel()) {
-                            return false;
-                        }
-                    } else if (firstResult.itemClass == ItemClass.Cave_up) {
-                        if (focusAsWorld.isHighestLevel()) {
-                            return false;
-                        }
-                    }
-                }
-            }
-        }
-
         return true;
     }
 
@@ -126,8 +74,7 @@ public class UsageProcessor {
         UsageResult result = getUsageResult(usage, tool.getItemInstance(), focus.getItemInstance());
         boolean success = validate(result, usage, tool, focus);
         if (success) {
-            makeCaveIfNecessary(result, focus);
-            implementResult(result, tool, focus);
+            implementResult(result, usage, tool, focus);
         }
         return success;
     }

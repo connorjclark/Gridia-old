@@ -56,6 +56,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     public final GridiaMessageToClientBuilder messageBuilder = new GridiaMessageToClientBuilder();
     public final TileMap tileMap;
     public final ContentManager contentManager;
+    public final UsageProcessor usageProcessor;
     public final Map<Integer, Creature> creatures = new ConcurrentHashMap();
     private final Random random = new Random();
     public final PlayerFactory playerFactory;
@@ -69,12 +70,13 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         worldTopDirectory = world;
         worldName = world.getName();
         contentManager = new WorldContentLoader(world).load();
+        usageProcessor = new hoten.gridia.scripting.ScriptableUsageProcessing(contentManager, eventDispatcher);
         GridiaGson.initialize(contentManager, this);
         tileMap = TileMap.loadMap(world, mapName);
         playerFactory = new PlayerFactory(world);
         containerFactory = new ContainerFactory(world);
         setUpScripting();
-        addScripts(Arrays.asList("Login", "Stairs", "Growth", "FloorDamage"));
+        addScripts(Arrays.asList("Login", "Stairs", "Growth", "FloorDamage", "CaveUses"));
         if ("demo-city".equals(mapName)) {
             addScripts(Arrays.asList("RoachQuest", "RandomMonsterDungeonQuest"));
         }
@@ -469,7 +471,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
             ItemWrapper focusWrapper,
             int destIndex // :(
     ) throws IOException {
-        boolean success = new UsageProcessor(contentManager).processUsage(use, toolWrapper, focusWrapper);
+        boolean success = usageProcessor.processUsage(use, toolWrapper, focusWrapper);
 
         if (success) {
             if (use.animation != null) {

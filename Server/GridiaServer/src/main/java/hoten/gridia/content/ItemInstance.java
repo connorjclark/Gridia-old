@@ -40,6 +40,10 @@ public class ItemInstance {
         age = item.age;
     }
 
+    public boolean isNothing() {
+        return this == NONE;
+    }
+
     public ItemInstance remove(int amount) {
         int newQuantity = _quantity - amount;
         if (newQuantity <= 0) {
