@@ -14,9 +14,9 @@ onValidateItemUse {
     if (isContainerWrapper(event.focus)) return "You can't make a $cave.name in a container!"
     
     if (cave.itemClass == ItemClass.Cave_down) {
-        if (event.focus.isLowestLevel()) return "You can't dig any lower"
+        if (event.focus.lowestLevel) return "You can't dig any lower"
     } else if (cave.itemClass == ItemClass.Cave_up) {
-        if (event.focus.isHighestLevel()) return "You can't go any higher"
+        if (event.focus.highestLevel) return "You can't go any higher"
     }
 }
 
@@ -28,14 +28,14 @@ onCompleteItemUse {
     if (cave.itemClass == ItemClass.Cave_down) {
         below = focus.itemBelow
         if (below.item.itemClass != ItemClass.Cave_up) {
-            if (below.isNothing() || focus.moveItemBelow()) {
+            if (below.nothing || focus.moveItemBelow()) {
                 focus.itemBelow = server.contentManager.createItemInstance(981)
             }
         }
     } else {
         above = focus.itemAbove
         if (above.item.itemClass != ItemClass.Cave_down) {
-            if (above.isNothing() || focus.moveItemAbove()) {
+            if (above.nothing || focus.moveItemAbove()) {
                 focus.itemAbove = server.contentManager.createItemInstance(980)
             }
         }
