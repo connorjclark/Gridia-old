@@ -17,9 +17,11 @@ class ScriptExecutor {
             /weeks?/ : 1000 * 60 * 60 * 24 * 7,
             /years?/ : 1000 * 60 * 60 * 24 * 7 * 52.1775
         ]
-        Integer.metaClass.propertyMissing = { String name ->
-            timeUnits.find { name =~ it.key }?.value?.multiply(delegate).with {
-                ((long)it) ?: {  new MissingPropertyException(name, ScriptExecutor) }()
+        [Number, Integer].each { klass ->
+            klass.metaClass.propertyMissing = { String name ->
+                (long) timeUnits.find { name =~ it.key }?.value?.multiply(delegate).with {
+                    it ?: { throw new MissingPropertyException(name, klass) }()
+                }
             }
         }
     }

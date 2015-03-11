@@ -54,7 +54,7 @@ class GridiaScript {
     
     def removeItemFrom(Map params) {
         def itemRemoved = server.contentManager.createItemInstance(params.itemId, 0)
-        params.container.getItems().eachWithIndex { item, i ->
+        params.container.items.eachWithIndex { item, i ->
             if (item.item.id == params.itemId) {
                 itemRemoved = itemRemoved.add item.quantity
                 params.container.deleteSlot i
@@ -119,8 +119,8 @@ class GridiaScript {
             try {
                 closure.call()
             } catch (ex) {
-                announce(from: "SCRIPT EXECUTOR", message: "Script error: $ex")
                 Logger.getLogger(GridiaScript.class.getName()).log(Level.SEVERE, null, ex);
+                announce(from: "SCRIPT EXECUTOR", message: "Script error: $ex")
                 future.cancel()
                 scheduledTasks -= future
             }
