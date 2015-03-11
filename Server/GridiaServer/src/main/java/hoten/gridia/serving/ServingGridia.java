@@ -77,7 +77,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         playerFactory = new PlayerFactory(world);
         containerFactory = new ContainerFactory(world);
         setUpScripting();
-        addScripts(Arrays.asList("Login", "Stairs", "Growth", "FloorDamage", "CaveUses"));
+        addScripts(Arrays.asList("Save", "Login", "Stairs", "Growth", "FloorDamage", "CaveUses"));
         if ("demo-city".equals(mapName)) {
             addScripts(Arrays.asList("RoachQuest", "RandomMonsterDungeonQuest"));
         }
