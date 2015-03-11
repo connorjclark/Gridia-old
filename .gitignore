@@ -95,3 +95,4 @@ Client/Client.sln
 Client/Assembly-CSharp-vs.csproj
 Client/Assembly-CSharp.csproj
 Client/client.exe
+*.userprefs

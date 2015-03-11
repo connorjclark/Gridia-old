@@ -35,6 +35,10 @@ public class Container {
             }
         }
 
+        public boolean exists(int id) {
+            return new File(dir, id + ".json").exists();
+        }
+
         private Container load(int id) throws IOException {
             String json = FileUtils.readFileToString(new File(dir, id + ".json"));
             Container container = GridiaGson.get().fromJson(json, Container.class);

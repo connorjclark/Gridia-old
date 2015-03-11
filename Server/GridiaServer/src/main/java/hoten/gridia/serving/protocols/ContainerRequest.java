@@ -18,7 +18,6 @@ public class ContainerRequest extends JsonMessageHandler<ConnectionToGridiaClien
     protected void handle(ConnectionToGridiaClientHandler connection, JsonObject data) throws IOException {
         ServingGridia server = connection.getServer();
         Coord location = GridiaGson.get().fromJson(data.get("loc"), Coord.class);
-
         ItemInstance containerItem = server.tileMap.getTile(location).item;
         requestContainer(server, connection, containerItem);
     }
@@ -29,7 +28,8 @@ public class ContainerRequest extends JsonMessageHandler<ConnectionToGridiaClien
             Container container;
             synchronized (item) {
                 JsonObject itemData = item.getData();
-                if (itemData.has("containerId")) {
+                if (itemData.has("containerId") && server.containerFactory.exists(itemData.get("containerId").getAsInt())) {
+                    System.out.println(itemData.get("containerId").getAsInt());
                     container = server.containerFactory.get(itemData.get("containerId").getAsInt());
                 } else {
                     container = server.containerFactory.create(Container.ContainerType.Other, 20);
@@ -37,6 +37,7 @@ public class ContainerRequest extends JsonMessageHandler<ConnectionToGridiaClien
                     server.sendToAll(server.messageBuilder.chat(player.accountDetails.username, "Ah! That brand new container smell.", player.creature.location));
                 }
             }
+
             if (!player.openedContainers.contains(container.id)) {
                 connection.send(server.messageBuilder.container(container, item.getItem().id));
                 player.openedContainers.add(container.id);
