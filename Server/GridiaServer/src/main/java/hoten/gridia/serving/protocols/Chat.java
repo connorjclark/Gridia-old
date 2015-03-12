@@ -29,7 +29,7 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
         if (msg.startsWith("!script ")) {
             String script = msg.split(" ", 2)[1];
             try {
-                server.addScript(script);
+                server.addScript(script, null);
             } catch (CompilationFailedException ex) {
                 connection.send(server.messageBuilder.chat("That didn't parse!\n" + ex, player.creature.location));
             }

@@ -12,8 +12,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import org.apache.commons.io.FileUtils;
 
 public class GridiaServerDriver {
@@ -115,22 +113,6 @@ public class GridiaServerDriver {
 
         new ServingPolicyFile(port).start();
 
-        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
-            if (server.anyPlayersOnline()) {
-                moveMonstersRandomly();
-            }
-        }, 0, 1500, TimeUnit.MILLISECONDS);
-
         System.out.println("Server started on port " + port);
-    }
-
-    private static void moveMonstersRandomly() {
-        server.creatures.values().stream()
-                .filter(cre -> !cre.belongsToPlayer && !cre.name.equals("Stacy the Mayor"))
-                .forEach(cre -> {
-                    if (Math.random() > 0.5) {
-                        server.moveCreatureRandomly(cre);
-                    }
-                });
     }
 }

@@ -12,6 +12,7 @@ class GridiaScript {
     def ServingGridia server
     def EventDispatcher eventDispatcher
     def scheduledTasks = []
+    def Entity entity
     
     def GridiaScript(ServingGridia server, EventDispatcher eventDispatcher) {
         this.server = server
@@ -119,7 +120,7 @@ class GridiaScript {
             try {
                 closure.call()
             } catch (ex) {
-                Logger.getLogger(GridiaScript.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GridiaScript.class.name).log(Level.SEVERE, null, ex);
                 announce(from: "SCRIPT EXECUTOR", message: "Script error: $ex")
                 future.cancel()
                 scheduledTasks -= future

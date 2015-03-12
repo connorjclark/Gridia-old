@@ -22,4 +22,22 @@ public class Coord {
     public String toString() {
         return String.format("%s, %s, %s", x, y, z);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Coord)) {
+            return false;
+        }
+        Coord otherCoord = (Coord) other;
+        return otherCoord.x == x && otherCoord.y == y && otherCoord.z == z;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + this.x;
+        hash = 89 * hash + this.y;
+        hash = 89 * hash + this.z;
+        return hash;
+    }
 }

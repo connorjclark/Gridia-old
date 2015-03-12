@@ -87,7 +87,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     private void addScripts(List<String> scripts) {
         scripts.forEach(scriptName -> {
             try {
-                addScript(new File(worldTopDirectory, "scripts/" + scriptName + ".groovy"));
+                addScript(new File(worldTopDirectory, "scripts/" + scriptName + ".groovy"), null);
             } catch (IOException ex) {
                 Logger.getLogger(ServingGridia.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -100,18 +100,23 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         shell = new GroovyShell(GridiaServerDriver.class.getClassLoader(), new Binding(), compilerConfiguration);
     }
 
-    public Script addScript(File scriptFile) throws IOException {
+    public Script addScript(File scriptFile, hoten.gridia.scripting.Entity entity) throws IOException {
         DelegatingScript script = (DelegatingScript) shell.parse(scriptFile);
-        return addScript(script);
+        return addScript(script, entity);
     }
 
-    public Script addScript(String scriptText) throws IOException {
+    public Script addScript(String scriptText, hoten.gridia.scripting.Entity entity) throws IOException {
         DelegatingScript script = (DelegatingScript) shell.parse(scriptText);
-        return addScript(script);
+        return addScript(script, entity);
     }
 
-    private Script addScript(DelegatingScript script) throws IOException {
-        script.setDelegate(new hoten.gridia.scripting.GridiaScript(this, eventDispatcher));
+    private Script addScript(DelegatingScript script, hoten.gridia.scripting.Entity entity) throws IOException {
+        hoten.gridia.scripting.GridiaScript gridiaScript = new hoten.gridia.scripting.GridiaScript(this, eventDispatcher);
+        script.setDelegate(gridiaScript);
+        gridiaScript.setEntity(entity);
+        if (entity != null) {
+            entity.scripts.add(gridiaScript);
+        }
         scriptExecutor.addScript(script);
         return script;
     }
@@ -200,7 +205,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     public void hurtCreature(Creature cre, int lifePoints) {
         sendToClientsWithAreaLoaded(messageBuilder.animation("Attack", cre.location), cre.location);
         cre.life -= lifePoints;
-        if (cre.life <= 0) {
+        if (!cre.isAlive()) {
             sendToClientsWithAreaLoaded(messageBuilder.animation("diescream", cre.location), cre.location);
             addItemNear(cre.location, contentManager.createItemInstance(1022), 10, true);
             if (cre.belongsToPlayer) {
@@ -229,6 +234,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         creatures.remove(cre.id);
         tileMap.getTile(cre.location).cre = null;
         cre.retire();
+        cre.removeScripts();
         sendToClientsWithSectorLoaded(messageBuilder.removeCreature(cre), sector);
     }
 
@@ -237,6 +243,9 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     }
 
     public void moveCreatureTo(Creature cre, Coord loc, int timeInMillisecondsToMove, boolean isTeleport, boolean onRaft) {
+        if (loc.equals(cre.location)) {
+            return;
+        }
         cre.justTeleported = false;
         Sector sectorBefore = tileMap.getSectorOf(cre.location);
         sendToClientsWithSectorLoaded(messageBuilder.moveCreature(cre, 0, false, onRaft), sectorBefore);
@@ -259,20 +268,6 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         sendToClientsWithSectorLoaded(messageBuilder.updateCreatureImage(cre), sector);
     }
 
-    public void moveCreatureRandomly(Creature cre) {
-        int x = cre.location.x;
-        int y = cre.location.y;
-        int diff = random.nextBoolean() ? 1 : -1;
-        if (random.nextBoolean()) {
-            x += diff;
-        } else {
-            y += diff;
-        }
-        if (tileMap.walkable(x, y, cre.location.z)) {
-            moveCreatureTo(cre, new Coord(x, y, cre.location.z), false);
-        }
-    }
-
     public void createCreatureRandomly(int image) {
         Coord c = new Coord(random.nextInt(tileMap.size / 10), random.nextInt(tileMap.size / 10), 0);
         if (tileMap.walkable(c.x, c.y, c.z)) {
@@ -281,7 +276,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     }
 
     public Creature createCreature(Monster mold, Coord loc) {
-        Creature cre = createCreature(mold.image, mold.name, loc);
+        Creature cre = createCreature(mold.image, mold.name, loc, false);
         List<ItemInstance> items = new ArrayList<>();
         mold.drops.forEach(itemDrop -> {
             items.add(new ItemInstance(itemDrop));
@@ -291,32 +286,36 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     }
 
     public Creature createCreature(int image, Coord loc) {
-        return createCreature(new DefaultCreatureImage(image), "Monster", loc);
+        return createCreature(new DefaultCreatureImage(image), "Monster", loc, false);
     }
 
     public Creature createCreature(CreatureImage image, Coord loc) {
-        return createCreature(image, "Monster", loc);
+        return createCreature(image, "Monster", loc, false);
     }
 
-    public Creature createCreature(CreatureImage image, String name, Coord loc) {
-        Creature cre = new Creature();
-        cre.name = name;
-        cre.image = image;
-        cre.location = loc;
+    public Creature createCreature(CreatureImage image, String name, Coord loc, boolean belongsToPlayer) {
+        Creature cre = createCreatureQuietly(image, name, loc, belongsToPlayer);
         Sector sector = tileMap.getSectorOf(cre.location);
         tileMap.getTile(cre.location).cre = cre;
         sendToClientsWithSectorLoaded(messageBuilder.addCreature(cre), sector);
-        creatures.put(cre.id, cre);
         return cre;
     }
 
     // :(
-    public Creature createCreatureQuietly(CreatureImage image, String name, Coord loc) {
+    public Creature createCreatureQuietly(CreatureImage image, String name, Coord loc, boolean belongsToPlayer) {
         Creature cre = new Creature();
+        cre.belongsToPlayer = belongsToPlayer;
         cre.name = name;
         cre.image = image;
         cre.location = loc;
         creatures.put(cre.id, cre);
+        if (!belongsToPlayer) {
+            try {
+                addScript(new File(worldTopDirectory, "scripts/RandomWalk.groovy"), cre);
+            } catch (IOException ex) {
+                Logger.getLogger(ServingGridia.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         return cre;
     }
 
@@ -326,8 +325,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         image.bareHead = (int) (Math.random() * 100);
         image.bareChest = (int) (Math.random() * 10);
         image.bareLegs = (int) (Math.random() * 10);
-        Creature cre = createCreature(image, name, location);
-        cre.belongsToPlayer = true;
+        Creature cre = createCreature(image, name, location, true);
         return cre;
     }
 

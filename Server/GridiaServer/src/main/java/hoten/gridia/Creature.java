@@ -1,15 +1,15 @@
 package hoten.gridia;
 
 import hoten.gridia.map.Coord;
+import hoten.gridia.serving.ServingGridia;
 import hoten.gridia.uniqueidentifiers.UniqueIdentifiers;
 
-public class Creature {
+public class Creature extends hoten.gridia.scripting.Entity {
 
     private static final UniqueIdentifiers uniqueIds = new UniqueIdentifiers(100);
 
     public final int id = uniqueIds.next();
     public String name;
-    public Coord location = new Coord(0, 0, 0);
     public CreatureImage image;
     public boolean belongsToPlayer;
     public Container inventory;
@@ -21,8 +21,12 @@ public class Creature {
     public void retire() {
         uniqueIds.retire(id);
     }
-    
+
     public boolean isAlive() {
         return life > 0;
+    }
+
+    public void setLocation(Coord newLocation) {
+        ServingGridia.instance.moveCreatureTo(this, newLocation, false);
     }
 }
