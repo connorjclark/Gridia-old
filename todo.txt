@@ -14,6 +14,7 @@ Issues
 
   Sawwing sfx is static-y
   Player position gets out of sync?
+  Usage -> Use
   freezes when minimized for awhile
   animations show in top left corner for split seconds
   issues when walking on edge of map
