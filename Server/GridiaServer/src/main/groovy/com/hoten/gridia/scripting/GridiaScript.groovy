@@ -150,7 +150,9 @@ public class GridiaScript {
     }
     
     def playAnimation(Map params) {
-        server.playAnimation(params.type, params.at)
+        params.at = params.at ?: entity.location
+        
+        server.playAnimation(params.type)
     }
     
     def every(duration, closure) {
