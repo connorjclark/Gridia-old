@@ -16,7 +16,7 @@ class ScriptableUsageProcessing extends UsageProcessor {
     
     def void validate(UsageResult result, ItemUse usage, ItemWrapper tool, ItemWrapper focus) {
         super.validate(result, usage, tool, focus)
-        def issues = eventDispatcher.dispatch("ValidateItemUse", [
+        def issues = eventDispatcher.dispatch("ValidateItemUse", null, [
                 result:result,
                 usage:usage,
                 tool:tool,
@@ -29,7 +29,7 @@ class ScriptableUsageProcessing extends UsageProcessor {
     
     def void implementResult(UsageResult result, ItemUse usage, ItemWrapper tool, ItemWrapper focus) {
         super.implementResult(result, usage, tool, focus)
-        eventDispatcher.dispatch("CompleteItemUse", [
+        eventDispatcher.dispatch("CompleteItemUse", null, [
                 result:result,
                 usage:usage,
                 tool:tool,
