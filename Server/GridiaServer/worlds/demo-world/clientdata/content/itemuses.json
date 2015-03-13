@@ -1041,7 +1041,7 @@
    },
    {
       "successMessage":"You light the camp fire.",
-      "animation":"CarpentryHammerSound",
+      "animation":"Burning",
       "tool":280,
       "focus":325,
       "toolQuantityConsumed":0,
@@ -1054,7 +1054,7 @@
    },
    {
       "successMessage":"You light the brazier.",
-      "animation":"CarpentryHammerSound",
+      "animation":"Burning",
       "tool":280,
       "focus":282,
       "toolQuantityConsumed":0,
@@ -1067,7 +1067,7 @@
    },
    {
       "successMessage":"You light the Tiki Torch.",
-      "animation":"CarpentryHammerSound",
+      "animation":"Burning",
       "tool":280,
       "focus":327,
       "toolQuantityConsumed":0,
@@ -1080,7 +1080,7 @@
    },
    {
       "successMessage":"You light the Oven.",
-      "animation":"CarpentryHammerSound",
+      "animation":"Burning",
       "tool":280,
       "focus":126,
       "toolQuantityConsumed":0,
@@ -1093,7 +1093,7 @@
    },
    {
       "successMessage":"You light the lantern.",
-      "animation":"CarpentryHammerSound",
+      "animation":"Burning",
       "tool":280,
       "focus":328,
       "toolQuantityConsumed":0,
@@ -1106,7 +1106,7 @@
    },
    {
       "successMessage":"You light the torch.",
-      "animation":"CarpentryHammerSound",
+      "animation":"Burning",
       "tool":280,
       "focus":333,
       "toolQuantityConsumed":0,
@@ -1119,7 +1119,7 @@
    },
    {
       "successMessage":"You light the candle.",
-      "animation":"CarpentryHammerSound",
+      "animation":"Burning",
       "tool":280,
       "focus":357,
       "toolQuantityConsumed":0,
@@ -1132,7 +1132,7 @@
    },
    {
       "successMessage":"You light the candlebra.",
-      "animation":"CarpentryHammerSound",
+      "animation":"Burning",
       "tool":280,
       "focus":363,
       "toolQuantityConsumed":0,
@@ -1145,7 +1145,7 @@
    },
    {
       "successMessage":"You light the coals.",
-      "animation":"CarpentryHammerSound",
+      "animation":"Burning",
       "tool":280,
       "focus":340,
       "toolQuantityConsumed":0,
@@ -1158,7 +1158,7 @@
    },
    {
       "successMessage":"You light the coals.",
-      "animation":"CarpentryHammerSound",
+      "animation":"Burning",
       "tool":280,
       "focus":193,
       "toolQuantityConsumed":0,
@@ -1171,7 +1171,7 @@
    },
    {
       "successMessage":"You put out the fire.",
-      "animation":"CarpentryHammerSound",
+      "animation":"Burning",
       "tool":281,
       "focus":323,
       "toolQuantityConsumed":0,
@@ -1942,7 +1942,7 @@
    },
    {
       "successMessage":"You reduce the rock, making small rocks.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":4,
       "toolQuantityConsumed":0,
@@ -1959,7 +1959,7 @@
    },
    {
       "successMessage":"You reduce the rock.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":5,
       "toolQuantityConsumed":0,
@@ -1972,7 +1972,7 @@
    },
    {
       "successMessage":"You tear down the stairs.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":987,
       "toolQuantityConsumed":0,
@@ -1987,7 +1987,7 @@
    },
    {
       "successMessage":"You tear down the stairs.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":986,
       "toolQuantityConsumed":0,
@@ -2002,7 +2002,7 @@
    },
    {
       "successMessage":"You tear down the pit.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":339,
       "toolQuantityConsumed":0,
@@ -2015,7 +2015,7 @@
    },
    {
       "successMessage":"You tear down the wall.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":10,
       "toolQuantityConsumed":0,
@@ -2028,7 +2028,7 @@
    },
    {
       "successMessage":"You tear down the wall.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":211,
       "toolQuantityConsumed":0,
@@ -2041,7 +2041,7 @@
    },
    {
       "successMessage":"You tear down the wall.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":213,
       "toolQuantityConsumed":0,
@@ -2067,7 +2067,7 @@
    },
    {
       "successMessage":"You tear down the wall.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":212,
       "toolQuantityConsumed":0,
@@ -2080,7 +2080,7 @@
    },
    {
       "successMessage":"You tear down the wall.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":214,
       "toolQuantityConsumed":0,
@@ -2093,7 +2093,7 @@
    },
    {
       "successMessage":"You tear down the wall.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":215,
       "toolQuantityConsumed":0,
@@ -2106,7 +2106,7 @@
    },
    {
       "successMessage":"You tear down the wall.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":216,
       "toolQuantityConsumed":0,
@@ -2119,7 +2119,7 @@
    },
    {
       "successMessage":"You tear down the wall.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":217,
       "toolQuantityConsumed":0,
@@ -2132,7 +2132,7 @@
    },
    {
       "successMessage":"You tear down the wall.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":218,
       "toolQuantityConsumed":0,
@@ -2145,7 +2145,7 @@
    },
    {
       "successMessage":"You tear down the wall.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":219,
       "toolQuantityConsumed":0,
@@ -2158,7 +2158,7 @@
    },
    {
       "successMessage":"You tear down the wall.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":220,
       "toolQuantityConsumed":0,
@@ -2171,7 +2171,7 @@
    },
    {
       "successMessage":"You tear down the wall.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":221,
       "toolQuantityConsumed":0,
@@ -2184,7 +2184,7 @@
    },
    {
       "successMessage":"You tear down the wall.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":222,
       "toolQuantityConsumed":0,
@@ -2197,7 +2197,7 @@
    },
    {
       "successMessage":"You tear down the wall.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":223,
       "toolQuantityConsumed":0,
@@ -2210,7 +2210,7 @@
    },
    {
       "successMessage":"You tear down the wall.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":224,
       "toolQuantityConsumed":0,
@@ -2223,7 +2223,7 @@
    },
    {
       "successMessage":"You tear down the door.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":248,
       "toolQuantityConsumed":0,
@@ -2238,7 +2238,7 @@
    },
    {
       "successMessage":"You tear down the door.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":249,
       "toolQuantityConsumed":0,
@@ -2253,7 +2253,7 @@
    },
    {
       "successMessage":"You tear down the door.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":257,
       "toolQuantityConsumed":0,
@@ -2268,7 +2268,7 @@
    },
    {
       "successMessage":"You tear down the door.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":258,
       "toolQuantityConsumed":0,
@@ -2283,7 +2283,7 @@
    },
    {
       "successMessage":"You tear down the wall.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":241,
       "toolQuantityConsumed":0,
@@ -2296,7 +2296,7 @@
    },
    {
       "successMessage":"You tear down the wall.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":242,
       "toolQuantityConsumed":0,
@@ -3284,7 +3284,7 @@
    },
    {
       "successMessage":"You dig up some dirt.",
-      "animation":"havenmayor",
+      "animation":"ShovelDig",
       "tool":902,
       "focus":0,
       "focusQuantityConsumed":0,
@@ -3299,7 +3299,7 @@
    },
    {
       "successMessage":"You dig up some worms.",
-      "animation":"havenmayor",
+      "animation":"ShovelDig",
       "tool":902,
       "focus":0,
       "focusQuantityConsumed":0,
@@ -3336,7 +3336,7 @@
       ]
    },
    {
-      "animation":"Hiccup",
+      "animation":"Fishing",
       "tool":2034,
       "focus":0,
       "focusQuantityConsumed":0,
@@ -3349,7 +3349,7 @@
       ]
    },
    {
-      "animation":"Hiccup",
+      "animation":"Fishing",
       "tool":2035,
       "focus":0,
       "focusQuantityConsumed":0,
@@ -3362,7 +3362,7 @@
       ]
    },
    {
-      "animation":"Hiccup",
+      "animation":"Fishing",
       "tool":2026,
       "focus":0,
       "focusQuantityConsumed":0,
@@ -3375,7 +3375,7 @@
       ]
    },
    {
-      "animation":"Hiccup",
+      "animation":"Fishing",
       "tool":2027,
       "focus":0,
       "focusQuantityConsumed":0,
@@ -3388,7 +3388,7 @@
       ]
    },
    {
-      "animation":"Hiccup",
+      "animation":"Fishing",
       "tool":1099,
       "focus":0,
       "focusQuantityConsumed":0,
@@ -4441,7 +4441,7 @@
    },
    {
       "successMessage":"You fill in the cave.",
-      "animation":"havenmayor",
+      "animation":"ShovelDig",
       "tool":902,
       "focus":981,
       "toolQuantityConsumed":0,
@@ -4454,7 +4454,7 @@
    },
    {
       "successMessage":"You fill in the cave.",
-      "animation":"havenmayor",
+      "animation":"ShovelDig",
       "tool":902,
       "focus":980,
       "toolQuantityConsumed":0,
@@ -4467,7 +4467,7 @@
    },
    {
       "successMessage":"You dig a cave.",
-      "animation":"havenmayor",
+      "animation":"ShovelDig",
       "tool":902,
       "focus":0,
       "focusQuantityConsumed":0,
@@ -4481,7 +4481,7 @@
    },
    {
       "successMessage":"You dig a cave.",
-      "animation":"havenmayor",
+      "animation":"ShovelDig",
       "tool":902,
       "focus":0,
       "focusQuantityConsumed":0,
@@ -4495,7 +4495,7 @@
    },
    {
       "successMessage":"You dig a well.",
-      "animation":"havenmayor",
+      "animation":"ShovelDig",
       "tool":902,
       "focus":0,
       "focusQuantityConsumed":0,
@@ -4509,7 +4509,7 @@
    },
    {
       "successMessage":"You fill the well.",
-      "animation":"havenmayor",
+      "animation":"ShovelDig",
       "tool":902,
       "focus":1116,
       "toolQuantityConsumed":0,
@@ -10081,7 +10081,7 @@
    },
    {
       "successMessage":"You switch the lever.",
-      "animation":"Pink Bubble",
+      "animation":"Door",
       "tool":0,
       "focus":689,
       "toolQuantityConsumed":0,
@@ -14680,7 +14680,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14692,7 +14692,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14704,7 +14704,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14716,7 +14716,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14728,7 +14728,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14740,7 +14740,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14752,7 +14752,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14764,7 +14764,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14776,7 +14776,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14788,7 +14788,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14800,7 +14800,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14812,7 +14812,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14824,7 +14824,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14836,7 +14836,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14848,7 +14848,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14860,7 +14860,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14872,7 +14872,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14884,7 +14884,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14896,7 +14896,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14908,7 +14908,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14920,7 +14920,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14932,7 +14932,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14944,7 +14944,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14956,7 +14956,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14968,7 +14968,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14980,7 +14980,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -14992,7 +14992,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15004,7 +15004,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15016,7 +15016,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15028,7 +15028,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15040,7 +15040,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15052,7 +15052,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15064,7 +15064,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15076,7 +15076,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15088,7 +15088,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15100,7 +15100,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15112,7 +15112,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15124,7 +15124,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15136,7 +15136,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15148,7 +15148,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15160,7 +15160,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15172,7 +15172,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15184,7 +15184,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15196,7 +15196,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15208,7 +15208,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15220,7 +15220,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15232,7 +15232,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15244,7 +15244,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15256,7 +15256,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15268,7 +15268,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15280,7 +15280,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15292,7 +15292,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15304,7 +15304,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15316,7 +15316,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15328,7 +15328,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15340,7 +15340,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15352,7 +15352,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15364,7 +15364,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15376,7 +15376,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15388,7 +15388,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15400,7 +15400,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15412,7 +15412,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15424,7 +15424,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":256,
       "toolQuantityConsumed":0,
@@ -15436,7 +15436,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15448,7 +15448,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15460,7 +15460,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15472,7 +15472,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":71,
       "toolQuantityConsumed":0,
@@ -15484,7 +15484,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15496,7 +15496,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15508,7 +15508,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15520,7 +15520,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15532,7 +15532,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":437,
       "toolQuantityConsumed":0,
@@ -15544,7 +15544,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":437,
       "toolQuantityConsumed":0,
@@ -15556,7 +15556,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15568,7 +15568,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15580,7 +15580,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15592,7 +15592,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -15627,7 +15627,7 @@
    },
    {
       "successMessage":"You smelt the Zircon Ore.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":917,
       "focus":342,
       "focusQuantityConsumed":0,
@@ -15641,7 +15641,7 @@
    },
    {
       "successMessage":"You smelt the Zircon Ore.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":917,
       "focus":194,
       "focusQuantityConsumed":0,
@@ -15655,7 +15655,7 @@
    },
    {
       "successMessage":"You smelt the Titanium Ore.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":920,
       "focus":342,
       "focusQuantityConsumed":0,
@@ -15669,7 +15669,7 @@
    },
    {
       "successMessage":"You smelt the Titanium Ore.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":920,
       "focus":194,
       "focusQuantityConsumed":0,
@@ -15683,7 +15683,7 @@
    },
    {
       "successMessage":"You smelt the Copper Ore.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":923,
       "focus":342,
       "focusQuantityConsumed":0,
@@ -15697,7 +15697,7 @@
    },
    {
       "successMessage":"You smelt the Copper Ore.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":923,
       "focus":194,
       "focusQuantityConsumed":0,
@@ -15711,7 +15711,7 @@
    },
    {
       "successMessage":"You smelt the Silver Ore.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":926,
       "focus":342,
       "focusQuantityConsumed":0,
@@ -15725,7 +15725,7 @@
    },
    {
       "successMessage":"You smelt the Silver Ore.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":926,
       "focus":194,
       "focusQuantityConsumed":0,
@@ -15739,7 +15739,7 @@
    },
    {
       "successMessage":"You smelt the Iron Ore.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":929,
       "focus":342,
       "focusQuantityConsumed":0,
@@ -15753,7 +15753,7 @@
    },
    {
       "successMessage":"You smelt the Iron Ore.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":929,
       "focus":194,
       "focusQuantityConsumed":0,
@@ -15767,7 +15767,7 @@
    },
    {
       "successMessage":"You smelt the Magnetite Ore.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":932,
       "focus":342,
       "focusQuantityConsumed":0,
@@ -15781,7 +15781,7 @@
    },
    {
       "successMessage":"You smelt the Magnetite Ore.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":932,
       "focus":194,
       "focusQuantityConsumed":0,
@@ -15795,7 +15795,7 @@
    },
    {
       "successMessage":"You smelt the Gold Ore.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":935,
       "focus":342,
       "focusQuantityConsumed":0,
@@ -15809,7 +15809,7 @@
    },
    {
       "successMessage":"You smelt the Gold Ore.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":935,
       "focus":194,
       "focusQuantityConsumed":0,
@@ -15823,7 +15823,7 @@
    },
    {
       "successMessage":"You smelt the hessite Ore.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":938,
       "focus":2237,
       "focusQuantityConsumed":0,
@@ -15837,7 +15837,7 @@
    },
    {
       "successMessage":"You smelt the tungsten Ore.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":2222,
       "focus":2237,
       "focusQuantityConsumed":0,
@@ -15851,7 +15851,7 @@
    },
    {
       "successMessage":"You heat the tungsten Sheet.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":2223,
       "focus":2237,
       "focusQuantityConsumed":0,
@@ -16006,7 +16006,7 @@
    },
    {
       "successMessage":"You smelt the Damonite Ore.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":1464,
       "focus":2237,
       "focusQuantityConsumed":0,
@@ -16020,7 +16020,7 @@
    },
    {
       "successMessage":"You heat the sheet.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":918,
       "focus":342,
       "focusQuantityConsumed":0,
@@ -16034,7 +16034,7 @@
    },
    {
       "successMessage":"You heat the Zircon Sheet.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":918,
       "focus":194,
       "focusQuantityConsumed":0,
@@ -16048,7 +16048,7 @@
    },
    {
       "successMessage":"You heat the Titanium Sheet.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":921,
       "focus":342,
       "focusQuantityConsumed":0,
@@ -16062,7 +16062,7 @@
    },
    {
       "successMessage":"You heat the Titanium Sheet.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":921,
       "focus":194,
       "focusQuantityConsumed":0,
@@ -16076,7 +16076,7 @@
    },
    {
       "successMessage":"You heat the Copper Sheet.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":924,
       "focus":342,
       "focusQuantityConsumed":0,
@@ -16090,7 +16090,7 @@
    },
    {
       "successMessage":"You heat the Copper Sheet.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":924,
       "focus":194,
       "focusQuantityConsumed":0,
@@ -16104,7 +16104,7 @@
    },
    {
       "successMessage":"You heat the SilverSheet.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":927,
       "focus":342,
       "focusQuantityConsumed":0,
@@ -16118,7 +16118,7 @@
    },
    {
       "successMessage":"You heat the Silver Sheet.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":927,
       "focus":194,
       "focusQuantityConsumed":0,
@@ -16132,7 +16132,7 @@
    },
    {
       "successMessage":"You heat the Iron Sheet.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":930,
       "focus":342,
       "focusQuantityConsumed":0,
@@ -16146,7 +16146,7 @@
    },
    {
       "successMessage":"You heat the Iron Sheet.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":930,
       "focus":194,
       "focusQuantityConsumed":0,
@@ -16160,7 +16160,7 @@
    },
    {
       "successMessage":"You heat the Magnetite Sheet.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":933,
       "focus":342,
       "focusQuantityConsumed":0,
@@ -16174,7 +16174,7 @@
    },
    {
       "successMessage":"You heat the Magnetite Sheet.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":933,
       "focus":194,
       "focusQuantityConsumed":0,
@@ -16188,7 +16188,7 @@
    },
    {
       "successMessage":"You heat the Gold Sheet.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":936,
       "focus":342,
       "focusQuantityConsumed":0,
@@ -16202,7 +16202,7 @@
    },
    {
       "successMessage":"You heat the Gold Sheet.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":936,
       "focus":194,
       "focusQuantityConsumed":0,
@@ -16216,7 +16216,7 @@
    },
    {
       "successMessage":"You heatt the hessite Sheet.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":939,
       "focus":2237,
       "focusQuantityConsumed":0,
@@ -16230,7 +16230,7 @@
    },
    {
       "successMessage":"You heat the sheet.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":1465,
       "focus":2237,
       "focusQuantityConsumed":0,
@@ -19532,7 +19532,7 @@
    },
    {
       "successMessage":"You saw out some planks and get some practice.",
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":672,
       "focus":659,
       "toolQuantityConsumed":0,
@@ -19596,7 +19596,7 @@
    },
    {
       "successMessage":"You hammer the iron and get some practice.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":666,
       "focus":665,
       "focusQuantityConsumed":0,
@@ -19610,7 +19610,7 @@
    },
    {
       "successMessage":"You fish the water and get some practice.",
-      "animation":"Hiccup",
+      "animation":"Fishing",
       "tool":667,
       "focus":0,
       "focusQuantityConsumed":0,
@@ -28473,7 +28473,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -28665,7 +28665,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":1668,
       "toolQuantityConsumed":0,
@@ -28677,7 +28677,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":1669,
       "toolQuantityConsumed":0,
@@ -28689,7 +28689,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":1670,
       "toolQuantityConsumed":0,
@@ -28701,7 +28701,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":1671,
       "toolQuantityConsumed":0,
@@ -28713,7 +28713,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":1672,
       "toolQuantityConsumed":0,
@@ -28725,7 +28725,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":1673,
       "toolQuantityConsumed":0,
@@ -28737,7 +28737,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":1674,
       "toolQuantityConsumed":0,
@@ -28749,7 +28749,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":1675,
       "toolQuantityConsumed":0,
@@ -28761,7 +28761,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":1676,
       "toolQuantityConsumed":0,
@@ -28773,7 +28773,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":1677,
       "toolQuantityConsumed":0,
@@ -28785,7 +28785,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":1679,
       "toolQuantityConsumed":0,
@@ -28797,7 +28797,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":1680,
       "toolQuantityConsumed":0,
@@ -28809,7 +28809,7 @@
       ]
    },
    {
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":1068,
       "focus":1681,
       "toolQuantityConsumed":0,
@@ -28821,7 +28821,7 @@
       ]
    },
    {
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":1068,
       "focus":1682,
       "toolQuantityConsumed":0,
@@ -28833,7 +28833,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":1683,
       "toolQuantityConsumed":0,
@@ -28845,7 +28845,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":1684,
       "toolQuantityConsumed":0,
@@ -28857,7 +28857,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":1685,
       "toolQuantityConsumed":0,
@@ -28869,7 +28869,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":1686,
       "toolQuantityConsumed":0,
@@ -28881,7 +28881,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":1687,
       "toolQuantityConsumed":0,
@@ -28893,7 +28893,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":1724,
       "toolQuantityConsumed":0,
@@ -28905,7 +28905,7 @@
       ]
    },
    {
-      "animation":"Burning",
+      "animation":"SawSound",
       "tool":1068,
       "focus":1723,
       "toolQuantityConsumed":0,
@@ -29354,7 +29354,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -29366,7 +29366,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -29378,7 +29378,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -29390,7 +29390,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -29402,7 +29402,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -29414,7 +29414,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -29426,7 +29426,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -29438,7 +29438,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -29450,7 +29450,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -29462,7 +29462,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -29474,7 +29474,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -29486,7 +29486,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -29498,7 +29498,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":345,
       "focus":1661,
       "successTool":0,
@@ -29510,7 +29510,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":345,
       "focus":1662,
       "successTool":0,
@@ -29522,7 +29522,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":345,
       "focus":1766,
       "successTool":0,
@@ -29534,7 +29534,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":345,
       "focus":1768,
       "successTool":0,
@@ -29546,7 +29546,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":345,
       "focus":1770,
       "successTool":0,
@@ -29558,7 +29558,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":345,
       "focus":1772,
       "successTool":0,
@@ -29570,7 +29570,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":345,
       "focus":1774,
       "successTool":0,
@@ -29582,7 +29582,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":345,
       "focus":1776,
       "successTool":0,
@@ -29594,7 +29594,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":345,
       "focus":1778,
       "successTool":0,
@@ -29606,7 +29606,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":345,
       "focus":1780,
       "successTool":0,
@@ -29781,7 +29781,7 @@
    },
    {
       "successMessage":"You light the crops on fire.",
-      "animation":"CarpentryHammerSound",
+      "animation":"Burning",
       "tool":280,
       "focus":1798,
       "toolQuantityConsumed":0,
@@ -29794,7 +29794,7 @@
    },
    {
       "successMessage":"You light the crops on fire.",
-      "animation":"CarpentryHammerSound",
+      "animation":"Burning",
       "tool":280,
       "focus":1799,
       "toolQuantityConsumed":0,
@@ -29807,7 +29807,7 @@
    },
    {
       "successMessage":"You light the crops on fire.",
-      "animation":"CarpentryHammerSound",
+      "animation":"Burning",
       "tool":280,
       "focus":1800,
       "toolQuantityConsumed":0,
@@ -29820,7 +29820,7 @@
    },
    {
       "successMessage":"You light the crops on fire.",
-      "animation":"CarpentryHammerSound",
+      "animation":"Burning",
       "tool":280,
       "focus":1801,
       "toolQuantityConsumed":0,
@@ -30589,7 +30589,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -30613,7 +30613,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -30637,7 +30637,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -31229,7 +31229,7 @@
    },
    {
       "successMessage":"You tear down the door.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":901,
       "focus":1939,
       "toolQuantityConsumed":0,
@@ -31335,7 +31335,7 @@
    },
    {
       "successMessage":"You smelt the Magma Ore.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":1806,
       "focus":342,
       "focusQuantityConsumed":0,
@@ -31349,7 +31349,7 @@
    },
    {
       "successMessage":"You smelt the Magma Ore.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":1806,
       "focus":194,
       "focusQuantityConsumed":0,
@@ -31362,7 +31362,7 @@
       ]
    },
    {
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":1807,
       "focus":342,
       "focusQuantityConsumed":0,
@@ -31375,7 +31375,7 @@
       ]
    },
    {
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":1807,
       "focus":194,
       "focusQuantityConsumed":0,
@@ -31424,7 +31424,7 @@
       ]
    },
    {
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":1809,
       "focus":140,
       "focusQuantityConsumed":0,
@@ -31437,7 +31437,7 @@
       ]
    },
    {
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":1809,
       "focus":140,
       "focusQuantityConsumed":0,
@@ -31450,7 +31450,7 @@
       ]
    },
    {
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":1809,
       "focus":140,
       "focusQuantityConsumed":0,
@@ -31502,7 +31502,7 @@
       ]
    },
    {
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":1810,
       "focus":342,
       "focusQuantityConsumed":0,
@@ -31515,7 +31515,7 @@
       ]
    },
    {
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":1810,
       "focus":194,
       "focusQuantityConsumed":0,
@@ -31528,7 +31528,7 @@
       ]
    },
    {
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":1811,
       "focus":342,
       "focusQuantityConsumed":0,
@@ -31541,7 +31541,7 @@
       ]
    },
    {
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":1811,
       "focus":194,
       "focusQuantityConsumed":0,
@@ -31554,7 +31554,7 @@
       ]
    },
    {
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":1812,
       "focus":342,
       "focusQuantityConsumed":0,
@@ -31567,7 +31567,7 @@
       ]
    },
    {
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":1812,
       "focus":194,
       "focusQuantityConsumed":0,
@@ -32772,7 +32772,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":3066,
       "focus":1468,
       "successTool":0,
@@ -32784,7 +32784,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":3066,
       "focus":1470,
       "successTool":0,
@@ -32985,7 +32985,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
@@ -32997,7 +32997,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":3087,
       "focus":1117,
       "successTool":0,
@@ -33009,7 +33009,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":3087,
       "focus":986,
       "successTool":0,
@@ -33022,7 +33022,7 @@
    },
    {
       "successMessage":"You rip out the trap door.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":900,
       "focus":3088,
       "toolQuantityConsumed":0,
@@ -33037,7 +33037,7 @@
    },
    {
       "successMessage":"You rip out the trap door.",
-      "animation":"BSHammerSound",
+      "animation":"MiningSound",
       "tool":900,
       "focus":3089,
       "toolQuantityConsumed":0,
@@ -33051,7 +33051,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":3066,
       "focus":3086,
       "successTool":0,
@@ -33305,7 +33305,7 @@
    },
    {
       "successMessage":"You smelt the Zephyrium Ore.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":3100,
       "focus":2237,
       "focusQuantityConsumed":0,
@@ -33319,7 +33319,7 @@
    },
    {
       "successMessage":"You heat the sheet.",
-      "animation":"CrossBow",
+      "animation":"BSHammerSound",
       "tool":3101,
       "focus":2237,
       "focusQuantityConsumed":0,
@@ -34734,7 +34734,7 @@
    },
    {
       "successMessage":"You light the Oven.",
-      "animation":"CarpentryHammerSound",
+      "animation":"Burning",
       "tool":280,
       "focus":3128,
       "toolQuantityConsumed":0,
@@ -34905,7 +34905,7 @@
    },
    {
       "successMessage":"You light the Lantern.",
-      "animation":"CarpentryHammerSound",
+      "animation":"Burning",
       "tool":280,
       "focus":3133,
       "toolQuantityConsumed":0,
@@ -35460,7 +35460,7 @@
       ]
    },
    {
-      "animation":"MiningSound",
+      "animation":"CarpentryHammerSound",
       "tool":826,
       "focus":406,
       "toolQuantityConsumed":0,
