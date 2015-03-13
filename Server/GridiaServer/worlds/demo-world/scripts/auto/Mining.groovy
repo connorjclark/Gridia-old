@@ -8,7 +8,7 @@ onMovedInto {
     if (hasPickAxe(event.entity.inventory)) {
         setFloor(id: 19, at: event.location)
         int oreId = Math.random() > 0.7 ? 0 : server.contentManager.getRandomItemOfClassByRarity(ItemClass.Ore).id
-        spawn(item: item(id: oreId), near: event.location)
+        spawnItem(item: item(id: oreId), near: event.location)
         playAnimation(type: "MiningSound", at: event.location)
     } else {
         announce(message: "You need a pickaxe to mine!", to: event.entity)

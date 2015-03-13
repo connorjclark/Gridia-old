@@ -95,59 +95,57 @@ public class GridiaScript {
         server.tileMap.getFloor(loc)
     }
     
-    def spawn(Map params) {
+    private def spawn(Map params, Closure generator) {
+        prepSpawnParams(params)
+        (0..<params.times).collect {
+            generator()
+        }.findAll { it }
+    }
+    
+    private def prepSpawnParams(Map params) {
         params.with {
             if (area) {
                 at = area.loc
                 width = area.width
                 height = area.height
             }
-            amount = amount ?: 1
+            times = times ?: 1
             width = width ?: 1
             height = height ?: 1
             range = range ?: 3
             if ([at, near].findAll { it }.size() != 1) {
                 throw new GridiaDSLException("Expected exactly one of the following: at, near")
             }
-            if ([item, monster].findAll { it }.size() != 1) {
-                throw new GridiaDSLException("Expected exactly one of the following: item, monster")
+        }
+    }
+    
+    private def rand = new Random()
+    private def determineSpawnLocation(Map params) {
+        params.near ? params.near : params.at.add(rand.nextInt(params.width), rand.nextInt(params.height), 0)
+    }
+    
+    def spawnMonsters(Map params) {
+        if (params.near) {
+            throw new GridiaDSLException("near is currently not supported.")
+        }
+        def generator = {
+            def loc = determineSpawnLocation(params)
+            if (walkable(loc) && floor(loc)) {
+                server.createCreature(params.monster, loc)
             }
         }
-            
-        def rand = new Random()
-        def generator
-            
-        if (params.at) {
-            if (params.item) {
-                generator = {
-                    def loc = params.at.add(rand.nextInt(params.width), rand.nextInt(params.height), 0)
-                    if (walkable(loc) && floor(loc)) {
-                        server.addItem(loc, params.item)
-                    }
-                }
-            } else if (params.monster) {
-                generator = {
-                    def loc = params.at.add(rand.nextInt(params.width), rand.nextInt(params.height), 0)
-                    if (walkable(loc) && floor(loc)) {
-                        server.createCreature(params.monster, loc)
-                    }
-                }
-            }
-        } else if (params.near) {
-            if (params.item) {
-                generator = {
-                    server.addItemNear(params.near, params.item, params.range, true)
-                }
-            } else if (params.monster) {
-                throw new GridiaDSLException("near & monster is currently not supported.")
+        spawn(params, generator)
+    }
+    
+    def spawnItems(Map params) {
+        def method = "addItem${params.near ? 'Near' : ''}"
+        def generator = {
+            def loc = determineSpawnLocation(params)
+            if (walkable(loc) && floor(loc)) {
+                server."$method"(params.item, loc)
             }
         }
-            
-        def spawned = []
-        params.amount.times {
-            spawned += generator()
-        }
-        spawned.findAll { it != null }
+        spawn(params, generator)
     }
     
     def remove(creature) {

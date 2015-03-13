@@ -6,8 +6,6 @@ entity.metaClass.hurt = { damage, deathReason ->
     delegate.life -= damage
     playAnimation(type: "Attack")
     if (!delegate?.alive) {
-        playAnimation(type: "diescream")
-        spawn(item: item(id: 1022), near: delegate.location, range: 3)
         eventDispatcher.dispatch("Death", delegate, [deathReason:deathReason])
     }
 }
@@ -21,6 +19,8 @@ if (!entity.isFriendly && !entity.belongsToPlayer) {
 
 onDeath {
     announce(message: "$entity.name $event.deathReason.")
+    playAnimation(type: "diescream")
+    spawnItems(item: item(id: 1022), near: entity.location, range: 3)
     if (entity.belongsToPlayer) {
         teleport(to: server.tileMap.defaultPlayerSpawn) // :(
         entity.life = 3

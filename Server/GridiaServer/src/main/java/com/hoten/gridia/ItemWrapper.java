@@ -28,7 +28,7 @@ public interface ItemWrapper {
 
         @Override
         public boolean addItemToSource(ItemInstance itemToAdd) {
-            return _server.addItemNear(_location, itemToAdd, 6, true) != null;
+            return _server.addItemNear(itemToAdd, _location, 6, true) != null;
         }
 
         @Override
@@ -38,7 +38,7 @@ public interface ItemWrapper {
 
         @Override
         public boolean addItemHere(ItemInstance itemToAdd) {
-            return _server.addItem(_location, itemToAdd) != null;
+            return _server.addItem(itemToAdd, _location) != null;
         }
 
         @Override

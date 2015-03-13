@@ -196,7 +196,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     public void dropContainerNear(Container container, Coord location) {
         List<ItemInstance> items = container.getItems();
         items.stream().forEach((item) -> {
-            addItemNear(location, item, 10, true);
+            addItemNear(item, location, 10, true);
         });
         for (int i = 0; i < items.size(); i++) {
             container.deleteSlot(i);
@@ -361,7 +361,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     }
 
     //adds item only if it is to an empty tile or if it would stack
-    public ItemInstance addItem(Coord loc, ItemInstance itemToAdd) {
+    public ItemInstance addItem(ItemInstance itemToAdd, Coord loc) {
         ItemInstance currentItem = tileMap.getTile(loc).item;
         boolean willStack = ItemInstance.stackable(currentItem, itemToAdd);
         if (currentItem.getItem().id != 0 && !willStack) {
@@ -374,7 +374,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
 
     //attempts to add an item at location, but if it is occupied, finds a nearby location
     //goes target, leftabove target, above target, rightabove target, left target, right target, leftbelow target...
-    public ItemInstance addItemNear(Coord loc, ItemInstance item, int range, boolean includeTargetLocation) {
+    public ItemInstance addItemNear(ItemInstance item, Coord loc, int range, boolean includeTargetLocation) {
         int x0 = loc.x;
         int y0 = loc.y;
         ItemInstance itemAdded;
@@ -383,17 +383,17 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
                 if (y1 == y0 - offset || y1 == y0 + offset) {
                     for (int x1 = x0 - offset; x1 <= offset + x0; x1++) {
                         Coord newLoc = tileMap.wrap(new Coord(x1, y1, loc.z));
-                        if ((itemAdded = addItem(newLoc, item)) != null) {
+                        if ((itemAdded = addItem(item, newLoc)) != null) {
                             return itemAdded;
                         }
                     }
                 } else {
                     Coord newLoc = tileMap.wrap(new Coord(x0 - offset, y1, loc.z));
-                    if ((itemAdded = addItem(newLoc, item)) != null) {
+                    if ((itemAdded = addItem(item, newLoc)) != null) {
                         return itemAdded;
                     }
                     newLoc = tileMap.wrap(new Coord(x0 + offset, y1, loc.z));
-                    if ((itemAdded = addItem(newLoc, item)) != null) {
+                    if ((itemAdded = addItem(item, newLoc)) != null) {
                         return itemAdded;
                     }
                 }
@@ -403,7 +403,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     }
 
     public ItemInstance addItemNear(int index, ItemInstance item, int bufferzone) {
-        return addItemNear(tileMap.getCoordFromIndex(index), item, bufferzone, true);
+        return addItemNear(item, tileMap.getCoordFromIndex(index), bufferzone, true);
     }
 
     public void updateContainerSlot(Container container, int slotIndex) {
@@ -497,7 +497,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     }
 
     public boolean moveItemOutOfTheWay(Coord loc) {
-        return addItemNear(loc, tileMap.getItem(loc), 10, false) != null;
+        return addItemNear(tileMap.getItem(loc), loc, 10, false) != null;
     }
 
     public void teleport(Creature creature, Coord coord) {

@@ -147,7 +147,7 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
             } else if (quantity == -1) {
                 connection.send(server.messageBuilder.chat("Invalid quantity.", player.creature.location));
             } else {
-                server.addItemNear(player.creature.location.add(0, 1, 0), server.contentManager.createItemInstance(item.id, quantity), 3, true);
+                server.addItemNear(server.contentManager.createItemInstance(item.id, quantity), player.creature.location.add(0, 1, 0), 3, true);
             }
         } else if (msg.startsWith("!admin ") && player.accountDetails.isAdmin) {
             String playerName = msg.split("\\s+", 2)[1];
