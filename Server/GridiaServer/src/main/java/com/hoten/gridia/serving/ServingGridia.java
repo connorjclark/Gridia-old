@@ -292,6 +292,9 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
             if (!belongsToPlayer) {
                 addScript(new File(worldTopDirectory, "scripts/RandomWalk.groovy"), cre);
             }
+            if (friendly) {
+                addScript(new File(worldTopDirectory, "scripts/Friendly.groovy"), cre);
+            }
             addScript(new File(worldTopDirectory, "scripts/Life.groovy"), cre);
         } catch (IOException ex) {
             Logger.getLogger(ServingGridia.class.getName()).log(Level.SEVERE, null, ex);
