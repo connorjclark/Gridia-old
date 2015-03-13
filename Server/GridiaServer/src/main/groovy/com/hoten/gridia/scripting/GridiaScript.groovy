@@ -23,6 +23,10 @@ public class GridiaScript {
         this.scriptName = scriptName
     }
     
+    def file(name) {
+        new File(server.worldTopDirectory, name)
+    }
+    
     def loc(x, y, z = 0) {
         new Coord(x, y, z)
     }

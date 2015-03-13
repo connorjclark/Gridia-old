@@ -35,7 +35,6 @@ import java.io.IOException;
 import java.net.Socket;
 import com.hoten.servingjava.message.Message;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,6 +62,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     public final PlayerFactory playerFactory;
     public final ContainerFactory containerFactory;
     public final String worldName;
+    public final String mapName;
     public final String version = "alpha-1.4-dev";
     public final File worldTopDirectory;
 
@@ -70,6 +70,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         super(port, clientDataFolder, localDataFolderName);
         worldTopDirectory = world;
         worldName = world.getName();
+        this.mapName = mapName;
         contentManager = new WorldContentLoader(world).load();
         usageProcessor = new com.hoten.gridia.scripting.ScriptableUsageProcessing(contentManager, eventDispatcher);
         GridiaGson.initialize(contentManager, this);
@@ -77,27 +78,14 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         playerFactory = new PlayerFactory(world);
         containerFactory = new ContainerFactory(world);
         setUpScripting();
-        addScripts(Arrays.asList("Save", "Login", "Stairs", "Growth", "FloorDamage", "CaveUses"));
-        if ("demo-city".equals(mapName)) {
-            addScripts(Arrays.asList("RoachQuest", "RandomMonsterDungeonQuest"));
-        }
         instance = this;
     }
 
-    private void addScripts(List<String> scripts) {
-        scripts.forEach(scriptName -> {
-            try {
-                addScript(new File(worldTopDirectory, "scripts/" + scriptName + ".groovy"), null);
-            } catch (IOException ex) {
-                Logger.getLogger(ServingGridia.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-    }
-
-    private void setUpScripting() {
+    private void setUpScripting() throws IOException {
         CompilerConfiguration compilerConfiguration = new CompilerConfiguration();
         compilerConfiguration.setScriptBaseClass(DelegatingScript.class.getName());
         shell = new GroovyShell(GridiaServerDriver.class.getClassLoader(), new Binding(), compilerConfiguration);
+        addScript(new File(worldTopDirectory, "scripts/ScriptLoader.groovy"), null);
     }
 
     public Script addScript(File scriptFile, com.hoten.gridia.scripting.Entity entity) throws IOException {
