@@ -8,6 +8,6 @@ every(1.second) {
         floor = server.tileMap.getFloor(it.value.location)
         badFloors.contains(floor)
     }.each {
-        server.hurtCreature(it.value, 1);
+        it.value.hurt(1, "incinerated in lava")
     }
 }

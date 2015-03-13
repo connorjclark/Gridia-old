@@ -13,17 +13,12 @@ public class Creature extends com.hoten.gridia.scripting.Entity {
     public CreatureImage image;
     public boolean belongsToPlayer;
     public Container inventory;
-    public int life = 3;
     public boolean justTeleported; // :(
     public boolean isFriendly;
     public String friendlyMessage = "Hello!";
 
     public void retire() {
         uniqueIds.retire(id);
-    }
-
-    public boolean isAlive() {
-        return life > 0;
     }
 
     public void setLocation(Coord newLocation) {

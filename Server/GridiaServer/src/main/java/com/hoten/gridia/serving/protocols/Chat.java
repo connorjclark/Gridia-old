@@ -14,6 +14,7 @@ import com.hoten.gridia.serving.ServingGridia;
 import com.hoten.servingjava.message.JsonMessageHandler;
 import com.hoten.servingjava.message.Message;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 import org.codehaus.groovy.control.CompilationFailedException;
 
@@ -29,7 +30,7 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
         if (msg.startsWith("!script ")) {
             String script = msg.split(" ", 2)[1];
             try {
-                server.addScript(script, null);
+                server.addScript(script, "CustomScript" + script.hashCode(), null);
             } catch (CompilationFailedException ex) {
                 connection.send(server.messageBuilder.chat("That didn't parse!\n" + ex, player.creature.location));
             }
@@ -55,8 +56,7 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                     Monster monster = server.contentManager.getMonster(id);
                     if (monster != null) {
                         String friendlyMessage = split[2];
-                        Creature creature = server.createCreature(monster, player.creature.location.add(0, 1, 0));
-                        creature.isFriendly = true;
+                        Creature creature = server.createCreature(monster, player.creature.location.add(0, 1, 0), true);
                         creature.friendlyMessage = friendlyMessage;
                     }
                 }
@@ -73,11 +73,13 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                     }
                 }
             } catch (NumberFormatException e) {
+                Message message = server.messageBuilder.chat(e.getMessage(), player.creature.location);
+                connection.send(message);
             }
         } else if (msg.equals("!kill")) {
             Creature cre = server.tileMap.getCreature(player.creature.location.add(0, 1, 0));
             if (cre != null) {
-                server.hurtCreature(cre, 100000);
+                cre.callMethod("hurt", Arrays.asList(10000, "was punished by " + player.creature.name));
             }
         } else if (msg.equals("!del") && player.accountDetails.isAdmin) {
             server.changeItem(player.creature.location.add(0, 1, 0), ItemInstance.NONE);
@@ -94,7 +96,7 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
             Message message = server.messageBuilder.chat(server.whoIsOnline(), player.creature.location);
             connection.send(message);
         } else if (msg.equals("!die")) {
-            server.hurtCreature(player.creature, 100000);
+            player.creature.callMethod("hurt", Arrays.asList(10000, "gave up"));
         } else if (msg.startsWith("!warp ")) {
             String[] split = msg.split("\\s+");
             if (split.length == 4) {

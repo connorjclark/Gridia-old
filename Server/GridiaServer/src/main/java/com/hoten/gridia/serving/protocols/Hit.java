@@ -20,15 +20,11 @@ public class Hit extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
         ServingGridia server = connection.getServer();
         Player player = connection.getPlayer();
         Coord loc = GridiaGson.get().fromJson(data.get("loc"), Coord.class);
-        
+
         Tile tile = server.tileMap.getTile(loc);
         Creature creature = tile.cre;
-        if (creature != null && !creature.belongsToPlayer) {
-            if (creature.isFriendly) {
-                connection.send(server.messageBuilder.chat(creature.name, creature.friendlyMessage, creature.location));
-            } else {
-                server.hurtCreature(creature, 1);
-            }
+        if (creature != null) {
+            server.dispatchEvent("MovedInto", creature, "entity", player.creature);
         } else if (tile.floor == 0) {
             if (player.creature.inventory.containsItemId(901)) {
                 server.changeFloor(loc, 19);

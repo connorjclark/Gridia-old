@@ -15,10 +15,12 @@ public class GridiaScript {
     def EventDispatcher eventDispatcher
     def scheduledTasks = []
     def Entity entity
+    def String scriptName
     
-    def GridiaScript(ServingGridia server, EventDispatcher eventDispatcher) {
+    def GridiaScript(ServingGridia server, EventDispatcher eventDispatcher, String scriptName) {
         this.server = server
         this.eventDispatcher = eventDispatcher
+        this.scriptName = scriptName
     }
     
     def loc(x, y, z = 0) {
@@ -29,6 +31,11 @@ public class GridiaScript {
         def mx = (int)(l.x + w/2)
         def my = (int)(l.y + h/2)
         [loc: l, width: w, height: h, middle: loc(mx, my, l.z)]
+    }
+    
+    def item(Map params) {
+        params.quantity = params.quantity ?: 1
+        server.contentManager.createItemInstance(params.type, params.quantity)
     }
     
     def findCreatures(Map params) {
@@ -139,6 +146,8 @@ public class GridiaScript {
     }
     
     def teleport(Map params) {
+        params.target = params.target ?: entity
+        
         server.teleport(params.target, params.to)
     }
 
@@ -152,7 +161,7 @@ public class GridiaScript {
     def playAnimation(Map params) {
         params.at = params.at ?: entity.location
         
-        server.playAnimation(params.type)
+        server.playAnimation(params.type, params.at)
     }
     
     def every(duration, closure) {
@@ -182,7 +191,7 @@ public class GridiaScript {
     def methodMissing(String name, args) {
         if (name.startsWith("on") && args.length == 1 && args[0] instanceof Closure) {
             def type = name.replaceFirst("on", "").toUpperCase()
-            eventDispatcher.addEventListener(type, args[0])
+            eventDispatcher.addEventListener(type, args[0], entity)
         } else if (['start', 'update', 'end'].every { it != name } ) {
             throw new MissingMethodException(name, GridiaScript, args)
         }

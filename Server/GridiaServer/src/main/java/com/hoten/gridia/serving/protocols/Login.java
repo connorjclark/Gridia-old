@@ -33,6 +33,6 @@ public class Login extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
 
         thePlayer.updatePlayerImage(server);
 
-        server.dispatchEvent("PlayerLogin", "player", thePlayer);
+        server.dispatchEvent("PlayerLogin", null, "player", thePlayer); // :(
     }
 }

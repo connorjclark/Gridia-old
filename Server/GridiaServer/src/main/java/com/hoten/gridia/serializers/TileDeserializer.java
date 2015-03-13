@@ -28,10 +28,9 @@ public class TileDeserializer implements JsonDeserializer<Tile> {
         tile.item = context.deserialize(jsonObject.get("item"), ItemInstance.class);
         if (jsonObject.has("cre")) {
             Creature cre = context.deserialize(jsonObject.get("cre"), Creature.class);
-            tile.cre = _servingGridia.createCreatureQuietly(cre.image, cre.name, cre.location, false);
-            tile.cre.isFriendly = cre.isFriendly;
+            tile.cre = _servingGridia.createCreatureQuietly(cre.image, cre.name, cre.location, false, cre.isFriendly);
             tile.cre.friendlyMessage = cre.friendlyMessage;
-            tile.cre.life = cre.life;
+            tile.cre.setAttribute("life", (Integer) cre.getAttribute("life"));
         }
         return tile;
     }
