@@ -20,7 +20,7 @@ if (!entity.isFriendly && !entity.belongsToPlayer) {
 onDeath {
     announce(message: "$entity.name $event.deathReason.")
     playAnimation(type: "diescream")
-    spawnItems(item: item(id: 1022), near: entity.location, range: 3)
+    spawnItem(item: item(id: 1022), near: entity.location, range: 3)
     if (entity.belongsToPlayer) {
         teleport(to: server.tileMap.defaultPlayerSpawn) // :(
         entity.life = 3

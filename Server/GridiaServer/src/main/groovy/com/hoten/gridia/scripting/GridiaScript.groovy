@@ -138,14 +138,27 @@ public class GridiaScript {
     }
     
     def spawnItems(Map params) {
-        def method = "addItem${params.near ? 'Near' : ''}"
+        def methodCall = params.near ?
+        { loc -> server.addItemNear(params.item, loc, params.range, true) }
+    :
+        { loc -> server.addItem(params.item, loc) }
         def generator = {
             def loc = determineSpawnLocation(params)
             if (walkable(loc) && floor(loc)) {
-                server."$method"(params.item, loc)
+                methodCall(loc)
             }
         }
         spawn(params, generator)
+    }
+    
+    def spawnItem(Map params) {
+        params.times = 1
+        spawnItems(params)[0]
+    }
+    
+    def spawnMonster(Map params) {
+        params.times = 1
+        spawnMonsters(params)[0]
     }
     
     def remove(creature) {
