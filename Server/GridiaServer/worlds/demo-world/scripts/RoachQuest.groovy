@@ -55,8 +55,9 @@ def spawnRoaches() {
     int currentAmount = roaches.size()
     roach = server.contentManager.getMonster(42)
     roachData = cloneMonsterAndStripName(roach)
-    newRoaches = spawn(monster: roachData, area: arena, amount: numRoaches - currentAmount)
-    roaches.addAll(newRoaches)
+    roaches.addAll (
+        spawn(monster: roachData, area: arena, amount: numRoaches - currentAmount)
+    )
 }
 
 def announceInArena(message) {
