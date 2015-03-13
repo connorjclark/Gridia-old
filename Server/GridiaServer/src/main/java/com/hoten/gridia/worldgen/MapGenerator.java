@@ -139,6 +139,8 @@ public class MapGenerator {
                 tile.item = random.nextDouble() < itemProbability ? itemSupplier.get() : ItemInstance.NONE;
             }
         }
+        
+        new File(map, "scripts/auto").mkdirs();
 
         return world;
     }
