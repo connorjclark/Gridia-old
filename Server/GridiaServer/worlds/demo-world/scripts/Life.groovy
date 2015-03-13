@@ -7,7 +7,7 @@ entity.metaClass.hurt = { damage, deathReason ->
     playAnimation(type: "Attack")
     if (!delegate?.alive) {
         playAnimation(type: "diescream")
-        spawn(item: item(type: 1022), near: delegate.location, range: 3)
+        spawn(item: item(id: 1022), near: delegate.location, range: 3)
         eventDispatcher.dispatch("Death", delegate, [deathReason:deathReason])
     }
 }

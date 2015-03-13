@@ -39,7 +39,11 @@ public class GridiaScript {
     
     def item(Map params) {
         params.quantity = params.quantity ?: 1
-        server.contentManager.createItemInstance(params.type, params.quantity)
+        server.contentManager.createItemInstance(params.id, params.quantity)
+    }
+    
+    def setFloor(Map params) {
+        server.changeFloor(params.at, params.id)
     }
     
     def findCreatures(Map params) {
@@ -101,6 +105,7 @@ public class GridiaScript {
             amount = amount ?: 1
             width = width ?: 1
             height = height ?: 1
+            range = range ?: 3
             if ([at, near].findAll { it }.size() != 1) {
                 throw new GridiaDSLException("Expected exactly one of the following: at, near")
             }
@@ -157,9 +162,13 @@ public class GridiaScript {
 
     def announce(Map params) {
         params.from = params.from ?: "WORLD"
-        params.at = params.at ?: loc(0, 0)
+        params.at = params.at ?: (params.to ? params.to.location : loc(0, 0))
         
-        server.announce(params.from, params.message, params.at)
+        if (params.to) {
+            server.announce(params.from, params.message, params.at, params.to)
+        } else {
+            server.announce(params.from, params.message, params.at)
+        }
     }
     
     def playAnimation(Map params) {

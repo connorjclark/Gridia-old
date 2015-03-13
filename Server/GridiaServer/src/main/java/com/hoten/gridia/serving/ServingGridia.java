@@ -313,6 +313,12 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         sendToAll(messageBuilder.chat(from, message, loc));
     }
 
+    public void announce(String from, String message, Coord loc, Creature to) {
+        sendToFirst(messageBuilder.chat(from, message, loc), client -> {
+            return client.player != null && client.player.creature == to;
+        });
+    }
+
     public void announceNewPlayer(ConnectionToGridiaClientHandler client, Player player) {
         String chatMessage = String.format("%s has joined the game!", player.creature.name);
         sendToAllBut(messageBuilder.chat(chatMessage, player.creature.location), client);

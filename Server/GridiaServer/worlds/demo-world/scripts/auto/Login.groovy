@@ -3,5 +3,5 @@ onPlayerLogin {
     loc = player.creature.location
     playAnimation(type: "WarpIn", at: loc)
     announce(message: "$player.accountDetails.username has logged in! Say hi!")
-    announce(at: loc, message: server.whoIsOnline())
+    announce(message: server.whoIsOnline(), at: loc)
 }

@@ -5,8 +5,7 @@ def start() {
 
 every(1.second) {
     creatures.findAll {
-        floor = server.tileMap.getFloor(it.value.location)
-        badFloors.contains(floor)
+        badFloors.contains(floor(it.value.location))
     }.each {
         it.value.hurt(1, "incinerated in lava")
     }
