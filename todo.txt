@@ -109,6 +109,9 @@ Meta
 
 Nice-to-have
 
+  Different realms - 1:100 movement, one-way telporting to "oblivion"-like plane, fixed teleports back
+  	temorary return gate, closes in 10 min, or cost mana?
+  	permament gates take a lot of mana/ resources. time investment
   sfxr
   Water ripple effect
   speed up music during combat
