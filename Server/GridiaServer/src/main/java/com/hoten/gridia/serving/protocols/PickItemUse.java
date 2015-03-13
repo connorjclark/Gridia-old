@@ -23,6 +23,6 @@ public class PickItemUse extends JsonMessageHandler<ConnectionToGridiaClientHand
         ItemWrapper focus = server.getItemFrom(player, player.useDest, player.useDestIndex);
         List<ItemUse> uses = server.contentManager.getItemUses(tool.getItemInstance().getItem(), focus.getItemInstance().getItem());
         ItemUse use = uses.get(useIndex);
-        server.executeItemUse(connection, use, tool, focus, player.useDest);
+        server.executeItemUse(connection, use, tool, focus, player.useDestIndex);
     }
 }
