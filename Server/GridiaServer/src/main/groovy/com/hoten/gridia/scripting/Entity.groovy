@@ -5,7 +5,8 @@ import com.hoten.gridia.map.Coord
 public class Entity {
     public def Coord location
     public transient def List<GridiaScript> scripts = []
-    public transient def Map<String, Closure> registeredEvents = [:].withDefault { [] } 
+    public transient def Map<String, Closure> registeredEvents = [:].withDefault { [] }
+    private transient def Map storage = [:]
     
     def void removeScripts() {
         scripts.each {
@@ -28,5 +29,13 @@ public class Entity {
     // :(
     def callMethod(String name, List params) {
         this."$name"(*params)
+    }
+    
+    def propertyMissing(String name, value) {
+        storage[name] = value
+    }
+    
+    def propertyMissing(String name) {
+        storage[name] 
     }
 }

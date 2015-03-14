@@ -34,11 +34,7 @@ class ScriptExecutor {
             } else {
                 throw new MissingPropertyException(name, Range)
             }
-        }
-        
-        Entity.metaClass.storage = [:]
-        Entity.metaClass.propertyMissing = { String name, value -> delegate.storage[name] = value }
-        Entity.metaClass.propertyMissing = { String name -> delegate.storage[name] }
+        }        
     }
     
     def addScript(script) {
