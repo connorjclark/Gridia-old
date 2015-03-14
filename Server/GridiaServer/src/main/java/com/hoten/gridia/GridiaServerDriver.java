@@ -111,7 +111,12 @@ public class GridiaServerDriver {
         server.tileMap.loadAll(); // :(
         server.startServer();
 
-        new ServingPolicyFile(port).start();
+        try {
+            new ServingPolicyFile(port).start();
+        } catch (IOException ex) {
+            System.out.println("Error starting policy file socket. Port 843 is probably already taken. Webplayer version will not work. Check for any applications running on that port (Dropbox?)");
+            System.out.println(ex);
+        }
 
         System.out.println("Server started on port " + port);
     }
