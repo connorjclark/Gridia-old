@@ -220,6 +220,14 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         if (loc.equals(cre.location)) {
             return;
         }
+        // move into
+        if (!isTeleport) {
+            Creature creatureMovedInto = tileMap.getCreature(loc);
+            if (creatureMovedInto != null) {
+                dispatchEvent("MovedInto", creatureMovedInto, "entity", cre);
+                return;
+            }
+        }
         cre.justTeleported = false;
         Sector sectorBefore = tileMap.getSectorOf(cre.location);
         sendToClientsWithSectorLoaded(messageBuilder.moveCreature(cre, 0, false, onRaft), sectorBefore);

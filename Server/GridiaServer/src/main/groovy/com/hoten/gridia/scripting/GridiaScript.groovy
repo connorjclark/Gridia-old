@@ -105,6 +105,10 @@ public class GridiaScript {
         server.tileMap.getItem(loc)
     }
     
+    def creature(Coord loc) {
+        server.tileMap.getCreature(loc)
+    }
+    
     private def spawn(Map params, Closure generator) {
         prepSpawnParams(params)
         (0..<params.times).collect {
