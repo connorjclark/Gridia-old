@@ -214,7 +214,7 @@ public class GridiaScript {
             }
         }
         catching.delegate = this
-        def future = scheduler.scheduleAtFixedRate(catching, 0, duration, TimeUnit.MILLISECONDS)
+        def future = scheduler.scheduleAtFixedRate(catching, duration, duration, TimeUnit.MILLISECONDS)
         scheduledTasks += future
     }
     
