@@ -41,6 +41,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -99,12 +100,8 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     }
 
     private Script addScript(DelegatingScript script, String scriptName, com.hoten.gridia.scripting.Entity entity) throws IOException {
-        com.hoten.gridia.scripting.GridiaScript gridiaScript = new com.hoten.gridia.scripting.GridiaScript(this, eventDispatcher, scriptName);
+        com.hoten.gridia.scripting.GridiaScript gridiaScript = new com.hoten.gridia.scripting.GridiaScript(this, eventDispatcher, entity, scriptName);
         script.setDelegate(gridiaScript);
-        if (entity != null) {
-            gridiaScript.setEntity(entity);
-            entity.scripts.add(gridiaScript);
-        }
         scriptExecutor.addScript(script);
         return script;
     }
@@ -168,7 +165,12 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
 
     @Override
     public void sendToAll(Message message) {
-        sendTo(message, c -> c.player != null);
+        super.sendTo(message, c -> c.player != null);
+    }
+
+    @Override
+    public void sendTo(Message message, Predicate<ConnectionToGridiaClientHandler> pred) {
+        super.sendTo(message, c -> c.player != null && pred.test(c));
     }
 
     public void sendToClientsWithSectorLoadedBut(Message message, Sector sector, ConnectionToGridiaClientHandler client) {
@@ -237,7 +239,10 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         tileMap.getTile(loc).cre = cre;
         cre.location = loc;
         sendTo(messageBuilder.moveCreature(cre, timeInMillisecondsToMove, isTeleport, onRaft), client -> {
-            return client.hasSectorLoaded(sector) || client.hasSectorLoaded(sectorBefore) || (client.player != null && client.player.creature == cre);
+            return client.hasSectorLoaded(sector) || client.player.creature == cre;
+        });
+        sendTo(messageBuilder.removeCreature(cre), client -> {
+            return client.player.creature != cre && !client.hasSectorLoaded(sector) && client.hasSectorLoaded(sectorBefore);
         });
     }
 
@@ -419,15 +424,11 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
 
     public void updateContainerSlot(Container container, int slotIndex) {
         Message message = messageBuilder.updateContainerSlot(container, slotIndex);
-        sendTo(message, client -> client.player != null && (client.player.creature.inventory.id == container.id || client.player.equipment.id == container.id));
-        sendTo(message, client -> {
-            if (client.player == null) {
-                return false;
-            }
-            return client.player.creature.inventory.id == container.id
-                    || client.player.equipment.id == container.id
-                    || client.player.openedContainers.contains(container.id);
-        });
+        sendTo(message, client -> client.player.creature.inventory.id == container.id || client.player.equipment.id == container.id);
+        sendTo(message, client -> client.player.creature.inventory.id == container.id
+                || client.player.equipment.id == container.id
+                || client.player.openedContainers.contains(container.id)
+        );
     }
 
     public void save() throws IOException {

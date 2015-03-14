@@ -16,11 +16,16 @@ public class GridiaScript {
     def scheduledTasks = []
     def Entity entity
     def String scriptName
+    def Map storage = [:]
     
-    def GridiaScript(ServingGridia server, EventDispatcher eventDispatcher, String scriptName) {
+    def GridiaScript(ServingGridia server, EventDispatcher eventDispatcher, Entity entity, String scriptName) {
         this.server = server
         this.eventDispatcher = eventDispatcher
         this.scriptName = scriptName
+        if (entity != null) {
+            this.entity = entity
+            entity.scripts += this
+        }
     }
     
     def file(name) {
@@ -222,8 +227,12 @@ public class GridiaScript {
         if (name == "ItemClass") {
             Item.ItemClass
         } else {
-            throw new MissingPropertyException(name, GridiaScript)
+            storage[name]
         }
+    }
+        
+    def propertyMissing(String name, value) {
+        storage[name] = value
     }
     
     def methodMissing(String name, args) {

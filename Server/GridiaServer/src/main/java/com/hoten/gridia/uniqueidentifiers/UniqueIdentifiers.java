@@ -13,14 +13,14 @@ public class UniqueIdentifiers {
         _expandAmount = expandAmount;
     }
 
-    public int next() {
+    public synchronized int next() {
         if (_available.isEmpty()) {
             expand();
         }
         return _available.remove();
     }
 
-    public void retire(int id) {
+    public synchronized void retire(int id) {
         _available.add(id);
     }
 

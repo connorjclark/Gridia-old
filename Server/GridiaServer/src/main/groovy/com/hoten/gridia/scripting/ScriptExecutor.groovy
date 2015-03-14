@@ -37,14 +37,14 @@ class ScriptExecutor {
         }        
     }
     
-    def addScript(script) {
+    def synchronized addScript(script) {
         scripts += script
         script.metaClass.scheduler = scheduler
         script.start()
         script.run()
     }
     
-    def removeScript(script) {
+    def synchronized removeScript(script) {
         scripts -= script
         script.end()
         script.scheduledTasks.each { it.cancel(true) }
