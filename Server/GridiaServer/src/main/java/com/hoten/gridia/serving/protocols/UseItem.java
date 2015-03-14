@@ -31,6 +31,8 @@ public class UseItem extends JsonMessageHandler<ConnectionToGridiaClientHandler>
         if (uses.isEmpty()) {
             if (tool.getItemInstance() == ItemInstance.NONE && focus.getItemInstance().getItem().itemClass == Item.ItemClass.Container) {
                 new ContainerRequest().requestContainer(server, connection, focus.getItemInstance());
+            } else {
+                server.dispatchEvent("FailedItemUse", null, "tool", tool, "focus", focus);
             }
             return;
         }

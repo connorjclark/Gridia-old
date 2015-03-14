@@ -61,6 +61,12 @@ public final class ContentManager {
 
     public Item getItemByName(String name) {
         return _items.stream()
+                .filter(item -> item != null && item.name.equals(name))
+                .findFirst().orElseThrow(() -> new NoSuchElementException("No such item: " + name));
+    }
+
+    public Item getItemByNameIgnoreCase(String name) {
+        return _items.stream()
                 .filter(item -> item != null && item.name.equalsIgnoreCase(name))
                 .findFirst().orElseThrow(() -> new NoSuchElementException("No such item: " + name));
     }
@@ -112,7 +118,7 @@ public final class ContentManager {
     }
 
     public ItemInstance createItemInstanceByName(String itemName, int quantity) {
-        return createItemInstance(getItemByName(itemName).id, quantity);
+        return createItemInstance(getItemByNameIgnoreCase(itemName).id, quantity);
     }
 
     public ItemInstance createItemInstanceByName(String itemName) {

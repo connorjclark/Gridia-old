@@ -29,14 +29,14 @@ onCompleteItemUse {
         below = focus.itemBelow
         if (below.item.itemClass != ItemClass.Cave_up) {
             if (below.nothing || focus.moveItemBelow()) {
-                focus.itemBelow = item(id: 981)
+                focus.itemBelow = item(name: "Cave Exit")
             }
         }
     } else {
         above = focus.itemAbove
         if (above.item.itemClass != ItemClass.Cave_down) {
             if (above.nothing || focus.moveItemAbove()) {
-                focus.itemAbove = item(id: 980)
+                focus.itemAbove = item(name: "Cave Entrance")
             }
         }
     }

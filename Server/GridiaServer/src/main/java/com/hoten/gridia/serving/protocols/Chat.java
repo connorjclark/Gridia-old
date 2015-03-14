@@ -132,7 +132,7 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                 item = server.contentManager.getItem(Integer.parseInt(itemInput));
             } catch (NumberFormatException e) {
                 try {
-                    item = server.contentManager.getItemByName(itemInput);
+                    item = server.contentManager.getItemByNameIgnoreCase(itemInput);
                 } catch (NoSuchElementException ex) {
                 }
             }

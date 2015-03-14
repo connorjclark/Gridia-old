@@ -39,6 +39,12 @@ public class GridiaScript {
     
     def item(Map params) {
         params.quantity = params.quantity ?: 1
+        if (params.id && params.name) throw new GridiaDSLException("Expected exactly one of the following: id, name")
+        if (params.name) {
+            def method = "getItemByName${params.caseSensitive ? '' : 'IgnoreCase'}"
+            params.id = server.contentManager."$method"(params.name).id
+        }
+        
         server.contentManager.createItemInstance(params.id, params.quantity)
     }
     
@@ -87,12 +93,16 @@ public class GridiaScript {
         cloned
     }
     
-    def walkable(loc) {
+    def walkable(Coord loc) {
         server.tileMap.walkable(loc)
     }
     
-    def floor(loc) {
+    def floor(Coord loc) {
         server.tileMap.getFloor(loc)
+    }
+    
+    def item(Coord loc) {
+        server.tileMap.getItem(loc)
     }
     
     private def spawn(Map params, Closure generator) {
@@ -144,7 +154,7 @@ public class GridiaScript {
         { loc -> server.addItem(params.item, loc) }
         def generator = {
             def loc = determineSpawnLocation(params)
-            if (walkable(loc) && floor(loc)) {
+            if (item(loc).nothing && floor(loc)) {
                 methodCall(loc)
             }
         }
