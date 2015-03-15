@@ -1,34 +1,19 @@
 package com.hoten.gridia.scripting
 
-class EventDispatcher {
-    def registeredEvents = [:].withDefault { [] } 
-    
+class EventDispatcher {    
     def addEventListener(String type, Closure closure, Entity eventTarget) {
         closure.eventType = type
-        if (eventTarget) {
-            closure.eventTarget = eventTarget
-            eventTarget.registeredEvents[type] += closure
-        } else {
-            registeredEvents[type] += closure
-        }
+        closure.eventTarget = eventTarget
+        eventTarget.registeredEvents[type] += closure
     }
     
     def removeEventListener(String type, Closure closure, Entity eventTarget) {
-        if (eventTarget) {
-            eventTarget.registeredEvents[type] -= closure
-        } else {
-            registeredEvents[type] -= closure
-        }
+        eventTarget.registeredEvents[type] -= closure
     }
     
     def dispatch(String type, Entity eventTarget, Map event) {
-        processEvent(getRelevantListeners(type, eventTarget), event)
-    }
-    
-    // :(
-    private def getRelevantListeners(String type, Entity eventTarget) {
-        type = type.toUpperCase()
-        eventTarget ? eventTarget.registeredEvents[type] : registeredEvents[type]
+        def listeners = eventTarget.registeredEvents[type.toUpperCase()]
+        processEvent(listeners, event)
     }
     
     private def processEvent(listeners, event) {

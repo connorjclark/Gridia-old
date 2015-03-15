@@ -22,10 +22,8 @@ public class GridiaScript {
         this.server = server
         this.eventDispatcher = eventDispatcher
         this.scriptName = scriptName
-        if (entity != null) {
-            this.entity = entity
-            entity.scripts += this
-        }
+        this.entity = entity
+        entity.scripts += this
     }
     
     def file(name) {

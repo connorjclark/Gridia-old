@@ -48,12 +48,10 @@ class ScriptExecutor {
         scripts -= script
         script.end()
         script.scheduledTasks.each { it.cancel(true) }
-        if (script.entity) script.entity.scripts -= script // :(
-        if (script.entity) {
-            script.entity.registeredEvents.each { type, closures ->
-                closures.each {
-                    script.eventDispatcher.removeEventListener(type, it, script.entity)
-                }
+        script.entity.scripts -= script
+        script.entity.registeredEvents.each { type, closures ->
+            closures.each {
+                script.eventDispatcher.removeEventListener(type, it, script.entity)
             }
         }
         script.entity = null

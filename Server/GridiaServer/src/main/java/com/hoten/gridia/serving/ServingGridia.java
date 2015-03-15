@@ -66,6 +66,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     public final String mapName;
     public final String version = "alpha-1.4-dev";
     public final File worldTopDirectory;
+    public final com.hoten.gridia.scripting.Entity worldEntity = new com.hoten.gridia.scripting.Entity();
 
     public ServingGridia(File world, String mapName, int port, File clientDataFolder, String localDataFolderName) throws IOException {
         super(port, clientDataFolder, localDataFolderName);
@@ -86,7 +87,15 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         CompilerConfiguration compilerConfiguration = new CompilerConfiguration();
         compilerConfiguration.setScriptBaseClass(DelegatingScript.class.getName());
         shell = new GroovyShell(GridiaServerDriver.class.getClassLoader(), new Binding(), compilerConfiguration);
-        addScript(new File(worldTopDirectory, "scripts/ScriptLoader.groovy"), null);
+        addScript(new File(worldTopDirectory, "scripts/ScriptLoader.groovy"));
+    }
+
+    public Script addScript(File scriptFile) throws IOException {
+        return addScript(scriptFile, worldEntity);
+    }
+
+    public Script addScript(String scriptText, String scriptName) throws IOException {
+        return addScript(scriptText, scriptName, worldEntity);
     }
 
     public Script addScript(File scriptFile, com.hoten.gridia.scripting.Entity entity) throws IOException {
@@ -107,6 +116,9 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     }
 
     public void dispatchEvent(String type, com.hoten.gridia.scripting.Entity target, Object... eventParams) {
+        if (target == null) {
+            target = worldEntity;
+        }
         if (eventParams.length % 2 == 1) {
             throw new RuntimeException("Expected an even amount of event parameters.");
         }
