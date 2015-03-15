@@ -49,7 +49,13 @@ class ScriptExecutor {
         script.end()
         script.scheduledTasks.each { it.cancel(true) }
         if (script.entity) script.entity.scripts -= script // :(
-        // todo: unregister events
+        if (script.entity) {
+            script.entity.registeredEvents.each { type, closures ->
+                closures.each {
+                    script.eventDispatcher.removeEventListener(type, it, script.entity)
+                }
+            }
+        }
         script.entity = null
     }
 }

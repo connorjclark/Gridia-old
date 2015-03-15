@@ -226,13 +226,16 @@ public class GridiaScript {
     def propertyMissing(String name) {
         if (name == "ItemClass") {
             Item.ItemClass
-        } else {
+        } else if (storage[name]) {
             storage[name]
+        } else {
+            throw new MissingPropertyException(name, GridiaScript)
         }
     }
         
-    def propertyMissing(String name, value) {
+    def void propertyMissing(String name, value) {
         storage[name] = value
+        this."$name" // :( removing this line seems to destroy the universe
     }
     
     def methodMissing(String name, args) {

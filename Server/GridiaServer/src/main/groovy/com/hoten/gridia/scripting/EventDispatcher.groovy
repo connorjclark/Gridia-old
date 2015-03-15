@@ -13,6 +13,14 @@ class EventDispatcher {
         }
     }
     
+    def removeEventListener(String type, Closure closure, Entity eventTarget) {
+        if (eventTarget) {
+            eventTarget.registeredEvents[type] -= closure
+        } else {
+            registeredEvents[type] -= closure
+        }
+    }
+    
     def dispatch(String type, Entity eventTarget, Map event) {
         processEvent(getRelevantListeners(type, eventTarget), event)
     }
