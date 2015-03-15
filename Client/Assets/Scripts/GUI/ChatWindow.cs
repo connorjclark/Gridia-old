@@ -53,7 +53,7 @@ Press *Q* to drop a single item of your current selection
 
 To equip an item, *double click* on it. Or, press *E* to equip your currently selected item
 
-Pretty chat: \*bold\* \*\*italics\*\* \*\*\*both\*\*\*
+Pretty chat: \**bold*\* \*\***italics**\*\* \*\*\****both***\*\*\*
 ________________________
 ";
             SetScrollToMax();
