@@ -39,17 +39,23 @@ namespace Gridia
         public bool StartingMusic { get; set; }
         public bool LoadingQueue { get; set; }
         public String CurrentSongName { get; private set; }
+        public bool BreakBecauseFirstTime { get; set; }
 
         public void Start() 
         {
             MusicAudio.loop = false;
             MusicAudio.volume = 0.6f;
-            //MuteMusic = Application.isEditor;
+            MuteMusic = Application.isEditor;
             _fileSystem = GridiaConstants.GetFileSystem();
         }
 
         public void Update() 
         {
+            if (BreakBecauseFirstTime)
+            {
+                BreakBecauseFirstTime = GridiaConstants.WorldName == null;
+                return;
+            }
             if (LoadingQueue)
             {
                 return;
@@ -74,6 +80,7 @@ namespace Gridia
         {
             LoadingQueue = true;
             new Thread(() => {
+                _fileSystem.CreateDirectory("worlds"); //ensure it exists :(
                 var clientDataFolder = @"worlds\" + GridiaConstants.WorldName; // :(
                 Debug.Log("queueing songs...");
                 // recursively? :(
@@ -86,6 +93,10 @@ namespace Gridia
                 Debug.Log(String.Join(", ", songs.ToArray()));
                 MusicQueue = Queue.Synchronized(new Queue(Shuffle(songs)));
                 LoadingQueue = false;
+                if (MusicQueue.Count == 0)
+                {
+                    BreakBecauseFirstTime = true;
+                }
             }).Start();
         }
 
@@ -186,6 +197,7 @@ namespace Gridia
 
         private String SearchForFile(String name) 
         {
+            _fileSystem.CreateDirectory("worlds"); //ensure it exists :(
             var clientDataFolder = @"worlds\" + GridiaConstants.WorldName; // :(
             foreach (string d in _fileSystem.GetFiles(clientDataFolder, "*", SearchOption.AllDirectories))
             {
