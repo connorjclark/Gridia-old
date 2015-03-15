@@ -96,6 +96,10 @@ public class GridiaScript {
         cloned
     }
     
+    def cloneMonster(monster) {
+        monster.clone()
+    }
+    
     def walkable(Coord loc) {
         server.tileMap.walkable(loc)
     }
