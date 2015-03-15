@@ -21,8 +21,12 @@ namespace Gridia
             _rect.width = textSize.x + 20; // :(
             _rect.height = 32;
             // :(
-            if (GUI.Button(Rect, Text) && OnClick != null) 
+            if (GUI.Button(Rect, Text) && OnClick != null)
             {
+                if (GridiaConstants.SoundPlayer != null)
+                {
+                    GridiaConstants.SoundPlayer.PlaySfx("pop_drip");
+                }
                 OnClick();
             }
         }

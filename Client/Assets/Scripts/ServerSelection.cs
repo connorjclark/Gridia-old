@@ -17,6 +17,7 @@ namespace Gridia
 
         public void Start()
         {
+            MainThreadQueue.Instantiate();
             GridiaConstants.InitializeGuiStuff();
 
             Locator.Provide(this);

@@ -14,10 +14,8 @@ namespace Gridia
     {
         private readonly Dictionary<String, WavFile> _wavFiles = new Dictionary<String, WavFile>();
         private AudioClip _currentMusic;
-        [SerializeField]
-        private AudioSource _musicAudio;
-        [SerializeField]
-        private AudioSource _sfxAudio;
+        public AudioSource MusicAudio;
+        public AudioSource SfxAudio;
         private FileSystem _fileSystem;
         public Queue MusicQueue = Queue.Synchronized(new Queue()); // Strings
         private bool _muteMusic;
@@ -29,11 +27,11 @@ namespace Gridia
                 _muteMusic = value;
                 if (_muteMusic) 
                 {
-                    _musicAudio.Pause();
+                    MusicAudio.Pause();
                 }
                 else
                 {
-                    _musicAudio.Play();
+                    MusicAudio.Play();
                 }
             }
         }
@@ -44,9 +42,9 @@ namespace Gridia
 
         public void Start() 
         {
-            _musicAudio.loop = false;
-            _musicAudio.volume = 0.6f;
-            MuteMusic = Application.isEditor;
+            MusicAudio.loop = false;
+            MusicAudio.volume = 0.6f;
+            //MuteMusic = Application.isEditor;
             _fileSystem = GridiaConstants.GetFileSystem();
         }
 
@@ -60,7 +58,7 @@ namespace Gridia
             {
                 QueueRandomSongs();
             }
-            else if (!_musicAudio.isPlaying && !_muteMusic && !StartingMusic) 
+            else if (!MusicAudio.isPlaying && !_muteMusic && !StartingMusic) 
             {
                 PlayMusic(MusicQueue.Dequeue() as String);
             }
@@ -76,11 +74,12 @@ namespace Gridia
         {
             LoadingQueue = true;
             new Thread(() => {
-                var clientDataFolder = @"worlds\" + GridiaConstants.WorldName + @"\clientdata"; // :(
+                var clientDataFolder = @"worlds\" + GridiaConstants.WorldName; // :(
                 Debug.Log("queueing songs...");
                 // recursively? :(
-                var songs = _fileSystem.GetFiles(clientDataFolder + @"\sound\music")
+                var songs = _fileSystem.GetFiles(clientDataFolder)
                     .ToList()
+                    .Where(path => path.Contains(@"sound\music"))
                     .Where(path => path.EndsWith(".wav") || path.EndsWith(".WAV"))
                     .Select(fullSongPath => Path.GetFileNameWithoutExtension(fullSongPath))
                     .ToList();
@@ -98,8 +97,8 @@ namespace Gridia
                 CurrentSongName = name;
                 var clip = GetAudioClip(name);
                 MainThreadQueue.Add(() => {
-                    _musicAudio.clip = clip;
-                    _musicAudio.Play();
+                    MusicAudio.clip = clip;
+                    MusicAudio.Play();
                     StartingMusic = false;
                 });
             }).Start();
@@ -107,24 +106,29 @@ namespace Gridia
 
         public void EndCurrentSong() 
         {
-            _musicAudio.Stop();
+            MusicAudio.Stop();
         }
 
-        public void PlaySfx(String name, Vector3 loc) 
+        public void PlaySfx(String name, float volume = 1.0f)
         {
-            if (!MuteSfx)
+            if (MuteSfx) return;
+            new Thread(() =>
             {
-                new Thread(() => {
-                    var clip = GetAudioClip(name);
-                    var playerLoc = Locator.Get<TileMapView>().Focus.Position;
-                    var dist = Vector3.Distance(playerLoc, loc);
-                    var volume = dist < 5 ? 1 : 1 / (1 + 0.25f * (dist - 5) * (dist - 5));
-                    MainThreadQueue.Add(() =>
-                    {
-                        _sfxAudio.PlayOneShot(clip, volume);
-                    });
-                }).Start();
-            }
+                var clip = GetAudioClip(name);
+                MainThreadQueue.Add(() =>
+                {
+                    SfxAudio.PlayOneShot(clip, volume);
+                });
+            }).Start();
+        }
+
+        public void PlaySfxAt(String name, Vector3 loc)
+        {
+            if (MuteSfx) return;
+            var playerLoc = Locator.Get<TileMapView>().Focus.Position;
+            var dist = Vector3.Distance(playerLoc, loc);
+            var volume = dist < 5 ? 1 : 1 / (1 + 0.25f * (dist - 5) * (dist - 5));
+            PlaySfx(name, volume);
         }
 
         private AudioClip GetAudioClip(String name)
@@ -182,10 +186,10 @@ namespace Gridia
 
         private String SearchForFile(String name) 
         {
-            var clientDataFolder = @"worlds\" + GridiaConstants.WorldName + @"\clientdata"; // :(
-            foreach (string d in _fileSystem.GetFiles(clientDataFolder + @"\sound", "*", SearchOption.AllDirectories))
+            var clientDataFolder = @"worlds\" + GridiaConstants.WorldName; // :(
+            foreach (string d in _fileSystem.GetFiles(clientDataFolder, "*", SearchOption.AllDirectories))
             {
-                if (String.Equals(Path.GetFileNameWithoutExtension(d), name, StringComparison.OrdinalIgnoreCase))
+                if (d.Contains("sound") && String.Equals(Path.GetFileNameWithoutExtension(d), name, StringComparison.OrdinalIgnoreCase))
                 {
                     return d;
                 }

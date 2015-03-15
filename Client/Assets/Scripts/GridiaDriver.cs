@@ -24,7 +24,7 @@ public class GridiaDriver : MonoBehaviour
         Locator.Provide(InputManager);
 
         Locator.Provide(this);
-        Locator.Provide(GetComponent<SoundPlayer>());
+        Locator.Provide(GridiaConstants.SoundPlayer);
         ResizeCamera();
 
         TabbedGui = new TabbedUI(new Vector2(Int32.MaxValue, 0));

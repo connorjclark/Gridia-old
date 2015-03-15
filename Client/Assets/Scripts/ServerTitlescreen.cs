@@ -11,6 +11,8 @@ namespace Gridia
 
         public void Start()
         {
+            MainThreadQueue.Instantiate();
+
             _displayList = new RenderableContainer(Vector2.zero) {ScaleXY = GridiaConstants.GuiScale};
 
             var usernameLabel = new Label(Vector2.zero, "Username", true);

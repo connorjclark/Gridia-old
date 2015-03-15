@@ -48,7 +48,7 @@ namespace Gridia
                     CurrentFrameIndex = newFrameIndex;
                     if (CurrentFrame.Sound != null)
                     {
-                        Locator.Get<SoundPlayer>().PlaySfx(CurrentFrame.Sound, Coord);
+                        Locator.Get<SoundPlayer>().PlaySfxAt(CurrentFrame.Sound, Coord);
                     }
                 }
                 else
