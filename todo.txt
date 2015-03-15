@@ -121,3 +121,35 @@ Nice-to-have
   "ground status" - water, ploughed, etc... Allows for flooding areas, and other stuff
     bit-array on sector
     ploughed should be a ground status
+
+========================
+Script chat commands
+========================
+
+!entities (Shows all)
+
+	monster1 - (ID, NAME, TYPE <monster/player/entity>)
+	monster2
+		script1
+		script2
+	world
+		script1
+		script2
+
+!entity <id/name> - shows all scripts
+
+!script inject <script instance id> <code to run>
+
+!script rerun <script instance id>
+
+!script list (shows all scripts known)
+	script1
+	script2
+	script3
+	script4
+
+!script attach <scriptname> <entity id or name>
+
+!script new scriptName <code> (creates a script)
+
+!script run <code> (creates script and attaches to world)
