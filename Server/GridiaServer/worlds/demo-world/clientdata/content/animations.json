@@ -663,7 +663,7 @@
     "name":"MiningSound",
     "frames":[
       {
-        "sound":"mining",
+        "sound":"digi_plink",
         "sprite":0
       }
     ]
