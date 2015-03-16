@@ -6,7 +6,7 @@ public class Entity {
     public def Coord location
     public transient def List<GridiaScript> scripts = []
     public transient def Map<String, Closure> registeredEvents = [:].withDefault { [] }
-    private transient def Map storage = [:]
+    private def Map storage = [:]
     
     def void removeScripts() {
         scripts.each {
