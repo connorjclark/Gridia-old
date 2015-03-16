@@ -18,6 +18,7 @@ public class GridiaGson {
 
     public static void initialize(ContentManager contentManager, ServingGridia servingGridia) {
         _gson = new GsonBuilder()
+                .registerTypeAdapter(com.hoten.gridia.scripting.Entity.class, new EntityGsonAdapter())
                 .registerTypeAdapter(ItemInstance.class, new ItemInstanceGsonAdapter(contentManager))
                 .registerTypeAdapter(Tile.class, new TileGsonAdapter(servingGridia))
                 .registerTypeAdapter(CreatureImage.class, new InterfaceAdapter<>())

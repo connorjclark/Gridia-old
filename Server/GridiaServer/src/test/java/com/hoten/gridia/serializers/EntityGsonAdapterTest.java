@@ -2,6 +2,8 @@ package com.hoten.gridia.serializers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.hoten.gridia.map.Coord;
+import java.util.Map;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -18,7 +20,7 @@ public class EntityGsonAdapterTest {
     }
 
     @Test
-    public void testSerializesCustomAttribute() {
+    public void testSerializeCustomAttribute() {
         com.hoten.gridia.scripting.Entity entity = new com.hoten.gridia.scripting.Entity();
         entity.setAttribute("name", "bill");
         String expected = "{\"name\":\"bill\"}";
@@ -26,9 +28,24 @@ public class EntityGsonAdapterTest {
     }
 
     @Test
-    public void testDeserializesCustomAttribute() {
+    public void testDeserializeCustomAttribute() {
         String json = "{\"name\":\"bill\"}";
         com.hoten.gridia.scripting.Entity entity = _gson.fromJson(json, com.hoten.gridia.scripting.Entity.class);
         assertEquals("bill", entity.getAttribute("name"));
+    }
+
+    @Test
+    public void testDeserializeLocation() {
+        String json = "{\"location\":{\"x\":1,\"y\":2,\"z\":3}}";
+        com.hoten.gridia.scripting.Entity entity = _gson.fromJson(json, com.hoten.gridia.scripting.Entity.class);
+        assertEquals(new Coord(1, 2, 3), entity.location);
+    }
+
+    @Test
+    public void testDeserializeLocationNotInStorage() {
+        String json = "{\"location\":{\"x\":1,\"y\":2,\"z\":3}}";
+        com.hoten.gridia.scripting.Entity entity = _gson.fromJson(json, com.hoten.gridia.scripting.Entity.class);
+        Map storage = (Map) entity.getAttribute("storage");
+        assertFalse(storage.containsKey("location"));
     }
 }
