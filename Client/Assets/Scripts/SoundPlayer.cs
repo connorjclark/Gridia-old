@@ -40,13 +40,21 @@ namespace Gridia
         public bool LoadingQueue { get; set; }
         public String CurrentSongName { get; private set; }
         public bool BreakBecauseFirstTime { get; set; }
+        private bool _startedAlready;
 
-        public void Start() 
+        public void Start()
         {
+            if (_startedAlready) return;
+            _startedAlready = true;
+
+            Debug.Log("START SOUND PLAYER!!");
             MusicAudio.loop = false;
             MusicAudio.volume = 0.6f;
             MuteMusic = Application.isEditor;
             _fileSystem = GridiaConstants.GetFileSystem();
+            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(SfxAudio);
+            DontDestroyOnLoad(MusicAudio);
         }
 
         public void Update() 
@@ -153,18 +161,14 @@ namespace Gridia
             AudioClip audioClip = null;
             MainThreadQueue.Add(() =>
             {
-                Debug.Log("SampleRate: " + wavFile.SampleRate);
-                Debug.Log("frames: " + wavFile.NumFrames);
-                Debug.Log("channels: " + wavFile.NumChannels);
-                Debug.Log("size: " + wavFile.AudioData.Length);
                 var position = 0;
-                audioClip = AudioClip.Create(name, wavFile.AudioData.Length / wavFile.NumChannels, wavFile.NumChannels, wavFile.SampleRate, false, true, data =>
+                audioClip = AudioClip.Create(name, wavFile.AudioData.Length / wavFile.NumChannels, wavFile.NumChannels, wavFile.SampleRate, true, data =>
                 {
-                    for (var i = 0; i < data.Length && position < wavFile.AudioData.Length; i++)
-                    {
-                        data[i] = wavFile.AudioData[position++];
-                    }
+                    var length = Math.Min(data.Length, wavFile.AudioData.Length);
+                    Array.Copy(wavFile.AudioData, position, data, 0, length);
+                    position += length;
                 }, p => position = p);
+                DontDestroyOnLoad(audioClip);
                 signal.Set();
             });
             signal.WaitOne();

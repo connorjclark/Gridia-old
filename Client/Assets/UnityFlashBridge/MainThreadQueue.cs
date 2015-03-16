@@ -15,6 +15,8 @@ public class MainThreadQueue : MonoBehaviour
       var gameObject = new GameObject();
       gameObject.name = "MainThreadQueue";
       _instance = gameObject.AddComponent<MainThreadQueue>();
+      DontDestroyOnLoad(gameObject);
+      DontDestroyOnLoad(_instance);
     }
   }
 
