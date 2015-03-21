@@ -34,7 +34,7 @@ class ScriptExecutor {
             } else {
                 throw new MissingPropertyException(name, Range)
             }
-        }        
+        }
     }
     
     def synchronized addScript(script) {

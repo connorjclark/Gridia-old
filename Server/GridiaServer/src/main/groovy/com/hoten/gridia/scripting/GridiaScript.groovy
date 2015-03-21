@@ -51,6 +51,10 @@ public class GridiaScript {
         server.contentManager.createItemInstance(params.id, params.quantity)
     }
     
+    def monsterData(Map params) {
+        server.contentManager.getMonster(params.id)
+    }
+    
     def setFloor(Map params) {
         server.changeFloor(params.at, params.id)
     }
@@ -149,10 +153,13 @@ public class GridiaScript {
         if (params.near) {
             throw new GridiaDSLException("near is currently not supported.")
         }
+        params.friendly = params.friendly ?: false
+        params.forceSpawn = params.forceSpawn ?: false
+        
         def generator = {
             def loc = determineSpawnLocation(params)
-            if (walkable(loc) && floor(loc)) {
-                server.createCreature(params.monster, loc)
+            if ((walkable(loc) && floor(loc)) || params.forceSpawn) {
+                server.createCreature(params.monster, loc, params.friendly)
             }
         }
         spawn(params, generator)
@@ -179,6 +186,7 @@ public class GridiaScript {
     
     def spawnMonster(Map params) {
         params.times = 1
+        params.forceSpawn = params.forceSpawn ?: true
         spawnMonsters(params)[0]
     }
     
@@ -241,9 +249,9 @@ public class GridiaScript {
     }
     
     def methodMissing(String name, args) {
-        if (name.startsWith("on") && args.length == 1 && args[0] instanceof Closure) {
+        if (name.startsWith("on") && (1..2).contains(args.length) && args.last() instanceof Closure) {
             def type = name.replaceFirst("on", "").toUpperCase()
-            eventDispatcher.addEventListener(type, args[0], entity)
+            eventDispatcher.addEventListener(type, args.last(), args.length == 1 ? entity : args.first())
         } else if (['start', 'update', 'end'].every { it != name } ) {
             throw new MissingMethodException(name, GridiaScript, args)
         }
