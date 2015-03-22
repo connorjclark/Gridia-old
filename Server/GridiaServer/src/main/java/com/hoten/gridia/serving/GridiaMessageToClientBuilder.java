@@ -1,6 +1,5 @@
 package com.hoten.gridia.serving;
 
-import com.google.gson.Gson;
 import com.hoten.gridia.Container;
 import com.hoten.gridia.CreatureImage;
 import com.hoten.gridia.CustomPlayerImage;

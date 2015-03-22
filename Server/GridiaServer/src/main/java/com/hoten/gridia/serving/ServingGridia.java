@@ -27,6 +27,7 @@ import com.hoten.gridia.content.WorldContentLoader;
 import com.hoten.gridia.map.Sector;
 import com.hoten.gridia.map.Tile;
 import com.hoten.gridia.map.TileMap;
+import com.hoten.gridia.scripting.Entity;
 import com.hoten.gridia.serializers.GridiaGson;
 import com.hoten.servingjava.filetransferring.ServingFileTransferring;
 import java.io.File;
@@ -155,7 +156,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     public String whoIsOnline() {
         return "Players online: " + _clients.stream()
                 .filter(client -> client.player != null)
-                .map(client -> client.player.accountDetails.username)
+                .map(client -> client.player.getUsername())
                 .collect(Collectors.joining(", "));
     }
 
@@ -298,10 +299,15 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
 
     public com.hoten.gridia.scripting.Entity createCreature(CreatureImage image, String name, Coord loc, boolean belongsToPlayer, boolean friendly) {
         com.hoten.gridia.scripting.Entity cre = createCreatureQuietly(image, name, loc, belongsToPlayer, friendly);
-        Sector sector = tileMap.getSectorOf(cre.location);
-        tileMap.getTile(cre.location).cre = cre;
-        sendToClientsWithSectorLoaded(messageBuilder.addCreature(cre), sector);
+        registerCreature(cre);
         return cre;
+    }
+
+    public void registerCreature(Entity creature) {
+        Sector sector = tileMap.getSectorOf(creature.location);
+        tileMap.getTile(creature.location).cre = creature;
+        sendToClientsWithSectorLoaded(messageBuilder.addCreature(creature), sector);
+        creatures.put(creature.id, creature);
     }
 
     // :( creating creatures need refactoring, standardization
@@ -312,7 +318,6 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         cre.setAttribute("name", name);
         cre.setAttribute("image", image);
         cre.location = loc;
-        creatures.put(cre.id, cre);
         try {
             if (!belongsToPlayer) {
                 addScript(new File(worldTopDirectory, "scripts/RandomWalk.groovy"), cre);
@@ -327,14 +332,13 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         return cre;
     }
 
-    public com.hoten.gridia.scripting.Entity createCreatureForPlayer(String name, Coord location) {
+    public CustomPlayerImage createDefaultCreatureImage() {
         CustomPlayerImage image = new CustomPlayerImage();
         image.bareArms = (int) (Math.random() * 10);
         image.bareHead = (int) (Math.random() * 100);
         image.bareChest = (int) (Math.random() * 10);
         image.bareLegs = (int) (Math.random() * 10);
-        com.hoten.gridia.scripting.Entity cre = createCreature(image, name, location, true, false);
-        return cre;
+        return image;
     }
 
     public void announce(String from, String message, Coord loc) {
@@ -508,7 +512,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
 
     public Player getPlayerWithName(String playerName) {
         return _clients.stream()
-                .filter(client -> client.player != null && client.player.accountDetails.username.equals(playerName))
+                .filter(client -> client.player != null && client.player.getUsername().equals(playerName))
                 .map(client -> client.player)
                 .findFirst().orElse(null);
     }

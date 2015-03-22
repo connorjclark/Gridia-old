@@ -28,9 +28,9 @@ public class Login extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
         ServingGridia server = connection.getServer();
         connection.player = thePlayer;
         connection.send(server.messageBuilder.genericEventHandler("success"));
-        connection.send(server.messageBuilder.setFocus(thePlayer.creature.id, thePlayer.accountDetails.isAdmin));
-        connection.send(server.messageBuilder.container((Container) thePlayer.creature.getAttribute("inventory"), -199));
-        connection.send(server.messageBuilder.container(thePlayer.equipment, -999));
+        connection.send(server.messageBuilder.setFocus(thePlayer.creature.id, thePlayer.isAdmin()));
+        connection.send(server.messageBuilder.container((Container) thePlayer.creature.getAttribute("inventory"), 10));
+        connection.send(server.messageBuilder.container(thePlayer.equipment, 10));
 
         thePlayer.updatePlayerImage(server);
 

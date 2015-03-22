@@ -41,7 +41,7 @@ public class TileGsonAdapter extends GsonAdapter<Tile> {
             com.hoten.gridia.scripting.Entity cre = context.deserialize(jsonObject.get("cre"), com.hoten.gridia.scripting.Entity.class); // :(
             tile.cre = _servingGridia.createCreatureQuietly((CreatureImage) cre.getAttribute("image"), (String) cre.getAttribute("name"), cre.location, false, (boolean) cre.getAttribute("isFriendly"));
             tile.cre.setAttribute("friendlyMessage", cre.getAttribute("friendlyMessage"));
-            tile.cre.setAttribute("life", (int) (double) cre.getAttribute("life"));
+            tile.cre.setAttribute("life", (int) cre.getAttribute("life"));
         }
         return tile;
     }

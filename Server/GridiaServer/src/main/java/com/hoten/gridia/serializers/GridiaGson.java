@@ -22,6 +22,7 @@ public class GridiaGson {
                 .registerTypeAdapter(ItemInstance.class, new ItemInstanceGsonAdapter(contentManager))
                 .registerTypeAdapter(Tile.class, new TileGsonAdapter(servingGridia))
                 .registerTypeAdapter(CreatureImage.class, new InterfaceAdapter<>())
+                .setPrettyPrinting()
                 .create();
     }
 }

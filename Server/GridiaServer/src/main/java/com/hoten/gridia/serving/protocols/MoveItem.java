@@ -26,7 +26,7 @@ public class MoveItem extends JsonMessageHandler<ConnectionToGridiaClientHandler
 
         ItemWrapper sourceItemWrapped = server.getItemFrom(player, source, sourceIndex);
         ItemInstance sourceItem = sourceItemWrapped.getItemInstance();
-        if (sourceItem == ItemInstance.NONE || (!player.accountDetails.isAdmin && !sourceItem.getItem().moveable)) {
+        if (sourceItem == ItemInstance.NONE || (!player.isAdmin() && !sourceItem.getItem().moveable)) {
             return;
         }
 

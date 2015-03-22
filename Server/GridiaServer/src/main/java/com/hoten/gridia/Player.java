@@ -2,7 +2,6 @@ package com.hoten.gridia;
 
 import com.hoten.gridia.Container.ContainerType;
 import com.hoten.gridia.content.ItemInstance;
-import com.hoten.gridia.map.Coord;
 import com.hoten.gridia.serializers.GridiaGson;
 import com.hoten.gridia.serving.ServingGridia;
 import java.io.File;
@@ -45,17 +44,19 @@ public class Player {
                 throw new BadLoginException("Bad user/password");
             }
             String json = FileUtils.readFileToString(dataFile);
-            AccountDetails accountDetails = GridiaGson.get().fromJson(json, AccountDetails.class);
+            com.hoten.gridia.scripting.Entity creature = GridiaGson.get().fromJson(json, com.hoten.gridia.scripting.Entity.class);
 
-            if (!accountDetails.passwordHash.equals(passwordHash)) {
+            Container equipment = server.containerFactory.get((int) creature.getAttribute("equipmentId")); // :(
+            Player player = new Player(creature, equipment);
+            if (!player.getPasswordHash().equals(passwordHash)) {
                 throw new BadLoginException("Bad user/password");
             }
-
-            com.hoten.gridia.scripting.Entity creature = server.createCreatureForPlayer(username, accountDetails.location);
-            creature.setAttribute("inventory", server.containerFactory.get(accountDetails.inventoryId));
-            Container equipment = server.containerFactory.get(accountDetails.equipmentId);
-
-            return new Player(accountDetails, creature, equipment);
+            creature.setAttribute("inventory", server.containerFactory.get(player.getInventoryId()));
+            if (!creature.hasAttribute("name")) {
+                creature.setAttribute("name", username);
+            }
+            server.registerCreature(creature);
+            return player;
         }
 
         public Player create(ServingGridia server, String username, String passwordHash) throws BadRegistrationException, IOException {
@@ -67,17 +68,26 @@ public class Player {
                 throw new BadRegistrationException("Username already exists");
             }
 
-            AccountDetails accountDetails = new AccountDetails();
-            accountDetails.username = username;
-            accountDetails.passwordHash = passwordHash;
-            accountDetails.location = server.tileMap.getDefaultPlayerSpawn();
+            // fake equipment
+            List<ItemInstance> equipmentItems = new ArrayList();
+            equipmentItems.add(server.contentManager.createItemInstance(0));
+            equipmentItems.add(server.contentManager.createItemInstance(0));
+            equipmentItems.add(server.contentManager.createItemInstance(0));
+            equipmentItems.add(server.contentManager.createItemInstance(0));
+            equipmentItems.add(server.contentManager.createItemInstance(0));
+            Container equipment = server.containerFactory.create(ContainerType.Equipment, equipmentItems);
+
+            com.hoten.gridia.scripting.Entity creature = new com.hoten.gridia.scripting.Entity();
+            Player player = new Player(creature, equipment);
+            player.setUsername(username);
+            player.setPasswordHash(passwordHash);
+            creature.location = server.tileMap.getDefaultPlayerSpawn();
+            creature.setAttribute("image", server.createDefaultCreatureImage());
 
             int invSize = 40;
             if (dir.listFiles() == null) {
-                accountDetails.isAdmin = true;
+                player.setIsAdmin(true);
             }
-
-            com.hoten.gridia.scripting.Entity creature = server.createCreatureForPlayer(username, accountDetails.location);
 
             // fake an inventory
             List<ItemInstance> inv = new ArrayList<>();
@@ -97,47 +107,34 @@ public class Player {
 
             Container invContainer = server.containerFactory.create(ContainerType.Inventory, inv);
             creature.setAttribute("inventory", invContainer);
-            accountDetails.inventoryId = invContainer.id;
+            player.setInventoryId(invContainer.id);
 
-            // fake equipment
-            List<ItemInstance> equipmentItems = new ArrayList();
-            equipmentItems.add(server.contentManager.createItemInstance(0));
-            equipmentItems.add(server.contentManager.createItemInstance(0));
-            equipmentItems.add(server.contentManager.createItemInstance(0));
-            equipmentItems.add(server.contentManager.createItemInstance(0));
-            equipmentItems.add(server.contentManager.createItemInstance(0));
-
-            Container equipment = server.containerFactory.create(ContainerType.Equipment, equipmentItems);
-            accountDetails.equipmentId = equipment.id;
+            player.setEquipmentId(equipment.id);
             CreatureImage image = (CreatureImage) creature.getAttribute("image");
             if (image instanceof CustomPlayerImage) {
                 ((CustomPlayerImage) (image)).moldToEquipment(equipment);
             }
 
-            Player player = new Player(accountDetails, creature, equipment);
             save(player);
+            server.registerCreature(creature);
 
             return player;
         }
 
         public void save(Player player) throws IOException {
-            player.accountDetails.location = player.creature.location;
-            String json = GridiaGson.get().toJson(player.accountDetails);
-            System.out.println("json = " + json);
-            FileUtils.writeStringToFile(new File(dir, player.accountDetails.username + ".json"), json);
+            String json = GridiaGson.get().toJson(player.creature);
+            FileUtils.writeStringToFile(new File(dir, player.getUsername() + ".json"), json);
         }
     }
 
     public final com.hoten.gridia.scripting.Entity creature;
     public final Container equipment;
-    public final AccountDetails accountDetails;
     public final Set<Integer> openedContainers = new HashSet();
     // :(
     public int useSourceIndex, useDestIndex;
     public int useSource, useDest;
 
-    private Player(AccountDetails accountDetails, com.hoten.gridia.scripting.Entity creature, Container equipment) {
-        this.accountDetails = accountDetails;
+    private Player(com.hoten.gridia.scripting.Entity creature, Container equipment) {
         this.creature = creature;
         this.equipment = equipment;
     }
@@ -150,14 +147,73 @@ public class Player {
         server.updateCreatureImage(creature);
     }
 
-    public static class AccountDetails {
+    /**
+     * @return the username
+     */
+    public String getUsername() {
+        return (String) creature.getAttribute("username");
+    }
 
-        public String username, passwordHash;
-        public int inventoryId, equipmentId;
-        public boolean isAdmin;
-        public Coord location;
+    /**
+     * @param username the username to set
+     */
+    public void setUsername(String username) {
+        creature.setAttribute("username", username);
+    }
 
-        private AccountDetails() {
-        }
+    /**
+     * @return the passwordHash
+     */
+    public String getPasswordHash() {
+        return (String) creature.getAttribute("passwordHash");
+    }
+
+    /**
+     * @param passwordHash the passwordHash to set
+     */
+    public void setPasswordHash(String passwordHash) {
+        creature.setAttribute("passwordHash", passwordHash);
+    }
+
+    /**
+     * @return the inventoryId
+     */
+    public int getInventoryId() {
+        return (int) creature.getAttribute("inventoryId");
+    }
+
+    /**
+     * @param inventoryId the inventoryId to set
+     */
+    public void setInventoryId(int inventoryId) {
+        creature.setAttribute("inventoryId", inventoryId);
+    }
+
+    /**
+     * @return the equipmentId
+     */
+    public int getEquipmentId() {
+        return (int) creature.getAttribute("equipmentId");
+    }
+
+    /**
+     * @param equipmentId the equipmentId to set
+     */
+    public void setEquipmentId(int equipmentId) {
+        creature.setAttribute("equipmentId", equipmentId);
+    }
+
+    /**
+     * @return the isAdmin
+     */
+    public boolean isAdmin() {
+        return creature.hasAttribute("isAdmin") && (boolean) creature.getAttribute("isAdmin");
+    }
+
+    /**
+     * @param isAdmin the isAdmin to set
+     */
+    public void setIsAdmin(boolean isAdmin) {
+        creature.setAttribute("isAdmin", isAdmin);
     }
 }

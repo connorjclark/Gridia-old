@@ -47,7 +47,7 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                 connection.getPlayer().updatePlayerImage(server);
             } catch (NumberFormatException e) {
             }
-        } else if (msg.startsWith("!friendly ") && player.accountDetails.isAdmin) {
+        } else if (msg.startsWith("!friendly ") && player.isAdmin()) {
             try {
                 String[] split = msg.split(" ", 3);
                 if (split.length == 3) {
@@ -61,7 +61,7 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                 }
             } catch (NumberFormatException e) {
             }
-        } else if (msg.startsWith("!monster ") && player.accountDetails.isAdmin) {
+        } else if (msg.startsWith("!monster ") && player.isAdmin()) {
             try {
                 String[] split = msg.split(" ", 3);
                 if (split.length == 2) {
@@ -80,9 +80,9 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
             if (cre != null) {
                 cre.callMethod("hurt", Arrays.asList(10000, "was punished by " + player.creature.getAttribute("name")));
             }
-        } else if (msg.equals("!del") && player.accountDetails.isAdmin) {
+        } else if (msg.equals("!del") && player.isAdmin()) {
             server.changeItem(player.creature.location.add(0, 1, 0), ItemInstance.NONE);
-        } else if (msg.equals("!clr") && player.accountDetails.isAdmin) {
+        } else if (msg.equals("!clr") && player.isAdmin()) {
             for (int i = 0; i < 20; i++) {
                 for (int j = 0; j < 20; j++) {
                     server.changeItem(player.creature.location.add(i, j, 0), ItemInstance.NONE);
@@ -119,9 +119,9 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
             } else {
                 connection.send(server.messageBuilder.chat("Invalid player.", player.creature.location));
             }
-        } else if (msg.equals("!save") && player.accountDetails.isAdmin) {
+        } else if (msg.equals("!save") && player.isAdmin()) {
             server.save();
-        } else if (msg.startsWith("!item ") && player.accountDetails.isAdmin) {
+        } else if (msg.startsWith("!item ") && player.isAdmin()) {
             String[] split = msg.replaceFirst("!item ", "").split(",", 2);
             String itemInput = split[0];
             String quantityInput = split.length == 2 ? split[1].trim() : "1";
@@ -148,11 +148,11 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
             } else {
                 server.addItemNear(server.contentManager.createItemInstance(item.id, quantity), player.creature.location.add(0, 1, 0), 3, true);
             }
-        } else if (msg.startsWith("!admin ") && player.accountDetails.isAdmin) {
+        } else if (msg.startsWith("!admin ") && player.isAdmin()) {
             String playerName = msg.split("\\s+", 2)[1];
             Player otherPlayer = server.getPlayerWithName(playerName);
             if (otherPlayer != null) {
-                otherPlayer.accountDetails.isAdmin = true;
+                otherPlayer.setIsAdmin(true);
                 server.savePlayer(otherPlayer);
                 server.sendToAll(server.messageBuilder.chat(otherPlayer.creature.getAttribute("name") + " is now an admin.", otherPlayer.creature.location));
             } else {

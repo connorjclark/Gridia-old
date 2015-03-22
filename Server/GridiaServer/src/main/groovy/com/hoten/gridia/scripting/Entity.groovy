@@ -31,10 +31,17 @@ public class Entity {
         ServingGridia.instance.moveCreatureTo(this, newLocation, false);
     }
     
+    // :(
+    def boolean hasAttribute(String name) {
+        this.hasProperty(name)
+    }
+    
+    // :(
     def setAttribute(String name, value) {
         this."$name" = value
     }
     
+    // :(
     def getAttribute(String name) {
         this."$name"
     }

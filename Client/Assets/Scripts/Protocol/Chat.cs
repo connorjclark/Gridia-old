@@ -11,7 +11,7 @@ namespace Gridia.Protocol
         {
             var user = (String) data["user"];
             var text = (String) data["text"];
-            var x = (int) data["loc"]["x"]; // :(
+            var x = (int)data["loc"]["x"]; // :(
             var y = (int) data["loc"]["y"];
             var z = (int) data["loc"]["z"];
 

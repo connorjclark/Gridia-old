@@ -108,8 +108,9 @@ public class GridiaServerDriver {
         File clientDataDir = new File(world, "clientdata");
         String localDataDirName = "worlds/" + world.getName() + "/clientdata";
         server = new ServingGridia(world, mapName, port, clientDataDir, localDataDirName);
-        server.tileMap.loadAll(); // :(
         server.startServer();
+        
+        server.tileMap.loadAll();
 
         try {
             new ServingPolicyFile(port).start();
