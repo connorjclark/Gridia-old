@@ -31,6 +31,10 @@ public class Entity {
         ServingGridia.instance.moveCreatureTo(this, newLocation, false);
     }
     
+    def boolean getBoolean(String name) {
+        getAttribute(name) ?: false
+    }
+    
     // :(
     def boolean hasAttribute(String name) {
         this.hasProperty(name)

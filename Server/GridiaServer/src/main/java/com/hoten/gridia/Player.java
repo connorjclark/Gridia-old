@@ -83,6 +83,7 @@ public class Player {
             player.setPasswordHash(passwordHash);
             creature.location = server.tileMap.getDefaultPlayerSpawn();
             creature.setAttribute("image", server.createDefaultCreatureImage());
+            creature.setAttribute("belongsToPlayer", true);
 
             int invSize = 40;
             if (dir.listFiles() == null) {

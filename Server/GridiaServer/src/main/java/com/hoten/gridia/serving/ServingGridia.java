@@ -308,6 +308,17 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         tileMap.getTile(creature.location).cre = creature;
         sendToClientsWithSectorLoaded(messageBuilder.addCreature(creature), sector);
         creatures.put(creature.id, creature);
+        try {
+            if (!creature.getBoolean("belongsToPlayer")) {
+                addScript(new File(worldTopDirectory, "scripts/RandomWalk.groovy"), creature);
+            }
+            if (creature.getBoolean("isFriendly")) {
+                addScript(new File(worldTopDirectory, "scripts/Friendly.groovy"), creature);
+            }
+            addScript(new File(worldTopDirectory, "scripts/Life.groovy"), creature);
+        } catch (IOException ex) {
+            Logger.getLogger(ServingGridia.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // :( creating creatures need refactoring, standardization
@@ -318,17 +329,6 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         cre.setAttribute("name", name);
         cre.setAttribute("image", image);
         cre.location = loc;
-        try {
-            if (!belongsToPlayer) {
-                addScript(new File(worldTopDirectory, "scripts/RandomWalk.groovy"), cre);
-            }
-            if (friendly) {
-                addScript(new File(worldTopDirectory, "scripts/Friendly.groovy"), cre);
-            }
-            addScript(new File(worldTopDirectory, "scripts/Life.groovy"), cre);
-        } catch (IOException ex) {
-            Logger.getLogger(ServingGridia.class.getName()).log(Level.SEVERE, null, ex);
-        }
         return cre;
     }
 

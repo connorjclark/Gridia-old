@@ -79,7 +79,7 @@ public class GridiaMessageToClientBuilder {
         builder.writeInt(creatures.size());
         creatures.stream().forEach((cre) -> {
             builder.writeShort(cre.id)
-                    .writeUTF((String) cre.getAttribute("name"))
+                    .writeUTF(cre.hasAttribute("name") ? (String) cre.getAttribute("name") : "")
                     .writeShort(cre.location.x)
                     .writeShort(cre.location.y)
                     .writeShort(cre.location.z);
