@@ -249,9 +249,8 @@ public class GridiaScript {
     }
     
     def methodMissing(String name, args) {
-        if (name.startsWith("on") && (1..2).contains(args.length) && args.last() instanceof Closure) {
-            def type = name.replaceFirst("on", "").toUpperCase()
-            eventDispatcher.addEventListener(type, args.last(), args.length == 1 ? entity : args.first())
+        if (['before', 'on', 'after'].any{ name.startsWith(it) } && (1..2).contains(args.length) && args.last() instanceof Closure) {
+            eventDispatcher.addEventListener(name.toUpperCase(), args.last(), args.length == 1 ? entity : args.first())
         } else if (['start', 'update', 'end'].every { it != name } ) {
             throw new MissingMethodException(name, GridiaScript, args)
         }

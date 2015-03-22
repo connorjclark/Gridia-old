@@ -12,8 +12,10 @@ class EventDispatcher {
     }
     
     def dispatch(String type, Entity eventTarget, Map event) {
-        def listeners = eventTarget.registeredEvents[type.toUpperCase()]
-        processEvent(listeners, event)
+        ['before', 'on', 'after'].each {
+            def listeners = eventTarget.registeredEvents["$it$type".toUpperCase()]
+            processEvent(listeners, event)
+        }
     }
     
     private def processEvent(listeners, event) {
