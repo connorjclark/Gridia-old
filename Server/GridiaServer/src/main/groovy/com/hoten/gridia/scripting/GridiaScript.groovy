@@ -249,7 +249,7 @@ public class GridiaScript {
     }
     
     def methodMissing(String name, args) {
-        if (['before', 'on', 'after'].any{ name.startsWith(it) } && (1..2).contains(args.length) && args.last() instanceof Closure) {
+        if (['before', 'on', 'after'].any { name.startsWith(it) } && (1..2).contains(args.length) && args.last() instanceof Closure) {
             eventDispatcher.addEventListener(name.toUpperCase(), args.last(), args.length == 1 ? entity : args.first())
         } else if (['start', 'update', 'end'].every { it != name } ) {
             throw new MissingMethodException(name, GridiaScript, args)

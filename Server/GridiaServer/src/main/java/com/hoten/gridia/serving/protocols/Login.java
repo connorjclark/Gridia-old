@@ -1,6 +1,7 @@
 package com.hoten.gridia.serving.protocols;
 
 import com.google.gson.JsonObject;
+import com.hoten.gridia.Container;
 import com.hoten.gridia.Player;
 import com.hoten.gridia.serving.ConnectionToGridiaClientHandler;
 import com.hoten.gridia.serving.ServingGridia;
@@ -28,7 +29,7 @@ public class Login extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
         connection.player = thePlayer;
         connection.send(server.messageBuilder.genericEventHandler("success"));
         connection.send(server.messageBuilder.setFocus(thePlayer.creature.id, thePlayer.accountDetails.isAdmin));
-        connection.send(server.messageBuilder.container(thePlayer.creature.inventory, -199));
+        connection.send(server.messageBuilder.container((Container) thePlayer.creature.getAttribute("inventory"), -199));
         connection.send(server.messageBuilder.container(thePlayer.equipment, -999));
 
         thePlayer.updatePlayerImage(server);

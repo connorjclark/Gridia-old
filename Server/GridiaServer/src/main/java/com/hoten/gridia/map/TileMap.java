@@ -2,7 +2,6 @@ package com.hoten.gridia.map;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.hoten.gridia.Creature;
 import com.hoten.gridia.content.ItemInstance;
 import java.io.File;
 import java.io.IOException;
@@ -179,7 +178,7 @@ public class TileMap {
         getTile(c.x, c.y, c.z).item = item;
     }
 
-    public Creature getCreature(Coord loc) {
+    public com.hoten.gridia.scripting.Entity getCreature(Coord loc) {
         return getTile(loc).cre;
     }
 

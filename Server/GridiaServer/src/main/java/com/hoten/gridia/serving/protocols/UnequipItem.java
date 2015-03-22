@@ -1,6 +1,7 @@
 package com.hoten.gridia.serving.protocols;
 
 import com.google.gson.JsonObject;
+import com.hoten.gridia.Container;
 import com.hoten.gridia.Player;
 import com.hoten.gridia.content.ItemInstance;
 import com.hoten.gridia.serving.ConnectionToGridiaClientHandler;
@@ -17,7 +18,8 @@ public class UnequipItem extends JsonMessageHandler<ConnectionToGridiaClientHand
         int slotIndex = data.get("slotIndex").getAsInt();
         
         ItemInstance itemToUnequip = player.equipment.get(slotIndex);
-        if (player.creature.inventory.add(itemToUnequip)) {
+        Container inv = (Container) player.creature.getAttribute("inventory");
+        if (inv.add(itemToUnequip)) {
             player.equipment.deleteSlot(slotIndex);
             player.updatePlayerImage(server);
         } else {

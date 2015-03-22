@@ -1,7 +1,8 @@
 package com.hoten.gridia.serving;
 
-import com.hoten.gridia.Creature;
+import com.google.gson.Gson;
 import com.hoten.gridia.Container;
+import com.hoten.gridia.CreatureImage;
 import com.hoten.gridia.CustomPlayerImage;
 import com.hoten.gridia.DefaultCreatureImage;
 import com.hoten.gridia.content.ItemInstance;
@@ -19,25 +20,25 @@ import java.util.List;
 
 public class GridiaMessageToClientBuilder {
 
-    public Message addCreature(Creature cre) {
+    public Message addCreature(com.hoten.gridia.scripting.Entity cre) {
         return new JsonMessageBuilder()
                 .type("AddCreature")
                 .set("id", cre.id)
-                .set("image", cre.image)
-                .set("name", cre.name)
+                .set("image", cre.getAttribute("image"))
+                .set("name", cre.getAttribute("name"))
                 .set("loc", cre.location)
                 .build();
     }
 
-    public Message renameCreature(Creature cre) {
+    public Message renameCreature(com.hoten.gridia.scripting.Entity cre) {
         return new JsonMessageBuilder()
                 .type("RenameCreature")
                 .set("id", cre.id)
-                .set("name", cre.name)
+                .set("name", cre.getAttribute("name"))
                 .build();
     }
 
-    public Message moveCreature(Creature cre, int timeoffset, boolean isTeleport, boolean onRaft) {
+    public Message moveCreature(com.hoten.gridia.scripting.Entity cre, int timeoffset, boolean isTeleport, boolean onRaft) {
         return new JsonMessageBuilder()
                 .type("MoveCreature")
                 .set("time", System.currentTimeMillis() + timeoffset)
@@ -48,7 +49,7 @@ public class GridiaMessageToClientBuilder {
                 .build();
     }
 
-    public Message removeCreature(Creature cre) {
+    public Message removeCreature(com.hoten.gridia.scripting.Entity cre) {
         return new JsonMessageBuilder()
                 .type("RemoveCreature")
                 .set("id", cre.id)
@@ -56,7 +57,7 @@ public class GridiaMessageToClientBuilder {
     }
 
     public Message sectorRequest(Sector sector) throws IOException {
-        List<Creature> creatures = new ArrayList();
+        List<com.hoten.gridia.scripting.Entity> creatures = new ArrayList();
         Tile[][] tiles = sector._tiles;
 
         BinaryMessageBuilder builder = new BinaryMessageBuilder()
@@ -79,18 +80,19 @@ public class GridiaMessageToClientBuilder {
         builder.writeInt(creatures.size());
         creatures.stream().forEach((cre) -> {
             builder.writeShort(cre.id)
-                    .writeUTF(cre.name)
+                    .writeUTF((String) cre.getAttribute("name"))
                     .writeShort(cre.location.x)
                     .writeShort(cre.location.y)
                     .writeShort(cre.location.z);
-            if (cre.image instanceof DefaultCreatureImage) {
-                DefaultCreatureImage defaultImage = (DefaultCreatureImage) cre.image;
+            CreatureImage image = (CreatureImage) cre.getAttribute("image");
+            if (image instanceof DefaultCreatureImage) {
+                DefaultCreatureImage defaultImage = (DefaultCreatureImage) image;
                 builder.writeShort(0)
                         .writeShort(defaultImage.spriteIndex)
                         .writeShort(defaultImage.width)
                         .writeShort(defaultImage.height);
-            } else if (cre.image instanceof CustomPlayerImage) {
-                CustomPlayerImage customImage = (CustomPlayerImage) cre.image;
+            } else if (image instanceof CustomPlayerImage) {
+                CustomPlayerImage customImage = (CustomPlayerImage) image;
                 builder.writeShort(1)
                         .writeShort(customImage.head)
                         .writeShort(customImage.chest)
@@ -185,11 +187,11 @@ public class GridiaMessageToClientBuilder {
                 .build();
     }
 
-    public Message updateCreatureImage(Creature creature) {
+    public Message updateCreatureImage(com.hoten.gridia.scripting.Entity creature) {
         return new JsonMessageBuilder()
                 .type("UpdateCreatureImage")
                 .set("id", creature.id)
-                .set("image", creature.image)
+                .set("image", creature.getAttribute("image"))
                 .build();
     }
 

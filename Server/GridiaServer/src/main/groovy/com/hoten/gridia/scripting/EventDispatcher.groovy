@@ -12,10 +12,10 @@ class EventDispatcher {
     }
     
     def dispatch(String type, Entity eventTarget, Map event) {
-        ['before', 'on', 'after'].each {
+        ['before', 'on', 'afterTMP2'].collect {
             def listeners = eventTarget.registeredEvents["$it$type".toUpperCase()]
             processEvent(listeners, event)
-        }
+        }.flatten()
     }
     
     private def processEvent(listeners, event) {

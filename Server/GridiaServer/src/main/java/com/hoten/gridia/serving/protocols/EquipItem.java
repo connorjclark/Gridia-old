@@ -1,6 +1,7 @@
 package com.hoten.gridia.serving.protocols;
 
 import com.google.gson.JsonObject;
+import com.hoten.gridia.Container;
 import com.hoten.gridia.Player;
 import com.hoten.gridia.content.ItemInstance;
 import com.hoten.gridia.serving.ConnectionToGridiaClientHandler;
@@ -16,15 +17,16 @@ public class EquipItem extends JsonMessageHandler<ConnectionToGridiaClientHandle
         Player player = connection.getPlayer();
         int slotIndex = data.get("slotIndex").getAsInt();
         
-        ItemInstance item = player.creature.inventory.get(slotIndex);
+        Container inv = (Container) player.creature.getAttribute("inventory");
+        ItemInstance item = inv.get(slotIndex);
         // :(
         if (item.getItem().isEquipable()) {
             int armorSlotIndex = item.getItem().armorSpot.ordinal();
             if (player.equipment.isEmpty(armorSlotIndex)) {
-                player.creature.inventory.deleteSlot(slotIndex);
+                inv.deleteSlot(slotIndex);
                 player.equipment.set(armorSlotIndex, item);
             } else {
-                player.creature.inventory.set(slotIndex, player.equipment.get(armorSlotIndex));
+                inv.set(slotIndex, player.equipment.get(armorSlotIndex));
                 player.equipment.set(armorSlotIndex, item);
             }
             player.updatePlayerImage(server);

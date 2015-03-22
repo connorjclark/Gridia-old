@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
-import com.hoten.gridia.Creature;
+import com.hoten.gridia.CreatureImage;
 import com.hoten.gridia.content.ItemInstance;
 import com.hoten.gridia.map.Tile;
 import com.hoten.gridia.serving.ServingGridia;
@@ -25,7 +25,7 @@ public class TileGsonAdapter extends GsonAdapter<Tile> {
         JsonObject obj = new JsonObject();
         obj.addProperty("floor", tile.floor);
         obj.add("item", jsc.serialize(tile.item));
-        if (tile.cre != null && !tile.cre.belongsToPlayer) {
+        if (tile.cre != null && !((boolean) tile.cre.getAttribute("belongsToPlayer"))) {
             obj.add("cre", jsc.serialize(tile.cre));
         }
         return obj;
@@ -38,10 +38,10 @@ public class TileGsonAdapter extends GsonAdapter<Tile> {
         tile.floor = jsonObject.get("floor").getAsInt();
         tile.item = context.deserialize(jsonObject.get("item"), ItemInstance.class);
         if (jsonObject.has("cre")) {
-            Creature cre = context.deserialize(jsonObject.get("cre"), Creature.class);
-            tile.cre = _servingGridia.createCreatureQuietly(cre.image, cre.name, cre.location, false, cre.isFriendly);
-            tile.cre.friendlyMessage = cre.friendlyMessage;
-            tile.cre.setAttribute("life", (Integer) cre.getAttribute("life"));
+            com.hoten.gridia.scripting.Entity cre = context.deserialize(jsonObject.get("cre"), com.hoten.gridia.scripting.Entity.class); // :(
+            tile.cre = _servingGridia.createCreatureQuietly((CreatureImage) cre.getAttribute("image"), (String) cre.getAttribute("name"), cre.location, false, (boolean) cre.getAttribute("isFriendly"));
+            tile.cre.setAttribute("friendlyMessage", cre.getAttribute("friendlyMessage"));
+            tile.cre.setAttribute("life", (int) (double) cre.getAttribute("life"));
         }
         return tile;
     }

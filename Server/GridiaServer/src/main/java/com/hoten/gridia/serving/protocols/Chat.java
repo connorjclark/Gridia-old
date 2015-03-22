@@ -1,7 +1,6 @@
 package com.hoten.gridia.serving.protocols;
 
 import com.google.gson.JsonObject;
-import com.hoten.gridia.Creature;
 import com.hoten.gridia.CustomPlayerImage;
 import com.hoten.gridia.DefaultCreatureImage;
 import com.hoten.gridia.Player;
@@ -41,9 +40,9 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                 int width = split.length == 4 && split[2].matches("\\d+") ? Integer.parseInt(split[2]) : 1;
                 int height = split.length == 4 && split[3].matches("\\d+") ? Integer.parseInt(split[3]) : 1;
                 if (image == 0) {
-                    player.creature.image = new CustomPlayerImage();
+                    player.creature.setAttribute("image", new CustomPlayerImage());
                 } else if (image > 0 && image <= 700 && width > 0 && width <= 3 && height > 0 && height <= 3) {
-                    player.creature.image = new DefaultCreatureImage(image, width, height);
+                    player.creature.setAttribute("image", new DefaultCreatureImage(image, width, height));
                 }
                 connection.getPlayer().updatePlayerImage(server);
             } catch (NumberFormatException e) {
@@ -56,8 +55,8 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                     Monster monster = server.contentManager.getMonster(id);
                     if (monster != null) {
                         String friendlyMessage = split[2];
-                        Creature creature = server.createCreature(monster, player.creature.location.add(0, 1, 0), true);
-                        creature.friendlyMessage = friendlyMessage;
+                        com.hoten.gridia.scripting.Entity creature = server.createCreature(monster, player.creature.location.add(0, 1, 0), true);
+                        creature.setAttribute("friendlyMessage", friendlyMessage);
                     }
                 }
             } catch (NumberFormatException e) {
@@ -77,9 +76,9 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                 connection.send(message);
             }
         } else if (msg.equals("!kill")) {
-            Creature cre = server.tileMap.getCreature(player.creature.location.add(0, 1, 0));
+            com.hoten.gridia.scripting.Entity cre = server.tileMap.getCreature(player.creature.location.add(0, 1, 0));
             if (cre != null) {
-                cre.callMethod("hurt", Arrays.asList(10000, "was punished by " + player.creature.name));
+                cre.callMethod("hurt", Arrays.asList(10000, "was punished by " + player.creature.getAttribute("name")));
             }
         } else if (msg.equals("!del") && player.accountDetails.isAdmin) {
             server.changeItem(player.creature.location.add(0, 1, 0), ItemInstance.NONE);
@@ -155,14 +154,14 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
             if (otherPlayer != null) {
                 otherPlayer.accountDetails.isAdmin = true;
                 server.savePlayer(otherPlayer);
-                server.sendToAll(server.messageBuilder.chat(otherPlayer.creature.name + " is now an admin.", otherPlayer.creature.location));
+                server.sendToAll(server.messageBuilder.chat(otherPlayer.creature.getAttribute("name") + " is now an admin.", otherPlayer.creature.location));
             } else {
                 connection.send(server.messageBuilder.chat("Invalid player.", player.creature.location));
             }
         } else if (msg.startsWith("!")) {
             connection.send(server.messageBuilder.chat("Invalid command.", player.creature.location));
         } else {
-            server.sendToAll(server.messageBuilder.chat(player.creature.name, msg, player.creature.location));
+            server.sendToAll(server.messageBuilder.chat((String) player.creature.getAttribute("name"), msg, player.creature.location));
         }
         if (msg.startsWith("!")) {
             connection.send(server.messageBuilder.chat("Command: " + msg, player.creature.location));
