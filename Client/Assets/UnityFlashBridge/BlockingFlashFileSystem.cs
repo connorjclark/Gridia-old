@@ -23,15 +23,17 @@ public class BlockingFlashFileSystem
     _flashFileSystem = flashGameObject.AddComponent<FlashFileSystem>();
   }
 
-  public void EnsureSharedObjectSettingsAreValid()
-  {
-    _flashFileSystem.RequestUserToAdjustSharedObjectSettings(() => {
-      _signal.Set();
-    });
-    _signal.WaitOne();
-  }
+    public void EnsureSharedObjectSettingsAreValid()
+    {
+        MainThreadQueue.Add(() =>
+            _flashFileSystem.RequestUserToAdjustSharedObjectSettings(() =>
+                _signal.Set()
+                )
+            );
+        _signal.WaitOne();
+    }
 
-  public void Init(string key)
+    public void Init(string key)
   {
     var status = FlashFileSystem.FAILURE;
     MainThreadQueue.Add(() => {
