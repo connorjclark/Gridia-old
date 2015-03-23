@@ -84,13 +84,10 @@ public class Player {
             creature.location = server.tileMap.getDefaultPlayerSpawn();
             creature.setAttribute("image", server.createDefaultCreatureImage());
             creature.setAttribute("belongsToPlayer", true);
-
-            int invSize = 40;
-            if (dir.listFiles() == null) {
-                player.setIsAdmin(true);
-            }
+            player.setIsAdmin(dir.listFiles() == null || dir.listFiles().length == 0);
 
             // fake an inventory
+            int invSize = 40;
             List<ItemInstance> inv = new ArrayList<>();
             inv.addAll(Arrays.asList(
                     57, 335, 277, 280, 1067, 900, 1068, 826,
@@ -208,7 +205,7 @@ public class Player {
      * @return the isAdmin
      */
     public boolean isAdmin() {
-        return creature.hasAttribute("isAdmin") && (boolean) creature.getAttribute("isAdmin");
+        return creature.getBoolean("isAdmin");
     }
 
     /**

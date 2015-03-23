@@ -35,6 +35,10 @@ public class Entity {
         getAttribute(name) ?: false
     }
     
+    def String getString(String name) {
+        getAttribute(name) ?: "nothing"
+    }
+    
     // :(
     def boolean hasAttribute(String name) {
         this.hasProperty(name)

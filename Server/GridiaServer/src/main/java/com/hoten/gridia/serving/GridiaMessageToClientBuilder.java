@@ -24,7 +24,7 @@ public class GridiaMessageToClientBuilder {
                 .type("AddCreature")
                 .set("id", cre.id)
                 .set("image", cre.getAttribute("image"))
-                .set("name", cre.getAttribute("name"))
+                .set("name", cre.getString("name"))
                 .set("loc", cre.location)
                 .build();
     }
@@ -79,7 +79,7 @@ public class GridiaMessageToClientBuilder {
         builder.writeInt(creatures.size());
         creatures.stream().forEach((cre) -> {
             builder.writeShort(cre.id)
-                    .writeUTF(cre.hasAttribute("name") ? (String) cre.getAttribute("name") : "")
+                    .writeUTF(cre.getString("name"))
                     .writeShort(cre.location.x)
                     .writeShort(cre.location.y)
                     .writeShort(cre.location.z);

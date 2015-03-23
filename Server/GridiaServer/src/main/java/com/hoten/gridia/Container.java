@@ -101,8 +101,11 @@ public class Container {
     }
 
     public boolean containsItemId(int id) {
-        return _items.stream()
-                .anyMatch(item -> item.getItem().id == id);
+        return _items.stream().anyMatch(item -> item.getItem().id == id);
+    }
+
+    public boolean containsItem(ItemInstance item) {
+        return _items.stream().anyMatch(it -> it.getItem().id == item.getItem().id && it.getQuantity() >= item.getQuantity());
     }
 
     public int size() {
