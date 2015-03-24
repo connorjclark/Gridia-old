@@ -44,17 +44,13 @@ namespace Gridia
 
         public void Start()
         {
+            _fileSystem = GridiaConstants.GetFileSystem();
             if (_startedAlready) return;
             _startedAlready = true;
 
-            Debug.Log("START SOUND PLAYER!!");
             MusicAudio.loop = false;
             MusicAudio.volume = 0.6f;
-            MuteMusic = Application.isEditor;
-            _fileSystem = GridiaConstants.GetFileSystem();
-            DontDestroyOnLoad(this);
-            DontDestroyOnLoad(SfxAudio);
-            DontDestroyOnLoad(MusicAudio);
+            //MuteSfx = MuteMusic = Application.isEditor;
         }
 
         public void Update() 
@@ -87,6 +83,7 @@ namespace Gridia
         public void QueueRandomSongs() 
         {
             LoadingQueue = true;
+            
             new Thread(() => {
                 _fileSystem.CreateDirectory("worlds"); //ensure it exists :(
                 var clientDataFolder = @"worlds\" + GridiaConstants.WorldName; // :(
@@ -94,11 +91,11 @@ namespace Gridia
                 // recursively? :(
                 var songs = _fileSystem.GetFiles(clientDataFolder)
                     .ToList()
-                    .Where(path => path.Contains(@"sound\music"))
+                    .Where(path => path.Contains(@"sound\music") || path.Contains(@"sound/music"))
                     .Where(path => path.EndsWith(".wav") || path.EndsWith(".WAV"))
                     .Select(fullSongPath => Path.GetFileNameWithoutExtension(fullSongPath))
                     .ToList();
-                Debug.Log(String.Join(", ", songs.ToArray()));
+                Debug.Log("songs: " + String.Join(", ", songs.ToArray()));
                 MusicQueue = Queue.Synchronized(new Queue(Shuffle(songs)));
                 LoadingQueue = false;
                 if (MusicQueue.Count == 0)
@@ -130,6 +127,9 @@ namespace Gridia
 
         public void PlaySfx(String name, float volume = 1.0f)
         {
+            #if UNITY_WEBPLAYER
+                if (Application.loadedLevelName == "Main") return;
+            #endif
             if (MuteSfx) return;
             new Thread(() =>
             {
@@ -164,6 +164,10 @@ namespace Gridia
                 var position = 0;
                 audioClip = AudioClip.Create(name, wavFile.AudioData.Length / wavFile.NumChannels, wavFile.NumChannels, wavFile.SampleRate, true, data =>
                 {
+                    // this or UnityEngine.Debug.Log is needed to prevent a crash.
+                    // Why? impossible to say ...
+                    UnityEngine.Debug.LogWarning(".");
+                    
                     var length = Math.Min(data.Length, wavFile.AudioData.Length);
                     Array.Copy(wavFile.AudioData, position, data, 0, length);
                     position += length;
