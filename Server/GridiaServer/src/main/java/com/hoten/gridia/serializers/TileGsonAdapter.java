@@ -5,7 +5,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
-import com.hoten.gridia.CreatureImage;
 import com.hoten.gridia.content.ItemInstance;
 import com.hoten.gridia.map.Tile;
 import com.hoten.gridia.serving.ServingGridia;
@@ -25,7 +24,7 @@ public class TileGsonAdapter extends GsonAdapter<Tile> {
         JsonObject obj = new JsonObject();
         obj.addProperty("floor", tile.floor);
         obj.add("item", jsc.serialize(tile.item));
-        if (tile.cre != null && !tile.cre.getBoolean("belongsToPlayer")) {
+        if (tile.cre != null && !tile.cre.getBoolean("belongsToPlayer") && !tile.cre.getBoolean("transient")) {
             obj.add("cre", jsc.serialize(tile.cre));
         }
         return obj;
