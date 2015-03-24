@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using UnityEngine;
 using Serving.FileTransferring;
@@ -41,6 +42,7 @@ namespace Gridia
             return GetTexture(textureIndex);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private void LoadTexture(int index)
         {
             _requestedTextureIndices.Add(index);
