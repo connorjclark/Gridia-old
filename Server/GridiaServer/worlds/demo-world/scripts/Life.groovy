@@ -12,6 +12,7 @@ entity.metaClass.hurt = { damage, deathReason ->
 
 if (!entity.isFriendly) {
     onMovedInto {
+        if (event.entity.isFriendly) return
         verbs = ["clobber", "bash", "destroy", "exterminate", "off"]
         entity.hurt(1, "was ${verbs[(verbs.size()*Math.random()) as int]}ed by $event.entity.name")
     }
