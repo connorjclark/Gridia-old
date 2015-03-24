@@ -14,6 +14,7 @@ namespace Gridia
         private GUISkin _gridiaGuiSkin;
         private bool connecting;
         private ConnectionToGridiaServerHandler _conn;
+        private Texture _bg;
 
         public void Start()
         {
@@ -24,6 +25,8 @@ namespace Gridia
             #endif
 
             Locator.Provide(this);
+
+            _bg = Resources.Load<Texture>("bg");
 
             _displayList = new RenderableContainer(Vector2.zero) {ScaleXY = GridiaConstants.GuiScale};
             _displayList.AddChild(CreateConnectButton(Vector2.zero, "www.hotengames.com", 1044));
@@ -118,6 +121,8 @@ namespace Gridia
 
         public void OnGUI()
         {
+            GUI.DrawTexture(new Rect(0f, 0f, Screen.width, Screen.height), _bg);
+
             if (connecting && GridiaConstants.ErrorMessage != null) 
             {
                 connecting = false;
