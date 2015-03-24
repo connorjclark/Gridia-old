@@ -128,7 +128,7 @@ namespace Gridia
         public void PlaySfx(String name, float volume = 1.0f)
         {
             #if UNITY_WEBPLAYER
-                if (Application.loadedLevelName == "Main") return;
+                if (Application.loadedLevelName != "Main") return;
             #endif
             if (MuteSfx) return;
             new Thread(() =>
