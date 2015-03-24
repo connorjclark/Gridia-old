@@ -52,9 +52,7 @@ public class Player {
                 throw new BadLoginException("Bad user/password");
             }
             creature.setAttribute("inventory", server.containerFactory.get(player.getInventoryId()));
-            if (!creature.hasAttribute("name")) {
-                creature.setAttribute("name", username);
-            }
+            
             server.registerCreature(creature);
             return player;
         }
@@ -85,7 +83,11 @@ public class Player {
             creature.setAttribute("image", server.createDefaultCreatureImage());
             creature.setAttribute("belongsToPlayer", true);
             player.setIsAdmin(dir.listFiles() == null || dir.listFiles().length == 0);
-
+            
+            if (!creature.hasAttribute("name")) {
+                creature.setAttribute("name", username);
+            }
+            
             // fake an inventory
             int invSize = 40;
             List<ItemInstance> inv = new ArrayList<>();
