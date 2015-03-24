@@ -110,8 +110,6 @@ public class GridiaServerDriver {
         server = new ServingGridia(world, mapName, port, clientDataDir, localDataDirName);
         server.startServer();
         
-        server.tileMap.loadAll();
-
         try {
             new ServingPolicyFile(port).start();
         } catch (IOException ex) {

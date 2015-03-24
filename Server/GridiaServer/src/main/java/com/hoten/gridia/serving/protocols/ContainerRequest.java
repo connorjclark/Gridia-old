@@ -29,7 +29,6 @@ public class ContainerRequest extends JsonMessageHandler<ConnectionToGridiaClien
             synchronized (item) {
                 JsonObject itemData = item.getData();
                 if (itemData.has("containerId") && server.containerFactory.exists(itemData.get("containerId").getAsInt())) {
-                    System.out.println(itemData.get("containerId").getAsInt());
                     container = server.containerFactory.get(itemData.get("containerId").getAsInt());
                 } else {
                     container = server.containerFactory.create(Container.ContainerType.Other, 20);
