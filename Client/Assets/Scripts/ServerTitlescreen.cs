@@ -11,7 +11,9 @@ namespace Gridia
 
         public void Start()
         {
-            MainThreadQueue.Instantiate();
+            #if UNITY_WEBPLAYER
+                GridiaConstants.InitializeSoundPlayer();
+            #endif
 
             _displayList = new RenderableContainer(Vector2.zero) {ScaleXY = GridiaConstants.GuiScale};
 

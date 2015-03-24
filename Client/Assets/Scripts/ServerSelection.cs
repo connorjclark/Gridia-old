@@ -19,6 +19,9 @@ namespace Gridia
         {
             MainThreadQueue.Instantiate();
             GridiaConstants.InitializeGuiStuff();
+            #if !UNITY_WEBPLAYER
+                GridiaConstants.InitializeSoundPlayer();
+            #endif
 
             Locator.Provide(this);
 

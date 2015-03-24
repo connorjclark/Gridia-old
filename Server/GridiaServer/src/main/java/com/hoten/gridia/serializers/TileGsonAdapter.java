@@ -25,7 +25,7 @@ public class TileGsonAdapter extends GsonAdapter<Tile> {
         JsonObject obj = new JsonObject();
         obj.addProperty("floor", tile.floor);
         obj.add("item", jsc.serialize(tile.item));
-        if (tile.cre != null && !((boolean) tile.cre.getAttribute("belongsToPlayer"))) {
+        if (tile.cre != null && !tile.cre.getBoolean("belongsToPlayer")) {
             obj.add("cre", jsc.serialize(tile.cre));
         }
         return obj;
@@ -39,9 +39,8 @@ public class TileGsonAdapter extends GsonAdapter<Tile> {
         tile.item = context.deserialize(jsonObject.get("item"), ItemInstance.class);
         if (jsonObject.has("cre")) {
             com.hoten.gridia.scripting.Entity cre = context.deserialize(jsonObject.get("cre"), com.hoten.gridia.scripting.Entity.class); // :(
-            tile.cre = _servingGridia.createCreatureQuietly((CreatureImage) cre.getAttribute("image"), (String) cre.getAttribute("name"), cre.location, false, (boolean) cre.getAttribute("isFriendly"));
-            tile.cre.setAttribute("friendlyMessage", cre.getAttribute("friendlyMessage"));
-            tile.cre.setAttribute("life", (int) cre.getAttribute("life"));
+            tile.cre = cre;
+            _servingGridia.attachScriptsToCreature(cre);
         }
         return tile;
     }

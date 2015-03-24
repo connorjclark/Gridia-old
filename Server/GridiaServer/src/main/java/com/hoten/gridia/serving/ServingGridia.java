@@ -303,11 +303,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         return cre;
     }
 
-    public void registerCreature(Entity creature) {
-        Sector sector = tileMap.getSectorOf(creature.location);
-        tileMap.getTile(creature.location).cre = creature;
-        sendToClientsWithSectorLoaded(messageBuilder.addCreature(creature), sector);
-        creatures.put(creature.id, creature);
+    public void attachScriptsToCreature(Entity creature) {
         try {
             if (!creature.getBoolean("belongsToPlayer")) {
                 addScript(new File(worldTopDirectory, "scripts/RandomWalk.groovy"), creature);
@@ -319,6 +315,14 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         } catch (IOException ex) {
             Logger.getLogger(ServingGridia.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void registerCreature(Entity creature) {
+        Sector sector = tileMap.getSectorOf(creature.location);
+        tileMap.getTile(creature.location).cre = creature;
+        sendToClientsWithSectorLoaded(messageBuilder.addCreature(creature), sector);
+        creatures.put(creature.id, creature);
+        attachScriptsToCreature(creature);
     }
 
     // :( creating creatures need refactoring, standardization

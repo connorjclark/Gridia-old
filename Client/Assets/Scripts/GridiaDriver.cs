@@ -20,7 +20,6 @@ public class GridiaDriver : MonoBehaviour
 
     void Start()
     {
-        MainThreadQueue.Instantiate();
         Locator.Provide(InputManager);
 
         Locator.Provide(this);

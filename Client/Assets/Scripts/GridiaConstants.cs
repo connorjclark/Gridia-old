@@ -28,7 +28,6 @@ namespace Gridia
 
         public static void InitializeGuiStuff()
         {
-            InitializeSoundPlayer();
             LoadGuiSkins();
             GuiScale = Screen.height / 125f / 4;
             FontSize = (int)(GuiScale * 10);
@@ -42,7 +41,7 @@ namespace Gridia
             skin.toggle.fontSize = FontSize;
         }
 
-        private static void InitializeSoundPlayer()
+        public static void InitializeSoundPlayer()
         {
             if (SoundPlayer != null)
             {
@@ -53,6 +52,9 @@ namespace Gridia
             SoundPlayer.MusicAudio = gameObject.AddComponent<AudioSource>();
             SoundPlayer.SfxAudio = gameObject.AddComponent<AudioSource>();
             UnityEngine.Object.DontDestroyOnLoad(gameObject);
+            UnityEngine.Object.DontDestroyOnLoad(SoundPlayer);
+            UnityEngine.Object.DontDestroyOnLoad(SoundPlayer.MusicAudio);
+            UnityEngine.Object.DontDestroyOnLoad(SoundPlayer.SfxAudio);
         }
 
         private static void LoadGuiSkins()
