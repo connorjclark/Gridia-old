@@ -64,7 +64,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>hoten.gridia.GridiaServerDriver</mainClass>
+                            <mainClass>com.hoten.gridia.GridiaServerDriver</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
