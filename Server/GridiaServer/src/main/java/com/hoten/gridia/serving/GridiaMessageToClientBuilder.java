@@ -200,4 +200,11 @@ public class GridiaMessageToClientBuilder {
                 .set("obj", obj)
                 .build();
     }
+
+    public Message alert(String message) {
+        return new JsonMessageBuilder()
+                .type("Alert")
+                .set("message", message)
+                .build();
+    }
 }

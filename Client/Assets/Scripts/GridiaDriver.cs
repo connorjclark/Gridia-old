@@ -46,6 +46,10 @@ public class GridiaDriver : MonoBehaviour
         Locator.Provide(ItemUsePickWindow);
         ItemUsePickWindow.ScaleXY = GridiaConstants.GuiScale;
 
+        var helpMenu = new HelpMenu(new Vector2(0, 0));
+        Locator.Provide(helpMenu);
+        helpMenu.ScaleXY = GridiaConstants.GuiScale;
+
         Locator.Provide(ContentManager = new ContentManager(GridiaConstants.WorldName));
         Locator.Provide(TextureManager = new TextureManager(GridiaConstants.WorldName));
     }
@@ -68,11 +72,12 @@ public class GridiaDriver : MonoBehaviour
         TabbedGui.Add(1221, InvGui, true); // :(
         TabbedGui.Add(15, EquipmentGui, false); // :(
         TabbedGui.Add(147, ChatGui, true); // :(
+        TabbedGui.Add(0, Locator.Get<HelpMenu>(), true); // :(
 
         var options = new OptionsWindow(Vector2.zero) {ScaleXY = GridiaConstants.GuiScale};
         options.X = (Screen.width - options.Width) / 2;
         options.Y = (Screen.height - options.Height) / 2;
-        TabbedGui.Add(0, options, false);
+        TabbedGui.Add(132, options, false);
     }
 
     public Vector2 GetRelativeScreenPosition(Vector3 playerPosition, Vector3 subjectCoord)
@@ -126,6 +131,7 @@ public class GridiaDriver : MonoBehaviour
                 {
                     var labelRelative = pos - Game.View.FocusPosition; // :(
                     var nameLabel = new Label(new Vector2((labelRelative.x + 0.5f) * tileSize, Screen.height - (labelRelative.y + 1.5f) * tileSize), cre.Name, true, true); // :(
+                    nameLabel.TextWidth = (int) GUI.skin.label.CalcSize(new GUIContent(nameLabel.Text)).x;
                     nameLabel.Render();
                 }
             }

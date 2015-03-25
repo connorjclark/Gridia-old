@@ -34,10 +34,10 @@ public class GridiaScript {
         new Coord(x, y, z)
     }
     
-    def area(l, w, h) {
+    def area(l, w, h, d = 0) {
         def mx = (int)(l.x + w/2)
         def my = (int)(l.y + h/2)
-        [loc: l, width: w, height: h, middle: loc(mx, my, l.z)]
+        [loc: l, width: w, height: h, depth: d, middle: loc(mx, my, l.z)]
     }
     
     def item(Map params) {
@@ -59,21 +59,48 @@ public class GridiaScript {
         server.changeFloor(params.at, params.id)
     }
     
+    def fillFloor(Map params) {
+        params.with {
+            if (area) {
+                width = area.width
+                height = area.height
+                depth = area.depth
+                at = area.loc
+            }
+        }
+        params.depth = params.depth ?: 1
+        
+        for (x in 0..<params.width) {
+            for (y in 0..<params.height) {
+                for (z in 0..<params.depth) {
+                    def loc = params.at.add(x, y, z)
+                    if (floor(loc) != params.id) {
+                        server.changeFloor(loc, params.id)
+                    } 
+                }
+            }
+        }
+    }
+    
     def findCreatures(Map params) {
         params.with {
             if (area) {
                 width = area.width
                 height = area.height
+                depth = area.depth
                 at = area.loc
             }
         }
+        params.depth = params.depth ?: 1
         
         def creatures = []
         for (x in 0..<params.width) {
             for (y in 0..<params.height) {
-                def loc = params.at.add(x, y, 0)
-                def cre = server.tileMap.getCreature(loc)
-                if (cre != null) creatures += cre
+                for (z in 0..<params.depth) {
+                    def loc = params.at.add(x, y, z)
+                    def cre = server.tileMap.getCreature(loc)
+                    if (cre != null) creatures += cre
+                }
             }
         }
         creatures
@@ -215,6 +242,12 @@ public class GridiaScript {
         params.at = params.at ?: entity.location
         
         server.playAnimation(params.type, params.at)
+    }
+    
+    def alert(Map params) {
+        params.to = params.to ?: entity
+        
+        server.alert(params.to, params.message)
     }
     
     def every(duration, closure) {

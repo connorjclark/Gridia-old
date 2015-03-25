@@ -58,7 +58,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     public final GridiaMessageToClientBuilder messageBuilder = new GridiaMessageToClientBuilder();
     public final TileMap tileMap;
     public final ContentManager contentManager;
-    public final UsageProcessor usageProcessor;
+    public final com.hoten.gridia.scripting.ScriptableUsageProcessing usageProcessor;
     public final Map<Integer, com.hoten.gridia.scripting.Entity> creatures = new ConcurrentHashMap();
     private final Random random = new Random();
     public final PlayerFactory playerFactory;
@@ -303,9 +303,10 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         return cre;
     }
 
+    // :(
     public void attachScriptsToCreature(Entity creature) {
         try {
-            if (!creature.getBoolean("belongsToPlayer")) {
+            if (!creature.getBoolean("belongsToPlayer") && creature.getAttribute("name") != "Bill" && creature.getAttribute("name") != "Kitty") {
                 addScript(new File(worldTopDirectory, "scripts/RandomWalk.groovy"), creature);
             }
             if (creature.getBoolean("isFriendly")) {
@@ -353,6 +354,16 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         sendToFirst(messageBuilder.chat(from, message, loc), client -> {
             return client.player != null && client.player.creature == to;
         });
+    }
+    
+    public void alert(com.hoten.gridia.scripting.Entity to, String message) {
+        sendToFirst(messageBuilder.alert(message), client -> {
+            return client.player != null && client.player.creature == to;
+        });
+    }
+    
+    public void alertToAll(String message) {
+        sendToAll(messageBuilder.alert(message));
     }
 
     public void announceNewPlayer(ConnectionToGridiaClientHandler client, Player player) {
@@ -493,7 +504,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
             int destIndex // :(
     ) throws IOException {
         try {
-            usageProcessor.processUsage(use, toolWrapper, focusWrapper);
+            usageProcessor.processUsage(use, toolWrapper, focusWrapper, connection.player.creature);
             if (use.animation != null) {
                 Coord loc = tileMap.getCoordFromIndex(destIndex);
                 sendToClientsWithAreaLoaded(messageBuilder.animation(use.animation, loc), destIndex);

@@ -28,13 +28,16 @@ class ScriptableUsageProcessing extends UsageProcessor {
         }
     }
     
-    def void implementResult(UsageResult result, ItemUse usage, ItemWrapper tool, ItemWrapper focus) {
-        super.implementResult(result, usage, tool, focus)
+    def void processUsage(ItemUse usage, ItemWrapper tool, ItemWrapper focus, Entity entity) throws ItemUseException {
+        UsageResult result = getUsageResult(usage, tool.getItemInstance(), focus.getItemInstance()) // :(
+        validate(result, usage, tool, focus) // :(
+        implementResult(result, usage, tool, focus) // :(
         eventDispatcher.dispatch("CompleteItemUse", ServingGridia.instance.worldEntity, [
                 result:result,
                 usage:usage,
                 tool:tool,
-                focus:focus
+                focus:focus,
+                entity:entity
             ])
     }
 }
