@@ -9,6 +9,7 @@ Priority features
   NPC merchants
     Player owned
   Land ownership
+  Transition to IntelliJ
 
 Issues
 
@@ -31,6 +32,10 @@ Issues
   Graphical layering of items is messed up
   Filling in cave w/ shovel should destroy corresponding exit / entrance
   Item usages on creatures (Shearing sheep)
+  Item drop issues - race conditions?
+    Drop as backpack/corpse instead of all items
+    Lost & found
+    Main thread queue?
 
 Controls
 
@@ -109,6 +114,7 @@ Meta
 
 Nice-to-have
 
+  'Chrome dark noise' on mining walls
   Different realms - 1:100 movement, one-way telporting to "oblivion"-like plane, fixed teleports back
   	temorary return gate, closes in 10 min, or cost mana?
   	permament gates take a lot of mana/ resources. time investment
