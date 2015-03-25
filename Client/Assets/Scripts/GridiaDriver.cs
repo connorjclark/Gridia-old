@@ -20,6 +20,8 @@ public class GridiaDriver : MonoBehaviour
 
     void Start()
     {
+        GridiaConstants.SoundPlayer.MuteSfx = GridiaConstants.SoundPlayer.MuteMusic = Application.isEditor;
+
         Locator.Provide(InputManager);
 
         Locator.Provide(this);

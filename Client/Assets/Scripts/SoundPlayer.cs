@@ -50,7 +50,7 @@ namespace Gridia
 
             MusicAudio.loop = false;
             MusicAudio.volume = 0.6f;
-            //MuteSfx = MuteMusic = Application.isEditor;
+            MuteSfx = MuteMusic = true;
         }
 
         public void Update() 
