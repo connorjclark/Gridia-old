@@ -4,12 +4,16 @@ import com.hoten.gridia.Container.ContainerType;
 import com.hoten.gridia.content.ItemInstance;
 import com.hoten.gridia.serializers.GridiaGson;
 import com.hoten.gridia.serving.ServingGridia;
+import com.hoten.gridia.uniqueidentifiers.FileResourceUniqueIdentifiers;
+import com.hoten.gridia.uniqueidentifiers.UniqueIdentifiers;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.apache.commons.io.FileUtils;
@@ -32,18 +36,20 @@ public class Player {
             }
         }
 
-        private final File dir;
+        public final Map<String, Integer> _usernameToId = new HashMap<>();
+        private final File _dir;
+        private final UniqueIdentifiers _uniqueIds;
 
         public PlayerFactory(File world) {
-            dir = new File(world, "Players/");
+            _dir = new File(world, "players/");
+            _uniqueIds = new FileResourceUniqueIdentifiers(_dir, 100);
         }
 
         public Player load(ServingGridia server, String username, String passwordHash) throws BadLoginException, IOException {
-            File dataFile = new File(dir, username + ".json");
-            if (!dataFile.exists()) {
+            if (!_usernameToId.containsKey(username)) {
                 throw new BadLoginException("Bad user/password");
             }
-            String json = FileUtils.readFileToString(dataFile);
+            String json = FileUtils.readFileToString(new File(_dir, _usernameToId.get(username) + ".json"));
             com.hoten.gridia.scripting.Entity creature = GridiaGson.get().fromJson(json, com.hoten.gridia.scripting.Entity.class);
 
             Container equipment = server.containerFactory.get((int) creature.getAttribute("equipmentId")); // :(
@@ -52,7 +58,7 @@ public class Player {
                 throw new BadLoginException("Bad user/password");
             }
             creature.setAttribute("inventory", server.containerFactory.get(player.getInventoryId()));
-            
+
             server.registerCreature(creature);
             return player;
         }
@@ -62,7 +68,7 @@ public class Player {
                 throw new BadRegistrationException("Username must be at least 3 characters");
             }
 
-            if (new File(dir, username + ".json").exists()) {
+            if (_usernameToId.containsKey(username)) {
                 throw new BadRegistrationException("Username already exists");
             }
 
@@ -77,17 +83,18 @@ public class Player {
 
             com.hoten.gridia.scripting.Entity creature = new com.hoten.gridia.scripting.Entity();
             Player player = new Player(creature, equipment);
+            player.setPlayerId(_uniqueIds.next());
             player.setUsername(username);
             player.setPasswordHash(passwordHash);
             creature.location = server.tileMap.getDefaultPlayerSpawn();
             creature.setAttribute("image", server.createDefaultCreatureImage());
             creature.setAttribute("belongsToPlayer", true);
-            player.setIsAdmin(dir.listFiles() == null || dir.listFiles().length == 0);
-            
+            player.setIsAdmin(_dir.listFiles() == null || _dir.listFiles().length == 0);
+
             if (!creature.hasAttribute("name")) {
                 creature.setAttribute("name", username);
             }
-            
+
             // fake an inventory
             int invSize = 40;
             List<ItemInstance> inv = new ArrayList<>();
@@ -123,7 +130,7 @@ public class Player {
 
         public void save(Player player) throws IOException {
             String json = GridiaGson.get().toJson(player.creature);
-            FileUtils.writeStringToFile(new File(dir, player.getUsername() + ".json"), json);
+            FileUtils.writeStringToFile(new File(_dir, player.getPlayerId() + ".json"), json);
         }
     }
 
@@ -145,6 +152,14 @@ public class Player {
             ((CustomPlayerImage) image).moldToEquipment(equipment);
         }
         server.updateCreatureImage(creature);
+    }
+
+    public int getPlayerId() {
+        return (int) creature.getAttribute("playerId");
+    }
+
+    public void setPlayerId(int id) {
+        creature.setAttribute("playerId", id);
     }
 
     /**
