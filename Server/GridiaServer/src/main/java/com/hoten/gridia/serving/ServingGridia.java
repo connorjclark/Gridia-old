@@ -65,7 +65,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     public final ContainerFactory containerFactory;
     public final String worldName;
     public final String mapName;
-    public final String version = "alpha-1.4-dev";
+    public final String version = "alpha-1.4";
     public final File worldTopDirectory;
     public final com.hoten.gridia.scripting.Entity worldEntity = new com.hoten.gridia.scripting.Entity();
 
