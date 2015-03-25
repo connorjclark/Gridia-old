@@ -183,7 +183,11 @@ namespace Gridia
                         connecting = false;
                         Debug.Log(ex);
                         GridiaConstants.ErrorMessage = "Connection to server has been lost.";
-                        GridiaConstants.ErrorMessageAction = () => { SceneManager.LoadScene("ServerSelection"); };
+                        GridiaConstants.ErrorMessageAction = () =>
+                        {
+                            GridiaConstants.SoundPlayer.MuteSfx = GridiaConstants.SoundPlayer.MuteMusic = true;
+                            SceneManager.LoadScene("ServerSelection");
+                        };
                     }
                 }).Start();
             }

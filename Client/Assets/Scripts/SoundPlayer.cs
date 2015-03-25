@@ -166,7 +166,7 @@ namespace Gridia
                 {
                     // this or UnityEngine.Debug.Log is needed to prevent a crash.
                     // Why? impossible to say ...
-                    UnityEngine.Debug.LogWarning(".");
+                    //UnityEngine.Debug.LogWarning(".");
                     
                     var length = Math.Min(data.Length, wavFile.AudioData.Length);
                     Array.Copy(wavFile.AudioData, position, data, 0, length);
