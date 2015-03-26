@@ -22,7 +22,7 @@ public class JsonContentLoader implements ContentLoader {
     @Override
     public ContentManager load() throws IOException {
         List<Item> items = loadItems();
-        List<ItemUse> usages = loadItemUses(items);
+        List<ItemUse> usages = loadItemUses();
         List<Monster> monsters = loadMonsters(items);
         return new ContentManager(items, usages, monsters);
     }
@@ -36,7 +36,7 @@ public class JsonContentLoader implements ContentLoader {
                 .fromJson(_itemsJson, type);
     }
 
-    private List<ItemUse> loadItemUses(List<Item> items) throws IOException {
+    private List<ItemUse> loadItemUses() throws IOException {
         Type type = new TypeToken<List<ItemUse>>() {
         }.getType();
         return new Gson().fromJson(_usagesJson, type);

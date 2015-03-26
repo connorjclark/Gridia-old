@@ -33,7 +33,7 @@ public class TileMap {
 
     public final int size, depth, sectorSize, area, volume, sectorsAcross, sectorsFloor, sectorsTotal;
     public final File map;
-    private Coord _defaultPlayerSpawn = new Coord(498, 543, 0);
+    private Coord _defaultPlayerSpawn = new Coord(498, 543, 0); // :(
     private final Sector[][][] _sectors;
     private final SectorLoader _sectorLoader;
     private final SectorSaver _sectorSaver;
@@ -116,7 +116,7 @@ public class TileMap {
         Sector sector = _sectors[sx][sy][sz];
         if (sector == null) {
             try {
-                _sectors[sx][sy][sz] = sector = _sectorLoader.load(map, sectorSize, sx, sy, sz);
+                return _sectors[sx][sy][sz] = _sectorLoader.load(map, sectorSize, sx, sy, sz);
             } catch (IOException ex) {
                 Logger.getLogger(TileMap.class.getName()).log(Level.SEVERE, null, ex);
             }
