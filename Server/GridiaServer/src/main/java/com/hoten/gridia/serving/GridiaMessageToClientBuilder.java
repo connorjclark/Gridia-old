@@ -87,9 +87,9 @@ public class GridiaMessageToClientBuilder {
             if (image instanceof DefaultCreatureImage) {
                 DefaultCreatureImage defaultImage = (DefaultCreatureImage) image;
                 builder.writeShort(0)
-                        .writeShort(defaultImage.spriteIndex)
-                        .writeShort(defaultImage.width)
-                        .writeShort(defaultImage.height);
+                        .writeShort(defaultImage.getSpriteIndex())
+                        .writeShort(defaultImage.getWidth())
+                        .writeShort(defaultImage.getHeight());
             } else if (image instanceof CustomPlayerImage) {
                 CustomPlayerImage customImage = (CustomPlayerImage) image;
                 builder.writeShort(1)
