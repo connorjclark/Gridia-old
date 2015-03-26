@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.stream.Stream;
 import org.apache.commons.io.FileUtils;
 
 public class Container {
@@ -19,28 +19,28 @@ public class Container {
     public static class ContainerFactory {
 
         private final UniqueIdentifiers _uniqueIds;
-        private final File dir;
+        private final File _dir;
         private final Map<Integer, Container> _containers = new HashMap<>();
 
         public ContainerFactory(File world) {
-            dir = new File(world, "containers/");
-            _uniqueIds = new FileResourceUniqueIdentifiers(dir, 100);
+            _dir = new File(world, "containers/");
+            _uniqueIds = new FileResourceUniqueIdentifiers(_dir, 100);
         }
 
         public Container get(int id) throws IOException {
-            if (_containers.containsKey(id)) {
-                return _containers.get(id);
-            } else {
-                return load(id);
-            }
+            return _containers.containsKey(id) ? _containers.get(id) : load(id);
+        }
+
+        private File getFile(int id) {
+            return new File(_dir, id + ".json");
         }
 
         public boolean exists(int id) {
-            return new File(dir, id + ".json").exists();
+            return getFile(id).exists();
         }
 
         private Container load(int id) throws IOException {
-            String json = FileUtils.readFileToString(new File(dir, id + ".json"));
+            String json = FileUtils.readFileToString(getFile(id));
             Container container = GridiaGson.get().fromJson(json, Container.class);
             _containers.put(id, container);
             return container;
@@ -53,29 +53,26 @@ public class Container {
             return container;
         }
 
-        public Container create(ContainerType type, int size) throws IOException {
-            List<ItemInstance> items = IntStream.range(0, size)
-                    .boxed()
-                    .map(i -> ItemInstance.NONE)
+        private List<ItemInstance> emptyItems(int amount) {
+            return Stream.generate(() -> ItemInstance.NONE)
+                    .limit(amount)
                     .collect(Collectors.toList());
-            return create(type, items);
+        }
+
+        public Container create(ContainerType type, int size) throws IOException {
+            return create(type, emptyItems(size));
         }
 
         public Container createOnlyInMemory(ContainerType type, List<ItemInstance> items) {
-            Container container = new Container(_uniqueIds.next(), type, items);
-            return container;
+            return new Container(_uniqueIds.next(), type, items);
         }
 
         public Container createOnlyInMemory(ContainerType type, int size) {
-            List<ItemInstance> items = IntStream.range(0, size)
-                    .boxed()
-                    .map(i -> ItemInstance.NONE)
-                    .collect(Collectors.toList());
-            return createOnlyInMemory(type, items);
+            return createOnlyInMemory(type, emptyItems(size));
         }
 
         public void save(Container container) throws IOException {
-            FileUtils.writeStringToFile(new File(dir, container.id + ".json"), GridiaGson.get().toJson(container));
+            FileUtils.writeStringToFile(getFile(container.id), GridiaGson.get().toJson(container));
         }
 
         public void saveAll() throws IOException {
@@ -172,8 +169,9 @@ public class Container {
 
     public boolean canFitItem(ItemInstance itemToTest) {
         return _items.stream().
-                anyMatch(item -> {
-                    return item == ItemInstance.NONE || ItemInstance.stackable(item, itemToTest);
-                });
+                anyMatch(item
+                        -> item == ItemInstance.NONE
+                        || ItemInstance.stackable(item, itemToTest)
+                );
     }
 }
