@@ -15,6 +15,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.apache.commons.io.FileUtils;
 
@@ -43,6 +45,15 @@ public class Player {
         public PlayerFactory(File world) {
             _dir = new File(world, "players/");
             _uniqueIds = new FileResourceUniqueIdentifiers(_dir, 100);
+            FileUtils.listFiles(_dir, new String[]{"json"}, true).forEach(file -> {
+                try {
+                    String json = FileUtils.readFileToString(file);
+                    com.hoten.gridia.scripting.Entity creature = GridiaGson.get().fromJson(json, com.hoten.gridia.scripting.Entity.class);
+                    _usernameToId.put((String) creature.getAttribute("username"), (int) creature.getAttribute("playerId"));
+                } catch (IOException ex) {
+                    Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
         }
 
         public Player load(ServingGridia server, String username, String passwordHash) throws BadLoginException, IOException {
@@ -122,6 +133,7 @@ public class Player {
                 ((CustomPlayerImage) (image)).moldToEquipment(equipment);
             }
 
+            _usernameToId.put(username, player.getPlayerId());
             save(player);
             server.registerCreature(creature);
 
