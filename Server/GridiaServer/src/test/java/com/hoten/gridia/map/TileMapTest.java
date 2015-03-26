@@ -15,11 +15,11 @@ public class TileMapTest {
         int size = 100;
         int depth = 1;
         int sectorSize = 20;
-        SectorLoader sectorLoader = (File map1, int sectorSize1, int x, int y, int z) -> {
+        SectorLoader sectorLoader = (int sectorSize1, int x, int y, int z) -> {
             return null;
         };
-        SectorSaver sectorSaver = new SectorSaver();
-        _tileMap = new TileMap(map, size, depth, sectorSize, sectorLoader, sectorSaver);
+        SectorSaver sectorSaver = new SectorSaver(map);
+        _tileMap = new TileMap(size, depth, sectorSize, sectorLoader, sectorSaver);
     }
 
     @Test

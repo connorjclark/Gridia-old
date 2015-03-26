@@ -50,7 +50,7 @@ public class MapGenerator {
         VoronoiGraph graph = TestDriver.createVoronoiGraph(size, _numPoints, _numLloydRelaxations, _seed);
         BufferedImage mapImage = graph.createMap();
 
-        TileMap world = new TileMap(map, size, depth, sectorSize, createFakeLoader(), new SectorSaver());
+        TileMap world = new TileMap(size, depth, sectorSize, createFakeLoader(), new SectorSaver(map));
 
         HashMap<Integer, ColorData> colorBiomeMap = new HashMap<>();
 
@@ -139,14 +139,14 @@ public class MapGenerator {
                 tile.item = random.nextDouble() < itemProbability ? itemSupplier.get() : ItemInstance.NONE;
             }
         }
-        
+
         new File(map, "scripts/auto").mkdirs();
 
         return world;
     }
 
     private SectorLoader createFakeLoader() {
-        return (File map, int sectorSize, int sx, int sy, int sz) -> {
+        return (int sectorSize, int sx, int sy, int sz) -> {
             Tile[][] tiles = new Tile[sectorSize][sectorSize];
             for (int x = 0; x < sectorSize; x++) {
                 tiles[x] = new Tile[sectorSize];
