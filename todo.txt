@@ -1,13 +1,13 @@
 Priority features
 
   Context menu, using items with mouse
-  Scripting
-    Combat
-    Tutorial island (~10-15 minutes)
-      Deep water
+  Combat
+  Tutorial island (~10-15 minutes)
+    Deep water
   Objectives / Achievements
   NPC merchants
     Player owned
+  Item ownership
   Land ownership
   Transition to IntelliJ
 
@@ -127,6 +127,17 @@ Nice-to-have
   "ground status" - water, ploughed, etc... Allows for flooding areas, and other stuff
     bit-array on sector
     ploughed should be a ground status
+
+
+Scripting todo:
+
+  Refactor GridiaScript - DRY
+
+  Attaching scripts - unattaching
+
+  Creating creatures is wonky
+
+  transient entity properties
 
 ========================
 Script chat commands
