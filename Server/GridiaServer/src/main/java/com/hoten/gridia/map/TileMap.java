@@ -2,6 +2,7 @@ package com.hoten.gridia.map;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.hoten.gridia.Player;
 import com.hoten.gridia.content.ItemInstance;
 import java.io.File;
 import java.io.IOException;
@@ -212,5 +213,14 @@ public class TileMap {
 
     public boolean inBounds(int x, int y, int z) {
         return x >= 0 && x < size && y >= 0 && y < size && z >= 0 && z < depth;
+    }
+
+    public boolean hasRightsTo(Player player, Coord coord) {
+        Tile tile = getTile(coord);
+        if (tile.getOwner() == player.getPlayerId() || tile.isUnclaimed()) {
+            return true;
+        }
+        Sector sector = getSectorOf(coord);
+        return sector.getOwner() == player.getPlayerId() || sector.isUnclaimed();
     }
 }

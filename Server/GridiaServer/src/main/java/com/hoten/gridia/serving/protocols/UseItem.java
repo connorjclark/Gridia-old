@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.hoten.gridia.ItemWrapper;
 import com.hoten.gridia.Player;
 import com.hoten.gridia.content.Item;
-import com.hoten.gridia.content.ItemInstance;
 import com.hoten.gridia.content.ItemUse;
 import com.hoten.gridia.serving.ConnectionToGridiaClientHandler;
 import com.hoten.gridia.serving.ServingGridia;
@@ -26,10 +25,15 @@ public class UseItem extends JsonMessageHandler<ConnectionToGridiaClientHandler>
         ItemWrapper tool = server.getItemFrom(player, source, sourceIndex);
         ItemWrapper focus = server.getItemFrom(player, dest, destIndex);
 
+        if (!focus.hasRights(server, player)) {
+            server.announce("WORLD", "You don't have the rights to work on that item.", player.creature.location, player.creature);
+            return;
+        }
+
         List<ItemUse> uses = server.contentManager.getItemUses(tool.getItemInstance().getItem(), focus.getItemInstance().getItem());
 
         if (uses.isEmpty()) {
-            if (tool.getItemInstance() == ItemInstance.NONE && focus.getItemInstance().getItem().itemClass == Item.ItemClass.Container) {
+            if (tool.getItemInstance().isNothing() && focus.getItemInstance().getItem().itemClass == Item.ItemClass.Container) {
                 new ContainerRequest().requestContainer(server, connection, focus.getItemInstance());
             } else {
                 server.dispatchEvent("FailedItemUse", null, "tool", tool, "focus", focus);

@@ -10,14 +10,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.bidimap.TreeBidiMap;
 import org.apache.commons.io.FileUtils;
 
 public class Player {
@@ -38,7 +38,7 @@ public class Player {
             }
         }
 
-        public final Map<String, Integer> _usernameToId = new HashMap<>();
+        public final BidiMap<String, Integer> _usernameToId = new TreeBidiMap<>();
         private final File _dir;
         private final UniqueIdentifiers _uniqueIds;
 
@@ -157,7 +157,7 @@ public class Player {
         this.creature = creature;
         this.equipment = equipment;
     }
-
+    
     public void updatePlayerImage(ServingGridia server) {
         CreatureImage image = (CreatureImage) creature.getAttribute("image");
         if (image instanceof CustomPlayerImage) {

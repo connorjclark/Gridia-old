@@ -14,6 +14,15 @@ public interface ItemWrapper {
 
     void changeWrappedItem(ItemInstance newItem);
 
+    default boolean hasRights(ServingGridia server, Player player) {
+        if (this instanceof ItemWrapper.WorldItemWrapper) {
+            ItemWrapper.WorldItemWrapper worldWrapper = (ItemWrapper.WorldItemWrapper) this;
+            Coord location = worldWrapper.getLocation();
+            return server.tileMap.hasRightsTo(player, location);
+        }
+        return true;
+    }
+
     public static class WorldItemWrapper implements ItemWrapper {
 
         private final ServingGridia _server; // :(
@@ -76,6 +85,10 @@ public interface ItemWrapper {
 
         public boolean moveItemBelow() {
             return _server.moveItemOutOfTheWay(_location.add(0, 0, 1));
+        }
+
+        public Coord getLocation() {
+            return _location;
         }
     }
 

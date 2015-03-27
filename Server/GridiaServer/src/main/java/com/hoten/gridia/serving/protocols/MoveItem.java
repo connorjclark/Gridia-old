@@ -26,7 +26,7 @@ public class MoveItem extends JsonMessageHandler<ConnectionToGridiaClientHandler
 
         ItemWrapper sourceItemWrapped = server.getItemFrom(player, source, sourceIndex);
         ItemInstance sourceItem = sourceItemWrapped.getItemInstance();
-        if (sourceItem == ItemInstance.NONE || (!player.isAdmin() && !sourceItem.getItem().moveable)) {
+        if (sourceItem.isNothing() || (!player.isAdmin() && !sourceItem.getItem().moveable)) {
             return;
         }
 
@@ -36,6 +36,16 @@ public class MoveItem extends JsonMessageHandler<ConnectionToGridiaClientHandler
         ItemInstance itemToMove = new ItemInstance(sourceItem.getItem(), quantityToMove, sourceItem.getData());
         itemToMove.age = sourceItem.age;
         ItemWrapper destItemWrapped = server.getItemFrom(player, dest, destIndex);
+
+        // check for rights to item
+        if (!sourceItemWrapped.hasRights(server, player)) {
+            server.announce("WORLD", "You don't have the rights to move that item.", player.creature.location, player.creature);
+            return;
+        }
+        if (!destItemWrapped.hasRights(server, player)) {
+            server.announce("WORLD", "You don't have the rights to move onto that item.", player.creature.location, player.creature);
+            return;
+        }
 
         boolean moveSuccessful = destItemWrapped.addItemHere(itemToMove);
         if (!moveSuccessful) {

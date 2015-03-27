@@ -8,6 +8,8 @@ import com.hoten.gridia.content.Item;
 import com.hoten.gridia.content.ItemInstance;
 import com.hoten.gridia.content.Monster;
 import com.hoten.gridia.map.Coord;
+import com.hoten.gridia.map.Sector;
+import com.hoten.gridia.map.Tile;
 import com.hoten.gridia.serving.ConnectionToGridiaClientHandler;
 import com.hoten.gridia.serving.ServingGridia;
 import com.hoten.servingjava.message.JsonMessageHandler;
@@ -157,6 +159,33 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                 server.sendToAll(server.messageBuilder.chat(otherPlayer.creature.getAttribute("name") + " is now an admin.", otherPlayer.creature.location));
             } else {
                 connection.send(server.messageBuilder.chat("Invalid player.", player.creature.location));
+            }
+        } else if (msg.startsWith("!claim")) {
+            Sector sector = server.tileMap.getSectorOf(player.creature.location);
+            if (sector.isUnclaimed()) {
+                sector.setOwner(player.getPlayerId());
+                connection.send(server.messageBuilder.chat("You have claimed this plot of land.", player.creature.location));
+            } else {
+                connection.send(server.messageBuilder.chat("This plot of land is already claimed.", player.creature.location));
+            }
+        } else if (msg.startsWith("!serverclaim") && player.isAdmin()) {
+            Sector sector = server.tileMap.getSectorOf(player.creature.location);
+            sector.setOwner(Tile.OWNER_SERVER);
+            connection.send(server.messageBuilder.chat("This plot of land has been claimed by the server.", player.creature.location));
+        } else if (msg.startsWith("!unclaim")) {
+            Sector sector = server.tileMap.getSectorOf(player.creature.location);
+            if (sector.getOwner() == player.getPlayerId()) {
+                sector.setOwner(Tile.OWNER_UNCLAIMED);
+                connection.send(server.messageBuilder.chat("You have unclaimed this plot of land.", player.creature.location));
+            } else {
+                connection.send(server.messageBuilder.chat("You do not own this land.", player.creature.location));
+            }
+        } else if (msg.startsWith("!owner")) {
+            Sector sector = server.tileMap.getSectorOf(player.creature.location);
+            if (sector.isUnclaimed()) {
+                connection.send(server.messageBuilder.chat("This plot of land is unclaimed.", player.creature.location));
+            } else {
+                connection.send(server.messageBuilder.chat("This plot of land is owned by: " + server.getOwnerName(sector.getOwner()), player.creature.location));
             }
         } else if (msg.startsWith("!")) {
             connection.send(server.messageBuilder.chat("Invalid command.", player.creature.location));

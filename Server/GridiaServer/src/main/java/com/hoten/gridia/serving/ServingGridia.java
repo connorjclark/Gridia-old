@@ -22,7 +22,6 @@ import com.hoten.gridia.Player.PlayerFactory;
 import com.hoten.gridia.content.ItemUse;
 import com.hoten.gridia.content.ItemUseException;
 import com.hoten.gridia.content.Monster;
-import com.hoten.gridia.content.UsageProcessor;
 import com.hoten.gridia.content.WorldContentLoader;
 import com.hoten.gridia.map.Sector;
 import com.hoten.gridia.map.Tile;
@@ -355,13 +354,13 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
             return client.player != null && client.player.creature == to;
         });
     }
-    
+
     public void alert(com.hoten.gridia.scripting.Entity to, String message) {
         sendToFirst(messageBuilder.alert(message), client -> {
             return client.player != null && client.player.creature == to;
         });
     }
-    
+
     public void alertToAll(String message) {
         sendToAll(messageBuilder.alert(message));
     }
@@ -549,5 +548,15 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         playAnimation("WarpOut", creature.location);
         moveCreatureTo(creature, coord, true);
         playAnimation("WarpIn", coord);
+    }
+
+    public String getOwnerName(int owner) {
+        if (owner == Tile.OWNER_SERVER) {
+            return "SERVER";
+        }
+        if (owner == Tile.OWNER_UNCLAIMED) {
+            return "UNCLAIMED";
+        }
+        return playerFactory._usernameToId.getKey(owner);
     }
 }
