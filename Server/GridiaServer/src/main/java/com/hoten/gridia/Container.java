@@ -118,7 +118,7 @@ public class Container {
     }
 
     public boolean isEmpty(int index) {
-        return _items.get(index) == ItemInstance.NONE;
+        return _items.get(index).isNothing();
     }
 
     public void set(int index, ItemInstance item) {

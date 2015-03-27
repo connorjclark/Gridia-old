@@ -3,7 +3,6 @@ package com.hoten.gridia.serving.protocols;
 import com.google.gson.JsonObject;
 import com.hoten.gridia.ItemWrapper;
 import com.hoten.gridia.Player;
-import com.hoten.gridia.content.ItemInstance;
 import com.hoten.gridia.content.ItemUse;
 import com.hoten.gridia.serving.ConnectionToGridiaClientHandler;
 import com.hoten.gridia.serving.ServingGridia;
