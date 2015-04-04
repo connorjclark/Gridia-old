@@ -1,6 +1,8 @@
 package com.hoten.gridia.scripting
 
 import com.hoten.gridia.serving.ServingGridia
+import com.hoten.gridia.DefaultCreatureImage
+import com.hoten.gridia.CustomPlayerImage
 import com.hoten.gridia.content.Item
 import com.hoten.gridia.map.Coord
 import com.hoten.gridia.content.Monster
@@ -248,6 +250,14 @@ public class GridiaScript {
         params.to = params.to ?: entity
         
         server.alert(params.to, params.message)
+    }
+    
+    def defaultCreatureImage(imageIndex, width, height) {
+        new DefaultCreatureImage(imageIndex, width, height)
+    }
+    
+    def customPlayerImage() {
+        new CustomPlayerImage()
     }
     
     def every(duration, closure) {

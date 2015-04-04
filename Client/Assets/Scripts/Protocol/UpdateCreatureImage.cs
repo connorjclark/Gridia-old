@@ -11,6 +11,8 @@ namespace Gridia.Protocol
             var game = connection.GetGame();
             var id = (int)data["id"];
 
+            UnityEngine.Debug.Log(data);
+
             var backToJson = JsonConvert.SerializeObject(data["image"]); // :(
             var image = JsonConvert.DeserializeObject<CreatureImage>(backToJson, new CreatureImageConverter());
             game.TileMap.GetCreature(id).Image = image;

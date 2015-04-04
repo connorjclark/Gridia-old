@@ -26,18 +26,20 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
     protected void handle(ConnectionToGridiaClientHandler connection, JsonObject data) throws IOException {
         ServingGridia server = connection.getServer();
         Player player = connection.getPlayer();
-        String msg = data.get("msg").getAsString();
+        String message = data.get("msg").getAsString();
 
-        if (msg.startsWith("!script ")) {
-            String script = msg.split(" ", 2)[1];
+        server.dispatchEvent("Chat", null, "message", message, "player", player);
+
+        /*if (message.startsWith("!script ")) {
+            String script = message.split(" ", 2)[1];
             try {
                 server.addScript(script, "CustomScript" + script.hashCode());
             } catch (CompilationFailedException ex) {
                 connection.send(server.messageBuilder.chat("That didn't parse!\n" + ex, player.creature.location));
             }
-        } else if (msg.startsWith("!image ")) {
+        } else if (message.startsWith("!image ")) {
             try {
-                String[] split = msg.split(" ");
+                String[] split = message.split(" ");
                 int image = split.length > 1 ? Integer.parseInt(split[1]) : 0;
                 int width = split.length == 4 && split[2].matches("\\d+") ? Integer.parseInt(split[2]) : 1;
                 int height = split.length == 4 && split[3].matches("\\d+") ? Integer.parseInt(split[3]) : 1;
@@ -49,9 +51,9 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                 connection.getPlayer().updatePlayerImage(server);
             } catch (NumberFormatException e) {
             }
-        } else if (msg.startsWith("!friendly ") && player.isAdmin()) {
+        } else if (message.startsWith("!friendly ") && player.isAdmin()) {
             try {
-                String[] split = msg.split(" ", 3);
+                String[] split = message.split(" ", 3);
                 if (split.length == 3) {
                     int id = Integer.parseInt(split[1]);
                     Monster monster = server.contentManager.getMonster(id);
@@ -63,9 +65,9 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                 }
             } catch (NumberFormatException e) {
             }
-        } else if (msg.startsWith("!monster ") && player.isAdmin()) {
+        } else if (message.startsWith("!monster ") && player.isAdmin()) {
             try {
-                String[] split = msg.split(" ", 3);
+                String[] split = message.split(" ", 3);
                 if (split.length == 2) {
                     int id = Integer.parseInt(split[1]);
                     Monster monster = server.contentManager.getMonster(id);
@@ -77,29 +79,29 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                 Message message = server.messageBuilder.chat(e.getMessage(), player.creature.location);
                 connection.send(message);
             }
-        } else if (msg.equals("!kill")) {
+        } else if (message.equals("!kill")) {
             com.hoten.gridia.scripting.Entity cre = server.tileMap.getCreature(player.creature.location.add(0, 1, 0));
             if (cre != null) {
                 cre.callMethod("hurt", Arrays.asList(10000, "was punished by " + player.creature.getAttribute("name")));
             }
-        } else if (msg.equals("!del") && player.isAdmin()) {
+        } else if (message.equals("!del") && player.isAdmin()) {
             server.changeItem(player.creature.location.add(0, 1, 0), ItemInstance.NONE);
-        } else if (msg.equals("!clr") && player.isAdmin()) {
+        } else if (message.equals("!clr") && player.isAdmin()) {
             for (int i = 0; i < 20; i++) {
                 for (int j = 0; j < 20; j++) {
                     server.changeItem(player.creature.location.add(i, j, 0), ItemInstance.NONE);
                 }
             }
-        } else if (msg.equals("!loc")) {
+        } else if (message.equals("!loc")) {
             Message message = server.messageBuilder.chat("You are at: " + player.creature.location.toString(), player.creature.location);
             connection.send(message);
-        } else if (msg.equals("!online")) {
+        } else if (message.equals("!online")) {
             Message message = server.messageBuilder.chat(server.whoIsOnline(), player.creature.location);
             connection.send(message);
-        } else if (msg.equals("!die")) {
+        } else if (message.equals("!die")) {
             player.creature.callMethod("hurt", Arrays.asList(10000, "gave up"));
-        } else if (msg.startsWith("!warp ")) {
-            String[] split = msg.split("\\s+");
+        } else if (message.startsWith("!warp ")) {
+            String[] split = message.split("\\s+");
             if (split.length == 4) {
                 try {
                     int x = Integer.parseInt(split[1]);
@@ -111,8 +113,8 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                 } catch (NumberFormatException e) {
                 }
             }
-        } else if (msg.startsWith("!tp ")) {
-            String playerName = msg.split("\\s+", 2)[1];
+        } else if (message.startsWith("!tp ")) {
+            String playerName = message.split("\\s+", 2)[1];
             Player otherPlayer = server.getPlayerWithName(playerName);
             if (otherPlayer != null) {
                 server.playAnimation("WarpOut", player.creature.location);
@@ -121,10 +123,10 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
             } else {
                 connection.send(server.messageBuilder.chat("Invalid player.", player.creature.location));
             }
-        } else if (msg.equals("!save") && player.isAdmin()) {
+        } else if (message.equals("!save") && player.isAdmin()) {
             server.save();
-        } else if (msg.startsWith("!item ") && player.isAdmin()) {
-            String[] split = msg.replaceFirst("!item ", "").split(",", 2);
+        } else if (message.startsWith("!item ") && player.isAdmin()) {
+            String[] split = message.replaceFirst("!item ", "").split(",", 2);
             String itemInput = split[0];
             String quantityInput = split.length == 2 ? split[1].trim() : "1";
 
@@ -150,8 +152,8 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
             } else {
                 server.addItemNear(server.contentManager.createItemInstance(item.id, quantity), player.creature.location.add(0, 1, 0), 3, true);
             }
-        } else if (msg.startsWith("!admin ") && player.isAdmin()) {
-            String playerName = msg.split("\\s+", 2)[1];
+        } else if (message.startsWith("!admin ") && player.isAdmin()) {
+            String playerName = message.split("\\s+", 2)[1];
             Player otherPlayer = server.getPlayerWithName(playerName);
             if (otherPlayer != null) {
                 otherPlayer.setIsAdmin(true);
@@ -160,7 +162,7 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
             } else {
                 connection.send(server.messageBuilder.chat("Invalid player.", player.creature.location));
             }
-        } else if (msg.startsWith("!claim")) {
+        } else if (message.startsWith("!claim")) {
             Sector sector = server.tileMap.getSectorOf(player.creature.location);
             if (sector.isUnclaimed()) {
                 sector.setOwner(player.getPlayerId());
@@ -168,11 +170,11 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
             } else {
                 connection.send(server.messageBuilder.chat("This plot of land is already claimed.", player.creature.location));
             }
-        } else if (msg.startsWith("!serverclaim") && player.isAdmin()) {
+        } else if (message.startsWith("!serverclaim") && player.isAdmin()) {
             Sector sector = server.tileMap.getSectorOf(player.creature.location);
             sector.setOwner(Tile.OWNER_SERVER);
             connection.send(server.messageBuilder.chat("This plot of land has been claimed by the server.", player.creature.location));
-        } else if (msg.startsWith("!unclaim")) {
+        } else if (message.startsWith("!unclaim")) {
             Sector sector = server.tileMap.getSectorOf(player.creature.location);
             if (sector.getOwner() == player.getPlayerId()) {
                 sector.setOwner(Tile.OWNER_UNCLAIMED);
@@ -180,20 +182,20 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
             } else {
                 connection.send(server.messageBuilder.chat("You do not own this land.", player.creature.location));
             }
-        } else if (msg.startsWith("!owner")) {
+        } else if (message.startsWith("!owner")) {
             Sector sector = server.tileMap.getSectorOf(player.creature.location);
             if (sector.isUnclaimed()) {
                 connection.send(server.messageBuilder.chat("This plot of land is unclaimed.", player.creature.location));
             } else {
                 connection.send(server.messageBuilder.chat("This plot of land is owned by: " + server.getOwnerName(sector.getOwner()), player.creature.location));
             }
-        } else if (msg.startsWith("!")) {
+        } else if (message.startsWith("!")) {
             connection.send(server.messageBuilder.chat("Invalid command.", player.creature.location));
         } else {
-            server.sendToAll(server.messageBuilder.chat((String) player.creature.getAttribute("name"), msg, player.creature.location));
+            server.sendToAll(server.messageBuilder.chat((String) player.creature.getAttribute("name"), message, player.creature.location));
         }
-        if (msg.startsWith("!")) {
-            connection.send(server.messageBuilder.chat("Command: " + msg, player.creature.location));
-        }
+        if (message.startsWith("!")) {
+            connection.send(server.messageBuilder.chat("Command: " + message, player.creature.location));
+        }*/
     }
 }
