@@ -14,9 +14,10 @@ namespace Gridia.Protocol
             var z = (int) data["loc"]["z"];
             var time = (long) data["time"] - Creature.RENDER_DELAY;
             var isTeleport = (bool) data["isTeleport"];
-            var onRaft = (bool) data["onRaft"];
+            var onRaft = (bool)data["onRaft"];
+            var tellMover = (bool)data["tellMover"];
 
-            if ((id != game.View.FocusId || Locator.Get<GridiaDriver>().SelectedCreature != null) || isTeleport)
+            if (tellMover || (id != game.View.FocusId || Locator.Get<GridiaDriver>().SelectedCreature != null) || isTeleport)
             {
                 game.TileMap.MoveCreature(id, x, y, z, onRaft, time);
                 if (isTeleport)

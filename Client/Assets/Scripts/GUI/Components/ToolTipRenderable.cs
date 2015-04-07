@@ -21,11 +21,10 @@ namespace Gridia
             base.Render();
             if (ToolTipMessage == null) return;
             var toolTip = ToolTipMessage;
+            _rect.height = Skin.label.CalcHeight(new GUIContent(toolTip), Width);
             GUI.Window(100, Rect, windowId =>
             {
-                var width = Width * 0.9f;
-                var height = Height * 0.8f;
-                GUI.Box(new Rect((Width - width) / 2, (Height - height) / 2, width, height), toolTip);
+                GUI.Label(new Rect(0, 0, _rect.width, _rect.height), toolTip);
                 GUI.BringWindowToFront(windowId);
             }, "");
             ToolTipMessage = null;

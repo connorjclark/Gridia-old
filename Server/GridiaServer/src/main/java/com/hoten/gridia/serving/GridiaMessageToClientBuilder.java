@@ -38,7 +38,7 @@ public class GridiaMessageToClientBuilder {
                 .build();
     }
 
-    public Message moveCreature(Entity cre, int timeoffset, boolean isTeleport, boolean onRaft) {
+    public Message moveCreature(Entity cre, int timeoffset, boolean isTeleport, boolean onRaft, boolean tellMover) {
         return new JsonMessageBuilder()
                 .type("MoveCreature")
                 .set("time", System.currentTimeMillis() + timeoffset)
@@ -46,6 +46,7 @@ public class GridiaMessageToClientBuilder {
                 .set("loc", cre.location)
                 .set("isTeleport", isTeleport)
                 .set("onRaft", onRaft)
+                .set("tellMover", tellMover)
                 .build();
     }
 

@@ -44,11 +44,11 @@ onDeath {
 }
 
 onAction {
-    if (!entity?.target?.alive) return
     if (event.actionId == 1) {
+        if (!entity?.target?.alive) return
         hitAction(entity.target)
     } else if (event.actionId == 2) {
-        rollAction(event.location)
+        dashAction(event.location)
     }
 }
 
@@ -70,8 +70,10 @@ def hitAction(target) {
     }
 }
 
-def rollAction(destination) {
-    speed = 5 // tiles per second
+def dashAction(destination) {
+    speed = 12 // tiles per second
     delta = (entity.location - destination).dist()
-    server.moveCreature(entity, destination, speed/delta, false)
+    time = 1000*delta/speed
+    server.moveCreatureTo(entity, destination, time as int, false, false, true)
+    playAnimation(type: "Roll", at: entity.location)
 }

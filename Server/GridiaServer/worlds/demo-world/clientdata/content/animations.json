@@ -1019,5 +1019,15 @@
         "sprite":0
       }
     ]
-  }
+  },
+  {
+    "id":46,
+    "name":"Roll",
+    "frames":[
+      {
+        "sound":"roll",
+        "sprite":0
+      }
+    ]
+  },
 ]

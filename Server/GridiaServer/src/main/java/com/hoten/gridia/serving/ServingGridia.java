@@ -64,7 +64,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     public final ContainerFactory containerFactory;
     public final String worldName;
     public final String mapName;
-    public final String version = "alpha-1.5-dev";
+    public final String version = "alpha-1.5";
     public final File worldTopDirectory;
     public final Entity worldEntity = new Entity();
 
@@ -227,6 +227,10 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     }
 
     public void moveCreatureTo(Entity cre, Coord loc, int timeInMillisecondsToMove, boolean isTeleport, boolean onRaft) {
+        moveCreatureTo(cre, loc, timeInMillisecondsToMove, isTeleport, onRaft, false);
+    }
+
+    public void moveCreatureTo(Entity cre, Coord loc, int timeInMillisecondsToMove, boolean isTeleport, boolean onRaft, boolean tellMover) {
         if (loc.equals(cre.location)) {
             return;
         }
@@ -240,13 +244,13 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         }
         cre.setAttribute("justTeleported", false);
         Sector sectorBefore = tileMap.getSectorOf(cre.location);
-        sendToClientsWithSectorLoaded(messageBuilder.moveCreature(cre, 0, false, onRaft), sectorBefore);
+        sendToClientsWithSectorLoaded(messageBuilder.moveCreature(cre, 0, false, onRaft, tellMover), sectorBefore);
         tileMap.wrap(loc);
         Sector sector = tileMap.getSectorOf(loc);
         tileMap.getTile(cre.location).cre = null;
         tileMap.getTile(loc).cre = cre;
         cre.location = loc;
-        sendTo(messageBuilder.moveCreature(cre, timeInMillisecondsToMove, isTeleport, onRaft), client -> client.hasSectorLoaded(sector) || client.player.creature == cre);
+        sendTo(messageBuilder.moveCreature(cre, timeInMillisecondsToMove, isTeleport, onRaft, tellMover), client -> client.hasSectorLoaded(sector) || client.player.creature == cre);
         sendTo(messageBuilder.removeCreature(cre), client -> client.player.creature != cre && !client.hasSectorLoaded(sector) && client.hasSectorLoaded(sectorBefore));
     }
 

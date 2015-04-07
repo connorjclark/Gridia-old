@@ -18,6 +18,10 @@ public class Coord {
         return new Coord(x + other.x, y + other.y, z + other.z);
     }
 
+    public Coord minus(Coord other) {
+        return new Coord(x - other.x, y - other.y, z - other.z);
+    }
+
     public double dist() {
         return Math.sqrt(x * x + y * y);
     }

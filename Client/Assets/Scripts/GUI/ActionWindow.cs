@@ -17,7 +17,7 @@ namespace Gridia
         public void TempAddActions()
         {
             TempAddAction(1, 1000, "Attack with your equipped weapon.", "Attack", false);
-            TempAddAction(2, 3000, "Roll quickly to a nearby tile.", "Blade", true);
+            TempAddAction(2, 3000, "Dash quickly to a nearby tile. Use WASD/Arrows and press Space to select a destination.", "Blade", true);
         }
 
         public void AddAction(int id, int cooldownTime, String description, Renderable gfx, Boolean requireDestination)
@@ -34,7 +34,8 @@ namespace Gridia
                 {
                     if (requireDestination)
                     {
-                        // go into a destination picker state ...
+                        var pickState = new ActionLocationPickState(id);
+                        Locator.Get<StateMachine>().SetState(pickState);
                     }
                     else
                     {
