@@ -17,6 +17,6 @@ public class PerformAction extends JsonMessageHandler<ConnectionToGridiaClientHa
         Coord loc = GridiaGson.get().fromJson(data.get("loc"), Coord.class);
         int actionId = data.get("id").getAsInt();
 
-        server.dispatchEvent("Action", player.creature, "actionId", actionId, "loc", loc);
+        server.dispatchEvent("Action", player.creature, "actionId", actionId, "location", loc);
     }
 }

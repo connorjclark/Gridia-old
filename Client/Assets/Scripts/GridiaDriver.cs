@@ -17,6 +17,7 @@ public class GridiaDriver : MonoBehaviour
     public InputManager InputManager = new InputManager();
     public List<FloatingText> FloatingTexts = new List<FloatingText>();
     public ContainerWindow SelectedContainer { get; set; }
+    public ActionWindow ActionWindow { get; set; }
     public Creature SelectedCreature { get; set; }
 
     void Start()
@@ -55,6 +56,10 @@ public class GridiaDriver : MonoBehaviour
 
         Locator.Provide(ContentManager = new ContentManager(GridiaConstants.WorldName));
         Locator.Provide(TextureManager = new TextureManager(GridiaConstants.WorldName));
+
+        ActionWindow = new ActionWindow(new Vector2(Int32.MaxValue, Int32.MaxValue));
+        Locator.Provide(ActionWindow);
+        helpMenu.ScaleXY = GridiaConstants.GuiScale;
     }
 
     // :(
@@ -74,8 +79,10 @@ public class GridiaDriver : MonoBehaviour
     {
         TabbedGui.Add(1221, InvGui, true); // :(
         TabbedGui.Add(15, EquipmentGui, false); // :(
-        TabbedGui.Add(147, ChatGui, true); // :(
+        TabbedGui.Add(147, ChatGui, false); // :(
         TabbedGui.Add(0, Locator.Get<HelpMenu>(), true); // :(
+        ActionWindow.TempAddActions();
+        TabbedGui.Add(32, ActionWindow, true);
 
         var options = new OptionsWindow(Vector2.zero) {ScaleXY = GridiaConstants.GuiScale};
         options.X = (Screen.width - options.Width) / 2;

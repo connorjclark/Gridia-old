@@ -3,6 +3,7 @@ entity.life = 3
 entity.metaClass.isAlive = { delegate.life > 0 }
 
 entity.metaClass.hurt = { damage, deathReason ->
+    if (delegate.friendly) return
     delegate.life -= damage
     playAnimation(type: "Attack")
     if (!delegate?.alive) {
@@ -17,7 +18,7 @@ def generateDeathReason(attacker) {
 }
 
 def getHurtBy(attacker) {
-    if (attacker.isFriendly) return
+    if (attacker.isFriendly || entity.isFriendly) return
     entity.hurt(1, generateDeathReason(attacker))
 }
 
@@ -46,6 +47,8 @@ onAction {
     if (!entity?.target?.alive) return
     if (event.actionId == 1) {
         hitAction(entity.target)
+    } else if (event.actionId == 2) {
+        rollAction(event.location)
     }
 }
 
@@ -65,4 +68,10 @@ def hitAction(target) {
     } else {
         getNear(target)
     }
+}
+
+def rollAction(destination) {
+    speed = 5 // tiles per second
+    delta = (entity.location - destination).dist()
+    server.moveCreature(entity, destination, speed/delta, false)
 }

@@ -59,7 +59,7 @@ namespace Gridia
 
         public GridiaAnimation GetAnimation(string name)
         {
-            return _animations.Find(anim => anim.Name == name);
+            return _animations.Find(anim => String.Equals(anim.Name, name, StringComparison.CurrentCultureIgnoreCase));
         }
 
         public List<ItemUse> GetUses(ItemInstance tool) 

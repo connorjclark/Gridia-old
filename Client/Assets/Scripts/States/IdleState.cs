@@ -94,16 +94,11 @@ namespace Gridia
             }
             else if (Input.GetKeyUp(KeyCode.Space))
             {
-                if (_driver.SelectedCreature != null)
-                {
-                    // send action
-                    Locator.Get<ConnectionToGridiaServerHandler>().PerformAction(1);
-                }
-                else
+                if (_driver.SelectedCreature == null)
                 {
                     _game.UseItemAtSelection(_driver.InvGui.SlotSelected);
+                    return;
                 }
-                return;
             }
             else if (Input.GetKeyUp(KeyCode.LeftAlt))
             {

@@ -94,6 +94,7 @@ namespace Gridia
         public Action OnMouseOver { private get; set; }
         public Action OnMouseLeave { private get; set; }
         public Action OnKeyUp { private get; set; }
+        public Action OnEnterFrame { private get; set; }
         public Func<String> ToolTip { private get; set; }
 
         public Renderable(Vector2 pos)
@@ -111,6 +112,7 @@ namespace Gridia
 
         public virtual void Render()
         {
+            if (OnEnterFrame != null) OnEnterFrame();
             ApplySkinAndColor();
         }
 

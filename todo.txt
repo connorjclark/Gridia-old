@@ -6,7 +6,7 @@ Priority features
 
   Combat
     Action based
-    Lock-in to enemy
+    Switch target focus with keyboard
     Actions have cooldown
     example actions:
       Hit with equipped weapon
