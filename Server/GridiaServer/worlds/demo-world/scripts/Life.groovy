@@ -10,11 +10,20 @@ entity.metaClass.hurt = { damage, deathReason ->
     }
 }
 
+def generateDeathReason(attacker) {
+    attackVerbs = ["clobber", "bash", "destroy", "exterminate", "off"]
+    verb = attackVerbs[(attackVerbs.size()*Math.random()) as int]
+    "was ${verb}ed by $attacker.name"
+}
+
+def getHurtBy(attacker) {
+    if (attacker.isFriendly) return
+    entity.hurt(1, generateDeathReason(attacker))
+}
+
 if (!entity.isFriendly) {
     onMovedInto {
-        if (event.entity.isFriendly) return
-        verbs = ["clobber", "bash", "destroy", "exterminate", "off"]
-        entity.hurt(1, "was ${verbs[(verbs.size()*Math.random()) as int]}ed by $event.entity.name")
+        getHurtBy(event.entity)
     }
 }
 
@@ -30,5 +39,30 @@ onDeath {
             server.dropContainerNear(entity.inventory, entity.location) // :(
         }
         remove(entity)
+    }
+}
+
+onAction {
+    if (!entity?.target?.alive) return
+    if (event.actionId == 1) {
+        hitAction(entity.target)
+    }
+}
+
+def isNear(target) {
+    Math.abs(entity.location.x - target.location.x) <= 1 && Math.abs(entity.location.y - target.location.y) <= 1
+}
+
+def getNear(target) {
+    dx = Math.signum(target.location.x - entity.location.x) as int
+    dy = Math.signum(target.location.y - entity.location.y) as int
+    entity.location = entity.location.add(dx, dy, 0)
+}
+
+def hitAction(target) {
+    if (isNear(target)) {
+        target.hurt(1, generateDeathReason(entity))
+    } else {
+        getNear(target)
     }
 }

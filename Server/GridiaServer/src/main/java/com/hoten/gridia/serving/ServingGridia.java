@@ -292,6 +292,10 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         return cre;
     }
 
+    public Entity getCreature(int id) {
+        return creatures.get(id);
+    }
+
     // :(
     public void attachScriptsToCreature(Entity creature) {
         try {

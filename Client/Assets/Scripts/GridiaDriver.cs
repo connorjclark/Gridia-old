@@ -17,6 +17,7 @@ public class GridiaDriver : MonoBehaviour
     public InputManager InputManager = new InputManager();
     public List<FloatingText> FloatingTexts = new List<FloatingText>();
     public ContainerWindow SelectedContainer { get; set; }
+    public Creature SelectedCreature { get; set; }
 
     void Start()
     {
@@ -99,10 +100,12 @@ public class GridiaDriver : MonoBehaviour
         {
             return;
         }
+        var mouseTileCoord = GetTileFloatLocationOfMouse();
+
         InputManager.Step();
         TabbedGui.Render();
         TabbedGui.HandleEvents();
-        if (MouseDownItem != null)
+        if (MouseDownItem != null && MouseDownItem.Item.Id != 0)
         {
             var rect = new Rect((int)Input.mousePosition.x - 16, Screen.height - (int)Input.mousePosition.y - 16, 32, 32);
             var draggedItem = new ItemRenderable(new Vector2(rect.x, rect.y), MouseDownItem) {ToolTip = null};
@@ -121,22 +124,39 @@ public class GridiaDriver : MonoBehaviour
         foreach (var cre in Game.TileMap.Creatures.ValuesToList()) 
         {
             var pos = cre.Position;
-            if (playerZ == pos.z)
-            {
-                // :(
-                var dx = Game.TileMap.WrappedDistBetweenX(pos, focusPos);
-                var dy = Game.TileMap.WrappedDistBetweenY(pos, focusPos);
+            if (playerZ != pos.z) continue;
+            // :(
+            var dx = Game.TileMap.WrappedDistBetweenX(pos, focusPos);
+            var dy = Game.TileMap.WrappedDistBetweenY(pos, focusPos);
+            
+            var rect = new Rect(dx * tileSize, Screen.height - dy * tileSize - tileSize, tileSize, tileSize);
+            TextureManager.DrawCreature(rect, cre, Game.View.Scale);
 
-                var rect = new Rect(dx * tileSize, Screen.height - dy * tileSize - tileSize, tileSize, tileSize);
-                TextureManager.DrawCreature(rect, cre, Game.View.Scale);
-                if (cre.Name.Length > 0)
+            var mouseDx = mouseTileCoord.x - pos.x;
+            var mouseDy = mouseTileCoord.y - pos.y;
+            if (mouseDx >= 0 && mouseDy >= 0 && mouseDx < 1 && mouseDy < 1 && cre != Game.View.Focus && SelectedCreature != cre)
+            {
+                if (Event.current.type == EventType.MouseUp)
                 {
-                    var labelRelative = pos - Game.View.FocusPosition; // :(
-                    var nameLabel = new Label(new Vector2((labelRelative.x + 0.5f) * tileSize, Screen.height - (labelRelative.y + 1.5f) * tileSize), cre.Name, true, true); // :(
-                    nameLabel.TextWidth = (int) GUI.skin.label.CalcSize(new GUIContent(nameLabel.Text)).x;
-                    nameLabel.Render();
+                    SelectedCreature = cre;
+                    Locator.Get<ConnectionToGridiaServerHandler>().SelectTarget(SelectedCreature);
+                }
+                else
+                {
+                    GridiaConstants.GUIDrawSelector(rect, new Color32(255, 255, 0, 100));
                 }
             }
+
+            if (SelectedCreature == cre)
+            {
+                GridiaConstants.GUIDrawSelector(rect, new Color32(255, 0, 0, 100));
+            }
+
+            if (cre.Name.Length <= 0) continue;
+            var labelRelative = pos - Game.View.FocusPosition; // :(
+            var nameLabel = new Label(new Vector2((labelRelative.x + 0.5f) * tileSize, Screen.height - (labelRelative.y + 1.5f) * tileSize), cre.Name, true, true); // :(
+            nameLabel.TextWidth = (int) GUI.skin.label.CalcSize(new GUIContent(nameLabel.Text)).x;
+            nameLabel.Render();
         }
 
         if (!Game.HideSelector)
@@ -276,6 +296,22 @@ public class GridiaDriver : MonoBehaviour
 
         x = Game.TileMap.Wrap(x + (int)Game.View.FocusPosition.x);
         y = Game.TileMap.Wrap(y + (int)Game.View.FocusPosition.y);
+
+        return new Vector3(x, y, z);
+    }
+
+    public Vector3 GetTileFloatLocationOfMouse()
+    {
+        var x = Input.mousePosition.x / (GridiaConstants.SpriteSize * Game.View.Scale);
+        var y = Input.mousePosition.y / (GridiaConstants.SpriteSize * Game.View.Scale);
+        var intX = (int) x;
+        var floatX = x - intX;
+        var intY = (int) y;
+        var floatY = y - intY;
+        var z = (int) Game.View.Focus.Position.z;
+
+        x = Game.TileMap.Wrap(intX + (int)Game.View.FocusPosition.x) + floatX;
+        y = Game.TileMap.Wrap(intY + (int)Game.View.FocusPosition.y) + floatY;
 
         return new Vector3(x, y, z);
     }

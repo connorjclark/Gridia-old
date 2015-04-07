@@ -222,6 +222,24 @@ public class ConnectionToGridiaServerHandler : SocketHandler
         _socketHandler.Send(message);
     }
 
+    public void SelectTarget(Creature creature)
+    {
+        var message = new JsonMessageBuilder()
+            .Type("SelectTarget")
+            .Set("id", creature.Id)
+            .Build();
+        _socketHandler.Send(message);
+    }
+
+    public void PerformAction(int actionId)
+    {
+        var message = new JsonMessageBuilder()
+            .Type("PerformAction")
+            .Set("id", actionId)
+            .Build();
+        _socketHandler.Send(message);
+    }
+
     public GridiaGame GetGame()
     {
         return _game;

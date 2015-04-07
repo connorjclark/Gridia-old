@@ -1,5 +1,9 @@
 Priority features
 
+  GridiaJsonMessageHandler
+  transient entity properties
+  player label is transparent
+
   Combat
     Action based
     Lock-in to enemy

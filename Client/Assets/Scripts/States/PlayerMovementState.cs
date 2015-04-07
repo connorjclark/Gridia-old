@@ -25,6 +25,7 @@ namespace Gridia
             if (Player == null) return;
             if (_cooldownUntil == 0)
             {
+                Locator.Get<GridiaDriver>().SelectedCreature = null;
                 var destination = Locator.Get<GridiaGame>().View.Focus.Position + _delta;
 
                 var now = GetSystemTime();

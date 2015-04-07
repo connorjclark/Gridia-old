@@ -14,7 +14,7 @@ public class CreatureRequest extends JsonMessageHandler<ConnectionToGridiaClient
         ServingGridia server = connection.getServer();
         int id = data.get("id").getAsInt();
         
-        Entity cre = server.creatures.get(id);
+        Entity cre = server.getCreature(id);
         if (cre != null) {
             connection.send(server.messageBuilder.addCreature(cre));
         }

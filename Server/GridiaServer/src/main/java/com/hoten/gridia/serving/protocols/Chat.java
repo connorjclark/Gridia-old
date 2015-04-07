@@ -10,6 +10,7 @@ import com.hoten.gridia.content.Monster;
 import com.hoten.gridia.map.Coord;
 import com.hoten.gridia.map.Sector;
 import com.hoten.gridia.map.Tile;
+import com.hoten.gridia.scripting.Entity;
 import com.hoten.gridia.serving.ConnectionToGridiaClientHandler;
 import com.hoten.gridia.serving.ServingGridia;
 import com.hoten.servingjava.message.JsonMessageHandler;
@@ -28,9 +29,10 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
         Player player = connection.getPlayer();
         String message = data.get("msg").getAsString();
 
-        server.dispatchEvent("Chat", null, "message", message, "player", player);
+        // TODO move chat to script
+        //server.dispatchEvent("Chat", null, "message", message, "player", player);
 
-        /*if (message.startsWith("!script ")) {
+        if (message.startsWith("!script ")) {
             String script = message.split(" ", 2)[1];
             try {
                 server.addScript(script, "CustomScript" + script.hashCode());
@@ -76,8 +78,8 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                     }
                 }
             } catch (NumberFormatException e) {
-                Message message = server.messageBuilder.chat(e.getMessage(), player.creature.location);
-                connection.send(message);
+                Message msg = server.messageBuilder.chat(e.getMessage(), player.creature.location);
+                connection.send(msg);
             }
         } else if (message.equals("!kill")) {
             Entity cre = server.tileMap.getCreature(player.creature.location.add(0, 1, 0));
@@ -93,11 +95,11 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                 }
             }
         } else if (message.equals("!loc")) {
-            Message message = server.messageBuilder.chat("You are at: " + player.creature.location.toString(), player.creature.location);
-            connection.send(message);
+            Message msg = server.messageBuilder.chat("You are at: " + player.creature.location.toString(), player.creature.location);
+            connection.send(msg);
         } else if (message.equals("!online")) {
-            Message message = server.messageBuilder.chat(server.whoIsOnline(), player.creature.location);
-            connection.send(message);
+            Message msg = server.messageBuilder.chat(server.whoIsOnline(), player.creature.location);
+            connection.send(msg);
         } else if (message.equals("!die")) {
             player.creature.callMethod("hurt", Arrays.asList(10000, "gave up"));
         } else if (message.startsWith("!warp ")) {
@@ -196,6 +198,6 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
         }
         if (message.startsWith("!")) {
             connection.send(server.messageBuilder.chat("Command: " + message, player.creature.location));
-        }*/
+        }
     }
 }
