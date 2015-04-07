@@ -30,9 +30,7 @@ public class EntityGsonAdapter extends GsonAdapter<Entity> {
     public JsonElement serialize(Entity entity, Type type, JsonSerializationContext jsc) {
         JsonObject jo = new JsonObject();
         Map<String, Object> storage = (Map) entity.getAttribute("storage");
-        storage.forEach((key, value) -> {
-            serializeWithType(jsc, jo, key, value);
-        });
+        storage.forEach((key, value) -> serializeWithType(jsc, jo, key, value));
         if (entity.location != null) {
             serializeWithType(jsc, jo, "location", entity.location);
         }

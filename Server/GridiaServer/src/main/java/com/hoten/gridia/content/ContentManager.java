@@ -27,9 +27,7 @@ public final class ContentManager {
         ItemInstance decayedRemains = createItemInstance(490);
         _monsters.stream()
                 .filter(monster -> monster != null)
-                .forEach(monster -> {
-                    monster.drops.add(decayedRemains);
-                });
+                .forEach(monster -> monster.drops.add(decayedRemains));
     }
 
     public ItemInstance createItemInstance(int id, int quantity, JsonObject data) {

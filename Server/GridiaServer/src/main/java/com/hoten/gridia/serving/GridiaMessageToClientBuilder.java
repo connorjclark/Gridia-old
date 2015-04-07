@@ -66,13 +66,13 @@ public class GridiaMessageToClientBuilder {
                 .writeInt(sector.sy)
                 .writeInt(sector.sz);
 
-        for (int x = 0; x < tiles.length; x++) {
+        for (Tile[] tile : tiles) {
             for (int y = 0; y < tiles.length; y++) {
-                builder.writeShort(tiles[x][y].floor);
-                builder.writeShort(tiles[x][y].item.getItem().id);
-                builder.writeShort(tiles[x][y].item.getQuantity());
-                if (tiles[x][y].cre != null) {
-                    creatures.add(tiles[x][y].cre);
+                builder.writeShort(tile[y].floor);
+                builder.writeShort(tile[y].item.getItem().id);
+                builder.writeShort(tile[y].item.getQuantity());
+                if (tile[y].cre != null) {
+                    creatures.add(tile[y].cre);
                 }
             }
         }

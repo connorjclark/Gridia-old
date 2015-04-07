@@ -11,14 +11,11 @@ public class TileMapTest {
 
     @Before
     public void setUp() {
-        File map = null; // :(
         int size = 100;
         int depth = 1;
         int sectorSize = 20;
-        SectorLoader sectorLoader = (int sectorSize1, int x, int y, int z) -> {
-            return null;
-        };
-        SectorSaver sectorSaver = new SectorSaver(map);
+        SectorLoader sectorLoader = (int sectorSize1, int x, int y, int z) -> null;
+        SectorSaver sectorSaver = new SectorSaver(null);
         _tileMap = new TileMap(size, depth, sectorSize, sectorLoader, sectorSaver);
     }
 

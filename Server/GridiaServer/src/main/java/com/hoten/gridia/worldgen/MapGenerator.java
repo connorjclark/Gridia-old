@@ -54,9 +54,7 @@ public class MapGenerator {
 
         HashMap<Integer, ColorData> colorBiomeMap = new HashMap<>();
 
-        Arrays.asList(ColorData.values()).forEach(c -> {
-            colorBiomeMap.put(c.color.getRGB(), c);
-        });
+        Arrays.asList(ColorData.values()).forEach(c -> colorBiomeMap.put(c.color.getRGB(), c));
 
         Random random = new Random(_seed);
 

@@ -37,9 +37,7 @@ public class UniqueIdentifiersTest {
     @Test
     public void testRetiringIdsShowUpAgain() {
         Set<Integer> originalIds = getIds(20);
-        originalIds.forEach(id -> {
-            _uniqueIds.retire(id);
-        });
+        originalIds.forEach(_uniqueIds::retire);
         for (int i = 0; i < 200 && !originalIds.isEmpty(); i++) {
             originalIds.remove(_uniqueIds.next());
         }

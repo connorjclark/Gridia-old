@@ -70,17 +70,14 @@ public class ItemInstance {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof ItemInstance)) {
             return false;
         }
         final ItemInstance other = (ItemInstance) obj;
-        if (!Objects.equals(this._item, other._item)) {
+        if (!Objects.equals(_item, other._item)) {
             return false;
         }
-        if (this._quantity != other._quantity) {
-            return false;
-        }
-        return true;
+        return _quantity == other._quantity;
     }
 
     @Override

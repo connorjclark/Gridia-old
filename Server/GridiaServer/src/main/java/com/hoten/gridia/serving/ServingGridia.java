@@ -202,16 +202,12 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     }
 
     public void sendCreatures(ConnectionToGridiaClientHandler client) {
-        creatures.values().forEach(cre -> {
-            sendTo(messageBuilder.addCreature(cre), client);
-        });
+        creatures.values().forEach(cre -> sendTo(messageBuilder.addCreature(cre), client));
     }
 
     public void dropContainerNear(Container container, Coord location) {
         List<ItemInstance> items = container.getItems();
-        items.stream().forEach((item) -> {
-            addItemNear(item, location, 10, true);
-        });
+        items.stream().forEach((item) -> addItemNear(item, location, 10, true));
         for (int i = 0; i < items.size(); i++) {
             container.deleteSlot(i);
         }
@@ -250,12 +246,8 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         tileMap.getTile(cre.location).cre = null;
         tileMap.getTile(loc).cre = cre;
         cre.location = loc;
-        sendTo(messageBuilder.moveCreature(cre, timeInMillisecondsToMove, isTeleport, onRaft), client -> {
-            return client.hasSectorLoaded(sector) || client.player.creature == cre;
-        });
-        sendTo(messageBuilder.removeCreature(cre), client -> {
-            return client.player.creature != cre && !client.hasSectorLoaded(sector) && client.hasSectorLoaded(sectorBefore);
-        });
+        sendTo(messageBuilder.moveCreature(cre, timeInMillisecondsToMove, isTeleport, onRaft), client -> client.hasSectorLoaded(sector) || client.player.creature == cre);
+        sendTo(messageBuilder.removeCreature(cre), client -> client.player.creature != cre && !client.hasSectorLoaded(sector) && client.hasSectorLoaded(sectorBefore));
     }
 
     public void moveCreatureTo(Entity cre, Coord loc, boolean isTeleport) {
@@ -277,9 +269,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     public Entity createCreature(Monster mold, Coord loc, boolean friendly) {
         Entity cre = createCreature(mold.image, mold.name, loc, false, friendly);
         List<ItemInstance> items = new ArrayList<>();
-        mold.drops.forEach(itemDrop -> {
-            items.add(new ItemInstance(itemDrop));
-        });
+        mold.drops.forEach(itemDrop -> items.add(new ItemInstance(itemDrop)));
         cre.setAttribute("inventory", containerFactory.createOnlyInMemory(ContainerType.Inventory, items));
         return cre;
     }
@@ -350,15 +340,11 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     }
 
     public void announce(String from, String message, Coord loc, Entity to) {
-        sendToFirst(messageBuilder.chat(from, message, loc), client -> {
-            return client.player != null && client.player.creature == to;
-        });
+        sendToFirst(messageBuilder.chat(from, message, loc), client -> client.player != null && client.player.creature == to);
     }
 
     public void alert(Entity to, String message) {
-        sendToFirst(messageBuilder.alert(message), client -> {
-            return client.player != null && client.player.creature == to;
-        });
+        sendToFirst(messageBuilder.alert(message), client -> client.player != null && client.player.creature == to);
     }
 
     public void alertToAll(String message) {

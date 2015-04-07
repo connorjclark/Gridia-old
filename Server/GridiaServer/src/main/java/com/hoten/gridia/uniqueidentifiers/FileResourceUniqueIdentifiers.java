@@ -21,7 +21,7 @@ public class FileResourceUniqueIdentifiers extends UniqueIdentifiers {
         Set<Integer> idsInUse = files.stream()
                 .map(file -> FilenameUtils.removeExtension(file.getName()))
                 .filter(name -> name.matches("\\d+"))
-                .map(name -> Integer.parseInt(name))
+                .map(Integer::parseInt)
                 .collect(Collectors.toSet());
         int max = idsInUse.stream().max(Integer::compare).orElseGet(() -> 0);
         Set<Integer> oneToMax = IntStream.rangeClosed(1, max).boxed().collect(Collectors.toSet());

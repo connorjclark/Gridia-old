@@ -17,7 +17,6 @@ import org.apache.commons.io.FileUtils;
 public class GridiaServerDriver {
 
     private static final int DEFAULT_PORT = 1044;
-    private static ServingGridia server;
 
     public static void main(String[] args) throws IOException {
         MessageHandler.loadMessageHandlers(Arrays.asList("com.hoten.gridia.serving.protocols"));
@@ -44,7 +43,7 @@ public class GridiaServerDriver {
         }
 
         System.out.println("Load which world?\n");
-        File[] worlds = new File("worlds/").listFiles(file -> file.isDirectory());
+        File[] worlds = new File("worlds/").listFiles(File::isDirectory);
         for (int i = 0; i < worlds.length; i++) {
             System.out.println(i + 1 + ") " + worlds[i].getName());
         }
@@ -52,7 +51,7 @@ public class GridiaServerDriver {
         File world = worlds[worldSelection - 1];
 
         System.out.println("Load a map, or generate a new one?\n");
-        File[] maps = new File(world, "maps").listFiles(file -> file.isDirectory());
+        File[] maps = new File(world, "maps").listFiles(File::isDirectory);
         if (maps != null) {
             for (int i = 0; i < maps.length; i++) {
                 System.out.println(i + 1 + ") " + maps[i].getName());
@@ -107,7 +106,7 @@ public class GridiaServerDriver {
     private static void loadWorld(File world, String mapName, int port) throws IOException {
         File clientDataDir = new File(world, "clientdata");
         String localDataDirName = "worlds/" + world.getName() + "/clientdata";
-        server = new ServingGridia(world, mapName, port, clientDataDir, localDataDirName);
+        ServingGridia server = new ServingGridia(world, mapName, port, clientDataDir, localDataDirName);
         server.startServer();
         
         try {
