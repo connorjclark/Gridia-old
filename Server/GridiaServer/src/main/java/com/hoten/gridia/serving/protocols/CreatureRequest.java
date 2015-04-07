@@ -1,6 +1,7 @@
 package com.hoten.gridia.serving.protocols;
 
 import com.google.gson.JsonObject;
+import com.hoten.gridia.scripting.Entity;
 import com.hoten.gridia.serving.ConnectionToGridiaClientHandler;
 import com.hoten.gridia.serving.ServingGridia;
 import com.hoten.servingjava.message.JsonMessageHandler;
@@ -13,7 +14,7 @@ public class CreatureRequest extends JsonMessageHandler<ConnectionToGridiaClient
         ServingGridia server = connection.getServer();
         int id = data.get("id").getAsInt();
         
-        com.hoten.gridia.scripting.Entity cre = server.creatures.get(id);
+        Entity cre = server.creatures.get(id);
         if (cre != null) {
             connection.send(server.messageBuilder.addCreature(cre));
         }

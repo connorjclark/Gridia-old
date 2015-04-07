@@ -2,6 +2,7 @@ package com.hoten.gridia;
 
 import com.hoten.gridia.Container.ContainerType;
 import com.hoten.gridia.content.ItemInstance;
+import com.hoten.gridia.scripting.Entity;
 import com.hoten.gridia.serializers.GridiaGson;
 import com.hoten.gridia.serving.ServingGridia;
 import com.hoten.gridia.uniqueidentifiers.FileResourceUniqueIdentifiers;
@@ -48,7 +49,7 @@ public class Player {
             FileUtils.listFiles(_dir, new String[]{"json"}, true).forEach(file -> {
                 try {
                     String json = FileUtils.readFileToString(file);
-                    com.hoten.gridia.scripting.Entity creature = GridiaGson.get().fromJson(json, com.hoten.gridia.scripting.Entity.class);
+                    Entity creature = GridiaGson.get().fromJson(json, Entity.class);
                     _usernameToId.put((String) creature.getAttribute("username"), (int) creature.getAttribute("playerId"));
                 } catch (IOException ex) {
                     Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
@@ -61,7 +62,7 @@ public class Player {
                 throw new BadLoginException("Bad user/password");
             }
             String json = FileUtils.readFileToString(new File(_dir, _usernameToId.get(username) + ".json"));
-            com.hoten.gridia.scripting.Entity creature = GridiaGson.get().fromJson(json, com.hoten.gridia.scripting.Entity.class);
+            Entity creature = GridiaGson.get().fromJson(json, Entity.class);
 
             Container equipment = server.containerFactory.get((int) creature.getAttribute("equipmentId")); // :(
             Player player = new Player(creature, equipment);
@@ -92,7 +93,7 @@ public class Player {
             equipmentItems.add(server.contentManager.createItemInstance(0));
             Container equipment = server.containerFactory.create(ContainerType.Equipment, equipmentItems);
 
-            com.hoten.gridia.scripting.Entity creature = new com.hoten.gridia.scripting.Entity();
+            Entity creature = new Entity();
             Player player = new Player(creature, equipment);
             player.setPlayerId(_uniqueIds.next());
             player.setUsername(username);
@@ -146,14 +147,14 @@ public class Player {
         }
     }
 
-    public final com.hoten.gridia.scripting.Entity creature;
+    public final Entity creature;
     public final Container equipment;
     public final Set<Integer> openedContainers = new HashSet();
     // :(
     public int useSourceIndex, useDestIndex;
     public int useSource, useDest;
 
-    private Player(com.hoten.gridia.scripting.Entity creature, Container equipment) {
+    private Player(Entity creature, Container equipment) {
         this.creature = creature;
         this.equipment = equipment;
     }

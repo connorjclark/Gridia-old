@@ -7,6 +7,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.hoten.gridia.content.ItemInstance;
 import com.hoten.gridia.map.Tile;
+import com.hoten.gridia.scripting.Entity;
 import com.hoten.gridia.serving.ServingGridia;
 import java.lang.reflect.Type;
 
@@ -40,7 +41,7 @@ public class TileGsonAdapter extends GsonAdapter<Tile> {
         tile.floor = jsonObject.get("floor").getAsInt();
         tile.item = context.deserialize(jsonObject.get("item"), ItemInstance.class);
         if (jsonObject.has("cre")) {
-            com.hoten.gridia.scripting.Entity cre = context.deserialize(jsonObject.get("cre"), com.hoten.gridia.scripting.Entity.class); // :(
+            Entity cre = context.deserialize(jsonObject.get("cre"), Entity.class); // :(
             tile.cre = cre;
             _servingGridia.attachScriptsToCreature(cre);
         }

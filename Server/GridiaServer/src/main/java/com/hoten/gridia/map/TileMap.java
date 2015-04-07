@@ -11,6 +11,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import com.hoten.gridia.scripting.Entity;
 import org.apache.commons.io.FileUtils;
 
 public class TileMap {
@@ -177,7 +178,7 @@ public class TileMap {
         getTile(c.x, c.y, c.z).item = item;
     }
 
-    public com.hoten.gridia.scripting.Entity getCreature(Coord loc) {
+    public Entity getCreature(Coord loc) {
         return getTile(loc).cre;
     }
 

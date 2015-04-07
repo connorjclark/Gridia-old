@@ -9,6 +9,7 @@ import com.hoten.gridia.content.ItemUse;
 import com.hoten.gridia.map.Coord;
 import com.hoten.gridia.map.Sector;
 import com.hoten.gridia.map.Tile;
+import com.hoten.gridia.scripting.Entity;
 import com.hoten.gridia.serializers.GridiaGson;
 import com.hoten.servingjava.message.BinaryMessageBuilder;
 import com.hoten.servingjava.message.JsonMessageBuilder;
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class GridiaMessageToClientBuilder {
 
-    public Message addCreature(com.hoten.gridia.scripting.Entity cre) {
+    public Message addCreature(Entity cre) {
         return new JsonMessageBuilder()
                 .type("AddCreature")
                 .set("id", cre.id)
@@ -29,7 +30,7 @@ public class GridiaMessageToClientBuilder {
                 .build();
     }
 
-    public Message renameCreature(com.hoten.gridia.scripting.Entity cre) {
+    public Message renameCreature(Entity cre) {
         return new JsonMessageBuilder()
                 .type("RenameCreature")
                 .set("id", cre.id)
@@ -37,7 +38,7 @@ public class GridiaMessageToClientBuilder {
                 .build();
     }
 
-    public Message moveCreature(com.hoten.gridia.scripting.Entity cre, int timeoffset, boolean isTeleport, boolean onRaft) {
+    public Message moveCreature(Entity cre, int timeoffset, boolean isTeleport, boolean onRaft) {
         return new JsonMessageBuilder()
                 .type("MoveCreature")
                 .set("time", System.currentTimeMillis() + timeoffset)
@@ -48,7 +49,7 @@ public class GridiaMessageToClientBuilder {
                 .build();
     }
 
-    public Message removeCreature(com.hoten.gridia.scripting.Entity cre) {
+    public Message removeCreature(Entity cre) {
         return new JsonMessageBuilder()
                 .type("RemoveCreature")
                 .set("id", cre.id)
@@ -56,7 +57,7 @@ public class GridiaMessageToClientBuilder {
     }
 
     public Message sectorRequest(Sector sector) throws IOException {
-        List<com.hoten.gridia.scripting.Entity> creatures = new ArrayList();
+        List<Entity> creatures = new ArrayList();
         Tile[][] tiles = sector._tiles;
 
         BinaryMessageBuilder builder = new BinaryMessageBuilder()
@@ -186,7 +187,7 @@ public class GridiaMessageToClientBuilder {
                 .build();
     }
 
-    public Message updateCreatureImage(com.hoten.gridia.scripting.Entity creature) {
+    public Message updateCreatureImage(Entity creature) {
         return new JsonMessageBuilder()
                 .type("UpdateCreatureImage")
                 .set("id", creature.id)

@@ -1,6 +1,7 @@
 package com.hoten.gridia.map;
 
 import com.hoten.gridia.content.ItemInstance;
+import com.hoten.gridia.scripting.Entity;
 
 public class Tile {
 
@@ -9,7 +10,7 @@ public class Tile {
 
     public int floor;
     public ItemInstance item;
-    public com.hoten.gridia.scripting.Entity cre;
+    public Entity cre;
     private int _owner;
 
     public boolean isUnclaimed() {

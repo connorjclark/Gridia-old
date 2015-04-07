@@ -6,6 +6,7 @@ import com.hoten.gridia.CreatureImage;
 import com.hoten.gridia.content.ContentManager;
 import com.hoten.gridia.content.ItemInstance;
 import com.hoten.gridia.map.Tile;
+import com.hoten.gridia.scripting.Entity;
 import com.hoten.gridia.serving.ServingGridia;
 
 public class GridiaGson {
@@ -18,7 +19,7 @@ public class GridiaGson {
 
     public static void initialize(ContentManager contentManager, ServingGridia servingGridia) {
         _gson = new GsonBuilder()
-                .registerTypeAdapter(com.hoten.gridia.scripting.Entity.class, new EntityGsonAdapter())
+                .registerTypeAdapter(Entity.class, new EntityGsonAdapter())
                 .registerTypeAdapter(ItemInstance.class, new ItemInstanceGsonAdapter(contentManager))
                 .registerTypeAdapter(Tile.class, new TileGsonAdapter(servingGridia))
                 .registerTypeAdapter(CreatureImage.class, new InterfaceAdapter<>())

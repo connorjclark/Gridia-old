@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class EntityGsonAdapter extends GsonAdapter<com.hoten.gridia.scripting.Entity> {
+public class EntityGsonAdapter extends GsonAdapter<Entity> {
 
     private void serializeWithType(JsonSerializationContext jsc, JsonObject into, String name, Object value) {
         if (value.getClass() != Container.class) {
@@ -44,7 +44,7 @@ public class EntityGsonAdapter extends GsonAdapter<com.hoten.gridia.scripting.En
         Type storageType = new TypeToken<Map<String, Map<String, JsonElement>>>() {
         }.getType();
         Map<String, Map> storage = context.deserialize(json, storageType);
-        com.hoten.gridia.scripting.Entity entity = new com.hoten.gridia.scripting.Entity();
+        Entity entity = new Entity();
         storage.forEach((key, valueAndClass) -> {
             try {
                 JsonPrimitive jsonClass = (JsonPrimitive) valueAndClass.get("class");

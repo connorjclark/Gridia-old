@@ -59,7 +59,7 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                     Monster monster = server.contentManager.getMonster(id);
                     if (monster != null) {
                         String friendlyMessage = split[2];
-                        com.hoten.gridia.scripting.Entity creature = server.createCreature(monster, player.creature.location.add(0, 1, 0), true);
+                        Entity creature = server.createCreature(monster, player.creature.location.add(0, 1, 0), true);
                         creature.setAttribute("friendlyMessage", friendlyMessage);
                     }
                 }
@@ -80,7 +80,7 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                 connection.send(message);
             }
         } else if (message.equals("!kill")) {
-            com.hoten.gridia.scripting.Entity cre = server.tileMap.getCreature(player.creature.location.add(0, 1, 0));
+            Entity cre = server.tileMap.getCreature(player.creature.location.add(0, 1, 0));
             if (cre != null) {
                 cre.callMethod("hurt", Arrays.asList(10000, "was punished by " + player.creature.getAttribute("name")));
             }

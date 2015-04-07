@@ -1,5 +1,6 @@
 package com.hoten.gridia.serving;
 
+import com.hoten.gridia.scripting.*;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import groovy.lang.Script;
@@ -26,7 +27,6 @@ import com.hoten.gridia.content.WorldContentLoader;
 import com.hoten.gridia.map.Sector;
 import com.hoten.gridia.map.Tile;
 import com.hoten.gridia.map.TileMap;
-import com.hoten.gridia.scripting.Entity;
 import com.hoten.gridia.serializers.GridiaGson;
 import com.hoten.servingjava.filetransferring.ServingFileTransferring;
 import java.io.File;
@@ -51,22 +51,22 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
 
     public static ServingGridia instance; // :(
 
-    private final com.hoten.gridia.scripting.ScriptExecutor scriptExecutor = new com.hoten.gridia.scripting.ScriptExecutor();
-    private final com.hoten.gridia.scripting.EventDispatcher eventDispatcher = new com.hoten.gridia.scripting.EventDispatcher();
+    private final ScriptExecutor scriptExecutor = new ScriptExecutor();
+    private final EventDispatcher eventDispatcher = new EventDispatcher();
     private GroovyShell shell;
     public final GridiaMessageToClientBuilder messageBuilder = new GridiaMessageToClientBuilder();
     public final TileMap tileMap;
     public final ContentManager contentManager;
-    public final com.hoten.gridia.scripting.ScriptableUsageProcessing usageProcessor;
-    public final Map<Integer, com.hoten.gridia.scripting.Entity> creatures = new ConcurrentHashMap();
+    public final ScriptableUsageProcessing usageProcessor;
+    public final Map<Integer, Entity> creatures = new ConcurrentHashMap();
     private final Random random = new Random();
     public final PlayerFactory playerFactory;
     public final ContainerFactory containerFactory;
     public final String worldName;
     public final String mapName;
-    public final String version = "alpha-1.4";
+    public final String version = "alpha-1.5-dev";
     public final File worldTopDirectory;
-    public final com.hoten.gridia.scripting.Entity worldEntity = new com.hoten.gridia.scripting.Entity();
+    public final Entity worldEntity = new Entity();
 
     public ServingGridia(File world, String mapName, int port, File clientDataFolder, String localDataFolderName) throws IOException {
         super(port, clientDataFolder, localDataFolderName);
@@ -74,7 +74,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         worldName = world.getName();
         this.mapName = mapName;
         contentManager = new WorldContentLoader(world).load();
-        usageProcessor = new com.hoten.gridia.scripting.ScriptableUsageProcessing(contentManager, eventDispatcher);
+        usageProcessor = new ScriptableUsageProcessing(contentManager, eventDispatcher);
         GridiaGson.initialize(contentManager, this);
         tileMap = TileMap.loadMap(world, mapName);
         playerFactory = new PlayerFactory(world);
@@ -98,24 +98,24 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         return addScript(scriptText, scriptName, worldEntity);
     }
 
-    public Script addScript(File scriptFile, com.hoten.gridia.scripting.Entity entity) throws IOException {
+    public Script addScript(File scriptFile, Entity entity) throws IOException {
         DelegatingScript script = (DelegatingScript) shell.parse(scriptFile);
         return addScript(script, scriptFile.getName(), entity);
     }
 
-    public Script addScript(String scriptText, String scriptName, com.hoten.gridia.scripting.Entity entity) throws IOException {
+    public Script addScript(String scriptText, String scriptName, Entity entity) throws IOException {
         DelegatingScript script = (DelegatingScript) shell.parse(scriptText);
         return addScript(script, scriptName, entity);
     }
 
-    private Script addScript(DelegatingScript script, String scriptName, com.hoten.gridia.scripting.Entity entity) throws IOException {
-        com.hoten.gridia.scripting.GridiaScript gridiaScript = new com.hoten.gridia.scripting.GridiaScript(this, eventDispatcher, entity, scriptName);
+    private Script addScript(DelegatingScript script, String scriptName, Entity entity) throws IOException {
+        GridiaScript gridiaScript = new GridiaScript(this, eventDispatcher, entity, scriptName);
         script.setDelegate(gridiaScript);
         scriptExecutor.addScript(script);
         return script;
     }
 
-    public void dispatchEvent(String type, com.hoten.gridia.scripting.Entity target, Object... eventParams) {
+    public void dispatchEvent(String type, Entity target, Object... eventParams) {
         if (target == null) {
             target = worldEntity;
         }
@@ -141,7 +141,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         if (client.player != null) {
             removeCreature(client.player.creature);
             savePlayer(client.player);
-            com.hoten.gridia.scripting.Entity cre = client.player.creature;
+            Entity cre = client.player.creature;
             sendToAll(messageBuilder.chat(cre.getAttribute("name") + " has left the building.", cre.location));
             playAnimation("WarpOut", cre.location);
         }
@@ -217,7 +217,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         }
     }
 
-    public void removeCreature(com.hoten.gridia.scripting.Entity cre) {
+    public void removeCreature(Entity cre) {
         Sector sector = tileMap.getSectorOf(cre.location);
         creatures.remove(cre.id);
         tileMap.getTile(cre.location).cre = null;
@@ -226,17 +226,17 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         sendToClientsWithSectorLoaded(messageBuilder.removeCreature(cre), sector);
     }
 
-    public void moveCreatureTo(com.hoten.gridia.scripting.Entity cre, Coord loc, int timeInMillisecondsToMove, boolean isTeleport) {
+    public void moveCreatureTo(Entity cre, Coord loc, int timeInMillisecondsToMove, boolean isTeleport) {
         moveCreatureTo(cre, loc, timeInMillisecondsToMove, isTeleport, false);
     }
 
-    public void moveCreatureTo(com.hoten.gridia.scripting.Entity cre, Coord loc, int timeInMillisecondsToMove, boolean isTeleport, boolean onRaft) {
+    public void moveCreatureTo(Entity cre, Coord loc, int timeInMillisecondsToMove, boolean isTeleport, boolean onRaft) {
         if (loc.equals(cre.location)) {
             return;
         }
         // move into
         if (!isTeleport) {
-            com.hoten.gridia.scripting.Entity creatureMovedInto = tileMap.getCreature(loc);
+            Entity creatureMovedInto = tileMap.getCreature(loc);
             if (creatureMovedInto != null) {
                 dispatchEvent("MovedInto", creatureMovedInto, "entity", cre);
                 return;
@@ -258,11 +258,11 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         });
     }
 
-    public void moveCreatureTo(com.hoten.gridia.scripting.Entity cre, Coord loc, boolean isTeleport) {
+    public void moveCreatureTo(Entity cre, Coord loc, boolean isTeleport) {
         moveCreatureTo(cre, loc, 200, isTeleport);
     }
 
-    public void updateCreatureImage(com.hoten.gridia.scripting.Entity cre) {
+    public void updateCreatureImage(Entity cre) {
         Sector sector = tileMap.getSectorOf(cre.location);
         sendToClientsWithSectorLoaded(messageBuilder.updateCreatureImage(cre), sector);
     }
@@ -274,8 +274,8 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         }
     }
 
-    public com.hoten.gridia.scripting.Entity createCreature(Monster mold, Coord loc, boolean friendly) {
-        com.hoten.gridia.scripting.Entity cre = createCreature(mold.image, mold.name, loc, false, friendly);
+    public Entity createCreature(Monster mold, Coord loc, boolean friendly) {
+        Entity cre = createCreature(mold.image, mold.name, loc, false, friendly);
         List<ItemInstance> items = new ArrayList<>();
         mold.drops.forEach(itemDrop -> {
             items.add(new ItemInstance(itemDrop));
@@ -284,20 +284,20 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         return cre;
     }
 
-    public com.hoten.gridia.scripting.Entity createCreature(Monster mold, Coord loc) {
+    public Entity createCreature(Monster mold, Coord loc) {
         return createCreature(mold, loc, false);
     }
 
-    public com.hoten.gridia.scripting.Entity createCreature(int image, Coord loc) {
+    public Entity createCreature(int image, Coord loc) {
         return createCreature(new DefaultCreatureImage(image), "Monster", loc, false, false);
     }
 
-    public com.hoten.gridia.scripting.Entity createCreature(CreatureImage image, Coord loc) {
+    public Entity createCreature(CreatureImage image, Coord loc) {
         return createCreature(image, "Monster", loc, false, false);
     }
 
-    public com.hoten.gridia.scripting.Entity createCreature(CreatureImage image, String name, Coord loc, boolean belongsToPlayer, boolean friendly) {
-        com.hoten.gridia.scripting.Entity cre = createCreatureQuietly(image, name, loc, belongsToPlayer, friendly);
+    public Entity createCreature(CreatureImage image, String name, Coord loc, boolean belongsToPlayer, boolean friendly) {
+        Entity cre = createCreatureQuietly(image, name, loc, belongsToPlayer, friendly);
         registerCreature(cre);
         return cre;
     }
@@ -326,8 +326,8 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     }
 
     // :( creating creatures need refactoring, standardization
-    public com.hoten.gridia.scripting.Entity createCreatureQuietly(CreatureImage image, String name, Coord loc, boolean belongsToPlayer, boolean friendly) {
-        com.hoten.gridia.scripting.Entity cre = new com.hoten.gridia.scripting.Entity();
+    public Entity createCreatureQuietly(CreatureImage image, String name, Coord loc, boolean belongsToPlayer, boolean friendly) {
+        Entity cre = new Entity();
         cre.setAttribute("belongsToPlayer", belongsToPlayer);
         cre.setAttribute("isFriendly", friendly);
         cre.setAttribute("name", name);
@@ -349,13 +349,13 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         sendToAll(messageBuilder.chat(from, message, loc));
     }
 
-    public void announce(String from, String message, Coord loc, com.hoten.gridia.scripting.Entity to) {
+    public void announce(String from, String message, Coord loc, Entity to) {
         sendToFirst(messageBuilder.chat(from, message, loc), client -> {
             return client.player != null && client.player.creature == to;
         });
     }
 
-    public void alert(com.hoten.gridia.scripting.Entity to, String message) {
+    public void alert(Entity to, String message) {
         sendToFirst(messageBuilder.alert(message), client -> {
             return client.player != null && client.player.creature == to;
         });
@@ -544,7 +544,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         return addItemNear(tileMap.getItem(loc), loc, 10, false) != null;
     }
 
-    public void teleport(com.hoten.gridia.scripting.Entity creature, Coord coord) {
+    public void teleport(Entity creature, Coord coord) {
         playAnimation("WarpOut", creature.location);
         moveCreatureTo(creature, coord, true);
         playAnimation("WarpIn", coord);
