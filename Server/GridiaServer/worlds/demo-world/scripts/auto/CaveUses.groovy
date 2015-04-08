@@ -8,8 +8,8 @@ def getCave(event) {
     }
 }
 
-onValidateItemUse {
-    cave = getCave(event)
+onValidateItemUse { event ->
+    def cave = getCave(event)
     if (!cave) return
     if (isContainerWrapper(event.focus)) return "You can't make a $cave.name in a container!"
     
@@ -20,20 +20,20 @@ onValidateItemUse {
     }
 }
 
-onCompleteItemUse {
-    cave = getCave(event)
+onCompleteItemUse { event ->
+    def cave = getCave(event)
     if (!cave) return
     
-    focus = event.focus
+    def focus = event.focus
     if (cave.itemClass == ItemClass.Cave_down) {
-        below = focus.itemBelow
+        def below = focus.itemBelow
         if (below.item.itemClass != ItemClass.Cave_up) {
             if (below.nothing || focus.moveItemBelow()) {
                 focus.itemBelow = item(name: "Cave Exit")
             }
         }
     } else {
-        above = focus.itemAbove
+        def above = focus.itemAbove
         if (above.item.itemClass != ItemClass.Cave_down) {
             if (above.nothing || focus.moveItemAbove()) {
                 focus.itemAbove = item(name: "Cave Entrance")
@@ -42,7 +42,7 @@ onCompleteItemUse {
     }
 }
 
-onCompleteItemUse {
+onCompleteItemUse { event ->
     if (event.tool.itemInstance.item.name == "Shovel" && event.focus.itemInstance.item.cave) {
         if (event.focus.itemInstance.item.itemClass == ItemClass.Cave_down) {
             if (event.focus.itemBelow.item.itemClass == ItemClass.Cave_up) {

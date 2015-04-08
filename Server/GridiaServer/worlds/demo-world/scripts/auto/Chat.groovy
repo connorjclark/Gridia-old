@@ -1,7 +1,7 @@
 chatCommandToken = '!'
 commands = [:]
 
-onChat {
+onChat { event ->
     player = event.player
     message = event.message
     announce(message: message, at: player.creature.location, from: player.creature.name)

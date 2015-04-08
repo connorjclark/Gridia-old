@@ -1,18 +1,16 @@
 package com.hoten.gridia.scripting
 
 class EventDispatcher {    
-    def addEventListener(String type, Closure closure, Entity eventTarget) {
-        closure.eventType = type
-        closure.eventTarget = eventTarget
-        eventTarget.registeredEvents[type] += closure
+    def addEventListener(String type, Closure callback, Entity eventTarget) {
+        eventTarget.registeredEvents[type] += callback
     }
     
-    def removeEventListener(String type, Closure closure, Entity eventTarget) {
-        eventTarget.registeredEvents[type] -= closure
+    def removeEventListener(String type, Closure callback, Entity eventTarget) {
+        eventTarget.registeredEvents[type] -= callback
     }
     
     def dispatch(String type, Entity eventTarget, Map event) {
-        ['before', 'on', 'afterTMP2'].collect {
+        ['before', 'on', 'after'].collect {
             def listeners = eventTarget.registeredEvents["$it$type".toUpperCase()]
             processEvent(listeners, event)
         }.flatten()
@@ -20,8 +18,7 @@ class EventDispatcher {
     
     private def processEvent(listeners, event) {
         listeners.collect {
-            it.event = event
-            it.call()
+            it.call(event)
         }.findAll { it != null }
     }
 }

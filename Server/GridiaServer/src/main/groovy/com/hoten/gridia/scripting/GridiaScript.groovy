@@ -18,8 +18,7 @@ public class GridiaScript {
     def scheduledTasks = []
     def Entity entity
     def String scriptName
-    def Map storage = [:]
-    
+
     def GridiaScript(ServingGridia server, EventDispatcher eventDispatcher, Entity entity, String scriptName) {
         this.server = server
         this.eventDispatcher = eventDispatcher
@@ -279,16 +278,9 @@ public class GridiaScript {
     def propertyMissing(String name) {
         if (name == "ItemClass") {
             Item.ItemClass
-        } else if (storage[name]) {
-            storage[name]
         } else {
             throw new MissingPropertyException(name, GridiaScript)
         }
-    }
-        
-    def void propertyMissing(String name, value) {
-        storage[name] = value
-        this."$name" // :( removing this line seems to destroy the universe
     }
     
     def methodMissing(String name, args) {

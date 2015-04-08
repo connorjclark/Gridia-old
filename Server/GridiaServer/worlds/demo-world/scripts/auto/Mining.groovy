@@ -2,7 +2,7 @@ def hasPickAxe(container) {
     container.containsItemId(901)
 }
 
-onMovedInto {
+onMovedInto { event ->
     if (floor(event.location) != 0) { return }
     
     if (hasPickAxe(event.entity.inventory)) {

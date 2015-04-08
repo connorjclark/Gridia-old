@@ -12,20 +12,14 @@ entity.metaClass.hurt = { damage, deathReason ->
 }
 
 def generateDeathReason(attacker) {
-    attackVerbs = ["clobber", "bash", "destroy", "exterminate", "off"]
-    verb = attackVerbs[(attackVerbs.size()*Math.random()) as int]
+    def attackVerbs = ["clobber", "bash", "destroy", "exterminate", "off"]
+    def verb = attackVerbs[(attackVerbs.size()*Math.random()) as int]
     "was ${verb}ed by $attacker.name"
 }
 
 def getHurtBy(attacker) {
     if (attacker.isFriendly || entity.isFriendly) return
     entity.hurt(1, generateDeathReason(attacker))
-}
-
-if (!entity.isFriendly) {
-    onMovedInto {
-        getHurtBy(event.entity)
-    }
 }
 
 onDeath {
@@ -43,7 +37,7 @@ onDeath {
     }
 }
 
-onAction {
+onAction { event ->
     if (event.actionId == 1) {
         if (!entity?.target?.alive) return
         hitAction(entity.target)
@@ -57,8 +51,8 @@ def isNear(target) {
 }
 
 def getNear(target) {
-    dx = Math.signum(target.location.x - entity.location.x) as int
-    dy = Math.signum(target.location.y - entity.location.y) as int
+    def dx = Math.signum(target.location.x - entity.location.x) as int
+    def dy = Math.signum(target.location.y - entity.location.y) as int
     entity.location = entity.location.add(dx, dy, 0)
 }
 

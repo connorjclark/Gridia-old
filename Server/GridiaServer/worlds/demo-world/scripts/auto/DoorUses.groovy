@@ -15,18 +15,18 @@ def isClosed(item) {
 }
 
 def close(openDoor) {
-    closedDoorName = openDoor.name.replaceFirst("(?i)Open", "Closed")
+    def closedDoorName = openDoor.name.replaceFirst("(?i)Open", "Closed")
     item(name: closedDoorName)
 }
 
 def open(closedDoor) {
-    openDoorName = closedDoor.name.replaceFirst("(?i)Closed", "Open")
+    def openDoorName = closedDoor.name.replaceFirst("(?i)Closed", "Open")
     item(name: openDoorName)
 }
 
-onFailedItemUse {
-    tool = event.tool
-    focus = event.focus
+onFailedItemUse { event ->
+    def tool = event.tool
+    def focus = event.focus
     if (tool.itemInstance.item.id == 0 && isDoor(focus.itemInstance.item)) {
         if (isOpen(focus.itemInstance.item)) {
             focus.changeWrappedItem(close(focus.itemInstance.item))

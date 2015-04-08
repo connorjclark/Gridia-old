@@ -1,12 +1,8 @@
-def start() {
-    creatures = server.creatures
-}
-
 every(1.second) {
-    creatures.findAll { !it.value.justTeleported }.each {
-        creature = it.value
-        itemUnder = server.tileMap.getItem(creature.location)
-        loc = creature.location
+    server.creatures.findAll { !it.value.justTeleported }.each {
+        def creature = it.value
+        def itemUnder = server.tileMap.getItem(creature.location)
+        def loc = creature.location
         if (loc.z != server.tileMap.depth - 1 && itemUnder.getItem().itemClass == ItemClass.Cave_down) {
             server.moveCreatureTo(creature, loc.add(0, 0, 1), true)
             creature.justTeleported = true
