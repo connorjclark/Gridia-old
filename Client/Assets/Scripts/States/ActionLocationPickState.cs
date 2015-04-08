@@ -72,7 +72,7 @@ namespace Gridia
 
         private bool HasMoveBeenConfirmed() 
         {
-            return Input.GetKey(KeyCode.Space);
+            return Input.GetKeyUp(KeyCode.Space);
         }
     }
 }
