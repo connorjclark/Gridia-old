@@ -38,6 +38,8 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
                 server.addScript(script, "CustomScript" + script.hashCode());
             } catch (CompilationFailedException ex) {
                 connection.send(server.messageBuilder.chat("That didn't parse!\n" + ex, player.creature.location));
+            } catch (Exception ex) {
+                connection.send(server.messageBuilder.chat("There was an error.\n" + ex, player.creature.location));
             }
         } else if (message.startsWith("!image ")) {
             try {
