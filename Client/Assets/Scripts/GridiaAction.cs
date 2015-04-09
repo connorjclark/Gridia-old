@@ -7,7 +7,7 @@ namespace Gridia
     {
         public int Id { get; private set; }
         public String Description { get; private set; }
-        private long _lastAttack, _timeLeft, _cooldownTime;
+        private long _lastAttack, _timeLeft;
         private bool _canPerformAction, _requireDestination;
 
         public GridiaAction(int id, String description, bool requireDestination, int cooldownTime, Renderable gfx)
@@ -15,7 +15,6 @@ namespace Gridia
             Id = id;
             Description = description;
             _requireDestination = requireDestination;
-            _cooldownTime = cooldownTime;
             _lastAttack = UnixTimeNow();
 
             gfx.OnClick = TriggerAction;

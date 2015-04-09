@@ -44,8 +44,8 @@ namespace Gridia
                 _driver.MoveSelectedContainerToNext();
             }
 
-            var wasdKeysUp = InputManager.Get4DirectionalInputUp();
-            var wasdKeys = InputManager.Get4DirectionalInput();
+            var wasdKeysUp = InputManager.Get4DirectionalWasdInputUp();
+            var wasdKeys = InputManager.Get4DirectionalWasdInput();
             if (wasdKeysUp != Vector3.zero)
             {
                 var destinationUp = Locator.Get<GridiaGame>().View.Focus.Position + wasdKeysUp;

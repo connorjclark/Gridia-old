@@ -19,45 +19,36 @@ namespace Gridia
             }
         }
 
-        public Vector3 Get4DirectionalInput()
-        {
-            var x = Math.Sign(Input.GetAxis("Horizontal"));
-            var y = Math.Sign(Input.GetAxis("Vertical"));
-            return new Vector3(x, y, 0);
-        }
+        private readonly KeyCode[] _wasdKeyCodes = { KeyCode.W, KeyCode.D, KeyCode.S, KeyCode.A };
+        private readonly KeyCode[] _arrowKeyCodes = { KeyCode.UpArrow, KeyCode.RightArrow, KeyCode.DownArrow, KeyCode.LeftArrow };
 
-        // :(
-        public Vector3 Get4DirectionalInputUp()
+        private Vector3 Get4DirectionalInput(Predicate<KeyCode> selector, KeyCode[] keys)
         {
             var direction = Vector3.zero;
-
-            if (Input.GetKeyUp(KeyCode.W))
+            if (selector(keys[0]))
                 direction += Vector3.up;
-            if (Input.GetKeyUp(KeyCode.D))
+            if (selector(keys[1]))
                 direction += Vector3.right;
-            if (Input.GetKeyUp(KeyCode.S))
+            if (selector(keys[2]))
                 direction += Vector3.down;
-            if (Input.GetKeyUp(KeyCode.A))
+            if (selector(keys[3]))
                 direction += Vector3.left;
-
             return direction;
         }
 
-        // :(
+        public Vector3 Get4DirectionalWasdInput()
+        {
+            return Get4DirectionalInput(Input.GetKey, _wasdKeyCodes);
+        }
+
+        public Vector3 Get4DirectionalWasdInputUp()
+        {
+            return Get4DirectionalInput(Input.GetKeyUp, _wasdKeyCodes);
+        }
+
         public Vector3 Get4DirectionalArrowKeysInputUp()
         {
-            var direction = Vector3.zero;
-
-            if (Input.GetKeyUp(KeyCode.UpArrow))
-                direction += Vector3.up;
-            if (Input.GetKeyUp(KeyCode.RightArrow))
-                direction += Vector3.right;
-            if (Input.GetKeyUp(KeyCode.DownArrow))
-                direction += Vector3.down;
-            if (Input.GetKeyUp(KeyCode.LeftArrow))
-                direction += Vector3.left;
-
-            return direction;
+            return Get4DirectionalInput(Input.GetKeyUp, _arrowKeyCodes);
         }
 
         public bool GetKeyDoublePress(KeyCode keyCode) 
