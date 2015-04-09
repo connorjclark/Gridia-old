@@ -22,7 +22,7 @@ def getHurtBy(attacker) {
     entity.hurt(1, generateDeathReason(attacker))
 }
 
-onDeath {
+onDeath { event ->
     announce(message: "$entity.name $event.deathReason.")
     playAnimation(type: "diescream")
     spawnItem(item: item(name: "Small Pool Of Blood"), near: entity.location)
