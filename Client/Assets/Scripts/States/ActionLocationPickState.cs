@@ -62,7 +62,7 @@ namespace Gridia
             var delta = InputManager.Get4DirectionalArrowKeysInputUp();
             if (delta == Vector3.zero)
             {
-                delta = InputManager.Get4DirectionalInputUp();
+                delta = InputManager.Get4DirectionalWasdInputUp();
             }
             if (delta != Vector3.zero)
             {
