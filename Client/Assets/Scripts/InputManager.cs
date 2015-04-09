@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gridia
@@ -20,18 +21,9 @@ namespace Gridia
 
         public Vector3 Get4DirectionalInput()
         {
-            var direction = Vector3.zero;
-
-            if (Input.GetButton("left"))
-                direction += Vector3.left;
-            if (Input.GetButton("right"))
-                direction += Vector3.right;
-            if (Input.GetButton("down"))
-                direction += Vector3.down;
-            if (Input.GetButton("up"))
-                direction += Vector3.up;
-
-            return direction;
+            var x = Math.Sign(Input.GetAxis("Horizontal"));
+            var y = Math.Sign(Input.GetAxis("Vertical"));
+            return new Vector3(x, y, 0);
         }
 
         // :(
@@ -39,14 +31,14 @@ namespace Gridia
         {
             var direction = Vector3.zero;
 
-            if (Input.GetButtonUp("left"))
-                direction += Vector3.left;
-            if (Input.GetButtonUp("right"))
-                direction += Vector3.right;
-            if (Input.GetButtonUp("down"))
-                direction += Vector3.down;
-            if (Input.GetButtonUp("up"))
+            if (Input.GetKeyUp(KeyCode.W))
                 direction += Vector3.up;
+            if (Input.GetKeyUp(KeyCode.D))
+                direction += Vector3.right;
+            if (Input.GetKeyUp(KeyCode.S))
+                direction += Vector3.down;
+            if (Input.GetKeyUp(KeyCode.A))
+                direction += Vector3.left;
 
             return direction;
         }

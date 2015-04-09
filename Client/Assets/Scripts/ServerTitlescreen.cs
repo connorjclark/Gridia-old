@@ -58,7 +58,7 @@ namespace Gridia
                     var args = new Hashtable();
                     args["username"] = usernameInput.Text;
                     args["password"] = passwordInput.Text;
-                    SceneManager.LoadScene("Register", args);
+                    SceneManager.LoadScene("RegistrationScene", args);
                 }
             };
 
