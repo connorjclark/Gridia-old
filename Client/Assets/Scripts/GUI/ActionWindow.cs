@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gridia
@@ -6,6 +6,7 @@ namespace Gridia
     public class ActionWindow : GridiaWindow
     {
         protected ExtendibleGrid ActionGrid = new ExtendibleGrid(Vector2.zero); // :(
+        private Dictionary<int, GridiaAction> _actions = new Dictionary<int, GridiaAction>(); 
 
         public ActionWindow(Vector2 pos)
             : base(pos, "Actions")
@@ -14,66 +15,34 @@ namespace Gridia
             AddChild(ActionGrid);
         }
 
-        public void TempAddActions()
+        public void TriggerAction(int id)
         {
-            TempAddAction(1, 1000, "Attack with your equipped weapon.", "Attack", false);
-            TempAddAction(2, 3000, "Dash quickly to a nearby tile. Use WASD/Arrows and press Space to select a destination.", "Blade", true);
+            if (_actions.ContainsKey(id))
+            {
+                _actions[id].TriggerAction();
+            }
         }
 
-        public void AddAction(int id, int cooldownTime, String description, Renderable gfx, Boolean requireDestination)
+        public void TempAddActions()
         {
+            TempAddAction(0, "Attack with your equipped weapon.", false, 1000, "Attack");
+            TempAddAction(1, "Dash quickly to a nearby tile. Use WASD/Arrows and press Space to select a destination.", true, 3000, "Blade");
+        }
+
+        public void AddAction(int id, string description, bool requireDestination, int cooldownTime, Renderable gfx)
+        {
+            var action = new GridiaAction(id, description, requireDestination, cooldownTime, gfx);
+            _actions.Add(id, action);
             gfx.ScaleXY = 2;
-
-            var lastAttack = UnixTimeNow();
-            var canPerformAction = true;
-            var timeLeft = 0L;
-
-            gfx.OnClick = () =>
-            {
-                if (canPerformAction/* && Locator.Get<GridiaDriver>().SelectedCreature != null*/)
-                {
-                    if (requireDestination)
-                    {
-                        var pickState = new ActionLocationPickState(id);
-                        Locator.Get<StateMachine>().SetState(pickState);
-                    }
-                    else
-                    {
-                        Locator.Get<ConnectionToGridiaServerHandler>().PerformAction(id);
-                        lastAttack = UnixTimeNow();
-                    }
-                }
-            };
-            
-            gfx.OnEnterFrame = () =>
-            {
-                var timeSinceLastAttack = UnixTimeNow() - lastAttack;
-                canPerformAction = timeSinceLastAttack >= cooldownTime;
-
-                // :( let's do a circular alpha mask instead of this ...
-                timeLeft = cooldownTime - timeSinceLastAttack;
-                var frac = (float) (UnixTimeNow() - lastAttack)/cooldownTime;
-                gfx.Alpha = (byte)(255 * Math.Min(1.0, frac));
-            };
-
-            gfx.ToolTip = () => canPerformAction ? description : String.Format("{0:##.#}s", timeLeft/1000.0);
-
             ActionGrid.AddChild(gfx);
         }
 
-        // in ms
-        private long UnixTimeNow()
-        {
-            var timeSpan = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
-            return (long)timeSpan.TotalMilliseconds;
-        }
-
-        private void TempAddAction(int id, int cooldownTime, String description, String animName, Boolean requireDestination)
+        private void TempAddAction(int id, string description, bool requireDestination, int cooldownTime, string animName)
         {
             var cm = Locator.Get<ContentManager>();
             var anim = cm.GetAnimation(animName);
             var renderable = new AnimationRenderable(Vector2.zero, anim);
-            AddAction(id, cooldownTime, description, renderable, requireDestination);
+            AddAction(id, description, requireDestination, cooldownTime, renderable);
         }
     }
 }

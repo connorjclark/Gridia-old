@@ -38,10 +38,10 @@ onDeath { event ->
 }
 
 onAction { event ->
-    if (event.actionId == 1) {
+    if (event.actionId == 0) {
         if (!entity?.target?.alive) return
         hitAction(entity.target)
-    } else if (event.actionId == 2) {
+    } else if (event.actionId == 1) {
         dashAction(event.location)
     }
 }

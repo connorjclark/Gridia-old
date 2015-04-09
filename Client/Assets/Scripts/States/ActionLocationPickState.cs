@@ -22,13 +22,13 @@ namespace Gridia
         }
         private readonly GridiaDriver _driver; // :( move to State?
         private readonly GridiaGame _game;
-        private readonly int _actionId;
+        private readonly GridiaAction _action;
 
-        public ActionLocationPickState(int actionId) 
+        public ActionLocationPickState(GridiaAction action) 
         {
             _driver = Locator.Get<GridiaDriver>();
             _game = Locator.Get<GridiaGame>();
-            _actionId = actionId;
+            _action = action;
         }
 
         public override void Step(StateMachine stateMachine, float dt)
@@ -37,7 +37,7 @@ namespace Gridia
             if (HasMoveBeenConfirmed()) 
             {
                 var destination = _game.GetSelectorCoord(DestinationSelectorDelta);
-                Locator.Get<ConnectionToGridiaServerHandler>().PerformAction(_actionId, destination);
+                _action.TriggerAction(destination);
                 stateMachine.SetState(new IdleState());
             }
             else 

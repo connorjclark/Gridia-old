@@ -28,7 +28,7 @@ namespace Gridia
                 }
                 else 
                 {
-                    _driver.InvGui.SlotSelected = numKeyPressed == 0 ? 9 : numKeyPressed - 1;
+                    var actionIndex = numKeyPressed == 0 ? 9 : numKeyPressed - 1;
                 }
             }
 
