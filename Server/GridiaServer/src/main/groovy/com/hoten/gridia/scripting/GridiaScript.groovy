@@ -10,7 +10,11 @@ import java.util.concurrent.TimeUnit
 import java.util.logging.Level
 import java.util.logging.Logger
 
-class GridiaDSLException extends Exception {}
+class GridiaDSLException extends Exception {
+    def GridiaDSLException(String message) {
+        super(message)
+    }
+}
 
 public class GridiaScript {
     def ServingGridia server
@@ -165,7 +169,7 @@ public class GridiaScript {
             times = times ?: 1
             width = width ?: 1
             height = height ?: 1
-            range = range ?: 3
+            range = range ?: 5
             if ([at, near].findAll { it }.size() != 1) {
                 throw new GridiaDSLException("Expected exactly one of the following: at, near")
             }
@@ -174,23 +178,23 @@ public class GridiaScript {
     
     private def rand = new Random()
     private def determineSpawnLocation(Map params) {
-        params.near ? params.near : params.at.add(rand.nextInt(params.width), rand.nextInt(params.height), 0)
+        if (params.near) {
+            server.findNearestTile(params.near, params.range, true, this.&walkable)
+        } else {
+            params.at.add(rand.nextInt(params.width), rand.nextInt(params.height), 0)
+        }
     }
     
     def spawnMonsters(Map params) {
-        if (params.near) {
-            throw new GridiaDSLException("near is currently not supported.")
-        }
         params.friendly = params.friendly ?: false
         params.forceSpawn = params.forceSpawn ?: false
-        
-        def generator = {
+
+        spawn(params) {
             def loc = determineSpawnLocation(params)
             if ((walkable(loc) && floor(loc)) || params.forceSpawn) {
                 server.createCreature(params.monster, loc, params.friendly)
             }
         }
-        spawn(params, generator)
     }
     
     def spawnItems(Map params) {
@@ -198,13 +202,13 @@ public class GridiaScript {
         { loc -> server.addItemNear(params.item, loc, params.range, true) }
     :
         { loc -> server.addItem(params.item, loc) }
-        def generator = {
+
+        spawn(params) {
             def loc = determineSpawnLocation(params)
             if (item(loc).nothing && floor(loc)) {
                 methodCall(loc)
             }
         }
-        spawn(params, generator)
     }
     
     def spawnItem(Map params) {

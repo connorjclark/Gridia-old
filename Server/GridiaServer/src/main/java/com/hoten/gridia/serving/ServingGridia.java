@@ -412,29 +412,28 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         return itemToSet;
     }
 
-    //attempts to add an item at location, but if it is occupied, finds a nearby location
-    //goes target, leftabove target, above target, rightabove target, left target, right target, leftbelow target...
-    public ItemInstance addItemNear(ItemInstance item, Coord loc, int range, boolean includeTargetLocation) {
+    //attempts to find a nearby location fulfilling a predicate
+    //goes target, left-above, above, right-above, left, right, left-below...
+    public Coord findNearestTile(Coord loc, int range, boolean includeTargetLocation, Predicate<Coord> predicate) {
         int x0 = loc.x;
         int y0 = loc.y;
-        ItemInstance itemAdded;
         for (int offset = includeTargetLocation ? 0 : 1; offset <= range; offset++) {
             for (int y1 = y0 - offset; y1 <= offset + y0; y1++) {
                 if (y1 == y0 - offset || y1 == y0 + offset) {
                     for (int x1 = x0 - offset; x1 <= offset + x0; x1++) {
                         Coord newLoc = tileMap.wrap(new Coord(x1, y1, loc.z));
-                        if ((itemAdded = addItem(item, newLoc)) != null) {
-                            return itemAdded;
+                        if (predicate.test(newLoc)) {
+                            return newLoc;
                         }
                     }
                 } else {
                     Coord newLoc = tileMap.wrap(new Coord(x0 - offset, y1, loc.z));
-                    if ((itemAdded = addItem(item, newLoc)) != null) {
-                        return itemAdded;
+                    if (predicate.test(newLoc)) {
+                        return newLoc;
                     }
                     newLoc = tileMap.wrap(new Coord(x0 + offset, y1, loc.z));
-                    if ((itemAdded = addItem(item, newLoc)) != null) {
-                        return itemAdded;
+                    if (predicate.test(newLoc)) {
+                        return newLoc;
                     }
                 }
             }
@@ -442,8 +441,13 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         return null;
     }
 
-    public ItemInstance addItemNear(int index, ItemInstance item, int bufferzone) {
-        return addItemNear(item, tileMap.getCoordFromIndex(index), bufferzone, true);
+    public ItemInstance addItemNear(ItemInstance item, Coord nearLoc, int range, boolean includeTargetLocation) {
+        Coord destination = findNearestTile(nearLoc, range, includeTargetLocation, loc -> addItem(item, loc) != null);
+        return destination != null ? tileMap.getItem(destination) : null;
+    }
+
+    public ItemInstance addItemNear(int index, ItemInstance item, int range) {
+        return addItemNear(item, tileMap.getCoordFromIndex(index), range, true);
     }
 
     public void updateContainerSlot(Container container, int slotIndex) {
