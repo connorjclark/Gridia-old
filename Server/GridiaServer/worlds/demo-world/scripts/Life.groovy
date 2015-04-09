@@ -68,6 +68,6 @@ def dashAction(destination) {
     speed = 12 // tiles per second
     delta = (entity.location - destination).dist()
     time = 1000*delta/speed
-    server.moveCreatureTo(entity, destination, time as int, false, false, true)
     playAnimation(type: "Roll", at: entity.location)
+    server.moveCreatureTo(entity, destination, time as int, false, false, true)
 }
