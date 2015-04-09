@@ -29,6 +29,7 @@ namespace Gridia
                 else 
                 {
                     var actionIndex = numKeyPressed == 0 ? 9 : numKeyPressed - 1;
+                    _driver.ActionWindow.TriggerAction(actionIndex);
                 }
             }
 

@@ -4,16 +4,12 @@ Priority features
   transient entity properties
   player label is transparent
 
-  Combat
-    Action based
-    Switch target focus with keyboard
-    Actions have cooldown
-    example actions:
-      Hit with equipped weapon
-      Parry
-      Defend
-      Roll (moves character to another tile quickly)
-      Escape (get ability to move back)  
+  Select Action focus:
+    Press t, see numbers above 10 closest entities <20 tiles away && onscreen, press number to lock in
+    Moving does not unlock
+
+  Rolling: just give a direction, and it goes that way
+    introduces new action type: directional
 
   Context menu, using items with mouse
   Tutorial island (~10-15 minutes)
