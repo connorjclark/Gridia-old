@@ -19,6 +19,8 @@ public class GridiaDriver : MonoBehaviour
     public ContainerWindow SelectedContainer { get; set; }
     public ActionWindow ActionWindow { get; set; }
     public Creature SelectedCreature { get; set; }
+    public Vector3 focusPos; // cached
+    public float tileSize;
 
     void Start()
     {
@@ -92,7 +94,6 @@ public class GridiaDriver : MonoBehaviour
 
     public Vector2 GetRelativeScreenPosition(Vector3 playerPosition, Vector3 subjectCoord)
     {
-        var tileSize = 32 * Game.View.Scale;
         var relative = subjectCoord - playerPosition + new Vector3(Game.View.Width / 2, Game.View.Height / 2);
         return new Vector2(relative.x * tileSize, Screen.height - relative.y * tileSize - tileSize);
     }
@@ -126,17 +127,14 @@ public class GridiaDriver : MonoBehaviour
 
         //temp :(
         var playerZ = (int) Game.View.Focus.Position.z;
-        var focusPos = Game.View.FocusPosition;
-        var tileSize = 32 * Game.View.Scale;
+        focusPos = Game.View.FocusPosition;
+        tileSize = 32 * Game.View.Scale;
         foreach (var cre in Game.TileMap.Creatures.ValuesToList()) 
         {
             var pos = cre.Position;
             if (playerZ != pos.z) continue;
-            // :(
-            var dx = Game.TileMap.WrappedDistBetweenX(pos, focusPos);
-            var dy = Game.TileMap.WrappedDistBetweenY(pos, focusPos);
-            
-            var rect = new Rect(dx * tileSize, Screen.height - dy * tileSize - tileSize, tileSize, tileSize);
+
+            var rect = GetScreenRectOfLocation(pos);
             TextureManager.DrawCreature(rect, cre, Game.View.Scale);
 
             var mouseDx = mouseTileCoord.x - pos.x;
@@ -246,6 +244,13 @@ public class GridiaDriver : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    public Rect GetScreenRectOfLocation(Vector3 loc)
+    {
+        var dx = Game.TileMap.WrappedDistBetweenX(loc, focusPos);
+        var dy = Game.TileMap.WrappedDistBetweenY(loc, focusPos);
+        return new Rect(dx * tileSize, Screen.height - dy * tileSize - tileSize, tileSize, tileSize);
     }
 
     public Vector2 GetMouse()

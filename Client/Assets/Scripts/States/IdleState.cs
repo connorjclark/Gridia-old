@@ -33,6 +33,12 @@ namespace Gridia
                 }
             }
 
+            if (Input.GetKey(KeyCode.T))
+            {
+                End(stateMachine, dt, new TargetSelectState());
+                return;
+            }
+
             if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftAlt)) 
             {
                 End(stateMachine, dt, new ItemMovementState(_game.GetSelectorCoord()));
