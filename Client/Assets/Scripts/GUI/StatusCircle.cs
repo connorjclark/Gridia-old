@@ -31,20 +31,16 @@ namespace Gridia
         public float Radius { get; set; }
         public float ThetaStep { get; set; }
         private LineRenderer _lineRenderer;
-        private Text _text;
+        public Text text;
 
         public StatusCircle()
         {
             ThetaStep = 0.1f;
-            MaxHealth = 200;
             Radius = 16;
         }
 
         public void Start()
         {
-            //var go = new GameObject();
-            //go.transform.parent = gameObject.transform;
-
             _lineRenderer = gameObject.AddComponent<LineRenderer>();
             _lineRenderer.useWorldSpace = false;
             _lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
@@ -54,9 +50,15 @@ namespace Gridia
 
             var canvas = Instantiate(Resources.Load("Text")) as GameObject;
             canvas.transform.parent = gameObject.transform;
-            _text = canvas.GetComponentInChildren<Text>();
-            _text.alignment = TextAnchor.MiddleCenter;
-            _text.fontStyle = FontStyle.Bold;
+            text = canvas.GetComponentInChildren<Text>();
+            text.fontStyle = FontStyle.Bold;
+            text.color = Color.white;
+            text.text = "";
+        }
+
+        public bool IsActive()
+        {
+            return CurrentHealth != MaxHealth || MaxHealth != 0;
         }
 
         private void RenderCircle()
@@ -64,7 +66,7 @@ namespace Gridia
             var maxTheta = Mathf.PI*2*(1f*CurrentHealth/MaxHealth);
             var i = 0;
             _lineRenderer.SetVertexCount(Mathf.CeilToInt(maxTheta/ThetaStep));
-            _text.text = CurrentHealth + "";
+            if (IsActive()) text.text = (int)CurrentHealth + "";
             for (var theta = 0.0f; theta < maxTheta; theta += ThetaStep)
             {
                 var x = Radius * Mathf.Cos(theta);

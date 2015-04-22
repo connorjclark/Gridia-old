@@ -1,16 +1,41 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Gridia
 {
     public class CreatureScript : MonoBehaviour
     {
         private SpriteRenderer _spriteRenderer;
+        private Text _nameText;
+        private StatusCircle _statusCircle;
 
         public Creature Creature { get; set; }
 
         public void Start()
         {
+            _statusCircle = GetComponent<StatusCircle>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            var canvas = Instantiate(Resources.Load("Text")) as GameObject;
+            canvas.transform.parent = gameObject.transform;
+            _nameText = canvas.GetComponentInChildren<Text>();
+            _nameText.transform.localPosition = new Vector2(0, 32);
+            _nameText.fontStyle = FontStyle.Bold;
+            _nameText.color = Color.white;
+        }
+
+        public void ClearImage()
+        {
+            _spriteRenderer.sprite = null;
+        }
+
+        // :(
+        private void SetVisibility(bool v)
+        {
+            _spriteRenderer.enabled = v;
+            _nameText.enabled = v;
+            _statusCircle.enabled = v;
+            _statusCircle.text.enabled = v;
+            GetComponent<LineRenderer>().enabled = v;
         }
 
         public void Update()
@@ -20,14 +45,11 @@ namespace Gridia
             if (_spriteRenderer.sprite == null)
             {
                 SetupSprite();
+                _nameText.text = Creature.Name;
             }
-//            if (_spriteRenderer.sprite == null)
-//            {
-//                _spriteRenderer.sprite = Sprite.Create(Resources.Load<Texture2D>("texture"), new Rect(0, 0, 32, 32), new Vector2(0.5f, 0.5f), 1);
-//            }
             var playerLoc = Locator.Get<TileMapView>().Focus.Position;
             transform.localPosition = Locator.Get<GridiaDriver>().GetRelativeScreenPositionForCreature(playerLoc, Creature.Position);
-            _spriteRenderer.enabled = playerLoc.z == Creature.Position.z;
+            SetVisibility(playerLoc.z == Creature.Position.z);
         }
 
         private void SetupSprite()

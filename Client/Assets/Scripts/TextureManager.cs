@@ -58,7 +58,7 @@ namespace Gridia
             var texCoords = new Rect(textureX / 10.0f, textureY / 10.0f, 1 / 10.0f, 1 / 10.0f); // :( don't hardcode 10
             GUI.DrawTextureWithTexCoords(rect, texture, texCoords);
         }
-
+        // :( delete
         public void DrawCreature(Rect rect, Creature creature, float scale)
         {
             // :(

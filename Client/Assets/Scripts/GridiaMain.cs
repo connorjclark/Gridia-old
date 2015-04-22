@@ -42,14 +42,14 @@ public class GridiaGame
     public void CreateCreature(int id, String name, CreatureImage image, int x, int y, int z)
     {
         var cre = TileMap.CreateCreature(id, name, image, x, y, z);
-        MainThreadQueue.Add(() => _driver.AddCreature(cre));
+        if (cre != null) MainThreadQueue.Add(() => _driver.AddCreature(cre));
     }
 
     public void RemoveCreature(int id)
     {
         TileMap.RemoveCreature(id);
         MainThreadQueue.Add(() => GameObject.Destroy(GameObject.Find("Creature " + id)));
-        if (_driver.SelectedCreature.Id == id) _driver.SelectedCreature = null;
+        if (_driver.SelectedCreature != null && _driver.SelectedCreature.Id == id) _driver.SelectedCreature = null;
     }
 
     // :(

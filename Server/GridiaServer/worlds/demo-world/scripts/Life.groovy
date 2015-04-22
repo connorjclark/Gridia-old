@@ -1,12 +1,5 @@
-entity.maxLife = 3
+entity.maxLife = 6
 entity.life = entity.maxLife
-
-def announceLife() {
-    def message = server.messageBuilder.setLife(entity)
-    server.sendToClientsWithAreaLoaded(message, entity.location)
-}
-
-announceLife()
 
 entity.metaClass.isAlive = { delegate.life > 0 }
 
@@ -15,7 +8,8 @@ entity.metaClass.hurt = { damage, deathReason ->
     delegate.life -= damage
     playAnimation(type: "Attack")
 
-    announceLife()
+    def message = server.messageBuilder.setLife(delegate)
+    server.sendToClientsWithAreaLoaded(message, delegate.location)
 
     if (!delegate?.alive) {
         eventDispatcher.dispatch("Death", delegate, [deathReason:deathReason])

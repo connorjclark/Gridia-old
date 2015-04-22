@@ -1,17 +1,19 @@
+For combat
+
+  Create an arena for pvp testing
+  Use mouse to select player
+  fire spell
+
 Priority features
+
+  Assess how to refactor TileMapView
 
   GridiaJsonMessageHandler
   transient entity properties
   player label is transparent
 
-  Select Action focus:
-    Press t, see numbers above 10 closest entities <20 tiles away && onscreen, press number to lock in
-    Moving does not unlock
-
   Rolling: just give a direction, and it goes that way
     introduces new action type: directional
-
-
 
   Context menu, using items with mouse
   Tutorial island (~10-15 minutes)

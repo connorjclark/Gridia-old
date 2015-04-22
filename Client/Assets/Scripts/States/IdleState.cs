@@ -67,7 +67,7 @@ namespace Gridia
             else if (wasdKeys != Vector3.zero)
             {
                 var destination = _game.View.Focus.Position + wasdKeys;
-                if (Locator.Get<TileMap>().Walkable(destination))
+                if (Locator.Get<TileMap>().Walkable(destination) && !_game.View.Focus.HasAFuturePosition())
                 {
                     Locator.Get<GridiaDriver>().RemoveAllOpenContainers();
                     End(stateMachine, dt, new PlayerMovementState(wasdKeys));

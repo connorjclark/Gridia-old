@@ -40,6 +40,11 @@ namespace Gridia
             AddPositionSnapshot(new Vector3(x, y, z), false, getSystemTime() - RENDER_DELAY);
         }
 
+        public bool HasAFuturePosition()
+        {
+            return _positions[_positions.Count - 1].Timestamp > getSystemTime() - RENDER_DELAY;
+        }
+
         public void ClearSnapshots(int amountToKeep = 0) 
         {
             _positions.RemoveRange(0, _positions.Count - amountToKeep);

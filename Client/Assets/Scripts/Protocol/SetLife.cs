@@ -14,9 +14,15 @@ namespace Gridia.Protocol
 
             MainThreadQueue.Add(() =>
             {
-                var sc = GameObject.Find("Creature " + id).GetComponent<StatusCircle>();
+                var cre = GameObject.Find("Creature " + id);
+                var sc = cre.GetComponent<StatusCircle>();
+                var takeDamage = sc.IsActive() && currentHealth < sc.CurrentHealth;
                 sc.MaxHealth = maxHealth;
                 sc.CurrentHealth = currentHealth;
+                if (takeDamage)
+                {
+                    iTween.ColorFrom(cre, Color.red, 1f);
+                }
             });
         }
     }

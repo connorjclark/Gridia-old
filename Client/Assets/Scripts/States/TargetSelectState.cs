@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Gridia
 {
@@ -54,19 +53,26 @@ namespace Gridia
         public override void Enter(StateMachine stateMachine)
         {
             _keyCodeToCreature = new Dictionary<KeyCode, Creature>();
-            var origin = Locator.Get<TileMapView>().Focus.Position;
-            const int range = 10;
-            var sx = (int) (origin.x - range);
-            var sy = (int) (origin.y - range);
-            for (var x = 0; x < range*2; x++)
+            var view = _game.View;
+            var origin = view.Focus.Position;
+            var rangex = view.Width/2;
+            var rangey = view.Height/2;
+            var sx = (int)(origin.x - rangex);
+            var sy = (int)(origin.y - rangey);
+            for (var x = 0; x < rangex*2; x++)
             {
-                for (var y = 0; y < range*2; y++)
+                for (var y = 0; y < rangey*2; y++)
                 {
                     var cre = _tileMap.GetCreatureAt(new Vector3(sx + x, sy + y, origin.z));
-                    if (cre == null || _keyCodeToCreature.Count == _selectKeyCodes.Length || cre == _game.View.Focus) continue;
+                    if (cre == null || _keyCodeToCreature.Count == _selectKeyCodes.Length || cre == _game.View.Focus)
+                        continue;
                     var keyCode = _selectKeyCodes[_keyCodeToCreature.Count];
                     _keyCodeToCreature[keyCode] = cre;
                 }
+            }
+            if (_keyCodeToCreature.Count == 0)
+            {
+                ReturnToIdle(stateMachine);
             }
         }
 

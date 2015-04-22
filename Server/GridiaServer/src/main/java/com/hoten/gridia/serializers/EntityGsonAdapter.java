@@ -48,10 +48,10 @@ public class EntityGsonAdapter extends GsonAdapter<Entity> {
                 JsonPrimitive jsonClass = (JsonPrimitive) valueAndClass.get("class");
                 Type klass = Class.forName(jsonClass.getAsString());
                 Object value = context.deserialize((JsonElement) valueAndClass.get("value"), klass);
-                if (!"location".equals(key)) {
-                    entity.setAttribute(key, value);
-                } else {
+                if ("location".equals(key)) {
                     entity.location = (Coord) value;
+                } else if (!"target".equals(key)) {
+                    entity.setAttribute(key, value);
                 }
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(EntityGsonAdapter.class.getName()).log(Level.SEVERE, null, ex);

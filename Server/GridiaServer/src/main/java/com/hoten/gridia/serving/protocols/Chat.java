@@ -33,7 +33,7 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
         //server.dispatchEvent("Chat", null, "message", message, "player", player);
 
         if (message.startsWith("!script ")) {
-            String script = message.split(" ", 2)[1];
+            String script = message.split("\\s+", 2)[1];
             try {
                 server.addScript(script, "CustomScript" + script.hashCode());
             } catch (CompilationFailedException ex) {
@@ -43,7 +43,7 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
             }
         } else if (message.startsWith("!image ")) {
             try {
-                String[] split = message.split(" ");
+                String[] split = message.split("\\s+");
                 int image = split.length > 1 ? Integer.parseInt(split[1]) : 0;
                 int width = split.length == 4 && split[2].matches("\\d+") ? Integer.parseInt(split[2]) : 1;
                 int height = split.length == 4 && split[3].matches("\\d+") ? Integer.parseInt(split[3]) : 1;
@@ -57,7 +57,7 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
             }
         } else if (message.startsWith("!friendly ") && player.isAdmin()) {
             try {
-                String[] split = message.split(" ", 3);
+                String[] split = message.split("\\s+", 3);
                 if (split.length == 3) {
                     int id = Integer.parseInt(split[1]);
                     Monster monster = server.contentManager.getMonster(id);
@@ -71,7 +71,7 @@ public class Chat extends JsonMessageHandler<ConnectionToGridiaClientHandler> {
             }
         } else if (message.startsWith("!monster ") && player.isAdmin()) {
             try {
-                String[] split = message.split(" ", 3);
+                String[] split = message.split("\\s+", 3);
                 if (split.length == 2) {
                     int id = Integer.parseInt(split[1]);
                     Monster monster = server.contentManager.getMonster(id);

@@ -321,6 +321,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
         sendToClientsWithSectorLoaded(messageBuilder.addCreature(creature), sector);
         creatures.put(creature.id, creature);
         attachScriptsToCreature(creature);
+        sendToClientsWithAreaLoaded(messageBuilder.setLife(creature), creature.location);
     }
 
     // :( creating creatures need refactoring, standardization

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serving;
+using UnityEngine;
 
 namespace Gridia.Protocol
 {
@@ -16,6 +17,7 @@ namespace Gridia.Protocol
             var backToJson = JsonConvert.SerializeObject(data["image"]); // :(
             var image = JsonConvert.DeserializeObject<CreatureImage>(backToJson, new CreatureImageConverter());
             game.TileMap.GetCreature(id).Image = image;
+            MainThreadQueue.Add(() => GameObject.Find("Creature " + id).GetComponent<CreatureScript>().ClearImage());
         }
     }
 }

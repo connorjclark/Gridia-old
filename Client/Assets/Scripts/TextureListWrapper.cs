@@ -21,16 +21,15 @@ namespace Gridia
             FallbackTexture = fallbackTexture;
             _fileSystem = fileSystem;
             Textures = new List<Texture2D>();
-            // FallbackSprite = Sprite.Create(FallbackTexture, new Rect(0, 0, 0, 0), Vector2.zero, 40*70);
         }
 
         public Sprite GetSprite(int spriteIndex, int width = 1, int height = 1)
         {
             var tex = GetTextureForSprite(spriteIndex);
             if (tex == FallbackTexture) return null;
-            var x = spriteIndex%GridiaConstants.NumTilesInSpritesheetRow;
-            var y = (spriteIndex%GridiaConstants.SpriteSheetSize)%GridiaConstants.NumTilesInSpritesheetRow;
-            return Sprite.Create(tex, new Rect(x*32, y*32, 32, 32), new Vector2(0.5f, 0.5f), 1);
+            var x = (spriteIndex%GridiaConstants.SpritesInSheet)%GridiaConstants.NumTilesInSpritesheetRow;
+            var y = 10 - (spriteIndex%GridiaConstants.SpritesInSheet)/GridiaConstants.NumTilesInSpritesheetRow - height; // ?
+            return Sprite.Create(tex, new Rect(x*32, y*32, 32*width, 32*height), new Vector2(0.5f, 0.5f), 1);
         }
 
         public Texture2D GetTexture(int textureIndex) 
