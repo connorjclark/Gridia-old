@@ -11,6 +11,8 @@ Priority features
   Rolling: just give a direction, and it goes that way
     introduces new action type: directional
 
+
+
   Context menu, using items with mouse
   Tutorial island (~10-15 minutes)
     Deep water
@@ -23,6 +25,7 @@ Priority features
   Running into items uses equipped item on it.
     Equip pickaxe to mine
     Equip axe to cut down trees easier
+  Convert entitites to unity objects
 
 Issues
 

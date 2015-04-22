@@ -16,7 +16,7 @@ namespace Gridia.Protocol
             var z = (int) data["loc"]["z"];
 
             var chat = Locator.Get<ChatWindow>();
-            chat.Append(user, text);
+            MainThreadQueue.Add(() => chat.Append(user, text));
 
             Locator.Get<GridiaDriver>().FloatingTexts.Add(new FloatingText(new Vector3(x, y, z), " " + text));
         }

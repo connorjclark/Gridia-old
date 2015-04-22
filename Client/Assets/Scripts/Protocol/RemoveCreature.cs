@@ -9,7 +9,7 @@ namespace Gridia.Protocol
         {
             var id = (int) data["id"];
 
-            connection.GetGame().TileMap.RemoveCreature(id);
+            connection.GetGame().RemoveCreature(id);
         }
     }
 }

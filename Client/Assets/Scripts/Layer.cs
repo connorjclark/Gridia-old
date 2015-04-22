@@ -44,6 +44,8 @@ namespace Gridia
         {
             var renderable = new GameObject(name, typeof(MeshRenderer), typeof(MeshFilter));
             renderable.GetComponent<MeshFilter>().mesh = new Mesh();
+            //renderable.transform.parent = GameObject.Find("Game").transform;
+            //renderable.transform.localScale = Vector3.one; // :(
             return renderable;
         }
 

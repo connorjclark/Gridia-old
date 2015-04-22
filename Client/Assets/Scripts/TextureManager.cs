@@ -72,7 +72,7 @@ namespace Gridia
             var image = creature.Image;
             if (image is DefaultCreatureImage)
             {
-                var defaultImage = image as DefaultCreatureImage;
+                var defaultImage = (DefaultCreatureImage) image;
                 var spriteId = defaultImage.SpriteIndex;
                 var textureX = (spriteId % GridiaConstants.SpritesInSheet) % GridiaConstants.NumTilesInSpritesheetRow;
                 var textureY = 10 - (spriteId % GridiaConstants.SpritesInSheet) / GridiaConstants.NumTilesInSpritesheetRow - defaultImage.Height; // ?
@@ -84,7 +84,7 @@ namespace Gridia
             }
             else if (image is CustomPlayerImage)
             {
-                var customImage = image as CustomPlayerImage;
+                var customImage = (CustomPlayerImage) image;
                 DrawCreaturePart(rect, Heads, customImage.Head);
                 DrawCreaturePart(rect, Chests, customImage.Chest);
                 DrawCreaturePart(rect, Legs, customImage.Legs);

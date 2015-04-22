@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Gridia
 {
@@ -40,12 +41,14 @@ namespace Gridia
 
         private readonly GridiaDriver _driver;
         private readonly TileMap _tileMap;
+        private readonly GridiaGame _game;
         private Dictionary<KeyCode, Creature> _keyCodeToCreature;
 
         public TargetSelectState()
         {
             _driver = Locator.Get<GridiaDriver>();
             _tileMap = Locator.Get<TileMap>();
+            _game = Locator.Get<GridiaGame>();
         }
 
         public override void Enter(StateMachine stateMachine)
@@ -60,7 +63,7 @@ namespace Gridia
                 for (var y = 0; y < range*2; y++)
                 {
                     var cre = _tileMap.GetCreatureAt(new Vector3(sx + x, sy + y, origin.z));
-                    if (cre == null || _keyCodeToCreature.Count == _selectKeyCodes.Length) continue;
+                    if (cre == null || _keyCodeToCreature.Count == _selectKeyCodes.Length || cre == _game.View.Focus) continue;
                     var keyCode = _selectKeyCodes[_keyCodeToCreature.Count];
                     _keyCodeToCreature[keyCode] = cre;
                 }
@@ -73,6 +76,7 @@ namespace Gridia
             if (keyCodeUp != KeyCode.None)
             {
                 _driver.SelectedCreature = _keyCodeToCreature[keyCodeUp];
+                Locator.Get<ConnectionToGridiaServerHandler>().SelectTarget(_driver.SelectedCreature);
                 ReturnToIdle(stateMachine);
             }
             if (Input.GetKeyUp(KeyCode.Escape))
@@ -84,6 +88,7 @@ namespace Gridia
         private void DrawKeyCodeOverCreature(Creature creature, KeyCode keyCode)
         {
             var rect = _driver.GetScreenRectOfLocation(creature.Position);
+            GridiaConstants.GUIDrawSelector(rect, new Color32(255, 255, 0, 100));
             rect.y -= _driver.tileSize * 0.5f;
             GUI.Box(rect, KeyCodeToString(keyCode));
         }

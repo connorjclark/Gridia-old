@@ -18,7 +18,7 @@ namespace Gridia.Protocol
             var y = (int) data["loc"]["y"];
             var z = (int) data["loc"]["z"];
 
-            connection.GetGame().TileMap.CreateCreature(id, name, image, x, y, z);
+            connection.GetGame().CreateCreature(id, name, image, x, y, z);
         }
     }
 }

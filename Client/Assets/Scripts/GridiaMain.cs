@@ -1,4 +1,5 @@
-﻿using Gridia;
+﻿using System;
+using Gridia;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -36,6 +37,19 @@ public class GridiaGame
         Locator.Provide(View);
         StateMachine.SetState(new IdleState());
         _driver = Locator.Get<GridiaDriver>();
+    }
+
+    public void CreateCreature(int id, String name, CreatureImage image, int x, int y, int z)
+    {
+        var cre = TileMap.CreateCreature(id, name, image, x, y, z);
+        MainThreadQueue.Add(() => _driver.AddCreature(cre));
+    }
+
+    public void RemoveCreature(int id)
+    {
+        TileMap.RemoveCreature(id);
+        MainThreadQueue.Add(() => GameObject.Destroy(GameObject.Find("Creature " + id)));
+        if (_driver.SelectedCreature.Id == id) _driver.SelectedCreature = null;
     }
 
     // :(

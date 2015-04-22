@@ -8,22 +8,32 @@ using Serving.FileTransferring;
 namespace Gridia
 {
     public class TextureListWrapper {
-        public List<Texture> Textures { get; private set; }
+        public List<Texture2D> Textures { get; private set; }
         public int Count { get { return Textures.Count; } }
         public String Prefix { get; private set; }
-        public Texture FallbackTexture { get; private set; }
+        public Texture2D FallbackTexture { get; private set; }
         private readonly FileSystem _fileSystem;
         private readonly List<int> _requestedTextureIndices = new List<int>();
 
-        public TextureListWrapper(String prefix, Texture fallbackTexture, FileSystem fileSystem)
+        public TextureListWrapper(String prefix, Texture2D fallbackTexture, FileSystem fileSystem)
         {
             Prefix = prefix;
             FallbackTexture = fallbackTexture;
             _fileSystem = fileSystem;
-            Textures = new List<Texture>();
+            Textures = new List<Texture2D>();
+            // FallbackSprite = Sprite.Create(FallbackTexture, new Rect(0, 0, 0, 0), Vector2.zero, 40*70);
         }
 
-        public Texture GetTexture(int textureIndex) 
+        public Sprite GetSprite(int spriteIndex, int width = 1, int height = 1)
+        {
+            var tex = GetTextureForSprite(spriteIndex);
+            if (tex == FallbackTexture) return null;
+            var x = spriteIndex%GridiaConstants.NumTilesInSpritesheetRow;
+            var y = (spriteIndex%GridiaConstants.SpriteSheetSize)%GridiaConstants.NumTilesInSpritesheetRow;
+            return Sprite.Create(tex, new Rect(x*32, y*32, 32, 32), new Vector2(0.5f, 0.5f), 1);
+        }
+
+        public Texture2D GetTexture(int textureIndex) 
         {
             if (Count <= textureIndex || Textures[textureIndex] == null)
             {
@@ -36,7 +46,7 @@ namespace Gridia
             return Textures[textureIndex];
         }
 
-        public Texture GetTextureForSprite(int spriteIndex) 
+        public Texture2D GetTextureForSprite(int spriteIndex) 
         {
             var textureIndex = spriteIndex / GridiaConstants.SpritesInSheet;
             return GetTexture(textureIndex);
@@ -61,7 +71,7 @@ namespace Gridia
                             wrapMode = TextureWrapMode.Clamp
                         };
                         tex.LoadImage(data);
-                        InsertTexture(tex, index);
+                        InsertIntoList(Textures, tex, index);
                         _requestedTextureIndices.Remove(index);
                     });
                 }
@@ -72,16 +82,16 @@ namespace Gridia
             }).Start();
         }
 
-        private void InsertTexture(Texture texture, int index)
+        private void InsertIntoList<T>(List<T> list, T texture, int index)
         {
-            if (Count <= index)
+            if (list.Count <= index)
             {
-                for (var i = Count; i <= index; i++) 
+                for (var i = list.Count; i <= index; i++) 
                 {
                     Textures.Add(null);
                 }
             }
-            Textures[index] = texture;
+            list[index] = texture;
         }
     }
 }

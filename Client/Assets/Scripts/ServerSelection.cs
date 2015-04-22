@@ -181,7 +181,7 @@ namespace Gridia
                     catch (Exception ex)
                     {
                         connecting = false;
-                        Debug.Log(ex);
+                        Debug.LogError(ex);
                         GridiaConstants.ErrorMessage = "Connection to server has been lost.";
                         GridiaConstants.ErrorMessageAction = () =>
                         {

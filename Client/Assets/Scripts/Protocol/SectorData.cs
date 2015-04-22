@@ -61,7 +61,7 @@ namespace Gridia.Protocol
                         image = customImage;
                         break;
                 }
-                game.TileMap.CreateCreature(id, name, image, x, y, z);
+                game.CreateCreature(id, name, image, x, y, z);
             }
         }
     }

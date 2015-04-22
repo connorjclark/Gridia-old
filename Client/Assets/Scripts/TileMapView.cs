@@ -290,8 +290,6 @@ namespace Gridia
         {
             var result = new List<Layer>();
 
-            var contentManager = Locator.Get<ContentManager>();
-
             result.Add(new Layer(
                 "Floor layer",
                 this,

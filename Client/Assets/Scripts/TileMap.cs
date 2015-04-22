@@ -58,12 +58,13 @@ namespace Gridia
             return sector;
         }
 
-        public void CreateCreature(int id, String name, CreatureImage image, int x, int y, int z)
+        public Creature CreateCreature(int id, String name, CreatureImage image, int x, int y, int z)
         {
             if (!Creatures.HasKey(id))
             {
-                Creatures[id] = new Creature(id, name, image, x, y, z);
+                return Creatures[id] = new Creature(id, name, image, x, y, z);
             }
+            return null;
         }
 
         public void RemoveCreature(int id)

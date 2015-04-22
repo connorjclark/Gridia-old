@@ -81,7 +81,7 @@ public class GridiaDriver : MonoBehaviour
     {
         TabbedGui.Add(1221, InvGui, true); // :(
         TabbedGui.Add(15, EquipmentGui, false); // :(
-        TabbedGui.Add(147, ChatGui, false); // :(
+        TabbedGui.Add(147, ChatGui, true); // :(
         TabbedGui.Add(0, Locator.Get<HelpMenu>(), true); // :(
         ActionWindow.TempAddActions();
         TabbedGui.Add(32, ActionWindow, true);
@@ -98,7 +98,14 @@ public class GridiaDriver : MonoBehaviour
         return new Vector2(relative.x * tileSize, Screen.height - relative.y * tileSize - tileSize);
     }
 
-    bool IsGameReady() {
+    // :(
+    public Vector2 GetRelativeScreenPositionForCreature(Vector3 playerPosition, Vector3 subjectCoord)
+    {
+        var relative = subjectCoord - playerPosition + new Vector3(Game.View.Width/2 + 0.5f, Game.View.Height/2 + 0.5f);
+        return relative*GridiaConstants.SpriteSize;
+    }
+
+    public bool IsGameReady() {
         return ContentManager.DoneLoading && TextureManager.DoneLoading && Game != null;
     }
 
@@ -129,39 +136,46 @@ public class GridiaDriver : MonoBehaviour
         var playerZ = (int) Game.View.Focus.Position.z;
         focusPos = Game.View.FocusPosition;
         tileSize = 32 * Game.View.Scale;
-        foreach (var cre in Game.TileMap.Creatures.ValuesToList()) 
+        GameObject.Find("Game").transform.localScale = new Vector3(Game.View.Scale, Game.View.Scale, 1); // :(
+//        foreach (var cre in Game.TileMap.Creatures.ValuesToList()) 
+//        {
+//            var pos = cre.Position;
+//            if (playerZ != pos.z) continue;
+//
+//            var rect = GetScreenRectOfLocation(pos);
+//            TextureManager.DrawCreature(rect, cre, Game.View.Scale);
+//
+//            var mouseDx = mouseTileCoord.x - pos.x;
+//            var mouseDy = mouseTileCoord.y - pos.y;
+//            if (mouseDx >= 0 && mouseDy >= 0 && mouseDx < 1 && mouseDy < 1 && cre != Game.View.Focus && SelectedCreature != cre)
+//            {
+//                if (Event.current.type == EventType.MouseUp)
+//                {
+//                    SelectedCreature = cre;
+//                    Locator.Get<ConnectionToGridiaServerHandler>().SelectTarget(SelectedCreature);
+//                }
+//                else
+//                {
+//                    GridiaConstants.GUIDrawSelector(rect, new Color32(255, 255, 0, 100));
+//                }
+//            }
+//
+//            if (SelectedCreature == cre)
+//            {
+//                GridiaConstants.GUIDrawSelector(rect, new Color32(255, 0, 0, 100));
+//            }
+//
+//            if (cre.Name.Length <= 0) continue;
+//            var labelRelative = pos - Game.View.FocusPosition; // :(
+//            var nameLabel = new Label(new Vector2((labelRelative.x + 0.5f) * tileSize, Screen.height - (labelRelative.y + 1.5f) * tileSize), cre.Name, true, true); // :(
+//            nameLabel.TextWidth = (int) GUI.skin.label.CalcSize(new GUIContent(nameLabel.Text)).x;
+//            nameLabel.Render();
+//        }
+
+        if (SelectedCreature != null)
         {
-            var pos = cre.Position;
-            if (playerZ != pos.z) continue;
-
-            var rect = GetScreenRectOfLocation(pos);
-            TextureManager.DrawCreature(rect, cre, Game.View.Scale);
-
-            var mouseDx = mouseTileCoord.x - pos.x;
-            var mouseDy = mouseTileCoord.y - pos.y;
-            if (mouseDx >= 0 && mouseDy >= 0 && mouseDx < 1 && mouseDy < 1 && cre != Game.View.Focus && SelectedCreature != cre)
-            {
-                if (Event.current.type == EventType.MouseUp)
-                {
-                    SelectedCreature = cre;
-                    Locator.Get<ConnectionToGridiaServerHandler>().SelectTarget(SelectedCreature);
-                }
-                else
-                {
-                    GridiaConstants.GUIDrawSelector(rect, new Color32(255, 255, 0, 100));
-                }
-            }
-
-            if (SelectedCreature == cre)
-            {
-                GridiaConstants.GUIDrawSelector(rect, new Color32(255, 0, 0, 100));
-            }
-
-            if (cre.Name.Length <= 0) continue;
-            var labelRelative = pos - Game.View.FocusPosition; // :(
-            var nameLabel = new Label(new Vector2((labelRelative.x + 0.5f) * tileSize, Screen.height - (labelRelative.y + 1.5f) * tileSize), cre.Name, true, true); // :(
-            nameLabel.TextWidth = (int) GUI.skin.label.CalcSize(new GUIContent(nameLabel.Text)).x;
-            nameLabel.Render();
+            var rect = GetScreenRectOfLocation(SelectedCreature.Position);
+            GridiaConstants.GUIDrawSelector(rect, new Color32(255, 0, 0, 100));
         }
 
         if (!Game.HideSelector)
@@ -246,6 +260,23 @@ public class GridiaDriver : MonoBehaviour
         }
     }
 
+    public void AddCreature(Creature creature)
+    {
+        var go = Instantiate(Resources.Load("Creature")) as GameObject;
+        go.name = "Creature " + creature.Id;
+        go.transform.parent = GameObject.Find("Creatures").transform;
+        go.transform.localScale = Vector3.one; // :(
+        var script = go.GetComponent<CreatureScript>();
+        script.Creature = creature;
+    }
+
+    public Vector3 GetScreenPositionOfLocation(Vector3 loc)
+    {
+        var dx = Game.TileMap.WrappedDistBetweenX(loc, focusPos);
+        var dy = Game.TileMap.WrappedDistBetweenY(loc, focusPos);
+        return new Vector3(dx * tileSize, Screen.height - dy * tileSize - tileSize, 0);
+    }
+
     public Rect GetScreenRectOfLocation(Vector3 loc)
     {
         var dx = Game.TileMap.WrappedDistBetweenX(loc, focusPos);
@@ -320,7 +351,7 @@ public class GridiaDriver : MonoBehaviour
         var floatX = x - intX;
         var intY = (int) y;
         var floatY = y - intY;
-        var z = (int) Game.View.Focus.Position.z;
+        var z = (int) Game.View.FocusPosition.z;
 
         x = Game.TileMap.Wrap(intX + (int)Game.View.FocusPosition.x) + floatX;
         y = Game.TileMap.Wrap(intY + (int)Game.View.FocusPosition.y) + floatY;
@@ -446,8 +477,8 @@ public class GridiaDriver : MonoBehaviour
     void ResizeCamera()
     {
         var camera = Camera.main;
-        camera.orthographicSize = Screen.height / 2.0f;
-        camera.transform.position = new Vector3(Screen.width / 2.0f, Screen.height / 2.0f, -100);
+        camera.orthographicSize = Screen.height/2f;
+        camera.transform.position = new Vector3(Screen.width/2f, Screen.height/2f, -100);
     }
 
     public void OnApplicationQuit() 

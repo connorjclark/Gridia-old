@@ -1,4 +1,12 @@
-entity.life = 3
+entity.maxLife = 3
+entity.life = entity.maxLife
+
+def announceLife() {
+    def message = server.messageBuilder.setLife(entity)
+    server.sendToClientsWithAreaLoaded(message, entity.location)
+}
+
+announceLife()
 
 entity.metaClass.isAlive = { delegate.life > 0 }
 
@@ -6,6 +14,9 @@ entity.metaClass.hurt = { damage, deathReason ->
     if (delegate.friendly) return
     delegate.life -= damage
     playAnimation(type: "Attack")
+
+    announceLife()
+
     if (!delegate?.alive) {
         eventDispatcher.dispatch("Death", delegate, [deathReason:deathReason])
     }
@@ -28,7 +39,7 @@ onDeath { event ->
     spawnItem(item: item(name: "Small Pool Of Blood"), near: entity.location)
     if (entity.belongsToPlayer) {
         teleport(to: server.tileMap.defaultPlayerSpawn) // :(
-        entity.life = 3
+        entity.life = entity.maxLife
     } else {
         if (entity.inventory) {
             server.dropContainerNear(entity.inventory, entity.location) // :(

@@ -209,4 +209,13 @@ public class GridiaMessageToClientBuilder {
                 .set("message", message)
                 .build();
     }
+
+    public Message setLife(Entity entity) {
+        return new JsonMessageBuilder()
+                .type("SetLife")
+                .set("id", entity.id)
+                .set("currentLife", entity.getAttribute("life"))
+                .set("maxLife", entity.getAttribute("maxLife"))
+                .build();
+    }
 }
