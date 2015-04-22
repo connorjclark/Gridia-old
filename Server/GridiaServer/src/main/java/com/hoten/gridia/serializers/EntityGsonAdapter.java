@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class EntityGsonAdapter extends GsonAdapter<Entity> {
 
     private void serializeWithType(JsonSerializationContext jsc, JsonObject into, String name, Object value) {
-        if (value.getClass() != Container.class) {
+        if (value != null && value.getClass() != Container.class) {
             JsonObject jo2 = new JsonObject();
             jo2.addProperty("class", value.getClass().getName());
             jo2.add("value", jsc.serialize(value));

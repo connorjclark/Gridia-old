@@ -226,7 +226,7 @@ public class ConnectionToGridiaServerHandler : SocketHandler
     {
         var message = new JsonMessageBuilder()
             .Type("SelectTarget")
-            .Set("id", creature.Id)
+            .Set("id", creature != null ? creature.Id : 0)
             .Build();
         _socketHandler.Send(message);
     }

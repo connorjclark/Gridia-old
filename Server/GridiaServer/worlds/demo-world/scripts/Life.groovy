@@ -55,17 +55,9 @@ def isNear(target) {
     Math.abs(entity.location.x - target.location.x) <= 1 && Math.abs(entity.location.y - target.location.y) <= 1
 }
 
-def getNear(target) {
-    def dx = Math.signum(target.location.x - entity.location.x) as int
-    def dy = Math.signum(target.location.y - entity.location.y) as int
-    entity.location = entity.location.add(dx, dy, 0)
-}
-
 def hitAction(target) {
     if (isNear(target)) {
         target.hurt(1, generateDeathReason(entity))
-    } else {
-        getNear(target)
     }
 }
 

@@ -33,7 +33,7 @@ namespace Gridia
                 }
             }
 
-            if (Input.GetKey(KeyCode.T))
+            if (Input.GetKeyUp(KeyCode.T))
             {
                 End(stateMachine, dt, new TargetSelectState());
                 return;
@@ -174,7 +174,7 @@ namespace Gridia
         {
             _driver.MouseDownItem = null;
             stateMachine.SetState(newState);
-            stateMachine.Step(dt);
+            // stateMachine.Step(dt);
             _driver.MouseDownItem = null;
             _game.HideSelector = true; // :( OnEnd()
         }

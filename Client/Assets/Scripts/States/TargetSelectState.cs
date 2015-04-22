@@ -52,27 +52,22 @@ namespace Gridia
 
         public override void Enter(StateMachine stateMachine)
         {
-            _keyCodeToCreature = new Dictionary<KeyCode, Creature>();
-            var view = _game.View;
-            var origin = view.Focus.Position;
-            var rangex = view.Width/2;
-            var rangey = view.Height/2;
-            var sx = (int)(origin.x - rangex);
-            var sy = (int)(origin.y - rangey);
-            for (var x = 0; x < rangex*2; x++)
-            {
-                for (var y = 0; y < rangey*2; y++)
-                {
-                    var cre = _tileMap.GetCreatureAt(new Vector3(sx + x, sy + y, origin.z));
-                    if (cre == null || _keyCodeToCreature.Count == _selectKeyCodes.Length || cre == _game.View.Focus)
-                        continue;
-                    var keyCode = _selectKeyCodes[_keyCodeToCreature.Count];
-                    _keyCodeToCreature[keyCode] = cre;
-                }
-            }
-            if (_keyCodeToCreature.Count == 0)
+            _driver.SelectedCreature = null;
+            var rangex = _game.View.Width/2;
+            var rangey = _game.View.Height/2;
+            var creatures = _game.GetCreaturesNearPlayer(rangex, rangey, _selectKeyCodes.Length);
+            if (creatures.Count == 0)
             {
                 ReturnToIdle(stateMachine);
+            }
+            else
+            {
+                _keyCodeToCreature = new Dictionary<KeyCode, Creature>();
+                creatures.ForEach(cre =>
+                {
+                    var keyCode = _selectKeyCodes[_keyCodeToCreature.Count];
+                    _keyCodeToCreature[keyCode] = cre;
+                });
             }
         }
 
@@ -82,10 +77,9 @@ namespace Gridia
             if (keyCodeUp != KeyCode.None)
             {
                 _driver.SelectedCreature = _keyCodeToCreature[keyCodeUp];
-                Locator.Get<ConnectionToGridiaServerHandler>().SelectTarget(_driver.SelectedCreature);
                 ReturnToIdle(stateMachine);
             }
-            if (Input.GetKeyUp(KeyCode.Escape))
+            if (Input.GetKeyUp(KeyCode.Escape) || Input.GetKeyUp(KeyCode.T))
             {
                 ReturnToIdle(stateMachine);
             }

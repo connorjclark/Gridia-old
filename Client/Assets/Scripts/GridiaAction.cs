@@ -41,6 +41,14 @@ namespace Gridia
             }
             else
             {
+                if (Locator.Get<GridiaDriver>().SelectedCreature == null)
+                {
+                    var creatureNear = Locator.Get<GridiaGame>().GetCreaturesNearPlayer(10, 10, 1);
+                    if (creatureNear.Count == 1)
+                    {
+                        Locator.Get<GridiaDriver>().SelectedCreature = creatureNear[0];
+                    }
+                }
                 Locator.Get<ConnectionToGridiaServerHandler>().PerformAction(Id);
                 _lastAttack = UnixTimeNow();
             }

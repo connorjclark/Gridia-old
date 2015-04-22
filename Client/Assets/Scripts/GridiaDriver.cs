@@ -18,7 +18,18 @@ public class GridiaDriver : MonoBehaviour
     public List<FloatingText> FloatingTexts = new List<FloatingText>();
     public ContainerWindow SelectedContainer { get; set; }
     public ActionWindow ActionWindow { get; set; }
-    public Creature SelectedCreature { get; set; }
+    private Creature _selectedCreature;
+
+    public Creature SelectedCreature
+    {
+        get { return _selectedCreature; }
+        set
+        {
+            _selectedCreature = value;
+            Locator.Get<ConnectionToGridiaServerHandler>().SelectTarget(_selectedCreature);
+        }
+    }
+
     public Vector3 focusPos; // cached
     public float tileSize;
 
@@ -116,6 +127,11 @@ public class GridiaDriver : MonoBehaviour
             return;
         }
         var mouseTileCoord = GetTileFloatLocationOfMouse();
+
+        // :( temp set Action window in middle of bottom part of screen
+        // really need to use unity GUI...
+        ActionWindow.X = (Screen.width - ActionWindow.Width) / 2;
+        ActionWindow.Y = Screen.height - ActionWindow.Height - 20;
 
         InputManager.Step();
         TabbedGui.Render();

@@ -39,6 +39,29 @@ public class GridiaGame
         _driver = Locator.Get<GridiaDriver>();
     }
 
+    public List<Creature> GetCreaturesNearPlayer(int rangex, int rangey, int limit)
+    {
+        var loc = View.Focus.Position;
+        var list = new List<Creature>();
+        var sx = (int)(loc.x - rangex);
+        var sy = (int)(loc.y - rangey);
+        for (var x = 0; x < rangex * 2; x++)
+        {
+            for (var y = 0; y < rangey * 2; y++)
+            {
+                var cre = TileMap.GetCreatureAt(new Vector3(sx + x, sy + y, loc.z));
+                if (cre == null || cre == View.Focus)
+                    continue;
+                list.Add(cre);
+                if (list.Count == limit)
+                {
+                    break;
+                }
+            }
+        }
+        return list;
+    }
+
     public void CreateCreature(int id, String name, CreatureImage image, int x, int y, int z)
     {
         var cre = TileMap.CreateCreature(id, name, image, x, y, z);
