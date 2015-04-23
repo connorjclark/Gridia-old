@@ -1,6 +1,7 @@
 ﻿using Gridia;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GridiaDriver : MonoBehaviour
@@ -206,7 +207,7 @@ public class GridiaDriver : MonoBehaviour
             GridiaConstants.GUIDrawSelector(selectorRect, new Color32(0, 0, 255, 100));
         }
 
-        foreach (var animation in Game.Animations)
+        foreach (var animation in Game.Animations.Where(a => a.IsInWorld))
         {
             animation.Rect = new Rect(animation.X, animation.Y, tileSize, tileSize); // :(
             animation.Render();

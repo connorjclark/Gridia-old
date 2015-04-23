@@ -3,10 +3,11 @@ entity.life = entity.maxLife
 
 entity.metaClass.isAlive = { delegate.life > 0 }
 
-entity.metaClass.hurt = { damage, deathReason ->
+entity.metaClass.hurt = { damage, deathReason, animation = "Attack" ->
     if (delegate.friendly) return
     delegate.life -= damage
-    playAnimation(type: "Attack")
+    delegate.life = Math.min(delegate.life, delegate.maxLife)
+    playAnimation(type: animation)
 
     def message = server.messageBuilder.setLife(delegate)
     server.sendToClientsWithAreaLoaded(message, delegate.location)
@@ -48,6 +49,12 @@ onAction { event ->
         hitAction(entity.target)
     } else if (event.actionId == 1) {
         dashAction(event.location)
+    } else if (event.actionId == 2) {
+        if (!entity?.target?.alive) return
+        fireSpellAction(entity.target)
+    } else if (event.actionId == 3) {
+        if (!entity?.target?.alive) return
+        healingSpellAction(entity.target)
     }
 }
 
@@ -62,9 +69,17 @@ def hitAction(target) {
 }
 
 def dashAction(destination) {
-    speed = 12 // tiles per second
-    delta = (entity.location - destination).dist()
-    time = 1000*delta/speed
+    def speed = 12 // tiles per second
+    def delta = (entity.location - destination).dist()
+    def time = 1000*delta/speed
     playAnimation(type: "Roll", at: entity.location)
     server.moveCreatureTo(entity, destination, time as int, false, false, true)
+}
+
+def fireSpellAction(target) {
+    target.hurt(3, entity.generateDeathReason(), "Flame")
+}
+
+def healingSpellAction(target) {
+    target.hurt(-10, entity.generateDeathReason(), "Heal")
 }

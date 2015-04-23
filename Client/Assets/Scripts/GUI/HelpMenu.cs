@@ -9,6 +9,7 @@ namespace Gridia
         private int AlertIndex { get; set; }
         private List<string> Alerts { get; set; }
         private readonly Button _prev;
+        private readonly Button _ok;
         private readonly Button _next;
         private readonly Label _label = new Label(Vector2.zero, "No messages");
 
@@ -19,8 +20,14 @@ namespace Gridia
             Alerts = new List<string>();
             AddChild(_label);
             _prev = MakeButton("<", new Vector2(0, 70), () => ShowAlert(AlertIndex - 1));
-            MakeButton("OK!", new Vector2(80, 70), () => Visible = false);
+            _ok = MakeButton("OK!", new Vector2(80, 70), () => Visible = false);
             _next = MakeButton(">", new Vector2(160, 70), () => ShowAlert(AlertIndex + 1));
+        }
+
+        public override void Render()
+        {
+            base.Render();
+            _prev.Y = _ok.Y = _next.Y = _label.Height/ScaleY;
         }
 
         public void AddAlert(String message)

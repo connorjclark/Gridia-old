@@ -15,8 +15,8 @@ namespace Gridia
             Id = id;
             Description = description;
             _requireDestination = requireDestination;
-            _lastAttack = UnixTimeNow();
 
+            Func<float, String> formatTime = time => String.Format("{0:##.#}s", time/1000.0);
             gfx.OnClick = TriggerAction;
             gfx.OnEnterFrame = () =>
             {
@@ -25,12 +25,13 @@ namespace Gridia
 
                 // :( let's do a circular alpha mask instead of this ...
                 _timeLeft = cooldownTime - timeSinceLastAttack;
-                var frac = (float)(UnixTimeNow() - _lastAttack) / cooldownTime;
-                gfx.Alpha = (byte)(255 * Math.Min(1.0, frac));
+                var frac = (float) (UnixTimeNow() - _lastAttack)/cooldownTime;
+                gfx.Alpha = (byte) (255*Math.Min(1.0, frac));
+                if (_timeLeft > 0) GUI.Label(gfx.Rect, formatTime(_timeLeft));
             };
             gfx.ToolTip = () => _canPerformAction
                 ? String.Format("Press {0} to use: {1}", id + 1, description)
-                : String.Format("{0:##.#}s", _timeLeft/1000.0);
+                : formatTime(_timeLeft);
         }
 
         public void TriggerAction()

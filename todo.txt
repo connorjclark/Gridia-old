@@ -29,6 +29,8 @@ Priority features
     Equip pickaxe to mine
     Equip axe to cut down trees easier
   Convert entitites to unity objects
+  Require def in scripts
+  Probably need to cache scripts
 
 Issues
 
