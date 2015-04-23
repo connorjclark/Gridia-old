@@ -16,7 +16,7 @@ every((1..3).sample().seconds) {
             } else {
                 moveRelativeToTarget(true)
             }
-            if (!isNearTarget(chaseDistance)) state = 'randomWalk'
+            if (target?.alive) if (!isNearTarget(chaseDistance)) state = 'randomWalk'
         } else if (state == 'retreat') {
             moveRelativeToTarget(false)
             if (!isNearTarget(retreatDistance)) state = 'randomWalk'
