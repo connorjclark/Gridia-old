@@ -90,9 +90,9 @@ public class GridiaDriver : MonoBehaviour
 
     void InitTabbedGui() 
     {
-        TabbedGui.Add(1221, InvGui, true); // :(
+        TabbedGui.Add(1221, InvGui, false); // :(
         TabbedGui.Add(15, EquipmentGui, false); // :(
-        TabbedGui.Add(147, ChatGui, true); // :(
+        TabbedGui.Add(147, ChatGui, false); // :(
         TabbedGui.Add(0, Locator.Get<HelpMenu>(), true); // :(
         ActionWindow.TempAddActions();
         TabbedGui.Add(32, ActionWindow, true);
@@ -191,7 +191,11 @@ public class GridiaDriver : MonoBehaviour
         if (SelectedCreature != null)
         {
             var rect = GetScreenRectOfLocation(SelectedCreature.Position);
-            GridiaConstants.GUIDrawSelector(rect, new Color32(255, 0, 0, 100));
+            GridiaConstants.GUIDrawSelector(rect, new Color32(255, 255, 0, 50));
+            if (SelectedCreature.Position.z != focusPos.z)
+            {
+                SelectedCreature = null;
+            }
         }
 
         if (!Game.HideSelector)

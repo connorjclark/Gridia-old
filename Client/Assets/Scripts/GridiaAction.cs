@@ -28,7 +28,9 @@ namespace Gridia
                 var frac = (float)(UnixTimeNow() - _lastAttack) / cooldownTime;
                 gfx.Alpha = (byte)(255 * Math.Min(1.0, frac));
             };
-            gfx.ToolTip = () => _canPerformAction ? description : String.Format("{0:##.#}s", _timeLeft / 1000.0);
+            gfx.ToolTip = () => _canPerformAction
+                ? String.Format("Press {0} to use: {1}", id + 1, description)
+                : String.Format("{0:##.#}s", _timeLeft/1000.0);
         }
 
         public void TriggerAction()

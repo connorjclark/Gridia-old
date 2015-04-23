@@ -71,6 +71,13 @@ namespace Gridia
             }
         }
 
+        private bool CheckForCancel()
+        {
+            return Locator.Get<InputManager>().Get4DirectionalWasdInput() != Vector3.zero
+                   || Input.GetKey(KeyCode.Escape)
+                   || Input.GetKeyUp(KeyCode.T);
+        }
+
         public override void Step(StateMachine stateMachine, float dt)
         {
             var keyCodeUp = _keyCodeToCreature.Keys.FirstOrDefault(Input.GetKeyUp);
@@ -79,22 +86,24 @@ namespace Gridia
                 _driver.SelectedCreature = _keyCodeToCreature[keyCodeUp];
                 ReturnToIdle(stateMachine);
             }
-            if (Input.GetKeyUp(KeyCode.Escape) || Input.GetKeyUp(KeyCode.T))
+            if (CheckForCancel())
             {
                 ReturnToIdle(stateMachine);
             }
         }
-
+        
         private void DrawKeyCodeOverCreature(Creature creature, KeyCode keyCode)
         {
             var rect = _driver.GetScreenRectOfLocation(creature.Position);
             GridiaConstants.GUIDrawSelector(rect, new Color32(255, 255, 0, 100));
             rect.y -= _driver.tileSize * 0.5f;
+            GUI.color = Color.white;
             GUI.Box(rect, KeyCodeToString(keyCode));
         }
 
         public override void OnGUI()
         {
+            if (_keyCodeToCreature == null) return;
             // draw ...
 
             foreach (var entry in _keyCodeToCreature)

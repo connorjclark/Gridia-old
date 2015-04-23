@@ -31,6 +31,7 @@ namespace Gridia
         public int Id { get; private set; }
         public String Name { get; set; }
         public CreatureImage Image { get; set; }
+        public CreatureScript CreatureScript { get; set; }
         private List<PositionSnapshot> _positions = new List<PositionSnapshot>();
 
         public Creature(int id, String name, CreatureImage image, int x, int y, int z) {

@@ -9,10 +9,22 @@ namespace Gridia
         private Text _nameText;
         private StatusCircle _statusCircle;
 
-        public Creature Creature { get; set; }
+        private Creature _creature;
+        private GridiaDriver _driver;
+
+        public Creature Creature
+        {
+            get { return _creature; }
+            set
+            {
+                _creature = value;
+                _creature.CreatureScript = this;
+            }
+        }
 
         public void Start()
         {
+            _driver = Locator.Get<GridiaDriver>();
             _statusCircle = GetComponent<StatusCircle>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
             var canvas = Instantiate(Resources.Load("Text")) as GameObject;
@@ -21,6 +33,14 @@ namespace Gridia
             _nameText.transform.localPosition = new Vector2(0, 32);
             _nameText.fontStyle = FontStyle.Bold;
             _nameText.color = Color.white;
+        }
+
+        public void OnMouseOver()
+        {
+            if (Input.GetMouseButton(0) && _driver.SelectedCreature != Creature)
+            {
+                _driver.SelectedCreature = Creature;
+            }
         }
 
         public void ClearImage()
@@ -33,8 +53,10 @@ namespace Gridia
         {
             _spriteRenderer.enabled = v;
             _nameText.enabled = v;
-            _statusCircle.enabled = v;
-            _statusCircle.text.enabled = v;
+            var isSelected = _driver.SelectedCreature == Creature;
+            var isPlayer = _driver.Game.View.Focus == Creature;
+            _statusCircle.enabled = v && (isSelected || isPlayer);
+            _statusCircle.text.enabled = v && (isSelected || isPlayer);
             GetComponent<LineRenderer>().enabled = v;
         }
 

@@ -43,14 +43,14 @@ public class GridiaGame
     {
         var loc = View.Focus.Position;
         var list = new List<Creature>();
-        var pos = new Vector2(loc.x, loc.y);
+        var pos = new Vector3(loc.x, loc.y, loc.z);
         var dir = Vector2.right;
         var segmentLength = 1;
         var segmentPassed = 0;
         while (list.Count < limit)
         {
             var inXRange = Math.Abs(loc.x - pos.x) <= rangex;
-            var inYRange = Math.Abs(loc.x - pos.x) <= rangex;
+            var inYRange = Math.Abs(loc.y - pos.y) <= rangey;
             if (!inXRange && !inYRange) break;
             if (inXRange && inYRange)
             {
@@ -65,7 +65,7 @@ public class GridiaGame
         return list;
     }
 
-    private void IncreaseInSpriral(ref Vector2 pos, ref Vector2 dir, ref int segmentLength, ref int segmentPassed)
+    private void IncreaseInSpriral(ref Vector3 pos, ref Vector2 dir, ref int segmentLength, ref int segmentPassed)
     {
         pos.x += dir.x;
         pos.y += dir.y;
