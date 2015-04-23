@@ -16,7 +16,7 @@ namespace Gridia
             _statusCircle = GetComponent<StatusCircle>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
             var canvas = Instantiate(Resources.Load("Text")) as GameObject;
-            canvas.transform.parent = gameObject.transform;
+            canvas.transform.SetParent(gameObject.transform, false);
             _nameText = canvas.GetComponentInChildren<Text>();
             _nameText.transform.localPosition = new Vector2(0, 32);
             _nameText.fontStyle = FontStyle.Bold;

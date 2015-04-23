@@ -49,7 +49,7 @@ namespace Gridia
             _lineRenderer.SetVertexCount(Mathf.CeilToInt(2*Mathf.PI/ThetaStep));
 
             var canvas = Instantiate(Resources.Load("Text")) as GameObject;
-            canvas.transform.parent = gameObject.transform;
+            canvas.transform.SetParent(gameObject.transform, false);
             text = canvas.GetComponentInChildren<Text>();
             text.fontStyle = FontStyle.Bold;
             text.color = Color.white;
