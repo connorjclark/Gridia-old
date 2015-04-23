@@ -43,23 +43,45 @@ public class GridiaGame
     {
         var loc = View.Focus.Position;
         var list = new List<Creature>();
-        var sx = (int)(loc.x - rangex);
-        var sy = (int)(loc.y - rangey);
-        for (var x = 0; x < rangex * 2; x++)
+        var pos = new Vector2(loc.x, loc.y);
+        var dir = Vector2.right;
+        var segmentLength = 1;
+        var segmentPassed = 0;
+        while (list.Count < limit)
         {
-            for (var y = 0; y < rangey * 2; y++)
+            var inXRange = Math.Abs(loc.x - pos.x) <= rangex;
+            var inYRange = Math.Abs(loc.x - pos.x) <= rangex;
+            if (!inXRange && !inYRange) break;
+            if (inXRange && inYRange)
             {
-                var cre = TileMap.GetCreatureAt(new Vector3(sx + x, sy + y, loc.z));
-                if (cre == null || cre == View.Focus)
-                    continue;
-                list.Add(cre);
-                if (list.Count == limit)
+                var cre = TileMap.GetCreatureAt(pos);
+                if (cre != null && cre != View.Focus)
                 {
-                    return list;
+                    list.Add(cre);
                 }
             }
+            IncreaseInSpriral(ref pos, ref dir, ref segmentLength, ref segmentPassed);
         }
         return list;
+    }
+
+    private void IncreaseInSpriral(ref Vector2 pos, ref Vector2 dir, ref int segmentLength, ref int segmentPassed)
+    {
+        pos.x += dir.x;
+        pos.y += dir.y;
+        ++segmentPassed;
+
+        if (segmentPassed == segmentLength)
+        {
+            segmentPassed = 0;
+            var buffer = dir.x;
+            dir.x = -dir.y;
+            dir.y = buffer;
+            if (dir.y == 0)
+            {
+                ++segmentLength;
+            }
+        }
     }
 
     public void CreateCreature(int id, String name, CreatureImage image, int x, int y, int z)
