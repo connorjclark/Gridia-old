@@ -37,13 +37,16 @@ def moveRelativeToTarget(towards) {
         dx = -dx
         dy = -dy
     }
-    entity.location = entity.location.add(dx, dy, 0)
+    def newLocation = entity.location.add(dx, dy, 0)
+    if (walkable(newLocation)) {
+        entity.location = newLocation
+    }
 }
 
 def randomWalk() {
     def range = -1..1
     def newLocation = entity.location.add(range.sample(), range.sample(), 0)
-    if (walkable(newLocation) || creature(newLocation)) {
+    if (walkable(newLocation)) {
         entity.location = newLocation
     }
 }
