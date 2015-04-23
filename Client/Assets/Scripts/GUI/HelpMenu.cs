@@ -19,15 +19,10 @@ namespace Gridia
             Resizeable = false;
             Alerts = new List<string>();
             AddChild(_label);
-            _prev = MakeButton("<", new Vector2(0, 70), () => ShowAlert(AlertIndex - 1));
-            _ok = MakeButton("OK!", new Vector2(80, 70), () => Visible = false);
-            _next = MakeButton(">", new Vector2(160, 70), () => ShowAlert(AlertIndex + 1));
-        }
-
-        public override void Render()
-        {
-            base.Render();
-            _prev.Y = _ok.Y = _next.Y = _label.Height/ScaleY;
+            _prev = MakeButton("<", new Vector2(0, 0), () => ShowAlert(AlertIndex - 1));
+            _ok = MakeButton("OK!", new Vector2(80, 0), () => Visible = false);
+            _next = MakeButton(">", new Vector2(160, 0), () => ShowAlert(AlertIndex + 1));
+            _label.Y = 40;
         }
 
         public void AddAlert(String message)
