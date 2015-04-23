@@ -41,7 +41,7 @@ namespace Gridia
                     onRaft = true;
                 }
 
-                Locator.Get<ConnectionToGridiaServerHandler>().PlayerMove(_delta, onRaft, (int)timeForMovement);
+                Locator.Get<ConnectionToGridiaServerHandler>().PlayerMove(destination, onRaft, (int)timeForMovement);
 
                 _cooldownUntil = now + (int)timeForMovement;
                 Player.AddPositionSnapshot(Player.Position, onRaft, now - Creature.RENDER_DELAY);

@@ -72,6 +72,8 @@ UI
 
 Refactor
 
+
+  Coord -> Int3
   xxxGui -> xxxWindow
   itemusages -> usages
   Preloader

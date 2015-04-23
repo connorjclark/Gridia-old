@@ -14,12 +14,11 @@ public class PlayerMove extends JsonMessageHandler<ConnectionToGridiaClientHandl
     protected void handle(ConnectionToGridiaClientHandler connection, JsonObject data) {
         ServingGridia server = connection.getServer();
         Player player = connection.getPlayer();
-        Coord delta = GridiaGson.get().fromJson(data.get("delta"), Coord.class);
+        Coord loc = GridiaGson.get().fromJson(data.get("loc"), Coord.class);
         boolean onRaft = data.get("onRaft").getAsBoolean();
         int timeForMovement = data.get("timeForMovement").getAsInt();
         
-        Coord loc = server.tileMap.wrap(player.creature.location.add(delta));
-        server.moveCreatureTo(player.creature, loc, timeForMovement, false, onRaft);
+        server.moveCreatureTo(player.creature, server.tileMap.wrap(loc), timeForMovement, false, onRaft);
         player.openedContainers.clear();
     }
 }
