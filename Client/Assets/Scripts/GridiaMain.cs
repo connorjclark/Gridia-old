@@ -55,7 +55,7 @@ public class GridiaGame
                 list.Add(cre);
                 if (list.Count == limit)
                 {
-                    break;
+                    return list;
                 }
             }
         }

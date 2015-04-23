@@ -1,8 +1,10 @@
 For combat
 
   Create an arena for pvp testing
+    warp stones
   Use mouse to select player
   fire spell
+  show numbers on actions (for keyboard)
 
 Priority features
 

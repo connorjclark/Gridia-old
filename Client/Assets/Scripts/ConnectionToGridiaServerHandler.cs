@@ -57,11 +57,11 @@ public class ConnectionToGridiaServerHandler : SocketHandler
 
     //outbound
 
-    public void PlayerMove(Vector3 position, bool onRaft, int timeForMovement)
+    public void PlayerMove(Vector3 loc, bool onRaft, int timeForMovement)
     {
         var message = new JsonMessageBuilder()
             .Type("PlayerMove")
-            .Set("loc", new { x = (int)position.x, y = (int)position.y, z = (int)position.z }) // :(
+            .Set("loc", new { x = (int)loc.x, y = (int)loc.y, z = (int)loc.z }) // :(
             .Set("onRaft", onRaft)
             .Set("timeForMovement", timeForMovement)
             .Build();
