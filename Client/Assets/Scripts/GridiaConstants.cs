@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +18,7 @@ namespace Gridia
         public static int Size, Depth, SectorSize; // :(
         public static long ServerTimeOffset;
         public static bool IsAdmin;
-        public static String Version = "alpha-1.6-dev"; // :(
+        public static String Version = "alpha-1.6"; // :(
         public static String WorldName;
         public static String ErrorMessage { get; set; }
         public static Action ErrorMessageAction { get; set; }

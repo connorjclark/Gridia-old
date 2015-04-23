@@ -1,5 +1,6 @@
 every(15.minutes) {
     if (server.anyPlayersOnline()) {
-        server.save()
+        //server.save()
+        announce(message: "save has been disabled ...")
     }
 }
