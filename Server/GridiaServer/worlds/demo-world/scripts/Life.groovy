@@ -16,15 +16,15 @@ entity.metaClass.hurt = { damage, deathReason ->
     }
 }
 
-def generateDeathReason(attacker) {
+entity.metaClass.generateDeathReason = {
     def attackVerbs = ["clobber", "bash", "destroy", "exterminate", "off"]
     def verb = attackVerbs[(attackVerbs.size()*Math.random()) as int]
-    "was ${verb}ed by $attacker.name"
+    "was ${verb}ed by $delegate.name"
 }
 
 def getHurtBy(attacker) {
     if (attacker.isFriendly || entity.isFriendly) return
-    entity.hurt(1, generateDeathReason(attacker))
+    entity.hurt(1, attacker.generateDeathReason())
 }
 
 onDeath { event ->
@@ -57,7 +57,7 @@ def isNear(target) {
 
 def hitAction(target) {
     if (isNear(target)) {
-        target.hurt(1, generateDeathReason(entity))
+        target.hurt(1, entity.generateDeathReason())
     }
 }
 

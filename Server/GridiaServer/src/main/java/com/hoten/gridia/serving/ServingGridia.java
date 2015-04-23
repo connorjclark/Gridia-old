@@ -304,7 +304,7 @@ public class ServingGridia extends ServingFileTransferring<ConnectionToGridiaCli
     public void attachScriptsToCreature(Entity creature) {
         try {
             if (!creature.getBoolean("belongsToPlayer") && creature.getAttribute("name") != "Bill" && creature.getAttribute("name") != "Kitty") {
-                addScript(new File(worldTopDirectory, "scripts/RandomWalk.groovy"), creature);
+                addScript(new File(worldTopDirectory, "scripts/AI.groovy"), creature);
             }
             if (creature.getBoolean("isFriendly")) {
                 addScript(new File(worldTopDirectory, "scripts/Friendly.groovy"), creature);

@@ -54,6 +54,5 @@ class ScriptExecutor {
                 script.eventDispatcher.removeEventListener(type, it, script.entity)
             }
         }
-        script.entity = null
     }
 }
