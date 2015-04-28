@@ -51,8 +51,19 @@ namespace Gridia
                     {
                         Locator.Get<GridiaDriver>().SelectedCreature = creatureNear[0];
                     }
+                    else
+                    {
+                        return;
+                    }
                 }
-                Locator.Get<ConnectionToGridiaServerHandler>().PerformAction(Id);
+                if (Id == 0)
+                {
+                    Locator.Get<StateMachine>().SetState(new BarState());
+                }
+                else
+                {
+                    Locator.Get<ConnectionToGridiaServerHandler>().PerformAction(Id);
+                }
                 _lastAttack = UnixTimeNow();
             }
         }

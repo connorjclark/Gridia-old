@@ -25,9 +25,9 @@ namespace Gridia
 
         public void TempAddActions()
         {
-            TempAddAction(0, "Attack with your equipped weapon.", false, 1000, "Attack");
+            TempAddAction(0, "Attack with your equipped weapon.", false, 4000, "Attack");
             TempAddAction(1, "Dash quickly to a nearby tile. Use WASD/Arrows and press Space to select a destination.", true, 3000, "Blade");
-            TempAddAction(2, "Cast fire spell.", false, 5000, "Flame");
+            TempAddAction(2, "Cast fire spell.", false, 15000, "Flame");
             TempAddAction(3, "Cast a healing spell.", false, 15000, "Heal");
         }
 

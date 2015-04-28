@@ -7,34 +7,11 @@ namespace Gridia
 {
     public class TargetSelectState : State
     {
-        private static KeyCode IntToKeyCode(int i)
-        {
-            return i + KeyCode.Alpha0;
-        }
-
-        private static String KeyCodeToString(KeyCode keyCode)
-        {
-            if (keyCode >= KeyCode.Alpha0 && keyCode <= KeyCode.Alpha9)
-            {
-                var num = (int) keyCode - (int) KeyCode.Alpha0;
-                return num + "";
-            }
-            switch (keyCode)
-            {
-                case KeyCode.Plus:
-                    return "+";
-                case KeyCode.Minus:
-                    return "-";
-                default:
-                    return keyCode.ToString();
-            }
-        }
-
         private static readonly KeyCode[] _selectKeyCodes =
         {
-            IntToKeyCode(1), IntToKeyCode(2), IntToKeyCode(3), IntToKeyCode(4),
-            IntToKeyCode(5), IntToKeyCode(6), IntToKeyCode(7), IntToKeyCode(8),
-            IntToKeyCode(9), IntToKeyCode(0), KeyCode.Minus, KeyCode.Plus,
+            KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4,
+            KeyCode.Alpha5, KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8,
+            KeyCode.Alpha9, KeyCode.Alpha0, KeyCode.Minus, KeyCode.Plus,
             KeyCode.Y, KeyCode.U, KeyCode.I, KeyCode.O, KeyCode.P
         };
 
@@ -98,7 +75,7 @@ namespace Gridia
             GridiaConstants.GUIDrawSelector(rect, new Color32(255, 255, 0, 100));
             rect.y -= _driver.tileSize * 0.5f;
             GUI.color = Color.white;
-            GUI.Box(rect, KeyCodeToString(keyCode));
+            GUI.Box(rect, keyCode.ToShortString());
         }
 
         public override void OnGUI()

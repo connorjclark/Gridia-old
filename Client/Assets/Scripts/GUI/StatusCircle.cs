@@ -65,7 +65,7 @@ namespace Gridia
         {
             var maxTheta = Mathf.PI*2*(1f*CurrentHealth/MaxHealth);
             var i = 0;
-            _lineRenderer.SetVertexCount(Mathf.CeilToInt(maxTheta/ThetaStep));
+            _lineRenderer.SetVertexCount(Mathf.Max(0, Mathf.CeilToInt(maxTheta/ThetaStep)));
             if (IsActive()) text.text = (int)CurrentHealth + "";
             for (var theta = 0.0f; theta < maxTheta; theta += ThetaStep)
             {

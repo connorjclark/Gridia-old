@@ -1,11 +1,12 @@
-entity.maxLife = 6
+entity.maxLife = entity.belongsToPlayer ? 300 : 75
 entity.life = entity.maxLife
+entity.defense = 0
 
 entity.metaClass.isAlive = { delegate.life > 0 }
 
 entity.metaClass.hurt = { damage, deathReason, animation = "Attack" ->
     if (delegate.friendly) return
-    delegate.life -= damage
+    delegate.life -= (damage * (1.0 - delegate.defense/100.0)) as int
     delegate.life = Math.min(delegate.life, delegate.maxLife)
     playAnimation(type: animation)
 
@@ -35,6 +36,9 @@ onDeath { event ->
     if (entity.belongsToPlayer) {
         teleport(to: server.tileMap.defaultPlayerSpawn) // :(
         entity.life = entity.maxLife
+
+        def message = server.messageBuilder.setLife(entity)
+        server.sendToClientsWithAreaLoaded(message, entity.location)
     } else {
         if (entity.inventory) {
             server.dropContainerNear(entity.inventory, entity.location) // :(
@@ -64,7 +68,7 @@ def isNear(target) {
 
 def hitAction(target) {
     if (isNear(target)) {
-        target.hurt(1, entity.generateDeathReason())
+        target.hurt(1, entity.generateDeathReason()) // remove
     }
 }
 
@@ -77,9 +81,9 @@ def dashAction(destination) {
 }
 
 def fireSpellAction(target) {
-    target.hurt(3, entity.generateDeathReason(), "Flame")
+    target.hurt(50, entity.generateDeathReason(), "Flame")
 }
 
 def healingSpellAction(target) {
-    target.hurt(-10, entity.generateDeathReason(), "Heal")
+    target.hurt(-100, entity.generateDeathReason(), "Heal")
 }

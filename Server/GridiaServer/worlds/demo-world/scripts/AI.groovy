@@ -12,7 +12,7 @@ every((1..3).sample().seconds) {
     } else if (target?.alive) {
         if (state == 'attack') {
             if (isNearTarget(1)) {
-                target.hurt(1, entity.generateDeathReason())
+                target.hurt(10, entity.generateDeathReason())
             } else {
                 moveRelativeToTarget(true)
             }
@@ -27,7 +27,7 @@ every((1..3).sample().seconds) {
 }
 
 def isNearTarget(distance) {
-    Math.abs(entity.location.x - target.location.x) <= distance && Math.abs(entity.location.y - target.location.y) <= distance
+    Math.abs(entity.location.x - target.location.x) <= distance && Math.abs(entity.location.y - target.location.y) <= distance && entity.location.z == target.location.z
 }
 
 def moveRelativeToTarget(towards) {

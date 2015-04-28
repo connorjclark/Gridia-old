@@ -18,7 +18,7 @@ namespace Gridia
         public static int Size, Depth, SectorSize; // :(
         public static long ServerTimeOffset;
         public static bool IsAdmin;
-        public static String Version = "alpha-1.6"; // :(
+        public static String Version = "alpha-1.7"; // :(
         public static String WorldName;
         public static String ErrorMessage { get; set; }
         public static Action ErrorMessageAction { get; set; }
@@ -102,9 +102,9 @@ namespace Gridia
             {
                 StaticRectTexture[color] = new Texture2D(1, 1);
                 StaticRectStyle[color] = new GUIStyle {normal = {background = StaticRectTexture[color]}};
+                StaticRectTexture[color].SetPixel(0, 0, color);
+                StaticRectTexture[color].Apply();
             }
-            StaticRectTexture[color].SetPixel(0, 0, color);
-            StaticRectTexture[color].Apply();
             GUI.Box(rect, GUIContent.none, StaticRectStyle[color]);
         }
 

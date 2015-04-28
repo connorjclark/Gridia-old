@@ -1,8 +1,59 @@
 For combat
 
+  *****
+  When using an action, a bar pops up. The bar has some intervals across it, which the player must press the key(s) displayed during.
+  In defense zones, if the player attempts and fails, then they break that zone and lose guard %
+  When the bar is full, the action is performed, hit takes place, and a cooldown occurs.
+  During the cooldown, the player is vulnerable, based on the guard % they lost, and can't move. There is some sort of visual indicator above player for guard%/cooling down.
+
+  Bar and zones are static. A ticker moves from left to right.
+  Not attemtping a zones gives no penality. Attempting and failing has a penalty.
+  Zone key-press types:
+    A single key
+    Multiple keys, which must be pressed in order
+    Mash a single key as many times as possible
+  Zone effect types
+    Regular
+      Succeeding adds some damage points/def %
+      Attempting and failing takes off 50% of collected damage/collected def%
+    Critical applier
+      Attempting and failing deals the damage on self/reduces def% by 50
+
+                                                 v                {} -> crit
+                     =================================================
+dmg so far  - |####|   [ 2, 3 ]       [  1  ]   |`|               {3} (atk zones)
+def% so far - |####|       [   e!   ]           |`|     [  q  ]   {p} (def zones)
+                     =================================================
+                               ! -> mash key     ^ ticker
+
+  *****
+
   Create an arena for pvp testing
     warp stones
-  fire spell
+
+  Armor weight -> player speed
+  Equipment determines actions available
+    Spear - spike (optimal at 2 tiles away)
+          - lunge (must be 1 tile away)
+
+  Give warning/don't allow action if target is out of range
+    - how to show warning?
+
+  Should increase the HP a lot.
+
+  Hits should show how much HP was removed
+    - 
+    a number shooting off the hit player?
+
+  Attacks are time-action based (paper mario)
+  Block attacks - think paper mario. give a cue that an attack is coming, and if GUARD action is done at certain time, the attack is mitigated a bit.
+    visual cue - ?
+    audio cue - ?
+    Attacks can also be dodged, if the player is in the middle of a dash
+
+  Strong/Fast attacks
+    Fast - 1, 2, 3. quick attacks that have small blocking intervals.
+    Strong - charge up. larger blocking interval
 
 Priority features
 

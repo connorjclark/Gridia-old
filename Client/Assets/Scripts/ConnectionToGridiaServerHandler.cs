@@ -254,4 +254,22 @@ public class ConnectionToGridiaServerHandler : SocketHandler
     {
         return _game;
     }
+
+    public void SetDefense(int defensePoints)
+    {
+        var message = new JsonMessageBuilder()
+                   .Type("SetDefense")
+                   .Set("defense", defensePoints)
+                   .Build();
+        _socketHandler.Send(message);
+    }
+
+    public void Attack(int attackPoints)
+    {
+        var message = new JsonMessageBuilder()
+                   .Type("Attack")
+                   .Set("attack", attackPoints)
+                   .Build();
+        _socketHandler.Send(message);
+    }
 }

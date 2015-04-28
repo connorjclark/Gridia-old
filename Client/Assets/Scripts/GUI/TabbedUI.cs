@@ -19,12 +19,14 @@ namespace Gridia
 
         public override void Render()
         {
+            if (!Visible) return;
             base.Render();
             _windows.ForEach(w => w.Render());
         }
 
         public override void HandleEvents()
         {
+            if (!Visible) return;
             base.HandleEvents();
             _windows.ForEach(w => w.HandleEvents());
         }
