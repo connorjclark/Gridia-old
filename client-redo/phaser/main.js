@@ -10,6 +10,7 @@ var numItemSheets = 27;
 var numPlayerSheets = 1;
 var sharedChunkData;
 var itemsConfig;
+var music;
 
 var TileIndexer = (function() {
   var numFloors = numFloorSheets * 100;
@@ -133,6 +134,8 @@ function preload() {
 
   game.load.json('items', 'assets/content/items.json');
 
+  game.load.audio('music', 'assets/sound/music/scythuz/Spring Breeze.ogg');
+
   game.time.advancedTiming = true;
 }
 
@@ -142,6 +145,8 @@ function create() {
   sharedChunkData = createSharedChunkData();
   cursors = game.input.keyboard.createCursorKeys();
   updateChunks();
+  music = game.add.audio('music');
+  music.play();
 }
 
 function createSharedChunkData() {
@@ -210,5 +215,5 @@ function updateChunks() {
 }
 
 function render() {
-  game.debug.text(game.time.fps || '--', 2, 14, "#00ff00")
+  game.debug.text(game.time.fps || '--', 2, 14, "#00ff00");
 }
