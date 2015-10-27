@@ -23,7 +23,7 @@ var TileIndexer = (function() {
       var tileSheetIndex = (floorType / 100) | 0;
       var baseTexture = PIXI.utils.TextureCache["assets/floors/floors" + tileSheetIndex + ".png"];
       floorType = floorType % 100;
-      var rect = new PIXI.Rectangle((floorType%10)*32, ((floorType/10)|0)*32, 32, 32);
+      var rect = new PIXI.Rectangle((floorType%10)*tileSize, ((floorType/10)|0)*tileSize, tileSize, tileSize);
       
       return new PIXI.Texture(baseTexture, rect);
     },
@@ -37,7 +37,7 @@ var TileIndexer = (function() {
       var tileSheetIndex = (index / 100) | 0;
       var baseTexture = PIXI.utils.TextureCache["assets/items/items" + tileSheetIndex + ".png"];
       index = index % 100;
-      var rect = new PIXI.Rectangle((index%10)*32, ((index/10)|0)*32, 32, 32);
+      var rect = new PIXI.Rectangle((index%10)*tileSize, ((index/10)|0)*tileSize, tileSize, tileSize);
 
       return new PIXI.Texture(baseTexture, rect);
     }
@@ -46,22 +46,45 @@ var TileIndexer = (function() {
 
 function createFloor(x, y, floor) {
   var sprite = new PIXI.Sprite(TileIndexer.getFloor(floor));
-  sprite.x = x * 32;
-  sprite.y = y * 32;
+  sprite.x = x * tileSize;
+  sprite.y = y * tileSize;
   return sprite;
 }
 
 function createItem(x, y, item) {
   var sprite = new PIXI.Sprite(TileIndexer.getItem(item));
-  sprite.x = x * 32;
-  sprite.y = y * 32;
+  sprite.x = x * tileSize;
+  sprite.y = y * tileSize;
   return sprite;
 }
 
 var ChunkManager = (function() {
   var chunks = {};
-  var floorLayer = new PIXI.ParticleContainer();
-  var itemLayer = new PIXI.ParticleContainer();
+
+  // particle container draw sprites very quickly
+  // but all children must have the same base texture
+  // so, one particle container per tilesheet
+  var floorParticleContainers = [];
+  var itemParticleContainers = [];
+
+  var floorLayer = new PIXI.Container();
+  var itemLayer = new PIXI.Container();
+  
+  function addToParticleContainers(particleContainers, sprite, layer) {
+    if (!particleContainers[sprite.texture.baseTexture.imageUrl]) {
+      particleContainers[sprite.texture.baseTexture.imageUrl] = new PIXI.ParticleContainer();
+      layer.addChild(particleContainers[sprite.texture.baseTexture.imageUrl]);
+    }
+    particleContainers[sprite.texture.baseTexture.imageUrl].addChild(sprite);
+  }
+
+  function removeFloor(floor) {
+    floorParticleContainers[floor.texture.baseTexture.imageUrl].removeChild(floor);
+  }
+
+  function removeItem(item) {
+    itemParticleContainers[item.texture.baseTexture.imageUrl].removeChild(item);
+  }
 
   function loadChunk(x, y) {
     console.log('loading', x, y);
@@ -76,13 +99,13 @@ var ChunkManager = (function() {
       for (var i = 0; i < chunkSize; i++) {
         for (var j = 0; j < chunkSize; j++) {
           var floor = createFloor(x*chunkSize + i, y*chunkSize + j, data[i][j].floor);
-          floorLayer.addChild(floor);
           floors.push(floor);
+          addToParticleContainers(floorParticleContainers, floor, floorLayer);
 
           if (data[i][j].item && data[i][j].item.type) {
             var item = createItem(x*chunkSize + i, y*chunkSize + j, data[i][j].item.type);
-            itemLayer.addChild(item);
             items.push(item);
+            addToParticleContainers(itemParticleContainers, item, itemLayer);
           }
         }
       }
@@ -116,10 +139,12 @@ var ChunkManager = (function() {
           console.log('culling', chunk.x, chunk.y);
 
           $.each(chunk.floors, function() {
-            floorLayer.removeChild(this);
+            removeFloor(this);
+            this.destroy();
           });
           $.each(chunk.items, function() {
-            itemLayer.removeChild(this);
+            removeItem(this);
+            this.destroy();
           });
 
           delete chunks[key];
@@ -128,7 +153,9 @@ var ChunkManager = (function() {
     },
     chunks: chunks,
     floorLayer: floorLayer,
-    itemLayer: itemLayer
+    itemLayer: itemLayer,
+    floorParticleContainers: floorParticleContainers,
+    itemParticleContainers: itemParticleContainers
   };
 })();
 
