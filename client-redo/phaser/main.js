@@ -1,11 +1,12 @@
 "use strict";
 
-var game = new Phaser.Game($(window).width(), $(window).height(), Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update, render: render });
+var game = new Phaser.Game($(window).width(), $(window).height(), Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 var view = {x: 0, y: 0};
 var cursors;
 var tileSize = 32;
 var chunkSize = 20;
 var numFloorSheets = 6;
+var numTemplateSheets = 0;
 var numItemSheets = 27;
 var numPlayerSheets = 1;
 var sharedChunkData;
@@ -13,7 +14,7 @@ var itemsConfig;
 var music;
 
 var TileIndexer = (function() {
-  var numFloors = numFloorSheets * 100;
+  var numFloors = (numFloorSheets + numTemplateSheets) * 100;
   var numItems = numItemSheets * 100;
 
   return {
@@ -129,6 +130,7 @@ function preload() {
   }
 
   for (var i = 0; i < numFloorSheets; i++) loadTileSheet('floors', i);
+  for (var i = 0; i < numTemplateSheets; i++) loadTileSheet('templates', i);
   for (var i = 0; i < numItemSheets; i++) loadTileSheet('items', i);
   for (var i = 0; i < numPlayerSheets; i++) loadTileSheet('players', i);
 
@@ -215,5 +217,9 @@ function updateChunks() {
 }
 
 function render() {
-  game.debug.text(game.time.fps || '--', 2, 14, "#00ff00");
+  if (game.renderType === Phaser.WEBGL) {
+    document.title = game.time.fps || '--';
+  } else {
+    game.debug.text(game.time.fps || '--', 2, 14, "#00ff00");
+  }
 }
