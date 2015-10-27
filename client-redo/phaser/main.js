@@ -40,6 +40,13 @@ var TileIndexer = (function() {
 var ChunkManager = (function() {
   var chunks = {};
 
+  // TileMap.putTile does a lot of extra work that I do not need.
+  function quickPutTile(map, index, x, y, layer) {
+    layer = map.getLayer(layer);
+    map.layers[layer].data[y][x] = new Phaser.Tile(map.layers[layer], index, x, y, map.tileWidth, map.tileHeight);
+    map.layers[layer].dirty = true;
+  }
+
   function loadChunk(x, y) {
     var map = game.add.tilemap();
 
@@ -61,9 +68,9 @@ var ChunkManager = (function() {
       var data = game.cache.getJSON(x + ',' + y);
       for (var i = 0; i < chunkSize; i++) {
         for (var j = 0; j < chunkSize; j++) {
-          map.putTile(TileIndexer.getFloor(data[i][j].floor), i, j, floorLayer);
+          quickPutTile(map, TileIndexer.getFloor(data[i][j].floor), i, j, floorLayer);
           if (data[i][j].item && data[i][j].item.type) {
-            map.putTile(TileIndexer.getItem(data[i][j].item.type), i, j, itemLayer);
+            quickPutTile(map, TileIndexer.getItem(data[i][j].item.type), i, j, itemLayer);
           }
         }
       }
