@@ -1,7 +1,9 @@
 "use strict";
 
 var stage;
-var view = {x: 0, y: 0};
+var previousGlobalTick;
+var globalTick;
+var view = {x: 1550, y: 5440};
 var numFloorSheets = 6;
 var numTemplateSheets = 1;
 var numItemSheets = 27;
@@ -33,13 +35,13 @@ var TileIndexer = (function() {
       
       return new PIXI.Texture(baseTexture, rect);
     },
-    getItem: function(itemType) {
+    getItem: function(itemType, tick) {
       var index = 0;
       var width = tileSize;
       var height = tileSize;
 
       if (itemsConfig[itemType] && itemsConfig[itemType].animations) {
-        index = itemsConfig[itemType].animations[0] || 0;
+        index = itemsConfig[itemType].animations[tick % itemsConfig[itemType].animations.length] || 0;
         width *= itemsConfig[itemType].imageWidth || 1;
         height *= itemsConfig[itemType].imageHeight || 1;
       }
@@ -62,7 +64,7 @@ function createFloor(x, y, floor) {
 }
 
 function createItem(x, y, item) {
-  var sprite = new PIXI.Sprite(TileIndexer.getItem(item));
+  var sprite = new PIXI.Sprite(TileIndexer.getItem(item, globalTick));
   sprite.x = x * tileSize;
   sprite.y = y * tileSize - sprite.height + tileSize; // offset for items taller than one tile
   return sprite;
@@ -104,7 +106,54 @@ var ChunkManager = (function() {
       items: [],
       x: x,
       y: y,
-      data: []
+      data: [],
+      redrawFloor: function(x, y) {
+        var floor = this.floors[x % chunkSize][y % chunkSize];
+
+        // need to remove from current particle container
+        floorParticleContainers[floor.texture.baseTexture.imageUrl].removeChild(floor);
+
+        // update data
+        floor.texture = TileIndexer.getFloor(this.data[x][y].floor, x, y);
+
+        // place in correct particle container
+        if (!floorParticleContainers[floor.texture.baseTexture.imageUrl]) {
+          floorParticleContainers[floor.texture.baseTexture.imageUrl] = new PIXI.ParticleContainer();
+          floorLayer.addChild(floorParticleContainers[floor.texture.baseTexture.imageUrl]);
+        }
+        floorParticleContainers[floor.texture.baseTexture.imageUrl].addChild(floor);
+      },
+      redrawItem: function(x, y) {
+        var item = this.items[x % chunkSize][y % chunkSize];
+
+        var previousBaseTexture = item.texture.baseTexture;
+        item.texture = TileIndexer.getItem(this.data[x][y].item.type, globalTick);
+        var newBaseTexture = item.texture.baseTexture;
+
+        // TODO for some reason it's necessary to remove and add the sprite, always.
+        if (previousBaseTexture !== newBaseTexture || true) {
+          // need to remove from previous particle container
+          itemParticleContainers[previousBaseTexture.imageUrl].removeChild(item);
+
+          // place in correct particle container
+          if (!itemParticleContainers[newBaseTexture.imageUrl]) {
+            itemParticleContainers[newBaseTexture.imageUrl] = new PIXI.ParticleContainer();
+            itemLayer.addChild(itemParticleContainers[newBaseTexture.imageUrl]);
+          }
+          itemParticleContainers[newBaseTexture.imageUrl].addChild(item);
+        }
+      },
+      redrawAnimations: function() {
+        if (!this.data.length) return;
+
+        for (var i = 0; i < chunkSize; i++) {
+          for (var j = 0; j < chunkSize; j++) {
+            if (itemsConfig[this.data[i][j].item.type].animations.length > 1) {
+              this.redrawItem(i, j);
+            }
+          }
+        }
+      }
     };
 
     chunks[x + ',' + y] = chunk;
@@ -114,16 +163,16 @@ var ChunkManager = (function() {
       chunk.data = PIXI.loader.resources[url].data;
 
       for (var i = 0; i < chunkSize; i++) {
+        chunk.floors[i] = [];
+        chunk.items[i] = [];
         for (var j = 0; j < chunkSize; j++) {
           var floor = createFloor(x*chunkSize + i, y*chunkSize + j, chunk.data[i][j].floor);
-          chunk.floors.push(floor);
+          chunk.floors[i][j] = floor;
           addToParticleContainers(floorParticleContainers, floor, floorLayer);
 
-          if (chunk.data[i][j].item && chunk.data[i][j].item.type) {
-            var item = createItem(x*chunkSize + i, y*chunkSize + j, chunk.data[i][j].item.type);
-            chunk.items.push(item);
-            addToParticleContainers(itemParticleContainers, item, itemLayer);
-          }
+          var item = createItem(x*chunkSize + i, y*chunkSize + j, chunk.data[i][j].item.type);
+          chunk.items[i][j] = item;
+          addToParticleContainers(itemParticleContainers, item, itemLayer);
         }
       }
 
@@ -151,12 +200,16 @@ var ChunkManager = (function() {
           console.log('culling', chunk.x, chunk.y);
 
           $.each(chunk.floors, function() {
-            removeFloor(this);
-            this.destroy();
+            $.each(this, function() {
+              removeFloor(this);
+              this.destroy();
+            });
           });
           $.each(chunk.items, function() {
-            removeItem(this);
-            this.destroy();
+            $.each(this, function() {
+              removeItem(this);
+              this.destroy();
+            });
           });
 
           delete chunks[key];
@@ -165,9 +218,7 @@ var ChunkManager = (function() {
     },
     chunks: chunks,
     floorLayer: floorLayer,
-    itemLayer: itemLayer,
-    floorParticleContainers: floorParticleContainers,
-    itemParticleContainers: itemParticleContainers
+    itemLayer: itemLayer
   };
 })();
 
@@ -187,7 +238,10 @@ function updateChunks() {
 
   for (var x = minChunkX; x <= maxChunkX; x++) {
     for (var y = minChunkY; y <= maxChunkY; y++) {
-      ChunkManager.getChunk(x, y); // just to load it.
+      var chunk = ChunkManager.getChunk(x, y); // this will load it if necessary
+      if (previousGlobalTick !== globalTick) {
+        chunk.redrawAnimations();
+      }
     }
   }
 
@@ -280,6 +334,9 @@ $(function() {
   function setup() {
     itemsConfig = PIXI.loader.resources["assets/content/items.json"].data;
 
+    // hack for displating a blank image on 0 itemType. items.json is set to show a '?'
+    itemsConfig[0].animations = [1];
+
     stage.addChild(ChunkManager.floorLayer);
     stage.addChild(ChunkManager.itemLayer);
 
@@ -288,6 +345,9 @@ $(function() {
 
   function update() {
     requestAnimationFrame(update);
+
+    previousGlobalTick = globalTick;
+    globalTick = Math.floor(Date.now() / 1000 * 5);
 
     if (right.isDown) {
       view.x += 4;
