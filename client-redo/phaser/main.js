@@ -16,7 +16,7 @@ var music;
 var tileSize = 32;
 var chunkSize = 20;
 
-var SpritePool = (function(capacity) {
+var SpritePool = (function() {
   var sprites = [];
 
   return {
@@ -31,7 +31,7 @@ var SpritePool = (function(capacity) {
       }
     }
   };
-})(40*40*2);
+})();
 
 var TileIndexer = (function() {
   return {
@@ -271,7 +271,7 @@ function updateChunks() {
   }
 
   // disable for now...
-  // ChunkManager.cull(minChunkX-earlyLoading, maxChunkX+earlyLoading, minChunkY-earlyLoading, maxChunkY+earlyLoading);
+  ChunkManager.cull(minChunkX-earlyLoading, maxChunkX+earlyLoading, minChunkY-earlyLoading, maxChunkY+earlyLoading);
 }
 
 function getTile(x, y) {
