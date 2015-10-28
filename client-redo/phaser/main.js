@@ -1,98 +1,136 @@
 "use strict";
 
-var game = new Phaser.Game($(window).width(), $(window).height(), Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
+var stage;
 var view = {x: 0, y: 0};
-var cursors;
-var tileSize = 32;
-var chunkSize = 20;
 var numFloorSheets = 6;
-var numTemplateSheets = 0;
+var numTemplateSheets = 1;
 var numItemSheets = 27;
 var numPlayerSheets = 1;
 var sharedChunkData;
 var itemsConfig;
 var music;
+var tileSize = 32;
+var chunkSize = 20;
 
 var TileIndexer = (function() {
-  var numFloors = (numFloorSheets + numTemplateSheets) * 100;
-  var numItems = numItemSheets * 100;
-
   return {
-    getFloor: function(floorType) {
-      // 1 is water. don't want to implement water templating yet, so default to 5
+    getFloor: function(floorType, x, y) {
+      var baseTexture, index;
+
+      // water tiling
       if (floorType === 1) {
-        return 5;
+        index = useTemplate(0, 1, x, y);
+        var tileSheetIndex = (index / 100) | 0;
+        baseTexture = PIXI.utils.TextureCache["assets/templates/templates" + tileSheetIndex + ".png"];
+        index = index % 100;
+      } else {
+        var tileSheetIndex = (floorType / 100) | 0;
+        baseTexture = PIXI.utils.TextureCache["assets/floors/floors" + tileSheetIndex + ".png"];
+        index = floorType % 100;
       }
 
-      return floorType;
+      var rect = new PIXI.Rectangle((index%10)*tileSize, ((index/10)|0)*tileSize, tileSize, tileSize);
+      
+      return new PIXI.Texture(baseTexture, rect);
     },
     getItem: function(itemType) {
       var index = 0;
+      var width = tileSize;
+      var height = tileSize;
 
       if (itemsConfig[itemType] && itemsConfig[itemType].animations) {
         index = itemsConfig[itemType].animations[0] || 0;
+        width *= itemsConfig[itemType].imageWidth || 1;
+        height *= itemsConfig[itemType].imageHeight || 1;
       }
 
-      return index + numFloors;
-    },
-    getPlayer: function(index) { return index + numFloors + numItems; }
+      var tileSheetIndex = (index / 100) | 0;
+      var baseTexture = PIXI.utils.TextureCache["assets/items/items" + tileSheetIndex + ".png"];
+      index = index % 100;
+      var rect = new PIXI.Rectangle((index%10)*tileSize, ((index/10)|0)*tileSize, width, height);
+
+      return new PIXI.Texture(baseTexture, rect);
+    }
   };
 })();
+
+function createFloor(x, y, floor) {
+  var sprite = new PIXI.Sprite(TileIndexer.getFloor(floor, x, y));
+  sprite.x = x * tileSize;
+  sprite.y = y * tileSize;
+  return sprite;
+}
+
+function createItem(x, y, item) {
+  var sprite = new PIXI.Sprite(TileIndexer.getItem(item));
+  sprite.x = x * tileSize;
+  sprite.y = y * tileSize - sprite.height + tileSize; // offset for items taller than one tile
+  return sprite;
+}
 
 var ChunkManager = (function() {
   var chunks = {};
 
-  // TileMap.putTile does a lot of extra work that I do not need.
-  function quickPutTile(map, index, x, y, layer) {
-    layer = map.getLayer(layer);
-    map.layers[layer].data[y][x] = new Phaser.Tile(map.layers[layer], index, x, y, map.tileWidth, map.tileHeight);
-    map.layers[layer].dirty = true;
+  // particle container draw sprites very quickly
+  // but all children must have the same base texture
+  // so, one particle container per tilesheet
+  var floorParticleContainers = [];
+  var itemParticleContainers = [];
+
+  var floorLayer = new PIXI.Container();
+  var itemLayer = new PIXI.Container();
+  
+  function addToParticleContainers(particleContainers, sprite, layer) {
+    if (!particleContainers[sprite.texture.baseTexture.imageUrl]) {
+      particleContainers[sprite.texture.baseTexture.imageUrl] = new PIXI.ParticleContainer();
+      layer.addChild(particleContainers[sprite.texture.baseTexture.imageUrl]);
+    }
+    particleContainers[sprite.texture.baseTexture.imageUrl].addChild(sprite);
+  }
+
+  function removeFloor(floor) {
+    floorParticleContainers[floor.texture.baseTexture.imageUrl].removeChild(floor);
+  }
+
+  function removeItem(item) {
+    itemParticleContainers[item.texture.baseTexture.imageUrl].removeChild(item);
   }
 
   function loadChunk(x, y) {
-    var map = game.add.tilemap();
+    console.log('loading', x, y);
 
-    map.tilesets = sharedChunkData.tilesets;
-    map.tiles = sharedChunkData.tiles;
+    var chunk = {
+      floors: [],
+      items: [],
+      x: x,
+      y: y,
+      data: []
+    };
 
-    var floorLayer = map.create('floor-layer', chunkSize, chunkSize, tileSize, tileSize);
-    var itemLayer = map.createBlankLayer('item-layer', chunkSize, chunkSize, tileSize, tileSize);
-    var playerLayer = map.createBlankLayer('player-layer', chunkSize, chunkSize, tileSize, tileSize);
+    chunks[x + ',' + y] = chunk;
 
-    floorLayer.fixedToCamera = false;
-    itemLayer.fixedToCamera = false;
-    playerLayer.fixedToCamera = false;
+    var url = 'assets/maps/demo-city/' + x + ',' + y + ',0.json';
+    PIXI.loader.add(url).load(function() {
+      chunk.data = PIXI.loader.resources[url].data;
 
-    game.load.json(x + ',' + y, 'assets/maps/demo-city/' + x + ',' + y + ',0.json', true);
-    game.load.onLoadComplete.add(function(name, a) {
-      if (!map.game) return; // necessary because this chunk could have been culled...somehow....
-
-      var data = game.cache.getJSON(x + ',' + y);
       for (var i = 0; i < chunkSize; i++) {
         for (var j = 0; j < chunkSize; j++) {
-          quickPutTile(map, TileIndexer.getFloor(data[i][j].floor), i, j, floorLayer);
-          if (data[i][j].item && data[i][j].item.type) {
-            quickPutTile(map, TileIndexer.getItem(data[i][j].item.type), i, j, itemLayer);
+          var floor = createFloor(x*chunkSize + i, y*chunkSize + j, chunk.data[i][j].floor);
+          chunk.floors.push(floor);
+          addToParticleContainers(floorParticleContainers, floor, floorLayer);
+
+          if (chunk.data[i][j].item && chunk.data[i][j].item.type) {
+            var item = createItem(x*chunkSize + i, y*chunkSize + j, chunk.data[i][j].item.type);
+            chunk.items.push(item);
+            addToParticleContainers(itemParticleContainers, item, itemLayer);
           }
         }
       }
-    }, game);
-    game.load.start();
 
-    return {
-      map: map,
-      floorLayer: floorLayer,
-      itemLayer: itemLayer,
-      playerLayer: playerLayer,
-      x: x,
-      y: y
-    }
-  }
-
-  function updateChunkPosition(chunk) {
-    $.each([chunk.floorLayer, chunk.itemLayer, chunk.playerLayer], function() {
-      this.position.set(chunk.x * tileSize * chunkSize - view.x, chunk.y * tileSize * chunkSize - view.y);
+      delete PIXI.loader.resources[url];
     });
+
+    return chunk;
   }
 
   return {
@@ -100,103 +138,44 @@ var ChunkManager = (function() {
       var chunk = chunks[x + ',' + y];
 
       if (!chunk) {
-        chunk = chunks[x + ',' + y] = loadChunk(x, y);
+        chunk = loadChunk(x, y);
       }
 
       return chunk;
-    },
-    updateChunkPositions: function() {
-      $.each(chunks, function() {
-        updateChunkPosition(this);
-      });
     },
     cull: function(minX, maxX, minY, maxY) {
       $.each(chunks, function(key, chunk) {
         var inViewport = chunk.x >= minX && chunk.x <= maxX && chunk.y >= minY && chunk.y <= maxY;
         
         if (!inViewport) {
-          chunk.map.destroy();
+          console.log('culling', chunk.x, chunk.y);
+
+          $.each(chunk.floors, function() {
+            removeFloor(this);
+            this.destroy();
+          });
+          $.each(chunk.items, function() {
+            removeItem(this);
+            this.destroy();
+          });
+
           delete chunks[key];
         }
       });
     },
-    chunks: chunks
+    chunks: chunks,
+    floorLayer: floorLayer,
+    itemLayer: itemLayer,
+    floorParticleContainers: floorParticleContainers,
+    itemParticleContainers: itemParticleContainers
   };
 })();
 
-function preload() {
-  function loadTileSheet(type, i) {
-    game.load.image(type + i, 'assets/' + type + '/' + type + i + '.png');
-  }
-
-  for (var i = 0; i < numFloorSheets; i++) loadTileSheet('floors', i);
-  for (var i = 0; i < numTemplateSheets; i++) loadTileSheet('templates', i);
-  for (var i = 0; i < numItemSheets; i++) loadTileSheet('items', i);
-  for (var i = 0; i < numPlayerSheets; i++) loadTileSheet('players', i);
-
-  game.load.json('items', 'assets/content/items.json');
-
-  game.load.audio('music', 'assets/sound/music/scythuz/Spring Breeze.ogg');
-
-  game.time.advancedTiming = true;
-}
-
-function create() {
-  itemsConfig = game.cache.getJSON('items');
-  game.stage.backgroundColor = '#2d2d2d';
-  sharedChunkData = createSharedChunkData();
-  cursors = game.input.keyboard.createCursorKeys();
-  updateChunks();
-  music = game.add.audio('music');
-  music.play();
-}
-
-function createSharedChunkData() {
-  var map = game.add.tilemap();
-  var gid = 0;
-
-  function loadTileSheet(type, i) {
-    map.addTilesetImage(type + i, type + i, tileSize, tileSize, 0, 0, gid);
-    gid += 100;
-  }
-
-  for (var i = 0; i < numFloorSheets; i++) loadTileSheet('floors', i);
-  for (var i = 0; i < numItemSheets; i++) loadTileSheet('items', i);
-  for (var i = 0; i < numPlayerSheets; i++) loadTileSheet('players', i);
-
-  return {tilesets: map.tilesets, tiles: map.tiles};
-}
-
-function update() {
-  var posChanged = false;
-  var speed = 4;
-
-  if (cursors.left.isDown) {
-    view.x -= speed;
-    posChanged = true;
-  } else if (cursors.right.isDown) {
-    view.x += speed;
-    posChanged = true;
-  }
-
-  if (cursors.up.isDown) {
-    view.y -= speed;
-    posChanged = true;
-  } else if (cursors.down.isDown) {
-    view.y += speed;
-    posChanged = true;
-  }
-
-  if (posChanged) {
-    updateChunks();
-  }
-}
-
 function updateChunks() {
   var minChunkX = (view.x / tileSize / chunkSize) | 0;
-  var maxChunkX = ((view.x + game.width) / tileSize / chunkSize) | 0;
+  var maxChunkX = ((view.x + window.innerWidth) / tileSize / chunkSize) | 0;
   var minChunkY = (view.y / tileSize / chunkSize) | 0;
-  var maxChunkY = ((view.y + game.height) / tileSize / chunkSize) | 0;
+  var maxChunkY = ((view.y + window.innerHeight) / tileSize / chunkSize) | 0;
 
   // console.log(minChunkX, maxChunkX, minChunkY, maxChunkY);
 
@@ -213,13 +192,259 @@ function updateChunks() {
   }
 
   ChunkManager.cull(minChunkX-1, maxChunkX+1, minChunkY-1, maxChunkY+1);
-  ChunkManager.updateChunkPositions();
 }
 
-function render() {
-  if (game.renderType === Phaser.WEBGL) {
-    document.title = game.time.fps || '--';
-  } else {
-    game.debug.text(game.time.fps || '--', 2, 14, "#00ff00");
+function getTile(x, y) {
+  if (x < 0 || y < 0) return {floor:1, item:{type:0}};
+  var chunkX = (x / chunkSize) | 0;
+  var chunkY = (y / chunkSize) | 0;
+  var chunk = ChunkManager.chunks[chunkX + ',' + chunkY];
+  return chunk && chunk.data.length && chunk.data[0].length ? chunk.data[x % chunkSize][y % chunkSize] : {floor:1, item:{type:0}};
+}
+
+function getFloor(x, y) {
+  return getTile(x, y).floor;
+}
+
+function getItem(x, y) {
+  return getTile(x, y).item;
+}
+
+function keyboard(keyCode) {
+  var key = {};
+  key.code = keyCode;
+  key.isDown = false;
+  key.isUp = true;
+  key.press = undefined;
+  key.release = undefined;
+  //The `downHandler`
+  key.downHandler = function(event) {
+    if (event.keyCode === key.code) {
+      if (key.isUp && key.press) key.press();
+      key.isDown = true;
+      key.isUp = false;
+    }
+    event.preventDefault();
+  };
+
+  //The `upHandler`
+  key.upHandler = function(event) {
+    if (event.keyCode === key.code) {
+      if (key.isDown && key.release) key.release();
+      key.isDown = false;
+      key.isUp = true;
+    }
+    event.preventDefault();
+  };
+
+  //Attach event listeners
+  window.addEventListener(
+    "keydown", key.downHandler.bind(key), false
+  );
+  window.addEventListener(
+    "keyup", key.upHandler.bind(key), false
+  );
+  return key;
+}
+
+$(function() {
+  var renderer = PIXI.autoDetectRenderer(256, 256);
+
+  document.body.appendChild(renderer.view);
+
+  renderer.view.style.position = "absolute"
+  renderer.view.style.display = "block";
+  renderer.autoResize = true;
+  renderer.resize(window.innerWidth, window.innerHeight);
+
+  stage = new PIXI.Container();
+
+  function loadTileSheet(type, i) {
+    PIXI.loader.add(type + i, 'assets/' + type + '/' + type + i + '.png');
   }
+
+  for (var i = 0; i < numFloorSheets; i++) loadTileSheet('floors', i);
+  for (var i = 0; i < numTemplateSheets; i++) loadTileSheet('templates', i);
+  for (var i = 0; i < numItemSheets; i++) loadTileSheet('items', i);
+  for (var i = 0; i < numPlayerSheets; i++) loadTileSheet('players', i);
+
+  PIXI.loader.add("assets/content/items.json");
+  
+  PIXI.loader.load(setup);
+
+  var left = keyboard(37),
+      up = keyboard(38),
+      right = keyboard(39),
+      down = keyboard(40);
+
+  function setup() {
+    itemsConfig = PIXI.loader.resources["assets/content/items.json"].data;
+
+    stage.addChild(ChunkManager.floorLayer);
+    stage.addChild(ChunkManager.itemLayer);
+
+    requestAnimationFrame(update);
+  }
+
+  function update() {
+    requestAnimationFrame(update);
+
+    if (right.isDown) {
+      view.x += 4;
+    }
+    if (left.isDown) {
+      view.x -= 4;
+    }
+    if (down.isDown) {
+      view.y += 4;
+    }
+    if (up.isDown) {
+      view.y -= 4;
+    }
+
+    ChunkManager.floorLayer.x = ChunkManager.itemLayer.x = -view.x;
+    ChunkManager.floorLayer.y = ChunkManager.itemLayer.y = -view.y;
+    
+    updateChunks();
+
+    renderer.render(stage);
+  }
+});
+
+/* crazy code for water templating */
+
+function useTemplate(templateId, typeToMatch, x, y, z) {
+  var xl = x - 1;
+  var xr = x + 1;
+  var yu = y - 1;
+  var yd = y + 1;
+
+  var above = getFloor(x, yu, z) === typeToMatch;
+  var below = getFloor(x, yd, z) === typeToMatch;
+  var left = getFloor(xl, y, z) === typeToMatch;
+  var right = getFloor(xr, y, z) === typeToMatch;
+
+  var offset = templateId * 50;
+  var v = (above ? 1 : 0) + (below ? 2 : 0) + (left ? 4 : 0) + (right ? 8 : 0);
+
+  // this is where the complicated crap kicks in
+  // i'd really like to replace this.
+  // :'(
+  // this is mostly guess work. I think. I wrote this code years ago. I know it works,
+  // so I just copy and pasted. Shame on me.
+
+  var upleft = getFloor(xl, yu, z) === typeToMatch;
+  var upright = getFloor(xr, yu, z) === typeToMatch;
+  var downleft = getFloor(xl, yd, z) === typeToMatch;
+  var downright = getFloor(xr, yd, z) === typeToMatch;
+
+  if (v == 15)
+  {
+      if (!upleft)
+      {
+          v++;
+      }
+      if (!upright)
+      {
+          v += 2;
+      }
+      if (!downleft)
+      {
+          v += 4;
+      }
+      if (!downright)
+      {
+          v += 8;
+      }
+  }
+  else if (v == 5)
+  {
+      if (!upleft)
+      {
+          v = 31;
+      }
+  }
+  else if (v == 6)
+  {
+      if (!downleft)
+      {
+          v = 32;
+      }
+  }
+  else if (v == 9)
+  {
+      if (!upright)
+      {
+          v = 33;
+      }
+  }
+  else if (v == 10)
+  {
+      if (!downright)
+      {
+          v = 34;
+      }
+  }
+  else if (v == 7)
+  {
+      if (!downleft || !upleft)
+      {
+          v = 34;
+          if (!downleft)
+          {
+              v++;
+          }
+          if (!upleft)
+          {
+              v += 2;
+          }
+      }
+  }
+  else if (v == 11)
+  {
+      if (!downright || !upright)
+      {
+          v = 37;
+          if (!downright)
+          {
+              v++;
+          }
+          if (!upright)
+          {
+              v += 2;
+          }
+      }
+  }
+  else if (v == 13)
+  {
+      if (!upright || !upleft)
+      {
+          v = 40;
+          if (!upright)
+          {
+              v++;
+          }
+          if (!upleft)
+          {
+              v += 2;
+          }
+      }
+  }
+  else if (v == 14)
+  {
+      if (!downright || !downleft)
+      {
+          v = 43;
+          if (!downright)
+          {
+              v++;
+          }
+          if (!downleft)
+          {
+              v += 2;
+          }
+      }
+  }
+
+  return v + offset;
 }
