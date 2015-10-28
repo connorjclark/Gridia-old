@@ -1,5 +1,7 @@
 "use strict";
 
+// TODO try keep a pool of sprites. this may improve performance when loading new chunks
+
 var stage;
 var previousGlobalTick;
 var globalTick;
@@ -13,6 +15,23 @@ var itemsConfig;
 var music;
 var tileSize = 32;
 var chunkSize = 20;
+
+var SpritePool = (function(capacity) {
+  var sprites = [];
+
+  return {
+    retire: function(sprite) {
+      sprites.push(sprite);
+    },
+    get: function() {
+      if (sprites.length) {
+        return sprites.pop();
+      } else {
+        return new PIXI.Sprite();
+      }
+    }
+  };
+})(40*40*2);
 
 var TileIndexer = (function() {
   return {
@@ -57,14 +76,16 @@ var TileIndexer = (function() {
 })();
 
 function createFloor(x, y, floor) {
-  var sprite = new PIXI.Sprite(TileIndexer.getFloor(floor, x, y));
+  var sprite = SpritePool.get();
+  sprite.texture = TileIndexer.getFloor(floor, x, y);
   sprite.x = x * tileSize;
   sprite.y = y * tileSize;
   return sprite;
 }
 
 function createItem(x, y, item) {
-  var sprite = new PIXI.Sprite(TileIndexer.getItem(item, globalTick));
+  var sprite = SpritePool.get();
+  sprite.texture = TileIndexer.getItem(item, globalTick);
   sprite.x = x * tileSize;
   sprite.y = y * tileSize - sprite.height + tileSize; // offset for items taller than one tile
   return sprite;
@@ -84,6 +105,7 @@ var ChunkManager = (function() {
   
   function addToParticleContainers(particleContainers, sprite, layer) {
     if (!particleContainers[sprite.texture.baseTexture.imageUrl]) {
+      // TODO there is a limit to how many sprites this can render....
       particleContainers[sprite.texture.baseTexture.imageUrl] = new PIXI.ParticleContainer();
       layer.addChild(particleContainers[sprite.texture.baseTexture.imageUrl]);
     }
@@ -148,7 +170,8 @@ var ChunkManager = (function() {
 
         for (var i = 0; i < chunkSize; i++) {
           for (var j = 0; j < chunkSize; j++) {
-            if (itemsConfig[this.data[i][j].item.type].animations.length > 1) {
+            if (itemsConfig[this.data[i][j].item.type]
+                && itemsConfig[this.data[i][j].item.type].animations.length > 1) {
               this.redrawItem(i, j);
             }
           }
@@ -202,13 +225,13 @@ var ChunkManager = (function() {
           $.each(chunk.floors, function() {
             $.each(this, function() {
               removeFloor(this);
-              this.destroy();
+              SpritePool.retire(this);
             });
           });
           $.each(chunk.items, function() {
             $.each(this, function() {
               removeItem(this);
-              this.destroy();
+              SpritePool.retire(this);
             });
           });
 
@@ -223,10 +246,12 @@ var ChunkManager = (function() {
 })();
 
 function updateChunks() {
-  var minChunkX = (view.x / tileSize / chunkSize) | 0;
-  var maxChunkX = ((view.x + window.innerWidth) / tileSize / chunkSize) | 0;
-  var minChunkY = (view.y / tileSize / chunkSize) | 0;
-  var maxChunkY = ((view.y + window.innerHeight) / tileSize / chunkSize) | 0;
+  var earlyLoading = 1;
+
+  var minChunkX = ((view.x / tileSize / chunkSize) | 0) - earlyLoading;
+  var maxChunkX = (((view.x + window.innerWidth) / tileSize / chunkSize) | 0) + earlyLoading;
+  var minChunkY = ((view.y / tileSize / chunkSize) | 0) - earlyLoading;
+  var maxChunkY = (((view.y + window.innerHeight) / tileSize / chunkSize) | 0) + earlyLoading;
 
   // console.log(minChunkX, maxChunkX, minChunkY, maxChunkY);
 
@@ -245,7 +270,8 @@ function updateChunks() {
     }
   }
 
-  ChunkManager.cull(minChunkX-1, maxChunkX+1, minChunkY-1, maxChunkY+1);
+  // disable for now...
+  // ChunkManager.cull(minChunkX-earlyLoading, maxChunkX+earlyLoading, minChunkY-earlyLoading, maxChunkY+earlyLoading);
 }
 
 function getTile(x, y) {
