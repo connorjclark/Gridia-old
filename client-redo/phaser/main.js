@@ -1,7 +1,5 @@
 "use strict";
 
-// TODO try keep a pool of sprites. this may improve performance when loading new chunks
-
 var stage;
 var previousGlobalTick;
 var globalTick;
@@ -15,6 +13,8 @@ var itemsConfig;
 var music;
 var tileSize = 32;
 var chunkSize = 20;
+
+// TODO see if pooling helps at all
 
 var SpritePool = (function() {
   var sprites = [];
@@ -42,11 +42,11 @@ var TileIndexer = (function() {
       if (floorType === 1) {
         index = useTemplate(0, 1, x, y);
         var tileSheetIndex = (index / 100) | 0;
-        baseTexture = PIXI.utils.TextureCache["assets/templates/templates" + tileSheetIndex + ".png"];
+        baseTexture = PIXI.utils.BaseTextureCache["assets/templates/templates" + tileSheetIndex + ".png"];
         index = index % 100;
       } else {
         var tileSheetIndex = (floorType / 100) | 0;
-        baseTexture = PIXI.utils.TextureCache["assets/floors/floors" + tileSheetIndex + ".png"];
+        baseTexture = PIXI.utils.BaseTextureCache["assets/floors/floors" + tileSheetIndex + ".png"];
         index = floorType % 100;
       }
 
@@ -66,7 +66,7 @@ var TileIndexer = (function() {
       }
 
       var tileSheetIndex = (index / 100) | 0;
-      var baseTexture = PIXI.utils.TextureCache["assets/items/items" + tileSheetIndex + ".png"];
+      var baseTexture = PIXI.utils.BaseTextureCache["assets/items/items" + tileSheetIndex + ".png"];
       index = index % 100;
       var rect = new PIXI.Rectangle((index%10)*tileSize, ((index/10)|0)*tileSize, width, height);
 
