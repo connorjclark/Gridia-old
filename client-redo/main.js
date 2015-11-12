@@ -47,9 +47,9 @@ var TileIndexer = (function() {
     getFloor: function(floorType, x, y, z) {
       var baseTexture, index;
 
-      // water tiling
-      if (floorType === 1) {
-        index = useTemplate(0, 1, x, y, z);
+      // water/cave tiling
+      if (floorType === 0 || floorType === 1) {
+        index = useTemplate(1 - floorType, floorType, x, y, z);
         var tileSheetIndex = (index / 100) | 0;
         baseTexture = PIXI.utils.BaseTextureCache["assets/templates/templates" + tileSheetIndex + ".png"];
         index = index % 100;
@@ -63,7 +63,7 @@ var TileIndexer = (function() {
       
       return new PIXI.Texture(baseTexture, rect);
     },
-    getItem: function(itemType, tick) {
+    getItem: function(itemType, x, y, z, tick) {
       var index = 0;
       var width = tileSize;
       var height = tileSize;
@@ -97,7 +97,7 @@ function createFloor(x, y, z, floor) {
 
 function createItem(x, y, z, item) {
   var sprite = SpritePool.get();
-  sprite.texture = TileIndexer.getItem(item, globalTick);
+  sprite.texture = TileIndexer.getItem(item, x, y, z, globalTick);
   sprite.x = x * tileSize;
   sprite.y = y * tileSize - sprite.height + tileSize; // offset for items taller than one tile
   return sprite;
@@ -162,7 +162,7 @@ var Map = (function(width, height, depth) {
         var item = this.items[x % chunkSize][y % chunkSize];
 
         var previousBaseTexture = item.texture.baseTexture;
-        item.texture = TileIndexer.getItem(this.data[x][y].item.type, globalTick);
+        item.texture = TileIndexer.getItem(this.data[x][y].item.type, x, y, z, globalTick);
         var newBaseTexture = item.texture.baseTexture;
 
         // TODO for some reason it's necessary to remove and add the sprite, always.
@@ -438,7 +438,7 @@ $(function() {
 
   function setup() {
     space.release = function() {
-      view.z = view.z === 0 ? 1 : 0;
+      view.z = 1 - view.z;
     };
 
     $(renderer.view).click(function(e) {
