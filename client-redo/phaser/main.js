@@ -343,6 +343,12 @@ $(function() {
     setViewport(getParameterByName('viewx', 30) * tileSize, getParameterByName('viewy', 25) * tileSize); 
   }
 
+  $(window).resize(function () {
+    if (getParameterByName('fullscreen', false)) {
+      setFullscreen();
+    }
+  });
+
   document.body.appendChild(renderer.view);
   renderer.autoResize = true;
 
