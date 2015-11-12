@@ -3,7 +3,7 @@
 var stage;
 var previousGlobalTick;
 var globalTick;
-var view = {x: 1550, y: 5440};
+var view = {x: 1550, y: 5440, z: 0};
 var numFloorSheets = 6;
 var numTemplateSheets = 1;
 var numItemSheets = 27;
@@ -44,12 +44,12 @@ var SpritePool = (function() {
 // indexes into spritesheets given item/floor/player types
 var TileIndexer = (function() {
   return {
-    getFloor: function(floorType, x, y) {
+    getFloor: function(floorType, x, y, z) {
       var baseTexture, index;
 
       // water tiling
       if (floorType === 1) {
-        index = useTemplate(0, 1, x, y);
+        index = useTemplate(0, 1, x, y, z);
         var tileSheetIndex = (index / 100) | 0;
         baseTexture = PIXI.utils.BaseTextureCache["assets/templates/templates" + tileSheetIndex + ".png"];
         index = index % 100;
@@ -87,15 +87,15 @@ var TileIndexer = (function() {
   };
 })();
 
-function createFloor(x, y, floor) {
+function createFloor(x, y, z, floor) {
   var sprite = SpritePool.get();
-  sprite.texture = TileIndexer.getFloor(floor, x, y);
+  sprite.texture = TileIndexer.getFloor(floor, x, y, z);
   sprite.x = x * tileSize;
   sprite.y = y * tileSize;
   return sprite;
 }
 
-function createItem(x, y, item) {
+function createItem(x, y, z, item) {
   var sprite = SpritePool.get();
   sprite.texture = TileIndexer.getItem(item, globalTick);
   sprite.x = x * tileSize;
@@ -103,7 +103,7 @@ function createItem(x, y, item) {
   return sprite;
 }
 
-var Map = (function(width, height) {
+var Map = (function(width, height, depth) {
   var chunks = {};
 
   // particle containers draw sprites very quickly
@@ -132,14 +132,15 @@ var Map = (function(width, height) {
     itemParticleContainers[item.texture.baseTexture.imageUrl].removeChild(item);
   }
 
-  function loadChunk(x, y) {
-    console.log('loading', x, y);
+  function loadChunk(x, y, z) {
+    console.log('loading', x, y, z);
 
     var chunk = {
       floors: [],
       items: [],
       x: x,
       y: y,
+      z: z,
       data: [],
       redrawFloor: function(x, y) {
         var floor = this.floors[x % chunkSize][y % chunkSize];
@@ -148,7 +149,7 @@ var Map = (function(width, height) {
         floorParticleContainers[floor.texture.baseTexture.imageUrl].removeChild(floor);
 
         // update data
-        floor.texture = TileIndexer.getFloor(this.data[x % chunkSize][y % chunkSize].floor, x, y);
+        floor.texture = TileIndexer.getFloor(this.data[x % chunkSize][y % chunkSize].floor, x, y, z);
 
         // place in correct particle container
         if (!floorParticleContainers[floor.texture.baseTexture.imageUrl]) {
@@ -191,9 +192,9 @@ var Map = (function(width, height) {
       }
     };
 
-    chunks[x + ',' + y] = chunk;
+    chunks[x + ',' + y + ',' + z] = chunk;
 
-    var url = 'assets/maps/demo-city/' + x + ',' + y + ',0.json';
+    var url = 'assets/maps/demo-city/' + x + ',' + y + ',' + z + '.json';
     PIXI.loader.add(url).load(function() {
       chunk.data = PIXI.loader.resources[url].data;
 
@@ -201,11 +202,11 @@ var Map = (function(width, height) {
         chunk.floors[i] = [];
         chunk.items[i] = [];
         for (var j = 0; j < chunkSize; j++) {
-          var floor = createFloor(x*chunkSize + i, y*chunkSize + j, chunk.data[i][j].floor);
+          var floor = createFloor(x*chunkSize + i, y*chunkSize + j, z, chunk.data[i][j].floor);
           chunk.floors[i][j] = floor;
           addToParticleContainers(floorParticleContainers, floor, floorLayer);
 
-          var item = createItem(x*chunkSize + i, y*chunkSize + j, chunk.data[i][j].item.type);
+          var item = createItem(x*chunkSize + i, y*chunkSize + j, z, chunk.data[i][j].item.type);
           chunk.items[i][j] = item;
           addToParticleContainers(itemParticleContainers, item, itemLayer);
         }
@@ -217,22 +218,22 @@ var Map = (function(width, height) {
     return chunk;
   }
 
-  function getChunk(x, y) {
-    var chunk = chunks[x + ',' + y];
+  function getChunk(x, y, z) {
+    var chunk = chunks[x + ',' + y + ',' + z];
 
-    if (!chunk && inBounds(x * chunkSize, y * chunkSize)) {
-      chunk = loadChunk(x, y);
+    if (!chunk && inBounds(x * chunkSize, y * chunkSize, z)) {
+      chunk = loadChunk(x, y, z);
     }
 
     return chunk;
   }
 
-  function cull(minX, maxX, minY, maxY) {
+  function cull(minX, maxX, minY, maxY, z) {
     $.each(chunks, function(key, chunk) {
-      var inViewport = chunk.x >= minX && chunk.x <= maxX && chunk.y >= minY && chunk.y <= maxY;
+      var inViewport = chunk.x >= minX && chunk.x <= maxX && chunk.y >= minY && chunk.y <= maxY && chunk.z === z;
       
       if (!inViewport) {
-        console.log('culling', chunk.x, chunk.y);
+        console.log('culling', chunk.x, chunk.y, chunk.z);
 
         $.each(chunk.floors, function() {
           $.each(this, function() {
@@ -252,43 +253,43 @@ var Map = (function(width, height) {
     });
   }
 
-  function inBounds(x, y) {
-    return x >= 0 && y >= 0 && x < width && y < height;
+  function inBounds(x, y, z) {
+    return x >= 0 && y >= 0 && x < width && y < height && z <= depth;
   }
 
-  function getChunkWithTile(x, y) {
+  function getChunkWithTile(x, y, z) {
     var chunkX = (x / chunkSize) | 0;
     var chunkY = (y / chunkSize) | 0;
-    return chunks[chunkX + ',' + chunkY];
+    return chunks[chunkX + ',' + chunkY + ',' + z];
   }
 
-  function getTile(x, y) {
+  function getTile(x, y, z) {
     // TODO ... why am I doing this again?
-    if (!inBounds(x, y)) {
+    if (!inBounds(x, y, z)) {
       return {floor:1, item:{type:0}};
     }
 
     var chunkX = (x / chunkSize) | 0;
     var chunkY = (y / chunkSize) | 0;
-    var chunk = chunks[chunkX + ',' + chunkY];
+    var chunk = chunks[chunkX + ',' + chunkY + ',' + z];
     return chunk && chunk.data.length && chunk.data[0].length ? chunk.data[x % chunkSize][y % chunkSize] : {floor:1, item:{type:0}};
   }
 
-  function getFloor(x, y) {
-    return getTile(x, y).floor;
+  function getFloor(x, y, z) {
+    return getTile(x, y, z).floor;
   }
 
-  function getItem(x, y) {
-    return getTile(x, y).item;
+  function getItem(x, y, z) {
+    return getTile(x, y, z).item;
   }
 
-  function setTile(x, y, tile) {
+  function setTile(x, y, z, tile) {
     // TODO
   }
 
-  function setFloor(x, y, floor) {
-    if (inBounds(x, y)) {
-      var chunk = getChunkWithTile(x, y);
+  function setFloor(x, y, z, floor) {
+    if (inBounds(x, y, z)) {
+      var chunk = getChunkWithTile(x, y, z);
       if (chunk) {
         var isWater = floor === 1;
         var wasWater = chunk.data[x % chunkSize][y % chunkSize].floor === 1;
@@ -299,8 +300,8 @@ var Map = (function(width, height) {
         if (isWater || wasWater) {
           for (var i = -1; i <= 1; i++) {
             for (var j = -1; j <= 1; j++) {
-              var chunk2 = getChunkWithTile(x + i, y + j);
-              if (chunk2 && inBounds(x + i, y + j)) {
+              var chunk2 = getChunkWithTile(x + i, y + j, z);
+              if (chunk2 && inBounds(x + i, y + j, z)) {
                 chunk2.redrawFloor(x + i, y + j);
               }
             }
@@ -312,7 +313,7 @@ var Map = (function(width, height) {
     }
   }
 
-  function setItem(x, y, item) {
+  function setItem(x, y, z, item) {
     // TODO
   }
 
@@ -328,7 +329,7 @@ var Map = (function(width, height) {
     cull: cull,
     getChunk: getChunk
   };
-})(chunkSize * 15, chunkSize * 15);
+})(chunkSize * 15, chunkSize * 15, 1);
 
 function updateChunks() {
   var earlyLoading = 1;
@@ -340,14 +341,14 @@ function updateChunks() {
 
   for (var x = minChunkX; x <= maxChunkX; x++) {
     for (var y = minChunkY; y <= maxChunkY; y++) {
-      var chunk = Map.getChunk(x, y); // this will load it if necessary
+      var chunk = Map.getChunk(x, y, view.z); // this will load it if necessary
       if (chunk && previousGlobalTick !== globalTick) {
         chunk.redrawAnimations();
       }
     }
   }
 
-  Map.cull(minChunkX-earlyLoading, maxChunkX+earlyLoading, minChunkY-earlyLoading, maxChunkY+earlyLoading);
+  Map.cull(minChunkX-earlyLoading, maxChunkX+earlyLoading, minChunkY-earlyLoading, maxChunkY+earlyLoading, view.z);
 }
 
 function keyboard(keyCode) {
@@ -423,7 +424,8 @@ $(function() {
   var left = keyboard(37),
       up = keyboard(38),
       right = keyboard(39),
-      down = keyboard(40);
+      down = keyboard(40),
+      space = keyboard(32);
 
   function setViewport(width, height) {
     viewPort = {width: width, height: height};
@@ -435,15 +437,19 @@ $(function() {
   }
 
   function setup() {
+    space.release = function() {
+      view.z = view.z === 0 ? 1 : 0;
+    };
+
     $(renderer.view).click(function(e) {
       var x = ((e.offsetX + view.x) / tileSize) | 0;
       var y = ((e.offsetY + view.y) / tileSize) | 0;
-      Map.setFloor(x, y, Map.getFloor(x, y) === 1 ? 21 : 1); // toggle water/grass
+      Map.setFloor(x, y, view.z, Map.getFloor(x, y, view.z) === 1 ? 21 : 1); // toggle water/grass
     });
 
     itemsConfig = PIXI.loader.resources["assets/content/items.json"].data;
 
-    // hack for displating a blank image on 0 itemType. items.json is set to show a '?'
+    // hack for displaying a blank image on 0 itemType. items.json is set to show a '?'
     itemsConfig[0].animations = [1];
 
     stage.addChild(Map.floorLayer);
