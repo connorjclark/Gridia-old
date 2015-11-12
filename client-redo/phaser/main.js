@@ -13,8 +13,16 @@ var itemsConfig;
 var music;
 var tileSize = 32;
 var chunkSize = 20;
+var viewPort;
 
 // TODO see if pooling helps at all
+
+function getParameterByName(name, defaultValue) {
+  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+      results = regex.exec(location.search);
+  return results === null ? defaultValue : decodeURIComponent(results[1].replace(/\+/g, " ")) || defaultValue;
+}
 
 var SpritePool = (function() {
   var sprites = [];
@@ -249,9 +257,9 @@ function updateChunks() {
   var earlyLoading = 1;
 
   var minChunkX = ((view.x / tileSize / chunkSize) | 0) - earlyLoading;
-  var maxChunkX = (((view.x + window.innerWidth) / tileSize / chunkSize) | 0) + earlyLoading;
+  var maxChunkX = (((view.x + viewPort.width) / tileSize / chunkSize) | 0) + earlyLoading;
   var minChunkY = ((view.y / tileSize / chunkSize) | 0) - earlyLoading;
-  var maxChunkY = (((view.y + window.innerHeight) / tileSize / chunkSize) | 0) + earlyLoading;
+  var maxChunkY = (((view.y + viewPort.height) / tileSize / chunkSize) | 0) + earlyLoading;
 
   // console.log(minChunkX, maxChunkX, minChunkY, maxChunkY);
 
@@ -270,7 +278,6 @@ function updateChunks() {
     }
   }
 
-  // disable for now...
   ChunkManager.cull(minChunkX-earlyLoading, maxChunkX+earlyLoading, minChunkY-earlyLoading, maxChunkY+earlyLoading);
 }
 
@@ -328,14 +335,16 @@ function keyboard(keyCode) {
 }
 
 $(function() {
-  var renderer = PIXI.autoDetectRenderer(256, 256);
+  var renderer = PIXI.autoDetectRenderer();
+
+  if (getParameterByName('fullscreen', false)) {
+    setFullscreen();
+  } else {
+    setViewport(getParameterByName('viewx', 30) * tileSize, getParameterByName('viewy', 25) * tileSize); 
+  }
 
   document.body.appendChild(renderer.view);
-
-  renderer.view.style.position = "absolute"
-  renderer.view.style.display = "block";
   renderer.autoResize = true;
-  renderer.resize(window.innerWidth, window.innerHeight);
 
   stage = new PIXI.Container();
 
@@ -357,7 +366,18 @@ $(function() {
       right = keyboard(39),
       down = keyboard(40);
 
+  function setViewport(width, height) {
+    viewPort = {width: width, height: height};
+    renderer.resize(width, height);
+  }
+
+  function setFullscreen() {
+    setViewport(window.innerWidth, window.innerHeight);
+  }
+
   function setup() {
+    // setFullscreen();
+
     itemsConfig = PIXI.loader.resources["assets/content/items.json"].data;
 
     // hack for displating a blank image on 0 itemType. items.json is set to show a '?'
