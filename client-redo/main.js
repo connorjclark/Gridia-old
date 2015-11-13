@@ -236,7 +236,13 @@ var Map = (function(width, height, depth) {
     chunks[x + ',' + y + ',' + z] = chunk;
 
     var url = 'assets/maps/demo-city/' + x + ',' + y + ',' + z + '.json';
-    PIXI.loader.add(url).load(function() {
+    if (PIXI.loader.resources[url]) {
+      parseData();
+    } else {
+      PIXI.loader.add(url).load(parseData);
+    }
+
+    function parseData() {
       chunk.data = PIXI.loader.resources[url].data;
 
       for (var i = 0; i < chunkSize; i++) {
@@ -252,9 +258,7 @@ var Map = (function(width, height, depth) {
           addToParticleContainers(itemParticleContainers, item, itemLayer);
         }
       }
-
-      delete PIXI.loader.resources[url];
-    });
+    }
 
     return chunk;
   }
@@ -374,12 +378,13 @@ var Map = (function(width, height, depth) {
 })(chunkSize * 15, chunkSize * 15, 1);
 
 function updateChunks() {
+  // var earlyLoading = 10; // high number = basically just load everything
   var earlyLoading = 1;
 
-  var minChunkX = ((player.view.x / tileSize / chunkSize) | 0) - earlyLoading;
-  var maxChunkX = (((player.view.x + viewPort.width) / tileSize / chunkSize) | 0) + earlyLoading;
-  var minChunkY = ((player.view.y / tileSize / chunkSize) | 0) - earlyLoading;
-  var maxChunkY = (((player.view.y + viewPort.height) / tileSize / chunkSize) | 0) + earlyLoading;
+  var minChunkX = (((player.view.x - viewPort.width / 2) / tileSize / chunkSize) | 0) - earlyLoading;
+  var maxChunkX = (((player.view.x + viewPort.width / 2) / tileSize / chunkSize) | 0) + earlyLoading;
+  var minChunkY = (((player.view.y - viewPort.height / 2) / tileSize / chunkSize) | 0) - earlyLoading;
+  var maxChunkY = (((player.view.y + viewPort.height / 2) / tileSize / chunkSize) | 0) + earlyLoading;
 
   for (var x = minChunkX; x <= maxChunkX; x++) {
     for (var y = minChunkY; y <= maxChunkY; y++) {
@@ -479,7 +484,7 @@ $(function() {
 
   function setup() {    
     space.release = function() {
-      view.z = 1 - view.z;
+      player.z = 1 - player.z;
     };
 
     $(renderer.view).click(function(e) {
@@ -536,6 +541,7 @@ $(function() {
       } else {
         monster.view.x = monster.x * tileSize;
         monster.view.y = monster.y * tileSize;
+        monster.view.visible = monster.z === player.z;
       }
     });
     
