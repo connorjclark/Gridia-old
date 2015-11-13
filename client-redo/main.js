@@ -3,17 +3,21 @@
 var stage;
 var previousGlobalTick;
 var globalTick;
-var view = {x: 1550, y: 5440, z: 0};
+var player;
 var numFloorSheets = 6;
 var numTemplateSheets = 1;
 var numItemSheets = 27;
-var numPlayerSheets = 1;
+var numPlayerSheets = 8;
 var sharedChunkData;
 var itemsConfig;
+var monstersConfig;
 var music;
 var tileSize = 32;
 var chunkSize = 20;
 var viewPort;
+
+var monsters = [];
+var monsterLayer = new PIXI.Container();
 
 // TODO see if pooling helps at all
 
@@ -81,13 +85,29 @@ var TileIndexer = (function() {
 
       return new PIXI.Texture(baseTexture, rect);
     },
-    getPlayer: function(playerType) {
-      // TODO
+    getMonster: function(monsterType) {
+      var index = 0;
+      var width = tileSize;
+      var height = tileSize;
+
+      if (monstersConfig[monsterType]) {
+        index = monstersConfig[monsterType].image;
+        if (monstersConfig[monsterType].image_type == 2) {
+          height *= 2;
+        }
+      }
+
+      var tileSheetIndex = (index / 100) | 0;
+      var baseTexture = PIXI.utils.BaseTextureCache["assets/players/players" + tileSheetIndex + ".png"];
+      index = index % 100;
+      var rect = new PIXI.Rectangle((index%10)*tileSize, ((index/10)|0)*tileSize, width, height);
+
+      return new PIXI.Texture(baseTexture, rect);
     }
   };
 })();
 
-function createFloor(x, y, z, floor) {
+function createFloorSprite(x, y, z, floor) {
   var sprite = SpritePool.get();
   sprite.texture = TileIndexer.getFloor(floor, x, y, z);
   sprite.x = x * tileSize;
@@ -95,12 +115,28 @@ function createFloor(x, y, z, floor) {
   return sprite;
 }
 
-function createItem(x, y, z, item) {
+function createItemSprite(x, y, z, item) {
   var sprite = SpritePool.get();
   sprite.texture = TileIndexer.getItem(item, x, y, z, globalTick);
   sprite.x = x * tileSize;
   sprite.y = y * tileSize - sprite.height + tileSize; // offset for items taller than one tile
   return sprite;
+}
+
+function createMonsterSprite(x, y, z, monsterType) {
+  var sprite = SpritePool.get();
+  sprite.texture = TileIndexer.getMonster(monsterType);
+  sprite.x = x * tileSize;
+  sprite.y = y * tileSize - sprite.height + tileSize; // offset for monsters taller than one tile
+  return sprite;
+}
+
+function createMonster(x, y, z, monsterType) {
+  var view = createMonsterSprite(x, y, z, monsterType);
+  var monster = { x: x, y: y, z: z, view: view };
+  monsters.push(monster);
+  monsterLayer.addChild(view);
+  return monster;
 }
 
 var Map = (function(width, height, depth) {
@@ -111,6 +147,7 @@ var Map = (function(width, height, depth) {
   // so, one particle container per tilesheet
   var floorParticleContainers = [];
   var itemParticleContainers = [];
+  var monsterParticleContainers = [];
 
   var floorLayer = new PIXI.Container();
   var itemLayer = new PIXI.Container();
@@ -130,6 +167,10 @@ var Map = (function(width, height, depth) {
 
   function removeItem(item) {
     itemParticleContainers[item.texture.baseTexture.imageUrl].removeChild(item);
+  }
+
+  function removeMonster(monster) {
+    monsterParticleContainers[monster.texture.baseTexture.imageUrl].removeChild(monster);
   }
 
   function loadChunk(x, y, z) {
@@ -202,11 +243,11 @@ var Map = (function(width, height, depth) {
         chunk.floors[i] = [];
         chunk.items[i] = [];
         for (var j = 0; j < chunkSize; j++) {
-          var floor = createFloor(x*chunkSize + i, y*chunkSize + j, z, chunk.data[i][j].floor);
+          var floor = createFloorSprite(x*chunkSize + i, y*chunkSize + j, z, chunk.data[i][j].floor);
           chunk.floors[i][j] = floor;
           addToParticleContainers(floorParticleContainers, floor, floorLayer);
 
-          var item = createItem(x*chunkSize + i, y*chunkSize + j, z, chunk.data[i][j].item.type);
+          var item = createItemSprite(x*chunkSize + i, y*chunkSize + j, z, chunk.data[i][j].item.type);
           chunk.items[i][j] = item;
           addToParticleContainers(itemParticleContainers, item, itemLayer);
         }
@@ -326,6 +367,7 @@ var Map = (function(width, height, depth) {
     setItem: setItem,
     floorLayer: floorLayer,
     itemLayer: itemLayer,
+    monsterLayer: monsterLayer,
     cull: cull,
     getChunk: getChunk
   };
@@ -334,21 +376,21 @@ var Map = (function(width, height, depth) {
 function updateChunks() {
   var earlyLoading = 1;
 
-  var minChunkX = ((view.x / tileSize / chunkSize) | 0) - earlyLoading;
-  var maxChunkX = (((view.x + viewPort.width) / tileSize / chunkSize) | 0) + earlyLoading;
-  var minChunkY = ((view.y / tileSize / chunkSize) | 0) - earlyLoading;
-  var maxChunkY = (((view.y + viewPort.height) / tileSize / chunkSize) | 0) + earlyLoading;
+  var minChunkX = ((player.view.x / tileSize / chunkSize) | 0) - earlyLoading;
+  var maxChunkX = (((player.view.x + viewPort.width) / tileSize / chunkSize) | 0) + earlyLoading;
+  var minChunkY = ((player.view.y / tileSize / chunkSize) | 0) - earlyLoading;
+  var maxChunkY = (((player.view.y + viewPort.height) / tileSize / chunkSize) | 0) + earlyLoading;
 
   for (var x = minChunkX; x <= maxChunkX; x++) {
     for (var y = minChunkY; y <= maxChunkY; y++) {
-      var chunk = Map.getChunk(x, y, view.z); // this will load it if necessary
+      var chunk = Map.getChunk(x, y, player.z); // this will load it if necessary
       if (chunk && previousGlobalTick !== globalTick) {
         chunk.redrawAnimations();
       }
     }
   }
 
-  Map.cull(minChunkX-earlyLoading, maxChunkX+earlyLoading, minChunkY-earlyLoading, maxChunkY+earlyLoading, view.z);
+  Map.cull(minChunkX-earlyLoading, maxChunkX+earlyLoading, minChunkY-earlyLoading, maxChunkY+earlyLoading, player.z);
 }
 
 function keyboard(keyCode) {
@@ -416,6 +458,7 @@ $(function() {
   for (var i = 0; i < numPlayerSheets; i++) loadTileSheet('players', i);
 
   PIXI.loader.add("assets/content/items.json");
+  PIXI.loader.add("assets/content/monsters.json");
   
   PIXI.loader.load(setup);
 
@@ -434,24 +477,30 @@ $(function() {
     setViewport(window.innerWidth, window.innerHeight);
   }
 
-  function setup() {
+  function setup() {    
     space.release = function() {
       view.z = 1 - view.z;
     };
 
     $(renderer.view).click(function(e) {
-      var x = ((e.offsetX + view.x) / tileSize) | 0;
-      var y = ((e.offsetY + view.y) / tileSize) | 0;
-      Map.setFloor(x, y, view.z, Map.getFloor(x, y, view.z) === 1 ? 21 : 1); // toggle water/grass
+      var x = ((e.offsetX + player.x * tileSize) / tileSize) | 0;
+      var y = ((e.offsetY + player.y * tileSize) / tileSize) | 0;
+      Map.setFloor(x, y, player.z, Map.getFloor(x, y, player.z) === 1 ? 21 : 1); // toggle water/grass
+
+      createMonster(x, y, player.z, 1);
     });
 
     itemsConfig = PIXI.loader.resources["assets/content/items.json"].data;
+    monstersConfig = PIXI.loader.resources["assets/content/monsters.json"].data;
 
     // hack for displaying a blank image on 0 itemType. items.json is set to show a '?'
     itemsConfig[0].animations = [1];
 
+    player = createMonster(50, 170, 0, 1);
+
     stage.addChild(Map.floorLayer);
     stage.addChild(Map.itemLayer);
+    stage.addChild(monsterLayer);
 
     requestAnimationFrame(update);
   }
@@ -462,22 +511,33 @@ $(function() {
     previousGlobalTick = globalTick;
     globalTick = Math.floor(Date.now() / 1000 * 5);
 
-    var speed = 4;
+    var speed = 4 / tileSize;
     if (right.isDown) {
-      view.x += speed;
+      player.x += speed;
     }
     if (left.isDown) {
-      view.x -= speed;
+      player.x -= speed;
     }
     if (down.isDown) {
-      view.y += speed;
+      player.y += speed;
     }
     if (up.isDown) {
-      view.y -= speed;
+      player.y -= speed;
     }
 
-    Map.floorLayer.x = Map.itemLayer.x = -view.x;
-    Map.floorLayer.y = Map.itemLayer.y = -view.y;
+    Map.floorLayer.x = Map.itemLayer.x = monsterLayer.x = -player.x * tileSize;
+    Map.floorLayer.y = Map.itemLayer.y = monsterLayer.y = -player.y * tileSize;
+
+    $.each(monsters, function() {
+      var monster = this;
+      if (monster === player) {
+        monster.view.x = monster.x * tileSize + viewPort.width / 2;
+        monster.view.y = monster.y * tileSize + viewPort.height / 2;
+      } else {
+        monster.view.x = monster.x * tileSize;
+        monster.view.y = monster.y * tileSize;
+      }
+    });
     
     updateChunks();
 
@@ -485,7 +545,7 @@ $(function() {
   }
 });
 
-/* crazy code for water templating */
+/* crazy code for tile templating */
 
 function useTemplate(templateId, typeToMatch, x, y, z) {
   var xl = x - 1;
