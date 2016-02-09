@@ -1,3 +1,24 @@
+getting back into the project:
+________________________________
+consolidate todos/backlog
+
+newest version of Unity
+
+focus on native client, put a pin in webplayer
+  make option for webserver build in build script. toggle it off in a config file, for now
+  go ahead and nuke the flash storage bridge from the repo. by the time webplayer comes back, it likely will have a better native storage solution
+
+redo server
+  groovy
+  simplify networking
+  use http for resources
+
+project/dev.env. quality
+  code lint
+  sublime integration
+  standardized file/resource naming (like-this.txt)
+________________________________
+
 For combat
 
   *****

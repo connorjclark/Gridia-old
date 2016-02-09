@@ -1,0 +1,46 @@
+rethink crafting
+  crafting, as is, is hard. need to memorize recipes. no fun! lets increase usability
+  adding a time factor to crafting might be interesting, let's try that
+  crafting things take time, ala Rust
+  possible crafting recipes are shown in a crafting menu
+  selecting a recipe will remove items from inventory, and create the product in x seconds
+    if one of the resources is near the player (ON THE GROUND), then it stays there until completion
+    if in inventory, it does not stay there
+  recipes can make use of items near the player (how to distinguish in menu?)
+    axe (in inventory) + tree (near player) = chop down tree ... (this should show in craft menu, but have a more convienent option)
+      TODO this sort of crafting recipe should slowly give the user resources (wood) over time. how to best integrate?
+    plough (in inv) + ground (around player) = ploughed ground (which part of the ground? need to be able to select WHERE when multiple choices exist)
+    hand (...) + closed door = opened door
+
+    saw (in inv) + planks (on ground) = item made on ground
+    saw (in inv) + planks (in inv) = item placed in inventory
+
+    item crafting time...if item is meant to be placed in inv, and inv is full, crafting halts (at end) until there is room
+    if item is meant to be ON THE GROUND, player must be near it for the crafting to continue on it.
+    crafts on the ground take precedence over crafts for the inventory
+    moving away from a craft on the ground PAUSES (doesn't reset) it's craft timer
+    
+    crafting menu only shows items that can be made w/ current resources (otherwise there are too many to show!)
+      maybe show things in grey if you have the tool (but not the focus) on hand?
+    item combos w/ multiple craft options produce submenus (hammer + planks = a lot of things, so the hammer+planks options is shown like:)
+      ____________________________________________
+      |      hammer and nails + wood planks    |  |
+      |  [itemimg1] [itemimg2] [...] [itemimgn]|>>|
+      |________________________________________|__|
+
+      otherwise it's more like
+      ____________________________________________
+      |  knife + apple = cut apple, apple seeds   |
+      | [tool] + [focus] = [prod1] [prod2] [...]  |
+      |___________________________________________|
+
+    crafts are queued. only one is active at a time. they can be canceled, this returns the resources to inventory
+
+redo ui
+  current ui is awful. let's get intimate with Unity's UI toolset
+  this means NUKE THE UI I ROLLED MYSELF. what a waste
+  ui while in 'game view' state should be CLEAN, unobstructed
+    toolbar of important items on bottom of screen, ala Minecraft/rust
+    quickly fading chat
+    perhaps a small toolbar on the bottom for informational stuff (num players online, what else?)
+  press TAB to bring up more menu stuff, ala Rust
