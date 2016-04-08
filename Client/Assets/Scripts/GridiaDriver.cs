@@ -2,10 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 
 public class GridiaDriver : MonoBehaviour
-{    
+{
+    public static AutoResetEvent GameInitWaitHandle = new AutoResetEvent(false);
+
     public GridiaGame Game; // :(
     public TextureManager TextureManager; // :(
     public ContentManager ContentManager; // :(
@@ -89,7 +92,8 @@ public class GridiaDriver : MonoBehaviour
         TabbedGui.Add(2008, _recipeBook, true);
     }
 
-    void InitTabbedGui() 
+    // TODO delete
+    /*void InitTabbedGui() 
     {
         TabbedGui.Add(1221, InvGui, false); // :(
         TabbedGui.Add(15, EquipmentGui, false); // :(
@@ -102,7 +106,7 @@ public class GridiaDriver : MonoBehaviour
         options.X = (Screen.width - options.Width) / 2;
         options.Y = (Screen.height - options.Height) / 2;
         TabbedGui.Add(132, options, false);
-    }
+    }*/
 
     public Vector2 GetRelativeScreenPosition(Vector3 playerPosition, Vector3 subjectCoord)
     {
@@ -118,12 +122,12 @@ public class GridiaDriver : MonoBehaviour
     }
 
     public bool IsGameReady() {
-        return ContentManager.DoneLoading && TextureManager.DoneLoading && Game != null;
+        return Game != null;
     }
 
     // :(
     void OnGUI() {
-        if (!IsGameReady())
+        if (Game == null)
         {
             return;
         }
@@ -319,15 +323,12 @@ public class GridiaDriver : MonoBehaviour
 
     void Update()
     {
-        if (ContentManager.DoneLoading && TextureManager.DoneLoading && Game == null) {
-            Game = Locator.Get<GridiaGame>();
-            InitTabbedGui();
-            Game.Initialize(GridiaConstants.Size, GridiaConstants.Depth, GridiaConstants.SectorSize); // :(
-            ServerSelection.gameInitWaitHandle.Set();
-        }
-        if (!IsGameReady())
+        if (Game == null)
         {
-            return;
+            Game = Locator.Get<GridiaGame>();
+            //InitTabbedGui();
+            Game.Initialize(GridiaConstants.Size, GridiaConstants.Depth, GridiaConstants.SectorSize); // :(
+            GameInitWaitHandle.Set();
         }
         if (Game.View.Focus == null)
         {

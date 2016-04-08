@@ -1,0 +1,26 @@
+<Showcase_ComboBox>
+  <Frame Style="ShowcasePanel">
+    <Group Alignment="Top" Orientation="Vertical" Spacing="30px" Margin="60,30,60,30" ContentAlignment="Center">
+      <Label Style="ShowcaseHeader" Text="ComboBox" AdjustToText="Width" TextAlignment="Center" />
+      <Label Style="ShowcaseDescription" Text="A drop-down list of selectable items." AdjustToText="Width" TextAlignment="Center" />
+      <Group Orientation="Horizontal" Spacing="30px" ContentAlignment="Top">
+        <Group Orientation="Vertical" ContentAlignment="Left">
+          <Label Text="Static items" AdjustToText="Width" />
+          <ComboBox>
+            <ListItem Text="ComboBoxItem 1" />
+            <ListItem Text="ComboBoxItem 2" />
+            <ListItem Text="ComboBoxItem 3" />
+            <ListItem Text="ComboBoxItem 4" />
+            <ListItem Text="ComboBoxItem 5" />
+          </ComboBox>
+        </Group>
+        <Group Orientation="Vertical" ContentAlignment="Left">
+          <Label Text="Dynamic items" AdjustToText="Width" />
+          <ComboBox Items="{ComboBoxItems}">
+            <ListItem Id="Template" Text="{Item.CraftingMaterial}" />
+          </ComboBox>
+        </Group>
+      </Group>
+    </Group>
+  </Frame> 
+</Showcase_ComboBox>

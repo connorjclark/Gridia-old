@@ -1,0 +1,241 @@
+getting back into the project:
+________________________________
+consolidate todos/backlog
+
+newest version of Unity
+
+focus on native client, put a pin in webplayer
+  make option for webserver build in build script. toggle it off in a config file, for now
+  go ahead and nuke the flash storage bridge from the repo. by the time webplayer comes back, it likely will have a better native storage solution
+
+redo server
+  groovy
+  simplify networking
+  use http for resources
+
+project/dev.env. quality
+  code lint
+  sublime integration
+  standardized file/resource naming (like-this.txt)
+  clean up todos
+  update instructions before next release
+________________________________
+
+  *****
+
+  Create an arena for pvp testing
+    warp stones
+
+  Armor weight -> player speed
+  Equipment determines actions available
+    Spear - spike (optimal at 2 tiles away)
+          - lunge (must be 1 tile away)
+
+  Give warning/don't allow action if target is out of range
+    - how to show warning?
+
+  Should increase the HP a lot.
+
+  Hits should show how much HP was removed
+    - 
+    a number shooting off the hit player?
+
+  Attacks are time-action based (paper mario)
+  Block attacks - think paper mario. give a cue that an attack is coming, and if GUARD action is done at certain time, the attack is mitigated a bit.
+    visual cue - ?
+    audio cue - ?
+    Attacks can also be dodged, if the player is in the middle of a dash
+
+  Strong/Fast attacks
+    Fast - 1, 2, 3. quick attacks that have small blocking intervals.
+    Strong - charge up. larger blocking interval
+
+Priority features
+
+  Assess how to refactor TileMapView
+    Sprite Tiler?
+
+  GridiaJsonMessageHandler
+  transient entity properties
+  player label is transparent
+
+  Rolling: just give a direction, and it goes that way
+    introduces new action type: directional
+
+  Context menu, using items with mouse
+  Tutorial island (~10-15 minutes)
+    Deep water
+  Objectives / Achievements
+  NPC merchants
+    Player owned
+  Item ownership
+  Land ownership
+  Transition to IntelliJ
+  Running into items uses equipped item on it.
+    Equip pickaxe to mine
+    Equip axe to cut down trees easier
+  Convert entitites to unity objects
+  Require def in scripts
+  Probably need to cache scripts
+
+Issues
+
+  Sawwing sfx is static-y
+  Player position gets out of sync?
+  Usage -> Use
+  freezes when minimized for awhile
+  animations show in top left corner for split seconds
+  issues when walking on edge of map
+  drag-item-under-windows bug
+  unity bridge request md5 hash
+  WavFile - some sounds do not work. Woodcutting plays twice, why?
+  you can equip stacks of items
+  GZipStream does not work in Unity
+  Clean up project structure
+  Gridia namespace
+  Unity doesn't compile this : 
+    JsonConvert issue: data["id"].Value<int>() doesn't compile in Unity. Forced to do (int)data["id"]
+  Client side hit prediction - worth doing?
+  Graphical layering of items is messed up
+  Filling in cave w/ shovel should destroy corresponding exit / entrance
+  Item usages on creatures (Shearing sheep)
+  Item drop issues - race conditions?
+    Drop as backpack/corpse instead of all items
+    Lost & found
+    Main thread queue?
+
+Controls
+
+  move items between/within containers w/ keyboard
+  right shift,ctrl,alt...
+  equip item: ctrl + e
+
+UI
+
+  Map
+  hand uses don't show in recipe book?
+  Show slot number for items 1-10 in inventory
+  Move 'next' button in recipe book to far right
+  color of quantity labels
+
+Refactor
+
+
+  Coord -> Int3
+  xxxGui -> xxxWindow
+  itemusages -> usages
+  Preloader
+  State machine
+  Test coverage
+  Item.Item -> Item.Data
+  lowercase-directory-names
+  kill the Locator
+  Everything!
+
+Tests, code coverage and cyclomatic complexity
+
+  ContentManager
+
+Misc
+
+  mute music on minimize
+  commands:
+    !kick
+    !w
+
+Crossplatform
+
+  Linux
+  Mac
+
+Magic
+
+  Spell discovery
+    Runes placed in minecraft-esque fashion
+    Discovering a certain attribute: shape and specific runes
+    Town gives a spell for free. Example: healing. Show player that a plus and a certain rune is for healing
+    Quests will then give players tips on the shape for a spell, or the rune for a spell
+    Discovery != usage
+    Specific runes needed is random for each player, to prevent easily 'cheating'  
+
+Land ownership:
+
+  Server owned, Player owned, and unclaimed
+  Partition sectors to 4 plots
+  Non-contiguous land has a one-tile border of undevelopable land, to prevent blocking parts of the world
+  Plots in PVP zones can have chests/doors be pick locked
+  Players can't build/destroy on land owned by other players or the server
+  Server owned floors can only be improved. Grass -> dirt -> stone. Floors decay over use.
+  Magic spell to see ownership
+  After x amount of time, if player does not log in, their land is put up for auction by the town
+  Taxes?
+
+Meta
+
+  Set up forums, chatroom
+    http://www.liquidweb.com/kb/how-to-install-docker-on-ubuntu-14-04-lts/
+    Discourse
+  Press kit
+  Tigsource
+  /r/indiegames - post imagine cup video
+  .rar, don't .zip
+  Greenlight
+
+Nice-to-have
+
+  'Chrome dark noise' on mining walls
+  Different realms - 1:100 movement, one-way telporting to "oblivion"-like plane, fixed teleports back
+  	temorary return gate, closes in 10 min, or cost mana?
+  	permament gates take a lot of mana/ resources. time investment
+  sfxr
+  Water ripple effect
+  speed up music during combat
+  browser version
+  auto-convert .ogg sounds files
+  sparse map structure, procedual generation
+  "ground status" - water, ploughed, etc... Allows for flooding areas, and other stuff
+    bit-array on sector
+    ploughed should be a ground status
+
+
+Scripting todo:
+
+  Refactor GridiaScript - DRY
+
+  Attaching scripts - unattaching
+
+  Creating creatures is wonky
+
+  transient entity properties
+
+========================
+Script chat commands
+========================
+
+!entities (Shows all)
+
+	monster1 - (ID, NAME, TYPE <monster/player/entity>)
+	monster2
+		script1
+		script2
+	world
+		script1
+		script2
+
+!entity <id/name> - shows all scripts
+
+!script inject <script instance id> <code to run>
+
+!script rerun <script instance id>
+
+!script list (shows all scripts known)
+	script1
+	script2
+	script3
+	script4
+
+!script attach <scriptname> <entity id or name>
+
+!script new scriptName <code> (creates a script)
+
+!script run <code> (creates script and attaches to world)

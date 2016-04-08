@@ -1,0 +1,16 @@
+<Showcase_Button>
+  <Frame Style="ShowcasePanel">
+    <Group Alignment="Top" Orientation="Vertical" Spacing="30px" Margin="60,30,60,30" ContentAlignment="Center">
+      <Label Style="ShowcaseHeader" Text="Button" TextAlignment="Center" />
+      <Label Style="ShowcaseDescription" Text="Clickable region with text. Can be set to toggle and can have content." AdjustToText="Width" TextAlignment="Center" />
+      <Group Orientation="Horizontal" Spacing="25px" ContentAlignment="Top">
+        <Button Text="Click" Click="ButtonClick" />
+        <Button Text="Toggle" IsToggleButton="True" />
+        <Button Text="Content">
+          <Image Style="ShowcaseButtonContent" />
+        </Button>
+      </Group>
+      <Label Text="Button clicked [b]{ButtonClickCount}[/b] times" FontSize="16" AdjustToText="Width" />
+    </Group> 
+  </Frame>
+</Showcase_Button> 

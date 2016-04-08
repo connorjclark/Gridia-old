@@ -1,0 +1,11 @@
+1. Ignore saving generated components in Unity Scene file, play nice with version control
+
+2. Bind properties
+
+3. how to clear ServerSelectList selection?
+
+4. commit to public, open source project?
+
+5. border around Region?
+
+6. data bind objects (or, a flowlist of Views?)

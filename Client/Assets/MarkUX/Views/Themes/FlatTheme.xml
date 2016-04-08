@@ -1,0 +1,61 @@
+<Theme Name="Flat" BaseDirectory="Assets/MarkUX/Themes/Flat/"> 
+  <Button BackgroundColor="#7d7d7d" HighlightedColor="Gray90" PressedColor="#ef706a" Height="50px" />
+  <Label Font="Fonts/Roboto-Light.ttf" FontSize="18" FontColor="#ffffff" />
+  <List ItemColor="Transparent" SelectedItemColor="Gold" />
+  <FlowList Style="Menu" CanSelect="True" ItemColor="#201d20" HighlightedItemColor="#262b35" SelectedItemColor="#c26aef" ItemFontColor="#ffffff" /> <!--#d08992-->
+  <FlowList Style="Selectable" CanSelect="True" ItemColor="Transparent" SelectedItemColor="#ef706a" />  
+  <Panel ScrollBarBreadth="10px"
+         HorizontalScrollBarColor="#000000"
+         VerticalScrollBarColor="#000000"         
+         HorizontalScrollBarHandleColor="#ef706a" 
+         VerticalScrollBarHandleColor="#ef706a" />
+  <Slider SliderFillColor="#ef706a" SliderHandleColor="#f8f6f3" SliderColor="#626262" Breadth="12"
+          SliderHandleLength="11" SliderHandleBreadth="22"/>
+  <Frame Style="Window" BackgroundColor="Gray80" />
+  <Region Style="Window" BackgroundColor="Gray80" />
+  <HyperLink FontColor="#8cade3" HighlightedFontColor="#c7dafb" PressedFontColor="#ef706a"
+             Font="Fonts/Roboto-Light.ttf" FontSize="18" />
+  <InputField Font="Fonts/Roboto-Light.ttf" FontSize="18" FontColor="#000000" Width="400px" Height="50px" TextMargin="10px,10px,10px,0px" TextSelectionColor="#ef706a" />
+  <DataGrid RowHeight="50px" SelectedRowColor="#ef706a" CanSelect="True" HeaderRowColor="Gray70" HeaderTextOffset="10,0,0,0" TextOffset="10,0,0,0"
+            Font="Fonts/Roboto-Light.ttf" FontSize="18" FontColor="#ffffff"
+            HeaderFont="Fonts/Roboto-Regular.ttf" HeaderFontSize="18" HeaderFontColor="#000000"/>  
+
+  <Region Style="DefaultBackgroundRegion" BackgroundColor="#131419" />
+  
+  <ComboBox Height="52" Width="300px" ButtonMargin="0,2px,0,0" ButtonFont="Fonts/Roboto-Regular.ttf" ButtonFontSize="18" ButtonFontColor="#000000" ButtonImage="Sprites/ComboBoxButton.psd" ButtonPressedImage="Sprites/ComboBoxButtonPressed.psd" ButtonImageType="Sliced" ButtonColor="#ffffff" ButtonHighlightedColor="#dddddd" ButtonPressedColor="#eeeeee"
+        ItemWidth="100%" ItemHeight="50px" ListBackgroundColor="#ffffff" ItemColor="#ffffff" HighlightedItemColor="#ffffff" SelectedItemColor="#ef706a"
+        ItemFont="Fonts/Roboto-Regular.ttf" ItemFontSize="18" ItemFontColor="#000000"/>  
+  
+  <Window TitleRegionWidth="100%" TitleRegionHeight="50px" TitleRegionBackgroundColor="#ef706a" WindowBackgroundColor="#252931"
+          TitleFont="Fonts/Roboto-Regular.ttf" TitleFontColor="#ffffff"
+          CloseButtonColor="#ffffff"
+          CloseButtonAlignment="TopRight"
+          CloseButtonImage="Sprites/CloseButton.psd" CloseButtonImageType="Simple"
+          CloseButtonHighlightedColor="#626262" CloseButtonPressedColor="#000000"
+          CloseButtonOffset="0,19px,16px,0" CloseButtonWidth="11" CloseButtonHeight="12"
+          TitleAlignment="Left" TitleOffset="26px,0,0,0" />
+
+  <TabPanel TabListHeight="50px" TabHeight="50px" TabAlignment="Bottom" TabContentMargin="0,50,0,0" 
+            TabItemColor="#262b35" HighlightedTabItemColor="#262b35" SelectedTabItemColor="#3b414e" TabItemFontColor="#ffffff"
+            TabItemFont="Fonts/Roboto-Regular.ttf" TabItemFontSize="18" TabContentBackgroundColor="#3b414e" />
+
+  <CheckBox CheckBoxImage="Sprites/CheckBox.psd" CheckBoxPressedImage="Sprites/CheckBoxPressed.psd" CheckBoxWidth="24" CheckBoxHeight="24" Height="25"
+            CheckBoxColor="#ffffff" CheckBoxPressedColor="#ffffff" 
+            Font="Fonts/Roboto-Regular.ttf" FontSize="18" FontColor="#ffffff" Spacing="10px"/>
+
+  <RadioButton RadioButtonImage="Sprites/RadioButton.psd" RadioButtonPressedImage="Sprites/RadioButtonPressed.psd" RadioButtonWidth="19" RadioButtonHeight="19" Height="25"
+          RadioButtonColor="#ffffff" RadioButtonPressedColor="#ffffff" RadioButtonOffset="0,1,0,0"
+          Font="Fonts/Roboto-Regular.ttf" FontSize="18" FontColor="#ffffff" Spacing="10px"/>
+
+  <Image Style="ShowcaseButtonContent" BackgroundImage="Sprites/RainbowSquare.psd" Width="20" Height="20" Offset="10,0,0,0" Alignment="Left" />
+  <Frame Style="ShowcasePanel" BackgroundColor="#252931" Alignment="Top" /> 
+  <Label Style="ShowcaseHeader" Font="Fonts/Roboto-Regular.ttf" FontSize="26" FontColor="#ffffff" />
+  <Label Style="ShowcaseDescription" Font="Fonts/Roboto-Light.ttf" FontSize="18" FontColor="#ffffff" />
+  <Region Style="ShowcaseListRegion" Margin="5px" BackgroundColor="#7d7d7d" />
+  <FlowList Style="ShowcaseFlowList" SelectedItemColor="#c26aef" />
+  <FlowListItem Style="MenuItem" Width="100" Height="50" />
+  <Frame Style="ShowcaseGroup" BackgroundColor="#7d7d7d" ContentMargin="5px" />
+  <Image Style="ShowcaseImage" Path="Sprites/RainbowSquare.psd" Width="400" Height="400" />
+</Theme>
+
+

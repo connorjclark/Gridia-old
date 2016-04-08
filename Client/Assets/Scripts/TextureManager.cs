@@ -17,37 +17,47 @@ namespace Gridia
         private TextureListWrapper Arms { get; set; }
         private TextureListWrapper Weapons { get; set; }
         private TextureListWrapper Shields { get; set; }
-        public bool DoneLoading { get; private set; }
         private readonly FileSystem _fileSystem;
 
         public TextureManager(String worldName)
         {
             _fileSystem = GridiaConstants.GetFileSystem();
             Initiate(worldName);
+
+            // TODO: profile if lazily loading textures is worth it
+            // if there isn't much benefit, just load all at once
+            LoadAll();
         }
 
         private void Initiate(String worldName) {
             var clientDataFolder = @"worlds\" + worldName + @"\clientdata\"; // :(
 
-            var fallbackTexture = new Texture2D(320, 320)
-            {
-                filterMode = FilterMode.Point,
-                wrapMode = TextureWrapMode.Clamp
-            };
+            Floors = new TextureListWrapper(clientDataFolder + @"floors\floors", _fileSystem);
+            Items = new TextureListWrapper(clientDataFolder + @"items\items", _fileSystem);
+            Creatures = new TextureListWrapper(clientDataFolder + @"players\players", _fileSystem);
+            Templates = new TextureListWrapper(clientDataFolder + @"templates\template", _fileSystem);
+            Animations = new TextureListWrapper(clientDataFolder + @"animations\animation", _fileSystem);
+            Heads = new TextureListWrapper(clientDataFolder + @"players\head", _fileSystem);
+            Chests = new TextureListWrapper(clientDataFolder + @"players\chest", _fileSystem);
+            Legs = new TextureListWrapper(clientDataFolder + @"players\legs", _fileSystem);
+            Arms = new TextureListWrapper(clientDataFolder + @"players\arms", _fileSystem);
+            Weapons = new TextureListWrapper(clientDataFolder + @"players\weapon", _fileSystem);
+            Shields = new TextureListWrapper(clientDataFolder + @"players\shield", _fileSystem);
+        }
 
-            Floors = new TextureListWrapper(clientDataFolder + @"floors\floors", fallbackTexture, _fileSystem);
-            Items = new TextureListWrapper(clientDataFolder + @"items\items", fallbackTexture, _fileSystem);
-            Creatures = new TextureListWrapper(clientDataFolder + @"players\players", fallbackTexture, _fileSystem);
-            Templates = new TextureListWrapper(clientDataFolder + @"templates\template", fallbackTexture, _fileSystem);
-            Animations = new TextureListWrapper(clientDataFolder + @"animations\animation", fallbackTexture, _fileSystem);
-            Heads = new TextureListWrapper(clientDataFolder + @"players\head", fallbackTexture, _fileSystem);
-            Chests = new TextureListWrapper(clientDataFolder + @"players\chest", fallbackTexture, _fileSystem);
-            Legs = new TextureListWrapper(clientDataFolder + @"players\legs", fallbackTexture, _fileSystem);
-            Arms = new TextureListWrapper(clientDataFolder + @"players\arms", fallbackTexture, _fileSystem);
-            Weapons = new TextureListWrapper(clientDataFolder + @"players\weapon", fallbackTexture, _fileSystem);
-            Shields = new TextureListWrapper(clientDataFolder + @"players\shield", fallbackTexture, _fileSystem);
-
-            DoneLoading = true;
+        public void LoadAll()
+        {
+            Floors.LoadAll();
+            Items.LoadAll();
+            Creatures.LoadAll();
+            Templates.LoadAll();
+            Animations.LoadAll();
+            Heads.LoadAll();
+            Chests.LoadAll();
+            Legs.LoadAll();
+            Arms.LoadAll();
+            Weapons.LoadAll();
+            Shields.LoadAll();
         }
 
         private void DrawCreaturePart(Rect rect, TextureListWrapper textures, int spriteIndex)

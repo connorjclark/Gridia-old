@@ -13,6 +13,7 @@ namespace Gridia.Protocol
             GridiaConstants.Depth = (int)data["depth"];
             GridiaConstants.SectorSize = (int)data["sectorSize"];
             GridiaConstants.ServerTimeOffset = connection.getSystemTime() - (long)data["time"];
+            
             if (!GridiaConstants.Version.Equals((String)data["version"]))
             {
                 GridiaConstants.ErrorMessage = "Incompatible client. Client version = " + GridiaConstants.Version + ". Server version = " + (String)data["version"] + ". Visit www.hotengames.com for the newest client.";
@@ -20,7 +21,7 @@ namespace Gridia.Protocol
             } else
             {
                 //ServerSelection.connectedWaitHandle.Set(); // :(
-                ServerSelection.connected = true;
+                ServerConnect.connected = true;
             }
         }
     }

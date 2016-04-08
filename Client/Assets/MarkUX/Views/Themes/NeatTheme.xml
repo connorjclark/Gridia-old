@@ -1,0 +1,95 @@
+<Theme Name="Neat" BaseDirectory="Assets/MarkUX/Themes/Neat/"> 
+  <Button BackgroundImage="Sprites/SmallButton.psd" BackgroundImageType="Sliced" BackgroundColor="#37277f" HighlightedColor="#6e2b9c" PressedColor="#f83a8c" Width="120px" Height="36px"
+          Font="Fonts/Lato-Regular.ttf" FontSize="14" FontColor="White" />
+  <Button Style="Close" BackgroundImage="Sprites/CloseButton.psd" BackgroundImageType="Simple" BackgroundColor="#b8b2c5" HighlightedColor="#5a566e" Width="16px" Height="16px" />
+  <Button Style="Small" BackgroundImage="Sprites/SmallButton.psd" BackgroundImageType="Sliced" BackgroundColor="#37277f" HighlightedColor="#6e2b9c" PressedColor="#f83a8c" Width="120px" Height="36px"
+          Font="Fonts/Lato-Regular.ttf" FontSize="14" FontColor="White" />
+  <Button Style="Medium" BackgroundImage="Sprites/MediumButton.psd" BackgroundImageType="Sliced" BackgroundColor="#37277f" HighlightedColor="#6e2b9c" PressedColor="#f83a8c" Width="180px" Height="50px"
+        Font="Fonts/Lato-Bold.ttf" FontSize="20" FontColor="White" />
+  <Button Style="Large" BackgroundImage="Sprites/LargeButton.psd" BackgroundImageType="Sliced" BackgroundColor="#37277f" HighlightedColor="#6e2b9c" PressedColor="#f83a8c" Width="180px" Height="60px"
+      Font="Fonts/Lato-Bold.ttf" FontSize="20" FontColor="White" />
+  <Frame Style="Window" BackgroundImage="Sprites/Window.psd" BackgroundImageType="Sliced" BackgroundColor="#f7f7f8" />
+  <Frame Style="WindowWithShadow" BackgroundImage="Sprites/WindowShadow.psd" BackgroundImageType="Sliced" BackgroundColor="White" />
+  <Region Style="WindowWithShadow" BackgroundImage="Sprites/WindowShadow.psd" BackgroundImageType="Sliced" BackgroundColor="#f7f7f8" />
+  <Label Font="Fonts/Lato-Light.ttf" FontSize="18" FontColor="#5a566e" />
+  <Label Style="Header" Font="Fonts/Lato-Regular.ttf" FontSize="26" FontColor="#5a566e" />
+  <Label Style="Paragraph" Font="Fonts/Lato-Light.ttf" FontSize="18" FontColor="#5a566e" LineSpacing="1.4" />
+  <Label Style="Link" Font="Fonts/Lato-Regular.ttf" FontSize="20" FontColor="#5a566e" />
+  <Label Style="Info" Font="Fonts/Lato-Regular.ttf" FontSize="16" FontColor="#5a566e" />
+  <Label Style="InfoBold" Font="Fonts/Lato-Bold.ttf" FontSize="16" FontColor="#b8b2c5" />
+  <Label Style="ListItem" Font="Fonts/Lato-Bold.ttf" FontSize="16" FontColor="#1a1145" />
+  <HyperLink FontColor="#30a8ff" HighlightedFontColor="#6e2b9c" PressedFontColor="#f83a8c"
+             Font="Fonts/Lato-Light.ttf" FontSize="18" />
+  <Image Style="MenuBackground" BackgroundImage="Sprites/SceneBackground.psd" />
+  <Image Style="MediaBackground" BackgroundImage="Sprites/MediaBackground.psd" />
+  <Image Style="MediaBackground2" BackgroundImage="Sprites/MediaBackground2.psd" />
+  <Image Style="MediaBackground3" BackgroundImage="Sprites/MediaBackground3.psd" />
+  <Image Style="MediaBackground4" BackgroundImage="Sprites/MediaBackground4.psd" />
+  <Mask Style="WindowMaskLeft" BackgroundImage="Sprites/WindowMaskLeft.psd" BackgroundImageType="Sliced" BackgroundColor="White" />
+  <Mask Style="WindowMaskTop" BackgroundImage="Sprites/WindowMaskTop.psd" BackgroundImageType="Sliced" BackgroundColor="White" />
+  <Mask Style="WindowMaskRight" BackgroundImage="Sprites/WindowMaskRight.psd" BackgroundImageType="Sliced" BackgroundColor="White" />
+  <Mask Style="WindowMaskBottom" BackgroundImage="Sprites/WindowMaskBottom.psd" BackgroundImageType="Sliced" BackgroundColor="White" />    
+  <Image Style="UserIcon" BackgroundImage="Sprites/UserIcon.psd" Width="25px" Height="25px" />
+  <Image Style="LockIcon" BackgroundImage="Sprites/LockIcon.psd" Width="25px" Height="25px" />
+  <Image Style="Divider" BackgroundImage="Sprites/Divider.psd" Height="3px" Width="90px" />
+  <InputField BackgroundImage="Sprites/InputField.psd" BackgroundImageType="Sliced" Font="Fonts/Lato-Light.ttf" FontSize="24" FontColor="#8f86a3" Width="400px" Height="60px" TextMargin="25px,15px,25px,0px" TextSelectionColor="#e7e0ea" />
+  <Label Style="InputPlaceholder" Font="Fonts/Lato-Light.ttf" FontSize="24" FontColor="#8f86a3" />
+  <Slider SliderImage="Sprites/Slider.psd" SliderFillImage="Sprites/Slider.psd" SliderImageType="Sliced" Breadth="12" Length="120px" SliderHandleLength="0px" SliderHandleBreadth="12px" SliderColor="#dbd7e3" SliderFillColor="#37277f" />
+  <Button Style="LargeRound" BackgroundImage="Sprites/LargeRoundButton.psd" BackgroundColor="#dbd7e3" HighlightedColor="#6e2b9c" PressedColor="#f83a8c" Width="60px" Height="60px" />
+  <Button Style="Resize" BackgroundImage="Sprites/ResizeIcon.psd" BackgroundColor="#dbd7e3" HighlightedColor="#6e2b9c" PressedColor="#f83a8c" Width="30px" Height="30px" />
+  <Image Style="PlayIcon" BackgroundImage="Sprites/PlayIcon.psd" Width="17px" Height="22px" Color="#37277f" />
+  <Image Style="ResizeIcon" BackgroundImage="Sprites/ResizeIcon.psd" Width="30px" Height="30px" Color="#dbd7e3" />
+  <FlowList Style="Menu" ItemImage="Sprites/SmallButton.psd" ItemImageType="Sliced" ItemColor="#3c4764" HighlightedItemColor="#6e2b9c" SelectedItemColor="#dd59d1"
+            ItemFont="Fonts/Lato-Regular.ttf" ItemFontSize="14" ItemFontColor="White"/>
+  <FlowList Style="Selectable" ItemColor="Transparent" SelectedItemColor="#dbd7e3" />
+  <List ItemImageType="Sliced" ItemColor="Transparent" SelectedItemColor="#dbd7e3" />  
+  <Panel ScrollBarBreadth="20"
+         VerticalScrollBarImage="Sprites/VerticalScrollBar.psd" VerticalScrollBarImageType="Sliced" VerticalScrollBarColor="#dbd7e3"
+         HorizontalScrollBarImage="Sprites/HorizontalScrollBar.psd" HorizontalScrollBarImageType="Sliced" HorizontalScrollBarColor="#dbd7e3"
+         VerticalScrollBarHandleImage="Sprites/VerticalScrollBar.psd" VerticalScrollBarHandleImageType="Sliced" VerticalScrollBarHandleColor="#413285"
+         HorizontalScrollBarHandleImage="Sprites/HorizontalScrollBar.psd" HorizontalScrollBarHandleImageType="Sliced" HorizontalScrollBarHandleColor="#413285"
+         />
+  
+  <DataGrid RowHeight="50px" SelectedRowColor="#c9c1ea" CanSelect="True" HeaderRowColor="#ececec" HeaderTextOffset="10,0,0,0" TextOffset="10,0,0,0"
+          Font="Fonts/Lato-Light.ttf" FontSize="20" FontColor="#8f86a3"
+          HeaderFont="Fonts/Lato-Regular.ttf" HeaderFontSize="20" HeaderFontColor="#000000"/>
+
+  <TabPanel TabListHeight="50px" TabHeight="50px" TabAlignment="Bottom" TabContentMargin="0,50,0,0"
+          TabItemColor="#3c4764" HighlightedTabItemColor="#3c4764" SelectedTabItemColor="#dd59d1" TabItemFontColor="#ffffff"
+          TabItemFont="Fonts/Lato-Regular.ttf" TabItemFontSize="20" TabContentBackgroundColor="#ffffff" />
+
+  <CheckBox CheckBoxImage="Sprites/CheckBox.psd" CheckBoxPressedImage="Sprites/CheckBoxPressed.psd" CheckBoxWidth="29" CheckBoxHeight="29" Height="30"
+          CheckBoxColor="#ffffff" CheckBoxPressedColor="#ffffff"
+          Font="Fonts/Lato-Regular.ttf" FontSize="20" FontColor="#5a566e" Spacing="10px"/>
+
+  <RadioButton RadioButtonImage="Sprites/RadioButton.psd" RadioButtonPressedImage="Sprites/RadioButtonPressed.psd" RadioButtonWidth="28" RadioButtonHeight="28" Height="30"
+        RadioButtonColor="#ffffff" RadioButtonPressedColor="#ffffff" RadioButtonOffset="0,1,0,0"
+        Font="Fonts/Lato-Regular.ttf" FontSize="20" FontColor="#5a566e" Spacing="10px"/>
+
+  <ComboBox Height="65px" Width="300px" ButtonFont="Fonts/Lato-Light.ttf" ButtonFontSize="24" ButtonFontColor="#8f86a3" ButtonImage="Sprites/ComboBoxButton.psd" ButtonPressedImage="Sprites/ComboBoxButtonPressed.psd" ButtonImageType="Sliced" ButtonColor="#ffffff" ButtonHighlightedColor="#dbd7e3" ButtonPressedColor="#dbd7e3"
+            ListMaskImage="Sprites/ListBoxMask.psd" ListMaskImageType="Sliced" ListMaskColor="#ffffff" ItemWidth="100%" ItemHeight="65px" ListBackgroundImage="Sprites/ListBox.psd" ListBackgroundImageType="Sliced" ListBackgroundColor="#ffffff" ItemColor="#ffffff" HighlightedItemColor="#ffffff" SelectedItemColor="#dbd7e3"
+            ItemFont="Fonts/Lato-Light.ttf" ItemFontSize="24" ItemFontColor="#8f86a3"/>
+
+  <Window TitleRegionWidth="100%" TitleRegionHeight="50px" WindowBackgroundImage="Sprites/Window.psd" WindowBackgroundImageType="Sliced" WindowBackgroundColor="#ffffff"
+        TitleFont="Fonts/Lato-Regular.ttf" TitleFontSize="26" TitleFontColor="#5a566e"
+        CloseButtonColor="#b8b2c5" CloseButtonHighlightedColor="#5a566e"
+        CloseButtonAlignment="TopRight"
+        CloseButtonImage="Sprites/CloseButton.psd" CloseButtonImageType="Simple"
+        CloseButtonOffset="0,30,30,0" CloseButtonWidth="16" CloseButtonHeight="16"
+        TitleAlignment="Top" TitleOffset="0,15,0,0" />
+
+  <Region Style="DefaultBackgroundRegion" BackgroundImage="Sprites/SceneBackground.psd" BackgroundColor="#ffffff" />
+  <Image Style="ShowcaseButtonContent" BackgroundImage="Sprites/RainbowBall.psd" Width="20" Height="20" Offset="6,0,0,0" Alignment="Left" />
+  <Frame Style="ShowcasePanel" BackgroundImage="Sprites/Window.psd" BackgroundImageType="Sliced" BackgroundColor="#ffffff" Alignment="Top" />
+  <Label Style="ShowcaseHeader" Font="Fonts/Lato-Regular.ttf" FontSize="26" FontColor="#5a566e" />
+  <Label Style="ShowcaseDescription" Font="Fonts/Lato-Light.ttf" FontSize="18" FontColor="#5a566e" LineSpacing="1.4" />
+  <Region Style="ShowcaseListRegion" Margin="3px" BackgroundColor="#3c4764" />
+  <FlowList Style="ShowcaseFlowList" SelectedItemColor="#dd59d1" ItemFont="Fonts/Lato-Regular.ttf" ItemFontSize="14" ItemFontColor="White" />
+  <Label Style="ShowcaseListLabel" Font="Fonts/Lato-Regular.ttf" FontSize="14" FontColor="White" />
+  <Label Style="ShowcaseGroupLabel" Font="Fonts/Lato-Regular.ttf" FontSize="14" FontColor="White" />
+  <Frame Style="ShowcaseGroup" BackgroundColor="#3c4764" ContentMargin="5px" />
+  <FlowListItem Style="MenuItem" Width="100" Height="36" />
+  <Image Style="ShowcaseImage" Path="Sprites/MediaBackground3.psd" Width="603" Height="453" />
+  <HyperLink Style="ShowcaseLink" Offset="0,0,2,0" />
+  <List Style="ShowcaseList" SelectedItemColor="#dd59d1" ItemFont="Fonts/Lato-Regular.ttf" ItemFontSize="14" ItemFontColor="White" />
+</Theme>

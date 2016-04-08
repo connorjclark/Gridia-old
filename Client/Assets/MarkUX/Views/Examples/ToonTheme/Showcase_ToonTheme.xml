@@ -1,0 +1,74 @@
+<Showcase_ToonTheme MusicVolume="75" SoundEffectsVolume="100" EasyMode="True" DisplayName="Player">
+
+  <Image Style="MenuBackground" /> 
+  
+  <ViewSwitcher Id="ViewSwitcher" StartView="MainMenu" TransitionIn="BounceInAnimation">
+    <Region Id="MainMenu" Width="10em" Height="11.5em">
+      <Region Style="Window" Margin="1em,50px,1em,2em">
+        <Group Spacing="0.25em" Margin="0,0.5em,0,0">
+          <Button Text="Play" Click="PlayGame" Width="5em" Height="1.75em" />
+          <Button Text="Options" Click="Options" Width="5em" Height="1.75em" />
+          <Button Text="Quit" Click="Quit" Width="5em" Height="1.75em" />
+        </Group>
+      </Region>
+      <Image Style="TitleRibbon" Alignment="Top" />
+      <Label Style="TitleRibbon" Text="Main Menu" Width="5em" Alignment="Top" />
+    </Region>
+
+    <Region Id="LevelSelect" Width="15em" Height="13em">
+      <Region Style="Window" Margin="0,50px,0,36px">
+        <Panel ContentMargin="1em,1.5em,1em,1em" ContentAlignment="Top" ShowHorizontalScrollBar="False" ScrollHorizontal="False">
+          <FlowList Style="LevelSelectList" Orientation="Horizontal" CanSelect="False" Width="11.5em" Alignment="Top" Items="{Levels}" HorizontalSpacing="0.25em" VerticalSpacing="0.25em">
+            <FlowListItem Id="Template" Style="Level" Click="StartLevel">
+                <Label Style="Level" Text="{Item.Index}" Alignment="Top" />
+            </FlowListItem>
+          </FlowList>
+        </Panel>
+      </Region>
+      <Button Style="Round" Click="BackToMainMenu" Alignment="BottomLeft" Offset="2em,0,0,0">
+        <Image Style="BackArrow" />
+      </Button>
+      <Image Style="TitleRibbon" Alignment="Top" />
+      <Label Style="TitleRibbon" Text="Level Select" Width="5.25em" Alignment="Top" />
+    </Region>
+
+    <Region Id="Options" Width="16em" Height="12em">
+      <Region Style="Window" Margin="0,50px,0,36px">
+        <Group Spacing="0.25em" Margin="1em" ContentAlignment="Left">
+          <Group Spacing="0.25em" Orientation="Horizontal">
+            <Label Text="Sound Effects" Width="4em" Height="0.75em" TextAlignment="Left" Margin="0.25em,0,0,0" />
+            <Slider Width="8em" Value="{SoundEffectsVolume}" SetValueOnDragEnded="True" />
+          </Group>
+          <Group Spacing="0.25em" Orientation="Horizontal">
+            <Label Text="Music" Width="4em" Height="0.75em" TextAlignment="Left" Margin="0.25em,0,0,0" />
+            <Slider Width="8em" Min="0" Max="100" Value="{MusicVolume}" SetValueOnDragEnded="True" />
+          </Group>
+          <Group Orientation="Horizontal">
+            <Label Text="Easy Mode" Width="4em" Height="0.75em" TextAlignment="Left" Margin="0.25em,0,0,0" />
+            <Button Style="CheckBox" ToggleValue="{EasyMode}" />
+          </Group>
+          <Group Orientation="Horizontal">
+            <Label Text="Display Name" Width="4em" Height="0.75em" TextAlignment="Left" Margin="0.25em,0,0,0" />
+            <InputField Text="{DisplayName}" />
+          </Group>
+        </Group>
+      </Region>
+      <Button Style="Round" Click="BackToMainMenu" Alignment="BottomLeft" Offset="2em,0,0,0">
+        <Image Style="BackArrow" />
+      </Button>
+      <Image Style="TitleRibbon" Alignment="Top" />
+      <Label Style="TitleRibbon" Text="Options" Width="4em" Alignment="Top" />
+    </Region>
+    
+    <Region Id="InGame">
+      <Button Style="Round" Click="BackToMainMenu" Alignment="BottomLeft" Offset="2em,0,0,2em">
+        <Image Style="MenuIcon" />
+      </Button>
+    </Region>
+  </ViewSwitcher>
+
+  <ViewAnimation Id="BounceInAnimation">
+    <Animate Field="Scale" From="0" To="1" Duration="0.2s" EasingFunction="QuadraticEaseIn" />
+    <Animate Field="Rotation" From="0,0,-20" To="0,0,0" Duration="0.5s" EasingFunction="BackEaseInOut" />
+  </ViewAnimation>
+</Showcase_ToonTheme>

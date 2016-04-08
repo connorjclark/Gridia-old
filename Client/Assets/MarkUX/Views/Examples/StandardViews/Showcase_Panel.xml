@@ -1,0 +1,16 @@
+<Showcase_Panel>
+  <Frame Style="ShowcasePanel">
+    <Group Alignment="Top" Orientation="Vertical" Spacing="30px" Margin="60,30,60,30" ContentAlignment="Center">
+      <Label Style="ShowcaseHeader" Text="Panel" TextAlignment="Center" AdjustToText="Width" />
+      <Label Style="ShowcaseDescription" Text="Scrollable content view." AdjustToText="Width" TextAlignment="Center" />
+      <Panel Width="300px" Height="300px">
+        <Region Width="600px" Height="600px">
+          <Region Width="50%" Height="50%" Alignment="TopLeft" BackgroundColor="Gray70" />
+          <Region Width="50%" Height="50%" Alignment="TopRight" BackgroundColor="Gray80" />
+          <Region Width="50%" Height="50%" Alignment="BottomLeft" BackgroundColor="Gray80" />
+          <Region Width="50%" Height="50%" Alignment="BottomRight" BackgroundColor="Gray70" />
+        </Region>
+      </Panel>
+    </Group>
+  </Frame>
+</Showcase_Panel>

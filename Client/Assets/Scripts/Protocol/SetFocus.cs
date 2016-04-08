@@ -7,7 +7,7 @@ namespace Gridia.Protocol
     {
         protected override void Handle(ConnectionToGridiaServerHandler connection, JObject data)
         {
-            ServerSelection.gameInitWaitHandle.WaitOne(); // :(
+            GridiaDriver.GameInitWaitHandle.WaitOne(); // :(
             var game = connection.GetGame();
             GridiaConstants.IsAdmin = (bool) data["isAdmin"];
             var id = (int) data["id"];

@@ -23,15 +23,12 @@ namespace Gridia
         public ContentManager(String worldName)
         {
             _fileSystem = GridiaConstants.GetFileSystem();
-            new Thread(() => {
-                var clientDataFolder = @"worlds/" + worldName + @"/clientdata"; // :(
-                _items = Load<Item>(clientDataFolder + "/content/items.json");
-                _floors = Load<Floor>(clientDataFolder + "/content/floors.json");
-                _monsters = Load<Monster>(clientDataFolder + "/content/monsters.json");
-                _animations = Load<GridiaAnimation>(clientDataFolder + "/content/animations.json");
-                _uses = Load<ItemUse>(clientDataFolder + "/content/itemuses.json");
-                DoneLoading = true;
-            }).Start();
+            var clientDataFolder = @"worlds/" + worldName + @"/clientdata"; // :(
+            _items = Load<Item>(clientDataFolder + "/content/items.json");
+            _floors = Load<Floor>(clientDataFolder + "/content/floors.json");
+            _monsters = Load<Monster>(clientDataFolder + "/content/monsters.json");
+            _animations = Load<GridiaAnimation>(clientDataFolder + "/content/animations.json");
+            _uses = Load<ItemUse>(clientDataFolder + "/content/itemuses.json");
         }
 
         private List<T> Load<T>(String filePath) where T : new()

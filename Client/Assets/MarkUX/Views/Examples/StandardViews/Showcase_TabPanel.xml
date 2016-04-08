@@ -1,0 +1,20 @@
+<Showcase_TabPanel>
+  <Frame Style="ShowcasePanel">
+    <Group Alignment="Top" Orientation="Vertical" Spacing="30px" Margin="60,30,60,30" ContentAlignment="Center">
+      <Label Style="ShowcaseHeader" Text="TabPanel" TextAlignment="Center" AdjustToText="Width" />
+      <Label Style="ShowcaseDescription" Text="Displays content in a tab-panel." AdjustToText="Width" TextAlignment="Center" />
+      <TabPanel Width="600px" Height="400px">
+        <Tab Title="Tab 1">
+          <Label Text="Tab 1 Content" AdjustToText="Width" />
+        </Tab>
+        <Tab Title="Tab 2">
+          <Label Text="Tab 2 Content" AdjustToText="Width" />
+        </Tab>
+        <Tab Title="Tab 3">
+          <Label Text="Tab 3 Content" AdjustToText="Width" />
+        </Tab>
+      </TabPanel>
+    </Group>    
+  </Frame>
+</Showcase_TabPanel>
+

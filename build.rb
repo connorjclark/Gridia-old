@@ -31,14 +31,14 @@ puts 'building clients for each platform'
 `unity -batchmode -quit -projectPath #{base_dir}/Client #{win32} #{win64} #{osx} #{linux32} #{linux64} #{wp}`
 
 puts 'running maven'
-`cd Server/GridiaServer/ & mvn clean compile assembly:single`
+`cd server/ & mvn clean compile assembly:single`
 
 puts 'making server-standalone'
-run_command "echo f | xcopy Server/GridiaServer/target/server.jar #{server_dir}/server.jar"
-run_command "echo f | xcopy Server/GridiaServer/splash.txt #{server_dir}/splash.txt"
-run_command "xcopy Server/GridiaServer/worlds/demo-world/clientdata #{server_dir}/worlds/demo-world/clientdata //E //i"
-run_command "xcopy Server/GridiaServer/worlds/demo-world/scripts #{server_dir}/worlds/demo-world/scripts //E //i"
-run_command "xcopy Server/GridiaServer/worlds/demo-world/maps/demo-city #{server_dir}/worlds/demo-world/maps/demo-city //E //i"
+run_command "echo f | xcopy server/target/server.jar #{server_dir}/server.jar"
+run_command "echo f | xcopy server/splash.txt #{server_dir}/splash.txt"
+run_command "xcopy server/worlds/demo-world/clientdata #{server_dir}/worlds/demo-world/clientdata //E //i"
+run_command "xcopy server/worlds/demo-world/scripts #{server_dir}/worlds/demo-world/scripts //E //i"
+run_command "xcopy server/worlds/demo-world/maps/demo-city #{server_dir}/worlds/demo-world/maps/demo-city //E //i"
 
 puts 'copying server to all platforms but webplayer'
 for_each_platform do |f|
@@ -50,16 +50,16 @@ for_each_platform do |f|
   run_command "copy #{base_dir}/instructions.odt #{f}"
 end
 
-puts 'zipping standalone server'
-run_command "7z a #{server_dir}.zip #{server_dir}"
+# puts 'zipping standalone server'
+# run_command "7z a #{server_dir}.zip #{server_dir}"
 
-puts 'zipping all platforms'
-for_each_platform do |f|
-  run_command "7z a #{f}.zip #{f}"
-end
+# puts 'zipping all platforms'
+# for_each_platform do |f|
+#   run_command "7z a #{f}.zip #{f}"
+# end
 
-puts 'cleaning up'
-run_command "rd #{server_dir} //Q //S"
-for_each_platform do |f|
-  run_command "rd #{f} //Q //S"
-end
+# puts 'cleaning up'
+# run_command "rd #{server_dir} //Q //S"
+# for_each_platform do |f|
+#   run_command "rd #{f} //Q //S"
+# end

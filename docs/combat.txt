@@ -1,0 +1,27 @@
+For combat
+
+  *****
+  When using an action, a bar pops up. The bar has some intervals across it, which the player must press the key(s) displayed during.
+  In defense zones, if the player attempts and fails, then they break that zone and lose guard %
+  When the bar is full, the action is performed, hit takes place, and a cooldown occurs.
+  During the cooldown, the player is vulnerable, based on the guard % they lost, and can't move. There is some sort of visual indicator above player for guard%/cooling down.
+
+  Bar and zones are static. A ticker moves from left to right.
+  Not attemtping a zones gives no penality. Attempting and failing has a penalty.
+  Zone key-press types:
+    A single key
+    Multiple keys, which must be pressed in order
+    Mash a single key as many times as possible
+  Zone effect types
+    Regular
+      Succeeding adds some damage points/def %
+      Attempting and failing takes off 50% of collected damage/collected def%
+    Critical applier
+      Attempting and failing deals the damage on self/reduces def% by 50
+
+                                                 v                {} -> crit
+                     =================================================
+dmg so far  - |####|   [ 2, 3 ]       [  1  ]   |`|               {3} (atk zones)
+def% so far - |####|       [   e!   ]           |`|     [  q  ]   {p} (def zones)
+                     =================================================
+                               ! -> mash key     ^ ticker

@@ -1,0 +1,79 @@
+<Showcase_List>
+  <Frame Style="ShowcasePanel">
+    <Group Alignment="Top" Orientation="Vertical" Spacing="30px" Margin="60,30,60,30" ContentAlignment="Center">
+      <Label Style="ShowcaseHeader" Text="List" TextAlignment="Center" AdjustToText="Width" />
+      <Label Style="ShowcaseDescription" Text="Arranges static or dynamic content as a selectable list of items." AdjustToText="Width" TextAlignment="Center" />
+
+      <TabPanel Height="500px" Width="600px">
+
+        <Tab Title="Dynamic" TabLength="200px">
+          <List Style="ShowcaseList" Orientation="Vertical" Items="{ListItems}" Width="100%" Height="100%" Margin="25px" Alignment="Top"
+                    SelectionChanged="ListItemClicked" CanSelect="True">
+            <ListItem Id="Template">
+              <Region Style="ShowcaseListRegion" Width="{Item.Width}" Height="{Item.Height}">
+                <Label Style="ShowcaseListLabel" Text="Item {Item.Index}" Width="100%" Height="100%" TextAlignment="Center" />
+              </Region>
+            </ListItem>
+          </List>
+
+          <Label Id="ListItemClickLabel" Text="Selected item: " AdjustToText="Width" Alignment="BottomLeft" Offset="25,0,0,25" />
+        </Tab>
+
+        <Tab Title="Static" TabLength="150px">
+          <List Style="ShowcaseList" Orientation="Vertical" Width="100%" Height="100%" Margin="25,25,25,75" Alignment="Left"
+                    SelectionChanged="StaticListItemClicked" CanSelect="True">
+            <ListItem>
+              <Region Style="ShowcaseListRegion" Width="280px" Height="40px">
+                <Label Style="ShowcaseListLabel" Text="Item 1" Width="100%" Height="100%" TextAlignment="Center" />
+              </Region>
+            </ListItem>
+            <ListItem>
+              <Region Style="ShowcaseListRegion" Width="320px" Height="40px">
+                <Label Style="ShowcaseListLabel" Text="Item 2" Width="100%" Height="100%" TextAlignment="Center" />
+              </Region>
+            </ListItem>
+            <ListItem>
+              <Region Style="ShowcaseListRegion" Width="240px" Height="40px">
+                <Label Style="ShowcaseListLabel" Text="Item 3" Width="100%" Height="100%" TextAlignment="Center" />
+              </Region>
+            </ListItem>
+            <ListItem>
+              <Region Style="ShowcaseListRegion" Width="200px" Height="40px">
+                <Label Style="ShowcaseListLabel" Text="Item 4" Width="100%" Height="100%" TextAlignment="Center" />
+              </Region>
+            </ListItem>
+            <ListItem>
+              <Region Style="ShowcaseListRegion" Width="340px" Height="40px">
+                <Label Style="ShowcaseListLabel" Text="Item 5" Width="100%" Height="100%" TextAlignment="Center" />
+              </Region>
+            </ListItem>
+            <ListItem>
+              <Region Style="ShowcaseListRegion" Width="280px" Height="40px">
+                <Label Style="ShowcaseListLabel" Text="Item 6" Width="100%" Height="100%" TextAlignment="Center" />
+              </Region>
+            </ListItem>
+            <ListItem>
+              <Region Style="ShowcaseListRegion" Width="310px" Height="40px">
+                <Label Style="ShowcaseListLabel" Text="Item 7" Width="100%" Height="100%" TextAlignment="Center" />
+              </Region>
+            </ListItem>
+            <ListItem>
+              <Region Style="ShowcaseListRegion" Width="200px" Height="40px">
+                <Label Style="ShowcaseListLabel" Text="Item 8" Width="100%" Height="100%" TextAlignment="Center" />
+              </Region>
+            </ListItem>
+            <ListItem>
+              <Region Style="ShowcaseListRegion" Width="260px" Height="40px">
+                <Label Style="ShowcaseListLabel" Text="Item 9" Width="100%" Height="100%" TextAlignment="Center" />
+              </Region>
+            </ListItem>
+          </List>
+
+          <Label Id="StaticListItemClickLabel" Text="Selected item: " AdjustToText="Width" Alignment="BottomLeft" Offset="25,0,0,25" />
+        </Tab>
+
+      </TabPanel>
+    </Group>
+  </Frame>
+
+</Showcase_List>

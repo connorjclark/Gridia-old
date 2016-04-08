@@ -1,0 +1,3 @@
+<ItemView BackgroundColor="grey" Width="32px" Height="32px">
+  <Image Id="Image" Width="32px" Height="32px"></Image>
+</ItemView>

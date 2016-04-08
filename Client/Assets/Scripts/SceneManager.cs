@@ -11,7 +11,7 @@ namespace Gridia
         public static void LoadScene(String sceneName, Hashtable sceneArguments = null)
         {
             _sceneArguments = sceneArguments;
-            Application.LoadLevel(sceneName);
+            MainThreadQueue.Add(() => Application.LoadLevel(sceneName));
         }
 
         public static T GetArguement<T>(String key)

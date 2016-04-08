@@ -1,0 +1,17 @@
+<Showcase_RadialMenu>
+  <Frame Style="ShowcasePanel">
+    <Group Alignment="Top" Orientation="Vertical" Spacing="30px" Margin="30,30,30,30" ContentAlignment="Center">
+      <Label Style="ShowcaseHeader" Text="RadialMenu" TextAlignment="Center" AdjustToText="Width" />
+      <Label Style="ShowcaseDescription" Text="Presents content in a circle." AdjustToText="Width" TextAlignment="Center" />
+      <InteractableRegion Width="400px" Height="400px" Click="ToggleRadialMenu" BackgroundColor="White">
+        <Label Text="Click here" TextAlignment="Center" FontSize="12" FontColor="#000000" />
+        <RadialMenu Id="ContextRadialMenu">
+          <Button Text="Menu 1" />
+          <Button Text="Menu 2" />
+          <Button Text="Menu 3" />
+          <Button Text="Menu 4" />
+        </RadialMenu>
+      </InteractableRegion>
+    </Group>
+  </Frame>
+</Showcase_RadialMenu>

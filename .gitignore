@@ -62,15 +62,14 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
-/Server/GridiaServer/target/
+/server/target/
 
 # Gridia
-Client/worlds/
-Server/GridiaServer/TestWorld/json-world/
-*.meta
+client/worlds/
+server/worlds/
 *.suo
-Client/packages
-Client/.nuget/NuGet.exe
+client/packages
+client/.nuget/NuGet.exe
 /s[0-9]*
 
 # Unity
@@ -84,7 +83,6 @@ client_Data/
 /*.pidb
 /*.booproj
 builds/
-maps/
 containers/
 Players/
 
@@ -100,3 +98,5 @@ Client/client.exe
 # IntelliJ
 .idea
 *.iml
+
+# MarkUX

@@ -1,0 +1,24 @@
+<Showcase_Label>
+  <Frame Style="ShowcasePanel">
+    <Group Alignment="Top" Orientation="Vertical" Spacing="30px" Margin="60,30,60,30" ContentAlignment="Center">
+      <Label Style="ShowcaseHeader" Text="Label" TextAlignment="Center" AdjustToText="Width" />
+      <Label Style="ShowcaseDescription" Text="Displays text." AdjustToText="Width" TextAlignment="Center" />
+      <TabPanel Height="400px" Width="600px">
+        <Tab Title="Embedded Views" TabLength="200px">
+          <Label Text="[b][size=20]Forest path[/size][/b]\n\nYou are standing at a fork in the road. To the [South] you see the path winding down leading to the main road. To the [North] the path enters unfamiliar grounds you don't know where it leads.\n\nWhich path will you take?" Width="420px" AdjustToText="Height">
+            <HyperLink Style="ShowcaseLink" Id="South" AdjustToText="WidthAndHeight" Text="South" />
+            <HyperLink Id="North" AdjustToText="WidthAndHeight" Text="North" />
+          </Label>
+        </Tab>
+
+        <Tab Title="Text Effects" TabLength="200px">
+          <Group Orientation="Vertical" ContentAlignment="Left">
+            <Label Text="Label effects:" AdjustToText="Width" />
+            <Label Text="Text with outline" FontSize="28" FontColor="White" OutlineColor="Black" OutlineDistance="1,1" AdjustToText="Width" />
+            <Label Text="Text with shadow" FontSize="28" FontColor="White" ShadowColor="Black" ShadowDistance="1,-1" AdjustToText="Width" />
+          </Group>
+        </Tab>
+      </TabPanel>
+    </Group>
+  </Frame>
+</Showcase_Label>

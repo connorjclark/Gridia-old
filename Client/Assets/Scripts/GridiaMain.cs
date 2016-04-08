@@ -33,7 +33,7 @@ public class GridiaGame
         Locator.Provide(StateMachine);
         TileMap = new TileMap(size, depth, sectorSize);
         Locator.Provide(TileMap);
-        View = new TileMapView(TileMap, Locator.Get<TextureManager>(), 1.75f);
+        View = new TileMapView(TileMap, Locator.Get<TextureManager>(), 1.0f);
         Locator.Provide(View);
         StateMachine.SetState(new IdleState());
         _driver = Locator.Get<GridiaDriver>();

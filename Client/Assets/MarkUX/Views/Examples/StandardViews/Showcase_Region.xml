@@ -1,0 +1,37 @@
+<Showcase_Region>
+  <Frame Style="ShowcasePanel">
+    <Group Alignment="Top" Orientation="Vertical" Spacing="30px" Margin="60,30,60,30" ContentAlignment="Center">
+      <Label Style="ShowcaseHeader" Text="Region" TextAlignment="Center" AdjustToText="Width" />
+      <Label Style="ShowcaseDescription" Text="Content view for doing layout." AdjustToText="Width" TextAlignment="Center" />
+      <Region Margin="10px" Width="400px" Height="400px">
+        <Region Width="33.333%" Height="33.333%" BackgroundColor="#fffacd" Alignment="TopLeft" Margin="2px">
+          <Label Text="TopLeft" Width="100%" Height="100%" TextAlignment="Center" ShadowColor="#777777" ShadowDistance="1,-1" />
+        </Region>
+        <Region Width="33.333%" Height="33.333%" BackgroundColor="#f0f9cd" Alignment="Top" Margin="2px">
+          <Label Text="Top" Width="100%" Height="100%" TextAlignment="Center" ShadowColor="#777777" ShadowDistance="1,-1" />
+        </Region>
+        <Region Width="33.333%" Height="33.333%" BackgroundColor="#00facd" Alignment="TopRight" Margin="2px">
+          <Label Text="TopRight" Width="100%" Height="100%" TextAlignment="Center" ShadowColor="#777777" ShadowDistance="1,-1" />
+        </Region>
+        <Region Width="33.333%" Height="33.333%" BackgroundColor="#fffa00" Alignment="Left" Margin="2px">
+          <Label Text="Left" Width="100%" Height="100%" TextAlignment="Center" ShadowColor="#777777" ShadowDistance="1,-1" />
+        </Region>
+        <Region Width="33.333%" Height="33.333%" BackgroundColor="#ff00cd" Alignment="Center" Margin="2px">
+          <Label Text="Center" Width="100%" Height="100%" TextAlignment="Center" ShadowColor="#777777" ShadowDistance="1,-1" />
+        </Region>
+        <Region Width="33.333%" Height="33.333%" BackgroundColor="#51fa51" Alignment="Right" Margin="2px">
+          <Label Text="Right" Width="100%" Height="100%" TextAlignment="Center" ShadowColor="#777777" ShadowDistance="1,-1" />
+        </Region>
+        <Region Width="33.333%" Height="33.333%" BackgroundColor="#ff51cd" Alignment="BottomLeft" Margin="2px">
+          <Label Text="BottomLeft" Width="100%" Height="100%" TextAlignment="Center" ShadowColor="#777777" ShadowDistance="1,-1" />
+        </Region>
+        <Region Width="33.333%" Height="33.333%" BackgroundColor="#5151cd" Alignment="Bottom" Margin="2px">
+          <Label Text="Bottom" Width="100%" Height="100%" TextAlignment="Center" ShadowColor="#777777" ShadowDistance="1,-1" />
+        </Region>
+        <Region Width="33.333%" Height="33.333%" BackgroundColor="#ff5151" Alignment="BottomRight" Margin="2px">
+          <Label Text="BottomRight" Width="100%" Height="100%" TextAlignment="Center" ShadowColor="#777777" ShadowDistance="1,-1" />
+        </Region>
+      </Region>
+    </Group>
+  </Frame>
+</Showcase_Region>

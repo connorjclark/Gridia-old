@@ -251,7 +251,8 @@ namespace Gridia
             }
         }
 
-        private Shader FindShader() {
+        private Shader FindShader()
+        {
             var name = IsLighting ? "shaders/Sprites-Diffuse" : "shaders/Unlit-Alpha";
             return Resources.Load(name) as Shader;
         }

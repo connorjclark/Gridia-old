@@ -1,0 +1,33 @@
+<Theme Name="Basic">
+  <Button BackgroundColor="Gray80" HighlightedColor="Gray90" PressedColor="Gold" />
+  <FlowList Style="Menu" CanSelect="True" ItemColor="Gray80" HighlightedItemColor="Gray90" SelectedItemColor="Gold" />
+  <FlowList Style="Selectable" CanSelect="True" ItemColor="Transparent" SelectedItemColor="Gold" />
+  <List ItemColor="Transparent" SelectedItemColor="Gold" />
+  <Panel HorizontalScrollBarHandleColor="Gray50" VerticalScrollBarHandleColor="Gray50" />
+  <Slider SliderFillColor="Gray70" SliderHandleColor="Gray50" SliderColor="White" Breadth="0.5em" />
+  <Frame Style="Window" BackgroundColor="Gray80" />
+  <Region Style="Window" BackgroundColor="Gray80" />
+  <DataGrid SelectedRowColor="Gold" CanSelect="True" HeaderRowColor="Gray70" FontColor="#000000" FontSize="16" HeaderFontColor="#000000" HeaderFontSize="16" />
+  <Window TitleRegionWidth="100%" TitleRegionHeight="40px" TitleRegionBackgroundColor="Gray50" WindowBackgroundColor="Gray70"
+        TitleFontColor="#ffffff"
+        CloseButtonAlignment="TopRight"
+        CloseButtonColor="Gray80"
+        CloseButtonHighlightedColor="Gray90" CloseButtonPressedColor="Gold"
+        CloseButtonOffset="0,15px,15px,0" CloseButtonWidth="10" CloseButtonHeight="10"
+        TitleAlignment="Left" TitleOffset="26px,0,0,0" />
+  <FlowListItem Style="MenuItem" Width="100" Height="50" />
+  <ComboBox Height="40" Width="300px" ButtonColor="White" ButtonPressedColor="Gold" ButtonFontColor="#000000" ButtonFontSize="16"
+            ButtonHighlightedColor="Gray90" ItemFontSize="16" ItemFontColor="#000000"
+            ItemWidth="100%" ItemHeight="50px" ListBackgroundColor="#ffffff" ItemColor="#ffffff" HighlightedItemColor="#ffffff" SelectedItemColor="Gold" />
+  <TabPanel TabListHeight="40px" TabHeight="40px" TabAlignment="Bottom" TabContentMargin="0,40,0,0"
+            TabItemColor="Gray70" HighlightedTabItemColor="Gray70" SelectedTabItemColor="Gray90"
+            TabContentBackgroundColor="Gray90" TabItemFontColor="#000000" TabItemFontSize="16" />
+  <CheckBox CheckBoxWidth="25" CheckBoxHeight="25" Height="25"
+            CheckBoxColor="Gray90" CheckBoxPressedColor="Gold" 
+            FontSize="18" FontColor="#000000" Spacing="10px"/>
+  <RadioButton RadioButtonWidth="25" RadioButtonHeight="25" Height="25"
+          RadioButtonColor="Gray90" RadioButtonPressedColor="Gold"
+          FontSize="18" FontColor="#000000" Spacing="10px"/> 
+</Theme>
+
+

@@ -32,14 +32,14 @@ namespace Gridia
             LoadGuiSkins();
             GuiScale = Screen.height / 125f / 4;
             FontSize = (int)(GuiScale * 10);
-            var skin = Skins[0];
+            /*var skin = Skins[0];
             skin.textArea.fontSize = FontSize;
             skin.textField.fontSize = FontSize;
             skin.label.fontSize = FontSize;
             skin.box.fontSize = FontSize;
             skin.window.fontSize = FontSize;
             skin.button.fontSize = FontSize;
-            skin.toggle.fontSize = FontSize;
+            skin.toggle.fontSize = FontSize;*/
         }
 
         public static void InitializeSoundPlayer()

@@ -1,0 +1,78 @@
+====  MarkUX: uGUI Markup Framework ====================
+
+Thank you very much for buying MarkUX. I have a favor to ask and that is to:
+
+    Subscribe to http://www.reddit.com/r/markuxdev and use it for conversation around MarkUX
+
+	Leave a rating/review on the Asset Store page:
+	https://www.assetstore.unity3d.com/en/#!/content/37466
+
+	Check out http://www.markux.com/ for the latest API docs and tutorials
+
+
+
+====  Upgrading from earlier versions  =================
+
+Backup your project. Remove the /MarkUX folder and import the new package. For easy upgrade in the future keep your custom views and themes in a folder outside the /MarkUX folder (e.g. in the folder /Views at the project root).
+
+
+====  Package Details  =================================
+
+(required)
+MarkUX\Source\Editor\*............... MarkUX editor extension.
+MarkUX\Source\* ..................... MarkUX framework API.
+
+(recommended)
+MarkUX\Themes\Flat\* ................ Assets for the theme: Flat
+MarkUX\Themes\Neat\* ................ Assets for the theme: Neat
+MarkUX\Themes\Toon\* ................ Assets for the theme: Toon
+MarkUX\Scenes\* ..................... Example scenes.
+MarkUX\Scripts\* .................... View models (C# scripts) for the example scenes.
+MarkUX\Views\Examples\* ............. Views (XML files) for the example scenes. 
+MarkUX\Views\Themes\* ............... Theme XML for basic, toon and neat themes.
+MarkUX\Configuration\* .............. Configuration asset for configuring the MarkUX editor extension
+
+
+
+====  Documentation  ===================================
+
+MarkUX\Documentation\GettingStarted.pdf ... step-by-step guide to get started using MarkUX
+MarkUX\Documentation\AnatomyOfAView.pdf ... in-depth guide on how to create custom views
+MarkUX\Documentation\Reference.pdf ........ API reference
+
+Please check http://www.markux.com for the most up to date versions of the API docs and tutorials.
+
+
+
+====  Getting Started (brief)  =========================
+
+This is a short introduction on how to get started. For a more comprehensive guide check out the latest getting started guide at http://www.markux.com/.
+
+To create your first view follow these simple steps:
+
+1. Create a view
+Create a XML file and put it in the custom view-folder "Assets\Views" (you can right-click on the folder and select Assets->Create->View). All views (XML files) in this folder and subfolders will be automatically imported by the MarkUX editor extension upon changes. If you created the view manually, make sure it contains the following:
+
+   <NewView>
+       <Label Text="My New View" />
+   </NewView>
+
+ You now have a view called "NewView" that contains a text label.
+
+2. Creating a View Presenter
+In order to present the views the scene needs a Canvas with a View Presenter component added to it. Create a canvas in the scene (GameObject->UI->Canvas) and add the View Presenter component to it. Click "Reload Views" in the inspector window or make a change to the view XML and save - this will refresh the View Presenters list of views and themes. As "Main View" select the view you've created: "NewView". The scene should now show your first view. The UI gets generated under "LayoutRoot" in the canvas. 
+
+Important: LayoutRoot is replaced when the view XML are updated so make sure not to put any important GameObjects under LayoutRoot.
+
+
+
+====  Example Scenes  ==================================
+
+The example scenes in MarkUX/Scenes/ showcases the standard views and the themes included in the framework.
+
+
+
+====  http://www.markux.com  ===========================
+
+For more documentation, tutorials and news check out http://www.markux.com.
+

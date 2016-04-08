@@ -1,0 +1,9 @@
+<Showcase_Image>
+  <Frame Style="ShowcasePanel">
+    <Group Alignment="Top" Orientation="Vertical" Spacing="30px" Margin="30,30,30,30" ContentAlignment="Center">
+      <Label Style="ShowcaseHeader" Text="Image" TextAlignment="Center" AdjustToText="Width" />
+      <Label Style="ShowcaseDescription" Text="Displays an image." AdjustToText="Width" TextAlignment="Center" />      
+      <Image Style="ShowcaseImage" />
+    </Group>
+  </Frame>
+</Showcase_Image>

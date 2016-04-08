@@ -9,6 +9,11 @@ using System.IO;
 // more generous sandbox. This requires that a 'File System'
 // is abstracted out of ServingJava's C# client.
 
+// 4/2016 Update: Not supporting web version anymore since
+// Unity WebPlayer is being phased out. Until the WebGL player
+// is stable, this won't be necessary. Until then, just keep the
+// abstraction anyways.
+
 namespace Serving.FileTransferring
 {
     public interface FileSystem

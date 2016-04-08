@@ -101,12 +101,13 @@ namespace Gridia
         {
             Rect = new Rect(pos.x, pos.y, 0, 0);
             Color = new Color32(255, 255, 255, 255);
-            Skin = GridiaConstants.Skins[0]; // :(
+            //Skin = GridiaConstants.Skins[0]; // :(
         }
 
         protected void ApplySkinAndColor()
         {
-            GUI.skin = Skin;
+            //GUI.skin = Skin;
+            Skin = GUI.skin;
             GUI.color = Color;
         }
 

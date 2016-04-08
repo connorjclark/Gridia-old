@@ -1,0 +1,5 @@
+<Showcase_Window>
+    <Window Title="Window Title" WindowWidth="600px" WindowHeight="400px" IsClosable="True">
+      <Label Style="ShowcaseDescription" Text="The Window displays content in a window that can be movable and closable." Width="100%" Height="100%" TextAlignment="Center" Margin="50px" />
+    </Window>
+</Showcase_Window>
