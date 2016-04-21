@@ -15,13 +15,14 @@ namespace MarkUX.UnityProject
         public int NumInRow = 10;
         public List<ItemInstanceWrapper> Items;
         public Views.FlowList Container;
+        public Views.FlowListItem Template;
 
         public override void Initialize()
         {
             base.Initialize();
 
             float rowSpacing = Container.Spacing.Pixels;
-            float rowWidth = NumInRow * 32 + (NumInRow - 2) * 2 * rowSpacing;
+            float rowWidth = NumInRow * Template.Width.Pixels + (NumInRow - 2) * 2 * rowSpacing;
             Container.SetValue(() => Container.Width, ElementSize.GetPixels(rowWidth));
         }
     }

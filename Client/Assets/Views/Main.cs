@@ -44,13 +44,17 @@ namespace MarkUX.UnityProject
         public ContainerView Inventory;
         public ContainerView Toolbar;
 
+        private bool _testMode;
+
         public override void Initialize()
         {
             base.Initialize();
 
-            if (EditorSceneManager.GetActiveScene().name == "TestMainUI")
+            _testMode = EditorSceneManager.GetActiveScene().name == "TestMainUI";
+
+            if (_testMode)
             {
-                TestUI();
+                TestInitialize();
             }
         }
 
@@ -62,13 +66,13 @@ namespace MarkUX.UnityProject
             if (index < NumItemsInToolbar)
             {
                 ToolbarItems[index] = iiw;
-                Toolbar.SetChanged(() => Toolbar.Items); // ?
+                Toolbar.SetChanged(() => Toolbar.Items); // TODO need a way to just update one item binding
             }
 
             if (index < NumItemsInInventory)
             {
                 InventoryItems[index] = iiw;
-                Inventory.SetChanged(() => Inventory.Items); // ?
+                Inventory.SetChanged(() => Inventory.Items); // TODO need a way to just update one item binding
             }
         }
 
@@ -78,15 +82,15 @@ namespace MarkUX.UnityProject
             {
                 TabView.Enabled = !TabView.Enabled;
                 TabView.UpdateView();
+            }
 
-                if (EditorSceneManager.GetActiveScene().name == "TestMainUI" && InventoryItems[0].ItemInstance.Item.Id != 10)
-                {
-                    SetInventoryItem(new ItemInstance(Locator.Get<ContentManager>().GetItem(10)), 0);
-                }
+            if (_testMode)
+            {
+                TestUpdate();
             }
         }
 
-        private void TestUI()
+        private void TestInitialize()
         {
             MainThreadQueue.Instantiate();
             Locator.Provide(new ContentManager("demo-world"));
@@ -102,6 +106,14 @@ namespace MarkUX.UnityProject
 
             InventoryItems = ItemInstanceWrapper.GetItemsWithBullshitWrapper(Items);
             ToolbarItems = InventoryItems.GetRange(0, NumItemsInToolbar);
+        }
+
+        private void TestUpdate()
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                SetInventoryItem(new ItemInstance(Locator.Get<ContentManager>().GetItem(10)), 0);
+            }
         }
     }
 }

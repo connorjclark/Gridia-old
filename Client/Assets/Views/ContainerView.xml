@@ -1,6 +1,6 @@
 <ContainerView>
-  <FlowList Id="Container" Style="ShowcaseFlowList" Orientation="Horizontal" Items="{Items}" CanSelect="True" Spacing="3" Alignment="{Alignment}">
-    <FlowListItem Id="Template">
+  <FlowList Id="Container" SelectedItemColor="Yellow" SelectedIndex="1,2,3" Style="ShowcaseFlowList" Orientation="Horizontal" Items="{Items}" CanSelect="True" Spacing="3" Alignment="{Alignment}">
+    <FlowListItem Id="Template" Width="35px" Height="35px">
       <ItemView Item="{Item.ItemInstance}" />
     </FlowListItem>
   </FlowList>
