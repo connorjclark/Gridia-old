@@ -24,6 +24,12 @@ namespace Gridia
         {
             _fileSystem = GridiaConstants.GetFileSystem();
             var clientDataFolder = @"worlds/" + worldName + @"/clientdata"; // :(
+
+            if (!_fileSystem.DirectoryExists(clientDataFolder) && _fileSystem.DirectoryExists("../" + clientDataFolder))
+            {
+              clientDataFolder = @"../" + clientDataFolder;
+            }
+
             _items = Load<Item>(clientDataFolder + "/content/items.json");
             _floors = Load<Floor>(clientDataFolder + "/content/floors.json");
             _monsters = Load<Monster>(clientDataFolder + "/content/monsters.json");

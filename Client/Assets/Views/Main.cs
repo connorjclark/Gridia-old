@@ -92,7 +92,11 @@ namespace MarkUX.UnityProject
 
         private void TestInitialize()
         {
-            MainThreadQueue.Instantiate();
+            if (Application.isPlaying)
+            {
+              MainThreadQueue.Instantiate();
+            }
+            
             Locator.Provide(new ContentManager("demo-world"));
             Locator.Provide(new TextureManager("demo-world"));
 

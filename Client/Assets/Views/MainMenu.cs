@@ -56,9 +56,12 @@ namespace MarkUX.UnityProject
         {
             base.Initialize();
             
-            MainThreadQueue.Instantiate();
-            GridiaConstants.InitializeGuiStuff();
-            GridiaConstants.InitializeSoundPlayer();
+            if (Application.isPlaying)
+            {
+              MainThreadQueue.Instantiate();
+              GridiaConstants.InitializeGuiStuff();
+              GridiaConstants.InitializeSoundPlayer();
+            }
             
             var cursorTexture = Resources.Load<Texture2D>("GUI Components/cursorHand_grey");
             Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);

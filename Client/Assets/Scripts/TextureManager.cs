@@ -32,6 +32,11 @@ namespace Gridia
         private void Initiate(String worldName) {
             var clientDataFolder = @"worlds\" + worldName + @"\clientdata\"; // :(
 
+            if (!_fileSystem.DirectoryExists(clientDataFolder) && _fileSystem.DirectoryExists("../" + clientDataFolder))
+            {
+              clientDataFolder = @"../" + clientDataFolder;
+            }
+
             Floors = new TextureListWrapper(clientDataFolder + @"floors\floors", _fileSystem);
             Items = new TextureListWrapper(clientDataFolder + @"items\items", _fileSystem);
             Creatures = new TextureListWrapper(clientDataFolder + @"players\players", _fileSystem);

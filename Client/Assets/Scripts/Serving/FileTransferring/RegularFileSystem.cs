@@ -39,6 +39,11 @@ namespace Serving.FileTransferring
             return File.Exists(path);
         }
 
+        public bool DirectoryExists(String path)
+        {
+            return Directory.Exists(path);
+        }
+
         public byte[] ReadAllBytes(String path)
         {
             return File.ReadAllBytes(path);

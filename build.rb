@@ -25,10 +25,9 @@ win64 = "-buildWindows64Player #{build_dir}/gridia-#{build_name}-win64/client.ex
 osx = "-buildOSXPlayer #{build_dir}/gridia-#{build_name}-osx/client.app"
 linux32 = "-buildLinux32Player #{build_dir}/gridia-#{build_name}-linux32/client.app"
 linux64 = "-buildLinux64Player #{build_dir}/gridia-#{build_name}-linux64/client.app"
-wp = "-buildWebPlayer #{build_dir}/gridia-#{build_name}-wp"
 
 puts 'building clients for each platform'
-`unity -batchmode -quit -projectPath #{base_dir}/Client #{win32} #{win64} #{osx} #{linux32} #{linux64} #{wp}`
+`unity -batchmode -quit -projectPath #{base_dir}/Client #{win32} #{win64} #{osx} #{linux32} #{linux64}`
 
 puts 'running maven'
 `cd server/ & mvn clean compile assembly:single`
@@ -40,9 +39,9 @@ run_command "xcopy server/worlds/demo-world/clientdata #{server_dir}/worlds/demo
 run_command "xcopy server/worlds/demo-world/scripts #{server_dir}/worlds/demo-world/scripts //E //i"
 run_command "xcopy server/worlds/demo-world/maps/demo-city #{server_dir}/worlds/demo-world/maps/demo-city //E //i"
 
-puts 'copying server to all platforms but webplayer'
+puts 'copying server to all platforms'
 for_each_platform do |f|
-  run_command "xcopy #{server_dir} #{f} //E //i" unless f.include? "gridia-#{build_name}-wp"
+  run_command "xcopy #{server_dir} #{f} //E //i"
 end
 
 puts 'copying instructions.odt'

@@ -24,6 +24,7 @@ namespace Serving.FileTransferring
         List<String> GetFiles(String directory, String searchPattern);
         List<String> GetFiles(String directory, String searchPattern, SearchOption searchOption);
         bool Exists(String path);
+        bool DirectoryExists(String path);
         byte[] ReadAllBytes(String path);
         string ReadString(String path);
         void Write(String path, byte[] data);
