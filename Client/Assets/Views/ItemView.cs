@@ -13,10 +13,7 @@ namespace MarkLight.UnityProject
 {
     public class ItemView : UIView
     {
-        // TODO: investigate
-        // property binding doesn't seem to work...this would be nicer:
-        /*
-        public ItemInstance Item {
+        public ItemInstance ItemInstance {
             get
             {
                 return _item;
@@ -29,15 +26,11 @@ namespace MarkLight.UnityProject
             }
         }
         private ItemInstance _item;
-        */
-
-        public ItemInstance ItemInstance;
 
         public Views.UI.Image Image;
         private int _currentFrameIndex;
 
         private List<Sprite> _spriteCache;
-        private ItemInstance _spriteCacheItem; // because the above prop. binding doesn't work...
 
         public override void Initialize()
         {
@@ -61,13 +54,6 @@ namespace MarkLight.UnityProject
 
         private void ReloadSprite()
         {
-            if (_spriteCacheItem != ItemInstance)
-            {
-                _spriteCacheItem = ItemInstance;
-                _spriteCache = GetSprites();
-                _currentFrameIndex = -1;
-            }
-
             if (_spriteCache == null || _spriteCache.Count() == 0)
             {
                 return;
@@ -83,7 +69,7 @@ namespace MarkLight.UnityProject
 
         public void Update()
         {
-            if (Item != null)
+            if (_item != null)
             {
                 ReloadSprite();
             }
