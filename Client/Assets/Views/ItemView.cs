@@ -1,16 +1,17 @@
 using Gridia;
-using MarkUX;
-using MarkUX.ValueConverters;
-using MarkUX.Views;
+using MarkLight;
+using MarkLight.ValueConverters;
+using MarkLight.Views;
+using MarkLight.Views.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace MarkUX.UnityProject
+namespace MarkLight.UnityProject
 {
-    public class ItemView : View
+    public class ItemView : UIView
     {
         // TODO: investigate
         // property binding doesn't seem to work...this would be nicer:
@@ -30,9 +31,9 @@ namespace MarkUX.UnityProject
         private ItemInstance _item;
         */
 
-        public ItemInstance Item;
+        public ItemInstance ItemInstance;
 
-        public Views.Image Image;
+        public Views.UI.Image Image;
         private int _currentFrameIndex;
 
         private List<Sprite> _spriteCache;
@@ -47,11 +48,11 @@ namespace MarkUX.UnityProject
         {
             var sprites = new List<Sprite>();
             var tm = Locator.Get<TextureManager>();
-            if (Item.Item != null && Item.Item.Animations != null)
+            if (ItemInstance.Item != null && ItemInstance.Item.Animations != null)
             {
-                for (int i = 0; i < Item.Item.Animations.Length; i++)
+                for (int i = 0; i < ItemInstance.Item.Animations.Length; i++)
                 {
-                    var sprite = tm.Items.GetSprite(Item.Item.Animations[i]);
+                    var sprite = tm.Items.GetSprite(ItemInstance.Item.Animations[i]);
                     sprites.Add(sprite);
                 }
             }
@@ -60,9 +61,9 @@ namespace MarkUX.UnityProject
 
         private void ReloadSprite()
         {
-            if (_spriteCacheItem != Item)
+            if (_spriteCacheItem != ItemInstance)
             {
-                _spriteCacheItem = Item;
+                _spriteCacheItem = ItemInstance;
                 _spriteCache = GetSprites();
                 _currentFrameIndex = -1;
             }

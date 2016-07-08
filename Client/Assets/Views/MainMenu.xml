@@ -1,135 +1,137 @@
 <MainMenu>
+  <UserInterface>
 
-  <Image BackgroundImage="Assets/Resources/bg.png"/>
-  
-  <ViewSwitcher Id="ViewSwitcher" StartView="ServerSelect" TransitionIn="BounceInAnimation">
-    <Region Id="ServerSelect" Style="Window" Width="50%" Height="50%">
-      <Region Height="95%" Alignment="TopLeft" Margin="1em,50px,1em,2em">
-        <Panel Id="ServerSelectPanel" ContentAlignment="TopLeft" ScrollVertical="True" ContentMargin="0" ScrollHorizontal="False" ShowHorizontalScrollBar="False">
-          <!-- todo: use datagrid -->
-          <List Id="ServerSelectList" Items="{Servers}" ItemOutlineColor="Black" HighlightedItemColor="Red" SelectionChanged="ListSelectionChanged" Spacing="0" Orientation="Vertical" CanDeselect="False" CanSelect="True" >
-            <ListItem Id="Template" >
-              <Label Text="{Item.Name}" Alignment="Left" />
-              <Group Orientation="Horizontal" Spacing="10" Alignment="Right">
-                <Image BackgroundImage="Assets/Resources/playericon.png" Width="40px" Height="40px"/>
-                <Label Text="{Item.PlayersOnline}" AdjustToText="Width" />
-              </Group>
-            </ListItem>
-          </List>
-        </Panel>
-      </Region>
-      <Region Height="25%" Alignment="Bottom" Margin="1em,50px,1em,2em">
-        <Button Text="Connect Manually" FontSize="15" Click="EnterInputConnectionDetails" Alignment="Left" />
-        <Button Id="HostServerButton" Text="Host Server" FontSize="20" Click="HostServer" Alignment="Right" />
-      </Region>
-      <Image Style="TitleRibbon" Alignment="Top" Offset="0,-50,0,0" />
-      <Label Style="TitleRibbon" AdjustToText="Width" Text="Server Select" Alignment="Top" Offset="0,-50,0,0" />
-    </Region>
-
-    <Region Id="ServerDetails" Style="Window" Width="50%" Height="75%">
-      <Region Height="75%" Alignment="Center" Margin="1em,50px,1em,2em">
-        <Panel ContentAlignment="TopLeft" ScrollVertical="True" ContentMargin="0" ScrollHorizontal="False" ShowHorizontalScrollBar="False">
-          <Label Text="{ServerDescription}" FontSize="20" AdjustToText="Height" Width="10em" />
-        </Panel>
-      </Region>
-      <Region Height="25%" Alignment="Bottom" Margin="1em,5px,1em,2em">
-        <Button Text="Connect!" FontSize="20" Click="ConnectToSelectedServer" />
+    <Image BackgroundImage="Assets/Resources/bg.png"/>
+    
+    <ViewSwitcher Id="ViewSwitcher" StartView="ServerSelect" TransitionIn="BounceInAnimation">
+      <Region Id="ServerSelect" Style="Window" Width="50%" Height="50%">
+        <Region Height="95%" Alignment="TopLeft" Margin="1ux,50px,1ux,2ux">
+          <Panel Id="ServerSelectPanel" ContentAlignment="TopLeft" CanScrollVertically="True" Margin="0" CanScrollHorizontally="False" HorizontalScrollbarVisibility="Remove">
+            <!-- todo: use datagrid -->
+            <List Id="ServerSelectList" Items="{Servers}" Spacing="0" Orientation="Vertical" CanDeselect="False" CanSelect="True" ItemSelected="ListSelectionChanged" DeselectAfterSelect="True" >
+              <ListItem OutlineColor="Black" BackgroundColor="clear" IsTemplate="True" >
+                <Label Text="{#Item.Name}" Alignment="Left" />
+                <Group Orientation="Horizontal" Spacing="10" Alignment="Right">
+                  <Image BackgroundImage="Assets/Resources/playericon.png" Width="40px" Height="40px"/>
+                  <Label Text="{#Item.PlayersOnline}" AdjustToText="Width" />
+                </Group>
+              </ListItem>
+            </List>
+          </Panel>
+        </Region>
+        <Region Height="25%" Alignment="Bottom" Margin="1ux,50px,1ux,2ux">
+          <Button Text="Connect Manually" FontSize="15" Click="EnterInputConnectionDetails" Alignment="Left" />
+          <Button Id="HostServerButton" Text="Host Server" FontSize="20" Click="HostServer" Alignment="Right" />
+        </Region>
+        <Image Style="TitleRibbon" Alignment="Top" Offset="0,-50,0,0" />
+        <Label Style="TitleRibbon" AdjustToText="Width" Text="Server Select" Alignment="Top" Offset="0,-50,0,0" />
       </Region>
 
-      <Button Style="Round" Click="EnterServerSelect" Alignment="TopLeft" Offset="0,0,20,20">
-        <Image Style="BackArrow" />
-      </Button>
-      <Image Style="TitleRibbon" Alignment="Top" Offset="0,-50,0,0" />
-      <Label Style="TitleRibbon" AdjustToText="Width" Text="{CurrentServerName}" Alignment="Top" Offset="0,-50,0,0" />
-    </Region>
+      <Region Id="ServerDetails" Style="Window" Width="50%" Height="75%">
+        <Region Height="75%" Alignment="Center" Margin="1ux,50px,1ux,2ux">
+          <Panel ContentAlignment="TopLeft" CanScrollVertically="True" Margin="0" CanScrollHorizontally="False" HorizontalScrollbarVisibility="Remove">
+            <Label Text="{ServerDescription}" FontSize="20" AdjustToText="Height" Width="10ux" />
+          </Panel>
+        </Region>
+        <Region Height="25%" Alignment="Bottom" Margin="1ux,5px,1ux,2ux">
+          <Button Text="Connect!" FontSize="20" Click="ConnectToSelectedServer" />
+        </Region>
 
-    <Region Id="ServerTitleScreen" Style="Window" Width="50%" Height="75%">
-      <Region Height="75%" Alignment="Center" Margin="1em,50px,1em,2em">
-        <Panel ContentAlignment="TopLeft" ScrollVertical="True" ContentMargin="0" ScrollHorizontal="False" ShowHorizontalScrollBar="False">
-          <Label Text="{ServerChangelog}" FontSize="20" AdjustToText="Height" Width="10em" />
-        </Panel>
+        <Image Style="TitleRibbon" Alignment="Top" Offset="0,-50,0,0" />
+        <Label Style="TitleRibbon" AdjustToText="Width" Text="{CurrentServerName}" Alignment="Top" Offset="0,-50,0,0" />
+        <Button Style="Round" Click="EnterServerSelect" Alignment="TopLeft" Offset="0,0,20,20">
+          <Image Style="BackArrow" />
+        </Button>
       </Region>
-      <Region Height="25%" Alignment="Bottom" Margin="1em,50px,1em,2em">
-        <Button Text="New User" FontSize="20" Alignment="Left" Click="EnterRegistration" />
-        <Button Text="Login" FontSize="20" Alignment="Right" Click="EnterLogin" />
+
+      <Region Id="ServerTitleScreen" Style="Window" Width="50%" Height="75%">
+        <Region Height="75%" Alignment="Center" Margin="1ux,50px,1ux,2ux">
+          <Panel ContentAlignment="TopLeft" CanScrollVertically="True" Margin="0" CanScrollHorizontally="False" HorizontalScrollbarVisibility="Remove">
+            <Label Text="{ServerChangelog}" FontSize="20" AdjustToText="Height" Width="10ux" />
+          </Panel>
+        </Region>
+        <Region Height="25%" Alignment="Bottom" Margin="1ux,50px,1ux,2ux">
+          <Button Text="New User" FontSize="20" Alignment="Left" Click="EnterRegistration" />
+          <Button Text="Login" FontSize="20" Alignment="Right" Click="EnterLogin" />
+        </Region>
+
+        <Image Style="TitleRibbon" Alignment="Top" Offset="0,-50,0,0" />
+        <Label Style="TitleRibbon" AdjustToText="Width" Text="{CurrentServerName}" Alignment="Top" Offset="0,-50,0,0" />
+        <Button Style="Round" Click="DisconnectAndEnterServerSelect" Alignment="TopLeft" Offset="0,0,20,20">
+          <Image Style="BackArrow" />
+        </Button>
       </Region>
 
-      <Button Style="Round" Click="DisconnectAndEnterServerSelect" Alignment="TopLeft" Offset="0,0,20,20">
-        <Image Style="BackArrow" />
-      </Button>
-      <Image Style="TitleRibbon" Alignment="Top" Offset="0,-50,0,0" />
-      <Label Style="TitleRibbon" AdjustToText="Width" Text="{CurrentServerName}" Alignment="Top" Offset="0,-50,0,0" />
-    </Region>
-
-    <Region Id="InputConnectionDetails" Style="Window" Width="50%" Height="50%">
-      <Group Spacing="0.25em" ContentAlignment="Left" Margin="1em,50px,1em,2em">
-        <Group Orientation="Horizontal">
-          <Label Text="IP Address" Width="4em" Height="0.75em" TextAlignment="Left" Margin="0.25em,0,0,0" />
-          <InputField Text="{ManualServerAddress}" />
+      <Region Id="InputConnectionDetails" Style="Window" Width="50%" Height="50%">
+        <Group Spacing="0.25ux" ContentAlignment="Left" Margin="1ux,50px,1ux,2ux">
+          <Group Orientation="Horizontal">
+            <Label Text="IP Address" Width="4ux" Height="0.75ux" TextAlignment="Left" Margin="0.25ux,0,0,0" />
+            <InputField Text="{ManualServerAddress}" />
+          </Group>
+          <Group Orientation="Horizontal">
+            <Label Text="Port" Width="4ux" Height="0.75ux" TextAlignment="Left" Margin="0.25ux,0,0,0" />
+            <InputField Text="{ManualServerPort}" Width="2ux"/>
+          </Group>
         </Group>
-        <Group Orientation="Horizontal">
-          <Label Text="Port" Width="4em" Height="0.75em" TextAlignment="Left" Margin="0.25em,0,0,0" />
-          <InputField Text="{ManualServerPort}" Width="2em"/>
-        </Group>
-      </Group>
-      <Region Height="25%" Alignment="Bottom" Margin="1em,5px,1em,2em">
-        <Button Click="ConnectManually" Text="Connect" />
+        <Region Height="25%" Alignment="Bottom" Margin="1ux,5px,1ux,2ux">
+          <Button Click="ConnectManually" Text="Connect" />
+        </Region>
+
+        <Image Style="TitleRibbon" Alignment="Top" Offset="0,-50,0,0" />
+        <Label Style="TitleRibbon" AdjustToText="Width" Text="Manual Connect" Alignment="Top" Offset="0,-50,0,0" />
+        <Button Style="Round" Click="EnterServerSelect" Alignment="TopLeft" Offset="0,0,20,20">
+          <Image Style="BackArrow" />
+        </Button>
       </Region>
 
-      <Button Style="Round" Click="EnterServerSelect" Alignment="TopLeft" Offset="0,0,20,20">
-        <Image Style="BackArrow" />
-      </Button>
-      <Image Style="TitleRibbon" Alignment="Top" Offset="0,-50,0,0" />
-      <Label Style="TitleRibbon" AdjustToText="Width" Text="Manual Connect" Alignment="Top" Offset="0,-50,0,0" />
-    </Region>
+      <Region Id="Login" Style="Window" Width="50%" Height="50%">
+        <Group Spacing="0.25ux" ContentAlignment="Left" Margin="1ux,50px,1ux,2ux">
+          <Group Orientation="Horizontal">
+            <Label Text="Username" Width="4ux" Height="0.75ux" TextAlignment="Left" Margin="0.25ux,0,0,0" />
+            <InputField Text="{LoginUsername}" />
+          </Group>
+          <Group Orientation="Horizontal">
+            <Label Text="Password" Width="4ux" Height="0.75ux" TextAlignment="Left" Margin="0.25ux,0,0,0" />
+            <InputField Text="{LoginPassword}" />
+          </Group>
+        </Group>
+        <Region Height="25%" Alignment="Bottom" Margin="1ux,5px,1ux,2ux">
+          <Button Click="Login" Text="Login" />
+        </Region>
 
-    <Region Id="Login" Style="Window" Width="50%" Height="50%">
-      <Group Spacing="0.25em" ContentAlignment="Left" Margin="1em,50px,1em,2em">
-        <Group Orientation="Horizontal">
-          <Label Text="Username" Width="4em" Height="0.75em" TextAlignment="Left" Margin="0.25em,0,0,0" />
-          <InputField Text="{LoginUsername}" />
-        </Group>
-        <Group Orientation="Horizontal">
-          <Label Text="Password" Width="4em" Height="0.75em" TextAlignment="Left" Margin="0.25em,0,0,0" />
-          <InputField Text="{LoginPassword}" />
-        </Group>
-      </Group>
-      <Region Height="25%" Alignment="Bottom" Margin="1em,5px,1em,2em">
-        <Button Click="Login" Text="Login" />
+        <Image Style="TitleRibbon" Alignment="Top" Offset="0,-50,0,0" />
+        <Label Style="TitleRibbon" AdjustToText="Width" Text="Login" Alignment="Top" Offset="0,-50,0,0" />
+        <Button Style="Round" Click="EnterServerTitleScreen" Alignment="TopLeft" Offset="0,0,20,20">
+          <Image Style="BackArrow" />
+        </Button>
       </Region>
 
-      <Button Style="Round" Click="EnterServerTitleScreen" Alignment="TopLeft" Offset="0,0,20,20">
-        <Image Style="BackArrow" />
-      </Button>
-      <Image Style="TitleRibbon" Alignment="Top" Offset="0,-50,0,0" />
-      <Label Style="TitleRibbon" AdjustToText="Width" Text="Login" Alignment="Top" Offset="0,-50,0,0" />
-    </Region>
+      <Region Id="Registration" Style="Window" Width="50%" Height="50%">
+        <Group Spacing="0.25ux" ContentAlignment="Left" Margin="1ux,50px,1ux,2ux">
+          <Group Orientation="Horizontal">
+            <Label Text="Username" Width="4ux" Height="0.75ux" TextAlignment="Left" Margin="0.25ux,0,0,0" />
+            <InputField Text="{RegistrationUsername}" />
+          </Group>
+          <Group Orientation="Horizontal">
+            <Label Text="Password" Width="4ux" Height="0.75ux" TextAlignment="Left" Margin="0.25ux,0,0,0" />
+            <InputField Text="{RegistrationPassword}" />
+          </Group>
+        </Group>
+        <Region Height="25%" Alignment="Bottom" Margin="1ux,5px,1ux,2ux">
+          <Button Click="Register" Text="Register" />
+        </Region>
 
-    <Region Id="Registration" Style="Window" Width="50%" Height="50%">
-      <Group Spacing="0.25em" ContentAlignment="Left" Margin="1em,50px,1em,2em">
-        <Group Orientation="Horizontal">
-          <Label Text="Username" Width="4em" Height="0.75em" TextAlignment="Left" Margin="0.25em,0,0,0" />
-          <InputField Text="{RegistrationUsername}" />
-        </Group>
-        <Group Orientation="Horizontal">
-          <Label Text="Password" Width="4em" Height="0.75em" TextAlignment="Left" Margin="0.25em,0,0,0" />
-          <InputField Text="{RegistrationPassword}" />
-        </Group>
-      </Group>
-      <Region Height="25%" Alignment="Bottom" Margin="1em,5px,1em,2em">
-        <Button Click="Register" Text="Register" />
+        <Image Style="TitleRibbon" Alignment="Top" Offset="0,-50,0,0" />
+        <Label Style="TitleRibbon" AdjustToText="Width" Text="Registration" Alignment="Top" Offset="0,-50,0,0" />
+        <Button Style="Round" Click="EnterServerTitleScreen" Alignment="TopLeft" Offset="0,0,20,20">
+          <Image Style="BackArrow" />
+        </Button>
       </Region>
+    </ViewSwitcher>
 
-      <Button Style="Round" Click="EnterServerTitleScreen" Alignment="TopLeft" Offset="0,0,20,20">
-        <Image Style="BackArrow" />
-      </Button>
-      <Image Style="TitleRibbon" Alignment="Top" Offset="0,-50,0,0" />
-      <Label Style="TitleRibbon" AdjustToText="Width" Text="Registration" Alignment="Top" Offset="0,-50,0,0" />
-    </Region>
-  </ViewSwitcher>
-
-  <ViewAnimation Id="BounceInAnimation">
-    <Animate Field="Scale" From="0" To="1" Duration="0.25s" EasingFunction="QuadraticEaseIn" />
-    <Animate Field="Rotation" From="0,0,-20" To="0,0,0" Duration="0.5s" EasingFunction="BackEaseInOut" />
-  </ViewAnimation>
+    <ViewAnimation Id="BounceInAnimation">
+      <Animate Field="Scale" From="0" To="1" Duration="0.25s" EasingFunction="QuadraticEaseIn" />
+      <Animate Field="Rotation" From="0,0,-20" To="0,0,0" Duration="0.5s" EasingFunction="BackEaseInOut" />
+    </ViewAnimation>
+  </UserInterface>
 </MainMenu>

@@ -1048,188 +1048,325 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27aaab7d46a79784b98495ae39ecfeed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnabledChanged:
-    _name: EnabledChanged
-    _source: {fileID: 438140763}
-    _entries: []
-    _triggeredByEventSystem: 0
-    _eventTriggerType: 0
-  Width:
-    _value: 32
-    _unit: 0
-    _fill: 0
-  WidthSet: 1
-  Height:
-    _value: 32
-    _unit: 0
-    _fill: 0
-  HeightSet: 1
-  Alignment: 0
-  AlignmentSet: 0
-  Margin:
-    _left:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _top:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _right:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _bottom:
-      _value: 0
-      _unit: 0
-      _fill: 0
-  Offset:
-    _left:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _top:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _right:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _bottom:
-      _value: 0
-      _unit: 0
-      _fill: 0
-  OffsetFromParent:
-    _left:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _top:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _right:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _bottom:
-      _value: 0
-      _unit: 0
-      _fill: 0
-  UpdateRectTransform: 1
-  UpdateBackground: 1
-  BackgroundColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  BackgroundColorSet: 1
-  BackgroundImage: {fileID: 0}
-  BackgroundImageType: 0
-  BackgroundMaterial: {fileID: 0}
-  PreserveAspect: 0
-  Enabled: 1
   Id: 
   Style: 
-  Alpha: 0
-  AlphaSet: 0
-  Rotation: {x: 0, y: 0, z: 0}
-  RotationSet: 0
-  Scale: {x: 0, y: 0, z: 0}
-  ScaleSet: 0
-  Pivot: {x: 0.5, y: 0.5}
-  HideFlags: 0
-  AlwaysBlockRaycast: 0
-  SortIndex: 0
-  ChildLayoutUpdated: 0
-  Name: ItemView
-  Parent: {fileID: 1899907446}
-  ParentView: {fileID: 1899907447}
-  LayoutParent: {fileID: 1417250447}
-  LayoutParentView: {fileID: 1417250448}
-  IsLayoutRoot: 0
-  IsDestroyed: 0
-  ViewActions:
-  - _name: EnabledChanged
-    _source: {fileID: 438140763}
-    _entries: []
-    _triggeredByEventSystem: 0
-    _eventTriggerType: 0
-  FieldBindings:
-  - SourceFieldPathString: Item
-    TargetFieldPathString: Item.ItemInstance
-    Source: {fileID: 438140763}
-    Target: {fileID: 1899907446}
-    FormatString: 
-    IsDynamic: 0
-    Update: 0
-  FieldChangeHandlers:
-  - FieldName: Width
-    ChangeHandlerName: UpdateLayouts
-    Source: {fileID: 438140763}
-  - FieldName: Height
-    ChangeHandlerName: UpdateLayouts
-    Source: {fileID: 438140763}
-  - FieldName: Alignment
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 438140763}
-  - FieldName: Margin
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 438140763}
-  - FieldName: Offset
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 438140763}
-  - FieldName: OffsetFromParent
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 438140763}
-  - FieldName: UpdateRectTransform
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 438140763}
-  - FieldName: UpdateBackground
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 438140763}
-  - FieldName: BackgroundColor
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 438140763}
-  - FieldName: BackgroundImage
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 438140763}
-  - FieldName: BackgroundImageType
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 438140763}
-  - FieldName: BackgroundMaterial
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 438140763}
-  - FieldName: PreserveAspect
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 438140763}
-  - FieldName: Enabled
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 438140763}
-  - FieldName: Id
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 438140763}
-  - FieldName: Style
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 438140763}
-  - FieldName: Alpha
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 438140763}
-  - FieldName: Rotation
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 438140763}
-  - FieldName: Scale
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 438140763}
-  - FieldName: Pivot
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 438140763}
-  - FieldName: HideFlags
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 438140763}
-  - FieldName: AlwaysBlockRaycast
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 438140763}
-  IsDynamic: 0
-  RootCanvas: {fileID: 754518837}
-  ParentViewPresenter: {fileID: 754518842}
+  BasedOn: 
+  Theme: 
+  BaseDirectory: 
+  UnitSize: {x: 0, y: 0, z: 0}
+  LayoutParent: {fileID: 0}
+  Parent: {fileID: 0}
+  Content: {fileID: 0}
+  State:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 
+  IsActive:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  HideFlags:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  GameObject: {fileID: 0}
+  Transform: {fileID: 0}
+  Position:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0, z: 0}
+  Rotation:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0, z: 0, w: 0}
+  Scale:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0, z: 0}
+  Item:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+  IsTemplate:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  Activated:
+    Name: 
+    TriggeredByEventSystem: 0
+    EventTriggerType: 0
+    IsDisabled: 0
+  Deactivated:
+    Name: 
+    TriggeredByEventSystem: 0
+    EventTriggerType: 0
+    IsDisabled: 0
+  IsDestroyed:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  IsDynamic:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  ViewTypeName: ItemView
+  ViewXumlName: 
+  ViewFieldBindings: []
+  ViewActionEntries: []
+  ViewFieldStateValues: []
+  SetViewFieldNames: []
+  ValueConverterContext:
+    BaseDirectory: 
+    UnitSize: {x: 0, y: 0, z: 0}
+  Width:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _value: 0
+      _unit: 0
+      _fill: 0
+  Height:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _value: 0
+      _unit: 0
+      _fill: 0
+  OverrideWidth:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _value: 0
+      _unit: 0
+      _fill: 0
+  OverrideHeight:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _value: 0
+      _unit: 0
+      _fill: 0
+  Alignment:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  Margin:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _left:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _top:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _right:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _bottom:
+        _value: 0
+        _unit: 0
+        _fill: 0
+  Offset:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _left:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _top:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _right:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _bottom:
+        _value: 0
+        _unit: 0
+        _fill: 0
+  OffsetFromParent:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _left:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _top:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _right:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _bottom:
+        _value: 0
+        _unit: 0
+        _fill: 0
+  Pivot:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0}
+  RectTransform: {fileID: 0}
+  RaycastBlockMode:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  Alpha:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  IsVisible:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  SortIndex:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  UpdateRectTransform:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  UpdateBackground:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  ImageComponent: {fileID: 0}
+  BackgroundImageEventAlphaThreshold:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillAmount:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillCenter:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillClockwise:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillMethod:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillOrigin:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageOverrideSprite:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {fileID: 0}
+  BackgroundImagePreserveAspect:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {fileID: 0}
+  BackgroundImage:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {fileID: 0}
+  BackgroundImageType:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundMaterial:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {fileID: 0}
+  BackgroundImageMaskable:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundColor:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {r: 0, g: 0, b: 0, a: 0}
   Image: {fileID: 1240144761}
 --- !u!114 &438140766
 MonoBehaviour:
@@ -2872,209 +3009,325 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b632b878fac98e4408b74ae951208738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnabledChanged:
-    _name: EnabledChanged
-    _source: {fileID: 643100829}
-    _entries: []
-    _triggeredByEventSystem: 0
-    _eventTriggerType: 0
-  Width:
-    _value: 1
-    _unit: 1
-    _fill: 0
-  WidthSet: 0
-  Height:
-    _value: 1
-    _unit: 1
-    _fill: 0
-  HeightSet: 0
-  Alignment: 1
-  AlignmentSet: 1
-  Margin:
-    _left:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _top:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _right:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _bottom:
-      _value: 0
-      _unit: 0
-      _fill: 0
-  Offset:
-    _left:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _top:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _right:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _bottom:
-      _value: 0
-      _unit: 0
-      _fill: 0
-  OffsetFromParent:
-    _left:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _top:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _right:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _bottom:
-      _value: 0
-      _unit: 0
-      _fill: 0
-  UpdateRectTransform: 1
-  UpdateBackground: 1
-  BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
-  BackgroundColorSet: 0
-  BackgroundImage: {fileID: 0}
-  BackgroundImageType: 0
-  BackgroundMaterial: {fileID: 0}
-  PreserveAspect: 0
-  Enabled: 1
   Id: Inventory
   Style: 
-  Alpha: 0
-  AlphaSet: 0
-  Rotation: {x: 0, y: 0, z: 0}
-  RotationSet: 0
-  Scale: {x: 0, y: 0, z: 0}
-  ScaleSet: 0
-  Pivot: {x: 0.5, y: 0.5}
-  HideFlags: 0
-  AlwaysBlockRaycast: 0
-  SortIndex: 0
-  ChildLayoutUpdated: 0
-  Name: Inventory
-  Parent: {fileID: 2017906655}
-  ParentView: {fileID: 2017906657}
-  LayoutParent: {fileID: 279464579}
-  LayoutParentView: {fileID: 279464581}
-  IsLayoutRoot: 0
-  IsDestroyed: 0
-  ViewActions:
-  - _name: EnabledChanged
-    _source: {fileID: 643100829}
-    _entries: []
-    _triggeredByEventSystem: 0
-    _eventTriggerType: 0
-  FieldBindings:
-  - SourceFieldPathString: Items
-    TargetFieldPathString: Items
-    Source: {fileID: 643100829}
-    Target: {fileID: 631400614}
-    FormatString: 
-    IsDynamic: 0
-    Update: 1
-  - SourceFieldPathString: Alignment
-    TargetFieldPathString: Alignment
-    Source: {fileID: 643100829}
-    Target: {fileID: 631400614}
-    FormatString: 
-    IsDynamic: 0
-    Update: 1
-  - SourceFieldPathString: Items
-    TargetFieldPathString: InventoryItems
-    Source: {fileID: 643100829}
-    Target: {fileID: 2017906655}
-    FormatString: 
-    IsDynamic: 0
-    Update: 0
-  - SourceFieldPathString: NumInRow
-    TargetFieldPathString: NumItemsInToolbar
-    Source: {fileID: 643100829}
-    Target: {fileID: 2017906655}
-    FormatString: 
-    IsDynamic: 0
-    Update: 0
-  FieldChangeHandlers:
-  - FieldName: Width
-    ChangeHandlerName: UpdateLayouts
-    Source: {fileID: 643100829}
-  - FieldName: Height
-    ChangeHandlerName: UpdateLayouts
-    Source: {fileID: 643100829}
-  - FieldName: Alignment
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 643100829}
-  - FieldName: Margin
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 643100829}
-  - FieldName: Offset
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 643100829}
-  - FieldName: OffsetFromParent
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 643100829}
-  - FieldName: UpdateRectTransform
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 643100829}
-  - FieldName: UpdateBackground
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 643100829}
-  - FieldName: BackgroundColor
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 643100829}
-  - FieldName: BackgroundImage
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 643100829}
-  - FieldName: BackgroundImageType
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 643100829}
-  - FieldName: BackgroundMaterial
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 643100829}
-  - FieldName: PreserveAspect
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 643100829}
-  - FieldName: Enabled
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 643100829}
-  - FieldName: Id
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 643100829}
-  - FieldName: Style
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 643100829}
-  - FieldName: Alpha
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 643100829}
-  - FieldName: Rotation
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 643100829}
-  - FieldName: Scale
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 643100829}
-  - FieldName: Pivot
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 643100829}
-  - FieldName: HideFlags
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 643100829}
-  - FieldName: AlwaysBlockRaycast
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 643100829}
-  IsDynamic: 0
-  RootCanvas: {fileID: 754518837}
-  ParentViewPresenter: {fileID: 754518842}
+  BasedOn: 
+  Theme: 
+  BaseDirectory: 
+  UnitSize: {x: 0, y: 0, z: 0}
+  LayoutParent: {fileID: 0}
+  Parent: {fileID: 0}
+  Content: {fileID: 0}
+  State:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 
+  IsActive:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  HideFlags:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  GameObject: {fileID: 0}
+  Transform: {fileID: 0}
+  Position:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0, z: 0}
+  Rotation:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0, z: 0, w: 0}
+  Scale:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0, z: 0}
+  Item:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+  IsTemplate:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  Activated:
+    Name: 
+    TriggeredByEventSystem: 0
+    EventTriggerType: 0
+    IsDisabled: 0
+  Deactivated:
+    Name: 
+    TriggeredByEventSystem: 0
+    EventTriggerType: 0
+    IsDisabled: 0
+  IsDestroyed:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  IsDynamic:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  ViewTypeName: ContainerView
+  ViewXumlName: 
+  ViewFieldBindings: []
+  ViewActionEntries: []
+  ViewFieldStateValues: []
+  SetViewFieldNames: []
+  ValueConverterContext:
+    BaseDirectory: 
+    UnitSize: {x: 0, y: 0, z: 0}
+  Width:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _value: 0
+      _unit: 0
+      _fill: 0
+  Height:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _value: 0
+      _unit: 0
+      _fill: 0
+  OverrideWidth:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _value: 0
+      _unit: 0
+      _fill: 0
+  OverrideHeight:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _value: 0
+      _unit: 0
+      _fill: 0
+  Alignment:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  Margin:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _left:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _top:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _right:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _bottom:
+        _value: 0
+        _unit: 0
+        _fill: 0
+  Offset:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _left:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _top:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _right:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _bottom:
+        _value: 0
+        _unit: 0
+        _fill: 0
+  OffsetFromParent:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _left:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _top:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _right:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _bottom:
+        _value: 0
+        _unit: 0
+        _fill: 0
+  Pivot:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0}
+  RectTransform: {fileID: 0}
+  RaycastBlockMode:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  Alpha:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  IsVisible:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  SortIndex:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  UpdateRectTransform:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  UpdateBackground:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  ImageComponent: {fileID: 0}
+  BackgroundImageEventAlphaThreshold:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillAmount:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillCenter:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillClockwise:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillMethod:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillOrigin:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageOverrideSprite:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {fileID: 0}
+  BackgroundImagePreserveAspect:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {fileID: 0}
+  BackgroundImage:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {fileID: 0}
+  BackgroundImageType:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundMaterial:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {fileID: 0}
+  BackgroundImageMaskable:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundColor:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {r: 0, g: 0, b: 0, a: 0}
   NumInRow: 10
   Container: {fileID: 631400616}
   Template: {fileID: 2026811510}
@@ -4324,39 +4577,116 @@ MonoBehaviour:
   m_GameObject: {fileID: 754518837}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cb390b94714dd848b9fc481ad13d2b9, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e5c19d77c6b4f84d8c68188b13ccfe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ElementSize: 40
-  DrawGrid: 0
-  MainView: Main
+  Id: 
+  Style: 
+  BasedOn: 
   Theme: 
-  Views:
-  - ContainerView
-  - ItemView
-  - Main
-  - MainMenu
-  - Showcase_Group
-  - Showcase_Image
-  - Showcase_InputField
-  - Showcase_Label
-  - Showcase_Mask
-  - Showcase_NeatTheme
-  - Showcase_Panel
-  - Showcase_Region
-  - Showcase_Slider
-  - Showcase_StandardViews
-  - Showcase_TabPanel
-  - Showcase_ToonTheme
-  - Showcase_Window
-  Themes:
-  - Basic
-  - Flat
-  - Neat
-  - Toon
-  LayoutRoot: {fileID: 720207181}
-  TemplateRoot: {fileID: 912075542}
-  DisableUndo: 0
+  BaseDirectory: 
+  UnitSize: {x: 40, y: 40, z: 40}
+  LayoutParent: {fileID: 0}
+  Parent: {fileID: 0}
+  Content: {fileID: 0}
+  State:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 
+  IsActive:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  HideFlags:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  GameObject: {fileID: 0}
+  Transform: {fileID: 0}
+  Position:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0, z: 0}
+  Rotation:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0, z: 0, w: 0}
+  Scale:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0, z: 0}
+  Item:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+  IsTemplate:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  Activated:
+    Name: 
+    TriggeredByEventSystem: 0
+    EventTriggerType: 0
+    IsDisabled: 0
+  Deactivated:
+    Name: 
+    TriggeredByEventSystem: 0
+    EventTriggerType: 0
+    IsDisabled: 0
+  IsDestroyed:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  IsDynamic:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  ViewTypeName: ViewPresenter
+  ViewXumlName: 
+  ViewFieldBindings: []
+  ViewActionEntries: []
+  ViewFieldStateValues: []
+  SetViewFieldNames: []
+  ValueConverterContext:
+    BaseDirectory: 
+    UnitSize: {x: 0, y: 0, z: 0}
+  ViewTypeDataList: []
+  ThemeData: []
+  ResourceDictionaries: []
+  MainView: 
+  DefaultTheme: 
+  DefaultLanguage: 
+  DefaultPlatform: 
+  Views: []
+  Themes: []
+  RootView: {fileID: 0}
+  Sprites: []
+  SpritePaths: []
+  Fonts: []
+  FontPaths: []
+  Materials: []
+  MaterialPaths: []
+  DisableAutomaticReload: 0
+  UpdateXsdSchema: 0
 --- !u!1 &912075542
 GameObject:
   m_ObjectHideFlags: 1
@@ -5099,181 +5429,325 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27aaab7d46a79784b98495ae39ecfeed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnabledChanged:
-    _name: EnabledChanged
-    _source: {fileID: 1137595147}
-    _entries: []
-    _triggeredByEventSystem: 0
-    _eventTriggerType: 0
-  Width:
-    _value: 32
-    _unit: 0
-    _fill: 0
-  WidthSet: 1
-  Height:
-    _value: 32
-    _unit: 0
-    _fill: 0
-  HeightSet: 1
-  Alignment: 0
-  AlignmentSet: 0
-  Margin:
-    _left:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _top:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _right:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _bottom:
-      _value: 0
-      _unit: 0
-      _fill: 0
-  Offset:
-    _left:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _top:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _right:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _bottom:
-      _value: 0
-      _unit: 0
-      _fill: 0
-  OffsetFromParent:
-    _left:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _top:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _right:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _bottom:
-      _value: 0
-      _unit: 0
-      _fill: 0
-  UpdateRectTransform: 1
-  UpdateBackground: 1
-  BackgroundColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  BackgroundColorSet: 1
-  BackgroundImage: {fileID: 0}
-  BackgroundImageType: 0
-  BackgroundMaterial: {fileID: 0}
-  PreserveAspect: 0
-  Enabled: 1
   Id: 
   Style: 
-  Alpha: 0
-  AlphaSet: 0
-  Rotation: {x: 0, y: 0, z: 0}
-  RotationSet: 0
-  Scale: {x: 0, y: 0, z: 0}
-  ScaleSet: 0
-  Pivot: {x: 0.5, y: 0.5}
-  HideFlags: 0
-  AlwaysBlockRaycast: 0
-  SortIndex: 0
-  ChildLayoutUpdated: 0
-  Name: ItemView
+  BasedOn: 
+  Theme: 
+  BaseDirectory: 
+  UnitSize: {x: 0, y: 0, z: 0}
+  LayoutParent: {fileID: 0}
   Parent: {fileID: 0}
-  ParentView: {fileID: 0}
-  LayoutParent: {fileID: 912075542}
-  LayoutParentView: {fileID: 912075543}
-  IsLayoutRoot: 0
-  IsDestroyed: 0
-  ViewActions:
-  - _name: EnabledChanged
-    _source: {fileID: 1137595147}
-    _entries: []
-    _triggeredByEventSystem: 0
-    _eventTriggerType: 0
-  FieldBindings: []
-  FieldChangeHandlers:
-  - FieldName: Width
-    ChangeHandlerName: UpdateLayouts
-    Source: {fileID: 1137595147}
-  - FieldName: Height
-    ChangeHandlerName: UpdateLayouts
-    Source: {fileID: 1137595147}
-  - FieldName: Alignment
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 1137595147}
-  - FieldName: Margin
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 1137595147}
-  - FieldName: Offset
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 1137595147}
-  - FieldName: OffsetFromParent
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 1137595147}
-  - FieldName: UpdateRectTransform
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 1137595147}
-  - FieldName: UpdateBackground
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 1137595147}
-  - FieldName: BackgroundColor
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1137595147}
-  - FieldName: BackgroundImage
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1137595147}
-  - FieldName: BackgroundImageType
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1137595147}
-  - FieldName: BackgroundMaterial
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1137595147}
-  - FieldName: PreserveAspect
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1137595147}
-  - FieldName: Enabled
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1137595147}
-  - FieldName: Id
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1137595147}
-  - FieldName: Style
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1137595147}
-  - FieldName: Alpha
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1137595147}
-  - FieldName: Rotation
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1137595147}
-  - FieldName: Scale
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1137595147}
-  - FieldName: Pivot
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1137595147}
-  - FieldName: HideFlags
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1137595147}
-  - FieldName: AlwaysBlockRaycast
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1137595147}
-  IsDynamic: 0
-  RootCanvas: {fileID: 754518837}
-  ParentViewPresenter: {fileID: 754518842}
+  Content: {fileID: 0}
+  State:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 
+  IsActive:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  HideFlags:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  GameObject: {fileID: 0}
+  Transform: {fileID: 0}
+  Position:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0, z: 0}
+  Rotation:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0, z: 0, w: 0}
+  Scale:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0, z: 0}
+  Item:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+  IsTemplate:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  Activated:
+    Name: 
+    TriggeredByEventSystem: 0
+    EventTriggerType: 0
+    IsDisabled: 0
+  Deactivated:
+    Name: 
+    TriggeredByEventSystem: 0
+    EventTriggerType: 0
+    IsDisabled: 0
+  IsDestroyed:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  IsDynamic:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  ViewTypeName: ItemView
+  ViewXumlName: 
+  ViewFieldBindings: []
+  ViewActionEntries: []
+  ViewFieldStateValues: []
+  SetViewFieldNames: []
+  ValueConverterContext:
+    BaseDirectory: 
+    UnitSize: {x: 0, y: 0, z: 0}
+  Width:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _value: 0
+      _unit: 0
+      _fill: 0
+  Height:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _value: 0
+      _unit: 0
+      _fill: 0
+  OverrideWidth:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _value: 0
+      _unit: 0
+      _fill: 0
+  OverrideHeight:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _value: 0
+      _unit: 0
+      _fill: 0
+  Alignment:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  Margin:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _left:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _top:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _right:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _bottom:
+        _value: 0
+        _unit: 0
+        _fill: 0
+  Offset:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _left:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _top:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _right:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _bottom:
+        _value: 0
+        _unit: 0
+        _fill: 0
+  OffsetFromParent:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _left:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _top:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _right:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _bottom:
+        _value: 0
+        _unit: 0
+        _fill: 0
+  Pivot:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0}
+  RectTransform: {fileID: 0}
+  RaycastBlockMode:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  Alpha:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  IsVisible:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  SortIndex:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  UpdateRectTransform:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  UpdateBackground:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  ImageComponent: {fileID: 0}
+  BackgroundImageEventAlphaThreshold:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillAmount:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillCenter:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillClockwise:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillMethod:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillOrigin:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageOverrideSprite:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {fileID: 0}
+  BackgroundImagePreserveAspect:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {fileID: 0}
+  BackgroundImage:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {fileID: 0}
+  BackgroundImageType:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundMaterial:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {fileID: 0}
+  BackgroundImageMaskable:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundColor:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {r: 0, g: 0, b: 0, a: 0}
   Image: {fileID: 626786994}
 --- !u!114 &1137595150
 MonoBehaviour:
@@ -8213,188 +8687,325 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27aaab7d46a79784b98495ae39ecfeed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnabledChanged:
-    _name: EnabledChanged
-    _source: {fileID: 1777071136}
-    _entries: []
-    _triggeredByEventSystem: 0
-    _eventTriggerType: 0
-  Width:
-    _value: 32
-    _unit: 0
-    _fill: 0
-  WidthSet: 1
-  Height:
-    _value: 32
-    _unit: 0
-    _fill: 0
-  HeightSet: 1
-  Alignment: 0
-  AlignmentSet: 0
-  Margin:
-    _left:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _top:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _right:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _bottom:
-      _value: 0
-      _unit: 0
-      _fill: 0
-  Offset:
-    _left:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _top:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _right:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _bottom:
-      _value: 0
-      _unit: 0
-      _fill: 0
-  OffsetFromParent:
-    _left:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _top:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _right:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _bottom:
-      _value: 0
-      _unit: 0
-      _fill: 0
-  UpdateRectTransform: 1
-  UpdateBackground: 1
-  BackgroundColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  BackgroundColorSet: 1
-  BackgroundImage: {fileID: 0}
-  BackgroundImageType: 0
-  BackgroundMaterial: {fileID: 0}
-  PreserveAspect: 0
-  Enabled: 1
   Id: 
   Style: 
-  Alpha: 0
-  AlphaSet: 0
-  Rotation: {x: 0, y: 0, z: 0}
-  RotationSet: 0
-  Scale: {x: 0, y: 0, z: 0}
-  ScaleSet: 0
-  Pivot: {x: 0.5, y: 0.5}
-  HideFlags: 0
-  AlwaysBlockRaycast: 0
-  SortIndex: 0
-  ChildLayoutUpdated: 0
-  Name: ItemView
-  Parent: {fileID: 643100829}
-  ParentView: {fileID: 643100831}
-  LayoutParent: {fileID: 2026811508}
-  LayoutParentView: {fileID: 2026811510}
-  IsLayoutRoot: 0
-  IsDestroyed: 0
-  ViewActions:
-  - _name: EnabledChanged
-    _source: {fileID: 1777071136}
-    _entries: []
-    _triggeredByEventSystem: 0
-    _eventTriggerType: 0
-  FieldBindings:
-  - SourceFieldPathString: Item
-    TargetFieldPathString: Item.ItemInstance
-    Source: {fileID: 1777071136}
-    Target: {fileID: 643100829}
-    FormatString: 
-    IsDynamic: 0
-    Update: 0
-  FieldChangeHandlers:
-  - FieldName: Width
-    ChangeHandlerName: UpdateLayouts
-    Source: {fileID: 1777071136}
-  - FieldName: Height
-    ChangeHandlerName: UpdateLayouts
-    Source: {fileID: 1777071136}
-  - FieldName: Alignment
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 1777071136}
-  - FieldName: Margin
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 1777071136}
-  - FieldName: Offset
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 1777071136}
-  - FieldName: OffsetFromParent
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 1777071136}
-  - FieldName: UpdateRectTransform
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 1777071136}
-  - FieldName: UpdateBackground
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 1777071136}
-  - FieldName: BackgroundColor
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1777071136}
-  - FieldName: BackgroundImage
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1777071136}
-  - FieldName: BackgroundImageType
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1777071136}
-  - FieldName: BackgroundMaterial
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1777071136}
-  - FieldName: PreserveAspect
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1777071136}
-  - FieldName: Enabled
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1777071136}
-  - FieldName: Id
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1777071136}
-  - FieldName: Style
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1777071136}
-  - FieldName: Alpha
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1777071136}
-  - FieldName: Rotation
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1777071136}
-  - FieldName: Scale
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1777071136}
-  - FieldName: Pivot
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1777071136}
-  - FieldName: HideFlags
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1777071136}
-  - FieldName: AlwaysBlockRaycast
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1777071136}
-  IsDynamic: 0
-  RootCanvas: {fileID: 754518837}
-  ParentViewPresenter: {fileID: 754518842}
+  BasedOn: 
+  Theme: 
+  BaseDirectory: 
+  UnitSize: {x: 0, y: 0, z: 0}
+  LayoutParent: {fileID: 0}
+  Parent: {fileID: 0}
+  Content: {fileID: 0}
+  State:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 
+  IsActive:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  HideFlags:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  GameObject: {fileID: 0}
+  Transform: {fileID: 0}
+  Position:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0, z: 0}
+  Rotation:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0, z: 0, w: 0}
+  Scale:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0, z: 0}
+  Item:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+  IsTemplate:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  Activated:
+    Name: 
+    TriggeredByEventSystem: 0
+    EventTriggerType: 0
+    IsDisabled: 0
+  Deactivated:
+    Name: 
+    TriggeredByEventSystem: 0
+    EventTriggerType: 0
+    IsDisabled: 0
+  IsDestroyed:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  IsDynamic:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  ViewTypeName: ItemView
+  ViewXumlName: 
+  ViewFieldBindings: []
+  ViewActionEntries: []
+  ViewFieldStateValues: []
+  SetViewFieldNames: []
+  ValueConverterContext:
+    BaseDirectory: 
+    UnitSize: {x: 0, y: 0, z: 0}
+  Width:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _value: 0
+      _unit: 0
+      _fill: 0
+  Height:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _value: 0
+      _unit: 0
+      _fill: 0
+  OverrideWidth:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _value: 0
+      _unit: 0
+      _fill: 0
+  OverrideHeight:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _value: 0
+      _unit: 0
+      _fill: 0
+  Alignment:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  Margin:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _left:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _top:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _right:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _bottom:
+        _value: 0
+        _unit: 0
+        _fill: 0
+  Offset:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _left:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _top:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _right:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _bottom:
+        _value: 0
+        _unit: 0
+        _fill: 0
+  OffsetFromParent:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _left:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _top:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _right:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _bottom:
+        _value: 0
+        _unit: 0
+        _fill: 0
+  Pivot:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0}
+  RectTransform: {fileID: 0}
+  RaycastBlockMode:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  Alpha:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  IsVisible:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  SortIndex:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  UpdateRectTransform:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  UpdateBackground:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  ImageComponent: {fileID: 0}
+  BackgroundImageEventAlphaThreshold:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillAmount:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillCenter:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillClockwise:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillMethod:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillOrigin:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageOverrideSprite:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {fileID: 0}
+  BackgroundImagePreserveAspect:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {fileID: 0}
+  BackgroundImage:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {fileID: 0}
+  BackgroundImageType:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundMaterial:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {fileID: 0}
+  BackgroundImageMaskable:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundColor:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {r: 0, g: 0, b: 0, a: 0}
   Image: {fileID: 195397077}
 --- !u!114 &1777071139
 MonoBehaviour:
@@ -9989,209 +10600,325 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b632b878fac98e4408b74ae951208738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnabledChanged:
-    _name: EnabledChanged
-    _source: {fileID: 1899907446}
-    _entries: []
-    _triggeredByEventSystem: 0
-    _eventTriggerType: 0
-  Width:
-    _value: 1
-    _unit: 1
-    _fill: 0
-  WidthSet: 0
-  Height:
-    _value: 1
-    _unit: 1
-    _fill: 0
-  HeightSet: 0
-  Alignment: 0
-  AlignmentSet: 1
-  Margin:
-    _left:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _top:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _right:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _bottom:
-      _value: 0
-      _unit: 0
-      _fill: 0
-  Offset:
-    _left:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _top:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _right:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _bottom:
-      _value: 0
-      _unit: 0
-      _fill: 0
-  OffsetFromParent:
-    _left:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _top:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _right:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _bottom:
-      _value: 0
-      _unit: 0
-      _fill: 0
-  UpdateRectTransform: 1
-  UpdateBackground: 1
-  BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
-  BackgroundColorSet: 0
-  BackgroundImage: {fileID: 0}
-  BackgroundImageType: 0
-  BackgroundMaterial: {fileID: 0}
-  PreserveAspect: 0
-  Enabled: 1
   Id: Toolbar
   Style: 
-  Alpha: 0
-  AlphaSet: 0
-  Rotation: {x: 0, y: 0, z: 0}
-  RotationSet: 0
-  Scale: {x: 0, y: 0, z: 0}
-  ScaleSet: 0
-  Pivot: {x: 0.5, y: 0.5}
-  HideFlags: 0
-  AlwaysBlockRaycast: 0
-  SortIndex: 0
-  ChildLayoutUpdated: 0
-  Name: Toolbar
-  Parent: {fileID: 2017906655}
-  ParentView: {fileID: 2017906657}
-  LayoutParent: {fileID: 1572871741}
-  LayoutParentView: {fileID: 1572871742}
-  IsLayoutRoot: 0
-  IsDestroyed: 0
-  ViewActions:
-  - _name: EnabledChanged
-    _source: {fileID: 1899907446}
-    _entries: []
-    _triggeredByEventSystem: 0
-    _eventTriggerType: 0
-  FieldBindings:
-  - SourceFieldPathString: Items
-    TargetFieldPathString: Items
-    Source: {fileID: 1899907446}
-    Target: {fileID: 1935428868}
-    FormatString: 
-    IsDynamic: 0
-    Update: 1
-  - SourceFieldPathString: Alignment
-    TargetFieldPathString: Alignment
-    Source: {fileID: 1899907446}
-    Target: {fileID: 1935428868}
-    FormatString: 
-    IsDynamic: 0
-    Update: 1
-  - SourceFieldPathString: Items
-    TargetFieldPathString: ToolbarItems
-    Source: {fileID: 1899907446}
-    Target: {fileID: 2017906655}
-    FormatString: 
-    IsDynamic: 0
-    Update: 0
-  - SourceFieldPathString: NumInRow
-    TargetFieldPathString: NumItemsInToolbar
-    Source: {fileID: 1899907446}
-    Target: {fileID: 2017906655}
-    FormatString: 
-    IsDynamic: 0
-    Update: 0
-  FieldChangeHandlers:
-  - FieldName: Width
-    ChangeHandlerName: UpdateLayouts
-    Source: {fileID: 1899907446}
-  - FieldName: Height
-    ChangeHandlerName: UpdateLayouts
-    Source: {fileID: 1899907446}
-  - FieldName: Alignment
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 1899907446}
-  - FieldName: Margin
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 1899907446}
-  - FieldName: Offset
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 1899907446}
-  - FieldName: OffsetFromParent
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 1899907446}
-  - FieldName: UpdateRectTransform
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 1899907446}
-  - FieldName: UpdateBackground
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 1899907446}
-  - FieldName: BackgroundColor
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1899907446}
-  - FieldName: BackgroundImage
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1899907446}
-  - FieldName: BackgroundImageType
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1899907446}
-  - FieldName: BackgroundMaterial
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1899907446}
-  - FieldName: PreserveAspect
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1899907446}
-  - FieldName: Enabled
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1899907446}
-  - FieldName: Id
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1899907446}
-  - FieldName: Style
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1899907446}
-  - FieldName: Alpha
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1899907446}
-  - FieldName: Rotation
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1899907446}
-  - FieldName: Scale
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1899907446}
-  - FieldName: Pivot
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1899907446}
-  - FieldName: HideFlags
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1899907446}
-  - FieldName: AlwaysBlockRaycast
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 1899907446}
-  IsDynamic: 0
-  RootCanvas: {fileID: 754518837}
-  ParentViewPresenter: {fileID: 754518842}
+  BasedOn: 
+  Theme: 
+  BaseDirectory: 
+  UnitSize: {x: 0, y: 0, z: 0}
+  LayoutParent: {fileID: 0}
+  Parent: {fileID: 0}
+  Content: {fileID: 0}
+  State:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 
+  IsActive:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  HideFlags:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  GameObject: {fileID: 0}
+  Transform: {fileID: 0}
+  Position:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0, z: 0}
+  Rotation:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0, z: 0, w: 0}
+  Scale:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0, z: 0}
+  Item:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+  IsTemplate:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  Activated:
+    Name: 
+    TriggeredByEventSystem: 0
+    EventTriggerType: 0
+    IsDisabled: 0
+  Deactivated:
+    Name: 
+    TriggeredByEventSystem: 0
+    EventTriggerType: 0
+    IsDisabled: 0
+  IsDestroyed:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  IsDynamic:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  ViewTypeName: ContainerView
+  ViewXumlName: 
+  ViewFieldBindings: []
+  ViewActionEntries: []
+  ViewFieldStateValues: []
+  SetViewFieldNames: []
+  ValueConverterContext:
+    BaseDirectory: 
+    UnitSize: {x: 0, y: 0, z: 0}
+  Width:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _value: 0
+      _unit: 0
+      _fill: 0
+  Height:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _value: 0
+      _unit: 0
+      _fill: 0
+  OverrideWidth:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _value: 0
+      _unit: 0
+      _fill: 0
+  OverrideHeight:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _value: 0
+      _unit: 0
+      _fill: 0
+  Alignment:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  Margin:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _left:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _top:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _right:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _bottom:
+        _value: 0
+        _unit: 0
+        _fill: 0
+  Offset:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _left:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _top:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _right:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _bottom:
+        _value: 0
+        _unit: 0
+        _fill: 0
+  OffsetFromParent:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _left:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _top:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _right:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _bottom:
+        _value: 0
+        _unit: 0
+        _fill: 0
+  Pivot:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0}
+  RectTransform: {fileID: 0}
+  RaycastBlockMode:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  Alpha:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  IsVisible:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  SortIndex:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  UpdateRectTransform:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  UpdateBackground:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  ImageComponent: {fileID: 0}
+  BackgroundImageEventAlphaThreshold:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillAmount:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillCenter:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillClockwise:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillMethod:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillOrigin:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageOverrideSprite:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {fileID: 0}
+  BackgroundImagePreserveAspect:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {fileID: 0}
+  BackgroundImage:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {fileID: 0}
+  BackgroundImageType:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundMaterial:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {fileID: 0}
+  BackgroundImageMaskable:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundColor:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {r: 0, g: 0, b: 0, a: 0}
   NumInRow: 10
   Container: {fileID: 1935428870}
   Template: {fileID: 1417250448}
@@ -11032,209 +11759,325 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3266b2b9b18f2e14d924780cbf6120d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnabledChanged:
-    _name: EnabledChanged
-    _source: {fileID: 2017906655}
-    _entries: []
-    _triggeredByEventSystem: 0
-    _eventTriggerType: 0
-  Width:
-    _value: 1
-    _unit: 1
-    _fill: 0
-  WidthSet: 0
-  Height:
-    _value: 1
-    _unit: 1
-    _fill: 0
-  HeightSet: 0
-  Alignment: 0
-  AlignmentSet: 0
-  Margin:
-    _left:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _top:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _right:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _bottom:
-      _value: 0
-      _unit: 0
-      _fill: 0
-  Offset:
-    _left:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _top:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _right:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _bottom:
-      _value: 0
-      _unit: 0
-      _fill: 0
-  OffsetFromParent:
-    _left:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _top:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _right:
-      _value: 0
-      _unit: 0
-      _fill: 0
-    _bottom:
-      _value: 0
-      _unit: 0
-      _fill: 0
-  UpdateRectTransform: 1
-  UpdateBackground: 1
-  BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
-  BackgroundColorSet: 0
-  BackgroundImage: {fileID: 0}
-  BackgroundImageType: 0
-  BackgroundMaterial: {fileID: 0}
-  PreserveAspect: 0
-  Enabled: 1
   Id: 
   Style: 
-  Alpha: 0
-  AlphaSet: 0
-  Rotation: {x: 0, y: 0, z: 0}
-  RotationSet: 0
-  Scale: {x: 0, y: 0, z: 0}
-  ScaleSet: 0
-  Pivot: {x: 0.5, y: 0.5}
-  HideFlags: 0
-  AlwaysBlockRaycast: 0
-  SortIndex: 0
-  ChildLayoutUpdated: 0
-  Name: Main
+  BasedOn: 
+  Theme: 
+  BaseDirectory: 
+  UnitSize: {x: 0, y: 0, z: 0}
+  LayoutParent: {fileID: 0}
   Parent: {fileID: 0}
-  ParentView: {fileID: 0}
-  LayoutParent: {fileID: 720207181}
-  LayoutParentView: {fileID: 720207183}
-  IsLayoutRoot: 0
-  IsDestroyed: 0
-  ViewActions:
-  - _name: EnabledChanged
-    _source: {fileID: 2017906655}
-    _entries: []
-    _triggeredByEventSystem: 0
-    _eventTriggerType: 0
-  FieldBindings:
-  - SourceFieldPathString: ToolbarItems
-    TargetFieldPathString: Items
-    Source: {fileID: 2017906655}
-    Target: {fileID: 1899907446}
-    FormatString: 
-    IsDynamic: 0
-    Update: 1
-  - SourceFieldPathString: NumItemsInToolbar
-    TargetFieldPathString: NumInRow
-    Source: {fileID: 2017906655}
-    Target: {fileID: 1899907446}
-    FormatString: 
-    IsDynamic: 0
-    Update: 1
-  - SourceFieldPathString: InventoryItems
-    TargetFieldPathString: Items
-    Source: {fileID: 2017906655}
-    Target: {fileID: 643100829}
-    FormatString: 
-    IsDynamic: 0
-    Update: 1
-  - SourceFieldPathString: NumItemsInToolbar
-    TargetFieldPathString: NumInRow
-    Source: {fileID: 2017906655}
-    Target: {fileID: 643100829}
-    FormatString: 
-    IsDynamic: 0
-    Update: 1
-  FieldChangeHandlers:
-  - FieldName: Width
-    ChangeHandlerName: UpdateLayouts
-    Source: {fileID: 2017906655}
-  - FieldName: Height
-    ChangeHandlerName: UpdateLayouts
-    Source: {fileID: 2017906655}
-  - FieldName: Alignment
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 2017906655}
-  - FieldName: Margin
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 2017906655}
-  - FieldName: Offset
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 2017906655}
-  - FieldName: OffsetFromParent
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 2017906655}
-  - FieldName: UpdateRectTransform
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 2017906655}
-  - FieldName: UpdateBackground
-    ChangeHandlerName: UpdateLayout
-    Source: {fileID: 2017906655}
-  - FieldName: BackgroundColor
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 2017906655}
-  - FieldName: BackgroundImage
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 2017906655}
-  - FieldName: BackgroundImageType
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 2017906655}
-  - FieldName: BackgroundMaterial
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 2017906655}
-  - FieldName: PreserveAspect
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 2017906655}
-  - FieldName: Enabled
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 2017906655}
-  - FieldName: Id
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 2017906655}
-  - FieldName: Style
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 2017906655}
-  - FieldName: Alpha
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 2017906655}
-  - FieldName: Rotation
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 2017906655}
-  - FieldName: Scale
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 2017906655}
-  - FieldName: Pivot
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 2017906655}
-  - FieldName: HideFlags
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 2017906655}
-  - FieldName: AlwaysBlockRaycast
-    ChangeHandlerName: UpdateBehavior
-    Source: {fileID: 2017906655}
-  IsDynamic: 0
-  RootCanvas: {fileID: 754518837}
-  ParentViewPresenter: {fileID: 754518842}
+  Content: {fileID: 0}
+  State:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 
+  IsActive:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  HideFlags:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  GameObject: {fileID: 0}
+  Transform: {fileID: 0}
+  Position:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0, z: 0}
+  Rotation:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0, z: 0, w: 0}
+  Scale:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0, z: 0}
+  Item:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+  IsTemplate:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  Activated:
+    Name: 
+    TriggeredByEventSystem: 0
+    EventTriggerType: 0
+    IsDisabled: 0
+  Deactivated:
+    Name: 
+    TriggeredByEventSystem: 0
+    EventTriggerType: 0
+    IsDisabled: 0
+  IsDestroyed:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  IsDynamic:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  ViewTypeName: Main
+  ViewXumlName: 
+  ViewFieldBindings: []
+  ViewActionEntries: []
+  ViewFieldStateValues: []
+  SetViewFieldNames: []
+  ValueConverterContext:
+    BaseDirectory: 
+    UnitSize: {x: 0, y: 0, z: 0}
+  Width:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _value: 0
+      _unit: 0
+      _fill: 0
+  Height:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _value: 0
+      _unit: 0
+      _fill: 0
+  OverrideWidth:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _value: 0
+      _unit: 0
+      _fill: 0
+  OverrideHeight:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _value: 0
+      _unit: 0
+      _fill: 0
+  Alignment:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  Margin:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _left:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _top:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _right:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _bottom:
+        _value: 0
+        _unit: 0
+        _fill: 0
+  Offset:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _left:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _top:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _right:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _bottom:
+        _value: 0
+        _unit: 0
+        _fill: 0
+  OffsetFromParent:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue:
+      _left:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _top:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _right:
+        _value: 0
+        _unit: 0
+        _fill: 0
+      _bottom:
+        _value: 0
+        _unit: 0
+        _fill: 0
+  Pivot:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {x: 0, y: 0}
+  RectTransform: {fileID: 0}
+  RaycastBlockMode:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  Alpha:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  IsVisible:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  SortIndex:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  UpdateRectTransform:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  UpdateBackground:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  ImageComponent: {fileID: 0}
+  BackgroundImageEventAlphaThreshold:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillAmount:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillCenter:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillClockwise:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillMethod:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageFillOrigin:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundImageOverrideSprite:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {fileID: 0}
+  BackgroundImagePreserveAspect:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {fileID: 0}
+  BackgroundImage:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {fileID: 0}
+  BackgroundImageType:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundMaterial:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {fileID: 0}
+  BackgroundImageMaskable:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: 0
+  BackgroundColor:
+    ParentView: {fileID: 0}
+    ViewFieldPath: 
+    IsMapped: 0
+    _isSet: 0
+    _internalValue: {r: 0, g: 0, b: 0, a: 0}
   NumItemsInInventory: 0
   NumItemsInToolbar: 10
   TabView: {fileID: 725203363}

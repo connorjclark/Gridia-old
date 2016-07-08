@@ -1,14 +1,14 @@
 using Gridia;
-using MarkUX;
-using MarkUX.ValueConverters;
-using MarkUX.Views;
+using MarkLight.ValueConverters;
+using MarkLight.Views;
+using MarkLight.Views.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace MarkUX.UnityProject
+namespace MarkLight.UnityProject
 {
     
     public class ServerDetails
@@ -20,15 +20,15 @@ namespace MarkUX.UnityProject
         public int PlayersOnline;
     }
 
-    public class MainMenu : View
+    public class MainMenu : UIView
     {
         public ViewSwitcher ViewSwitcher;
-        public List<ServerDetails> Servers;
+        public ObservableList<ServerDetails> Servers;
 
         // ServerSelect
-        public Views.Button HostServerButton;
-        public Views.Panel ServerSelectPanel;
-        public Views.List ServerSelectList;
+        public Views.UI.Button HostServerButton;
+        public Views.UI.Panel ServerSelectPanel;
+        public Views.UI.List ServerSelectList;
 
         // InputConnectionDetails
         public String ManualServerAddress = "";
@@ -66,7 +66,7 @@ namespace MarkUX.UnityProject
             var cursorTexture = Resources.Load<Texture2D>("GUI Components/cursorHand_grey");
             Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
 
-            Servers = new List<ServerDetails>();
+            Servers = new ObservableList<ServerDetails>();
             {
                 var server = new ServerDetails();
                 server.Name = "Local";
@@ -79,7 +79,7 @@ namespace MarkUX.UnityProject
 
             {
                 var server = new ServerDetails();
-                server.Name = "hotengame.com";
+                server.Name = "hotengames.com";
                 server.Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum";
                 server.PlayersOnline = 5;
                 server.Address = "www.hotengames.com";
@@ -87,13 +87,17 @@ namespace MarkUX.UnityProject
                 Servers.Add(server);
             }
 
-            HostServerButton.Enabled = LocalServer.CanHostLocally();
+            HostServerButton.IsActive.Value = LocalServer.CanHostLocally();
         }
 
         public void EnterServerSelect()
         {
             ViewSwitcher.SwitchTo("ServerSelect");
+            
             // TODO how to clear ServerSelectList selection?
+            // this doesn't work...
+            Servers.SelectedItem = null;
+            Servers.SelectedIndex = -1;
         }
 
         public void DisconnectAndEnterEnterServerSelect()
@@ -193,23 +197,23 @@ namespace MarkUX.UnityProject
             LocalServer.LaunchServerProcess();
         }
 
-        public void ListSelectionChanged(ListSelectionActionData data)
+        public void ListSelectionChanged(ItemSelectionActionData data)
         {
-            if (data.ListItem != null)
+            if (data.Item != null)
             {
-                ServerDetails serverDetails = (ServerDetails)data.ListItem.Item;
+                ServerDetails serverDetails = (ServerDetails)data.Item;
                 EnterServerDetails(serverDetails);
             }
         }
 
         public void Update()
         {
-            float serverSelectPanelWidth = ServerSelectPanel.ActualWidth - ServerSelectPanel.VerticalScrollBar.ActualWidth;
+            float serverSelectPanelWidth = ServerSelectPanel.ActualWidth - ServerSelectPanel.VerticalScrollbar.ActualWidth;
 
             if (serverSelectPanelWidth != _previousServerSelectListWidth)
             {
-                ServerSelectList.SetValue(() => ServerSelectList.ItemWidth, new ElementSize(serverSelectPanelWidth, ElementSizeUnit.Pixels));
-                ServerSelectList.UpdateLayout();
+                //ServerSelectList.SetValue(() => ServerSelectList.PresentedListItems[0].Width.Value.Pixels, new ElementSize(serverSelectPanelWidth, ElementSizeUnit.Pixels));
+                //ServerSelectList.UpdateLayout();
                 _previousServerSelectListWidth = serverSelectPanelWidth;
             }
 

@@ -35,9 +35,9 @@ puts 'running maven'
 puts 'making server-standalone'
 run_command "echo f | xcopy server/target/server.jar #{server_dir}/server.jar"
 run_command "echo f | xcopy server/splash.txt #{server_dir}/splash.txt"
-run_command "xcopy server/worlds/demo-world/clientdata #{server_dir}/worlds/demo-world/clientdata //E //i"
-run_command "xcopy server/worlds/demo-world/scripts #{server_dir}/worlds/demo-world/scripts //E //i"
-run_command "xcopy server/worlds/demo-world/maps/demo-city #{server_dir}/worlds/demo-world/maps/demo-city //E //i"
+run_command "xcopy worlds/demo-world/clientdata #{server_dir}/worlds/demo-world/clientdata //E //i"
+run_command "xcopy worlds/demo-world/scripts #{server_dir}/worlds/demo-world/scripts //E //i"
+run_command "xcopy worlds/demo-world/maps/demo-city #{server_dir}/worlds/demo-world/maps/demo-city //E //i"
 
 puts 'copying server to all platforms'
 for_each_platform do |f|

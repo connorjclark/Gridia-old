@@ -4,7 +4,7 @@
     <ContainerView Id="Toolbar" Items="{ToolbarItems}" NumInRow="{NumItemsInToolbar}" Alignment="Center"/>
   </Region>
 
-  <Region Id="TabView" Enabled="false">
+  <Region Id="TabView" IsActive="False">
     <Image BackgroundColor="Red" Alpha="0.3"></Image>
     <Region Margin="25px">
       <ContainerView Id="Inventory" Items="{InventoryItems}" NumInRow="{NumItemsInToolbar}" Alignment="Left"/>
