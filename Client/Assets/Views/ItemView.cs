@@ -49,6 +49,14 @@ namespace MarkLight.UnityProject
                     sprites.Add(sprite);
                 }
             }
+
+            // :(
+            if (sprites.Count() == 0)
+            {
+                var sprite = tm.Items.GetSprite(1);
+                sprites.Add(sprite);
+            }
+
             return sprites;
         }
 
@@ -63,7 +71,7 @@ namespace MarkLight.UnityProject
             if (frameIndex != _currentFrameIndex)
             {
                 _currentFrameIndex = frameIndex;
-                SetValue(() => Image.BackgroundImage, _spriteCache[frameIndex]);
+                SetValue(() => Image.Sprite, _spriteCache[frameIndex]);
             }
         }
 

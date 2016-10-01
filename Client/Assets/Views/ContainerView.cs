@@ -12,6 +12,8 @@ namespace MarkLight.UnityProject
 {
     public class ContainerView : UIView
     {
+        public static Dictionary<int, ObservableList<ItemInstance>> ContainerModels = new Dictionary<int, ObservableList<ItemInstance>>();
+
         public int NumInRow = 10;
         public ObservableList<ItemInstance> Items;
         public Views.UI.List Container;

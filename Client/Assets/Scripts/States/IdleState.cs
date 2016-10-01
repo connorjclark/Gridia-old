@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using MarkLight.UnityProject;
 
 namespace Gridia
 {
@@ -153,7 +154,7 @@ namespace Gridia
                     var tileLocUp = _driver.GetTileLocationOfMouse();
                     if (tileLocUp == _driver.Game.TileMap.Wrap(_driver.Game.View.Focus.Position))
                     {
-                        dest = _driver.InvGui.ContainerId;
+                        dest = Main.Instance.InventoryContainerId;
                         destIndex = -1;
                     }
                     else 

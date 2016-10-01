@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Serving;
+using MarkLight.UnityProject;
 
 namespace Gridia.Protocol
 {
@@ -13,15 +14,24 @@ namespace Gridia.Protocol
             var quantity = (int) data["quantity"];
 
             var itemInstance = Locator.Get<ContentManager>().GetItem(item).GetInstance(quantity);
-            var container = Locator.Get<GridiaDriver>().GetOpenContainerWithId(id);
-            if (container != null) 
+            
+            if (id == Main.Instance.InventoryContainerId)
             {
-                container.SetItemAt(index, itemInstance);
+                MainThreadQueue.Add(() =>
+                {
+                    Main.Instance.SetContainerItem(id, itemInstance, index);
+                });
             }
-            else
-            {
-                UnityEngine.Debug.Log("Null contianer ....");
-            }
+
+            // var container = Locator.Get<GridiaDriver>().GetOpenContainerWithId(id);
+            // if (container != null) 
+            // {
+            //     container.SetItemAt(index, itemInstance);
+            // }
+            // else
+            // {
+            //     UnityEngine.Debug.Log("Null contianer ....");
+            // }
         }
     }
 }

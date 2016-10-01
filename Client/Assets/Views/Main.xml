@@ -1,13 +1,13 @@
 <Main>
   <Region Height="4.5%" Alignment="Bottom">
     <Image BackgroundColor="black"></Image>
-    <ContainerView Id="Toolbar" Items="{ToolbarItems}" NumInRow="{NumItemsInToolbar}" Alignment="Center"/>
+    <ContainerView Id="Toolbar" NumInRow="{NumItemsInToolbar}" Alignment="Center"/>
   </Region>
 
   <Region Id="TabView" IsActive="False">
     <Image BackgroundColor="Red" Alpha="0.3"></Image>
     <Region Margin="25px">
-      <ContainerView Id="Inventory" Items="{InventoryItems}" NumInRow="{NumItemsInToolbar}" Alignment="Left"/>
+      <ContainerView Id="Inventory" NumInRow="{NumItemsInToolbar}" Alignment="Left"/>
     </Region>
   </Region>
 </Main>

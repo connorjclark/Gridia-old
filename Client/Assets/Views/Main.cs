@@ -16,14 +16,52 @@ namespace MarkLight.UnityProject
 {
     public class Main : UIView
     {
-        public ObservableList<ItemInstance> InventoryItems;
-        public ObservableList<ItemInstance> ToolbarItems;
-        public int NumItemsInInventory;
+        public static Main Instance;
+
         public int NumItemsInToolbar = 10;
 
         public Views.UI.Region TabView;
         public ContainerView Inventory;
         public ContainerView Toolbar;
+
+        public int InventoryContainerId;
+        public Dictionary<int, ObservableList<ItemInstance>> ContainerItemLists = new Dictionary<int, ObservableList<ItemInstance>>(); // :(
+
+        public ObservableList<ItemInstance> GetContainerItems(int containerId)
+        {
+            if (!ContainerItemLists.ContainsKey(containerId))
+            {
+                ContainerItemLists[containerId] = new ObservableList<ItemInstance>();
+
+                if (containerId == InventoryContainerId)
+                {
+                    Inventory.SetValue("Items", ContainerItemLists[containerId]);
+                    Toolbar.SetValue("Items", new ObservableList<ItemInstance>());
+                }
+            }
+
+            return ContainerItemLists[containerId];
+        }
+
+        public void SetContainerItems(int containerId, List<ItemInstance> items)
+        {
+            var containerItems = GetContainerItems(containerId);
+            containerItems.Replace(items);
+            if (containerId == InventoryContainerId)
+            {
+                Toolbar.Items.Replace(items.GetRange(0, NumItemsInToolbar));
+            }
+        }
+
+        public void SetContainerItem(int containerId, ItemInstance itemInstance, int index)
+        {
+            ContainerItemLists[containerId][index] = itemInstance;
+            
+            if (containerId == InventoryContainerId && index < NumItemsInToolbar)
+            {
+                Toolbar.Items[index] = itemInstance;
+            }
+        }
 
         private bool _testMode;
 
@@ -37,22 +75,10 @@ namespace MarkLight.UnityProject
             {
                 TestInitialize();
             }
+
+            Instance = this;
         }
-
-        public void SetInventoryItem(ItemInstance itemInstance, int index)
-        {
-            if (index < NumItemsInToolbar)
-            {
-                ToolbarItems[index] = itemInstance;
-                ToolbarItems.ItemModified(index);
-            }
-
-            if (index < NumItemsInInventory)
-            {
-                InventoryItems[index] = itemInstance;
-            }
-        }
-
+        
         public void Update()
         {
             if (Input.GetKeyDown(KeyCode.Tab))
@@ -77,26 +103,37 @@ namespace MarkLight.UnityProject
             Locator.Provide(new ContentManager("demo-world"));
             Locator.Provide(new TextureManager("demo-world"));
 
-            InventoryItems = new ObservableList<ItemInstance>();
             var cm = Locator.Get<ContentManager>();
-            NumItemsInInventory = 50;
-            for (int i = 0; i < NumItemsInInventory; i++)
+
+            var items = new List<ItemInstance>();
+            for (int i = 0; i < 50; i++)
             {
-                InventoryItems.Add(new ItemInstance(cm.GetItem(i)));
+                items.Add(new ItemInstance(cm.GetItem(i)));
             }
 
-            ToolbarItems = new ObservableList<ItemInstance>();
-            for (int i = 0; i < NumItemsInToolbar; i++)
-            {
-                ToolbarItems.Add(InventoryItems[i]);
-            }
+            InventoryContainerId = 0;
+            SetContainerItems(InventoryContainerId, items);
         }
 
         private void TestUpdate()
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                SetInventoryItem(new ItemInstance(Locator.Get<ContentManager>().GetItem(new System.Random().Next(100))), 0);
+                var items = new List<ItemInstance>();
+                var cm = Locator.Get<ContentManager>();
+                var r = new System.Random();
+                for (int i = 0; i < 50; i++)
+                {
+                    items.Add(new ItemInstance(cm.GetItem(r.Next(10))));
+                }
+
+                SetContainerItems(InventoryContainerId, items);
+            }
+
+            // create new container window
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                
             }
         }
     }

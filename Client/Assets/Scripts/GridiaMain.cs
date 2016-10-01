@@ -2,6 +2,7 @@
 using Gridia;
 using System.Collections.Generic;
 using UnityEngine;
+using MarkLight.UnityProject;
 
 public class GridiaGame
 {
@@ -132,7 +133,7 @@ public class GridiaGame
         {
             var destIndex = _driver.SelectedContainer.SlotSelected;
             var slotSelected = _driver.InvGui.SlotSelected;
-            Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(_driver.InvGui.ContainerId, _driver.SelectedContainer.ContainerId, slotSelected, destIndex, 1); // :(
+            Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(Main.Instance.InventoryContainerId, _driver.SelectedContainer.ContainerId, slotSelected, destIndex, 1); // :(
         }
     }
 
@@ -140,7 +141,7 @@ public class GridiaGame
     {
         var destIndex = Locator.Get<TileMap>().ToIndex(dropItemLoc);
         var slotSelected = _driver.InvGui.SlotSelected;
-        Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(_driver.InvGui.ContainerId, 0, slotSelected, destIndex, 1); // :(
+        Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(Main.Instance.InventoryContainerId, 0, slotSelected, destIndex, 1); // :(
     }
 
     public void PickUpItemAtSelection() 
@@ -152,7 +153,7 @@ public class GridiaGame
         else
         {
             var pickupItemIndex = _driver.SelectedContainer.SlotSelected;
-            Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(_driver.SelectedContainer.ContainerId, _driver.InvGui.ContainerId, pickupItemIndex, -1); // :(
+            Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(_driver.SelectedContainer.ContainerId, Main.Instance.InventoryContainerId, pickupItemIndex, -1); // :(
         }
     }
 
@@ -160,7 +161,7 @@ public class GridiaGame
     {
         pickupItemLoc = TileMap.Wrap(pickupItemLoc);
         var pickupItemIndex = TileMap.ToIndex(pickupItemLoc);
-        Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(0, _driver.InvGui.ContainerId, pickupItemIndex, -1); // :(
+        Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(0, Main.Instance.InventoryContainerId, pickupItemIndex, -1); // :(
     }
 
     public void UseItemAtSelection(int sourceIndex)
@@ -168,11 +169,11 @@ public class GridiaGame
         if (_driver.SelectedContainer == null)
         {
             var destIndex = TileMap.ToIndex(GetSelectorCoord());
-            UseItemAt(_driver.InvGui.ContainerId, sourceIndex, 0, destIndex);
+            UseItemAt(Main.Instance.InventoryContainerId, sourceIndex, 0, destIndex);
         }
         else
         {
-            UseItemAt(_driver.InvGui.ContainerId, sourceIndex, _driver.SelectedContainer.ContainerId, _driver.SelectedContainer.SlotSelected);
+            UseItemAt(Main.Instance.InventoryContainerId, sourceIndex, _driver.SelectedContainer.ContainerId, _driver.SelectedContainer.SlotSelected);
         }
     }
 

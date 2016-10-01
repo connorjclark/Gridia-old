@@ -4,6 +4,7 @@ using Serving;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using MarkLight.UnityProject;
 
 namespace Gridia.Protocol
 {
@@ -20,16 +21,14 @@ namespace Gridia.Protocol
             switch (type)
             {
                 case "Inventory":
-                    var invWindow = Locator.Get<GridiaDriver>().InvGui;
-                    invWindow.Set(items, id);
-                    invWindow.ShowSelected = true;
-                    invWindow.SelectedColor = new Color32(255, 255, 0, 50);
+                    Main.Instance.InventoryContainerId = id;
+                    Main.Instance.SetContainerItems(id, items);
                     break;
                 case "Equipment":
-                    Locator.Get<GridiaDriver>().EquipmentGui.Set(items, id);
+                    //Locator.Get<GridiaDriver>().EquipmentGui.Set(items, id);
                     break;
                 default:
-                    Locator.Get<GridiaDriver>().AddNewContainer(items, id, tabGfxItemId);
+                    //Locator.Get<GridiaDriver>().AddNewContainer(items, id, tabGfxItemId);
                     break;
             }
         }
