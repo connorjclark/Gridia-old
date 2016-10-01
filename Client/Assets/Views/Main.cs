@@ -29,6 +29,7 @@ namespace MarkLight.UnityProject
         public Views.UI.Region TabView;
         public ContainerView Toolbar;
 
+        private Dictionary<int, ContainerView> ContainerViews = new Dictionary<int, ContainerView>();
         private bool _testMode;
 
         #endregion Fields
@@ -53,12 +54,16 @@ namespace MarkLight.UnityProject
             Instance = this;
         }
 
+        public void ShowTabView()
+        {
+            TabView.IsActive.Value = true;
+        }
+
         public void Update()
         {
             if (Input.GetKeyDown(KeyCode.Tab))
             {
                 TabView.IsActive.Value = !TabView.IsActive.Value;
-                //TabView.UpdateView();
             }
 
             if (_testMode)
@@ -81,6 +86,21 @@ namespace MarkLight.UnityProject
             {
                 Inventory.SetValue("Items", items);
                 Toolbar.SetValue("Items", new ObservableList<ItemInstance>(items.GetRange(0, NumItemsInToolbar)));
+            }
+            else if (containerId == GameState.Instance.EquipmentContainerId)
+            {
+                // TODO
+            }
+            else
+            {
+                if (!ContainerViews.ContainsKey(containerId))
+                {
+                    ContainerViews[containerId] = TabView.CreateView<ContainerView>();
+                    ContainerViews[containerId].Alignment.Value = ElementAlignment.Right;
+                    ContainerViews[containerId].InitializeViews();
+                }
+
+                ContainerViews[containerId].SetValue("Items", items);
             }
         }
 
@@ -124,7 +144,16 @@ namespace MarkLight.UnityProject
             // create new container window
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
+                var items = new List<ItemInstance>();
+                var cm = Locator.Get<ContentManager>();
+                var r = new System.Random();
+                for (int i = 0; i < 15; i++)
+                {
+                    items.Add(new ItemInstance(cm.GetItem(r.Next(10))));
+                }
 
+                GameState.Instance.SetContainerItems(r.Next(), items);
+                ShowTabView();
             }
         }
 

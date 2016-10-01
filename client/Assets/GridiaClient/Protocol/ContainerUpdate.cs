@@ -17,23 +17,10 @@
 
             var itemInstance = Locator.Get<ContentManager>().GetItem(item).GetInstance(quantity);
 
-            if (id == GameState.Instance.InventoryContainerId)
+            MainThreadQueue.Add(() =>
             {
-                MainThreadQueue.Add(() =>
-                {
-                    GameState.Instance.SetContainerItem(id, itemInstance, index);
-                });
-            }
-
-            // var container = Locator.Get<GridiaDriver>().GetOpenContainerWithId(id);
-            // if (container != null)
-            // {
-            //     container.SetItemAt(index, itemInstance);
-            // }
-            // else
-            // {
-            //     UnityEngine.Debug.Log("Null contianer ....");
-            // }
+                GameState.Instance.SetContainerItem(id, itemInstance, index);
+            });
         }
 
         #endregion Methods

@@ -20,8 +20,10 @@ namespace Gridia
 
         public ContainerChanged ContainerChanged;
         public ContainerCreated ContainerCreated;
-        public Dictionary<int, ObservableList<ItemInstance>> ContainerItemLists = new Dictionary<int, ObservableList<ItemInstance>>(); // :(
+        public int EquipmentContainerId;
         public int InventoryContainerId;
+
+        private Dictionary<int, ObservableList<ItemInstance>> ContainerItemLists = new Dictionary<int, ObservableList<ItemInstance>>(); // :(
 
         #endregion Fields
 

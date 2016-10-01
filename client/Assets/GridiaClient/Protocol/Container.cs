@@ -22,19 +22,21 @@
             var type = (String)data["type"];
             var tabGfxItemId = (int)data["tabGfxItemId"];
 
-            switch (type)
+            if (type == "Inventory")
             {
-                case "Inventory":
-                    GameState.Instance.InventoryContainerId = id;
-                    GameState.Instance.SetContainerItems(id, items);
-                    break;
-                case "Equipment":
-                    //Locator.Get<GridiaDriver>().EquipmentGui.Set(items, id);
-                    break;
-                default:
-                    //Locator.Get<GridiaDriver>().AddNewContainer(items, id, tabGfxItemId);
-                    break;
+                // TODO for some reason this is getting reset. check server for why.
+                GameState.Instance.InventoryContainerId = id;
             }
+
+            if (type == "Equipment")
+            {
+                GameState.Instance.EquipmentContainerId = id;
+            }
+
+            MainThreadQueue.Add(() =>
+            {
+                GameState.Instance.SetContainerItems(id, items);
+            });
         }
 
         #endregion Methods
