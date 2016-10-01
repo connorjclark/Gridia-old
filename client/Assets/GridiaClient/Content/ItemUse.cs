@@ -1,13 +1,19 @@
-﻿using System.Collections.Generic;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using System.Collections.Generic;
+
     public class ItemUse
     {
-        public int Tool;
+        #region Fields
+
         public int Focus;
-        public int SuccessTool;
         public List<int> Products;
+        public int SuccessTool;
+        public int Tool;
+
+        #endregion Fields
+
+        #region Methods
 
         public int GetIdentifyingItem()
         {
@@ -17,5 +23,7 @@ namespace Gridia
             }
             return Products.Count != 0 ? Products[0] : 1;
         }
+
+        #endregion Methods
     }
 }

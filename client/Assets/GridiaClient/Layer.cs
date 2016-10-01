@@ -1,21 +1,29 @@
-﻿using System;
-using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using System;
+
+    using UnityEngine;
+
     public class Layer
     {
-        public readonly Func<Tile, int> GetTileData;
-        public readonly Func<int, Texture> GetTexture;
-        public readonly Func<Tile, Vector2> GetOffset;
-        public readonly Func<Tile, int> GetWidth;
+        #region Fields
+
         public readonly Func<Tile, int> GetHeight;
+        public readonly Func<Tile, Vector2> GetOffset;
+        public readonly Func<int, Texture> GetTexture;
+        public readonly Func<Tile, int> GetTileData;
+        public readonly Func<Tile, int> GetWidth;
+        public readonly Mesh Mesh;
         public readonly GameObject Renderable;
         public readonly Vector2[] uv;
-        public readonly Mesh Mesh;
+
         private readonly TileMapView _view;
 
-        public Layer (
+        #endregion Fields
+
+        #region Constructors
+
+        public Layer(
             string name,
             TileMapView view,
             Func<Tile, int> getTileData,
@@ -35,9 +43,18 @@ namespace Gridia
             uv = InitUV();
         }
 
+        #endregion Constructors
+
+        #region Methods
+
         public void ApplyUV()
         {
             Mesh.uv = uv;
+        }
+
+        public void Delete()
+        {
+            UnityEngine.Object.Destroy(Renderable);
         }
 
         private GameObject InitRenderable(string name)
@@ -59,9 +76,6 @@ namespace Gridia
             return uv;
         }
 
-        public void Delete()
-        {
-            UnityEngine.Object.Destroy(Renderable);
-        }
+        #endregion Methods
     }
 }

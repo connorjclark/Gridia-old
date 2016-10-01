@@ -2,7 +2,18 @@
 {
     public class Floor
     {
-        public int Id { get; set; }
-        public float MovementModifier { get; set; }
+        #region Properties
+
+        public int Id
+        {
+            get; set;
+        }
+
+        public float MovementModifier
+        {
+            get; set;
+        }
+
+        #endregion Properties
     }
 }

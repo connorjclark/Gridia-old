@@ -1,11 +1,31 @@
-﻿using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using UnityEngine;
+
     public class ItemMovementState : State
     {
-        private Vector3 LocationOfItemToMove { get; set; }
+        #region Fields
+
+        private readonly GridiaDriver _driver; // :( move to State?
+        private readonly GridiaGame _game;
+
         private Vector3 _destinationSelectorDelta = Vector3.zero; // :(
+
+        #endregion Fields
+
+        #region Constructors
+
+        public ItemMovementState(Vector3 locationOfItemToMove)
+        {
+            LocationOfItemToMove = locationOfItemToMove;
+            _driver = Locator.Get<GridiaDriver>();
+            _game = Locator.Get<GridiaGame>();
+        }
+
+        #endregion Constructors
+
+        #region Properties
+
         public Vector3 DestinationSelectorDelta
         {
             get
@@ -19,38 +39,17 @@ namespace Gridia
                 _destinationSelectorDelta.y = Mathf.Clamp(_destinationSelectorDelta.y, -2, 2);
             }
         }
-        private readonly GridiaDriver _driver; // :( move to State?
-        private readonly GridiaGame _game;
 
-        public ItemMovementState(Vector3 locationOfItemToMove) 
+        private Vector3 LocationOfItemToMove
         {
-            LocationOfItemToMove = locationOfItemToMove;
-            _driver = Locator.Get<GridiaDriver>();
-            _game = Locator.Get<GridiaGame>();
+            get; set;
         }
 
-        public override void Step(StateMachine stateMachine, float dt)
-        {
-            _game.HideSelector = false;
-            if (HasMoveBeenConfirmed()) 
-            {
-                var destination = _game.GetSelectorCoord(DestinationSelectorDelta);
-                if (destination != LocationOfItemToMove) 
-                {
-                    var sourceIndex = _driver.Game.TileMap.ToIndex(LocationOfItemToMove); // :(
-                    var destinationIndex = _driver.Game.TileMap.ToIndex(destination);
-                    Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(0, 0, sourceIndex, destinationIndex);
-                }
-                _game.HideSelector = true;
-                stateMachine.SetState(new IdleState());
-            }
-            else 
-            {
-                MoveDestinationSelector();
-            }
-        }
+        #endregion Properties
 
-        public override void OnGUI() 
+        #region Methods
+
+        public override void OnGUI()
         {
             base.OnGUI();
             var focusPos = _game.View.FocusPosition;
@@ -59,6 +58,32 @@ namespace Gridia
             var selectorRelativePosition = _driver.GetRelativeScreenPosition(focusPos, selectorPos);
             var selectorRect = new Rect(selectorRelativePosition.x, selectorRelativePosition.y, tileSize, tileSize);
             GridiaConstants.GUIDrawSelector(selectorRect, new Color32(0, 255, 0, 100));
+        }
+
+        public override void Step(StateMachine stateMachine, float dt)
+        {
+            _game.HideSelector = false;
+            if (HasMoveBeenConfirmed())
+            {
+                var destination = _game.GetSelectorCoord(DestinationSelectorDelta);
+                if (destination != LocationOfItemToMove)
+                {
+                    var sourceIndex = _driver.Game.TileMap.ToIndex(LocationOfItemToMove); // :(
+                    var destinationIndex = _driver.Game.TileMap.ToIndex(destination);
+                    Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(0, 0, sourceIndex, destinationIndex);
+                }
+                _game.HideSelector = true;
+                stateMachine.SetState(new IdleState());
+            }
+            else
+            {
+                MoveDestinationSelector();
+            }
+        }
+
+        private bool HasMoveBeenConfirmed()
+        {
+            return !Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftAlt);
         }
 
         private void MoveDestinationSelector()
@@ -70,9 +95,6 @@ namespace Gridia
             }
         }
 
-        private bool HasMoveBeenConfirmed() 
-        {
-            return !Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftAlt);
-        }
+        #endregion Methods
     }
 }

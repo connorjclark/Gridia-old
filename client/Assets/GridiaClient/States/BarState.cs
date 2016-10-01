@@ -1,12 +1,19 @@
-﻿using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using UnityEngine;
+
     public class BarState : State
     {
+        #region Fields
+
         private readonly GridiaAction _action;
-        private GameObject go;
+
         private bool begun = false;
+        private GameObject go;
+
+        #endregion Fields
+
+        #region Methods
 
         public override void Enter(StateMachine stateMachine)
         {
@@ -27,5 +34,7 @@ namespace Gridia
                 stateMachine.SetState(new IdleState());
             }
         }
+
+        #endregion Methods
     }
 }

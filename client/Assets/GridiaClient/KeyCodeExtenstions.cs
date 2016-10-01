@@ -1,10 +1,13 @@
-﻿using System;
-using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using System;
+
+    using UnityEngine;
+
     public static class KeyCodeExtenstions
     {
+        #region Methods
+
         public static String ToShortString(this KeyCode key)
         {
             if (key >= KeyCode.Alpha0 && key <= KeyCode.Alpha9)
@@ -22,5 +25,7 @@ namespace Gridia
                     return key.ToString();
             }
         }
+
+        #endregion Methods
     }
 }

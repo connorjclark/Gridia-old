@@ -1,12 +1,15 @@
-﻿using System;
-using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using System;
+
+    using UnityEngine;
+
     public class OptionsWindow : GridiaWindow
     {
+        #region Constructors
+
         public OptionsWindow(Vector2 pos)
-            : base(pos, "Options") 
+            : base(pos, "Options")
         {
             Resizeable = false;
             var soundPlayer = Locator.Get<SoundPlayer>();
@@ -19,16 +22,22 @@ namespace Gridia
             MakeToggle(" Mute sfx", soundPlayer.MuteSfx, new Vector2(0, 130), (value) => soundPlayer.MuteSfx = value);
         }
 
-        private void MakeButton(String label, Vector2 pos, Action onClick) 
+        #endregion Constructors
+
+        #region Methods
+
+        private void MakeButton(String label, Vector2 pos, Action onClick)
         {
             var button = new Button(pos, label) {OnClick = onClick};
             AddChild(button);
         }
 
-        private void MakeToggle(String label, bool initialState, Vector2 pos, Action<bool> onToggle) 
+        private void MakeToggle(String label, bool initialState, Vector2 pos, Action<bool> onToggle)
         {
             var toggle = new Toggle(pos, label, initialState) {OnToggle = onToggle};
             AddChild(toggle);
         }
+
+        #endregion Methods
     }
 }

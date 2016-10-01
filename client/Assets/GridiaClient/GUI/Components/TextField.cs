@@ -1,15 +1,12 @@
-﻿using System;
-using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using System;
+
+    using UnityEngine;
+
     public class TextField : Renderable
     {
-        public String Text { get; set; }
-        public bool PasswordField { get; set; }
-        public int MaxChars { get; set; }
-        public String TextFieldName { get; set; }
-        public Action OnEnter { private get; set; }
+        #region Constructors
 
         public TextField(Vector2 pos, String textFieldName, float width, float height)
             : base(pos)
@@ -21,6 +18,39 @@ namespace Gridia
             _rect.height = height;
         }
 
+        #endregion Constructors
+
+        #region Properties
+
+        public int MaxChars
+        {
+            get; set;
+        }
+
+        public Action OnEnter
+        {
+            private get; set;
+        }
+
+        public bool PasswordField
+        {
+            get; set;
+        }
+
+        public String Text
+        {
+            get; set;
+        }
+
+        public String TextFieldName
+        {
+            get; set;
+        }
+
+        #endregion Properties
+
+        #region Methods
+
         public override void Render()
         {
             base.Render();
@@ -31,5 +61,7 @@ namespace Gridia
                 OnEnter();
             }
         }
+
+        #endregion Methods
     }
 }

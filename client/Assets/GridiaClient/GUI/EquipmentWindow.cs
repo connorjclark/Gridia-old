@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using System.Collections.Generic;
+
+    using UnityEngine;
+
     // :(
     public class EquipmentWindow : ContainerWindow
     {
+        #region Constructors
+
         public EquipmentWindow(Vector2 pos)
             : base(pos)
         {
@@ -13,7 +16,11 @@ namespace Gridia
             Resizeable = false;
         }
 
-        protected override void ViewItems(List<ItemInstance> items) 
+        #endregion Constructors
+
+        #region Methods
+
+        protected override void ViewItems(List<ItemInstance> items)
         {
             ItemRenderables = new List<ItemRenderable>();
 
@@ -31,5 +38,7 @@ namespace Gridia
                 Slots.AddChild(itemRend);
             }
         }
+
+        #endregion Methods
     }
 }

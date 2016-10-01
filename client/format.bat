@@ -1,0 +1,1 @@
+narrange-console Assets\GridiaClient /c:gridia-client-config.xml

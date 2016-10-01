@@ -1,18 +1,29 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using System.Collections.Generic;
+
+    using UnityEngine;
+
     public class Lighting
     {
-        private readonly TileMapView _view;
+        #region Fields
+
         private readonly List<GameObject> lights;
+        private readonly TileMapView _view;
+
+        #endregion Fields
+
+        #region Constructors
 
         public Lighting(TileMapView view)
         {
             _view = view;
             lights = new List<GameObject>();
         }
+
+        #endregion Constructors
+
+        #region Methods
 
         public void SetLights(List<Vector3> lights)
         {
@@ -46,5 +57,7 @@ namespace Gridia
             lights.Add(lightGameObject);
             //5000 range -100 z 0.5 I
         }
+
+        #endregion Methods
     }
 }

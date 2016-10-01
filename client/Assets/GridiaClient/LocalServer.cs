@@ -1,12 +1,20 @@
-using System;
-using System.Net.Sockets;
-using System.Threading;
-using UnityEngine;
-
 namespace Gridia
 {
+    using System;
+    using System.Net.Sockets;
+    using System.Threading;
+
+    using UnityEngine;
+
     public class LocalServer
     {
+        #region Methods
+
+        public static bool CanHostLocally()
+        {
+            return true;
+        }
+
         public static void LaunchServerProcess()
         {
             var processInfo = new System.Diagnostics.ProcessStartInfo {FileName = "java"};
@@ -24,9 +32,6 @@ namespace Gridia
             proc.Start();
         }
 
-        public static bool CanHostLocally()
-        {
-            return true;
-        }
+        #endregion Methods
     }
 }

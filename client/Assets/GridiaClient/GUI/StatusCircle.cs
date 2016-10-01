@@ -1,16 +1,30 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using UnityEngine;
+    using UnityEngine.UI;
+
     public class StatusCircle : MonoBehaviour
     {
-        private float _currentHealth;
+        #region Fields
 
-        public void SetCurrentHealth(float v)
+        public Text text;
+
+        private float _currentHealth;
+        private LineRenderer _lineRenderer;
+
+        #endregion Fields
+
+        #region Constructors
+
+        public StatusCircle()
         {
-            _currentHealth = v;
+            ThetaStep = 0.1f;
+            Radius = 16;
         }
+
+        #endregion Constructors
+
+        #region Properties
 
         public float CurrentHealth
         {
@@ -27,16 +41,33 @@ namespace Gridia
             }
         }
 
-        public int MaxHealth { get; set; }
-        public float Radius { get; set; }
-        public float ThetaStep { get; set; }
-        private LineRenderer _lineRenderer;
-        public Text text;
-
-        public StatusCircle()
+        public int MaxHealth
         {
-            ThetaStep = 0.1f;
-            Radius = 16;
+            get; set;
+        }
+
+        public float Radius
+        {
+            get; set;
+        }
+
+        public float ThetaStep
+        {
+            get; set;
+        }
+
+        #endregion Properties
+
+        #region Methods
+
+        public bool IsActive()
+        {
+            return CurrentHealth != MaxHealth || MaxHealth != 0;
+        }
+
+        public void SetCurrentHealth(float v)
+        {
+            _currentHealth = v;
         }
 
         public void Start()
@@ -56,9 +87,9 @@ namespace Gridia
             text.text = "";
         }
 
-        public bool IsActive()
+        public void Update()
         {
-            return CurrentHealth != MaxHealth || MaxHealth != 0;
+            RenderCircle();
         }
 
         private void RenderCircle()
@@ -76,9 +107,6 @@ namespace Gridia
             }
         }
 
-        public void Update()
-        {
-            RenderCircle();
-        }
+        #endregion Methods
     }
 }

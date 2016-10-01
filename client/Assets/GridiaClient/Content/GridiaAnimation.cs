@@ -1,18 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Gridia
+﻿namespace Gridia
 {
-    public class Frame 
+    using System;
+    using System.Collections.Generic;
+
+    public class Frame
     {
-        public int Sprite { get; set; }
-        public String Sound { get; set; }
+        #region Properties
+
+        public String Sound
+        {
+            get; set;
+        }
+
+        public int Sprite
+        {
+            get; set;
+        }
+
+        #endregion Properties
     }
 
     public class GridiaAnimation
     {
-        public int Id { get; set; }
-        public String Name { get; set; }
-        public List<Frame> Frames { get; set; }
+        #region Properties
+
+        public List<Frame> Frames
+        {
+            get; set;
+        }
+
+        public int Id
+        {
+            get; set;
+        }
+
+        public String Name
+        {
+            get; set;
+        }
+
+        #endregion Properties
     }
 }

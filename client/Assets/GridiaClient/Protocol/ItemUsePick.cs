@@ -1,11 +1,15 @@
-﻿using Newtonsoft.Json.Linq;
-using Serving;
-using System.Collections.Generic;
-
-namespace Gridia.Protocol
+﻿namespace Gridia.Protocol
 {
+    using System.Collections.Generic;
+
+    using Newtonsoft.Json.Linq;
+
+    using Serving;
+
     class ItemUsePick : JsonMessageHandler<ConnectionToGridiaServerHandler>
     {
+        #region Methods
+
         protected override void Handle(ConnectionToGridiaServerHandler connection, JObject data)
         {
             var uses = data["uses"].ToObject<List<ItemUse>>();
@@ -17,5 +21,7 @@ namespace Gridia.Protocol
             usePickWindow.ItemUsePickState = new ItemUsePickState(usePickWindow);
             Locator.Get<StateMachine>().SetState(usePickWindow.ItemUsePickState);
         }
+
+        #endregion Methods
     }
 }

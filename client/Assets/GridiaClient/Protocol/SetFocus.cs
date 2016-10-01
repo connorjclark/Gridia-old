@@ -1,10 +1,13 @@
-﻿using Newtonsoft.Json.Linq;
-using Serving;
-
-namespace Gridia.Protocol
+﻿namespace Gridia.Protocol
 {
+    using Newtonsoft.Json.Linq;
+
+    using Serving;
+
     class SetFocus : JsonMessageHandler<ConnectionToGridiaServerHandler>
     {
+        #region Methods
+
         protected override void Handle(ConnectionToGridiaServerHandler connection, JObject data)
         {
             GridiaDriver.GameInitWaitHandle.WaitOne(); // :(
@@ -18,5 +21,7 @@ namespace Gridia.Protocol
                 game.InitAdminWindowTab();
             }
         }
+
+        #endregion Methods
     }
 }

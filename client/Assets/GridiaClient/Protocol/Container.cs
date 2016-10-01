@@ -1,15 +1,21 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Serving;
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-using MarkLight.UnityProject;
-
-namespace Gridia.Protocol
+﻿namespace Gridia.Protocol
 {
+    using System;
+    using System.Collections.Generic;
+
+    using MarkLight.UnityProject;
+
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
+
+    using Serving;
+
+    using UnityEngine;
+
     class Container : JsonMessageHandler<ConnectionToGridiaServerHandler>
     {
+        #region Methods
+
         protected override void Handle(ConnectionToGridiaServerHandler connection, JObject data)
         {
             var backToJson = JsonConvert.SerializeObject(data["items"]); // :(
@@ -32,5 +38,7 @@ namespace Gridia.Protocol
                     break;
             }
         }
+
+        #endregion Methods
     }
 }

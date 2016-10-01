@@ -2,15 +2,47 @@ namespace Gridia
 {
     public abstract class State
     {
-        public virtual void Enter(StateMachine stateMachine) {}
-        public abstract void Step(StateMachine stateMachine, float dt);
-        public virtual void OnGUI() {}
+        #region Fields
+
         protected InputManager InputManager = Locator.Get<InputManager>();
+
+        #endregion Fields
+
+        #region Methods
+
+        public virtual void Enter(StateMachine stateMachine)
+        {
+        }
+
+        public virtual void OnGUI()
+        {
+        }
+
+        public abstract void Step(StateMachine stateMachine, float dt);
+
+        #endregion Methods
     }
 
     public class StateMachine
     {
-        public State CurrentState { get; private set; }
+        #region Properties
+
+        public State CurrentState
+        {
+            get; private set;
+        }
+
+        #endregion Properties
+
+        #region Methods
+
+        public void OnGUI()
+        {
+            if (CurrentState != null)
+            {
+                CurrentState.OnGUI();
+            }
+        }
 
         public void SetState(State state)
         {
@@ -26,12 +58,6 @@ namespace Gridia
             }
         }
 
-        public void OnGUI()
-        {
-            if (CurrentState != null)
-            {
-                CurrentState.OnGUI();
-            }
-        }
+        #endregion Methods
     }
 }

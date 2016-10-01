@@ -1,13 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using UnityEngine;
+
     public class TargetSelectState : State
     {
-        private static readonly KeyCode[] _selectKeyCodes =
+        #region Fields
+
+        private static readonly KeyCode[] _selectKeyCodes = 
         {
             KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4,
             KeyCode.Alpha5, KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8,
@@ -16,9 +19,14 @@ namespace Gridia
         };
 
         private readonly GridiaDriver _driver;
-        private readonly TileMap _tileMap;
         private readonly GridiaGame _game;
+        private readonly TileMap _tileMap;
+
         private Dictionary<KeyCode, Creature> _keyCodeToCreature;
+
+        #endregion Fields
+
+        #region Constructors
 
         public TargetSelectState()
         {
@@ -26,6 +34,10 @@ namespace Gridia
             _tileMap = Locator.Get<TileMap>();
             _game = Locator.Get<GridiaGame>();
         }
+
+        #endregion Constructors
+
+        #region Methods
 
         public override void Enter(StateMachine stateMachine)
         {
@@ -48,36 +60,6 @@ namespace Gridia
             }
         }
 
-        private bool CheckForCancel()
-        {
-            return Locator.Get<InputManager>().Get4DirectionalWasdInput() != Vector3.zero
-                   || Input.GetKey(KeyCode.Escape)
-                   || Input.GetKeyUp(KeyCode.T);
-        }
-
-        public override void Step(StateMachine stateMachine, float dt)
-        {
-            var keyCodeUp = _keyCodeToCreature.Keys.FirstOrDefault(Input.GetKeyUp);
-            if (keyCodeUp != KeyCode.None)
-            {
-                _driver.SelectedCreature = _keyCodeToCreature[keyCodeUp];
-                ReturnToIdle(stateMachine);
-            }
-            if (CheckForCancel())
-            {
-                ReturnToIdle(stateMachine);
-            }
-        }
-        
-        private void DrawKeyCodeOverCreature(Creature creature, KeyCode keyCode)
-        {
-            var rect = _driver.GetScreenRectOfLocation(creature.Position);
-            GridiaConstants.GUIDrawSelector(rect, new Color32(255, 255, 0, 100));
-            rect.y -= _driver.tileSize * 0.5f;
-            GUI.color = Color.white;
-            GUI.Box(rect, keyCode.ToShortString());
-        }
-
         public override void OnGUI()
         {
             if (_keyCodeToCreature == null) return;
@@ -93,9 +75,41 @@ namespace Gridia
             // end state on click ...
         }
 
+        public override void Step(StateMachine stateMachine, float dt)
+        {
+            var keyCodeUp = _keyCodeToCreature.Keys.FirstOrDefault(Input.GetKeyUp);
+            if (keyCodeUp != KeyCode.None)
+            {
+                _driver.SelectedCreature = _keyCodeToCreature[keyCodeUp];
+                ReturnToIdle(stateMachine);
+            }
+            if (CheckForCancel())
+            {
+                ReturnToIdle(stateMachine);
+            }
+        }
+
+        private bool CheckForCancel()
+        {
+            return Locator.Get<InputManager>().Get4DirectionalWasdInput() != Vector3.zero
+                   || Input.GetKey(KeyCode.Escape)
+                   || Input.GetKeyUp(KeyCode.T);
+        }
+
+        private void DrawKeyCodeOverCreature(Creature creature, KeyCode keyCode)
+        {
+            var rect = _driver.GetScreenRectOfLocation(creature.Position);
+            GridiaConstants.GUIDrawSelector(rect, new Color32(255, 255, 0, 100));
+            rect.y -= _driver.tileSize * 0.5f;
+            GUI.color = Color.white;
+            GUI.Box(rect, keyCode.ToShortString());
+        }
+
         private void ReturnToIdle(StateMachine stateMachine)
         {
             stateMachine.SetState(new IdleState());
         }
+
+        #endregion Methods
     }
 }

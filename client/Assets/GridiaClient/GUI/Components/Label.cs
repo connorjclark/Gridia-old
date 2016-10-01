@@ -1,14 +1,18 @@
-﻿using System;
-using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using System;
+
+    using UnityEngine;
+
     public class Label : Renderable
     {
-        public String Text { get; set; }
-        public bool Centered { get; set; }
-        public bool Background { get; set; }
+        #region Fields
+
         public int TextWidth = 300;
+
+        #endregion Fields
+
+        #region Constructors
 
         public Label(Vector2 pos, String text, bool centered = false, bool background = false)
             : base(pos)
@@ -17,6 +21,29 @@ namespace Gridia
             Centered = centered;
             Background = background;
         }
+
+        #endregion Constructors
+
+        #region Properties
+
+        public bool Background
+        {
+            get; set;
+        }
+
+        public bool Centered
+        {
+            get; set;
+        }
+
+        public String Text
+        {
+            get; set;
+        }
+
+        #endregion Properties
+
+        #region Methods
 
         public override void Render()
         {
@@ -30,5 +57,7 @@ namespace Gridia
             }
             GUI.Label(rect, Text);
         }
+
+        #endregion Methods
     }
 }

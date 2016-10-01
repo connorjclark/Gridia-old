@@ -1,11 +1,15 @@
-﻿using Newtonsoft.Json.Linq;
-using Serving;
-using UnityEngine;
-
-namespace Gridia.Protocol
+﻿namespace Gridia.Protocol
 {
+    using Newtonsoft.Json.Linq;
+
+    using Serving;
+
+    using UnityEngine;
+
     class SetLife : JsonMessageHandler<ConnectionToGridiaServerHandler>
     {
+        #region Methods
+
         protected override void Handle(ConnectionToGridiaServerHandler connection, JObject data)
         {
             var id = (int)data["id"];
@@ -25,5 +29,7 @@ namespace Gridia.Protocol
                 }
             });
         }
+
+        #endregion Methods
     }
 }

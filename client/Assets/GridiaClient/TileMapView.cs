@@ -1,51 +1,31 @@
-using UnityEngine;
-using System.Collections.Generic;
-using System;
-
 namespace Gridia
 {
+    using System;
+    using System.Collections.Generic;
+
+    using UnityEngine;
+
     public class TileMapView
     {
+        #region Fields
+
         public static int OffGridTiles = 400; // stress test this limit
 
-        public Creature Focus { 
-            get 
-            {
-                return _tileMap.GetCreature(FocusId);
-            } 
-        }
-        public int FocusId { get; set; }
-        public Vector3 FocusPosition
-        { 
-            get {
-                var cre = Focus;
-                var pos = cre == null ? Vector3.zero : cre.Position;
-                return pos - new Vector3(Width / 2, Height / 2, 0);
-            }
-        }
-        public bool IsLighting { get; set; }
-        public int NumGridTiles { get { return (Width + 2) * (Height + 2); } }
-        public int NumTiles { get { return NumGridTiles + OffGridTiles; } }
-        public float TileSize { get { return GridiaConstants.SpriteSize * _scale; } }
+        public int Width, Height;
 
-        public float Scale
-        {
-            get { return _scale; }
-            set
-            {
-                _scale = value;
-                Initialize();
-            }
-        }
-
-        private readonly TileMap _tileMap;
-        private readonly TextureManager _textureManager;
-        private List<Layer> _layers;
         private readonly Lighting _lighting;
         private readonly Shader _shader;
+        private readonly TextureManager _textureManager;
+        private readonly TileMap _tileMap;
+
         private Vector3[] _gridVertices;
-        public int Width, Height;
+        private List<Layer> _layers;
+        private int _prevZ; // :(
         private float _scale;
+
+        #endregion Fields
+
+        #region Constructors
 
         public TileMapView(TileMap tileMap, TextureManager textureManager, float scale = 1.0f)
         {
@@ -57,7 +37,79 @@ namespace Gridia
             IsLighting = false;
         }
 
-        public void Initialize() 
+        #endregion Constructors
+
+        #region Properties
+
+        public Creature Focus
+        {
+            get
+            {
+                return _tileMap.GetCreature(FocusId);
+            }
+        }
+
+        public int FocusId
+        {
+            get; set;
+        }
+
+        public Vector3 FocusPosition
+        {
+            get {
+                var cre = Focus;
+                var pos = cre == null ? Vector3.zero : cre.Position;
+                return pos - new Vector3(Width / 2, Height / 2, 0);
+            }
+        }
+
+        public bool IsLighting
+        {
+            get; set;
+        }
+
+        public int NumGridTiles
+        {
+            get { return (Width + 2) * (Height + 2); }
+        }
+
+        public int NumTiles
+        {
+            get { return NumGridTiles + OffGridTiles; }
+        }
+
+        public float Scale
+        {
+            get { return _scale; }
+            set
+            {
+                _scale = value;
+                Initialize();
+            }
+        }
+
+        public float TileSize
+        {
+            get { return GridiaConstants.SpriteSize * _scale; }
+        }
+
+        #endregion Properties
+
+        #region Methods
+
+        // :(
+        public void ForEachInView(Action<int, int> task)
+        {
+            for (var y = -1; y < Height + 1; y++)
+            {
+                for (var x = -1; x < Width + 1; x++)
+                {
+                    task(x, y);
+                }
+            }
+        }
+
+        public void Initialize()
         {
             var tileSize = GridiaConstants.SpriteSize * _scale;
             Width = Mathf.CeilToInt(Screen.width / tileSize);
@@ -72,8 +124,6 @@ namespace Gridia
             }
             _layers = InitLayers();
         }
-
-        private int _prevZ; // :(
 
         public void Render()
         {
@@ -257,34 +307,15 @@ namespace Gridia
             return Resources.Load(name) as Shader;
         }
 
-        private void UpdateLighting()
+        private void InitGridVertices()
         {
-            var lights = new List<Vector3>();
-            var posX = (int) Focus.Position.x;
-            var posY = (int) Focus.Position.y;
-            var posZ = (int) Focus.Position.z;
+            _gridVertices = new Vector3[NumTiles * 4];
+            var offset = 0;
             ForEachInView((x, y) =>
             {
-                var tile = _tileMap.GetTile(x + posX, y + posY, posZ);
-                var lightIntensity = tile.Item.Item.Light;
-                if (lightIntensity != 0)
-                {
-                    lights.Add(new Vector3(x, y, lightIntensity));
-                }
+                SetTileVertices(offset, x, y, 1, 1);
+                offset += 4;
             });
-            _lighting.SetLights(lights);
-        }
-
-        // :(
-        public void ForEachInView(Action<int, int> task)
-        {
-            for (var y = -1; y < Height + 1; y++)
-            {
-                for (var x = -1; x < Width + 1; x++)
-                {
-                    task(x, y);
-                }
-            }
         }
 
         private List<Layer> InitLayers()
@@ -309,8 +340,8 @@ namespace Gridia
             ));
 
             result.Add(new Layer(
-                "Item layer", 
-                this, 
+                "Item layer",
+                this,
                 tile =>
                 {
                     var animations = tile.Item.Item.Animations;
@@ -345,18 +376,8 @@ namespace Gridia
             return result;
         }
 
-        private void InitGridVertices()
+        private void SetTileVertices(int offset, float x, float y, int width, int height)
         {
-            _gridVertices = new Vector3[NumTiles * 4];
-            var offset = 0;
-            ForEachInView((x, y) =>
-            {
-                SetTileVertices(offset, x, y, 1, 1);
-                offset += 4;
-            });
-        }
-
-        private void SetTileVertices(int offset, float x, float y, int width, int height) {
             var x1 = x * TileSize;
             var y1 = y * TileSize;
             var x2 = x1 + TileSize * width;
@@ -367,10 +388,29 @@ namespace Gridia
             _gridVertices[offset + 3] = new Vector3(x2, y1, 0);
         }
 
+        private void UpdateLighting()
+        {
+            var lights = new List<Vector3>();
+            var posX = (int) Focus.Position.x;
+            var posY = (int) Focus.Position.y;
+            var posZ = (int) Focus.Position.z;
+            ForEachInView((x, y) =>
+            {
+                var tile = _tileMap.GetTile(x + posX, y + posY, posZ);
+                var lightIntensity = tile.Item.Item.Light;
+                if (lightIntensity != 0)
+                {
+                    lights.Add(new Vector3(x, y, lightIntensity));
+                }
+            });
+            _lighting.SetLights(lights);
+        }
+
         //generalize
         //this is only for floors right now
         //more uses?
-        private int UseTemplate(int templateId, int typeToMatch, int x, int y, int z) {
+        private int UseTemplate(int templateId, int typeToMatch, int x, int y, int z)
+        {
             var size = _tileMap.Size;
             var xl = x == 0 ? size - 1 : x - 1;
             var xr = x == size - 1 ? 0 : x + 1;
@@ -384,7 +424,6 @@ namespace Gridia
 
             var offset = templateId * 50;
             var v = (above ? 1 : 0) + (below ? 2 : 0) + (left ? 4 : 0) + (right ? 8 : 0);
-            
 
             // this is where the complicated crap kicks in
             // i'd really like to replace this.
@@ -507,6 +546,7 @@ namespace Gridia
 
             return v + offset;
         }
-    }
 
+        #endregion Methods
+    }
 }

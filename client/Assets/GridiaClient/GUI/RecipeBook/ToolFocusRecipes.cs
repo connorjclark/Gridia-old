@@ -1,15 +1,23 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using System.Collections.Generic;
+
+    using UnityEngine;
+
     public class ToolFocusRecipes : RenderableContainer
     {
-        private readonly List<ItemUse> _uses;
-        private int _currentSelection;
-        private List<ItemRenderable> _products;
+        #region Fields
+
         private readonly Label _equalsLabel;
         private readonly Button _nextButton;
+        private readonly List<ItemUse> _uses;
+
+        private int _currentSelection;
+        private List<ItemRenderable> _products;
+
+        #endregion Fields
+
+        #region Constructors
 
         public ToolFocusRecipes(Vector2 pos, List<ItemUse> uses)
             : base(pos)
@@ -34,27 +42,9 @@ namespace Gridia
             CalculateRect();
         }
 
-        private float LastChildRight()
-        {
-            var child = Children[Children.Count - 1];
-            return child.X + child.Width;
-        }
+        #endregion Constructors
 
-        private void NextSelection()
-        {
-            _currentSelection = (_currentSelection + 1) % _uses.Count;
-            DisplayCurrentSelection();
-        }
-
-        private void PreviousSelection()
-        {
-            if (_currentSelection == 0)
-                _currentSelection = _uses.Count - 1;
-            else
-                _currentSelection--;
-
-            DisplayCurrentSelection();
-        }
+        #region Methods
 
         private void DisplayCurrentSelection()
         {
@@ -90,5 +80,29 @@ namespace Gridia
                 _products.Add(renderable);
             });
         }
+
+        private float LastChildRight()
+        {
+            var child = Children[Children.Count - 1];
+            return child.X + child.Width;
+        }
+
+        private void NextSelection()
+        {
+            _currentSelection = (_currentSelection + 1) % _uses.Count;
+            DisplayCurrentSelection();
+        }
+
+        private void PreviousSelection()
+        {
+            if (_currentSelection == 0)
+                _currentSelection = _uses.Count - 1;
+            else
+                _currentSelection--;
+
+            DisplayCurrentSelection();
+        }
+
+        #endregion Methods
     }
 }

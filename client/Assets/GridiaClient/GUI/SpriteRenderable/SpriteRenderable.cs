@@ -1,10 +1,10 @@
-﻿using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using UnityEngine;
+
     public abstract class SpriteRenderable : Renderable
     {
-        protected bool RenderBox { get; set; }
+        #region Constructors
 
         public SpriteRenderable(Vector2 pos)
             : base(pos)
@@ -12,6 +12,19 @@ namespace Gridia
             RenderBox = true;
             _rect.width = _rect.height = GridiaConstants.SpriteSize;
         }
+
+        #endregion Constructors
+
+        #region Properties
+
+        protected bool RenderBox
+        {
+            get; set;
+        }
+
+        #endregion Properties
+
+        #region Methods
 
         public abstract int GetSpriteIndex();
 
@@ -21,7 +34,7 @@ namespace Gridia
         {
             base.Render();
 
-            if (RenderBox) 
+            if (RenderBox)
             {
                 GUI.Box(Rect, "");
             }
@@ -35,5 +48,7 @@ namespace Gridia
             var texCoords = new Rect(textureX / 10.0f, textureY / 10.0f, 1 / 10.0f, 1 / 10.0f); // :( don't hardcode 10
             GUI.DrawTextureWithTexCoords(Rect, texture, texCoords);
         }
+
+        #endregion Methods
     }
 }

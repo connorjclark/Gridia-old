@@ -1,10 +1,14 @@
-using Newtonsoft.Json;
-using System.Collections.Generic;
-
 namespace Gridia
 {
-    public class ContentLoader<T> where T: new()
+    using System.Collections.Generic;
+
+    using Newtonsoft.Json;
+
+    public class ContentLoader<T>
+        where T : new()
     {
+        #region Methods
+
         public List<T> Load(string json)
         {
             return LoadFromJSON(json);
@@ -23,5 +27,7 @@ namespace Gridia
 
             return results;
         }
+
+        #endregion Methods
     }
 }

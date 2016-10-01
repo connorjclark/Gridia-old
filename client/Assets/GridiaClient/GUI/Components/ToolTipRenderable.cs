@@ -1,20 +1,41 @@
-﻿using System;
-using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using System;
+
+    using UnityEngine;
+
     public class ToolTipRenderable : Renderable
     {
+        #region Fields
+
         private static ToolTipRenderable _instance;
+
+        #endregion Fields
+
+        #region Constructors
+
+        private ToolTipRenderable(Vector2 pos)
+            : base(pos)
+        {
+        }
+
+        #endregion Constructors
+
+        #region Properties
+
         public static ToolTipRenderable Instance
         {
             get { return _instance ?? (_instance = new ToolTipRenderable(Vector2.zero)); }
         }
 
-        public String ToolTipMessage { get; set; }
+        public String ToolTipMessage
+        {
+            get; set;
+        }
 
-        private ToolTipRenderable(Vector2 pos)
-            : base(pos) { }
+        #endregion Properties
+
+        #region Methods
 
         public override void Render()
         {
@@ -29,5 +50,7 @@ namespace Gridia
             }, "");
             ToolTipMessage = null;
         }
+
+        #endregion Methods
     }
 }

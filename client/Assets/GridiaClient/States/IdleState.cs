@@ -1,33 +1,45 @@
-﻿using UnityEngine;
-using MarkLight.UnityProject;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using MarkLight.UnityProject;
+
+    using UnityEngine;
+
     public class IdleState : State
     {
-        private int _sourceIndex;
-        private int _mouseDownLocation = -1;
+        #region Fields
+
         private readonly GridiaDriver _driver;
         private readonly GridiaGame _game;
 
+        private int _mouseDownLocation = -1;
+        private int _sourceIndex;
+
+        #endregion Fields
+
+        #region Constructors
+
         // :(
-        public IdleState() 
+        public IdleState()
         {
             _driver = Locator.Get<GridiaDriver>();
             _game = Locator.Get<GridiaGame>();
             _game.SelectorDelta = Vector3.zero;
         }
 
+        #endregion Constructors
+
+        #region Methods
+
         public override void Step(StateMachine stateMachine, float dt)
         {
             var numKeyPressed = GetNumberKeyPressed();
             if (numKeyPressed != -1)
             {
-                if (Input.GetKey(KeyCode.LeftShift)) 
+                if (Input.GetKey(KeyCode.LeftShift))
                 {
                     _driver.TabbedGui.ToggleVisiblity(numKeyPressed - 1);
                 }
-                else 
+                else
                 {
                     var actionIndex = numKeyPressed == 0 ? 9 : numKeyPressed - 1;
                     _driver.ActionWindow.TriggerAction(actionIndex);
@@ -40,7 +52,7 @@ namespace Gridia
                 return;
             }
 
-            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftAlt)) 
+            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.LeftAlt))
             {
                 End(stateMachine, dt, new ItemMovementState(_game.GetSelectorCoord()));
                 return;
@@ -157,7 +169,7 @@ namespace Gridia
                         dest = Main.Instance.InventoryContainerId;
                         destIndex = -1;
                     }
-                    else 
+                    else
                     {
                         dest = 0;
                         destIndex = _driver.Game.TileMap.ToIndex(tileLocUp);
@@ -171,7 +183,7 @@ namespace Gridia
             }
         }
 
-        private void End(StateMachine stateMachine, float dt, State newState) 
+        private void End(StateMachine stateMachine, float dt, State newState)
         {
             _driver.MouseDownItem = null;
             stateMachine.SetState(newState);
@@ -191,5 +203,7 @@ namespace Gridia
             }
             return -1;
         }
+
+        #endregion Methods
     }
 }

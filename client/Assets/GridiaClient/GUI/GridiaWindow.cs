@@ -1,25 +1,20 @@
-﻿using System;
-using UnityEngine;
-
-namespace Gridia 
+﻿namespace Gridia
 {
+    using System;
+
+    using UnityEngine;
+
     public class GridiaWindow : RenderableContainer
     {
+        #region Fields
+
         private static int _nextWindowId;
 
-        public int WindowId { get; private set; }
-        public Renderable Icon { get; set; }
-        public bool Resizeable { get; set; }
-        public bool Moveable { get; set; }
-        public bool Visible { get; set; }
-		public bool MouseOver { get; private set; }
-		public bool DoubleClick { get; private set; }
-		public bool ResizingWindow { get; private set; }
-        public bool ResizeOnHorizontal { get; set; }
-        public bool ResizeOnVertical { get; set; }
         private float _borderSize;
-		public float BorderSize { get { return _borderSize*ScaleY; } set { _borderSize = value/ScaleY; } }
-		public String WindowName { get; set; }
+
+        #endregion Fields
+
+        #region Constructors
 
         public GridiaWindow(Vector2 pos, String windowName)
             : base(pos)
@@ -35,7 +30,83 @@ namespace Gridia
             Alpha = 150;
         }
 
-        public override void Render() 
+        #endregion Constructors
+
+        #region Properties
+
+        public float BorderSize
+        {
+            get { return _borderSize*ScaleY; } set { _borderSize = value/ScaleY; }
+        }
+
+        public bool DoubleClick
+        {
+            get; private set;
+        }
+
+        public Renderable Icon
+        {
+            get; set;
+        }
+
+        public bool MouseOver
+        {
+            get; private set;
+        }
+
+        public bool Moveable
+        {
+            get; set;
+        }
+
+        public bool Resizeable
+        {
+            get; set;
+        }
+
+        public bool ResizeOnHorizontal
+        {
+            get; set;
+        }
+
+        public bool ResizeOnVertical
+        {
+            get; set;
+        }
+
+        public bool ResizingWindow
+        {
+            get; private set;
+        }
+
+        public bool Visible
+        {
+            get; set;
+        }
+
+        public int WindowId
+        {
+            get; private set;
+        }
+
+        public String WindowName
+        {
+            get; set;
+        }
+
+        #endregion Properties
+
+        #region Methods
+
+        public override void HandleEvents()
+        {
+            if (!Visible) return;
+            GUI.BeginGroup(new Rect(BorderSize, BorderSize, Int32.MaxValue, Int32.MaxValue));
+            base.HandleEvents();
+            GUI.EndGroup();
+        }
+
+        public override void Render()
         {
             if (Event.current.type == EventType.Layout)
             {
@@ -46,9 +117,9 @@ namespace Gridia
                 ResizingWindow = false;
             }
             // :(
-			if (Event.current.type == EventType.MouseDown) {
-				DoubleClick = Event.current.clickCount == 2;
-			}
+            if (Event.current.type == EventType.MouseDown) {
+                DoubleClick = Event.current.clickCount == 2;
+            }
             if (ResizingWindow)
             {
                 Resize();
@@ -69,7 +140,7 @@ namespace Gridia
                     Icon.Y = BorderSize / 5;
                     Icon.Render();
                 }
-                if (Moveable) 
+                if (Moveable)
                 {
                     RenderDrag();
                 }
@@ -90,12 +161,19 @@ namespace Gridia
             }
         }
 
-        public override void HandleEvents()
+        protected void RenderDrag()
         {
-            if (!Visible) return;
-            GUI.BeginGroup(new Rect(BorderSize, BorderSize, Int32.MaxValue, Int32.MaxValue));
-            base.HandleEvents();
-            GUI.EndGroup();
+            GUI.DragWindow(new Rect(0, 0, Width + BorderSize * 2, BorderSize));
+        }
+
+        protected void RenderResize()
+        {
+            var resizeRect = new Rect(Width, Height + BorderSize, BorderSize * 2, BorderSize);
+            if (Event.current.type == EventType.mouseDown && resizeRect.Contains(Event.current.mousePosition))
+            {
+                ResizingWindow = true;
+            }
+            GUI.Label(resizeRect, " ◄►");
         }
 
         protected virtual void Resize()
@@ -112,21 +190,6 @@ namespace Gridia
             }
         }
 
-        protected void RenderDrag()
-        {
-            GUI.DragWindow(new Rect(0, 0, Width + BorderSize * 2, BorderSize));
-        }
-
-        protected void RenderResize() 
-        {
-            var resizeRect = new Rect(Width, Height + BorderSize, BorderSize * 2, BorderSize);
-            if (Event.current.type == EventType.mouseDown && resizeRect.Contains(Event.current.mousePosition))
-            {
-                ResizingWindow = true;
-            }
-            GUI.Label(resizeRect, " ◄►");
-        }
-
         private void ClampPosition()
         {
             if (Dirty)
@@ -139,5 +202,7 @@ namespace Gridia
             X = Mathf.Clamp(X, 0, maxX);
             Y = Mathf.Clamp(Y, 0, maxY);
         }
+
+        #endregion Methods
     }
 }

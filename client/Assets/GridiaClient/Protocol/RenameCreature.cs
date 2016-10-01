@@ -1,10 +1,13 @@
-﻿using Newtonsoft.Json.Linq;
-using Serving;
-
-namespace Gridia.Protocol
+﻿namespace Gridia.Protocol
 {
+    using Newtonsoft.Json.Linq;
+
+    using Serving;
+
     class RenameCreature : JsonMessageHandler<ConnectionToGridiaServerHandler>
     {
+        #region Methods
+
         protected override void Handle(ConnectionToGridiaServerHandler connection, JObject data)
         {
             var id = (int) data["id"];
@@ -12,5 +15,7 @@ namespace Gridia.Protocol
 
             connection.GetGame().TileMap.GetCreature(id).Name = name;
         }
+
+        #endregion Methods
     }
 }

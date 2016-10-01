@@ -1,11 +1,15 @@
-﻿using Newtonsoft.Json.Linq;
-using Serving;
-using MarkLight.UnityProject;
-
-namespace Gridia.Protocol
+﻿namespace Gridia.Protocol
 {
+    using MarkLight.UnityProject;
+
+    using Newtonsoft.Json.Linq;
+
+    using Serving;
+
     class ContainerUpdate : JsonMessageHandler<ConnectionToGridiaServerHandler>
     {
+        #region Methods
+
         protected override void Handle(ConnectionToGridiaServerHandler connection, JObject data)
         {
             var id = (int) data["id"];
@@ -14,7 +18,7 @@ namespace Gridia.Protocol
             var quantity = (int) data["quantity"];
 
             var itemInstance = Locator.Get<ContentManager>().GetItem(item).GetInstance(quantity);
-            
+
             if (id == Main.Instance.InventoryContainerId)
             {
                 MainThreadQueue.Add(() =>
@@ -24,7 +28,7 @@ namespace Gridia.Protocol
             }
 
             // var container = Locator.Get<GridiaDriver>().GetOpenContainerWithId(id);
-            // if (container != null) 
+            // if (container != null)
             // {
             //     container.SetItemAt(index, itemInstance);
             // }
@@ -33,5 +37,7 @@ namespace Gridia.Protocol
             //     UnityEngine.Debug.Log("Null contianer ....");
             // }
         }
+
+        #endregion Methods
     }
 }

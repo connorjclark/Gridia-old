@@ -1,21 +1,42 @@
-﻿using System;
-using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using System;
+
+    using UnityEngine;
+
     public class Toggle : Renderable
     {
-        public String Label { get; set; }
-        public Action<bool> OnToggle { private get; set; }
-        private bool Selected { get; set; }
+        #region Constructors
 
         public Toggle(Vector2 pos, String label, bool initialState)
             : base(pos)
         {
-            
             Selected = initialState;
             Label = label;
         }
+
+        #endregion Constructors
+
+        #region Properties
+
+        public String Label
+        {
+            get; set;
+        }
+
+        public Action<bool> OnToggle
+        {
+            private get; set;
+        }
+
+        private bool Selected
+        {
+            get; set;
+        }
+
+        #endregion Properties
+
+        #region Methods
 
         public override void Render()
         {
@@ -30,5 +51,7 @@ namespace Gridia
                 OnToggle(Selected);
             }
         }
+
+        #endregion Methods
     }
 }

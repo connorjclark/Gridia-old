@@ -1,12 +1,17 @@
-﻿using Newtonsoft.Json.Linq;
-using Serving;
-using System;
-using UnityEngine;
-
-namespace Gridia.Protocol
+﻿namespace Gridia.Protocol
 {
+    using System;
+
+    using Newtonsoft.Json.Linq;
+
+    using Serving;
+
+    using UnityEngine;
+
     class Chat : JsonMessageHandler<ConnectionToGridiaServerHandler>
     {
+        #region Methods
+
         protected override void Handle(ConnectionToGridiaServerHandler connection, JObject data)
         {
             var user = (String) data["user"];
@@ -20,5 +25,7 @@ namespace Gridia.Protocol
 
             Locator.Get<GridiaDriver>().FloatingTexts.Add(new FloatingText(new Vector3(x, y, z), " " + text));
         }
+
+        #endregion Methods
     }
 }

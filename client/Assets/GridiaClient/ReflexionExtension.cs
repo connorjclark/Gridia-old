@@ -1,11 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using System;
+    using System.Linq;
+    using System.Reflection;
+
     public static class ReflexionExtension
     {
+        #region Methods
+
         public static bool IsSubClassOfGeneric(this Type child, Type parent)
         {
             if (child == parent)
@@ -34,10 +36,12 @@ namespace Gridia
             }
             return false;
         }
+
         private static Type GetFullTypeDefinition(Type type)
         {
             return type.IsGenericType ? type.GetGenericTypeDefinition() : type;
         }
+
         private static bool VerifyGenericArguments(Type parent, Type child)
         {
             Type[] childArguments = child.GetGenericArguments();
@@ -48,5 +52,7 @@ namespace Gridia
                         return true;
             return false;
         }
+
+        #endregion Methods
     }
 }

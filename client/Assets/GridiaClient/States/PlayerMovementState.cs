@@ -1,24 +1,38 @@
-using System;
-using UnityEngine;
-
 namespace Gridia
 {
+    using System;
+
+    using UnityEngine;
+
     public class PlayerMovementState : State
     {
-        private static Creature Player { get { return Locator.Get<TileMapView>().Focus; } }// :(
-        private long _cooldownUntil;
+        #region Fields
+
         private readonly Vector3 _delta;
+
+        private long _cooldownUntil;
+
+        #endregion Fields
+
+        #region Constructors
 
         public PlayerMovementState(Vector3 delta)
         {
             _delta = delta;
         }
 
-        // :(
-        private long GetSystemTime()
+        #endregion Constructors
+
+        #region Properties
+
+        private static Creature Player
         {
-            return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - GridiaConstants.ServerTimeOffset;
+            get { return Locator.Get<TileMapView>().Focus; }
         }
+
+        #endregion Properties
+
+        #region Methods
 
         public override void Step(StateMachine stateMachine, float dt)
         {
@@ -58,5 +72,13 @@ namespace Gridia
             // :(
             stateMachine.SetState(new IdleState());
         }
+
+        // :(
+        private long GetSystemTime()
+        {
+            return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - GridiaConstants.ServerTimeOffset;
+        }
+
+        #endregion Methods
     }
 }

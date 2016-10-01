@@ -1,10 +1,10 @@
-﻿using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using UnityEngine;
+
     public class ItemRenderable : SpriteRenderable
     {
-        public ItemInstance Item { get; set; }
+        #region Constructors
 
         public ItemRenderable(Vector2 pos, ItemInstance item)
             : base(pos)
@@ -13,14 +13,18 @@ namespace Gridia
             ToolTip = () => Item.Item.Id != 0 ? Item.ToString() : null;
         }
 
-        public override void Render()
+        #endregion Constructors
+
+        #region Properties
+
+        public ItemInstance Item
         {
-            base.Render();
-            if (Item.Quantity > 1)
-            {
-                GUI.Label(Rect, Item.Quantity.ToString());
-            }
+            get; set;
         }
+
+        #endregion Properties
+
+        #region Methods
 
         public override int GetSpriteIndex()
         {
@@ -38,5 +42,16 @@ namespace Gridia
             var textures = Locator.Get<TextureManager>(); // :(
             return textures.Items.GetTextureForSprite(spriteIndex);
         }
+
+        public override void Render()
+        {
+            base.Render();
+            if (Item.Quantity > 1)
+            {
+                GUI.Label(Rect, Item.Quantity.ToString());
+            }
+        }
+
+        #endregion Methods
     }
 }

@@ -1,10 +1,13 @@
-﻿using Newtonsoft.Json.Linq;
-using Serving;
-
-namespace Gridia.Protocol
+﻿namespace Gridia.Protocol
 {
+    using Newtonsoft.Json.Linq;
+
+    using Serving;
+
     class TileUpdate : JsonMessageHandler<ConnectionToGridiaServerHandler>
     {
+        #region Methods
+
         protected override void Handle(ConnectionToGridiaServerHandler connection, JObject data)
         {
             var game = connection.GetGame();
@@ -18,5 +21,7 @@ namespace Gridia.Protocol
             game.TileMap.SetItem(Locator.Get<ContentManager>().GetItem(item).GetInstance(quantity), x, y, z);
             game.TileMap.SetFloor(floor, x, y, z);
         }
+
+        #endregion Methods
     }
 }

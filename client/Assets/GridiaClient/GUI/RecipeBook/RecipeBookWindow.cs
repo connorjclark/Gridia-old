@@ -1,16 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using UnityEngine;
+
     public class RecipeBookWindow : GridiaWindow
     {
+        #region Fields
+
+        private const int NumToShow = 5;
+
         private readonly RenderableContainer _toolFocusGrid;
         private readonly List<List<ItemUse>> _usesWithFocus;
-        private const int NumToShow = 5;
+
         private int _currentSelection;
+
+        #endregion Fields
+
+        #region Constructors
 
         public RecipeBookWindow(Vector2 pos, ItemInstance tool)
             : base(pos, "Recipe Book")
@@ -35,8 +44,29 @@ namespace Gridia
 
             _toolFocusGrid = new RenderableContainer(new Vector2(0, 32));
             AddChild(_toolFocusGrid);
-            
+
             DisplayCurrentSelection();
+        }
+
+        #endregion Constructors
+
+        #region Methods
+
+        private void DisplayCurrentSelection()
+        {
+            _toolFocusGrid.RemoveAllChildren();
+
+            var lastIndex = Math.Min(_currentSelection + NumToShow, _usesWithFocus.Count);
+            var y = 0.0f;
+            for (var i = _currentSelection; i < lastIndex; i++)
+            {
+                var uses = _usesWithFocus[i];
+                var toolFocusRecipes = new ToolFocusRecipes(new Vector2(0, y), uses);
+                y += toolFocusRecipes.Height;
+                _toolFocusGrid.AddChild(toolFocusRecipes);
+            }
+
+            WindowName = String.Format("Recipe Book: {0} - {1} out of {2}", _currentSelection + 1, lastIndex, _usesWithFocus.Count);
         }
 
         private void NextSelection()
@@ -63,21 +93,6 @@ namespace Gridia
             DisplayCurrentSelection();
         }
 
-        private void DisplayCurrentSelection()
-        {
-            _toolFocusGrid.RemoveAllChildren();
-
-            var lastIndex = Math.Min(_currentSelection + NumToShow, _usesWithFocus.Count);
-            var y = 0.0f;
-            for (var i = _currentSelection; i < lastIndex; i++)
-            {
-                var uses = _usesWithFocus[i];
-                var toolFocusRecipes = new ToolFocusRecipes(new Vector2(0, y), uses);
-                y += toolFocusRecipes.Height;
-                _toolFocusGrid.AddChild(toolFocusRecipes);
-            }
-
-            WindowName = String.Format("Recipe Book: {0} - {1} out of {2}", _currentSelection + 1, lastIndex, _usesWithFocus.Count);
-        }
+        #endregion Methods
     }
 }

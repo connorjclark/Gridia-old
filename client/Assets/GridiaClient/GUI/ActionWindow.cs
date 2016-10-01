@@ -1,12 +1,20 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using System.Collections.Generic;
+
+    using UnityEngine;
+
     public class ActionWindow : GridiaWindow
     {
+        #region Fields
+
         protected ExtendibleGrid ActionGrid = new ExtendibleGrid(Vector2.zero); // :(
-        private Dictionary<int, GridiaAction> _actions = new Dictionary<int, GridiaAction>(); 
+
+        private Dictionary<int, GridiaAction> _actions = new Dictionary<int, GridiaAction>();
+
+        #endregion Fields
+
+        #region Constructors
 
         public ActionWindow(Vector2 pos)
             : base(pos, "Actions")
@@ -15,12 +23,16 @@ namespace Gridia
             AddChild(ActionGrid);
         }
 
-        public void TriggerAction(int id)
+        #endregion Constructors
+
+        #region Methods
+
+        public void AddAction(int id, string description, bool requireDestination, int cooldownTime, Renderable gfx)
         {
-            if (_actions.ContainsKey(id))
-            {
-                _actions[id].TriggerAction();
-            }
+            var action = new GridiaAction(id, description, requireDestination, cooldownTime, gfx);
+            _actions.Add(id, action);
+            gfx.ScaleXY = 2;
+            ActionGrid.AddChild(gfx);
         }
 
         public void TempAddActions()
@@ -31,12 +43,12 @@ namespace Gridia
             TempAddAction(3, "Cast a healing spell.", false, 15000, "Heal");
         }
 
-        public void AddAction(int id, string description, bool requireDestination, int cooldownTime, Renderable gfx)
+        public void TriggerAction(int id)
         {
-            var action = new GridiaAction(id, description, requireDestination, cooldownTime, gfx);
-            _actions.Add(id, action);
-            gfx.ScaleXY = 2;
-            ActionGrid.AddChild(gfx);
+            if (_actions.ContainsKey(id))
+            {
+                _actions[id].TriggerAction();
+            }
         }
 
         private void TempAddAction(int id, string description, bool requireDestination, int cooldownTime, string animName)
@@ -47,5 +59,7 @@ namespace Gridia
             Locator.Get<GridiaGame>().Animations.Add(renderable); // :(
             AddAction(id, description, requireDestination, cooldownTime, renderable);
         }
+
+        #endregion Methods
     }
 }

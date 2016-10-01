@@ -1,11 +1,15 @@
-﻿using Newtonsoft.Json.Linq;
-using Serving;
-using UnityEngine;
-
-namespace Gridia.Protocol
+﻿namespace Gridia.Protocol
 {
+    using Newtonsoft.Json.Linq;
+
+    using Serving;
+
+    using UnityEngine;
+
     class Animation : JsonMessageHandler<ConnectionToGridiaServerHandler>
     {
+        #region Methods
+
         protected override void Handle(ConnectionToGridiaServerHandler connection, JObject data)
         {
             var game = connection.GetGame();
@@ -22,5 +26,7 @@ namespace Gridia.Protocol
                 Locator.Get<GridiaGame>().Animations.Add(animRenderable);
             }
         }
+
+        #endregion Methods
     }
 }

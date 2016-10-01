@@ -1,31 +1,59 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using UnityEngine;
-using Serving.FileTransferring;
-using Wav;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Threading;
+
+    using Serving.FileTransferring;
+
+    using UnityEngine;
+
+    using Wav;
+
     public class SoundPlayer : MonoBehaviour
     {
-        private readonly Dictionary<String, WavFile> _wavFiles = new Dictionary<String, WavFile>();
-        private AudioClip _currentMusic;
+        #region Fields
+
         public AudioSource MusicAudio;
-        public AudioSource SfxAudio;
-        private FileSystem _fileSystem;
         public Queue MusicQueue = Queue.Synchronized(new Queue()); // Strings
+        public AudioSource SfxAudio;
+
+        private readonly Dictionary<String, WavFile> _wavFiles = new Dictionary<String, WavFile>();
+
+        private AudioClip _currentMusic;
+        private FileSystem _fileSystem;
         private bool _muteMusic;
+        private bool _startedAlready;
+
+        #endregion Fields
+
+        #region Properties
+
+        public bool BreakBecauseFirstTime
+        {
+            get; set;
+        }
+
+        public String CurrentSongName
+        {
+            get; private set;
+        }
+
+        public bool LoadingQueue
+        {
+            get; set;
+        }
+
         public bool MuteMusic
         {
             get { return _muteMusic; }
             set
             {
                 _muteMusic = value;
-                if (_muteMusic) 
+                if (_muteMusic)
                 {
                     MusicAudio.Pause();
                 }
@@ -35,74 +63,24 @@ namespace Gridia
                 }
             }
         }
-        public bool MuteSfx { get; set; }
-        public bool StartingMusic { get; set; }
-        public bool LoadingQueue { get; set; }
-        public String CurrentSongName { get; private set; }
-        public bool BreakBecauseFirstTime { get; set; }
-        private bool _startedAlready;
 
-        public void Start()
+        public bool MuteSfx
         {
-            _fileSystem = GridiaConstants.GetFileSystem();
-            if (_startedAlready) return;
-            _startedAlready = true;
-
-            MusicAudio.loop = false;
-            MusicAudio.volume = 0.6f;
-            MuteSfx = MuteMusic = true;
+            get; set;
         }
 
-        public void Update() 
+        public bool StartingMusic
         {
-            if (BreakBecauseFirstTime)
-            {
-                BreakBecauseFirstTime = GridiaConstants.WorldName == null;
-                return;
-            }
-            if (LoadingQueue)
-            {
-                return;
-            }
-            if (MusicQueue.Count == 0)
-            {
-                QueueRandomSongs();
-            }
-            else if (!MusicAudio.isPlaying && !_muteMusic && !StartingMusic) 
-            {
-                PlayMusic(MusicQueue.Dequeue() as String);
-            }
+            get; set;
         }
 
-        private List<String> Shuffle(List<String> list)
-        {
-            var rnd = new System.Random();
-            return list.OrderBy(item => rnd.Next()).ToList();
-        }
+        #endregion Properties
 
-        public void QueueRandomSongs() 
+        #region Methods
+
+        public void EndCurrentSong()
         {
-            LoadingQueue = true;
-            
-            new Thread(() => {
-                _fileSystem.CreateDirectory("worlds"); //ensure it exists :(
-                var clientDataFolder = @"worlds\" + GridiaConstants.WorldName; // :(
-                Debug.Log("queueing songs...");
-                // recursively? :(
-                var songs = _fileSystem.GetFiles(clientDataFolder)
-                    .ToList()
-                    .Where(path => path.Contains(@"sound\music") || path.Contains(@"sound/music"))
-                    .Where(path => path.EndsWith(".wav") || path.EndsWith(".WAV"))
-                    .Select(fullSongPath => Path.GetFileNameWithoutExtension(fullSongPath))
-                    .ToList();
-                Debug.Log("songs: " + String.Join(", ", songs.ToArray()));
-                MusicQueue = Queue.Synchronized(new Queue(Shuffle(songs)));
-                LoadingQueue = false;
-                if (MusicQueue.Count == 0)
-                {
-                    BreakBecauseFirstTime = true;
-                }
-            }).Start();
+            MusicAudio.Stop();
         }
 
         public void PlayMusic(String name)
@@ -118,11 +96,6 @@ namespace Gridia
                     StartingMusic = false;
                 });
             }).Start();
-        }
-
-        public void EndCurrentSong() 
-        {
-            MusicAudio.Stop();
         }
 
         public void PlaySfx(String name, float volume = 1.0f)
@@ -150,6 +123,63 @@ namespace Gridia
             PlaySfx(name, volume);
         }
 
+        public void QueueRandomSongs()
+        {
+            LoadingQueue = true;
+
+            new Thread(() => {
+                _fileSystem.CreateDirectory("worlds"); //ensure it exists :(
+                var clientDataFolder = @"worlds\" + GridiaConstants.WorldName; // :(
+                Debug.Log("queueing songs...");
+                // recursively? :(
+                var songs = _fileSystem.GetFiles(clientDataFolder)
+                    .ToList()
+                    .Where(path => path.Contains(@"sound\music") || path.Contains(@"sound/music"))
+                    .Where(path => path.EndsWith(".wav") || path.EndsWith(".WAV"))
+                    .Select(fullSongPath => Path.GetFileNameWithoutExtension(fullSongPath))
+                    .ToList();
+                Debug.Log("songs: " + String.Join(", ", songs.ToArray()));
+                MusicQueue = Queue.Synchronized(new Queue(Shuffle(songs)));
+                LoadingQueue = false;
+                if (MusicQueue.Count == 0)
+                {
+                    BreakBecauseFirstTime = true;
+                }
+            }).Start();
+        }
+
+        public void Start()
+        {
+            _fileSystem = GridiaConstants.GetFileSystem();
+            if (_startedAlready) return;
+            _startedAlready = true;
+
+            MusicAudio.loop = false;
+            MusicAudio.volume = 0.6f;
+            MuteSfx = MuteMusic = true;
+        }
+
+        public void Update()
+        {
+            if (BreakBecauseFirstTime)
+            {
+                BreakBecauseFirstTime = GridiaConstants.WorldName == null;
+                return;
+            }
+            if (LoadingQueue)
+            {
+                return;
+            }
+            if (MusicQueue.Count == 0)
+            {
+                QueueRandomSongs();
+            }
+            else if (!MusicAudio.isPlaying && !_muteMusic && !StartingMusic)
+            {
+                PlayMusic(MusicQueue.Dequeue() as String);
+            }
+        }
+
         private AudioClip GetAudioClip(String name)
         {
             var wavFile = GetWavFile(name);
@@ -167,7 +197,7 @@ namespace Gridia
                     // this or UnityEngine.Debug.Log is needed to prevent a crash.
                     // Why? impossible to say ...
                     //UnityEngine.Debug.LogWarning(".");
-                    
+
                     var length = Math.Min(data.Length, wavFile.AudioData.Length);
                     Array.Copy(wavFile.AudioData, position, data, 0, length);
                     position += length;
@@ -179,7 +209,7 @@ namespace Gridia
             return audioClip;
         }
 
-        private WavFile GetWavFile(String name) 
+        private WavFile GetWavFile(String name)
         {
             if (!_wavFiles.ContainsKey(name)) {
                 _wavFiles[name] = LoadWavFile(name);
@@ -203,7 +233,7 @@ namespace Gridia
             }
         }
 
-        private String SearchForFile(String name) 
+        private String SearchForFile(String name)
         {
             _fileSystem.CreateDirectory("worlds"); //ensure it exists :(
             var clientDataFolder = @"worlds\" + GridiaConstants.WorldName; // :(
@@ -216,5 +246,13 @@ namespace Gridia
             }
             throw new Exception("No file found: " + name);
         }
+
+        private List<String> Shuffle(List<String> list)
+        {
+            var rnd = new System.Random();
+            return list.OrderBy(item => rnd.Next()).ToList();
+        }
+
+        #endregion Methods
     }
 }

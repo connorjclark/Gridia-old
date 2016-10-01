@@ -1,31 +1,17 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using System;
+
+    using Newtonsoft.Json.Linq;
+
     public interface CreatureImage
     {
     }
 
-    public class DefaultCreatureImage : CreatureImage
-    {
-        public int SpriteIndex { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
-    }
-
-    public class CustomPlayerImage : CreatureImage
-    {
-        public int Head { get; set; }
-        public int Chest { get; set; }
-        public int Legs { get; set; }
-        public int Arms { get; set; }
-        public int Weapon { get; set; }
-        public int Shield { get; set; }
-    }
-
     public class CreatureImageConverter : JsonCreationConverter<CreatureImage>
     {
+        #region Methods
+
         protected override CreatureImage Create(Type objectType, JObject jObject)
         {
             if (jObject["spriteIndex"] != null)
@@ -52,5 +38,66 @@ namespace Gridia
                 return image;
             }
         }
+
+        #endregion Methods
+    }
+
+    public class CustomPlayerImage : CreatureImage
+    {
+        #region Properties
+
+        public int Arms
+        {
+            get; set;
+        }
+
+        public int Chest
+        {
+            get; set;
+        }
+
+        public int Head
+        {
+            get; set;
+        }
+
+        public int Legs
+        {
+            get; set;
+        }
+
+        public int Shield
+        {
+            get; set;
+        }
+
+        public int Weapon
+        {
+            get; set;
+        }
+
+        #endregion Properties
+    }
+
+    public class DefaultCreatureImage : CreatureImage
+    {
+        #region Properties
+
+        public int Height
+        {
+            get; set;
+        }
+
+        public int SpriteIndex
+        {
+            get; set;
+        }
+
+        public int Width
+        {
+            get; set;
+        }
+
+        #endregion Properties
     }
 }

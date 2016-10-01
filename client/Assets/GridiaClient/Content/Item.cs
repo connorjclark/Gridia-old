@@ -1,9 +1,20 @@
-using System;
-
 namespace Gridia
 {
+    using System;
+
     public class Item
     {
+        #region Constructors
+
+        public Item()
+        {
+            ImageWidth = ImageHeight = 1;
+        }
+
+        #endregion Constructors
+
+        #region Enumerations
+
         public enum ItemClass
         {
             Normal,
@@ -37,24 +48,60 @@ namespace Gridia
             Fish
         }
 
-        // :( private set?
-        public int Id { get; set; }
-        public ItemClass Class { get; set; }
-        public int ImageWidth { get; set; }
-        public int ImageHeight { get; set; }
-        public String Name { get; set; }
-        public bool Walkable { get; set; }
-        public int Light { get; set; }
-        public int[] Animations { get; set; }
+        #endregion Enumerations
 
-        public Item()
+        #region Properties
+
+        public int[] Animations
         {
-            ImageWidth = ImageHeight = 1;
+            get; set;
         }
 
-        public ItemInstance GetInstance (int quantity = 1)
+        public ItemClass Class
+        {
+            get; set;
+        }
+
+        // :( private set?
+        public int Id
+        {
+            get; set;
+        }
+
+        public int ImageHeight
+        {
+            get; set;
+        }
+
+        public int ImageWidth
+        {
+            get; set;
+        }
+
+        public int Light
+        {
+            get; set;
+        }
+
+        public String Name
+        {
+            get; set;
+        }
+
+        public bool Walkable
+        {
+            get; set;
+        }
+
+        #endregion Properties
+
+        #region Methods
+
+        public ItemInstance GetInstance(int quantity = 1)
         {
             return new ItemInstance (this, quantity);
         }
+
+        #endregion Methods
     }
 }

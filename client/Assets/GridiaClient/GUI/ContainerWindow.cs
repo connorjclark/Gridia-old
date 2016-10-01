@@ -1,25 +1,52 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using UnityEngine;
+
     public class ContainerWindow : GridiaWindow
     {
-        public int SlotSelected { get { return Slots.TileSelected; } set { Slots.TileSelected = value; } }
-        public int SlotSelectedX { get { return Slots.TileSelectedX; } set { Slots.TileSelectedX = value; } }
-        public int SlotSelectedY { get { return Slots.TileSelectedY; } set { Slots.TileSelectedY = value; } }
-        // :(
-        public int MouseDownSlot { get; private set; }
-        public int MouseUpSlot { get; private set; }
-        public int MouseOverSlot { get; private set; }
+        #region Fields
 
-        public int ContainerId { get; private set; }
+        protected List<ItemRenderable> ItemRenderables;
+        protected ExtendibleGrid Slots = new ExtendibleGrid(Vector2.zero); // :(
 
-        public bool ShowSelected
+        #endregion Fields
+
+        #region Constructors
+
+        public ContainerWindow(Vector2 pos)
+            : base(pos, "Container")
         {
-            get { return Slots.ShowSelected; }
-            set { Slots.ShowSelected = value; }
+            ResizeOnVertical = false;
+            Set(new List<ItemInstance>(), 0);
+            AddChild(Slots);
+        }
+
+        #endregion Constructors
+
+        #region Properties
+
+        public int ContainerId
+        {
+            get; private set;
+        }
+
+        // :(
+        public int MouseDownSlot
+        {
+            get; private set;
+        }
+
+        public int MouseOverSlot
+        {
+            get; private set;
+        }
+
+        public int MouseUpSlot
+        {
+            get; private set;
         }
 
         public Color SelectedColor
@@ -28,15 +55,65 @@ namespace Gridia
             set { Slots.SelectedColor = value; }
         }
 
-        protected List<ItemRenderable> ItemRenderables;
-        protected ExtendibleGrid Slots = new ExtendibleGrid(Vector2.zero); // :(
-
-        public ContainerWindow(Vector2 pos)
-            : base(pos, "Container")
+        public bool ShowSelected
         {
-            ResizeOnVertical = false;
-            Set(new List<ItemInstance>(), 0);
-            AddChild(Slots);
+            get { return Slots.ShowSelected; }
+            set { Slots.ShowSelected = value; }
+        }
+
+        public int SlotSelected
+        {
+            get { return Slots.TileSelected; } set { Slots.TileSelected = value; }
+        }
+
+        public int SlotSelectedX
+        {
+            get { return Slots.TileSelectedX; } set { Slots.TileSelectedX = value; }
+        }
+
+        public int SlotSelectedY
+        {
+            get { return Slots.TileSelectedY; } set { Slots.TileSelectedY = value; }
+        }
+
+        #endregion Properties
+
+        #region Methods
+
+        public void EquipItemAtCurrentSelection()
+        {
+            EquipItemAt(SlotSelected);
+        }
+
+        public ItemInstance GetItemAt(int index)
+        {
+            return ItemRenderables[index].Item;
+        }
+
+        public bool HasRaft()
+        {
+            return ItemRenderables.Any(itemR => itemR.Item.Item.Class == Item.ItemClass.Raft);
+        }
+
+        public override void Render()
+        {
+            if (Event.current.type == EventType.Layout)
+            {
+                MouseDownSlot = MouseUpSlot = MouseOverSlot = -1;
+                SetWindowNameToCurrentSelection();
+            }
+            base.Render();
+        }
+
+        public void Set(List<ItemInstance> items, int id)
+        {
+            ContainerId = id;
+            ViewItems(items);
+        }
+
+        public void SetItemAt(int index, ItemInstance item)
+        {
+            ItemRenderables[index].Item = item;
         }
 
         // :(
@@ -52,23 +129,20 @@ namespace Gridia
             }
         }
 
-        public override void Render()
+        protected override void Resize()
         {
-            if (Event.current.type == EventType.Layout) 
+            base.Resize();
+            Slots.FitToWidth(Width - BorderSize * 2);
+
+            var availableHeight = Screen.height - BorderSize * 2;
+            var maxTilesColumn = Mathf.FloorToInt(availableHeight / Slots.GetTileHeight());
+            while (Slots.TilesColumn > maxTilesColumn)
             {
-                MouseDownSlot = MouseUpSlot = MouseOverSlot = -1;
-                SetWindowNameToCurrentSelection();
+                Slots.SetTilesAcross(Slots.TilesAcross + 1);
             }
-            base.Render();
         }
 
-        public void Set(List<ItemInstance> items, int id)
-        {
-            ContainerId = id;
-            ViewItems(items);
-        }
-
-        protected virtual void ViewItems(List<ItemInstance> items) 
+        protected virtual void ViewItems(List<ItemInstance> items)
         {
             ItemRenderables = new List<ItemRenderable>();
 
@@ -100,42 +174,11 @@ namespace Gridia
             SetWindowNameToCurrentSelection();
         }
 
-        public void SetItemAt(int index, ItemInstance item)
-        {
-            ItemRenderables[index].Item = item;
-        }
-
-        public ItemInstance GetItemAt(int index)
-        {
-            return ItemRenderables[index].Item;
-        }
-
-        public void EquipItemAtCurrentSelection()
-        {
-            EquipItemAt(SlotSelected);
-        }
-
-        public bool HasRaft()
-        {
-            return ItemRenderables.Any(itemR => itemR.Item.Item.Class == Item.ItemClass.Raft);
-        }
-
         private void EquipItemAt(int slotIndex)
         {
             Locator.Get<ConnectionToGridiaServerHandler>().EquipItem(slotIndex);
         }
 
-        protected override void Resize()
-        {
-            base.Resize();
-            Slots.FitToWidth(Width - BorderSize * 2);
-
-            var availableHeight = Screen.height - BorderSize * 2;
-            var maxTilesColumn = Mathf.FloorToInt(availableHeight / Slots.GetTileHeight());
-            while (Slots.TilesColumn > maxTilesColumn)
-            {
-                Slots.SetTilesAcross(Slots.TilesAcross + 1);
-            }
-        }
+        #endregion Methods
     }
 }

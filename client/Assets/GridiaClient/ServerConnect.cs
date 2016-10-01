@@ -1,17 +1,25 @@
-using System;
-using System.Net.Sockets;
-using System.Threading;
-using UnityEngine;
-
 namespace Gridia
 {
+    using System;
+    using System.Net.Sockets;
+    using System.Threading;
+
+    using UnityEngine;
+
     public class ServerConnect
     {
+        #region Fields
+
         // TODO remove these bools
         public static bool connected;
         public static bool connecting;
+
         private static bool loggingIn;
         private static ConnectionToGridiaServerHandler _conn;
+
+        #endregion Fields
+
+        #region Methods
 
         public static void Connect(String ip, int port)
         {
@@ -90,5 +98,7 @@ namespace Gridia
                 callback(false, "Bad Connection");
             }
         }
+
+        #endregion Methods
     }
 }

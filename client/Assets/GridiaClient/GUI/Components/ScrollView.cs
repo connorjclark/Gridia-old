@@ -1,11 +1,10 @@
-﻿using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using UnityEngine;
+
     public class ScrollView : Renderable
     {
-        public Renderable View { get; set; }
-        public Vector2 ScrollPosition { get; set; }
+        #region Constructors
 
         public ScrollView(Vector2 pos, float width, float height, Renderable view)
             : base(pos)
@@ -15,6 +14,24 @@ namespace Gridia
             View = view;
         }
 
+        #endregion Constructors
+
+        #region Properties
+
+        public Vector2 ScrollPosition
+        {
+            get; set;
+        }
+
+        public Renderable View
+        {
+            get; set;
+        }
+
+        #endregion Properties
+
+        #region Methods
+
         public override void Render()
         {
             base.Render();
@@ -22,5 +39,7 @@ namespace Gridia
             View.Render();
             GUI.EndScrollView();
         }
+
+        #endregion Methods
     }
 }

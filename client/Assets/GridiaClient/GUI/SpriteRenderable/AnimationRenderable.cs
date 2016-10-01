@@ -1,18 +1,10 @@
-﻿using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using UnityEngine;
+
     public class AnimationRenderable : SpriteRenderable
     {
-        private GridiaAnimation Animation { get; set; }
-        private int CurrentFrameIndex { get; set; }
-        private Frame CurrentFrame { get { return Animation.Frames[CurrentFrameIndex]; } }
-        private float TimeElapsed { get; set; }
-        public bool Dead { get; private set; }
-        private bool OnNewFrame { get; set; }
-        private Vector3 Coord { get; set; }
-        public bool Loop { get; set; }
-        public bool IsInWorld { get; set; }
+        #region Constructors
 
         public AnimationRenderable(Vector3 coord, GridiaAnimation animation, bool loop = false, bool isInWorld = true)
             : base(Vector2.zero)
@@ -25,6 +17,59 @@ namespace Gridia
             IsInWorld = isInWorld;
         }
 
+        #endregion Constructors
+
+        #region Properties
+
+        public bool Dead
+        {
+            get; private set;
+        }
+
+        public bool IsInWorld
+        {
+            get; set;
+        }
+
+        public bool Loop
+        {
+            get; set;
+        }
+
+        private GridiaAnimation Animation
+        {
+            get; set;
+        }
+
+        private Vector3 Coord
+        {
+            get; set;
+        }
+
+        private Frame CurrentFrame
+        {
+            get { return Animation.Frames[CurrentFrameIndex]; }
+        }
+
+        private int CurrentFrameIndex
+        {
+            get; set;
+        }
+
+        private bool OnNewFrame
+        {
+            get; set;
+        }
+
+        private float TimeElapsed
+        {
+            get; set;
+        }
+
+        #endregion Properties
+
+        #region Methods
+
         public override int GetSpriteIndex()
         {
             return CurrentFrame.Sprite;
@@ -36,7 +81,7 @@ namespace Gridia
             return textures.Animations.GetTextureForSprite(spriteIndex);
         }
 
-        public void Step(float dt) 
+        public void Step(float dt)
         {
             if (IsInWorld)
             {
@@ -47,9 +92,9 @@ namespace Gridia
 
             TimeElapsed += dt;
             var newFrameIndex = (int) (TimeElapsed/0.25);
-            if (newFrameIndex < Animation.Frames.Count || Loop) 
+            if (newFrameIndex < Animation.Frames.Count || Loop)
             {
-                if (OnNewFrame) 
+                if (OnNewFrame)
                 {
                     OnNewFrame = false;
                     CurrentFrameIndex = newFrameIndex%Animation.Frames.Count;
@@ -68,5 +113,7 @@ namespace Gridia
                 Dead = true;
             }
         }
+
+        #endregion Methods
     }
 }

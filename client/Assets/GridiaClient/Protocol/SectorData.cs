@@ -1,9 +1,11 @@
-﻿using Serving;
-
-namespace Gridia.Protocol
+﻿namespace Gridia.Protocol
 {
+    using Serving;
+
     class SectorData : BinaryMessageHandler<ConnectionToGridiaServerHandler>
     {
+        #region Methods
+
         protected override void Handle(ConnectionToGridiaServerHandler connection, JavaBinaryReader data)
         {
             var game = connection.GetGame();
@@ -64,5 +66,7 @@ namespace Gridia.Protocol
                 game.CreateCreature(id, name, image, x, y, z);
             }
         }
+
+        #endregion Methods
     }
 }

@@ -1,7 +1,6 @@
 namespace Gridia.Protocol
 {
-  public class GameState
-  {
-
-  }
+    public class GameState
+    {
+    }
 }

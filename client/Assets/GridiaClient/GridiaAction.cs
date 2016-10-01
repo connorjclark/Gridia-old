@@ -1,14 +1,19 @@
-﻿using System;
-using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using System;
+
+    using UnityEngine;
+
     public class GridiaAction
     {
-        public int Id { get; private set; }
-        public String Description { get; private set; }
-        private long _lastAttack, _timeLeft;
+        #region Fields
+
         private bool _canPerformAction, _requireDestination;
+        private long _lastAttack, _timeLeft;
+
+        #endregion Fields
+
+        #region Constructors
 
         public GridiaAction(int id, String description, bool requireDestination, int cooldownTime, Renderable gfx)
         {
@@ -33,6 +38,24 @@ namespace Gridia
                 ? String.Format("Press {0} to use: {1}", id + 1, description)
                 : formatTime(_timeLeft);
         }
+
+        #endregion Constructors
+
+        #region Properties
+
+        public String Description
+        {
+            get; private set;
+        }
+
+        public int Id
+        {
+            get; private set;
+        }
+
+        #endregion Properties
+
+        #region Methods
 
         public void TriggerAction()
         {
@@ -81,5 +104,7 @@ namespace Gridia
             var timeSpan = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
             return (long)timeSpan.TotalMilliseconds;
         }
+
+        #endregion Methods
     }
 }

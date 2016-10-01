@@ -1,98 +1,87 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
-    public class Creature {
-        class PositionSnapshot 
-        {
-            public PositionSnapshot(Vector3 position, bool onRaft, long time)
-            {
-                Position = position;
-                OnRaft = onRaft;
-                Timestamp = time;
-            }
-            public Vector3 Position { get; set; }
-            public bool OnRaft { get; set; }
-            public long Timestamp { get; set; }
+    using System;
+    using System.Collections.Generic;
 
-            public override string ToString() {
-                return Timestamp + " " + Position;
-            }
-        }
+    using UnityEngine;
 
-        public Vector3 Position {
-            get 
-            {
-                return GetPosition();
-            } 
-        }
-        public int Id { get; private set; }
-        public String Name { get; set; }
-        public CreatureImage Image { get; set; }
-        public CreatureScript CreatureScript { get; set; }
+    public class Creature
+    {
+        #region Fields
+
+        public static int RENDER_DELAY = 50; // in ms (not needed???)
+
         private List<PositionSnapshot> _positions = new List<PositionSnapshot>();
 
-        public Creature(int id, String name, CreatureImage image, int x, int y, int z) {
+        #endregion Fields
+
+        #region Constructors
+
+        public Creature(int id, String name, CreatureImage image, int x, int y, int z)
+        {
             Id = id;
             Name = name;
             Image = image;
             AddPositionSnapshot(new Vector3(x, y, z), false, getSystemTime() - RENDER_DELAY);
         }
 
-        public bool HasAFuturePosition()
+        #endregion Constructors
+
+        #region Properties
+
+        public CreatureScript CreatureScript
         {
-            return _positions[_positions.Count - 1].Timestamp > getSystemTime() - RENDER_DELAY;
+            get; set;
         }
 
-        public void ClearSnapshots(int amountToKeep = 0) 
+        public int Id
         {
-            _positions.RemoveRange(0, _positions.Count - amountToKeep);
+            get; private set;
         }
 
-        public void AddPositionSnapshot(Vector3 position, bool onRaft) 
+        public CreatureImage Image
+        {
+            get; set;
+        }
+
+        public String Name
+        {
+            get; set;
+        }
+
+        public Vector3 Position
+        {
+            get
+            {
+                return GetPosition();
+            }
+        }
+
+        #endregion Properties
+
+        #region Methods
+
+        public void AddPositionSnapshot(Vector3 position, bool onRaft)
         {
             AddPositionSnapshot(position, onRaft, getSystemTime());
         }
 
-        public void AddPositionSnapshot(Vector3 position, bool onRaft, long time) 
+        public void AddPositionSnapshot(Vector3 position, bool onRaft, long time)
         {
             var snapshot = new PositionSnapshot(position, onRaft, time);
             _positions.Add(snapshot);
-            if (_positions.Count > 9) 
+            if (_positions.Count > 9)
             {
                 _positions.RemoveRange(0, 3);
             }
         }
 
-        // :(
-        private long getSystemTime()
+        public void ClearSnapshots(int amountToKeep = 0)
         {
-            return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - GridiaConstants.ServerTimeOffset;
+            _positions.RemoveRange(0, _positions.Count - amountToKeep);
         }
 
-        public static int RENDER_DELAY = 50; // in ms (not needed???)
-
-        // see https://developer.valvesoftware.com/wiki/Source_Multiplayer_Networking
-
-        private void GetSnapshotBeforeAndAfter(long time, out PositionSnapshot before, out PositionSnapshot after) 
-        {
-            before = after = null;
-			// :( think about synchornizing access to _positions
-            for (int i = _positions.Count - 1; i >= 0; i--) 
-            {
-                var snapshot = _positions[i];
-                if (time >= snapshot.Timestamp) 
-                {
-                    before = snapshot;
-                    after = i  != _positions.Count - 1 ? _positions[i + 1] : before;
-                    break;
-                }
-            }
-        }
-
-        public Vector3 GetPosition() 
+        public Vector3 GetPosition()
         {
             if (_positions.Count == 1)
             {
@@ -116,6 +105,11 @@ namespace Gridia
             return snapshotBefore.Position + snapshotPositionDelta * interp;
         }
 
+        public bool HasAFuturePosition()
+        {
+            return _positions[_positions.Count - 1].Timestamp > getSystemTime() - RENDER_DELAY;
+        }
+
         public bool IsOnRaft()
         {
             long timeToRender = getSystemTime() - RENDER_DELAY;
@@ -131,5 +125,76 @@ namespace Gridia
 
             return snapshotBefore.OnRaft || snapshotAfter.OnRaft;
         }
+
+        // see https://developer.valvesoftware.com/wiki/Source_Multiplayer_Networking
+        private void GetSnapshotBeforeAndAfter(long time, out PositionSnapshot before, out PositionSnapshot after)
+        {
+            before = after = null;
+            // :( think about synchornizing access to _positions
+            for (int i = _positions.Count - 1; i >= 0; i--)
+            {
+                var snapshot = _positions[i];
+                if (time >= snapshot.Timestamp)
+                {
+                    before = snapshot;
+                    after = i  != _positions.Count - 1 ? _positions[i + 1] : before;
+                    break;
+                }
+            }
+        }
+
+        // :(
+        private long getSystemTime()
+        {
+            return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - GridiaConstants.ServerTimeOffset;
+        }
+
+        #endregion Methods
+
+        #region Nested Types
+
+        class PositionSnapshot
+        {
+            #region Constructors
+
+            public PositionSnapshot(Vector3 position, bool onRaft, long time)
+            {
+                Position = position;
+                OnRaft = onRaft;
+                Timestamp = time;
+            }
+
+            #endregion Constructors
+
+            #region Properties
+
+            public bool OnRaft
+            {
+                get; set;
+            }
+
+            public Vector3 Position
+            {
+                get; set;
+            }
+
+            public long Timestamp
+            {
+                get; set;
+            }
+
+            #endregion Properties
+
+            #region Methods
+
+            public override string ToString()
+            {
+                return Timestamp + " " + Position;
+            }
+
+            #endregion Methods
+        }
+
+        #endregion Nested Types
     }
 }

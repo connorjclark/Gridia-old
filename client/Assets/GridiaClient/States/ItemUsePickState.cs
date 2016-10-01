@@ -1,16 +1,33 @@
-﻿using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using UnityEngine;
+
     // :(
     public class ItemUsePickState : State
     {
+        #region Fields
+
         private readonly ItemUsePickWindow _pickWindow;
+
         private StateMachine _stateMachine;
 
-        public ItemUsePickState(ItemUsePickWindow pickWindow) 
+        #endregion Fields
+
+        #region Constructors
+
+        public ItemUsePickState(ItemUsePickWindow pickWindow)
         {
             _pickWindow = pickWindow;
+        }
+
+        #endregion Constructors
+
+        #region Methods
+
+        public void End()
+        {
+            Locator.Get<TabbedUI>().Remove(_pickWindow);
+            _stateMachine.SetState(new IdleState());
         }
 
         public override void Step(StateMachine stateMachine, float dt)
@@ -37,15 +54,11 @@ namespace Gridia
             }
         }
 
-        private bool CheckForCancel() 
+        private bool CheckForCancel()
         {
             return Locator.Get<InputManager>().Get4DirectionalWasdInput() != Vector3.zero || Input.GetKey(KeyCode.Escape);
         }
 
-        public void End()
-        {
-            Locator.Get<TabbedUI>().Remove(_pickWindow);
-            _stateMachine.SetState(new IdleState());
-        }
+        #endregion Methods
     }
 }

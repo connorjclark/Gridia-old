@@ -1,13 +1,20 @@
-﻿using System;
-using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using System;
+
+    using UnityEngine;
+
     public class AdminWindow : GridiaWindow
     {
-        private readonly BulkViewer _bulkItems;
+        #region Fields
+
         private readonly BulkViewer _bulkFloors;
+        private readonly BulkViewer _bulkItems;
         private readonly ContentManager _contentManager;
+
+        #endregion Fields
+
+        #region Constructors
 
         public AdminWindow(Vector2 pos)
             : base(pos, "Admin Control Panel")
@@ -40,19 +47,34 @@ namespace Gridia
             AddChild(_bulkFloors);
         }
 
+        #endregion Constructors
+
+        #region Nested Types
+
         private class BulkViewer : RenderableContainer
         {
-            private readonly ExtendibleGrid _bulk = new ExtendibleGrid(new Vector2(0, 50));
-            private int _currentPage;
+            #region Fields
+
             private const int PerPage = 50;
+
+            private readonly ExtendibleGrid _bulk = new ExtendibleGrid(new Vector2(0, 50));
+            private readonly Func<int, Renderable> _getElement;
+            private readonly Func<int> _getNumElements;
+            private readonly Action<int> _onElementClick;
+
+            private int _currentPage;
             private Vector2 _vector2;
+
+            #endregion Fields
+
+            #region Constructors
 
             public BulkViewer(
                 Vector2 pos,
                 Func<int> getNumElements,
                 Func<int, Renderable> getElement,
                 Action<int> onElementClick
-            )
+                )
                 : base(pos)
             {
                 _bulk.TileSelected = -1;
@@ -72,11 +94,9 @@ namespace Gridia
                 AddChild(_bulk);
             }
 
-            private readonly Func<int> _getNumElements;
+            #endregion Constructors
 
-            private readonly Func<int, Renderable> _getElement;
-
-            private readonly Action<int> _onElementClick;
+            #region Methods
 
             private void ShowPage(int page)
             {
@@ -106,6 +126,10 @@ namespace Gridia
                     _bulk.AddChild(element);
                 }
             }
+
+            #endregion Methods
         }
+
+        #endregion Nested Types
     }
 }

@@ -1,13 +1,12 @@
-﻿using System;
-using UnityEngine;
-
-namespace Gridia
+﻿namespace Gridia
 {
+    using System;
+
+    using UnityEngine;
+
     public class Button : Renderable
     {
-        public String Text { get; set; }
-        public bool GuessSize { get; set; }
-        public bool Active { get; set; }
+        #region Constructors
 
         public Button(Vector2 pos, String text, bool guessSize = true)
             : base(pos)
@@ -18,6 +17,29 @@ namespace Gridia
             GuessSize = guessSize;
             Active = true;
         }
+
+        #endregion Constructors
+
+        #region Properties
+
+        public bool Active
+        {
+            get; set;
+        }
+
+        public bool GuessSize
+        {
+            get; set;
+        }
+
+        public String Text
+        {
+            get; set;
+        }
+
+        #endregion Properties
+
+        #region Methods
 
         public override void Render()
         {
@@ -38,5 +60,7 @@ namespace Gridia
                 OnClick();
             }
         }
+
+        #endregion Methods
     }
 }
