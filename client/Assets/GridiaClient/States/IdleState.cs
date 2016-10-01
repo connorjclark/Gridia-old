@@ -166,7 +166,7 @@
                     var tileLocUp = _driver.GetTileLocationOfMouse();
                     if (tileLocUp == _driver.Game.TileMap.Wrap(_driver.Game.View.Focus.Position))
                     {
-                        dest = Main.Instance.InventoryContainerId;
+                        dest = GameState.Instance.InventoryContainerId;
                         destIndex = -1;
                     }
                     else

@@ -1,7 +1,5 @@
 ﻿namespace Gridia.Protocol
 {
-    using MarkLight.UnityProject;
-
     using Newtonsoft.Json.Linq;
 
     using Serving;
@@ -19,11 +17,11 @@
 
             var itemInstance = Locator.Get<ContentManager>().GetItem(item).GetInstance(quantity);
 
-            if (id == Main.Instance.InventoryContainerId)
+            if (id == GameState.Instance.InventoryContainerId)
             {
                 MainThreadQueue.Add(() =>
                 {
-                    Main.Instance.SetContainerItem(id, itemInstance, index);
+                    GameState.Instance.SetContainerItem(id, itemInstance, index);
                 });
             }
 

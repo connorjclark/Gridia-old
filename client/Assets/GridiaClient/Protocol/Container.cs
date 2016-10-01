@@ -3,8 +3,6 @@
     using System;
     using System.Collections.Generic;
 
-    using MarkLight.UnityProject;
-
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
@@ -27,8 +25,8 @@
             switch (type)
             {
                 case "Inventory":
-                    Main.Instance.InventoryContainerId = id;
-                    Main.Instance.SetContainerItems(id, items);
+                    GameState.Instance.InventoryContainerId = id;
+                    GameState.Instance.SetContainerItems(id, items);
                     break;
                 case "Equipment":
                     //Locator.Get<GridiaDriver>().EquipmentGui.Set(items, id);

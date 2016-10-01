@@ -1,68 +1,130 @@
-using Gridia;
-using MarkLight.ValueConverters;
-using MarkLight.Views;
-using MarkLight.Views.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-
 namespace MarkLight.UnityProject
 {
-    
-    public class ServerDetails
-    {
-        public String Name;
-        public String Address;
-        public int Port;
-        public String Description;
-        public int PlayersOnline;
-    }
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    using Gridia;
+
+    using MarkLight.ValueConverters;
+    using MarkLight.Views;
+    using MarkLight.Views.UI;
+
+    using UnityEngine;
 
     public class MainMenu : UIView
     {
-        public ViewSwitcher ViewSwitcher;
-        public ObservableList<ServerDetails> Servers;
+        #region Fields
+
+        public String CurrentServerName;
 
         // ServerSelect
         public Views.UI.Button HostServerButton;
-        public Views.UI.Panel ServerSelectPanel;
-        public Views.UI.List ServerSelectList;
+        public String LoginPassword = "";
+
+        // Login
+        public String LoginUsername = "";
 
         // InputConnectionDetails
         public String ManualServerAddress = "";
         public String ManualServerPort = "";
-
-        // ServerDetails
-        public ServerDetails SelectedServer;
-        public String CurrentServerName;
-        public String ServerDescription;
-
-        // ServerTitleScreen
-        public String ServerChangelog = "";
-
-        // Login
-        public String LoginUsername = "";
-        public String LoginPassword = "";
+        public String RegistrationPassword = "";
 
         // Registration
         public String RegistrationUsername = "";
-        public String RegistrationPassword = "";
+
+        // ServerDetails
+        public ServerDetails SelectedServer;
+
+        // ServerTitleScreen
+        public String ServerChangelog = "";
+        public String ServerDescription;
+        public ObservableList<ServerDetails> Servers;
+        public Views.UI.List ServerSelectList;
+        public Views.UI.Panel ServerSelectPanel;
+        public ViewSwitcher ViewSwitcher;
 
         private float _previousServerSelectListWidth;
+
+        #endregion Fields
+
+        #region Methods
+
+        public void ConnectManually()
+        {
+            int port = 0;
+            if (Int32.TryParse(ManualServerPort, out port))
+            {
+                ServerConnect.Connect(ManualServerAddress, port);
+            }
+        }
+
+        public void ConnectToSelectedServer()
+        {
+            ServerConnect.Connect(SelectedServer.Address, SelectedServer.Port);
+        }
+
+        public void DisconnectAndEnterEnterServerSelect()
+        {
+            Locator.Get<ConnectionToGridiaServerHandler>().Close();
+            EnterServerSelect();
+        }
+
+        public void EnterInputConnectionDetails()
+        {
+            ViewSwitcher.SwitchTo("InputConnectionDetails");
+        }
+
+        public void EnterLogin()
+        {
+            ViewSwitcher.SwitchTo("Login");
+        }
+
+        public void EnterRegistration()
+        {
+            ViewSwitcher.SwitchTo("Registration");
+        }
+
+        public void EnterServerDetails(ServerDetails serverDetails)
+        {
+            ViewSwitcher.SwitchTo("ServerDetails");
+            SelectedServer = serverDetails;
+            SetValue(() => CurrentServerName, serverDetails.Name);
+            SetValue(() => ServerDescription, serverDetails.Description);
+        }
+
+        public void EnterServerSelect()
+        {
+            ViewSwitcher.SwitchTo("ServerSelect");
+
+            // TODO how to clear ServerSelectList selection?
+            // this doesn't work...
+            Servers.SelectedItem = null;
+            Servers.SelectedIndex = -1;
+        }
+
+        public void EnterServerTitleScreen()
+        {
+            ViewSwitcher.SwitchTo("ServerTitleScreen");
+        }
+
+        public void HostServer()
+        {
+            LocalServer.LaunchServerProcess();
+        }
 
         public override void Initialize()
         {
             base.Initialize();
-            
+
             if (Application.isPlaying)
             {
               MainThreadQueue.Instantiate();
               GridiaConstants.InitializeGuiStuff();
               GridiaConstants.InitializeSoundPlayer();
             }
-            
+
             var cursorTexture = Resources.Load<Texture2D>("GUI Components/cursorHand_grey");
             Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
 
@@ -90,48 +152,13 @@ namespace MarkLight.UnityProject
             HostServerButton.IsActive.Value = LocalServer.CanHostLocally();
         }
 
-        public void EnterServerSelect()
+        public void ListSelectionChanged(ItemSelectionActionData data)
         {
-            ViewSwitcher.SwitchTo("ServerSelect");
-            
-            // TODO how to clear ServerSelectList selection?
-            // this doesn't work...
-            Servers.SelectedItem = null;
-            Servers.SelectedIndex = -1;
-        }
-
-        public void DisconnectAndEnterEnterServerSelect()
-        {
-            Locator.Get<ConnectionToGridiaServerHandler>().Close();
-            EnterServerSelect();
-        }
-
-        public void EnterInputConnectionDetails()
-        {
-            ViewSwitcher.SwitchTo("InputConnectionDetails");
-        }
-
-        public void EnterServerDetails(ServerDetails serverDetails)
-        {
-            ViewSwitcher.SwitchTo("ServerDetails");
-            SelectedServer = serverDetails;
-            SetValue(() => CurrentServerName, serverDetails.Name);
-            SetValue(() => ServerDescription, serverDetails.Description);
-        }
-
-        public void EnterServerTitleScreen()
-        {
-            ViewSwitcher.SwitchTo("ServerTitleScreen");
-        }
-
-        public void EnterLogin()
-        {
-            ViewSwitcher.SwitchTo("Login");
-        }
-
-        public void EnterRegistration()
-        {
-            ViewSwitcher.SwitchTo("Registration");
+            if (data.Item != null)
+            {
+                ServerDetails serverDetails = (ServerDetails)data.Item;
+                EnterServerDetails(serverDetails);
+            }
         }
 
         /*public void Connect(String address, int port)
@@ -148,7 +175,6 @@ namespace MarkLight.UnityProject
                 }
             });
         }*/
-
         public void Login()
         {
             ServerConnect.SendLoginRequest(LoginUsername, LoginPassword, (bool success, String message) => {
@@ -177,35 +203,6 @@ namespace MarkLight.UnityProject
             });
         }
 
-        public void ConnectManually()
-        {
-            int port = 0;
-            if (Int32.TryParse(ManualServerPort, out port))
-            {
-                ServerConnect.Connect(ManualServerAddress, port);
-            }
-        }
-
-        public void ConnectToSelectedServer()
-        {
-            ServerConnect.Connect(SelectedServer.Address, SelectedServer.Port);
-        }
-
-
-        public void HostServer()
-        {
-            LocalServer.LaunchServerProcess();
-        }
-
-        public void ListSelectionChanged(ItemSelectionActionData data)
-        {
-            if (data.Item != null)
-            {
-                ServerDetails serverDetails = (ServerDetails)data.Item;
-                EnterServerDetails(serverDetails);
-            }
-        }
-
         public void Update()
         {
             float serverSelectPanelWidth = ServerSelectPanel.ActualWidth - ServerSelectPanel.VerticalScrollbar.ActualWidth;
@@ -224,5 +221,20 @@ namespace MarkLight.UnityProject
                 EnterServerTitleScreen();
             }
         }
+
+        #endregion Methods
+    }
+
+    public class ServerDetails
+    {
+        #region Fields
+
+        public String Address;
+        public String Description;
+        public String Name;
+        public int PlayersOnline;
+        public int Port;
+
+        #endregion Fields
     }
 }

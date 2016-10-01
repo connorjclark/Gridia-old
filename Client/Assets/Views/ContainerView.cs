@@ -1,23 +1,30 @@
-using Gridia;
-using MarkLight;
-using MarkLight.Views.UI;
-using MarkLight.ValueConverters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-
 namespace MarkLight.UnityProject
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    using Gridia;
+
+    using MarkLight;
+    using MarkLight.ValueConverters;
+    using MarkLight.Views.UI;
+
+    using UnityEngine;
+
     public class ContainerView : UIView
     {
-        public static Dictionary<int, ObservableList<ItemInstance>> ContainerModels = new Dictionary<int, ObservableList<ItemInstance>>();
+        #region Fields
 
-        public int NumInRow = 10;
-        public ObservableList<ItemInstance> Items;
         public Views.UI.List Container;
+        public ObservableList<ItemInstance> Items;
+        public int NumInRow = 10;
         public Views.UI.ListItem Template;
+
+        #endregion Fields
+
+        #region Methods
 
         public override void Initialize()
         {
@@ -28,5 +35,7 @@ namespace MarkLight.UnityProject
             //Container.SetValue(() => Container.Width, ElementSize.FromPixels(rowWidth));
             Container.Width.Value = ElementSize.FromPixels(rowWidth);
         }
+
+        #endregion Methods
     }
 }

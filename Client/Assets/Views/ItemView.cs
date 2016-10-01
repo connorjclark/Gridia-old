@@ -1,19 +1,35 @@
-using Gridia;
-using MarkLight;
-using MarkLight.ValueConverters;
-using MarkLight.Views;
-using MarkLight.Views.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-
 namespace MarkLight.UnityProject
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    using Gridia;
+
+    using MarkLight;
+    using MarkLight.ValueConverters;
+    using MarkLight.Views;
+    using MarkLight.Views.UI;
+
+    using UnityEngine;
+
     public class ItemView : UIView
     {
-        public ItemInstance ItemInstance {
+        #region Fields
+
+        public Views.UI.Image Image;
+
+        private int _currentFrameIndex;
+        private ItemInstance _item;
+        private List<Sprite> _spriteCache;
+
+        #endregion Fields
+
+        #region Properties
+
+        public ItemInstance ItemInstance
+        {
             get
             {
                 return _item;
@@ -25,16 +41,22 @@ namespace MarkLight.UnityProject
                 _currentFrameIndex = -1;
             }
         }
-        private ItemInstance _item;
 
-        public Views.UI.Image Image;
-        private int _currentFrameIndex;
+        #endregion Properties
 
-        private List<Sprite> _spriteCache;
+        #region Methods
 
         public override void Initialize()
         {
             base.Initialize();
+        }
+
+        public void Update()
+        {
+            if (_item != null)
+            {
+                ReloadSprite();
+            }
         }
 
         private List<Sprite> GetSprites()
@@ -75,12 +97,6 @@ namespace MarkLight.UnityProject
             }
         }
 
-        public void Update()
-        {
-            if (_item != null)
-            {
-                ReloadSprite();
-            }
-        }
+        #endregion Methods
     }
 }
