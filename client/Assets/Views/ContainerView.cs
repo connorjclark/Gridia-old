@@ -12,7 +12,7 @@ namespace MarkLight.UnityProject
     using MarkLight.Views.UI;
 
     using UnityEngine;
-
+    using UnityEngine.EventSystems;
     public class ContainerView : UIView
     {
         #region Fields
@@ -21,6 +21,11 @@ namespace MarkLight.UnityProject
         public ObservableList<ItemInstance> Items;
         public int NumInRow = 10;
         public Views.UI.ListItem Template;
+
+        public Views.UI.Label ContainerNameLabel;
+        public String ContainerName;
+
+        public int ContainerId;
 
         #endregion Fields
 
@@ -31,9 +36,23 @@ namespace MarkLight.UnityProject
             base.Initialize();
 
             float rowSpacing = Container.Spacing.Value.Pixels;
-            float rowWidth = NumInRow * Template.Width.Value.Pixels + (NumInRow - 2) * 2 * rowSpacing;
+            float rowWidth = NumInRow * Template.Width.Value.Pixels + (NumInRow + 1) * rowSpacing;
             //Container.SetValue(() => Container.Width, ElementSize.FromPixels(rowWidth));
             Container.Width.Value = ElementSize.FromPixels(rowWidth);
+        }
+
+        // TODO is there a way to run a callback when a field changes?
+        public void SetItems(ObservableList<ItemInstance> items)
+        {
+            SetValue("Items", items);
+
+            int NumInColumn = (int) Math.Ceiling((float)items.Count() / NumInRow);
+            Height.Value = ElementSize.FromPixels(NumInColumn * Template.Height.Value.Pixels + ContainerNameLabel.Height.Value.Pixels);
+        }
+
+        public void ClickHandler(PointerEventData eventData)
+        {
+            Debug.Log("click");
         }
 
         #endregion Methods

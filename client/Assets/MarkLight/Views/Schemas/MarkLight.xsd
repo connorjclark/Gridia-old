@@ -456,10 +456,10 @@
     <xs:attribute name="IsTemplate" type="xs:string" />
     <xs:attribute name="IsDestroyed" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
-    <xs:attribute name="Drag" type="xs:string" />
     <xs:attribute name="EndDrag" type="xs:string" />
-    <xs:attribute name="InitializePotentialDrag" type="xs:string" />
     <xs:attribute name="BeginDrag" type="xs:string" />
+    <xs:attribute name="InitializePotentialDrag" type="xs:string" />
+    <xs:attribute name="Drag" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
     <xs:anyAttribute processContents="skip" />
@@ -909,8 +909,8 @@
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
-    <xs:attribute name="NumInRow" type="xs:string" />
     <xs:attribute name="Items" type="xs:string" />
+    <xs:attribute name="NumInRow" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
     <xs:attribute name="BasedOn" type="xs:string" />
@@ -1427,17 +1427,17 @@
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
-    <xs:attribute name="Servers" type="xs:string" />
+    <xs:attribute name="CurrentServerName" type="xs:string" />
+    <xs:attribute name="LoginPassword" type="xs:string" />
+    <xs:attribute name="LoginUsername" type="xs:string" />
     <xs:attribute name="ManualServerAddress" type="xs:string" />
     <xs:attribute name="ManualServerPort" type="xs:string" />
-    <xs:attribute name="SelectedServer" type="xs:string" />
-    <xs:attribute name="CurrentServerName" type="xs:string" />
-    <xs:attribute name="ServerDescription" type="xs:string" />
-    <xs:attribute name="ServerChangelog" type="xs:string" />
-    <xs:attribute name="LoginUsername" type="xs:string" />
-    <xs:attribute name="LoginPassword" type="xs:string" />
-    <xs:attribute name="RegistrationUsername" type="xs:string" />
     <xs:attribute name="RegistrationPassword" type="xs:string" />
+    <xs:attribute name="RegistrationUsername" type="xs:string" />
+    <xs:attribute name="SelectedServer" type="xs:string" />
+    <xs:attribute name="ServerChangelog" type="xs:string" />
+    <xs:attribute name="ServerDescription" type="xs:string" />
+    <xs:attribute name="Servers" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
     <xs:attribute name="BasedOn" type="xs:string" />
@@ -2169,9 +2169,9 @@
     <xs:attribute name="IsTemplate" type="xs:string" />
     <xs:attribute name="IsDestroyed" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ListChanged" type="xs:string" />
     <xs:attribute name="ItemSelected" type="xs:string" />
     <xs:attribute name="ItemDeselected" type="xs:string" />
-    <xs:attribute name="ListChanged" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
     <xs:anyAttribute processContents="skip" />

@@ -19,6 +19,7 @@ namespace MarkLight.UnityProject
         #region Fields
 
         public Views.UI.Image Image;
+        public ViewAction Click;
 
         private int _currentFrameIndex;
         private ItemInstance _item;

@@ -27,9 +27,11 @@ namespace MarkLight.UnityProject
         public ContainerView Inventory;
         public int NumItemsInToolbar = 10;
         public Views.UI.Region TabView;
+        public Views.UI.Group ContainerGroup;
         public ContainerView Toolbar;
 
-        private Dictionary<int, ContainerView> ContainerViews = new Dictionary<int, ContainerView>();
+        private int _maxContainerViewsAllowed = 3;
+        private List<ContainerView> ContainerViews = new List<ContainerView>();
         private bool _testMode;
 
         #endregion Fields
@@ -84,8 +86,8 @@ namespace MarkLight.UnityProject
         {
             if (containerId == GameState.Instance.InventoryContainerId)
             {
-                Inventory.SetValue("Items", items);
-                Toolbar.SetValue("Items", new ObservableList<ItemInstance>(items.GetRange(0, NumItemsInToolbar)));
+                Inventory.SetItems(items);
+                Toolbar.SetItems(new ObservableList<ItemInstance>(items.GetRange(0, NumItemsInToolbar)));
             }
             else if (containerId == GameState.Instance.EquipmentContainerId)
             {
@@ -93,14 +95,28 @@ namespace MarkLight.UnityProject
             }
             else
             {
-                if (!ContainerViews.ContainsKey(containerId))
+                ContainerView containerView = ContainerViews.Find(cv => cv.ContainerId == containerId);
+
+                if (!containerView)
                 {
-                    ContainerViews[containerId] = TabView.CreateView<ContainerView>();
-                    ContainerViews[containerId].Alignment.Value = ElementAlignment.Right;
-                    ContainerViews[containerId].InitializeViews();
+                    containerView = ContainerGroup.CreateView<ContainerView>();
+                    containerView.Alignment.Value = ElementAlignment.Right;
+                    containerView.ContainerName = "Container " + containerId;
+                    containerView.SetItems(items);
+                    containerView.InitializeViews();
+
+                    ContainerViews.Add(containerView);
+                }
+                else
+                {
+                    containerView.SetItems(items);
                 }
 
-                ContainerViews[containerId].SetValue("Items", items);
+                if (ContainerViews.Count() > _maxContainerViewsAllowed)
+                {
+                    ContainerViews[0].Destroy();
+                    ContainerViews.RemoveAt(0);
+                }
             }
         }
 
@@ -147,7 +163,7 @@ namespace MarkLight.UnityProject
                 var items = new List<ItemInstance>();
                 var cm = Locator.Get<ContentManager>();
                 var r = new System.Random();
-                for (int i = 0; i < 15; i++)
+                for (int i = 0; i < 20; i++)
                 {
                     items.Add(new ItemInstance(cm.GetItem(r.Next(10))));
                 }

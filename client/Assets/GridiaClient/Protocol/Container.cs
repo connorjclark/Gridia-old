@@ -22,7 +22,7 @@
             var type = (String)data["type"];
             var tabGfxItemId = (int)data["tabGfxItemId"];
 
-            if (type == "Inventory")
+            if (type == "Inventory" && GameState.Instance.InventoryContainerId == 0)
             {
                 // TODO for some reason this is getting reset. check server for why.
                 GameState.Instance.InventoryContainerId = id;
