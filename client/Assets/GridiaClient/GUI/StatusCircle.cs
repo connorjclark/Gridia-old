@@ -79,9 +79,10 @@
             _lineRenderer.SetWidth(Radius*0.4f, Radius*0.4f);
             _lineRenderer.SetVertexCount(Mathf.CeilToInt(2*Mathf.PI/ThetaStep));
 
-            var canvas = Instantiate(Resources.Load("Text")) as GameObject;
-            canvas.transform.SetParent(gameObject.transform, false);
-            text = canvas.GetComponentInChildren<Text>();
+            GameObject newGO = new GameObject("myTextGO");
+            newGO.transform.SetParent(this.transform);
+
+            text = newGO.AddComponent<Text>();
             text.fontStyle = FontStyle.Bold;
             text.color = Color.white;
             text.text = "";

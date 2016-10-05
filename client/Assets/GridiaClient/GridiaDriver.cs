@@ -5,6 +5,8 @@ using System.Threading;
 
 using Gridia;
 
+using MarkLight.UnityProject;
+
 using UnityEngine;
 
 public class GridiaDriver : MonoBehaviour
@@ -115,21 +117,6 @@ public class GridiaDriver : MonoBehaviour
             }
         }
         return count;
-    }
-
-    public ContainerWindow GetOpenContainerWithId(int id)
-    {
-        return GetOpenContainerWith(containerWindow => containerWindow.ContainerId == id);
-    }
-
-    public ContainerWindow GetOpenContainerWithMouseDown()
-    {
-        return GetOpenContainerWith(containerWindow => containerWindow.MouseDownSlot != -1);
-    }
-
-    public ContainerWindow GetOpenContainerWithMouseUp()
-    {
-        return GetOpenContainerWith(containerWindow => containerWindow.MouseUpSlot != -1);
     }
 
     // TODO delete
@@ -274,22 +261,25 @@ public class GridiaDriver : MonoBehaviour
         }
     }
 
-    private ContainerWindow GetOpenContainerWith(Predicate<ContainerWindow> predicate)
+    private ContainerView GetOpenContainerWith(Predicate<ContainerView> predicate)
     {
-        for (var i = 0; i < TabbedGui.NumWindows(); i++)
-        {
-            var window = TabbedGui.GetWindowAt(i);
-            if (window is ContainerWindow && predicate(window as ContainerWindow))
-            {
-                return window as ContainerWindow;
-            }
-        }
+        // for (var i = 0; i < TabbedGui.NumWindows(); i++)
+        // {
+        //     var window = TabbedGui.GetWindowAt(i);
+        //     if (window is ContainerWindow && predicate(window as ContainerWindow))
+        //     {
+        //         return window as ContainerWindow;
+        //     }
+        // }
+
         return null;
     }
 
     // :(
     void OnGUI()
     {
+        return;
+
         if (Game == null)
         {
             return;
@@ -455,8 +445,15 @@ public class GridiaDriver : MonoBehaviour
         camera.transform.position = new Vector3(Screen.width/2f, Screen.height/2f, -100);
     }
 
+    void OnMoveItem(int fromSource, int fromIndex, int toSource, int toIndex)
+    {
+        Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(fromSource, toSource, fromIndex, toIndex);
+    }
+
     void Start()
     {
+        Main.Instance.MoveItem = OnMoveItem;
+
         GridiaConstants.SoundPlayer.MuteSfx = GridiaConstants.SoundPlayer.MuteMusic = Application.isEditor;
 
         Locator.Provide(InputManager);
@@ -494,7 +491,7 @@ public class GridiaDriver : MonoBehaviour
 
         ActionWindow = new ActionWindow(new Vector2(Int32.MaxValue, Int32.MaxValue));
         Locator.Provide(ActionWindow);
-        helpMenu.ScaleXY = GridiaConstants.GuiScale;
+        ActionWindow.ScaleXY = GridiaConstants.GuiScale;
     }
 
     void Update()

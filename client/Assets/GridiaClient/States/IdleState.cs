@@ -134,53 +134,53 @@
                 _driver.InvGui.EquipItemAtCurrentSelection();
             }
 
-            if (Input.GetMouseButtonDown(0))
-            {
-                var openContainerWithMouseDown = _driver.GetOpenContainerWithMouseDown();
-                if (openContainerWithMouseDown != null)
-                {
-                    _mouseDownLocation = openContainerWithMouseDown.ContainerId;
-                    _sourceIndex = openContainerWithMouseDown.MouseDownSlot;
-                    _driver.MouseDownItem = _driver.InvGui.GetItemAt(openContainerWithMouseDown.MouseDownSlot);
-                }
-                else if (!_driver.IsMouseOverGui())
-                {
-                    _mouseDownLocation = 0;
-                    var downCoord = _driver.GetTileLocationOfMouse();
-                    _driver.MouseDownItem = _driver.Game.TileMap.GetTile((int)downCoord.x, (int)downCoord.y, (int)downCoord.z).Item;
-                    _sourceIndex = _driver.Game.TileMap.ToIndex(downCoord);
-                }
-            }
-            else if (Input.GetMouseButtonUp(0) && _mouseDownLocation != -1)
-            {
-                int dest, destIndex;
+            // if (Input.GetMouseButtonDown(0))
+            // {
+            //     var openContainerWithMouseDown = Main.Instance.MouseDownContainer;
+            //     if (openContainerWithMouseDown != null)
+            //     {
+            //         _mouseDownLocation = openContainerWithMouseDown.ContainerId;
+            //         _sourceIndex = Main.Instance.MouseDownIndex;
+            //         _driver.MouseDownItem = openContainerWithMouseDown.Items[_sourceIndex];
+            //     }
+            //     else if (!_driver.IsMouseOverGui())
+            //     {
+            //         _mouseDownLocation = 0;
+            //         var downCoord = _driver.GetTileLocationOfMouse();
+            //         _driver.MouseDownItem = _driver.Game.TileMap.GetTile((int)downCoord.x, (int)downCoord.y, (int)downCoord.z).Item;
+            //         _sourceIndex = _driver.Game.TileMap.ToIndex(downCoord);
+            //     }
+            // }
+            // else if (Input.GetMouseButtonUp(0) && _mouseDownLocation != -1)
+            // {
+            //     int dest, destIndex;
 
-                var openContainerWithMouseUp = _driver.GetOpenContainerWithMouseUp();
-                if (openContainerWithMouseUp != null)
-                {
-                    dest = openContainerWithMouseUp.ContainerId;
-                    destIndex = openContainerWithMouseUp.MouseUpSlot;
-                }
-                else
-                {
-                    var tileLocUp = _driver.GetTileLocationOfMouse();
-                    if (tileLocUp == _driver.Game.TileMap.Wrap(_driver.Game.View.Focus.Position))
-                    {
-                        dest = GameState.Instance.InventoryContainerId;
-                        destIndex = -1;
-                    }
-                    else
-                    {
-                        dest = 0;
-                        destIndex = _driver.Game.TileMap.ToIndex(tileLocUp);
-                    }
-                }
+            //     var openContainerWithMouseUp = Main.Instance.MouseUpContainer;
+            //     if (openContainerWithMouseUp != null)
+            //     {
+            //         dest = openContainerWithMouseUp.ContainerId;
+            //         destIndex = Main.Instance.MouseUpIndex;
+            //     }
+            //     else
+            //     {
+            //         var tileLocUp = _driver.GetTileLocationOfMouse();
+            //         if (tileLocUp == _driver.Game.TileMap.Wrap(_driver.Game.View.Focus.Position))
+            //         {
+            //             dest = GameState.Instance.InventoryContainerId;
+            //             destIndex = -1;
+            //         }
+            //         else
+            //         {
+            //             dest = 0;
+            //             destIndex = _driver.Game.TileMap.ToIndex(tileLocUp);
+            //         }
+            //     }
 
-                Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(_mouseDownLocation, dest, _sourceIndex, destIndex);
+            //     Locator.Get<ConnectionToGridiaServerHandler>().MoveItem(_mouseDownLocation, dest, _sourceIndex, destIndex);
 
-                _driver.MouseDownItem =  null;
-                _mouseDownLocation = -1;
-            }
+            //     _driver.MouseDownItem =  null;
+            //     _mouseDownLocation = -1;
+            // }
         }
 
         private void End(StateMachine stateMachine, float dt, State newState)

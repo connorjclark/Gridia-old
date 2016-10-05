@@ -18,20 +18,28 @@ namespace MarkLight.UnityProject
 
     using UnityEngine;
 
+    public delegate void MoveItem(int fromSource, int fromIndex, int toSource, int toIndex);
+
     public class Main : UIView
     {
         #region Fields
 
         public static Main Instance;
 
-        public ContainerView Inventory;
+        public Views.UI.Group ContainerGroup;
+        public bool MouseDraggingItemDone = false;
+        public ContainerView MouseDownContainer;
+        public int MouseDownIndex;
+        public ContainerView MouseUpContainer;
+        public int MouseUpIndex;
         public int NumItemsInToolbar = 10;
         public Views.UI.Region TabView;
-        public Views.UI.Group ContainerGroup;
         public ContainerView Toolbar;
 
-        private int _maxContainerViewsAllowed = 3;
+        public MoveItem MoveItem;
+
         private List<ContainerView> ContainerViews = new List<ContainerView>();
+        private int _maxContainerViewsAllowed = 3;
         private bool _testMode;
 
         #endregion Fields
@@ -43,12 +51,11 @@ namespace MarkLight.UnityProject
             base.Initialize();
 
             _testMode = EditorSceneManager.GetActiveScene().name == "TestMainUI";
-            GameState.Create();
 
             GameState.Instance.ContainerCreated = OnContainerCreated;
             GameState.Instance.ContainerChanged = OnContainerChanged;
 
-            if (_testMode)
+            if (_testMode && Application.isPlaying)
             {
                 TestInitialize();
             }
@@ -68,6 +75,19 @@ namespace MarkLight.UnityProject
                 TabView.IsActive.Value = !TabView.IsActive.Value;
             }
 
+            if (MouseDraggingItemDone)
+            {
+                MouseDraggingItemDone = false;
+
+                var fromSource = MouseDownContainer != null ? MouseDownContainer.ContainerId : 0;
+                var toSource = MouseUpContainer != null ? MouseUpContainer.ContainerId : 0;
+
+                MoveItem(fromSource, MouseDownIndex, toSource, MouseUpIndex);
+
+                MouseDownContainer = MouseUpContainer = null;
+                MouseDownIndex = MouseUpIndex = -1;
+            }
+
             if (_testMode)
             {
                 TestUpdate();
@@ -84,62 +104,78 @@ namespace MarkLight.UnityProject
 
         private void OnContainerCreated(int containerId, ObservableList<ItemInstance> items)
         {
+            String containerName;
+
             if (containerId == GameState.Instance.InventoryContainerId)
             {
-                Inventory.SetItems(items);
                 Toolbar.SetItems(new ObservableList<ItemInstance>(items.GetRange(0, NumItemsInToolbar)));
+                Toolbar.ContainerId = containerId;
+                containerName = "Inventory";
             }
             else if (containerId == GameState.Instance.EquipmentContainerId)
             {
-                // TODO
+                containerName = "Equipment";
             }
             else
             {
-                ContainerView containerView = ContainerViews.Find(cv => cv.ContainerId == containerId);
+                containerName = "Container " + containerId;
+            }
 
-                if (!containerView)
-                {
-                    containerView = ContainerGroup.CreateView<ContainerView>();
-                    containerView.Alignment.Value = ElementAlignment.Right;
-                    containerView.ContainerName = "Container " + containerId;
-                    containerView.SetItems(items);
-                    containerView.InitializeViews();
+            ContainerView containerView = ContainerViews.Find(cv => cv.ContainerId == containerId);
 
-                    ContainerViews.Add(containerView);
-                }
-                else
-                {
-                    containerView.SetItems(items);
-                }
+            if (!containerView)
+            {
+                containerView = ContainerGroup.CreateView<ContainerView>();
+                containerView.Alignment.Value = ElementAlignment.Right;
+                containerView.ContainerName = containerName;
+                containerView.SetItems(items);
+                containerView.ContainerId = containerId;
 
-                if (ContainerViews.Count() > _maxContainerViewsAllowed)
-                {
-                    ContainerViews[0].Destroy();
-                    ContainerViews.RemoveAt(0);
-                }
+                containerView.InitializeViews();
+
+                ContainerViews.Add(containerView);
+            }
+            else
+            {
+                containerView.SetItems(items);
+            }
+
+            if (ContainerViews.Count() > _maxContainerViewsAllowed)
+            {
+                // index 0 is the inventory
+                ContainerViews[1].Destroy();
+                ContainerViews.RemoveAt(1);
             }
         }
 
         private void TestInitialize()
         {
-            if (Application.isPlaying)
-            {
-                MainThreadQueue.Instantiate();
-            }
-
             Locator.Provide(new ContentManager("demo-world"));
             Locator.Provide(new TextureManager("demo-world"));
 
             var cm = Locator.Get<ContentManager>();
 
             var items = new List<ItemInstance>();
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 25; i++)
             {
                 items.Add(new ItemInstance(cm.GetItem(i)));
             }
+            for (int i = 0; i < 25; i++)
+            {
+                items.Add(new ItemInstance(cm.GetItem(0)));
+            }
 
-            GameState.Instance.InventoryContainerId = 0;
+            GameState.Instance.InventoryContainerId = 1;
             GameState.Instance.SetContainerItems(GameState.Instance.InventoryContainerId, items);
+
+            MoveItem = (int fromSource, int fromIndex, int toSource, int toIndex) => {
+                if (fromSource > 0 && toSource > 0)
+                {
+                    var temp = MouseDownContainer.Items[fromIndex];
+                    GameState.Instance.SetContainerItem(fromSource, MouseUpContainer.Items[toIndex], fromIndex);
+                    GameState.Instance.SetContainerItem(toSource, temp, toIndex);
+                }
+            };
         }
 
         private void TestUpdate()
@@ -149,15 +185,19 @@ namespace MarkLight.UnityProject
                 var items = new List<ItemInstance>();
                 var cm = Locator.Get<ContentManager>();
                 var r = new System.Random();
-                for (int i = 0; i < 50; i++)
+                for (int i = 0; i < 25; i++)
                 {
                     items.Add(new ItemInstance(cm.GetItem(r.Next(10))));
+                }
+                for (int i = 0; i < 25; i++)
+                {
+                    items.Add(new ItemInstance(cm.GetItem(0)));
                 }
 
                 GameState.Instance.SetContainerItems(GameState.Instance.InventoryContainerId, items);
             }
 
-            // create new container window
+            // create new container
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 var items = new List<ItemInstance>();

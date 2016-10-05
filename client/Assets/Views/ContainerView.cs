@@ -13,19 +13,21 @@ namespace MarkLight.UnityProject
 
     using UnityEngine;
     using UnityEngine.EventSystems;
+
     public class ContainerView : UIView
     {
         #region Fields
 
+        public ViewAction BeginDrag;
         public Views.UI.List Container;
+        public int ContainerId;
+        public String ContainerName;
+        public Views.UI.Label ContainerNameLabel;
+        // public ViewAction Drag;
+        // public ViewAction EndDrag;
         public ObservableList<ItemInstance> Items;
         public int NumInRow = 10;
         public Views.UI.ListItem Template;
-
-        public Views.UI.Label ContainerNameLabel;
-        public String ContainerName;
-
-        public int ContainerId;
 
         #endregion Fields
 
@@ -37,8 +39,44 @@ namespace MarkLight.UnityProject
 
             float rowSpacing = Container.Spacing.Value.Pixels;
             float rowWidth = NumInRow * Template.Width.Value.Pixels + (NumInRow + 1) * rowSpacing;
-            //Container.SetValue(() => Container.Width, ElementSize.FromPixels(rowWidth));
             Container.Width.Value = ElementSize.FromPixels(rowWidth);
+        }
+
+        public void OnBeginDrag(ItemView source)
+        {
+            int index = Items.IndexOf(source.ItemInstance);
+
+            Main.Instance.MouseDraggingItemDone = false;
+
+            Main.Instance.MouseDownContainer = this;
+            Main.Instance.MouseDownIndex = index;
+        }
+
+        public void OnDrag(ItemView source, PointerEventData data)
+        {
+            // Debug.LogWarning("drag");
+            // Debug.LogWarning(source == null ? "false" : source.ItemInstance.Item.Name);
+        }
+
+        // public void OnDrop(ItemView source)
+        // {
+        //     int index = Items.IndexOf(source.ItemInstance);
+
+        //     Main.Instance.MouseUpContainer = this;
+        //     Main.Instance.MouseUpIndex = index;
+        // }
+
+        public void OnDrop(ItemView source)
+        {
+            int index = Items.IndexOf(source.ItemInstance);
+
+            Main.Instance.MouseUpContainer = this;
+            Main.Instance.MouseUpIndex = index;
+        }
+
+        public void OnEndDrag(ItemView source)
+        {
+            Main.Instance.MouseDraggingItemDone = true;
         }
 
         // TODO is there a way to run a callback when a field changes?
@@ -48,11 +86,6 @@ namespace MarkLight.UnityProject
 
             int NumInColumn = (int) Math.Ceiling((float)items.Count() / NumInRow);
             Height.Value = ElementSize.FromPixels(NumInColumn * Template.Height.Value.Pixels + ContainerNameLabel.Height.Value.Pixels);
-        }
-
-        public void ClickHandler(PointerEventData eventData)
-        {
-            Debug.Log("click");
         }
 
         #endregion Methods

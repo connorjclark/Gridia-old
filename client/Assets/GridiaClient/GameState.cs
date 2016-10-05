@@ -9,14 +9,27 @@ namespace Gridia
     public delegate void ContainerChanged(int containerId, ItemInstance itemInstance, int indexChanged);
 
     public delegate void ContainerCreated(int containerId, ObservableList<ItemInstance> items);
-
+    
     #endregion Delegates
 
     public class GameState
     {
         #region Fields
 
-        public static GameState Instance;
+        private static GameState _instance;
+
+        public static GameState Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new GameState();
+                }
+
+                return _instance;
+            }
+        }
 
         public ContainerChanged ContainerChanged;
         public ContainerCreated ContainerCreated;
@@ -37,9 +50,9 @@ namespace Gridia
 
         #region Methods
 
-        public static void Create()
+        public static void Clear()
         {
-            Instance = new GameState();
+            _instance = new GameState();
         }
 
         public void SetContainerItem(int containerId, ItemInstance itemInstance, int index)

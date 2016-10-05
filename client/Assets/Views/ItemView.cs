@@ -18,8 +18,12 @@ namespace MarkLight.UnityProject
     {
         #region Fields
 
+        public ViewAction BeginDrag;
+        public ViewAction Drag;
+        public ViewAction Drop;
+        public ViewAction EndDrag;
+        // public ViewAction Click;
         public Views.UI.Image Image;
-        public ViewAction Click;
 
         private int _currentFrameIndex;
         private ItemInstance _item;
@@ -50,6 +54,11 @@ namespace MarkLight.UnityProject
         public override void Initialize()
         {
             base.Initialize();
+        }
+
+        public void OnClick(UnityEngine.EventSystems.PointerEventData data)
+        {
+            Debug.LogWarning("Click!");
         }
 
         public void Update()

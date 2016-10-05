@@ -120,13 +120,13 @@ namespace MarkLight.UnityProject
 
             if (Application.isPlaying)
             {
-              MainThreadQueue.Instantiate();
-              GridiaConstants.InitializeGuiStuff();
-              GridiaConstants.InitializeSoundPlayer();
+                MainThreadQueue.Instantiate();
+                GridiaConstants.InitializeGuiStuff();
+                GridiaConstants.InitializeSoundPlayer();
             }
 
-            var cursorTexture = Resources.Load<Texture2D>("GUI Components/cursorHand_grey");
-            Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
+            // var cursorTexture = Resources.Load<Texture2D>("GUI Components/cursorHand_grey");
+            // Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
 
             Servers = new ObservableList<ServerDetails>();
             {

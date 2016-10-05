@@ -49,9 +49,12 @@
             _driver = Locator.Get<GridiaDriver>();
             _statusCircle = GetComponent<StatusCircle>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
-            var canvas = Instantiate(Resources.Load("Text")) as GameObject;
-            canvas.transform.SetParent(gameObject.transform, false);
-            _nameText = canvas.GetComponentInChildren<Text>();
+            
+            // TODO delete Text component?
+            // var canvas = Instantiate(Resources.Load("Text")) as GameObject;
+            // canvas.transform.SetParent(gameObject.transform, false);
+            
+            _nameText = GetComponent<Text>();
             _nameText.transform.localPosition = new Vector2(0, 32);
             _nameText.fontStyle = FontStyle.Bold;
             _nameText.color = Color.white;
@@ -93,7 +96,10 @@
             var isSelected = _driver.SelectedCreature == Creature;
             var isPlayer = _driver.Game.View.Focus == Creature;
             _statusCircle.enabled = v && (isSelected || isPlayer);
-            _statusCircle.text.enabled = v && (isSelected || isPlayer);
+            if (_statusCircle.text != null)
+            {
+                _statusCircle.text.enabled = v && (isSelected || isPlayer);
+            }
             GetComponent<LineRenderer>().enabled = v;
         }
 

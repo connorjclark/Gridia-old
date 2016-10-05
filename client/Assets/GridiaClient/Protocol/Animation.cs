@@ -18,6 +18,8 @@
             var y = (int)data["loc"]["y"];
             var z = (int)data["loc"]["z"];
 
+            return; // TODO
+
             if (game.View.Focus == null || z == game.View.Focus.Position.z)
             {
                 var coord = new Vector3(x, y, z);

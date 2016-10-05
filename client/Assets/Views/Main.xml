@@ -6,8 +6,6 @@
 
   <Region Id="TabView" IsActive="False">
     <Image BackgroundColor="Red" Alpha="0.3"></Image>
-    <Group Id="ContainerGroup" Margin="25px" Orientation="Vertical" Alignment="Left">
-      <ContainerView Id="Inventory" ContainerName="Inventory" NumInRow="{NumItemsInToolbar}" />
-    </Group>
+    <Group Id="ContainerGroup" Margin="25px" Orientation="Vertical" Alignment="Left" />
   </Region>
 </Main>
