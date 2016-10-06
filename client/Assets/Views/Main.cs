@@ -158,7 +158,7 @@ namespace MarkLight.UnityProject
             var items = new List<ItemInstance>();
             for (int i = 0; i < 25; i++)
             {
-                items.Add(new ItemInstance(cm.GetItem(i)));
+                items.Add(new ItemInstance(cm.GetItem(i + 1), i + 1));
             }
             for (int i = 0; i < 25; i++)
             {
@@ -187,7 +187,7 @@ namespace MarkLight.UnityProject
                 var r = new System.Random();
                 for (int i = 0; i < 25; i++)
                 {
-                    items.Add(new ItemInstance(cm.GetItem(r.Next(10))));
+                    items.Add(new ItemInstance(cm.GetItem(r.Next(1, 10)), r.Next(1, 10)));
                 }
                 for (int i = 0; i < 25; i++)
                 {

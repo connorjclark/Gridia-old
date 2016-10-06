@@ -1,8 +1,8 @@
 <ContainerView>
   <Group Orientation="Vertical">
     <Label Id="ContainerNameLabel" Text="{ContainerName}" FontSize="15" AdjustToText="Height" Alignment="Left" />
-    <List Id="Container" Style="ShowcaseList" Orientation="Horizontal" Items="{Items}" CanSelect="True" Spacing="3" Overflow="Wrap">
-      <ListItem Id="Template" Width="35px" Height="35px" Selected-OutlineColor="Yellow" IsTemplate="True">
+    <List Id="Container" Style="ShowcaseList" Orientation="Horizontal" Items="{Items}" CanSelect="True" BackgroundColor="silver" Spacing="3" Overflow="Wrap">
+      <ListItem Id="Template" Width="35px" Height="35px" Highlighted-BackgroundColor="Yellow" IsTemplate="True">
         <ItemView ItemInstance="{#Item}" BeginDrag="OnBeginDrag" EndDrag="OnEndDrag" Drag="OnDrag" Drop="OnDrop" />
       </ListItem>
     </List>

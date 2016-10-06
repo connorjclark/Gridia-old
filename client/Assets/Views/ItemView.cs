@@ -24,6 +24,7 @@ namespace MarkLight.UnityProject
         public ViewAction EndDrag;
         // public ViewAction Click;
         public Views.UI.Image Image;
+        public Views.UI.Label QuantityLabel;
 
         private int _currentFrameIndex;
         private ItemInstance _item;
@@ -44,6 +45,8 @@ namespace MarkLight.UnityProject
                 _item = value;
                 _spriteCache = GetSprites();
                 _currentFrameIndex = -1;
+                QuantityLabel.IsVisible.Value = _item.Quantity != 1 && _item.Item.Id != 0;
+                QuantityLabel.Text.Value = "" + _item.Quantity;
             }
         }
 
