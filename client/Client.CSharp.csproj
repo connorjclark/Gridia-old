@@ -651,6 +651,7 @@
     <Compile Include="Assets\Serving\ReflexionExtension.cs" />
     <Compile Include="Assets\Serving\SocketHandler.cs" />
     <Compile Include="Assets\Serving\SocketHandlerImpl.cs" />
+    <Compile Include="Assets\Views\ChatView.cs" />
     <Compile Include="Assets\Views\ContainerView.cs" />
     <Compile Include="Assets\Views\ItemView.cs" />
     <Compile Include="Assets\Views\Main.cs" />
@@ -732,6 +733,7 @@
     <None Include="Assets\Resources\shaders\Sprites-Diffuse.shader" />
     <None Include="Assets\Resources\shaders\Unlit-Alpha.shader" />
     <None Include="Assets\Resources\shaders\Unlit-Color.shader" />
+    <None Include="Assets\Views\ChatView.xml" />
     <None Include="Assets\Views\ContainerView.xml" />
     <None Include="Assets\Views\ItemView.xml" />
     <None Include="Assets\Views\Main.xml" />

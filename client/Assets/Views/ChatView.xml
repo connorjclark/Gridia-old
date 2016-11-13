@@ -1,0 +1,7 @@
+<ChatView>
+  <Group Height="30%" Width="30%" Alignment="BottomLeft">
+    <InputField Id="ChatArea" Alignment="Top" Height="85%" Width="100%" Alpha="0.7" IsReadOnly="true"></InputField>
+    <InputField Id="ChatInput" Alignment="BottomLeft" Height="15%" Width="80%" Alpha="0.8"></InputField>
+    <Button Id="ChatInputButton" Text="Enter" Alignment="BottomRight" Height="15%" Width="20%" Alpha="0.8"></Button>
+  </Group>
+</ChatView>

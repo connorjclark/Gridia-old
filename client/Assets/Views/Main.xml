@@ -1,7 +1,11 @@
-<Main>
-  <Region Height="4.5%" Alignment="Bottom">
+<Main HideFlags="NotEditable">
+  <Region Height="4.51%" Alignment="Bottom">
     <Image BackgroundColor="black"></Image>
     <ContainerView Id="Toolbar" NumInRow="{NumItemsInToolbar}" Alignment="Bottom"/>
+  </Region>
+  
+  <Region>
+    <ChatView></ChatView>
   </Region>
 
   <Region Id="TabView" IsActive="False">
