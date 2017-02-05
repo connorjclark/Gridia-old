@@ -5,10 +5,10 @@ rethink crafting
   possible crafting recipes are shown in a crafting menu
   selecting a recipe will remove items from inventory, and create the product in x seconds
     if one of the resources is near the player (ON THE GROUND), then it stays there until completion
-    if in inventory, it does not stay there
+    if in inventory, it does not stay there (EDIT: wait why?)
   recipes can make use of items near the player (how to distinguish in menu?)
     axe (in inventory) + tree (near player) = chop down tree ... (this should show in craft menu, but have a more convienent option)
-      TODO this sort of crafting recipe should slowly give the user resources (wood) over time. how to best integrate?
+      TODO this sort of crafting recipe should slowly give the user resources (wood) over time. how to best integrate? (EDIT: should it? consider doing this on a second pass)
     plough (in inv) + ground (around player) = ploughed ground (which part of the ground? need to be able to select WHERE when multiple choices exist)
     hand (...) + closed door = opened door
 
